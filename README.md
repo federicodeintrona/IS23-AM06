@@ -7,6 +7,6 @@
 
 # Development State
 
-| Functionality | State |
-| ---- | ---- |
-| Uml | :yellow_circle: |
+| Functionality | State | Current | Comment |
+| ---- | ---- | ---- | ---- |
+| Uml | :yellow_circle: | | |
