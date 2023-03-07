@@ -7,6 +7,8 @@
 
 # Development State
 
-| Functionality | State | Current | Comment |
-| ---- | ---- | ---- | ---- |
-| Uml | :yellow_circle: | | |
+| Functionality | State           | Current | Comment |
+|---------------|-----------------| ---- | ---- |
+| Early H-L UML | :yellow_circle: | | |
+| Final UML     | :red_circle:    | | |
+
