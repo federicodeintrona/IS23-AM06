@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package src.test.java.it.polimi.ingsw;
 
 //import junit.framework.Test;
 //import junit.framework.TestCase;

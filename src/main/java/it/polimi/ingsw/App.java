@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package src.main.java.it.polimi.ingsw;
 
 /**
  * Hello world!
