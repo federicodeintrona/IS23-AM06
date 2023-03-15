@@ -6,5 +6,7 @@ public enum Tiles {
     YELLOW,
     WHITE,
     PINK,
-    LIGHT_BLUE;
+    LIGHT_BLUE,
+    NOTALLOWED,
+    EMPTY;
 }
