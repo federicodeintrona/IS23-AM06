@@ -18,7 +18,6 @@ public class Board {
                 gamesBoard.setEmpty(i, j);
             }
         }
-
         //posizioni matrice che NON possono essere inserite tessere
         //riga 0
         for (int i = 0; i <= 2; i++) {

@@ -10,6 +10,9 @@ public class PersonalObjective1 extends PersonalObjective {
     }
 
 //metodi
+
+
+
     //ritorna il numero di obiettivi completati -->
     // --> posizione-colore carta PersonalObjective coincide con posizione-colore nella Bookshelf
     @Override
