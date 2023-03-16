@@ -12,12 +12,12 @@ public class CommonObjective2 extends CommonObjective{
     public boolean checkCondition(Player player){
 
         // using tile as a buffer for the first angle of the bookshelf
-        Tiles tile = player.bookshelf.tiles.getTile(0, 0);
+        Tiles tile = player.getBookshelf().getTiles().getTile(0, 0);
 
         //checking if the four angles of the bookshelf are equal
-        if (tile.equals(player.bookshelf.tiles.getTile(0, 2))) {
-            if (tile.equals(player.bookshelf.tiles.getTile(2, 2))) {
-                if (tile.equals(player.bookshelf.tiles.getTile(2, 2))) {
+        if (tile.equals(player.getBookshelf().getTiles().getTile(0, 2))) {
+            if (tile.equals(player.getBookshelf().getTiles().getTile(2, 2))) {
+                if (tile.equals(player.getBookshelf().getTiles().getTile(2, 2))) {
                     return true;
                 }
             }

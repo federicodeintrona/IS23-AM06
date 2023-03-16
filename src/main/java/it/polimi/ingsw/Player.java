@@ -20,6 +20,10 @@ public class Player {
         this.chair=chair;
     }
 
+    public Bookshelf getBookshelf(){
+        return bookshelf;
+    }
+
     public int getPublicPoint() {
         return publicPoint;
     }

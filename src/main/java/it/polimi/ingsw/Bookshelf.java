@@ -12,6 +12,10 @@ public class Bookshelf {
             tiles=new Matrix(6,5);
             num_of_tiles=0;
         }
+
+        public Matrix getTiles(){
+            return tiles;
+        }
         public boolean checkColumns(int choice, int column){
             if(tiles.getTile(0+choice-1,column).equals(EMPTY))
                 return true;
