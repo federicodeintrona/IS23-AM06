@@ -16,7 +16,7 @@ public class Server
 
     public static void main( String[] args )  {
 
-
+        int port=3356;
         ArrayList<CommonObjective> c1 = new ArrayList<>();
 
         //Testing matrice

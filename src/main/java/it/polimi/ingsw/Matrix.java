@@ -32,7 +32,7 @@ public class Matrix {
      * @param col   the number of the column where you want to set the tile
      */
     //aggunge tile
-    public void add(Tiles tile, int row, int col){
+    public void setTile(Tiles tile, int row, int col){
 
         board.get(row).set(col,tile);
 
