@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 public class Player {
     private final String userName;
+    private Bookshelf bookshelf = new Bookshelf();
     private int publicPoint;
     private int privatePoint;
     private int commonObjectivePoint;
@@ -17,6 +18,10 @@ public class Player {
         personalObjectivePoint = 0;
         vicinityPoint = 0;
         this.chair=chair;
+    }
+
+    public Bookshelf getBookshelf(){
+        return bookshelf;
     }
 
     public int getPublicPoint() {

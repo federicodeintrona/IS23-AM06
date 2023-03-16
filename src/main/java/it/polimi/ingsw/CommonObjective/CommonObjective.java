@@ -35,11 +35,6 @@ public abstract class CommonObjective {
     public static ArrayList<CommonObjective> randomSubclass(int num) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 
 
-
-
-
-
-
         ArrayList temp = (ArrayList) subclasses.clone();
         Random rand = new Random();
 
