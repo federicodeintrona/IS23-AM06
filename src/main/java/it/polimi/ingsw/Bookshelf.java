@@ -27,15 +27,15 @@ public class Bookshelf {
         }
         public void addTile(ArrayList<Tiles> tiles, int column){
             int pos=firstFree(column);
-            if (tiles.size() == 1) this.tiles.add(tiles.get(0), pos, column);
+            if (tiles.size() == 1) this.tiles.setTile(tiles.get(0), pos, column);
             else if (tiles.size()==2) {
-                this.tiles.add(tiles.get(0), pos, column);
-                this.tiles.add(tiles.get(1), pos+1, column);
+                this.tiles.setTile(tiles.get(0), pos, column);
+                this.tiles.setTile(tiles.get(1), pos+1, column);
             }
             else {
-                this.tiles.add(tiles.get(0), pos, column);
-                this.tiles.add(tiles.get(1), pos+1, column);
-                this.tiles.add(tiles.get(2), pos+2, column);
+                this.tiles.setTile(tiles.get(0), pos, column);
+                this.tiles.setTile(tiles.get(1), pos+1, column);
+                this.tiles.setTile(tiles.get(2), pos+2, column);
             }
         }
 
