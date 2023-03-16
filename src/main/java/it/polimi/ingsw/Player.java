@@ -23,8 +23,8 @@ public class Player {
         return publicPoint;
     }
 
-    public void setPublicPoint(int publicPoint) {
-        this.publicPoint = publicPoint;
+    private void setPublicPoint() {
+        publicPoint= (vicinityPoint+commonObjectivePoint) ;
     }
 
     public int getCommonObjectivePoint() {
@@ -39,8 +39,8 @@ public class Player {
         return privatePoint;
     }
 
-    public void setPrivatePoint(int privatePoint) {
-        this.privatePoint = privatePoint;
+    public void setPrivatePoint() {
+        privatePoint=personalObjectivePoint+vicinityPoint+commonObjectivePoint;
     }
 
     public int getPersonalObjectivePoint() {

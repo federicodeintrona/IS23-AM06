@@ -3,21 +3,15 @@ package it.polimi.ingsw;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 public class Matrix {
     /**
      *  Tile Matrix Class
      */
-    private  ArrayList<ArrayList<Tiles>> board = new ArrayList<ArrayList<Tiles>>();
+    private final ArrayList<ArrayList<Tiles>> board = new ArrayList<ArrayList<Tiles>>();
     private final int numRows;
     private final int numCols;
 
 
-    /**
-     * Constructor Method
-     * @param rows Number of rows
-     * @param columns Number of columns
-     */
     public Matrix(int rows, int columns ){
         numCols=columns;
         numRows=rows;
@@ -32,12 +26,12 @@ public class Matrix {
     }
 
     /**
-     * Method which set the selected tile value
+     * Method which set the selected tile to value 'tile'
      * @param tile  wanted value of the tile
-     * @param row   Row number
-     * @param col   Column number
+     * @param row   the number of the row where you want to set the tile
+     * @param col   the number of the column where you want to set the tile
      */
-    public void setTile(Tiles tile ,int row, int col){
+    public void add(Tiles tile ,int row, int col){
 
         board.get(row).set(col,tile);
 
@@ -45,40 +39,23 @@ public class Matrix {
 
     /**
      * Set the selected tile to EMPTY
-     * @param row   Row number
-     * @param col   Column number
+     * @param row   The number of the row where you want to set the tile
+     * @param col   the number of the column where you want to set the tile
      */
-    public void removeTile(int row, int col){
+    public void remove(int row, int col){
 
         board.get(row).set(col,Tiles.EMPTY);
 
     }
-
-    /**
-     * Set the selected tile to NOTALLOWED
-     * @param row Row number
-     * @param col Column number
-     */
     public void setNotAllowed(int row, int col){
 
         board.get(row).set(col,Tiles.NOTALLOWED);
 
     }
-
-    /**
-     *  Returns the value of the selected tile
-     * @param row Row number
-     * @param col Column number
-     * @return Value of the selected tile
-     */
     public Tiles getTile(int row, int col){
         return board.get(row).get(col);
     }
 
-    /**
-     * Temporary
-     * Used for debugging purposes
-     */
     public void print(){
         for( int i=0; i<numRows;i++){
             for( int j=0; j<numCols;j++){
@@ -89,10 +66,6 @@ public class Matrix {
         }
     }
 
-    /**
-     * Returns the board
-     * @return Board
-     */
     public ArrayList<ArrayList<Tiles>> getBoard() {
         return board;
     }
