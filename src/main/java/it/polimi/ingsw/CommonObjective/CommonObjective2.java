@@ -9,7 +9,7 @@ public class CommonObjective2 extends CommonObjective{
         subclasses.add(CommonObjective2.class);
     }
 
-    boolean checkCondition(Player player){
+    public boolean checkCondition(Player player){
 
         //checking if the four angles of the boockshelf are equal
         if (player.bookshelf.tiles.getTile(0, 0) == player.bookshelf.tiles.getTile(0, 4) == player.bookshelf.tiles.getTile(5, 0) == player.bookshelf.tiles.getTile(5, 4)){
