@@ -125,7 +125,7 @@ public class Board {
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)) {
                     //chiama addTiles --> aggiunge colore al Sachet
-                    boardSachet.addTile(gamesBoard.getTile(i, j));
+//                    boardSachet.add(gamesBoard.getTile(i, j));
                     //chiama remove   --> rimuovi effettivamente tiles da board
                     gamesBoard.remove(i, j);
                 }

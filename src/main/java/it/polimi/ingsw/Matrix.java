@@ -11,7 +11,7 @@ public class Matrix {
     private final int numRows;
     private final int numCols;
 
-
+    //costruttore
     public Matrix(int rows, int columns ){
         numCols=columns;
         numRows=rows;
@@ -31,7 +31,8 @@ public class Matrix {
      * @param row   the number of the row where you want to set the tile
      * @param col   the number of the column where you want to set the tile
      */
-    public void add(Tiles tile ,int row, int col){
+    //aggunge tile
+    public void add(Tiles tile, int row, int col){
 
         board.get(row).set(col,tile);
 
@@ -42,20 +43,29 @@ public class Matrix {
      * @param row   The number of the row where you want to set the tile
      * @param col   the number of the column where you want to set the tile
      */
+    //rimuove tile
     public void remove(int row, int col){
 
         board.get(row).set(col,Tiles.EMPTY);
 
     }
+    //imposta cella a NotAllowed
     public void setNotAllowed(int row, int col){
 
         board.get(row).set(col,Tiles.NOTALLOWED);
 
     }
+    public void setEmpty(int row, int col){
+
+        board.get(row).set(col,Tiles.EMPTY);
+
+    }
+
     public Tiles getTile(int row, int col){
         return board.get(row).get(col);
     }
 
+    //stampa la matrice
     public void print(){
         for( int i=0; i<numRows;i++){
             for( int j=0; j<numCols;j++){
