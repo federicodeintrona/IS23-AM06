@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Sachet {
     private ArrayList<Tiles> sachet;
 
-    public void draw(){
-
+    public Tiles draw(){
+        return Tiles.YELLOW;
     }
     public int remainingTiles(){
         int remTiles;
