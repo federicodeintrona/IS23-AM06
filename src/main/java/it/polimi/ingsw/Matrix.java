@@ -31,7 +31,7 @@ public class Matrix {
      * @param row   the number of the row where you want to set the tile
      * @param col   the number of the column where you want to set the tile
      */
-    public void add(Tiles tile ,int row, int col){
+    public void add(Tiles tile , int row , int col){
 
         board.get(row).set(col,tile);
 
