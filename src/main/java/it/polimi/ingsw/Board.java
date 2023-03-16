@@ -137,7 +137,7 @@ public class Board {
 
     //aggiunge tiles nella board - OK
     public void PlaceTiles(Tiles tile, int row, int col){
-        gamesBoard.add(tile, row, col);
+        gamesBoard.setTile(tile, row, col);
     }
 
     //rimuove i tiles nelle posizioni indicate - OK
