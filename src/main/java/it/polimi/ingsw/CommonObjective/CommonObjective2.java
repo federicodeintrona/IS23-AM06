@@ -1,7 +1,7 @@
 package it.polimi.ingsw.CommonObjective;
 
-import it.polimi.ingsw.Bookshelf;
 import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Tiles;
 
 public class CommonObjective2 extends CommonObjective{
 
@@ -11,13 +11,20 @@ public class CommonObjective2 extends CommonObjective{
 
     public boolean checkCondition(Player player){
 
-        //checking if the four angles of the boockshelf are equal
-        if (player.bookshelf.tiles.getTile(0, 0) == player.bookshelf.tiles.getTile(0, 4) == player.bookshelf.tiles.getTile(5, 0) == player.bookshelf.tiles.getTile(5, 4)){
-            return true;
+        // using tile as a buffer for the first angle of the bookshelf
+        Tiles tile = player.bookshelf.tiles.getTile(0, 0);
+
+        //checking if the four angles of the bookshelf are equal
+        if (tile.equals(player.bookshelf.tiles.getTile(0, 2))) {
+            if (tile.equals(player.bookshelf.tiles.getTile(2, 2))) {
+                if (tile.equals(player.bookshelf.tiles.getTile(2, 2))) {
+                    return true;
+                }
+            }
         }
 
-        // if not returns false
-        else return false;
+        // else returns false
+        return false;
     }
 
 }
