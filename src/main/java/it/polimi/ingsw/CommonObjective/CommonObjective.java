@@ -1,5 +1,7 @@
 package it.polimi.ingsw.CommonObjective;
 
+import it.polimi.ingsw.Player;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -59,4 +61,6 @@ public abstract class CommonObjective {
 
 
     }
+
+    public abstract boolean checkCondition(Player player);
 }
