@@ -1,13 +1,17 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.PersonalObjective.PersonalObjective;
+
 public class Player {
     private final String userName;
     private Bookshelf bookshelf = new Bookshelf();
+    private PersonalObjective personalObjective;
     private int publicPoint;
     private int privatePoint;
     private int commonObjectivePoint;
     private int personalObjectivePoint;
     private int vicinityPoint;
+    private int winnerPoint ;
     private final boolean chair;
 
     public Player(String userName, boolean chair) {
@@ -17,6 +21,7 @@ public class Player {
         commonObjectivePoint = 0;
         personalObjectivePoint = 0;
         vicinityPoint = 0;
+        winnerPoint = 0;
         this.chair=chair;
     }
 
@@ -29,7 +34,7 @@ public class Player {
     }
 
     private void setPublicPoint() {
-        publicPoint= (vicinityPoint+commonObjectivePoint) ;
+        publicPoint= (vicinityPoint + commonObjectivePoint + winnerPoint) ;
     }
 
     public int getCommonObjectivePoint() {
@@ -45,7 +50,7 @@ public class Player {
     }
 
     public void setPrivatePoint() {
-        privatePoint=personalObjectivePoint+vicinityPoint+commonObjectivePoint;
+        privatePoint=personalObjectivePoint+vicinityPoint+commonObjectivePoint + winnerPoint;
     }
 
     public int getPersonalObjectivePoint() {
@@ -66,5 +71,21 @@ public class Player {
 
     public boolean isChair() {
         return chair;
+    }
+
+    public PersonalObjective getPersonalObjective() {
+        return personalObjective;
+    }
+
+    public void setPersonalObjective(PersonalObjective personalObjective) {
+        this.personalObjective = personalObjective;
+    }
+
+    public int getWinnerPoint() {
+        return winnerPoint;
+    }
+
+    public void setWinnerPoint(int winnerPoint) {
+        this.winnerPoint = winnerPoint;
     }
 }
