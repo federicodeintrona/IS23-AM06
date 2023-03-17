@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.CommonObjective.CommonObjective;
 import it.polimi.ingsw.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.View.View;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -12,6 +13,7 @@ public class Model {
 
     private  Board board;
     private ArrayList<Player> players;
+    private ArrayList<View> virtualViews;
     private ArrayList<CommonObjective> commonobj;
 
     private Player currPlayer;
@@ -22,8 +24,9 @@ public class Model {
 
     public Model(){};
 
-    public Model( ArrayList<Player> players) {
+    public Model( ArrayList<Player> players,  ArrayList<View> views) {
         this.players = players;
+        this.virtualViews = views;
         this.currPlayer = players.get(0);
         this.nextPlayer = players.get(1);
     }
@@ -41,6 +44,7 @@ public class Model {
         board = new Board(players.size(), new Sachet());
         commonobjInit();
         personalobjInit();
+
 
     }
 

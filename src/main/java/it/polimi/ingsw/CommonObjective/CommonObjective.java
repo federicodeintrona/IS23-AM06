@@ -38,15 +38,9 @@ public abstract class CommonObjective {
         ArrayList temp = (ArrayList) subclasses.clone();
         Random rand = new Random();
 
-        System.out.println(subclasses.size());
-        System.out.println(temp.size());
-
 
         ArrayList<CommonObjective> result = new ArrayList<CommonObjective>();
 
-        /*for (int i = 0; i< temp.size();i++){
-            System.out.println(temp.get(i));
-        }*/
 
         for(int i = 0; i<num; i++ ){
             int index = rand.nextInt(subclasses.size());
