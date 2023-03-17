@@ -10,7 +10,24 @@ public class Sachet {
     // --> vero sacchetto contenente le tessere (contiene 132 tessere = 6tipi * 22tessere)
     static{
         //132tiles = 6tipi * 22tiles
-
+        for (int i = 0; i < 22; i++) {
+            sachet.add(Tiles.GREEN);
+        }
+        for (int i = 0; i < 22; i++) {
+            sachet.add(Tiles.BLUE);
+        }
+        for (int i = 0; i < 22; i++) {
+            sachet.add(Tiles.YELLOW);
+        }
+        for (int i = 0; i < 22; i++) {
+            sachet.add(Tiles.WHITE);
+        }
+        for (int i = 0; i < 22; i++) {
+            sachet.add(Tiles.PINK);
+        }
+        for (int i = 0; i < 22; i++) {
+            sachet.add(Tiles.LIGHT_BLUE);
+        }
     }
 
 //-------------------------------------------------------------------------------------------------------\\
