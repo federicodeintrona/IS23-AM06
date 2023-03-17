@@ -18,4 +18,18 @@ public class Sachet {
         remTiles=0;
         return remTiles;
     }
+
+    public void setSachet(ArrayList<Tiles> sachet) {
+        this.sachet = sachet;
+    }
+
+    //aggiunge tiles nel sachet --> aggiunta ad array list
+    public void addTiles(Tiles til){
+        sachet.add(til);
+    }
+
+    //rimuove tiles dal sachet in posizione i
+    public void removeTiles(int i){
+        sachet.remove(i);
+    }
 }

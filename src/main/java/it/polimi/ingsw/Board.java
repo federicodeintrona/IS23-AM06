@@ -109,12 +109,96 @@ public class Board {
         }
     }
 
-    //ritorna true se la board deve essere resettata
+    //ritorna true se la board deve essere resettata - OK
     public boolean checkBoardReset(){
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                //per tutte le tiles!=NOTALLOWED && !=EMPTY
+                if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)){
+                    //se adiacente c'è almeno 1 tiles ==> return false
+                    if (i==0){
+                        //adiacenza solo:
+                        // sx
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // dx
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // basso
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                    }
+                    else if (i==8){
+                        //adicenza solo:
+                        // sx
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // dx
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // alto
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                    }
+                    if (j==0){
+                        //adiacenza solo:
+                        // alto
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // basso
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // dx
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                    }
+                    else if (j == 8) {
+                        //adiacenza solo:
+                        // alto
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // basso
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        // sx
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        //se supera i 2 for ==> non ci sono tiles adiacenti con altre tiles
         return true;
     }
 
-    //resetta la board - OK
+//DOMANDA SU SLACK IN ATTESA RISPOSTA
+    //resetta la board
     //1. rimuovere tiles rimanenti e rimette in sachet
     //2. riempe board con tiles rimantenti nel sachet
     public void boardReset(){
@@ -124,7 +208,7 @@ public class Board {
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)) {
                     //chiama addTiles --> aggiunge colore al Sachet
-//                    boardSachet.add(gamesBoard.getTile(i, j));
+                    boardSachet.addTiles(gamesBoard.getTile(i, j));
                     //chiama remove   --> rimuovi effettivamente tiles da board
                     gamesBoard.remove(i, j);
                 }
@@ -147,10 +231,6 @@ public class Board {
         }
     }
 
-    //rimuove tiles singolarmente e li mette in sachet
-    public void remove(Point position){
-
-    }
 
 
 
