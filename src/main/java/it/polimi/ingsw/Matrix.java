@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -62,6 +63,11 @@ public class Matrix {
     }
 
     public Tiles getTile(int row, int col){
+        return board.get(row).get(col);
+    }
+    public Tiles getTile(Point p){
+        int row=p.x;
+        int col=p.y;
         return board.get(row).get(col);
     }
 
