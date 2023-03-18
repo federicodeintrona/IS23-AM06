@@ -119,7 +119,7 @@ public class Model {
         if(currPlayer==players.get(players.size())){ nextPlayer = players.get(0);}
         else nextPlayer = players.get(players.indexOf(currPlayer)+1);
 
-        if(board.checkBoardReset()) board.boardReset();
+        if(board.checkBoardReset()) board.boardResetENG();
 
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
 

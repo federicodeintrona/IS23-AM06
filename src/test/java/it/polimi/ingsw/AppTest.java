@@ -4,6 +4,10 @@ package src.test.java.it.polimi.ingsw;
 //import junit.framework.TestCase;
 //import junit.framework.TestSuite;
 import static org.junit.jupiter.api.Assertions.*;
+
+import it.polimi.ingsw.Board;
+import it.polimi.ingsw.Server;
+import it.polimi.ingsw.Tiles;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -15,7 +19,7 @@ import org.junit.jupiter.api.Test;
 class AppTest {
     @Test
     void theAnswer() {
-        assertEquals(42, 22 + 20);
+        assertEquals(22,10+12);
     }
 }
 
