@@ -87,4 +87,20 @@ public class Matrix {
     public int getNumCols() {
         return numCols;
     }
+
+    // method to check if column x is full
+    public boolean columnIsFull(int x){
+        for (int i=0; i<numRows; i++){
+            if (board.get(i).get(x).equals(Tiles.EMPTY)) return false;
+        }
+        return true;
+    }
+
+    // method to check if row x is full
+    public boolean rowIsFull(int x){
+        for (int i=0; i<numRows; i++){
+            if (board.get(x).get(i).equals(Tiles.EMPTY)) return false;
+        }
+        return true;
+    }
 }
