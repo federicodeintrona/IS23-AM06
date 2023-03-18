@@ -18,9 +18,9 @@ import java.util.concurrent.Executors;
 public class Server
 {
     private static int port =9898;
-    static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
+    private static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
 
-    public static void main( String[] args ) throws IOException {
+    public static void main( String[] args ) {
 
 
         ArrayList<CommonObjective> c1 = new ArrayList<>();
@@ -70,4 +70,5 @@ public class Server
     public void removeClient(ServerClientHandler client){
         clientList.remove(client);
 }
+
 }
