@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import org.w3c.dom.CDATASection;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -461,7 +463,7 @@ public class Board {
         int i=position.x;
         int j=position.y;
         //se NON siamo sul bordo
-        if ((position.x!=0 && position.x!=8)||
+        if ((position.x!=0 && position.x!=8) &&
             (position.y!=0 && position.y!=8)){
             //sx
             if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
@@ -662,20 +664,285 @@ public class Board {
         return result;
     }
 
-    //ritorna TRUE se nella List i Point sono adiacenti --> hanno un lato in comune
+    //ritorna TRUE se nella List i Point sono adiacenti --> hanno un lato in comune - OK
     //adiacenza su board --> sono sulla stessa riga/colonna
         //RICHIEDE CHE NON CI SIANO PIÙ Point UGUALI --> STESSA X E STESSA Y
     public boolean checkAdjacentTiles(List<Point> position){
-        return false;
-
+        //stessa riga o stessa colonna
+        Point p=new Point();
+        Point p1=new Point();
+        if (!checkSameRow(position) && !checkSameColumn(position)){
+            return false;
+        }
+        //sono veramente adiacenti ==> i Point sono vicini --> cambia di +-1 solo x o solo y
+        //sono sulla stessa riga
+        if (checkSameRow(position)){
+            for (int i = 0; i < position.size(); i++) {
+                //se position.get(i).y==0 || ==8
+                if (position.get(i).y==0){
+                    p.x=position.get(i).x;
+                    p.y=position.get(i).y+1;
+                    if (!position.contains(p)){ //NON sono adiacenti sono solo sulla stessa riga
+                        return false;
+                    }
+                }
+                else if (position.get(i).y==8){
+                    p.x=position.get(i).x;
+                    p.y=position.get(i).y-1;
+                    //NON sono adiacenti sono solo sulla stessa riga
+                    if (!position.contains(p)){
+                        return false;
+                    }
+                }
+                //se position.get(i).y!=0 && !=8
+                else {
+                    p.x=position.get(i).x;
+                    p.y=position.get(i).y-1;
+                    p1.x=position.get(i).x;
+                    p1.y=position.get(i).y+1;
+                    //NON sono adiacenti sono solo sulla stessa riga
+                    if (!position.contains(p) && !position.contains(p1)){
+                        return false;
+                    }
+                }
+            }
+        }
+        //sono sulla stessa colonna
+        else if (checkSameColumn(position)){
+            for (int i = 0; i < position.size(); i++) {
+                //se position.get(i).x==0 || ==8
+                if (position.get(i).x==0){
+                    p.x=position.get(i).x+1;
+                    p.y=position.get(i).y;
+                    //NON sono adiacenti sono solo sulla stessa colonna
+                    if (!position.contains(p)){
+                        return false;
+                    }
+                }
+                else if (position.get(i).x==8){
+                    p.x=position.get(i).x-1;
+                    p.y=position.get(i).y;
+                    //NON sono adiacenti sono solo sulla stessa colonna
+                    if (!position.contains(p)){
+                        return false;
+                    }
+                }
+                //se position.get(i).y!=0 && !=8
+                else {
+                    p.x=position.get(i).x-1;
+                    p.y=position.get(i).y;
+                    p1.x=position.get(i).x+1;
+                    p1.y=position.get(i).y;
+                    //NON sono adiacenti sono solo sulla stessa colonna
+                    if (!position.contains(p) && !position.contains(p1)){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
-    //ritorna la posizione delle tiles adiacenti a quella in ingresso
+    //ritorna la posizione delle tiles adiacenti a quella in ingresso - OK
     public ArrayList<Point> adjacentTiles(Point tile){
+        Point p=new Point();
         ArrayList<Point> result=new ArrayList<>();
+
+        //NON siamo sul bordo
+        if ((tile.x!=0 && tile.x!=8) &&
+            (tile.y!=0 && tile.y!=8)){
+            //alto
+            p.x=tile.x+1;
+            p.y=tile.y;
+            result.add(p);
+            //basso
+            p.x=tile.x-1;
+            result.add(p);
+            //sx
+            p.x=tile.x;
+            p.y=tile.y-1;
+            result.add(p);
+            //dx
+            p.y=tile.y+1;
+            result.add(p);
+        }
+        //siamo sul bordo
+        else {
+            //siamo sul bordo alto
+            if (tile.x==0){
+                if (tile.y==0){
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //dx
+                    p.x=tile.x;
+                    p.y=tile.y+1;
+                    result.add(p);
+                }
+                else if (tile.y==8){
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //sx
+                    p.x=tile.x;
+                    p.y=tile.y-1;
+                    result.add(p);
+                }
+                else {
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //sx
+                    p.x=tile.x;
+                    p.y=tile.y-1;
+                    result.add(p);
+                    //dx
+                    p.y=tile.y+1;
+                    result.add(p);
+                }
+            }
+            //siamo sul bordo basso
+            if (tile.x==8){
+                if (tile.y==0){
+                    //alto
+                    p.x=tile.x+1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //dx
+                    p.x=tile.x;
+                    p.y=tile.y+1;
+                    result.add(p);
+                }
+                else if (tile.y==8){
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //sx
+                    p.x=tile.x;
+                    p.y=tile.y-1;
+                    result.add(p);
+                }
+                else {
+                    //alto
+                    p.x=tile.x+1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //sx
+                    p.x=tile.x;
+                    p.y=tile.y-1;
+                    result.add(p);
+                    //dx
+                    p.y=tile.y+1;
+                    result.add(p);
+                }
+            }
+            //siamo sul bordo sx
+            if (tile.y==0){
+                if (tile.x==0){
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //dx
+                    p.x=tile.x;
+                    p.y=tile.y+1;
+                    result.add(p);
+                }
+                else if (tile.x==8){
+                    //alto
+                    p.x=tile.x+1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //dx
+                    p.x=tile.x;
+                    p.y=tile.y+1;
+                    result.add(p);
+                }
+                else {
+                    //alto
+                    p.x=tile.x+1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //dx
+                    p.x=tile.x;
+                    p.y=tile.y+1;
+                    result.add(p);
+                }
+
+            }
+            //siamo sul bordo dx
+            if (tile.y==8){
+                if (tile.x==0){
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //sx
+                    p.x=tile.x;
+                    p.y=tile.y-1;
+                    result.add(p);
+                }
+                else if (tile.x==8){
+                    //alto
+                    p.x=tile.x+1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //sx
+                    p.x=tile.x;
+                    p.y=tile.y-1;
+                    result.add(p);
+                }
+                else {
+                    //alto
+                    p.x=tile.x+1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //basso
+                    p.x=tile.x-1;
+                    p.y=tile.y;
+                    result.add(p);
+                    //sx
+                    p.x=tile.x;
+                    p.y=tile.y-1;
+                    result.add(p);
+                }
+            }
+        }
 
 
         return result;
+    }
+
+    //ritorna TRUE se i Point sono sulla stessa riga - OK
+    public boolean checkSameRow(List<Point> position){
+        for (int i = 0; i < position.size(); i++) {
+            for (int j = 0; j < position.size(); j++) {
+                if (position.get(i).x!=position.get(j).x){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    //ritorna TRUE se i Point sono sulla stessa colonna - OK
+    public boolean checkSameColumn(List<Point> position){
+        for (int i = 0; i < position.size(); i++) {
+            for (int j = 0; j < position.size(); j++) {
+                if (position.get(i).y!=position.get(j).y){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
@@ -683,6 +950,3 @@ public class Board {
 
 
 }
-
-
-//checkAdiacenze
