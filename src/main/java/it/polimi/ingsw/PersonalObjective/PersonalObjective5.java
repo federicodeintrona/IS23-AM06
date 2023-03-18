@@ -51,4 +51,26 @@ public class PersonalObjective5 extends PersonalObjective{
         }
         return result;
     }
+
+
+    //ritorna il punteggio del player
+    public int personalObjectivePoint(Player player){
+        int condition=checkCondition(player);
+        switch (condition){
+            case 1:
+                return 1; //1 punto
+            case 2:
+                return 2; //2 punti
+            case 3:
+                return 4; //4 punti
+            case 4:
+                return 6; //6 punti
+            case 5:
+                return 9; //9 punti
+            case 6:
+                return 12; //12 punti
+            default:
+                return 0; //0 punti
+        }
+    }
 }

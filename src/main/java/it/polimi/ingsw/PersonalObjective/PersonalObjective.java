@@ -54,10 +54,10 @@ public abstract class PersonalObjective {
         }*/
 
 
-            int index = rand.nextInt(subclasses.size());
-            Constructor c= subclasses.get(index).getDeclaredConstructor();
-            temp.remove(index);
-            result = (PersonalObjective) c.newInstance();
+        int index = rand.nextInt(subclasses.size());
+        Constructor c= subclasses.get(index).getDeclaredConstructor();
+        temp.remove(index);
+        result = (PersonalObjective) c.newInstance();
 
 
 
@@ -66,8 +66,13 @@ public abstract class PersonalObjective {
     }
 
 
-    //metodi
-        //ritorna il numero di obiettivi completati -->
-        // --> posizione-colore carta PersonalObjective coincide con posizione-colore nella Bookshelf
-        public abstract int checkCondition(Player player);
+//metodi
+    //ritorna il numero di obiettivi completati -->
+    // --> posizione-colore carta PersonalObjective coincide con posizione-colore nella Bookshelf
+    public abstract int checkCondition(Player player);
+
+    //ritorna il punteggio del player
+    public abstract int personalObjectivePoint(Player player);
+
+
 }
