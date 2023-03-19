@@ -5,14 +5,15 @@ import it.polimi.ingsw.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public abstract class CommonObjective {
-
+    int points = 8;
+    Set<Player> playersWhoCompletedComObj = new HashSet<>();
 
     protected static ArrayList<Class> subclasses = new ArrayList();
-
-    int points;
 
     static{
         try {
@@ -56,20 +57,7 @@ public abstract class CommonObjective {
 
     }
 
-
-    public CommonObjective() {
-
-
-    }
-
     public abstract boolean checkCondition(Player player);
 
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
+    public abstract void commonObjPointsCalculator(Player player, int numOfPlayers);
 }
