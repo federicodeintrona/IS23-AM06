@@ -88,4 +88,8 @@ public class Player {
     public void setWinnerPoint(int winnerPoint) {
         this.winnerPoint = winnerPoint;
     }
+
+    public void setPersonalObjectivePoint(){
+        personalObjectivePoint=personalObjective.personalObjectivePoint(this);
+    }
 }
