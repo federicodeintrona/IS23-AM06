@@ -19,16 +19,22 @@ public class CommonObjective10 extends CommonObjective{
         Set<Tiles> buffer = new HashSet<>();
 
         while ((count < 2) && (i < 6)){
-            buffer.add(player.getBookshelf().getTiles().getTile(i, 0));
-            numOfColor = 1;
-            for (int j=1; j<5; j++){
-                if (!buffer.contains(player.getBookshelf().getTiles().getTile(i, j))){
-                    buffer.add(player.getBookshelf().getTiles().getTile(i, j));
-                    numOfColor++;
+
+            // controlling that row i is full first
+            if (player.getBookshelf().getTiles().rowIsFull(i)) {
+                buffer.add(player.getBookshelf().getTiles().getTile(i, 0));
+                numOfColor = 1;
+
+                // analyzing each element of row i
+                for (int j = 1; j < 5; j++) {
+                    if (!buffer.contains(player.getBookshelf().getTiles().getTile(i, j))) {
+                        buffer.add(player.getBookshelf().getTiles().getTile(i, j));
+                        numOfColor++;
+                    }
                 }
+                if (numOfColor == 5) count++;
+                buffer.clear();
             }
-            if (numOfColor == 5) count++;
-            buffer.clear();
             i++;
         }
 
