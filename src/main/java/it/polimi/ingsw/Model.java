@@ -5,16 +5,22 @@ import it.polimi.ingsw.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.View.View;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 
-public class Model {
+public class Model  {
 
     private  Board board;
     private ArrayList<Player> players;
     private ArrayList<View> virtualViews;
     private ArrayList<CommonObjective> commonobj;
+
+    private ArrayList<Integer> privatePoints;
+
+    private ArrayList<Integer> publicPoints;
 
     private Player currPlayer;
     private Player nextPlayer;
@@ -22,7 +28,12 @@ public class Model {
     private Player winner;
     private boolean isFinished = false;
 
-    public Model(){};
+
+
+
+    private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
+
+
 
     public Model( ArrayList<Player> players,  ArrayList<View> views) {
         this.players = players;
@@ -44,7 +55,14 @@ public class Model {
         board = new Board(players.size(), new Sachet());
         commonobjInit();
         personalobjInit();
+        for(Player p : players){
+            privatePoints.add(p.getPrivatePoint());
+            publicPoints.add(p.getPublicPoint());
+        }
 
+        for (View v : virtualViews){
+            notifier.addPropertyChangeListener(v);
+        }
 
     }
 
@@ -85,6 +103,10 @@ public class Model {
             board.remove(points);
         }
 
+        PropertyChangeEvent evt = new PropertyChangeEvent(board, "board",
+                null,points);
+
+        notifier.firePropertyChange(evt);
 
     }
 
@@ -99,14 +121,43 @@ public class Model {
     public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column){
         player.getBookshelf().addTile(tiles, column);
 
+
+
         if(!isFinished && player.getBookshelf().checkEndGame()){
             isFinished=true;
             player.setWinnerPoint(1);
+            PropertyChangeEvent evt1 = new PropertyChangeEvent(currPlayer, "points",
+                    publicPoints.get(players.indexOf(currPlayer)),currPlayer.getPublicPoint());
+
+            notifier.firePropertyChange(evt1);
+
         }
+
 
         nextTurn();
 
     }
+
+
+    private void updatePoints(){
+
+
+        currPlayer.getBookshelf().checkVicinityPoints();
+        currPlayer.getPersonalObjective().checkCondition(currPlayer);
+        int tempcomm = 0;
+        /*
+        for(CommonObjective o : commonobj){
+             if(o.checkCondition(currPlayer)) tempcomm += o.getPoints();
+        }
+        currPlayer.setCommonObjectivePoint(tempcomm);*/
+
+        PropertyChangeEvent evt = new PropertyChangeEvent(currPlayer, "points",
+                publicPoints.get(players.indexOf(currPlayer)),currPlayer.getPublicPoint());
+
+        notifier.firePropertyChange(evt);
+
+    }
+
 
     /**
      * Select the next player and calls the endGame function if the last turn has been played.
@@ -115,12 +166,18 @@ public class Model {
      */
     private void nextTurn(){
 
+        updatePoints();
+
+        //changes current player
         currPlayer=nextPlayer;
         if(currPlayer==players.get(players.size())){ nextPlayer = players.get(0);}
         else nextPlayer = players.get(players.indexOf(currPlayer)+1);
 
+
+        //checks if the board needs to reset
         if(board.checkBoardReset()) board.boardResetENG();
 
+        //checks if someone completed all their bookshelf
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
 
 
@@ -174,6 +231,11 @@ public class Model {
             persobj.add(p.getPersonalObjective());
         }
         return persobj;
+    }
+
+
+    public void saveState(){
+
     }
 
     public boolean isFinished() {

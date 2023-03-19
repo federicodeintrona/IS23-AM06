@@ -13,6 +13,7 @@ public abstract class CommonObjective {
 
     protected static ArrayList<Class> subclasses = new ArrayList();
 
+    int points;
 
     static{
         try {
@@ -63,4 +64,13 @@ public abstract class CommonObjective {
     }
 
     public abstract boolean checkCondition(Player player);
+
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 }
