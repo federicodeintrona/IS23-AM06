@@ -152,7 +152,7 @@ public class Board {
     }
 
     //getter gamesBoard --> ritorna la Matrix
-    public static Matrix getGamesBoard() {
+    public  Matrix getGamesBoard() {
         return gamesBoard;
     }
     //getter numberOfPlayer --> ritorna il numero di giocatori

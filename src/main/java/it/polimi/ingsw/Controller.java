@@ -6,6 +6,7 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Controller {
 
@@ -21,6 +22,15 @@ public class Controller {
 
     public void startGame(int ID) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         games.get(ID).initialization();
+    }
+
+    public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
+        ArrayList<Tiles> array = new ArrayList<>();
+        array.addAll(tiles);
+        for (int i=0;i<ints.size();i++){
+            tiles.set(i,array.get(ints.get(i)-1));
+        }
+
     }
 
 

@@ -3,6 +3,8 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.CommonObjective.CommonObjective;
 import it.polimi.ingsw.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.View.View;
+import org.javatuples.Pair;
+import org.javatuples.Tuple;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -30,10 +32,9 @@ public class Model  {
 
 
 
-
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
-    //PUBLIC METHODS : INTERFACE
+
 
     public Model(ArrayList<Player> players, ArrayList<View> views) {
         this.players = players;
@@ -41,6 +42,10 @@ public class Model  {
         this.currPlayer = players.get(0);
         this.nextPlayer = players.get(1);
     }
+
+    //PUBLIC METHODS : INTERFACE
+
+
 
 
     /**
@@ -76,13 +81,12 @@ public class Model  {
     public void removeTileArray( ArrayList<Point> points){
 
         for(int i = 0; i < points.size(); i++){
+            Pair<Tiles,Point> p1 = new Pair<>(board.getGamesBoard().getTile(points.get(i)),points.get(i));
+            Pair<Tiles,Point> p2 = new Pair<>(Tiles.EMPTY,points.get(i));
+
+            notifier.firePropertyChange( new PropertyChangeEvent(board,"board", p1,p2));
             board.remove(points);
         }
-
-        PropertyChangeEvent evt = new PropertyChangeEvent(board, "board",
-                null,points);
-
-        notifier.firePropertyChange(evt);
 
     }
 
@@ -96,8 +100,16 @@ public class Model  {
      * @param column   The column where you want to add the tiles
      */
     public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column){
+
+        ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
+        Pair<ArrayList<Tiles>, Integer> p1 = new Pair<>(temp1, column);
+
         player.getBookshelf().addTile(tiles, column);
 
+        ArrayList<Tiles> temp2 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
+        Pair<ArrayList<Tiles>, Integer> p2 = new Pair<>(temp2, column);
+
+        notifier.firePropertyChange(new PropertyChangeEvent(player, "bookshelf", p1, p2));
 
 
         if(!isFinished && player.getBookshelf().checkEndGame()){
