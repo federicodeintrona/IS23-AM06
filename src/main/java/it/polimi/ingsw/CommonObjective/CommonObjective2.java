@@ -15,7 +15,7 @@ public class CommonObjective2 extends CommonObjective{
         Tiles tile = player.getBookshelf().getTiles().getTile(0, 0);
 
         //checking if the four angles of the bookshelf are equal
-        if (tile.equals(player.getBookshelf().getTiles().getTile(0, 4))) {
+        if (!(tile.equals(Tiles.EMPTY))  && (tile.equals(player.getBookshelf().getTiles().getTile(0, 4)))) {
             if (tile.equals(player.getBookshelf().getTiles().getTile(5, 0))) {
                 if (tile.equals(player.getBookshelf().getTiles().getTile(5, 4))) {
                     return true;

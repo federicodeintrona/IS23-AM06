@@ -2,6 +2,7 @@ package it.polimi.ingsw.CommonObjective;
 
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.Matrix;
+import it.polimi.ingsw.Tiles;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -65,6 +66,9 @@ class MyRunnable implements Runnable {
             for (int i=0; i<6; i++){
                 for (int j=0; j<4; j++){
 
+                    // Skipping if cell is set to EMPTY
+                    if (matrix.getTile(i, j).equals(Tiles.EMPTY)) continue;
+
                     if (matrix.getTile(i, j).equals(matrix.getTile(i, j+1))){
 
                         // synchronizing on buffer so threads will check and add the coordinates one at the time
@@ -87,6 +91,9 @@ class MyRunnable implements Runnable {
         else if (name.equals("column-Thread 2")) {
             for (int j=0; j<5; j++){
                 for (int i=0; i<5; i++){
+
+                    // Skipping if cell is set to EMPTY
+                    if (matrix.getTile(i, j).equals(Tiles.EMPTY)) continue;
 
                     if (matrix.getTile(i, j).equals(matrix.getTile(i+1, j))){
 

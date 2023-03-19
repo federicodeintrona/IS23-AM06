@@ -17,8 +17,9 @@ public class CommonObjective6 extends CommonObjective{
         // scrolling all bookshelf's elements while counting theme
         for (int i=0; i<6; i++){
             for (int j=0; j<5; j++){
+
                 // checking if the box is empty or not
-                if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.NOTALLOWED) && player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
+                if (!player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
                     countMap.put(player.getBookshelf().getTiles().getTile(i, j), countMap.getOrDefault(player.getBookshelf().getTiles().getTile(i, j), 0) + 1);
                 }
             }
