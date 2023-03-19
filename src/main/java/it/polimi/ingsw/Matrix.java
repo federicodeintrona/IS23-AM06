@@ -2,7 +2,6 @@ package it.polimi.ingsw;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Matrix {
     /**

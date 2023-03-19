@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Model  {
 
-    private  Board board;
+    private Board board;
     private ArrayList<Player> players;
     private ArrayList<View> virtualViews;
     private ArrayList<CommonObjective> commonobj;
@@ -33,9 +33,9 @@ public class Model  {
 
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
+    //PUBLIC METHODS : INTERFACE
 
-
-    public Model( ArrayList<Player> players,  ArrayList<View> views) {
+    public Model(ArrayList<Player> players, ArrayList<View> views) {
         this.players = players;
         this.virtualViews = views;
         this.currPlayer = players.get(0);
@@ -66,31 +66,7 @@ public class Model  {
 
     }
 
-    /**
-     * Initializes common objectives
-     *
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
-     */
-    public void commonobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-       commonobj = CommonObjective.randomSubclass(2);
-    }
 
-    /**
-     * Initializes private objectives
-     *
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
-     */
-    public void personalobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        for(Player p : players){
-            p.setPersonalObjective(PersonalObjective.randomSubclass());
-        }
-    }
 
     /**
      * Removes an array of tiles from the board
@@ -109,6 +85,7 @@ public class Model  {
         notifier.firePropertyChange(evt);
 
     }
+
 
     /**
      * Adds an ordered array of tiles in the player's bookshelf.
@@ -137,6 +114,77 @@ public class Model  {
         nextTurn();
 
     }
+
+    public void saveState(){
+
+    }
+
+    //GETTERS AND SETTERS
+
+    public int getPlayerPublicPoints(Player player){
+        return player.getPublicPoint();
+    }
+
+    public int getPlayerPrivatePoints(Player player){
+        return player.getPrivatePoint();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     * @return Array of all the common objectives
+     */
+    public ArrayList<CommonObjective> getCommonobj() {
+        return commonobj;
+    }
+
+    /**
+     * @return Array of all the personal objectives of all players in the game
+     */
+    public ArrayList<PersonalObjective> getPersobj(){
+        ArrayList<PersonalObjective> persobj = new ArrayList<>();
+        for( Player p : players){
+            persobj.add(p.getPersonalObjective());
+        }
+        return persobj;
+    }
+
+
+
+
+
+
+    //PRIVATE METHODS : UTILITY
+
+    /**
+     * Initializes common objectives
+     *
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     */
+    private void commonobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+       commonobj = CommonObjective.randomSubclass(2);
+    }
+
+    /**
+     * Initializes private objectives
+     *
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     */
+    private void personalobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        for(Player p : players){
+            p.setPersonalObjective(PersonalObjective.randomSubclass());
+        }
+    }
+
+
 
 
     private void updatePoints(){
@@ -203,40 +251,7 @@ public class Model  {
 
     }
 
-    public int getPlayerPublicPoints(Player player){
-        return player.getPublicPoint();
-    }
 
-    public int getPlayerPrivatePoints(Player player){
-        return player.getPrivatePoint();
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    /**
-     * @return Array of all the common objectives
-     */
-    public ArrayList<CommonObjective> getCommonobj() {
-        return commonobj;
-    }
-
-    /**
-     * @return Array of all the personal objectives of all players in the game
-     */
-    public ArrayList<PersonalObjective> getPersobj(){
-        ArrayList<PersonalObjective> persobj = new ArrayList<>();
-        for( Player p : players){
-            persobj.add(p.getPersonalObjective());
-        }
-        return persobj;
-    }
-
-
-    public void saveState(){
-
-    }
 
     public boolean isFinished() {
         return isFinished;

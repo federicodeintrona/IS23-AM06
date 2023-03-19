@@ -1,7 +1,6 @@
 package it.polimi.ingsw.CommonObjective;
 
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Tiles;
+import it.polimi.ingsw.*;
 
 public class CommonObjective7 extends CommonObjective{
     static{

@@ -1,8 +1,5 @@
 package it.polimi.ingsw.CommonObjective;
-
-import it.polimi.ingsw.Matrix;
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Tiles;
+import it.polimi.ingsw.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

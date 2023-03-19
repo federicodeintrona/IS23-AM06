@@ -1,12 +1,9 @@
 package it.polimi.ingsw.PersonalObjective;
 
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Tiles;
+import it.polimi.ingsw.*;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class PersonalObjective12 extends PersonalObjective{
 

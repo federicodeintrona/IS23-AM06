@@ -1,13 +1,12 @@
 package it.polimi.ingsw.CommonObjective;
 
-import it.polimi.ingsw.Matrix;
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Tiles;
 
+import it.polimi.ingsw.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import it.polimi.ingsw.*;
 
 public class CommonObjective3 extends CommonObjective{
 

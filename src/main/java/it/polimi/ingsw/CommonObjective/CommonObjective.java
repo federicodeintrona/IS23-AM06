@@ -1,11 +1,10 @@
 package it.polimi.ingsw.CommonObjective;
 
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Random;
 
 public abstract class CommonObjective {
