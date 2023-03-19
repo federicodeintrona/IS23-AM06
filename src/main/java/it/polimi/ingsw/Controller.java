@@ -24,14 +24,7 @@ public class Controller {
         games.get(ID).initialization();
     }
 
-    public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
-        ArrayList<Tiles> array = new ArrayList<>();
-        array.addAll(tiles);
-        for (int i=0;i<ints.size();i++){
-            tiles.set(i,array.get(ints.get(i)-1));
-        }
 
-    }
 
 
     public void addToBookshelf(int gameID, int playerID, ArrayList<Tiles> array, int col ){
@@ -48,4 +41,22 @@ public class Controller {
         games.get(gameID).saveState();
     }
 
+
+    //TO BE COMPLETED: just for UML purposes
+    private boolean checkInLine(ArrayList<Point> points){return true;};
+    private boolean checkAvailable(Point p){return true;}
+    private boolean checkDomain(Point p){return true;}
+    private boolean checkDomain(int num,int len){return true;}
+    private boolean checkColumn(int i){return true;}
+
+
+    //Client Side Controller Method
+    public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
+        ArrayList<Tiles> array = new ArrayList<>();
+        array.addAll(tiles);
+        for (int i=0;i<ints.size();i++){
+            tiles.set(i,array.get(ints.get(i)-1));
+        }
+
+    }
 }
