@@ -186,7 +186,7 @@ public class Board {
                     !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)){
                     //se adiacente c'è almeno 1 tiles ==> return false
                     //se NON siamo sul bordo della board
-                    if ((i!=0 && i!=8) ||
+                    if ((i!=0 && i!=8) &&
                         (j!=0 && j!=8)){
                         //adiacenza:
                         //sx
@@ -210,201 +210,80 @@ public class Board {
                             return false;
                         }
                     }
-                    //se siamo sul bordo alto della board
+                    //siamo sul bordo superiore
                     else if (i==0){
-                        switch (j){
-                            case 0: //angolo in alto a sx
-                                //adiacenza solo:
-                                //dx
-                                if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                //basso
-                                if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            case 8: //angolo in alto a dx
-                                //adiacenza solo:
-                                //sx
-                                if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                //basso
-                                if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            default: //riga alta meno angoli alti
-                                //adiacenza solo:
-                                // sx
-                                if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // dx
-                                if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // basso
-                                if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
+                        //adiacenza:
+                        //sx
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                            return false;
                         }
-
+                        //dx
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //basso
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
                     }
-                    //se siamo sul bordo basso della board
+                    //siamo sul bordo inferiore
                     else if (i==8){
-                        switch (j){
-                            case 0: //siamo nell'angolo in basso a sx
-                                //adicenza solo:
-                                // sx
-                                if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // alto
-                                if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            case 8: //siamo nell'angolo in basso a dx
-                                //adicenza solo:
-                                // dx
-                                if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // alto
-                                if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            default: //riga bassa meno angoli bassi
-                                //adicenza solo:
-                                // sx
-                                if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // dx
-                                if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // alto
-                                if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
+                        //adiacenza:
+                        //sx
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //dx
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //alto
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                            return false;
                         }
                     }
-                    //se siamo sul bordo sx della board
+                    //siamo sul bordo sx
                     else if (j==0){
-                        switch (i){
-                            case 0: //siamo nell'angolo sx alto
-                                //adiacenza solo:
-                                // basso
-                                if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // dx
-                                if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            case 8: //siamo nell'angolo sx basso
-                                //adiacenza solo:
-                                // alto
-                                if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // dx
-                                if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            default: //colonna sx meno angolo sx alto e basso
-                                //adiacenza solo:
-                                // alto
-                                if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // basso
-                                if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // dx
-                                if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
+                        //adiacenza:
+                        //dx
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //alto
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //basso
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                            return false;
                         }
                     }
-                    //se siamo sul bordo dx della board
-                    else if (j == 8) {
-                        switch (i){
-                            case 0: //siamo nell'angolo dx in alto
-                                //adiacenza solo:
-                                // basso
-                                if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // sx
-                                if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            case 8: //siamo nell'angolo dx in basso
-                                //adiacenza solo:
-                                // alto
-                                if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // sx
-                                if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
-                            default: //colonna dx meno angolo dx alto e basso
-                                //adiacenza solo:
-                                // alto
-                                if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // basso
-                                if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                // sx
-                                if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                        !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                    return false;
-                                }
-                                break;
+                    //siamo sul bordo dx
+                    else if (j==8){
+                        //adiacenza:
+                        //sx
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //alto
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //basso
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                            return false;
                         }
                     }
                 }
@@ -417,6 +296,7 @@ public class Board {
     //resetta la board - versione ENG - OK
     //1. rimuovere tiles rimanenti e rimette in sachet
     //2. riempe board con tiles rimantenti nel sachet
+        //RICHIEDE CHE checkBoardReset SIA A TRUE --> NON CONTROLLO
     public void boardResetENG(){
         //ricerca tiles!=EMPTY && tiles!=NOTALLOWED
         for (int i = 0; i < 9; i++) {
@@ -466,180 +346,101 @@ public class Board {
         if ((position.x!=0 && position.x!=8) &&
             (position.y!=0 && position.y!=8)){
             //sx
-            if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                return true;
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                return false;
             }
             //dx
-            if (gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                return true;
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                return false;
             }
             //alto
-            if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                return true;
+            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                return false;
             }
             //basso
-            if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                return true;
+            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                return false;
             }
         }
-        //se position è riga alto
-        if (position.x==0){
-            switch (position.y){
-                case 0: //angolo in alto a sx
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //basso
-                    if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                case 8: //angolo in alto a dx
-                    //dx
-                    if (gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //basso
-                    if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                default:
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //dx
-                    if (gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //basso
-                    if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
+        //se siamo nella riga in alto
+        else if (position.x==0){
+            //sx
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //dx
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                return false;
+            }
+
+            //basso
+            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                return false;
             }
         }
-        //se position è riga basso
+        //se siamo nella riga in basso
         else if (position.x==8){
-            switch (position.y){
-                case 0: //angolo in basso a sx
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //alto
-                    if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                case 8: //angolo in basso a dx
-                    //dx
-                    if (gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //alto
-                    if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                default:
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //dx
-                    if (gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //alto
-                    if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
+            //sx
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //dx
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //alto
+            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                return false;
             }
         }
-        //se position è colonna sx
+        //se siamo nella colonna a sx
         else if (position.y==0){
-            switch (position.x){
-                case 0: //angolo a sx in alto
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //basso
-                    if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                case 8: //angolo a dx in basso
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //alto
-                    if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                default:
-                    //dx
-                    if (gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //alto
-                    if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //basso
-                    if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
+            //dx
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //alto
+            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //basso
+            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                return false;
             }
         }
-        //se position è colonna dx
+        //se siamo nella colonna a dx
         else if (position.y==8){
-            switch (position.x){
-                case 0: //angolo a dx in alto
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //basso
-                    if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                case 8: //angolo a dx in basso
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //alto
-                    if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
-                default:
-                    //sx
-                    if (gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //alto
-                    if (gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    //basso
-                    if (gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                        return true;
-                    }
-                    break;
+            //sx
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //alto
+            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //basso
+            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                return false;
             }
         }
-        //se siamo arrivati qui vuol dire che tile NON è libera
-        return false;
+        //se siamo arrivati qui vuol dire che tile è libera
+        return true;
     }
 
     //ritorna la posizione delle tiles libere - OK
@@ -649,9 +450,9 @@ public class Board {
         //giriamo tutta la board
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
+                //assegniamo a position (i, j) --> Point=(int, int)
                 position.setLocation(i, j);
-                //ricerca delle tiles!=NOTALLOWED e !=EMPTY
-                //              tiles libere
+                //ricerca delle tiles!=NOTALLOWED, !=EMPTY e libere
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &&
                     checkFreeTiles(position)){
@@ -678,7 +479,7 @@ public class Board {
         //sono sulla stessa riga
         if (checkSameRow(position)){
             for (int i = 0; i < position.size(); i++) {
-                //se position.get(i).y==0 || ==8
+                //siamo sulla x-esima riga prima colonna
                 if (position.get(i).y==0){
                     p.x=position.get(i).x;
                     p.y=position.get(i).y+1;
@@ -686,6 +487,7 @@ public class Board {
                         return false;
                     }
                 }
+                //siamo sulla x-esima riga ultima colonna
                 else if (position.get(i).y==8){
                     p.x=position.get(i).x;
                     p.y=position.get(i).y-1;
@@ -694,7 +496,7 @@ public class Board {
                         return false;
                     }
                 }
-                //se position.get(i).y!=0 && !=8
+                //siamo sulla x-esima riga / NO casi limite
                 else {
                     p.x=position.get(i).x;
                     p.y=position.get(i).y-1;
@@ -710,7 +512,7 @@ public class Board {
         //sono sulla stessa colonna
         else if (checkSameColumn(position)){
             for (int i = 0; i < position.size(); i++) {
-                //se position.get(i).x==0 || ==8
+                //siamo sulla y-esima colonna prima riga
                 if (position.get(i).x==0){
                     p.x=position.get(i).x+1;
                     p.y=position.get(i).y;
@@ -719,6 +521,7 @@ public class Board {
                         return false;
                     }
                 }
+                //siamo sulla y-esima colonna ultima riga
                 else if (position.get(i).x==8){
                     p.x=position.get(i).x-1;
                     p.y=position.get(i).y;
@@ -727,7 +530,7 @@ public class Board {
                         return false;
                     }
                 }
-                //se position.get(i).y!=0 && !=8
+                //siamo sulla y-esima colonna / NO casi limite
                 else {
                     p.x=position.get(i).x-1;
                     p.y=position.get(i).y;
@@ -744,180 +547,134 @@ public class Board {
     }
 
     //ritorna la posizione delle tiles adiacenti a quella in ingresso - OK
+        //RICHIEDE CHE tile SIA IN UNA POSIZIONE NOTALLOWED
     public ArrayList<Point> adjacentTiles(Point tile){
         Point p=new Point();
         ArrayList<Point> result=new ArrayList<>();
-
         //NON siamo sul bordo
         if ((tile.x!=0 && tile.x!=8) &&
             (tile.y!=0 && tile.y!=8)){
             //alto
             p.x=tile.x+1;
             p.y=tile.y;
-            result.add(p);
+            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                result.add(p);
+            }
             //basso
             p.x=tile.x-1;
-            result.add(p);
+            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                result.add(p);
+            }
             //sx
             p.x=tile.x;
             p.y=tile.y-1;
-            result.add(p);
+            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                result.add(p);
+            }
             //dx
             p.y=tile.y+1;
-            result.add(p);
+            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                result.add(p);
+            }
         }
         //siamo sul bordo
         else {
             //siamo sul bordo alto
             if (tile.x==0){
-                if (tile.y==0){
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //dx
-                    p.x=tile.x;
-                    p.y=tile.y+1;
+                //basso
+                p.x=tile.x-1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else if (tile.y==8){
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //sx
-                    p.x=tile.x;
-                    p.y=tile.y-1;
+                //sx
+                p.x=tile.x;
+                p.y=tile.y-1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else {
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //sx
-                    p.x=tile.x;
-                    p.y=tile.y-1;
-                    result.add(p);
-                    //dx
-                    p.y=tile.y+1;
+                //dx
+                p.y=tile.y+1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
             }
             //siamo sul bordo basso
-            if (tile.x==8){
-                if (tile.y==0){
-                    //alto
-                    p.x=tile.x+1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //dx
-                    p.x=tile.x;
-                    p.y=tile.y+1;
+            else if (tile.x==8){
+                //alto
+                p.x=tile.x+1;
+                p.y=tile.y;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else if (tile.y==8){
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //sx
-                    p.x=tile.x;
-                    p.y=tile.y-1;
+                //sx
+                p.x=tile.x;
+                p.y=tile.y-1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else {
-                    //alto
-                    p.x=tile.x+1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //sx
-                    p.x=tile.x;
-                    p.y=tile.y-1;
-                    result.add(p);
-                    //dx
-                    p.y=tile.y+1;
+                //dx
+                p.y=tile.y+1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
             }
             //siamo sul bordo sx
-            if (tile.y==0){
-                if (tile.x==0){
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //dx
-                    p.x=tile.x;
-                    p.y=tile.y+1;
+            else if (tile.y==0){
+                //alto
+                p.x=tile.x+1;
+                p.y=tile.y;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else if (tile.x==8){
-                    //alto
-                    p.x=tile.x+1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //dx
-                    p.x=tile.x;
-                    p.y=tile.y+1;
+                //basso
+                p.x=tile.x-1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else {
-                    //alto
-                    p.x=tile.x+1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //dx
-                    p.x=tile.x;
-                    p.y=tile.y+1;
+                //dx
+                p.y=tile.y+1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-
             }
             //siamo sul bordo dx
-            if (tile.y==8){
-                if (tile.x==0){
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //sx
-                    p.x=tile.x;
-                    p.y=tile.y-1;
+            else if (tile.y==8){
+                //alto
+                p.x=tile.x+1;
+                p.y=tile.y;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else if (tile.x==8){
-                    //alto
-                    p.x=tile.x+1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //sx
-                    p.x=tile.x;
-                    p.y=tile.y-1;
+                //basso
+                p.x=tile.x-1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
-                else {
-                    //alto
-                    p.x=tile.x+1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //basso
-                    p.x=tile.x-1;
-                    p.y=tile.y;
-                    result.add(p);
-                    //sx
-                    p.x=tile.x;
-                    p.y=tile.y-1;
+                //sx
+                p.x=tile.x;
+                p.y=tile.y-1;
+                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(p);
                 }
             }
         }
-
-
+        //ritorna l'ArrayList delle tiles adiacenti a quella data
         return result;
     }
 
@@ -944,8 +701,6 @@ public class Board {
         }
         return true;
     }
-
-
 
 
 
