@@ -1,4 +1,9 @@
 package it.polimi.ingsw.View;
 
-public abstract class View {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public abstract class View implements PropertyChangeListener {
+
+
 }

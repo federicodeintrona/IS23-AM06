@@ -7,6 +7,9 @@ import java.util.Scanner;
 import java.lang.InterruptedException;
 public class ServerClientHandler implements Runnable  {
 
+    int gameID;
+    int playerID;
+
     Socket socket;
     Scanner ois;
     PrintWriter oos;
