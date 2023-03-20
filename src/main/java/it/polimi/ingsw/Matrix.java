@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -37,6 +38,11 @@ public class Matrix {
         board.get(row).set(col,tile);
 
     }
+    public void setTile(Tiles tile, Point pos) {
+
+        board.get(pos.getLocation().x).set(pos.getLocation().y,tile);
+
+    }
 
     /**
      * Set the selected tile to EMPTY
@@ -49,10 +55,20 @@ public class Matrix {
         board.get(row).set(col,Tiles.EMPTY);
 
     }
+    public void remove(Point pos){
+
+        board.get(pos.x).set(pos.y,Tiles.EMPTY);
+
+    }
     //imposta cella a NotAllowed
     public void setNotAllowed(int row, int col){
 
         board.get(row).set(col,Tiles.NOTALLOWED);
+
+    }
+    public void setNotAllowed(Point pos){
+
+        board.get(pos.x).set(pos.y,Tiles.NOTALLOWED);
 
     }
     public void setEmpty(int row, int col){
@@ -60,11 +76,22 @@ public class Matrix {
         board.get(row).set(col,Tiles.EMPTY);
 
     }
+    public void setEmpty(Point pos){
 
-    public Tiles getTile(int row, int col){
-        return board.get(row).get(col);
+        board.get(pos.x).set(pos.y,Tiles.EMPTY);
+
     }
 
+    public Tiles getTile(int row, int col){
+
+        return board.get(row).get(col);
+
+    }
+    public Tiles getTile(Point pos){
+
+        return board.get(pos.x).get(pos.y);
+
+    }
     //stampa la matrice
     public void print(){
         for( int i=0; i<numRows;i++){
