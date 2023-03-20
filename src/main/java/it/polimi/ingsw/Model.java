@@ -204,12 +204,12 @@ public class Model  {
 
         currPlayer.getBookshelf().checkVicinityPoints();
         currPlayer.getPersonalObjective().checkCondition(currPlayer);
-        int tempcomm = 0;
-        /*
+
         for(CommonObjective o : commonobj){
-             if(o.checkCondition(currPlayer)) tempcomm += o.getPoints();
+             o.commonObjPointsCalculator(currPlayer,players.size());
         }
-        currPlayer.setCommonObjectivePoint(tempcomm);*/
+
+
 
         PropertyChangeEvent evt = new PropertyChangeEvent(currPlayer, "points",
                 publicPoints.get(players.indexOf(currPlayer)),currPlayer.getPublicPoint());
