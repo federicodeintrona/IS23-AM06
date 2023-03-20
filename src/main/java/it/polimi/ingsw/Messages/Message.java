@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Messages;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Message {
 
-    private int senderID;
+    private Point senderID;
     private MessageTypes type;
     private int num;
 

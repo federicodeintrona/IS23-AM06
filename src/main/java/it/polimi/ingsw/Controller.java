@@ -46,6 +46,7 @@ public class Controller {
     private boolean checkAvailable(Point p){return true;}
     private boolean checkDomain(Point p){return true;}
     private boolean checkDomain(int num,int len){return true;}
+    private boolean checkPlayerNum(int num){return true;}
     private boolean checkColumn(int i){return true;}
 
 
