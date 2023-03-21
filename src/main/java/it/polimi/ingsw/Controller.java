@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Messages.Message;
 import it.polimi.ingsw.View.View;
 
 import java.awt.*;
@@ -49,6 +50,7 @@ public class Controller {
     private boolean checkPlayerNum(int num){return true;}
     private boolean checkColumn(int i){return true;}
 
+    private void processMessage(Message m){};
 
     //Client Side Controller Method
     public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
