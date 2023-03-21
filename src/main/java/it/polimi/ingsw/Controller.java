@@ -15,6 +15,13 @@ public class Controller {
 
     private HashMap<Integer, Player> playerIDs;
 
+
+    public Controller() {
+       games = new ArrayList<>();
+       views = new ArrayList<>();
+       playerIDs = new HashMap<>();
+    }
+
     public void addGame(Model model, ArrayList<View> view){
         games.add(model);
         views.add(view);
@@ -50,7 +57,7 @@ public class Controller {
     private boolean checkPlayerNum(int num){return true;}
     private boolean checkColumn(int i){return true;}
 
-    private Message processMessage(Message m){return new Message();};
+    private Message processMessage(Message m, int playerID, int gameID){return new Message();};
 
     //Client Side Controller Method
     public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
