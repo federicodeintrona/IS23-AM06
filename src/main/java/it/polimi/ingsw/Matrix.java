@@ -47,6 +47,12 @@ public class Matrix {
         board.get(col).set(row,tile);
 
     }
+
+    /**
+     *
+     * @param tile
+     * @param pos
+     */
     public void setTile(Tiles tile, Point pos) {
 
         board.get(pos.getLocation().y).set(pos.getLocation().x,tile);
