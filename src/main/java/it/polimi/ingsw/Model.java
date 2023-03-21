@@ -133,6 +133,11 @@ public class Model  {
 
     //GETTERS AND SETTERS
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     public int getPlayerPublicPoints(Player player){
         return player.getPublicPoint();
     }

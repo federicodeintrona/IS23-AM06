@@ -26,7 +26,11 @@ public class Matrix {
         }
     }
 
-
+    /**
+     * Methods that return a selected column
+     * @param col   The index of the column
+     * @return    The selected column
+     */
     public ArrayList<Tiles> getColumn(int col){
         return board.get(col);
     }
