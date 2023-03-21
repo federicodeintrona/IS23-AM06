@@ -57,7 +57,7 @@ public class Controller {
     private boolean checkPlayerNum(int num){return true;}
     private boolean checkColumn(int i){return true;}
 
-    private Message processMessage(Message m, int playerID, int gameID){return new Message();};
+    public Message processMessage(Message m, int playerID, int gameID){return new Message();};
 
     //Client Side Controller Method
     public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
