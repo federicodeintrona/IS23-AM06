@@ -1,7 +1,6 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.CommonObjective.CommonObjective;
-import it.polimi.ingsw.CommonObjective.CommonObjective1;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -18,9 +17,10 @@ import java.util.concurrent.Executors;
 public class Server
 {
     private static int port =9898;
-    static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
+    private static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
+    private Controller controller= new Controller();
 
-    public static void main( String[] args ) throws IOException {
+    public static void main( String[] args ) {
 
 
         ArrayList<CommonObjective> c1 = new ArrayList<>();
@@ -55,7 +55,7 @@ public class Server
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                clientList.add(new ServerClientHandler(socket));
+                clientList.add(new ServerClientHandler(socket, controller));
                 executor.submit(clientList.get(clientList.size()-1));
             } catch (IOException e) {
                 break;
@@ -70,4 +70,5 @@ public class Server
     public void removeClient(ServerClientHandler client){
         clientList.remove(client);
 }
+
 }

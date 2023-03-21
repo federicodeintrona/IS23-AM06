@@ -1,16 +1,19 @@
 package it.polimi.ingsw.CommonObjective;
 
+import it.polimi.ingsw.*;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public abstract class CommonObjective {
-
+    int points = 8;
+    Set<Player> playersWhoCompletedComObj = new HashSet<>();
 
     protected static ArrayList<Class> subclasses = new ArrayList();
-
 
     static{
         try {
@@ -38,15 +41,9 @@ public abstract class CommonObjective {
         ArrayList temp = (ArrayList) subclasses.clone();
         Random rand = new Random();
 
-        System.out.println(subclasses.size());
-        System.out.println(temp.size());
-
 
         ArrayList<CommonObjective> result = new ArrayList<CommonObjective>();
 
-        /*for (int i = 0; i< temp.size();i++){
-            System.out.println(temp.get(i));
-        }*/
 
         for(int i = 0; i<num; i++ ){
             int index = rand.nextInt(subclasses.size());
@@ -60,9 +57,7 @@ public abstract class CommonObjective {
 
     }
 
+    public abstract boolean checkCondition(Player player);
 
-    public CommonObjective() {
-
-
-    }
+    public abstract void commonObjPointsCalculator(Player player, int numOfPlayers);
 }

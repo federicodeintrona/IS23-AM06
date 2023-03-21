@@ -40,10 +40,23 @@ public class Sachet {
 
 
 
-    //1. scegliere una tiles --> posizione randomica
-    //2. rimuovere la tiles dal set --> removeTiles
+    //ritorna una tile randomicamente - OK
+    //se il sachet è vuoto ritorna EMPTY
+    //1. scegliere una tile --> posizione randomica
+    //2. rimuovere la tile dal set --> removeTiles
     public Tiles draw(){
-        return Tiles.YELLOW;
+        if (sachet.size()==0){
+            return Tiles.EMPTY;
+        }
+        Random random=new Random(); //crea oggetto Random
+        Tiles result;
+        //scelta numero casuale
+        int n= random.nextInt(sachet.size());
+        //salvataggio tile in posizione casuale
+        result=sachet.get(n);
+        //rimozione tile da sachet
+        removeTiles(n);
+        return result;
     }
 
     //ritorna il numero di tessere rimanenti nel sachet - OK
@@ -51,14 +64,27 @@ public class Sachet {
         return sachet.size();
     }
 
-    //ritorna il numero di tessere rimanenti nel sachet del colore tiles richiesto
+    //ritorna il numero di tessere rimanenti nel sachet del colore tiles richiesto - OK
     public int remainingTilesPerColor(Tiles tiles){
-        return 0;
+        int result=0;
+        for (int i = 0; i < sachet.size(); i++) {
+            if (sachet.get(i).equals(tiles)){
+                result++;
+            }
+        }
+        return result;
     }
 
     //aggiunge tiles nel sachet --> aggiunta ad array list - OK
     public void addTiles(Tiles til){
-        sachet.add(til);
+        //controllare se til si può aggiungere:
+        //sachet.size()+1<=132
+        if (sachet.size()+1<=132){
+            //remainingTilesperColor(til)<=22
+            if (remainingTilesPerColor(til)+1<=22){
+                sachet.add(til);
+            }
+        }
     }
 
     //rimuove tiles dal sachet in posizione i - OK

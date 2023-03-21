@@ -10,5 +10,6 @@
 | Functionality | State           | Current | Comment |
 |---------------|-----------------| ---- | ---- |
 | Early H-L UML | :yellow_circle: | | |
+| Implementation of Classes| 🟡 | | |
 | Final UML     | :red_circle:    | | |
 

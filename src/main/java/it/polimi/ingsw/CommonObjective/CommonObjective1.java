@@ -1,7 +1,6 @@
 package it.polimi.ingsw.CommonObjective;
+import it.polimi.ingsw.*;
 
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Matrix;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -43,6 +42,26 @@ public class CommonObjective1 extends CommonObjective{
 
         return false;
     }
+
+    public void commonObjPointsCalculator(Player player, int numOfPlayers){
+        if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
+
+            // adding the player to the set of players who already received the points
+            playersWhoCompletedComObj.add(player);
+
+            // for a 2 players game the first to complete a commonObj gets 8 points and the second to do so 4
+            if (numOfPlayers == 2) {
+                player.setCommonObjectivePoint(points);
+                points -= 4;
+            }
+
+            // in case there are more than 2 players each time a commonObj is completed its points decrease by 2
+            else {
+                player.setCommonObjectivePoint(points);
+                points -= 2;
+            }
+        }
+    }
 }
 
 class MyRunnable implements Runnable {
@@ -64,6 +83,9 @@ class MyRunnable implements Runnable {
         if (name.equals("row-Thread 1")){
             for (int i=0; i<6; i++){
                 for (int j=0; j<4; j++){
+
+                    // Skipping if cell is set to EMPTY
+                    if (matrix.getTile(i, j).equals(Tiles.EMPTY)) continue;
 
                     if (matrix.getTile(i, j).equals(matrix.getTile(i, j+1))){
 
@@ -87,6 +109,9 @@ class MyRunnable implements Runnable {
         else if (name.equals("column-Thread 2")) {
             for (int j=0; j<5; j++){
                 for (int i=0; i<5; i++){
+
+                    // Skipping if cell is set to EMPTY
+                    if (matrix.getTile(i, j).equals(Tiles.EMPTY)) continue;
 
                     if (matrix.getTile(i, j).equals(matrix.getTile(i+1, j))){
 
