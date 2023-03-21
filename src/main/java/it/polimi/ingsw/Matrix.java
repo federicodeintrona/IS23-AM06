@@ -26,6 +26,11 @@ public class Matrix {
         }
     }
 
+
+    public ArrayList<Tiles> getColumn(int col){
+        return board.get(col);
+    }
+
     /**
      * Method which set the selected tile to value 'tile'
      * @param tile  wanted value of the tile
