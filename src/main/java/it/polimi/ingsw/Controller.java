@@ -50,7 +50,7 @@ public class Controller {
     private boolean checkPlayerNum(int num){return true;}
     private boolean checkColumn(int i){return true;}
 
-    private void processMessage(Message m){};
+    private Message processMessage(Message m){return new Message();};
 
     //Client Side Controller Method
     public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
