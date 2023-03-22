@@ -23,6 +23,7 @@ public class Server
     public static void main( String[] args ) {
 
 
+
         ArrayList<CommonObjective> c1 = new ArrayList<>();
 
         Server EchoServer = new Server();

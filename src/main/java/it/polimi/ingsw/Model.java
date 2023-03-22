@@ -131,42 +131,20 @@ public class Model  {
 
     }
 
-    //GETTERS AND SETTERS
 
-    /**
-     *
-     * @param player
-     * @return
-     */
-    public int getPlayerPublicPoints(Player player){
-        return player.getPublicPoint();
-    }
 
-    public int getPlayerPrivatePoints(Player player){
-        return player.getPrivatePoint();
-    }
 
-    public Board getBoard() {
-        return board;
-    }
+    //Checks
+    private boolean checkInLine(ArrayList<Point> points){return true;};
+    private boolean checkAvailable(Point p){return true;}
+    private boolean checkDomain(Point p){return true;}
+    private boolean checkDomain(int num,int len){return true;}
+    private boolean checkPlayerNum(int num){return true;}
+    private boolean checkColumn(int i){return true;}
 
-    /**
-     * @return Array of all the common objectives
-     */
-    public ArrayList<CommonObjective> getCommonobj() {
-        return commonobj;
-    }
 
-    /**
-     * @return Array of all the personal objectives of all players in the game
-     */
-    public ArrayList<PersonalObjective> getPersobj(){
-        ArrayList<PersonalObjective> persobj = new ArrayList<>();
-        for( Player p : players){
-            persobj.add(p.getPersonalObjective());
-        }
-        return persobj;
-    }
+
+
 
 
 
@@ -270,7 +248,46 @@ public class Model  {
 
 
 
+
+
+    //GETTERS AND SETTERS: USELESS FOR NOW
+
+    public int getPlayerPublicPoints(Player player){
+        return player.getPublicPoint();
+    }
+
+    public int getPlayerPrivatePoints(Player player){
+        return player.getPrivatePoint();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     * @return Array of all the common objectives
+     */
+    public ArrayList<CommonObjective> getCommonobj() {
+        return commonobj;
+    }
+
+    /**
+     * @return Array of all the personal objectives of all players in the game
+     */
+    public ArrayList<PersonalObjective> getPersobj(){
+        ArrayList<PersonalObjective> persobj = new ArrayList<>();
+        for( Player p : players){
+            persobj.add(p.getPersonalObjective());
+        }
+        return persobj;
+    }
+
+
     public boolean isFinished() {
         return isFinished;
     }
+
+
+
+
 }

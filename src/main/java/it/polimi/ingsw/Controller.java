@@ -50,12 +50,7 @@ public class Controller {
 
 
     //TO BE COMPLETED: just for UML purposes
-    private boolean checkInLine(ArrayList<Point> points){return true;};
-    private boolean checkAvailable(Point p){return true;}
-    private boolean checkDomain(Point p){return true;}
-    private boolean checkDomain(int num,int len){return true;}
-    private boolean checkPlayerNum(int num){return true;}
-    private boolean checkColumn(int i){return true;}
+
 
     public Message processMessage(Message m, int playerID, int gameID){return new Message();};
 

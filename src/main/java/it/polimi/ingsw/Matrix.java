@@ -109,10 +109,9 @@ public class Matrix {
     }
     //stampa la matrice
     public void print(){
-        for( int i=0; i<numCols;i++){
-            for( int j=0; j<numRows;j++){
-                System.out.print(board.get(i).get(j));
-                System.out.print(" ");
+        for( int i=0; i<numRows;i++){
+            for( int j=0; j<numCols;j++){
+                System.out.print(board.get(j).get(i));
             }
             System.out.println();
         }
