@@ -23,7 +23,21 @@ public class Server
     public static void main( String[] args ) {
 
 
+        Matrix m = new Matrix(3,3);
+        m.setTile(Tiles.PINK, 0,0);
+        m.setTile(Tiles.YELLOW, 0,1);
+        m.setTile(Tiles.EMPTY, 0,2);
+        m.setTile(Tiles.BLUE, 1,0);
+        m.setTile(Tiles.LIGHT_BLUE, 1,1);
+        m.setTile(Tiles.BLUE, 1,2);
+        m.setTile(Tiles.GREEN, 2,0);
+        m.setTile(Tiles.WHITE, 2,1);
+        m.setTile(Tiles.NOTALLOWED, 2,2);
 
+        m.print();
+
+
+        /*
         ArrayList<CommonObjective> c1 = new ArrayList<>();
 
         Server EchoServer = new Server();
@@ -39,7 +53,7 @@ public class Server
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-        for (CommonObjective commonObjective : c1) System.out.println(commonObjective);
+        for (CommonObjective commonObjective : c1) System.out.println(commonObjective);*/
 
     }
 
