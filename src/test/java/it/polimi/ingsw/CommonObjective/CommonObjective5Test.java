@@ -5,6 +5,9 @@ import it.polimi.ingsw.Tiles;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommonObjective5Test {
@@ -97,6 +100,27 @@ class CommonObjective5Test {
     }
 
     @Test
-    void commonObjPointsCalculator() {
+    void commonObjPointsCalculatorSuccessTwoPlayers() {
+        Player player1 = new Player( "Jhon", true);
+        Player player2 = new Player( "Obi", false);
+        Tiles tiles = Tiles.GREEN;
+        int loop = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                player1.getBookshelf().getTiles().setTile(tiles, i, j);
+                player2.getBookshelf().getTiles().setTile(tiles, i, j);
+            }
+        }
+
+        // Creazione di un'istanza di CommonObjective5
+        CommonObjective5 obj = new CommonObjective5();
+
+        obj.commonObjPointsCalculator(player1, 2);
+        assertEquals(8, player1.getCommonObjectivePoint());
+        assertEquals(4, obj.points);
+
+        obj.commonObjPointsCalculator(player2, 2);
+        assertEquals(4, player2.getCommonObjectivePoint());
+        assertEquals(0, obj.points);
     }
 }
