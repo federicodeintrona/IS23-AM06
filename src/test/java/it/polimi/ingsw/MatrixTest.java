@@ -30,6 +30,8 @@ class MatrixTest {
         assertEquals(m.getTile(2,1), Tiles.YELLOW,"2,1 expected Yellow");
     }
 
+
+
     @Test
     void GetandSetPointsTile() {
         Matrix m = new Matrix(3,3);
