@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.Messages.Message;
 import it.polimi.ingsw.View.View;
 
@@ -36,12 +37,20 @@ public class Controller {
 
     public void addToBookshelf(int gameID, int playerID, ArrayList<Tiles> array, int col ){
 
-        games.get(gameID).addToBookShelf(playerIDs.get(playerID),array,col);
+        try {
+            games.get(gameID).addToBookShelf(playerIDs.get(playerID),array,col);
+        } catch (MoveNotPossible e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
     public void removeTiles(int gameID, ArrayList<Point> points){
-        games.get(gameID).removeTileArray(points);
+        try {
+            games.get(gameID).removeTileArray(points);
+        } catch (MoveNotPossible e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void saveState(int gameID){

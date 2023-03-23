@@ -10,10 +10,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Hello world!
- *
- */
+
 public class Server
 {
     private static int port =9898;
@@ -25,8 +22,6 @@ public class Server
 
 
 
-        ArrayList<CommonObjective> c1 = new ArrayList<>();
-
         Server EchoServer = new Server();
         try {
             EchoServer.startServer();
@@ -35,8 +30,6 @@ public class Server
             System.err.println(e.getMessage());
         }
 
-        c1.addAll( CommonObjective.randomSubclass(3));
-        for (CommonObjective commonObjective : c1) System.out.println(commonObjective);
 
     }
 

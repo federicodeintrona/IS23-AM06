@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.CommonObjective.CommonObjective;
+import it.polimi.ingsw.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.View.View;
 import org.javatuples.Pair;
@@ -78,15 +79,21 @@ public class Model  {
 
      * @param points  The position of the tiles
      */
-    public void removeTileArray( ArrayList<Point> points){
+    public void removeTileArray( ArrayList<Point> points) throws MoveNotPossible{
+
+        //Checks move legitimacy
+        if(!checkRemoveLegit(points)) throw new MoveNotPossible();
+
 
         for(int i = 0; i < points.size(); i++){
             Pair<Tiles,Point> p1 = new Pair<>(board.getGamesBoard().getTile(points.get(i)),points.get(i));
             Pair<Tiles,Point> p2 = new Pair<>(Tiles.EMPTY,points.get(i));
 
+
             notifier.firePropertyChange( new PropertyChangeEvent(board,"board", p1,p2));
-            board.remove(points);
+
         }
+        board.remove(points);
 
     }
 
@@ -99,8 +106,12 @@ public class Model  {
      * @param tiles   The color of the tiles to add
      * @param column   The column where you want to add the tiles
      */
-    public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column){
+    public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column) throws MoveNotPossible {
 
+        //Check for move legitimacy
+        if(!checkAddLegit(player,column)) throw new MoveNotPossible();
+
+        //Notifying changes
         ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p1 = new Pair<>(temp1, column);
 
@@ -112,17 +123,17 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(player, "bookshelf", p1, p2));
 
 
+        //Checks if player filled his bookshelf
         if(!isFinished && player.getBookshelf().checkEndGame()){
             isFinished=true;
             player.setWinnerPoint(1);
-            PropertyChangeEvent evt1 = new PropertyChangeEvent(currPlayer, "points",
-                    publicPoints.get(players.indexOf(currPlayer)),currPlayer.getPublicPoint());
+            PropertyChangeEvent evt1 = new PropertyChangeEvent(player, "points",
+                    publicPoints.get(players.indexOf(player)),player.getPublicPoint());
 
             notifier.firePropertyChange(evt1);
 
         }
-
-
+        //Advances turns
         nextTurn();
 
     }
@@ -135,7 +146,16 @@ public class Model  {
 
 
     //Checks
-    private boolean checkInLine(ArrayList<Point> points){return true;};
+    private boolean checkRemoveLegit(ArrayList<Point> points){return true;};
+    private boolean checkAddLegit(Player player,int col){return true;};
+    private boolean checkInLine(ArrayList<Point> points){
+
+
+
+
+
+
+        return true;};
     private boolean checkAvailable(Point p){return true;}
     private boolean checkDomain(Point p){return true;}
     private boolean checkDomain(int num,int len){return true;}
@@ -166,8 +186,9 @@ public class Model  {
      *
      */
     private void personalobjInit() {
-        for(Player p : players){
-            p.setPersonalObjective(PersonalObjective.randomSubclass());
+        ArrayList<PersonalObjective> temp = PersonalObjective.randomSubclass(players.size());
+        for(int i = 0;i<players.size();i++){
+            players.get(i).setPersonalObjective(temp.get(i));
         }
     }
 
@@ -205,7 +226,7 @@ public class Model  {
 
         //changes current player
         currPlayer=nextPlayer;
-        if(currPlayer==players.get(players.size())){ nextPlayer = players.get(0);}
+        if(currPlayer==players.get(players.size()-1)){ nextPlayer = players.get(0);}
         else nextPlayer = players.get(players.indexOf(currPlayer)+1);
 
 
@@ -247,14 +268,6 @@ public class Model  {
 
     public ArrayList<Player> getPlayers() {
         return players;
-    }
-
-    public int getPlayerPublicPoints(Player player){
-        return player.getPublicPoint();
-    }
-
-    public int getPlayerPrivatePoints(Player player){
-        return player.getPrivatePoint();
     }
 
     public Board getBoard() {

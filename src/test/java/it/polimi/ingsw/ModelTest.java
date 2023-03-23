@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.View.CLIView;
 import it.polimi.ingsw.View.View;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,11 +30,12 @@ class ModelTest {
         views.add(new CLIView());
         views.add(new CLIView());
         m = new Model(players,views);
+        m.initialization();
+
     }
 
     @Test
     void initialization() {
-            m.initialization();
             assertNotEquals(Tiles.EMPTY,m.getBoard().getGamesBoard().getTile(4,4));
             assertEquals(Tiles.NOTALLOWED,m.getBoard().getGamesBoard().getTile(5,7));
             for (Player p : m.getPlayers()) {
@@ -45,10 +47,43 @@ class ModelTest {
 
     @Test
     void removeTileArray() {
+        ArrayList<Point> array = new ArrayList<>();
+        for(int i=0;i<7;i++){
+        array.add(getRandomPointInBoard());}
+        try {
+            m.removeTileArray(array);
+        } catch (MoveNotPossible e) {
+            throw new RuntimeException(e);
+        }
+        for(Point p : array) {
+            assertEquals(Tiles.EMPTY, m.getBoard().getGamesBoard().getTile(p));
+        }
+
     }
 
     @Test
     void addToBookShelf() {
+
+        ArrayList<Tiles> array = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            array.add(Tiles.BLUE);
+        }
+        assertEquals(Tiles.BLUE,array.get(2));
+        for (int j =0;j<5;j++) {
+
+
+
+            try {
+                m.addToBookShelf(players.get(0), array, j);
+            } catch (MoveNotPossible e) {
+                throw new RuntimeException(e);
+            }
+
+            assertEquals(Tiles.BLUE,m.getPlayers().get(0).getBookshelf().getTiles().getTile(2,j));
+            assertEquals(Tiles.EMPTY,m.getPlayers().get(1).getBookshelf().getTiles().getTile(2,j));
+        }
+       assertEquals(true,m.isFinished());
+
     }
 
     @Test

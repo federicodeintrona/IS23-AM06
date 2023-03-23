@@ -38,7 +38,7 @@ public abstract class CommonObjective {
     public static ArrayList<CommonObjective> randomSubclass(int num) {
 
 
-        ArrayList temp = new ArrayList<>();
+        ArrayList<Class> temp = new ArrayList<>();
         temp.addAll(subclasses);
         Random rand = new Random();
 
@@ -47,10 +47,10 @@ public abstract class CommonObjective {
 
 
         for(int i = 0; i<num; i++ ){
-            int index = rand.nextInt(subclasses.size());
+            int index = rand.nextInt(temp.size());
             Constructor c;
             try {
-                c = subclasses.get(index).getDeclaredConstructor();
+                c = temp.get(index).getDeclaredConstructor();
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
