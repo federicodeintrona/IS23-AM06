@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import java.util.ArrayList;
 
-import static it.polimi.ingsw.Tiles.EMPTY;
+import it.polimi.ingsw.*;
 
 public class Bookshelf {
         Matrix tiles;
@@ -17,13 +17,13 @@ public class Bookshelf {
             return tiles;
         }
         public boolean checkColumns(int choice, int column){
-            if(tiles.getTile(0+choice-1,column).equals(EMPTY))
+            if(tiles.getTile(0+choice-1,column).equals(Tiles.EMPTY))
                 return true;
             else return false;
         }
         public boolean checkEndGame(){
             for(int i=0;i<5;i++){
-                if(tiles.getTile(0,i).equals(EMPTY)){
+                if(tiles.getTile(0,i).equals(Tiles.EMPTY)){
                     return false;
                 }
             }
@@ -45,7 +45,7 @@ public class Bookshelf {
 
         private int firstFree (int column){
             for (int i=0;i<6;i++){
-                if(tiles.getTile(i,column).equals(EMPTY)){
+                if(tiles.getTile(i,column).equals(Tiles.EMPTY)){
                     return i;
                 }
             }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PersonalObjective;
 
+
+
 import it.polimi.ingsw.Player;
 
 import java.lang.reflect.Constructor;

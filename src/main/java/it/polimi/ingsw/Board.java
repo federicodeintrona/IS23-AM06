@@ -1,7 +1,5 @@
 package it.polimi.ingsw;
 
-import org.w3c.dom.CDATASection;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +152,7 @@ public class Board {
     }
 
     //getter gamesBoard --> ritorna la Matrix
-    public static Matrix getGamesBoard() {
+    public  Matrix getGamesBoard() {
         return gamesBoard;
     }
     //getter numberOfPlayer --> ritorna il numero di giocatori
