@@ -1,6 +1,9 @@
 package it.polimi.ingsw;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import it.polimi.ingsw.*;
 
@@ -51,55 +54,90 @@ public class Bookshelf {
             }
             return -1;
         }
-        public int checkVicinityPoints(){
 
-            /*
-            int numOfGroups = 0;
+        //ritorna l'ArrayList delle posizioni con colori adiacenti
+        private static ArrayList<Point> getAdjacentSameColor(Matrix matrix, Point point) {
+        ArrayList<Point> adjacent = new ArrayList<>();
+        int x = point.x;
+        int y = point.y;
+        Tiles color = matrix.getTile(x, y);
+
+        // Checking adjacent cells with the same color
+        if (x > 0 && matrix.getTile(x - 1, y) == color) {
+            adjacent.add(new Point(x - 1, y));
+        }
+        if (x < 5 && matrix.getTile(x + 1, y) == color) {
+            adjacent.add(new Point(x + 1, y));
+        }
+        if (y > 0 && matrix.getTile(x, y - 1) == color) {
+            adjacent.add(new Point(x, y - 1));
+        }
+        if (y < 4 && matrix.getTile(x, y + 1) == color) {
+            adjacent.add(new Point(x, y + 1));
+        }
+
+        return adjacent;
+        }
+
+        //ritorna i punti di una vicinanza
+        public int vicinityPointCount(int n){
+              switch (n){
+                  case 3:
+                      return 2;
+                  case 4:
+                      return 3;
+                  case 5:
+                      return 5;
+                  default:
+                      if (n>=6){
+                          return 8;
+                      }
+                      else {
+                          return 0;
+                      }
+              }
+        }
+
+        //ritorna il totale dei punti dei punti di vicinanza
+        public int checkVicinityPoints(){
+        int adjPoint=0;
+        int sameColor=0;
         boolean[][] visited = new boolean[6][5];
 
-        // Loop through all the cells in the matrix
+        //per ogni posizione
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-                if (visited[i][j] || player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
-
-                    // Skip if cell already visited or set to EMPTY
-                    continue;
-                }
-
-                // Performing BFS (algoritmo di ricerca in ampiezza) on this node
-                Queue<Point> queue = new LinkedList<>();
-                queue.add(new Point(i, j));
-                visited[i][j] = true;
-                int count = 1;
-
-                while (!queue.isEmpty()) {
-                    Point current = queue.poll();
-
-                    // Check all adjacent cells with the same color
-                    for (Point adjacent : getAdjacentSameColor(player.getBookshelf().getTiles(), current)) {
-                        int x = adjacent.x;
-                        int y = adjacent.y;
-                        if (!visited[x][y]) {
-                            visited[x][y] = true;
-                            queue.add(adjacent);
-                            count++;
-
-                            // Four adjacent cells of the same color found
-                            if (count == 4) numOfGroups++;
-
-                            // Four groups that meet the criteria found
-                            if (numOfGroups == 4) return true;
+                //se NON è stato ancora visitato && la tile!=EMPTY
+                if (!visited[i][j] && !getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
+                    //inizializiamo coda
+                    Queue<Point> queue=new LinkedList<>();
+                    queue.add(new Point(i, j));
+                    visited[i][j]=true;
+                    sameColor=1;
+                    //fino tanto che ci sono elementi nella coda
+                    while (!queue.isEmpty()){
+                        //legge elemento in testa e lo rimuove
+                        Point current=queue.poll();
+                        //controlliamo tutte le celle adiacenti con lo stesso colore
+                        for (Point adj : getAdjacentSameColor(getTiles(), current)){
+                            //se NON è stata ancora visitata
+                            if (!visited[adj.x][adj.y]){
+                                visited[adj.x][adj.y]=true; //ora è stata visitata
+                                queue.add(adj);
+                                sameColor++;
+                            }
                         }
+                        //sameColor ha il numero di tiles dello stesso colore vicine
+                        adjPoint+=vicinityPointCount(sameColor);
                     }
+
                 }
+
             }
         }
 
-        // No four adjacent cells of the same color found
-        return false;
-             */
+        return adjPoint;
+    }
 
 
-            return 0;
-        }
 }
