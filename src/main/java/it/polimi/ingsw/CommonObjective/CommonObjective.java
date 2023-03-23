@@ -35,10 +35,11 @@ public abstract class CommonObjective {
         }
 
     }
-    public static ArrayList<CommonObjective> randomSubclass(int num) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public static ArrayList<CommonObjective> randomSubclass(int num) {
 
 
-        ArrayList temp = (ArrayList) subclasses.clone();
+        ArrayList temp = new ArrayList<>();
+        temp.addAll(subclasses);
         Random rand = new Random();
 
 
@@ -47,9 +48,19 @@ public abstract class CommonObjective {
 
         for(int i = 0; i<num; i++ ){
             int index = rand.nextInt(subclasses.size());
-            Constructor c= subclasses.get(index).getDeclaredConstructor();
+            Constructor c;
+            try {
+                c = subclasses.get(index).getDeclaredConstructor();
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
             temp.remove(index);
-            result.add((CommonObjective) c.newInstance() );
+            try {
+                result.add((CommonObjective) c.newInstance() );
+            } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
         }
 
 
@@ -60,4 +71,16 @@ public abstract class CommonObjective {
     public abstract boolean checkCondition(Player player);
 
     public abstract void commonObjPointsCalculator(Player player, int numOfPlayers);
+
+    public int getPoints() {
+        return points;
+    }
+
+    public Set<Player> getPlayersWhoCompletedComObj() {
+        return playersWhoCompletedComObj;
+    }
+
+    public static ArrayList<Class> getSubclasses() {
+        return subclasses;
+    }
 }

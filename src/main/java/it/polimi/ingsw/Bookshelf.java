@@ -11,6 +11,12 @@ public class Bookshelf {
         public Bookshelf(){
             tiles=new Matrix(6,5);
             num_of_tiles=0;
+            for( int i=0; i<tiles.getNumRows();i++){
+                for( int j=0; j<tiles.getNumCols();j++){
+                    tiles.setEmpty(i,j);
+                }
+
+            }
         }
 
         public Matrix getTiles(){

@@ -40,10 +40,11 @@ public abstract class PersonalObjective {
     }
 
 
-    public static PersonalObjective randomSubclass() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public static PersonalObjective randomSubclass()  {
 
 
-        ArrayList temp = (ArrayList) subclasses.clone();
+        ArrayList temp = new ArrayList<>();
+        temp.addAll(subclasses);
         Random rand = new Random();
 
         System.out.println(subclasses.size());
@@ -57,10 +58,18 @@ public abstract class PersonalObjective {
 
 
         int index = rand.nextInt(subclasses.size());
-        Constructor c= subclasses.get(index).getDeclaredConstructor();
+        Constructor c= null;
+        try {
+            c = subclasses.get(index).getDeclaredConstructor();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
         temp.remove(index);
-        result = (PersonalObjective) c.newInstance();
-
+        try {
+            result = (PersonalObjective) c.newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
 
 
         return result;

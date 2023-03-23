@@ -35,11 +35,7 @@ public class Server
             System.err.println(e.getMessage());
         }
 
-        try {
-            c1.addAll( CommonObjective.randomSubclass(3));
-        } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+        c1.addAll( CommonObjective.randomSubclass(3));
         for (CommonObjective commonObjective : c1) System.out.println(commonObjective);
 
     }

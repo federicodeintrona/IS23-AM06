@@ -18,11 +18,11 @@ public class Model  {
     private Board board;
     private ArrayList<Player> players;
     private ArrayList<View> virtualViews;
-    private ArrayList<CommonObjective> commonobj;
+    private ArrayList<CommonObjective> commonobj = new ArrayList<>();
 
-    private ArrayList<Integer> privatePoints;
+    private ArrayList<Integer> privatePoints = new ArrayList<>();
 
-    private ArrayList<Integer> publicPoints;
+    private ArrayList<Integer> publicPoints = new ArrayList<>();
 
     private Player currPlayer;
     private Player nextPlayer;
@@ -35,6 +35,9 @@ public class Model  {
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
 
+    public Model(ArrayList<Player> players) {
+        this.players = players;
+    }
 
     public Model(ArrayList<Player> players, ArrayList<View> views) {
         this.players = players;
@@ -50,14 +53,11 @@ public class Model  {
 
     /**
      * Initializes the board and the objectives
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
      */
-    public void initialization() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public void initialization()  {
 
         board = new Board(players.size(), new Sachet());
+        board.BoardInitialization();
         commonobjInit();
         personalobjInit();
         for(Player p : players){
@@ -156,24 +156,16 @@ public class Model  {
     /**
      * Initializes common objectives
      *
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
      */
-    private void commonobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    private void commonobjInit() {
        commonobj = CommonObjective.randomSubclass(2);
     }
 
     /**
      * Initializes private objectives
      *
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
      */
-    private void personalobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    private void personalobjInit() {
         for(Player p : players){
             p.setPersonalObjective(PersonalObjective.randomSubclass());
         }
@@ -251,6 +243,11 @@ public class Model  {
 
 
     //GETTERS AND SETTERS: USELESS FOR NOW
+
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 
     public int getPlayerPublicPoints(Player player){
         return player.getPublicPoint();
