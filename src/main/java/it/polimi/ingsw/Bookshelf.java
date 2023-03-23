@@ -52,6 +52,54 @@ public class Bookshelf {
             return -1;
         }
         public int checkVicinityPoints(){
+
+            /*
+            int numOfGroups = 0;
+        boolean[][] visited = new boolean[6][5];
+
+        // Loop through all the cells in the matrix
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (visited[i][j] || player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
+
+                    // Skip if cell already visited or set to EMPTY
+                    continue;
+                }
+
+                // Performing BFS (algoritmo di ricerca in ampiezza) on this node
+                Queue<Point> queue = new LinkedList<>();
+                queue.add(new Point(i, j));
+                visited[i][j] = true;
+                int count = 1;
+
+                while (!queue.isEmpty()) {
+                    Point current = queue.poll();
+
+                    // Check all adjacent cells with the same color
+                    for (Point adjacent : getAdjacentSameColor(player.getBookshelf().getTiles(), current)) {
+                        int x = adjacent.x;
+                        int y = adjacent.y;
+                        if (!visited[x][y]) {
+                            visited[x][y] = true;
+                            queue.add(adjacent);
+                            count++;
+
+                            // Four adjacent cells of the same color found
+                            if (count == 4) numOfGroups++;
+
+                            // Four groups that meet the criteria found
+                            if (numOfGroups == 4) return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // No four adjacent cells of the same color found
+        return false;
+             */
+
+
             return 0;
         }
 }
