@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="AM06" target="19" />
+      <module name="AM06" target="17" />
       <module name="IS23-AM06" target="17" />
     </bytecodeTargetLevel>
   </component>
