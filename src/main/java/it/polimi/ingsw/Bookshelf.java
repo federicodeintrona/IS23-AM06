@@ -26,7 +26,7 @@ public class Bookshelf {
             return tiles;
         }
         public boolean checkColumns(int choice, int column){
-            if(tiles.getTile(0+choice-1,column).equals(Tiles.EMPTY))
+            if(tiles.getTile(choice-1,column).equals(Tiles.EMPTY))
                 return true;
             else return false;
         }

@@ -17,6 +17,7 @@ public abstract class CommonObjective {
 
     static{
         try {
+            ClassLoader.getSystemClassLoader().loadClass("it.polimi.ingsw.CommonObjective.CommonObjective");
             Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective");
             Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective1");
             Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective2");

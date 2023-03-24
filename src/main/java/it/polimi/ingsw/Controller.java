@@ -11,16 +11,23 @@ import java.util.HashMap;
 
 public class Controller {
 
+    Lobby lobby;
     private ArrayList<Model> games;
     private ArrayList<ArrayList<View>> views;
 
     private HashMap<Integer, Player> playerIDs;
 
 
-    public Controller() {
+    public Controller(Lobby loby) {
+        lobby = loby;
        games = new ArrayList<>();
        views = new ArrayList<>();
        playerIDs = new HashMap<>();
+    }
+
+
+    public void addModel(Model m){
+        games.add(m);
     }
 
     public void addGame(Model model, ArrayList<View> view){
@@ -28,7 +35,7 @@ public class Controller {
         views.add(view);
     }
 
-    public void startGame(int ID) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public void startGame(int ID)  {
         games.get(ID).initialization();
     }
 
@@ -57,11 +64,19 @@ public class Controller {
         games.get(gameID).saveState();
     }
 
+    //Lobby methods
+    public boolean waitingLobby(){
+        return lobby.waitingLobbys();
+    }
 
-    //TO BE COMPLETED: just for UML purposes
+    public void newLobby(ServerClientHandler client,int players){
+        lobby.newLobby(client,players);
+    }
 
+    public void addClient(ServerClientHandler client){
+        lobby.addClient(client);
+    }
 
-    public Message processMessage(Message m, int playerID, int gameID){return new Message();};
 
     //Client Side Controller Method
     public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
