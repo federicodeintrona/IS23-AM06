@@ -17,6 +17,8 @@ class CommonObjective5Test {
     void checkConditionSuccessOneColor() {
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
+
+        // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
                 player.getBookshelf().getTiles().setTile(tiles, i, j);
@@ -26,7 +28,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Verifica che il metodo checkCondition restituisca true
+        // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
@@ -39,6 +41,8 @@ class CommonObjective5Test {
     void checkConditionSuccessMoreColors() {
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
+
+        // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
                 player.getBookshelf().getTiles().setTile(tiles, i, j);
@@ -60,7 +64,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Verifica che il metodo checkCondition restituisca true
+        // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
@@ -88,7 +92,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Checking that the checkCondition method returns true
+        // Checking that the checkCondition method returns false
         assertFalse(obj.checkCondition(player));
     }
 
@@ -125,7 +129,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Checking that the checkCondition method returns true
+        // Checking that the checkCondition method returns false
         assertFalse(obj.checkCondition(player));
     }
 
