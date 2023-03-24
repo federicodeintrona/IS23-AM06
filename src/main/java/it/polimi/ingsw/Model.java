@@ -205,8 +205,8 @@ public class Model  {
     private void updatePoints(){
 
 
-        currPlayer.getBookshelf().checkVicinityPoints();
-        currPlayer.getPersonalObjective().checkCondition(currPlayer);
+        currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
+        currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer);
 
         for(CommonObjective o : commonobj){
              o.commonObjPointsCalculator(currPlayer,players.size());
@@ -243,9 +243,7 @@ public class Model  {
         //checks if someone completed all their bookshelf
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
 
-
     }
-
     /**
      * Calls select winner
      */

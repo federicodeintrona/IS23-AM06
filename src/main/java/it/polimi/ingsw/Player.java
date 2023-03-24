@@ -24,6 +24,16 @@ public class Player {
         winnerPoint = 0;
     }
 
+    public Player(String userName,boolean chair) {
+        this.userName = userName;
+        publicPoint = 0;
+        privatePoint = 0;
+        commonObjectivePoint = 0;
+        personalObjectivePoint = 0;
+        vicinityPoint = 0;
+        winnerPoint = 0;
+        this.chair = chair;
+    }
     public Bookshelf getBookshelf(){
         return bookshelf;
     }
