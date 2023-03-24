@@ -73,8 +73,6 @@ public class Board {
 //-------------------------------------------------------------------------------------------------------\\
 
 //metodi
-
-
     //costruttore --> assegna numberOfPlayer
     //            --> crea la Board in base al numero di giocatori
         // RICHIEDE CHE numberOfPlayer SIA UN NUMERO TRA 2, 3, 4
