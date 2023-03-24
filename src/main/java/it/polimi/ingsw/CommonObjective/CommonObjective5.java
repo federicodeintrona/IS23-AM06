@@ -32,8 +32,8 @@ public class CommonObjective5 extends CommonObjective{
 
                 if (numOfColor < 4) count++;
                 buffer.clear();
-                i++;
             }
+            i++;
         }
         if (count == 3) return true;
         else return false;
