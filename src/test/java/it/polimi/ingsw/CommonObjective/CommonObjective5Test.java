@@ -14,9 +14,11 @@ class CommonObjective5Test {
      * completely full of green colored tiles
      */
     @Test
-    void checkConditionSuccessOneColor() {
+    void checkConditionSuccess1() {
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
+
+        // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
                 player.getBookshelf().getTiles().setTile(tiles, i, j);
@@ -26,7 +28,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Verifica che il metodo checkCondition restituisca true
+        // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
@@ -36,9 +38,11 @@ class CommonObjective5Test {
      * colors each
      */
     @Test
-    void checkConditionSuccessMoreColors() {
+    void checkConditionSuccess2() {
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
+
+        // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
                 player.getBookshelf().getTiles().setTile(tiles, i, j);
@@ -60,7 +64,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Verifica che il metodo checkCondition restituisca true
+        // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
@@ -69,7 +73,7 @@ class CommonObjective5Test {
      * no column is full
      */
     @Test
-    void checkConditionFalseAllColumnsEmpty(){
+    void checkConditionFailure1(){
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
 
@@ -88,7 +92,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Checking that the checkCondition method returns true
+        // Checking that the checkCondition method returns false
         assertFalse(obj.checkCondition(player));
     }
 
@@ -97,7 +101,7 @@ class CommonObjective5Test {
      * all columns are composed by 4 different colors
      */
     @Test
-    void checkConditionFalseAllColumnsFourColors(){
+    void checkConditionFailure2(){
         Player player = new Player( "Jhon", true);
 
         // Initializing the bookshelf
@@ -125,7 +129,7 @@ class CommonObjective5Test {
         // Creation of an instance for CommonObjective5
         CommonObjective5 obj = new CommonObjective5();
 
-        // Checking that the checkCondition method returns true
+        // Checking that the checkCondition method returns false
         assertFalse(obj.checkCondition(player));
     }
 
@@ -134,7 +138,7 @@ class CommonObjective5Test {
      * when points need to be added
      */
     @Test
-    void commonObjPointsCalculatorSuccessTwoPlayers() {
+    void commonObjPointsCalculatorTwoPlayers() {
         Player player1 = new Player( "Jhon", true);
         Player player2 = new Player( "Obi", false);
         Tiles tiles = Tiles.GREEN;
@@ -166,7 +170,7 @@ class CommonObjective5Test {
      * when points need to be added
      */
     @Test
-    void commonObjPointsCalculatorSuccessFourPlayers() {
+    void commonObjPointsCalculatorFourPlayers() {
         Player player1 = new Player( "Jhon", true);
         Player player2 = new Player( "Obi", false);
         Player player3 = new Player( "Pablo", false);
@@ -208,11 +212,11 @@ class CommonObjective5Test {
     }
 
     /**
-     * Testing the first if statement for failure in case player's
+     * Testing first if statement for failure in case player's
      * bookshelf does not meet the obj5 condition criteria
      */
     @Test
-    void commonObjPointsCalculatorFailureForConditionNotVerified(){
+    void commonObjPointsCalculatorFailure1(){
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
 
@@ -241,7 +245,7 @@ class CommonObjective5Test {
      * already received the commonObjectivePoints
      */
     @Test
-    void commonObjPointsCalculatorFailurePlayerAlreadyAdded(){
+    void commonObjPointsCalculatorFailure2(){
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
 

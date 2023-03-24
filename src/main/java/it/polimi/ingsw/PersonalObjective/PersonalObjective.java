@@ -2,6 +2,7 @@ package it.polimi.ingsw.PersonalObjective;
 
 
 
+import it.polimi.ingsw.CommonObjective.CommonObjective;
 import it.polimi.ingsw.Player;
 
 import java.lang.reflect.Constructor;
@@ -40,27 +41,34 @@ public abstract class PersonalObjective {
     }
 
 
-    public static PersonalObjective randomSubclass() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public static ArrayList<PersonalObjective> randomSubclass(int num)  {
 
 
-        ArrayList temp = (ArrayList) subclasses.clone();
+
+        ArrayList<Class> temp = new ArrayList<>();
+        temp.addAll(subclasses);
         Random rand = new Random();
 
-        System.out.println(subclasses.size());
-        System.out.println(temp.size());
 
-        PersonalObjective result;
-
-        /*for (int i = 0; i< temp.size();i++){
-            System.out.println(temp.get(i));
-        }*/
+        ArrayList<PersonalObjective> result = new ArrayList<>();
 
 
-        int index = rand.nextInt(subclasses.size());
-        Constructor c= subclasses.get(index).getDeclaredConstructor();
-        temp.remove(index);
-        result = (PersonalObjective) c.newInstance();
-
+        for(int i = 0; i<num; i++ ){
+            int index = rand.nextInt(temp.size());
+            Constructor c;
+            try {
+                c = temp.get(index).getDeclaredConstructor();
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            temp.remove(index);
+            try {
+                result.add((PersonalObjective) c.newInstance() );
+            } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }
 
 
         return result;

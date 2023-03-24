@@ -43,6 +43,11 @@ public class CommonObjective1 extends CommonObjective{
         return false;
     }
 
+    /**
+     *
+     * @param player
+     * @param numOfPlayers
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 
