@@ -62,8 +62,8 @@ class CommonObjective1Test {
     }
 
     /**
-     * Testing first if statement of run() for success:
-     * bookshelf completely empty
+     * Testing first if statement of each Thread (inside
+     * method run()) for success: bookshelf completely empty
      */
     @Test
     void checkConditionFailure() {
@@ -81,6 +81,33 @@ class CommonObjective1Test {
         CommonObjective1 obj = new CommonObjective1();
 
         // Checking that the checkCondition method returns true
+        assertFalse(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing second if statement of each Thread (inside
+     * method run()) for failure: no same color tiles
+     * adjacent to each other
+     */
+    @Test
+    void checkConditionFailure2(){
+        Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        int x = 0;
+
+        // Initializing the bookshelf
+        for (int i=0; i<6; i++){
+            for (int j=0; j<5; j++){
+                player.getBookshelf().getTiles().setTile(values[x], i, j);
+                x++;
+                if (x == 6) x = 0;
+            }
+        }
+
+        // Creation of an instance for CommonObjective1
+        CommonObjective1 obj = new CommonObjective1();
+
+        // Checking that the checkCondition method returns false
         assertFalse(obj.checkCondition(player));
     }
 
