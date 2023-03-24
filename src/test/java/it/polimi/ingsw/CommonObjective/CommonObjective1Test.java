@@ -17,7 +17,7 @@ class CommonObjective1Test {
      * of the bookshelf so that they have to communicate with each other
      */
     @Test
-    void checkConditionSuccess() {
+    void checkConditionSuccess1() {
         Player player = new Player( "Jhon", true);
 
         // Initializing the bookshelf
@@ -323,5 +323,88 @@ class CommonObjective1Test {
         obj.commonObjPointsCalculator(player4, 4);
         assertEquals(2, player4.getCommonObjectivePoint());
         assertEquals(0, obj.points);
+    }
+
+    /**
+     * Testing first if statement for failure in case player's
+     * bookshelf does not meet the obj1 condition criteria
+     */
+    @Test
+    void commonObjPointsCalculatorFailure1(){
+        Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        int x = 0;
+
+        // Initializing the bookshelf
+        for (int i=0; i<6; i++){
+            for (int j=0; j<5; j++){
+                player.getBookshelf().getTiles().setTile(values[x], i, j);
+                x++;
+                if (x == 6) x = 0;
+            }
+        }
+
+        // Creation of an instance for CommonObjective1
+        CommonObjective1 obj = new CommonObjective1();
+
+        // Testing method for player
+        obj.commonObjPointsCalculator(player, 2);
+        assertEquals(0, player.getCommonObjectivePoint());
+        assertEquals(8, obj.points);
+    }
+
+    /**
+     * Testing the first if statement for failure in case the player
+     * already received the commonObjectivePoints
+     */
+    @Test
+    void commonObjPointsCalculatorFailure2(){
+        Player player = new Player( "Jhon", true);
+
+        // Initializing the bookshelf
+        for (int i=0; i<6; i++){
+            for (int j=0; j<5; j++){
+                Tiles[] values = Tiles.values();
+                Random random = new Random();
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                Tiles randomValue = values[index];
+                player.getBookshelf().getTiles().setTile(randomValue, i, j);
+            }
+        }
+
+        // Programming the specific boxes to manually get 6 groups of two same colored tiles
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 0);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 1);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 1, 0);
+
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 0, 4);
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 1, 4);
+
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 2, 3);
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 2, 4);
+
+        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 5, 1);
+        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 5, 2);
+
+        player.getBookshelf().getTiles().setTile(Tiles.PINK, 4, 2);
+        player.getBookshelf().getTiles().setTile(Tiles.PINK, 4, 3);
+
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 2, 1);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 3, 1);
+
+        // Creation of an instance for CommonObjective1
+        CommonObjective1 obj = new CommonObjective1();
+
+        // Testing method for player first time
+        obj.commonObjPointsCalculator(player, 3);
+        assertEquals(8, player.getCommonObjectivePoint());
+        assertEquals(6, obj.points);
+
+        // Testing method for player second time
+        obj.commonObjPointsCalculator(player, 3);
+        assertEquals(8, player.getCommonObjectivePoint());
+        assertEquals(6, obj.points);
     }
 }
