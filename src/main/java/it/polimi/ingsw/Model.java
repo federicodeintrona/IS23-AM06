@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.CommonObjective.CommonObjective;
+import it.polimi.ingsw.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.View.View;
 import org.javatuples.Pair;
@@ -18,11 +19,11 @@ public class Model  {
     private Board board;
     private ArrayList<Player> players;
     private ArrayList<View> virtualViews;
-    private ArrayList<CommonObjective> commonobj;
+    private ArrayList<CommonObjective> commonobj = new ArrayList<>();
 
-    private ArrayList<Integer> privatePoints;
+    private ArrayList<Integer> privatePoints = new ArrayList<>();
 
-    private ArrayList<Integer> publicPoints;
+    private ArrayList<Integer> publicPoints = new ArrayList<>();
 
     private Player currPlayer;
     private Player nextPlayer;
@@ -35,6 +36,9 @@ public class Model  {
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
 
+    public Model(ArrayList<Player> players) {
+        this.players = players;
+    }
 
     public Model(ArrayList<Player> players, ArrayList<View> views) {
         this.players = players;
@@ -50,14 +54,11 @@ public class Model  {
 
     /**
      * Initializes the board and the objectives
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
      */
-    public void initialization() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public void initialization()  {
 
         board = new Board(players.size(), new Sachet());
+        board.BoardInitialization();
         commonobjInit();
         personalobjInit();
         for(Player p : players){
@@ -78,15 +79,21 @@ public class Model  {
 
      * @param points  The position of the tiles
      */
-    public void removeTileArray( ArrayList<Point> points){
+    public void removeTileArray( ArrayList<Point> points) throws MoveNotPossible{
+
+        //Checks move legitimacy
+        if(!checkRemoveLegit(points)) throw new MoveNotPossible();
+
 
         for(int i = 0; i < points.size(); i++){
             Pair<Tiles,Point> p1 = new Pair<>(board.getGamesBoard().getTile(points.get(i)),points.get(i));
             Pair<Tiles,Point> p2 = new Pair<>(Tiles.EMPTY,points.get(i));
 
+
             notifier.firePropertyChange( new PropertyChangeEvent(board,"board", p1,p2));
-            board.remove(points);
+
         }
+        board.remove(points);
 
     }
 
@@ -99,8 +106,12 @@ public class Model  {
      * @param tiles   The color of the tiles to add
      * @param column   The column where you want to add the tiles
      */
-    public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column){
+    public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column) throws MoveNotPossible {
 
+        //Check for move legitimacy
+        if(!checkAddLegit(player,column,tiles.size())) throw new MoveNotPossible();
+
+        //Notifying changes
         ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p1 = new Pair<>(temp1, column);
 
@@ -112,17 +123,17 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(player, "bookshelf", p1, p2));
 
 
+        //Checks if player filled his bookshelf
         if(!isFinished && player.getBookshelf().checkEndGame()){
             isFinished=true;
             player.setWinnerPoint(1);
-            PropertyChangeEvent evt1 = new PropertyChangeEvent(currPlayer, "points",
-                    publicPoints.get(players.indexOf(currPlayer)),currPlayer.getPublicPoint());
+            PropertyChangeEvent evt1 = new PropertyChangeEvent(player, "points",
+                    publicPoints.get(players.indexOf(player)),player.getPublicPoint());
 
             notifier.firePropertyChange(evt1);
 
         }
-
-
+        //Advances turns
         nextTurn();
 
     }
@@ -131,37 +142,36 @@ public class Model  {
 
     }
 
-    //GETTERS AND SETTERS
 
-    public int getPlayerPublicPoints(Player player){
-        return player.getPublicPoint();
-    }
 
-    public int getPlayerPrivatePoints(Player player){
-        return player.getPrivatePoint();
-    }
 
-    public Board getBoard() {
-        return board;
-    }
-
-    /**
-     * @return Array of all the common objectives
-     */
-    public ArrayList<CommonObjective> getCommonobj() {
-        return commonobj;
-    }
-
-    /**
-     * @return Array of all the personal objectives of all players in the game
-     */
-    public ArrayList<PersonalObjective> getPersobj(){
-        ArrayList<PersonalObjective> persobj = new ArrayList<>();
-        for( Player p : players){
-            persobj.add(p.getPersonalObjective());
+    //Checks
+    private boolean checkRemoveLegit(ArrayList<Point> points){
+        if(!Board.checkAdjacentTiles(points)) return false;
+        for(Point p : points){
+            if(!checkBoardDomain(p)) return false;
         }
-        return persobj;
-    }
+        return true;}
+
+    private boolean checkAddLegit(Player player,int col,int size){
+        if(!player.equals(currPlayer)) return false;
+       if(!checkColumn(col,size)) return false;
+        return true;}
+
+
+    private boolean checkColumn(int col,int size){
+        if(col<0||col>5) return false;
+        if(!currPlayer.getBookshelf().checkColumns(size,col)) return false;
+        return true;}
+
+    //Board Checks
+    private boolean checkBoardDomain(Point p){
+        if(p.getX()<0 || p.getX()>8) return false;
+        else if(p.getY()<0 || p.getY()>8) return false;
+        else if(board.getGamesBoard().getTile(p).equals(Tiles.NOTALLOWED)) return false;
+        else if(board.getGamesBoard().getTile(p).equals(Tiles.EMPTY)) return false;
+        else return true;}
+
 
 
 
@@ -173,26 +183,19 @@ public class Model  {
     /**
      * Initializes common objectives
      *
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
      */
-    private void commonobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    private void commonobjInit() {
        commonobj = CommonObjective.randomSubclass(2);
     }
 
     /**
      * Initializes private objectives
      *
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
      */
-    private void personalobjInit() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        for(Player p : players){
-            p.setPersonalObjective(PersonalObjective.randomSubclass());
+    private void personalobjInit() {
+        ArrayList<PersonalObjective> temp = PersonalObjective.randomSubclass(players.size());
+        for(int i = 0;i<players.size();i++){
+            players.get(i).setPersonalObjective(temp.get(i));
         }
     }
 
@@ -202,8 +205,8 @@ public class Model  {
     private void updatePoints(){
 
 
-        currPlayer.getBookshelf().checkVicinityPoints();
-        currPlayer.getPersonalObjective().checkCondition(currPlayer);
+        currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
+        currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer);
 
         for(CommonObjective o : commonobj){
              o.commonObjPointsCalculator(currPlayer,players.size());
@@ -230,7 +233,7 @@ public class Model  {
 
         //changes current player
         currPlayer=nextPlayer;
-        if(currPlayer==players.get(players.size())){ nextPlayer = players.get(0);}
+        if(currPlayer==players.get(players.size()-1)){ nextPlayer = players.get(0);}
         else nextPlayer = players.get(players.indexOf(currPlayer)+1);
 
 
@@ -240,9 +243,7 @@ public class Model  {
         //checks if someone completed all their bookshelf
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
 
-
     }
-
     /**
      * Calls select winner
      */
@@ -265,7 +266,43 @@ public class Model  {
 
 
 
+
+
+    //GETTERS AND SETTERS: USELESS FOR NOW
+
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     * @return Array of all the common objectives
+     */
+    public ArrayList<CommonObjective> getCommonobj() {
+        return commonobj;
+    }
+
+    /**
+     * @return Array of all the personal objectives of all players in the game
+     */
+    public ArrayList<PersonalObjective> getPersobj(){
+        ArrayList<PersonalObjective> persobj = new ArrayList<>();
+        for( Player p : players){
+            persobj.add(p.getPersonalObjective());
+        }
+        return persobj;
+    }
+
+
     public boolean isFinished() {
         return isFinished;
     }
+
+
+
+
 }

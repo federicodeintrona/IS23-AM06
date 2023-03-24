@@ -10,20 +10,18 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Hello world!
- *
- */
+
 public class Server
 {
     private static int port =9898;
     private static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
-    private Controller controller= new Controller();
+    private Lobby lobby = new Lobby();
+    private Controller controller= new Controller(lobby);
 
     public static void main( String[] args ) {
 
 
-        ArrayList<CommonObjective> c1 = new ArrayList<>();
+
 
         Server EchoServer = new Server();
         try {
@@ -33,12 +31,6 @@ public class Server
             System.err.println(e.getMessage());
         }
 
-        try {
-            c1.addAll( CommonObjective.randomSubclass(3));
-        } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        for (CommonObjective commonObjective : c1) System.out.println(commonObjective);
 
     }
 

@@ -12,9 +12,9 @@ public class Player {
     private int personalObjectivePoint;
     private int vicinityPoint;
     private int winnerPoint ;
-    private final boolean chair;
+    private boolean chair;
 
-    public Player(String userName, boolean chair) {
+    public Player(String userName) {
         this.userName = userName;
         publicPoint = 0;
         privatePoint = 0;
@@ -22,9 +22,18 @@ public class Player {
         personalObjectivePoint = 0;
         vicinityPoint = 0;
         winnerPoint = 0;
-        this.chair=chair;
     }
 
+    public Player(String userName,boolean chair) {
+        this.userName = userName;
+        publicPoint = 0;
+        privatePoint = 0;
+        commonObjectivePoint = 0;
+        personalObjectivePoint = 0;
+        vicinityPoint = 0;
+        winnerPoint = 0;
+        this.chair = chair;
+    }
     public Bookshelf getBookshelf(){
         return bookshelf;
     }

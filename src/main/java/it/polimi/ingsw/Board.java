@@ -188,23 +188,23 @@ public class Board {
                         (j!=0 && j!=8)){
                         //adiacenza:
                         //sx
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //dx
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //alto
                         if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
                             !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                             return false;
                         }
-                        //basso
+                        //dx
                         if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
                             !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //alto
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                            return false;
+                        }
+                        //basso
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                     }
@@ -212,18 +212,18 @@ public class Board {
                     else if (i==0){
                         //adiacenza:
                         //sx
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //dx
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //basso
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                     }
@@ -231,18 +231,18 @@ public class Board {
                     else if (i==8){
                         //adiacenza:
                         //sx
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //dx
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //alto
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                     }
@@ -250,18 +250,18 @@ public class Board {
                     else if (j==0){
                         //adiacenza:
                         //dx
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //alto
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //basso
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                     }
@@ -269,18 +269,18 @@ public class Board {
                     else if (j==8){
                         //adiacenza:
                         //sx
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //alto
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //basso
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                     }
@@ -344,96 +344,95 @@ public class Board {
         if ((position.x!=0 && position.x!=8) &&
             (position.y!=0 && position.y!=8)){
             //sx
-            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                return false;
-            }
-            //dx
-            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                return false;
-            }
-            //alto
             if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
                 !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                 return false;
             }
-            //basso
+            //dx
             if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
                 !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //alto
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //basso
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                 return false;
             }
         }
         //se siamo nella riga in alto
         else if (position.x==0){
             //sx
-            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                 return false;
             }
             //dx
-            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                return false;
-            }
-
-            //basso
             if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
                 !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                return false;
+            }
+            //basso
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                 return false;
             }
         }
         //se siamo nella riga in basso
         else if (position.x==8){
             //sx
-            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                 return false;
             }
             //dx
-            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                 return false;
             }
             //alto
-            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                 return false;
             }
         }
         //se siamo nella colonna a sx
         else if (position.y==0){
             //dx
-            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                 return false;
             }
             //alto
-            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                 return false;
             }
             //basso
-            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                 return false;
             }
         }
         //se siamo nella colonna a dx
         else if (position.y==8){
             //sx
-            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                 return false;
             }
             //alto
-            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                 return false;
             }
             //basso
-            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                 return false;
             }
         }
@@ -466,7 +465,7 @@ public class Board {
     //ritorna TRUE se nella List i Point sono adiacenti --> hanno un lato in comune - OK
     //adiacenza su board --> sono sulla stessa riga/colonna
         //RICHIEDE CHE NON CI SIANO PIÙ Point UGUALI --> STESSA X E STESSA Y
-    public boolean checkAdjacentTiles(List<Point> position){
+    public static boolean checkAdjacentTiles(List<Point> position){
         //stessa riga o stessa colonna
         Point p=new Point();
         Point p1=new Point();
@@ -677,7 +676,7 @@ public class Board {
     }
 
     //ritorna TRUE se i Point sono sulla stessa riga - OK
-    public boolean checkSameRow(List<Point> position){
+    public static boolean checkSameRow(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
             for (int j = 0; j < position.size(); j++) {
                 if (position.get(i).x!=position.get(j).x){
@@ -689,7 +688,7 @@ public class Board {
     }
 
     //ritorna TRUE se i Point sono sulla stessa colonna - OK
-    public boolean checkSameColumn(List<Point> position){
+    public static boolean  checkSameColumn(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
             for (int j = 0; j < position.size(); j++) {
                 if (position.get(i).y!=position.get(j).y){
@@ -703,3 +702,18 @@ public class Board {
 
 
 }
+
+
+
+
+/*
+    i = riga
+    j = colonna
+    ==> alto i--
+    ==> basso i++
+
+
+
+
+
+ */

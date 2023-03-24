@@ -14,13 +14,19 @@ public class Bookshelf {
         public Bookshelf(){
             tiles=new Matrix(6,5);
             num_of_tiles=0;
+            for( int i=0; i<tiles.getNumRows();i++){
+                for( int j=0; j<tiles.getNumCols();j++){
+                    tiles.setEmpty(i,j);
+                }
+
+            }
         }
 
         public Matrix getTiles(){
             return tiles;
         }
         public boolean checkColumns(int choice, int column){
-            if(tiles.getTile(0+choice-1,column).equals(Tiles.EMPTY))
+            if(tiles.getTile(choice-1,column).equals(Tiles.EMPTY))
                 return true;
             else return false;
         }
