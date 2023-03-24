@@ -109,7 +109,7 @@ public class Model  {
     public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column) throws MoveNotPossible {
 
         //Check for move legitimacy
-        if(!checkAddLegit(player,column)) throw new MoveNotPossible();
+        if(!checkAddLegit(player,column,tiles.size())) throw new MoveNotPossible();
 
         //Notifying changes
         ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
@@ -146,24 +146,31 @@ public class Model  {
 
 
     //Checks
-    private boolean checkRemoveLegit(ArrayList<Point> points){return true;};
-    private boolean checkAddLegit(Player player,int col){return true;};
-    private boolean checkInLine(ArrayList<Point> points){
+    private boolean checkRemoveLegit(ArrayList<Point> points){
+        if(!Board.checkAdjacentTiles(points)) return false;
+        for(Point p : points){
+            if(!checkBoardDomain(p)) return false;
+        }
+        return true;}
+
+    private boolean checkAddLegit(Player player,int col,int size){
+        if(!player.equals(currPlayer)) return false;
+       if(!checkColumn(col,size)) return false;
+        return true;}
 
 
+    private boolean checkColumn(int col,int size){
+        if(col<0||col>5) return false;
+        if(currPlayer.getBookshelf().checkColumns(size,col)) return false;
+        return true;}
 
-
-
-
-        return true;};
-    private boolean checkAvailable(Point p){return true;}
-    private boolean checkDomain(Point p){return true;}
-    private boolean checkDomain(int num,int len){return true;}
-    private boolean checkPlayerNum(int num){return true;}
-    private boolean checkColumn(int i){return true;}
-
-
-
+    //Board Checks
+    private boolean checkBoardDomain(Point p){
+        if(p.getX()<0 || p.getX()>8) return false;
+        else if(p.getY()<0 || p.getY()>8) return false;
+        else if(board.getGamesBoard().getTile(p).equals(Tiles.NOTALLOWED)) return false;
+        else if(board.getGamesBoard().getTile(p).equals(Tiles.EMPTY)) return false;
+        else return true;}
 
 
 

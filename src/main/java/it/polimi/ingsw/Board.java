@@ -466,7 +466,7 @@ public class Board {
     //ritorna TRUE se nella List i Point sono adiacenti --> hanno un lato in comune - OK
     //adiacenza su board --> sono sulla stessa riga/colonna
         //RICHIEDE CHE NON CI SIANO PIÙ Point UGUALI --> STESSA X E STESSA Y
-    public boolean checkAdjacentTiles(List<Point> position){
+    public static boolean checkAdjacentTiles(List<Point> position){
         //stessa riga o stessa colonna
         Point p=new Point();
         Point p1=new Point();
@@ -677,7 +677,7 @@ public class Board {
     }
 
     //ritorna TRUE se i Point sono sulla stessa riga - OK
-    public boolean checkSameRow(List<Point> position){
+    public static boolean checkSameRow(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
             for (int j = 0; j < position.size(); j++) {
                 if (position.get(i).x!=position.get(j).x){
@@ -689,7 +689,7 @@ public class Board {
     }
 
     //ritorna TRUE se i Point sono sulla stessa colonna - OK
-    public boolean checkSameColumn(List<Point> position){
+    public static boolean  checkSameColumn(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
             for (int j = 0; j < position.size(); j++) {
                 if (position.get(i).y!=position.get(j).y){
