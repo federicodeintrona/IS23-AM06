@@ -3,9 +3,7 @@ package it.polimi.ingsw.CommonObjective;
 import it.polimi.ingsw.*;
 
 public class CommonObjective7 extends CommonObjective{
-    static{
-        subclasses.add(CommonObjective7.class);
-    }
+
 
     public boolean checkCondition(Player player){
         int i;

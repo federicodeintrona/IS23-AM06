@@ -25,6 +25,14 @@
     </dependency>
 
 
+
+    <dependency>
+      <groupId>com.openpojo</groupId>
+      <artifactId>openpojo</artifactId>
+      <version>0.9.1</version>
+    </dependency>
+
+
     <dependency>
       <groupId>org.javatuples</groupId>
       <artifactId>javatuples</artifactId>

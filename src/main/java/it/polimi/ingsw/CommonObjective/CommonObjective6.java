@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommonObjective6 extends CommonObjective{
-    static{
-        subclasses.add(CommonObjective6.class);
-    }
+
 
     public boolean checkCondition(Player player){
         Map<Tiles, Integer> countMap = new HashMap<>();

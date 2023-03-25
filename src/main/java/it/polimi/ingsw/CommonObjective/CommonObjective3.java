@@ -10,9 +10,7 @@ import it.polimi.ingsw.*;
 
 public class CommonObjective3 extends CommonObjective{
 
-    static{
-        subclasses.add(CommonObjective3.class);
-    }
+
 
     public boolean checkCondition(Player player) {
         int numOfGroups = 0;
