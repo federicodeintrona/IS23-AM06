@@ -33,7 +33,7 @@ public class Bookshelf {
 
         public boolean checkEndGame(){
             for(int i=0;i<5;i++){
-                if(tiles.getTile(0,i).equals(Tiles.EMPTY)){
+                if(tiles.getTile(5,i).equals(Tiles.EMPTY)){
                     return false;
                 }
             }
@@ -44,17 +44,17 @@ public class Bookshelf {
             if (tiles.size() == 1) this.tiles.setTile(tiles.get(0), pos, column);
             else if (tiles.size()==2) {
                 this.tiles.setTile(tiles.get(0), pos, column);
-                this.tiles.setTile(tiles.get(1), pos+1, column);
+                this.tiles.setTile(tiles.get(1), pos-1, column);
             }
             else {
                 this.tiles.setTile(tiles.get(0), pos, column);
-                this.tiles.setTile(tiles.get(1), pos+1, column);
-                this.tiles.setTile(tiles.get(2), pos+2, column);
+                this.tiles.setTile(tiles.get(1), pos-1, column);
+                this.tiles.setTile(tiles.get(2), pos-2, column);
             }
         }
 
         private int firstFree (int column){
-            for (int i=0;i<6;i++){
+            for (int i=5;i>=0;i--){
                 if(tiles.getTile(i,column).equals(Tiles.EMPTY)){
                     return i;
                 }
@@ -135,9 +135,9 @@ public class Bookshelf {
                             }
                         }
                         //sameColor ha il numero di tiles dello stesso colore vicine
-                        adjPoint+=vicinityPointCount(sameColor);
-                    }
 
+                    }
+                    adjPoint+=vicinityPointCount(sameColor);
                 }
 
             }
