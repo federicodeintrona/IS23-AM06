@@ -164,7 +164,7 @@ public class Model  {
 
     private boolean checkColumn(int col,int size){
         if(col<0||col>5) return false;
-        if(!currPlayer.getBookshelf().checkCol(size,col)) return false;
+        if(!currPlayer.getBookshelf().checkColumns(size,col)) return false;
         return true;}
 
     //Board Checks
