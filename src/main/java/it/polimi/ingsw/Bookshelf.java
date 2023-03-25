@@ -31,11 +31,6 @@ public class Bookshelf {
             else return false;
         }
 
-         public boolean checkCol(int size, int col){
-            int index = firstFree(col);
-            if((tiles.getNumRows()-index)<size) return false;
-            return true;
-         }
         public boolean checkEndGame(){
             for(int i=0;i<5;i++){
                 if(tiles.getTile(0,i).equals(Tiles.EMPTY)){
@@ -92,7 +87,7 @@ public class Bookshelf {
         }
 
         //ritorna i punti di una vicinanza
-        public int vicinityPointCount(int n){
+        private int vicinityPointCount(int n){
               switch (n){
                   case 3:
                       return 2;
