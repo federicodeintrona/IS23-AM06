@@ -30,6 +30,12 @@ public class Bookshelf {
                 return true;
             else return false;
         }
+
+         public boolean checkCol(int size, int col){
+            int index = firstFree(col);
+            if((tiles.getNumRows()-index)<size) return false;
+            return true;
+         }
         public boolean checkEndGame(){
             for(int i=0;i<5;i++){
                 if(tiles.getTile(0,i).equals(Tiles.EMPTY)){

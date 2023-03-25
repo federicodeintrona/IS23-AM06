@@ -147,21 +147,24 @@ public class Model  {
 
     //Checks
     private boolean checkRemoveLegit(ArrayList<Point> points){
-        if(!Board.checkAdjacentTiles(points)) return false;
-        for(Point p : points){
-            if(!checkBoardDomain(p)) return false;
-        }
-        return true;}
+        if(points!=null){
+            if(points.size()>3) return false;
+            if(!Board.checkAdjacentTiles(points)) return false;
+            for(Point p : points){
+                if(!checkBoardDomain(p)) return false;
+                    }
+            return true;}
+        return false;}
 
     private boolean checkAddLegit(Player player,int col,int size){
         if(!player.equals(currPlayer)) return false;
-       if(!checkColumn(col,size)) return false;
+        if(!checkColumn(col,size)) return false;
         return true;}
 
 
     private boolean checkColumn(int col,int size){
         if(col<0||col>5) return false;
-        if(!currPlayer.getBookshelf().checkColumns(size,col)) return false;
+        if(!currPlayer.getBookshelf().checkCol(size,col)) return false;
         return true;}
 
     //Board Checks
@@ -297,6 +300,13 @@ public class Model  {
         return persobj;
     }
 
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public void setCurrPlayer(Player currPlayer) {
+        this.currPlayer = currPlayer;
+    }
 
     public boolean isFinished() {
         return isFinished;
