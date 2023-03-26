@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class PersonalObjective1 extends PersonalObjective {
-    //attributi
+//attributi
     private static final HashMap<Point, Tiles> card=new HashMap<>();
 
     static{
