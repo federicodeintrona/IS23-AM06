@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Board {
 //attributi
-    private static Matrix gamesBoard=new Matrix(9, 9);
+    private static final Matrix gamesBoard=new Matrix(9, 9);
     private int numberOfPlayer;
     private Sachet boardSachet;
 
@@ -22,24 +22,24 @@ public class Board {
         }
         //posizioni matrice che NON possono essere inserite tessere
         //riga 0
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i < 3; i++) {
             gamesBoard.setNotAllowed(0, i);
         }
-        for (int i = 5; i <= 8; i++) {
+        for (int i = 5; i < 9; i++) {
             gamesBoard.setNotAllowed(0, i);
         }
         //riga 1
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i < 3; i++) {
             gamesBoard.setNotAllowed(1, i);
         }
-        for (int i = 6; i <= 8; i++) {
-            gamesBoard.setNotAllowed(0, i);
+        for (int i = 6; i < 9; i++) {
+            gamesBoard.setNotAllowed(1, i);
         }
         //riga 2
-        for (int i = 0; i <= 1; i++) {
+        for (int i = 0; i < 2; i++) {
             gamesBoard.setNotAllowed(2, i);
         }
-        for (int i = 7; i <= 8; i++) {
+        for (int i = 7; i < 9; i++) {
             gamesBoard.setNotAllowed(2, i);
         }
         //riga 3
@@ -48,24 +48,24 @@ public class Board {
         //riga 5
         gamesBoard.setNotAllowed(5, 8);
         //riga 6
-        for (int i = 0; i <= 1; i++) {
+        for (int i = 0; i < 2; i++) {
             gamesBoard.setNotAllowed(6, i);
         }
-        for (int i = 7; i <= 8; i++) {
+        for (int i = 7; i < 9; i++) {
             gamesBoard.setNotAllowed(6, i);
         }
         //riga 7
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i < 3; i++) {
             gamesBoard.setNotAllowed(7, i);
         }
-        for (int i = 6; i <= 8; i++) {
+        for (int i = 6; i < 9; i++) {
             gamesBoard.setNotAllowed(7, i);
         }
         //riga 8
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 0; i < 4; i++) {
             gamesBoard.setNotAllowed(8, i);
         }
-        for (int i = 6; i <= 8; i++) {
+        for (int i = 6; i < 9; i++) {
             gamesBoard.setNotAllowed(8, i);
         }
     }
@@ -78,35 +78,50 @@ public class Board {
         // RICHIEDE CHE numberOfPlayer SIA UN NUMERO TRA 2, 3, 4
     public Board(int numberOfPlayer) {
         this.numberOfPlayer = numberOfPlayer;
-        switch (numberOfPlayer){
-            case 2:
+        switch (numberOfPlayer) {
+            case 2 -> {
                 gamesBoard.setNotAllowed(0, 3);
                 gamesBoard.setNotAllowed(0, 4);
+
                 gamesBoard.setNotAllowed(1, 5);
+
                 gamesBoard.setNotAllowed(2, 2);
                 gamesBoard.setNotAllowed(2, 6);
+
                 gamesBoard.setNotAllowed(3, 1);
                 gamesBoard.setNotAllowed(3, 8);
+
                 gamesBoard.setNotAllowed(4, 0);
                 gamesBoard.setNotAllowed(4, 8);
+
                 gamesBoard.setNotAllowed(5, 0);
                 gamesBoard.setNotAllowed(5, 7);
+
                 gamesBoard.setNotAllowed(6, 2);
                 gamesBoard.setNotAllowed(6, 6);
+
                 gamesBoard.setNotAllowed(7, 3);
+
                 gamesBoard.setNotAllowed(8, 4);
                 gamesBoard.setNotAllowed(8, 5);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 gamesBoard.setNotAllowed(0, 4);
+
                 gamesBoard.setNotAllowed(1, 5);
+
                 gamesBoard.setNotAllowed(3, 1);
+
                 gamesBoard.setNotAllowed(4, 0);
                 gamesBoard.setNotAllowed(4, 8);
+
                 gamesBoard.setNotAllowed(5, 7);
+
                 gamesBoard.setNotAllowed(7, 3);
+
                 gamesBoard.setNotAllowed(8, 4);
-                break;
+            }
+            default -> {break;}
         }
     }
     //costruttore --> assegna boardSachet
@@ -118,35 +133,50 @@ public class Board {
         // RICHIEDE CHE numberOfPlayer SIA UN NUMERO TRA 2, 3, 4
     public Board(int numberOfPlayer, Sachet boardSachet) {
         this.numberOfPlayer = numberOfPlayer;
-        switch (numberOfPlayer){
-            case 2:
+        switch (numberOfPlayer) {
+            case 2 -> {
                 gamesBoard.setNotAllowed(0, 3);
                 gamesBoard.setNotAllowed(0, 4);
+
                 gamesBoard.setNotAllowed(1, 5);
+
                 gamesBoard.setNotAllowed(2, 2);
                 gamesBoard.setNotAllowed(2, 6);
+
                 gamesBoard.setNotAllowed(3, 1);
                 gamesBoard.setNotAllowed(3, 8);
+
                 gamesBoard.setNotAllowed(4, 0);
                 gamesBoard.setNotAllowed(4, 8);
+
                 gamesBoard.setNotAllowed(5, 0);
                 gamesBoard.setNotAllowed(5, 7);
+
                 gamesBoard.setNotAllowed(6, 2);
                 gamesBoard.setNotAllowed(6, 6);
+
                 gamesBoard.setNotAllowed(7, 3);
+
                 gamesBoard.setNotAllowed(8, 4);
                 gamesBoard.setNotAllowed(8, 5);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 gamesBoard.setNotAllowed(0, 4);
+
                 gamesBoard.setNotAllowed(1, 5);
+
                 gamesBoard.setNotAllowed(3, 1);
+
                 gamesBoard.setNotAllowed(4, 0);
                 gamesBoard.setNotAllowed(4, 8);
+
                 gamesBoard.setNotAllowed(5, 7);
+
                 gamesBoard.setNotAllowed(7, 3);
+
                 gamesBoard.setNotAllowed(8, 4);
-                break;
+            }
+            default -> {break;}
         }
         this.boardSachet = boardSachet;
     }
@@ -169,7 +199,7 @@ public class Board {
                 //se tiles==EMPTY riempe randomicamente
                 if (gamesBoard.getTile(i, j).equals(Tiles.EMPTY)){
                     //in posizione i,j scegli randomicamente le tiles --> sachet.draw()
-                    PlaceTiles(boardSachet.draw(), i, j);
+                    placeTiles(boardSachet.draw(), i, j);
                 }
             }
         }
@@ -322,8 +352,9 @@ public class Board {
 
 
     //aggiunge tiles nella board - OK
-    public void PlaceTiles(Tiles tile, int row, int col){
+    public void placeTiles(Tiles tile, int row, int col){
         gamesBoard.setTile(tile, row, col);
+        boardSachet.removeTiles(tile);
     }
 
     //rimuove i tiles nelle posizioni indicate - OK
@@ -335,9 +366,7 @@ public class Board {
         }
     }
 
-    //ritorna TRUE se tiles è libera --> ha almeno un lato libero - OK
-        //RICHIEDE CHE position APPARTIENE ALLA BOARD VERA --> croce storta
-    public boolean checkFreeTiles(Point position){
+    public boolean checkFreeTilesMOSTCOMPLICATE(Point position){
         int i=position.x;
         int j=position.y;
         //se NON siamo sul bordo
@@ -440,25 +469,44 @@ public class Board {
         return true;
     }
 
-    //ritorna la posizione delle tiles libere - OK
-    public ArrayList<Point> freeTiles(){
+    //ritorna TRUE se tiles è libera --> ha almeno un lato libero - OK
+        //RICHIEDE CHE position APPARTIENE ALLA BOARD VERA --> croce storta
+    public boolean checkFreeTiles(Point position){
+        ArrayList<Point> list=adjacentTiles(position);
+        return list.size() != 4;
+    }
+
+    public ArrayList<Point> freeTilesMOSTCOMPLICATE(){
         ArrayList<Point> result=new ArrayList<Point>();
         Point position=new Point();
         //giriamo tutta la board
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                //assegniamo a position (i, j) --> Point=(int, int)
-                position.setLocation(i, j);
                 //ricerca delle tiles!=NOTALLOWED, !=EMPTY e libere
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &&
-                    checkFreeTiles(position)){
+                    checkFreeTiles(new Point(i, j))){
                     //aggiungi position all'ArrayList delle tiles libere
-                    result.add(position);
+                    result.add(new Point(i, j));
                 }
             }
         }
         //ritorna il result
+        return result;
+    }
+
+    //ritorna la posizione delle tiles libere - OK
+    public ArrayList<Point> freeTiles(){
+        ArrayList<Point> result=new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
+                    !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &
+                    checkFreeTiles(new Point(i, j))){
+                    result.add(new Point(i, j));
+                }
+            }
+        }
         return result;
     }
 
@@ -545,37 +593,39 @@ public class Board {
 
     //ritorna la posizione delle tiles adiacenti a quella in ingresso - OK
         //RICHIEDE CHE tile SIA IN UNA POSIZIONE NOTALLOWED
-    public ArrayList<Point> adjacentTiles(Point tile){
+    public static ArrayList<Point> adjacentTiles(Point tile){
         Point p=new Point();
+        int x=tile.x;
+        int y=tile.y;
         ArrayList<Point> result=new ArrayList<>();
         //NON siamo sul bordo
         if ((tile.x!=0 && tile.x!=8) &&
             (tile.y!=0 && tile.y!=8)){
             //alto
-            p.x=tile.x+1;
-            p.y=tile.y;
+            p.x=x-1;
+            p.y=y;
             if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                 !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                result.add(p);
+                result.add(new Point(x-1, y));
             }
             //basso
-            p.x=tile.x-1;
+            p.x=x+1;
             if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                result.add(p);
+                !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                result.add(new Point(x+1, y));
             }
             //sx
-            p.x=tile.x;
-            p.y=tile.y-1;
+            p.x=x;
+            p.y=y-1;
             if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                result.add(p);
+                !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                result.add(new Point(x, y-1));
             }
             //dx
-            p.y=tile.y+1;
+            p.y=y+1;
             if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                    !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                result.add(p);
+                !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                result.add(new Point(x, y+1));
             }
         }
         //siamo sul bordo
@@ -583,91 +633,92 @@ public class Board {
             //siamo sul bordo alto
             if (tile.x==0){
                 //basso
-                p.x=tile.x-1;
+                p.x=x+1;
+                p.y=y;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x+1, y));
                 }
                 //sx
-                p.x=tile.x;
-                p.y=tile.y-1;
+                p.x=x;
+                p.y=y-1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x,y-1));
                 }
                 //dx
-                p.y=tile.y+1;
+                p.y=y+1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x, y+1));
                 }
             }
             //siamo sul bordo basso
             else if (tile.x==8){
                 //alto
-                p.x=tile.x+1;
-                p.y=tile.y;
+                p.x=x-1;
+                p.y=y;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x-1, y));
                 }
                 //sx
-                p.x=tile.x;
-                p.y=tile.y-1;
+                p.x=x;
+                p.y=y-1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x, y-1));
                 }
                 //dx
-                p.y=tile.y+1;
+                p.y=y+1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x, y+1));
                 }
             }
             //siamo sul bordo sx
             else if (tile.y==0){
                 //alto
-                p.x=tile.x+1;
-                p.y=tile.y;
+                p.x=x-1;
+                p.y=y;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x-1, y));
                 }
                 //basso
-                p.x=tile.x-1;
+                p.x=x+1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x+1, y));
                 }
                 //dx
-                p.y=tile.y+1;
+                p.y=y+1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x, y+1));
                 }
             }
             //siamo sul bordo dx
             else if (tile.y==8){
                 //alto
-                p.x=tile.x+1;
-                p.y=tile.y;
+                p.x=x-1;
+                p.y=y;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x-1, y));
                 }
                 //basso
-                p.x=tile.x-1;
+                p.x=x+1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x+1, y));
                 }
                 //sx
-                p.x=tile.x;
-                p.y=tile.y-1;
+                p.x=x;
+                p.y=y-1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(p);
+                    result.add(new Point(x, y-1));
                 }
             }
         }
@@ -688,7 +739,7 @@ public class Board {
     }
 
     //ritorna TRUE se i Point sono sulla stessa colonna - OK
-    public static boolean  checkSameColumn(List<Point> position){
+    public static boolean checkSameColumn(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
             for (int j = 0; j < position.size(); j++) {
                 if (position.get(i).y!=position.get(j).y){

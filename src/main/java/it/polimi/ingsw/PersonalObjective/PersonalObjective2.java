@@ -10,7 +10,6 @@ public class PersonalObjective2 extends PersonalObjective{
 
 
     static{
-        subclasses.add(PersonalObjective2.class);
         //creazione PersonalObjective
         Point p=new Point();
         p.x=1;

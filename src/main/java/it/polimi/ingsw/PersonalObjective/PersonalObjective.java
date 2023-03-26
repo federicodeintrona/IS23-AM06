@@ -2,6 +2,8 @@ package it.polimi.ingsw.PersonalObjective;
 
 
 
+import com.openpojo.reflection.PojoClass;
+import com.openpojo.reflection.impl.PojoClassFactory;
 import it.polimi.ingsw.CommonObjective.CommonObjective;
 import it.polimi.ingsw.Player;
 
@@ -19,26 +21,14 @@ public abstract class PersonalObjective {
     protected static ArrayList<Class> subclasses = new ArrayList();
 
 
-    static{
-        try {
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective1");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective2");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective3");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective4");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective5");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective6");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective7");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective8");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective9");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective10");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective11");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective12");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+
+        static{
+            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.PersonalObjective", CommonObjective.class, null)) {
+                subclasses.add(pojoClass.getClazz());
+            }
         }
 
-    }
+
 
 
     public static ArrayList<PersonalObjective> randomSubclass(int num)  {

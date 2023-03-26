@@ -9,9 +9,7 @@ import java.util.Set;
 public class CommonObjective1 extends CommonObjective{
 
 
-    static{
-        subclasses.add(CommonObjective1.class);
-    }
+
 
     public boolean checkCondition(Player player){
 

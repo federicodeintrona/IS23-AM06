@@ -7,9 +7,7 @@ import java.util.Map;
 
 public class CommonObjective4 extends CommonObjective{
 
-    static{
-        subclasses.add(CommonObjective4.class);
-    }
+
     public boolean checkCondition(Player player) {
         Matrix matrix = player.getBookshelf().getTiles();       //creating a copy of player's bookshelf To decrease the number of access
         ArrayList<Tiles> colors = new ArrayList<>();        //to store the colors of the checking matrix 2x2
