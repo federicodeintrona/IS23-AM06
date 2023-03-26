@@ -48,15 +48,21 @@ class ModelTest {
     @Test
     void removeTileArray() {
         ArrayList<Point> array = new ArrayList<>();
-        for(int i=0;i<7;i++){
-        array.add(getRandomPointInBoard());}
+
+        array.add(new Point(0,3));
+        array.add(new Point(0,4));
         try {
+            //La casella 0,4 è NOT_ALLOWED con solo 3 giocatori
+            assertThrows(MoveNotPossible.class,()-> m.removeTileArray(array));
+
+            array.set(1,new Point(1,3));
             m.removeTileArray(array);
+
         } catch (MoveNotPossible e) {
             throw new RuntimeException(e);
         }
         for(Point p : array) {
-            assertEquals(Tiles.EMPTY, m.getBoard().getGamesBoard().getTile(p));
+            assertEquals(Tiles.EMPTY, m.getBoard().getGamesBoard().getTile(p),"Expected empty but got:" +m.getBoard().getGamesBoard().getTile(p));
         }
 
     }
@@ -65,7 +71,7 @@ class ModelTest {
     void addToBookShelf() {
 
         ArrayList<Tiles> array = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             array.add(Tiles.BLUE);
         }
         assertEquals(Tiles.BLUE,array.get(2));
@@ -75,6 +81,9 @@ class ModelTest {
 
             try {
                 m.addToBookShelf(players.get(0), array, j);
+                m.setCurrPlayer(players.get(0));
+                m.addToBookShelf(players.get(0), array, j);
+                m.setCurrPlayer(players.get(0));
             } catch (MoveNotPossible e) {
                 throw new RuntimeException(e);
             }
@@ -86,14 +95,10 @@ class ModelTest {
 
     }
 
+    /*
     @Test
     void saveState() {
-    }
-
-    @Test
-    void isFinished() {
-    }
-
+    }*/
 
 
 

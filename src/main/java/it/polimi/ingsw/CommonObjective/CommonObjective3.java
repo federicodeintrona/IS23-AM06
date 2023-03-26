@@ -10,9 +10,7 @@ import it.polimi.ingsw.*;
 
 public class CommonObjective3 extends CommonObjective{
 
-    static{
-        subclasses.add(CommonObjective3.class);
-    }
+
 
     public boolean checkCondition(Player player) {
         int numOfGroups = 0;
@@ -46,12 +44,16 @@ public class CommonObjective3 extends CommonObjective{
                             count++;
 
                             // Four adjacent cells of the same color found
-                            if (count == 4) numOfGroups++;
-
-                            // Four groups that meet the criteria found
-                            if (numOfGroups == 4) return true;
+                            if (count == 4) {
+                                numOfGroups++;
+                                queue.clear();
+                                break;
+                            }
                         }
                     }
+
+                    // Four groups that meet the criteria found
+                    if (numOfGroups == 4) return true;
                 }
             }
         }

@@ -9,7 +9,6 @@ public class PersonalObjective10 extends PersonalObjective{
     private static final HashMap<Point, Tiles> card=new HashMap<>();
 
     static{
-        subclasses.add(PersonalObjective10.class);
         //creazione PersonalObjective
         Point p=new Point();
         p.x=5;
