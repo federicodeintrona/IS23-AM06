@@ -55,7 +55,6 @@ public class Sachet {
         //salvataggio tile in posizione casuale
         result=sachet.get(n);
         //rimozione tile da sachet
-        removeTiles(n);
         return result;
     }
 
@@ -91,4 +90,10 @@ public class Sachet {
     public void removeTiles(int i){
         sachet.remove(i);
     }
+
+    //rimuove tile dal sachet di colore tiles - OK
+    public void removeTiles(Tiles tiles){
+        sachet.remove(tiles);
+    }
+
 }
