@@ -6,52 +6,110 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Lobby {
-    Controller controller;
-    ArrayList<ArrayList<ServerClientHandler>> lobbys = new ArrayList<>();
-    Queue<Integer> waitingLobbys = new LinkedList<>();
-    HashMap<Integer,Integer> idToPlayers = new HashMap<>();
+    private Controller controller;
+    private  ArrayList<ArrayList<ServerClientHandler>> lobbys = new ArrayList<>();
+    private Queue<Integer> waitingLobbys = new LinkedList<>();
+
+    private HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
+    private HashMap<Integer,Model> games = new HashMap<>();
+
+    private int gameNumber = 0;
+    private final Object gamenumberlock = new Object();
 
 
-
-    public boolean waitingLobbys(){
+    public synchronized boolean waitingLobbys(){
         if(waitingLobbys.isEmpty()){
         return false;}
         else return true;
     }
 
 
+    /**
+     * Adds a client to a waiting lobby and starts the game when it is full
+     * @param client    The client you want to add
+     */
     public synchronized void addClient(ServerClientHandler client){
+        //Get the ID of the lobby that is waiting for the longest time
         Integer index = waitingLobbys.peek();
-        lobbys.get(index).add(client);
-        if(lobbys.get(index).size() == idToPlayers.get(index)) {
-            waitingLobbys.remove();
-            startGame(index);
 
-        }
-    }
+        if(index!=null) {
+            //Add the client to the lobby and set his lobbyID
+            lobbys.get(index).add(client);
+            client.setLobbyID(index);
 
-    public void startGame(int index){
-        ArrayList<Player> players = new ArrayList<>();
-        for (ServerClientHandler s : lobbys.get(index)){
-            Player p = new Player(s.getNickname());
-            players.add(p);
+            //If the lobby reached the max number of player, start the game.
+            if (lobbys.get(index).size() == gamePlayerNumber.get(index)) {
+                waitingLobbys.remove();
+                startGame(index);
+
+            }
         }
-        Model m = new Model(players);
-        controller.addModel(m);
-        controller.startGame(index);
+
     }
 
     public synchronized void newLobby(ServerClientHandler client,int numplayers){
-          ArrayList<ServerClientHandler> newLobby = new ArrayList<>();
-          newLobby.add(client);
-          lobbys.add(newLobby);
-          idToPlayers.put(lobbys.size()-1, numplayers);
-          waitingLobbys.add(lobbys.size()-1);
+        //create a new lobby and add the player
+        ArrayList<ServerClientHandler> newLobby = new ArrayList<>();
+        newLobby.add(client);
 
+        //add the new lobby to the lobby list
+        lobbys.add(newLobby);
 
+        //record the selected number of player
+        gamePlayerNumber.put(lobbys.size()-1, numplayers);
+
+        //add i to the waiting lobbies list
+        waitingLobbys.add(lobbys.size()-1);
+
+        //set the client lobbyID
+        client.setLobbyID(lobbys.size()-1);
     }
+
+
+    public void startGame(int index) {
+        //create the model and the array that will contain alla players
+        ArrayList<Player> players = new ArrayList<>();
+        Model m = new Model(players);
+        int tempnum;
+
+        //add the new game and get its ID
+        synchronized (gamenumberlock) {
+            gameNumber += 1;
+            tempnum = gameNumber;
+        }
+        games.put(tempnum, m);
+
+        //for every client in the lobby, create his player and set the gameID
+        for (ServerClientHandler s : lobbys.get(index)) {
+            Player p = new Player(s.getNickname());
+            players.add(p);
+            s.setGameID(tempnum);
+        }
+
+        //start the game
+        controller.startGame(index);
+    }
+
+
+
+    public synchronized boolean handleClient(ServerClientHandler client){
+        //if there are waiting lobbies, add the client to the longest waiting lobby and return true
+        if(waitingLobbys()){
+            addClient(client);
+            return true;
+        //if there aren't any, return false
+        }else return false;
+    }
+
+    private void closeLobby(){}
+    public void playerDisconnection(){}
+
 
     public void setController(Controller controller) {
         this.controller = controller;
+    }
+
+    public HashMap<Integer,Model> getGames() {
+        return games;
     }
 }

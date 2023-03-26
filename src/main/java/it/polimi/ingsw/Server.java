@@ -15,8 +15,8 @@ public class Server
 {
     private static int port =9898;
     private static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
-    private Lobby lobby = new Lobby();
-    private Controller controller= new Controller(lobby);
+    private final Lobby lobby = new Lobby();
+    private Controller controller= new Controller(lobby,lobby.getGames());
 
     public static void main( String[] args ) {
 

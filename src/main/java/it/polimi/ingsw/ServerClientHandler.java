@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.Messages.IntMessage;
 import it.polimi.ingsw.Messages.Message;
 import it.polimi.ingsw.Messages.MessageTypes;
+import it.polimi.ingsw.Messages.PointsMessage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,18 +14,19 @@ import java.util.Scanner;
 import java.lang.InterruptedException;
 public class ServerClientHandler implements Runnable  {
 
-    String nickname;
-    int gameID;
-    int playerID;
+    private String username;
+    private int lobbyID;
+    private int gameID;
+    private int playerID;
 
-    Socket socket;
-    ObjectInputStream ois;
-    ObjectOutputStream oos;
+    private Socket socket;
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
 
-    Message messageIn;
-    Message messageOut;
+    private Message messageIn;
+    private Message messageOut;
 
-    Controller controller;
+    private Controller controller;
 
     public ServerClientHandler(Socket socket, Controller controller) {
         this.socket = socket;
@@ -62,33 +64,32 @@ public class ServerClientHandler implements Runnable  {
     }
 
     public void setNickname(String nickname) {
-        this.nickname = nickname;
+        this.username = nickname;
+    }
+
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
     }
 
     public String getNickname() {
-        return nickname;
+        return username;
     }
 
     private void processMessage(Message incomingMsg) throws IOException {
         if(incomingMsg != null)
         {
-            System.out.println("Server received " + incomingMsg.toString() + "from: " + nickname);
+            System.out.println("Server received " + incomingMsg.toString() + "from: " + username);
             switch (incomingMsg.getType()) {
                 case CONNECT -> {
                     System.out.println("Server: connect message received");
-
-                    synchronized(this){
-                    if (!controller.waitingLobby()) {
-                        messageOut.setType(MessageTypes.NEW_LOBBY);
-                        messageOut.setContent("Select the number of players");
-                    } else {
-                        controller.addClient(this);
-                        messageOut.setType(MessageTypes.WAITING_FOR_PLAYERS);
-                        messageOut.setContent("Added to a game. Waiting for other player...");
-                    }}
+                    messageOut = controller.handleNewClient(this);
                     this.oos.writeObject(messageOut);
 
-                    }
+                }
 
                 case NUM_OF_PLAYERS -> {
                     IntMessage message = (IntMessage) incomingMsg;
@@ -99,6 +100,15 @@ public class ServerClientHandler implements Runnable  {
 
                 }
                 case DISCONNECT -> {
+
+                }
+                case REMOVE_FROM_BOARD -> {
+                    PointsMessage temp = (PointsMessage) incomingMsg;
+                    controller.removeTiles(this.gameID,this.username, temp.getTiles());
+
+
+                }
+                case ADD_TO_BOOKSHELF -> {
 
                 }
                 default -> {
