@@ -1,10 +1,8 @@
 package it.polimi.ingsw.PersonalObjective;
 
 
-
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import it.polimi.ingsw.CommonObjective.CommonObjective;
 import it.polimi.ingsw.Player;
 
 import java.lang.reflect.Constructor;
