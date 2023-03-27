@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
 
-
     //TEST boardInitialization()
     @DisplayName("Board initiliazation for 2 players do NOT put EMPTY tiles")
     @Test
