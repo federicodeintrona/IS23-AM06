@@ -79,10 +79,10 @@ public class Model  {
 
      * @param points  The position of the tiles
      */
-    public void removeTileArray( ArrayList<Point> points) throws MoveNotPossible{
+    public void removeTileArray( Player player,ArrayList<Point> points) throws MoveNotPossible{
 
         //Checks move legitimacy
-        if(!checkRemoveLegit(points)) throw new MoveNotPossible();
+        if(!checkRemoveLegit(points,player)) throw new MoveNotPossible();
 
 
         for(int i = 0; i < points.size(); i++){
@@ -146,15 +146,24 @@ public class Model  {
 
 
     //Checks
-    private boolean checkRemoveLegit(ArrayList<Point> points){
+    private boolean checkRemoveLegit(ArrayList<Point> points, Player player){
+        if(!player.equals(currPlayer)) return false;
+        else if(!checkPointArrayDomain(points)) return false;
+       else return true;
+    }
+
+    private boolean checkPointArrayDomain(ArrayList<Point> points){
         if(points!=null){
             if(points.size()>3) return false;
-            if(!Board.checkAdjacentTiles(points)) return false;
+            else if(!Board.checkAdjacentTiles(points)) return false;
             for(Point p : points){
                 if(!checkBoardDomain(p)) return false;
-                    }
+            }
             return true;}
-        return false;}
+        else return false;
+
+    }
+
 
     private boolean checkAddLegit(Player player,int col,int size){
         if(!player.equals(currPlayer)) return false;

@@ -53,10 +53,10 @@ class ModelTest {
         array.add(new Point(0,4));
         try {
             //La casella 0,4 è NOT_ALLOWED con solo 3 giocatori
-            assertThrows(MoveNotPossible.class,()-> m.removeTileArray(array));
+            assertThrows(MoveNotPossible.class,()-> m.removeTileArray(players.get(0),array));
 
             array.set(1,new Point(1,3));
-            m.removeTileArray(array);
+            m.removeTileArray(players.get(0),array);
 
         } catch (MoveNotPossible e) {
             throw new RuntimeException(e);
@@ -100,6 +100,26 @@ class ModelTest {
     void saveState() {
     }*/
 
+    @Test
+    void gameTest(){
+
+        //player 0's turn
+        ArrayList<Point> remove = new ArrayList<>();
+        remove.add(new Point(0,3));
+        remove.add(new Point(1,3));
+        ArrayList<Tiles> add = new ArrayList<>();
+        for (Point point : remove) {
+            add.add(m.getBoard().getGamesBoard().getTile(point));
+        }
+
+        try {
+            m.removeTileArray(players.get(0),remove);
+
+            m.addToBookShelf(players.get(0),add,0);
+        } catch (MoveNotPossible e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

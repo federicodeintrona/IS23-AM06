@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.Messages.Message;
+import it.polimi.ingsw.Messages.MessageTypes;
 import it.polimi.ingsw.View.View;
 
 import java.awt.*;
@@ -12,37 +13,34 @@ import java.util.HashMap;
 public class Controller {
 
     Lobby lobby;
-    private ArrayList<Model> games;
+    private HashMap<Integer,Model> games;
+
+    private HashMap<String ,Player > playerIDs;
+
     private ArrayList<ArrayList<View>> views;
 
-    private HashMap<Integer, Player> playerIDs;
-
-
-    public Controller(Lobby loby) {
+    public Controller(Lobby loby, HashMap<Integer,Model> models) {
         lobby = loby;
-       games = new ArrayList<>();
+       games = models;
        views = new ArrayList<>();
        playerIDs = new HashMap<>();
     }
 
 
-    public void addModel(Model m){
-        games.add(m);
-    }
 
-    public void addGame(Model model, ArrayList<View> view){
-        games.add(model);
-        views.add(view);
-    }
 
     public void startGame(int ID)  {
+
+        for(Player p : games.get(ID).getPlayers()) {
+            playerIDs.put(p.getUsername(),p);
+        }
         games.get(ID).initialization();
     }
 
 
 
 
-    public void addToBookshelf(int gameID, int playerID, ArrayList<Tiles> array, int col ){
+    public void addToBookshelf(int gameID, String playerID, ArrayList<Tiles> array, int col ){
 
         try {
             games.get(gameID).addToBookShelf(playerIDs.get(playerID),array,col);
@@ -52,9 +50,9 @@ public class Controller {
     }
 
 
-    public void removeTiles(int gameID, ArrayList<Point> points){
+    public void removeTiles(int gameID,String playerID, ArrayList<Point> points){
         try {
-            games.get(gameID).removeTileArray(points);
+            games.get(gameID).removeTileArray(playerIDs.get(playerID),points);
         } catch (MoveNotPossible e) {
             throw new RuntimeException(e);
         }
@@ -73,8 +71,17 @@ public class Controller {
         lobby.newLobby(client,players);
     }
 
-    public void addClient(ServerClientHandler client){
-        lobby.addClient(client);
+    public Message handleNewClient(ServerClientHandler client){
+        Message reply = new Message();
+        if(lobby.handleClient(client)){
+            reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
+            reply.setContent("Added to a game. Waiting for other player...");
+            return  reply;
+        }else {
+            reply.setType(MessageTypes.NEW_LOBBY);
+            reply.setContent("Select the number of players");
+            return reply;
+        }
     }
 
 
@@ -86,5 +93,10 @@ public class Controller {
             tiles.set(i,array.get(ints.get(i)-1));
         }
 
+    }
+
+
+    public void addPlayer(String username, Player player){
+        playerIDs.put(username,player);
     }
 }
