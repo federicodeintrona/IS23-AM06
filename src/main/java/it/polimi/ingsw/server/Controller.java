@@ -71,6 +71,7 @@ public class Controller {
     }
 
     public Message handleNewClient(ServerClientHandler client){
+
         Message reply = new Message();
         if(lobby.handleClient(client)){
             reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
