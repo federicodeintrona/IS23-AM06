@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Set;
 
 public abstract class CommonObjective {
-    public int points = 8;
+    int points = 8;
     Set<Player> playersWhoCompletedComObj = new HashSet<>();
 
     protected static ArrayList<Class> subclasses = new ArrayList();
