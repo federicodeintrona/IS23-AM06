@@ -4,6 +4,8 @@ package it.polimi.ingsw.PersonalObjective;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
+import it.polimi.ingsw.Bookshelf;
+import it.polimi.ingsw.CommonObjective.CommonObjective;
 import it.polimi.ingsw.Player;
 
 import java.lang.reflect.Constructor;
@@ -22,7 +24,7 @@ public abstract class PersonalObjective {
 
 
         static{
-            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.PersonalObjective", PersonalObjective.class, null)) {
+            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.PersonalObjective", CommonObjective.class, null)) {
                 subclasses.add(pojoClass.getClazz());
             }
         }
@@ -69,9 +71,10 @@ public abstract class PersonalObjective {
     //ritorna il numero di obiettivi completati -->
     // --> posizione-colore carta PersonalObjective coincide con posizione-colore nella Bookshelf
     public abstract int checkCondition(Player player);
+    public abstract int checkCondition(Bookshelf bookshelf);
 
     //ritorna il punteggio del player
     public abstract int personalObjectivePoint(Player player);
-
+    public abstract int personalObjectivePoint(Bookshelf bookshelf);
 
 }
