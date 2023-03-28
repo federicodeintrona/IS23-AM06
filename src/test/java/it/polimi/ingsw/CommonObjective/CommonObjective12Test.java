@@ -1,5 +1,6 @@
 package it.polimi.ingsw.CommonObjective;
 
+import it.polimi.ingsw.server.CommonObjective.CommonObjective9;
 import it.polimi.ingsw.server.Player;
 import it.polimi.ingsw.server.Tiles;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective12;
@@ -15,17 +16,29 @@ class CommonObjective12Test {
      */
     @Test
     void checkConditionSuccess1() {
-        Player player = new Player("Jhon", true);
+        Player player = new Player( "Jhon", true);
+        Tiles tiles = Tiles.EMPTY;
         Tiles[] values = Tiles.values();
         int x = 0;
+        int buffer = 1;
+        int j;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
+            }
+        }
+
+        for (int i=0; i<6; i++){
+            j = 0;
+            while (j < buffer){
                 player.getBookshelf().getTiles().setTile(values[x], i, j);
                 x++;
-                if (x == 5) x = 0;
+                j++;
+                if (x == 6) x = 0;
             }
+            buffer++;
         }
 
         // Creation of an instance for CommonObjective12
@@ -69,10 +82,26 @@ class CommonObjective12Test {
     }
 
     /**
-     * Testing
+     * Testing for failure first if statement
+     * with a bookshelf completely empty
      */
     @Test
     void checkConditionFailure1() {
+        Player player = new Player( "Jhon", true);
+        Tiles tiles = Tiles.EMPTY;
+
+        // Initializing the bookshelf
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
+            }
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Checking that the checkCondition method returns true
+        assertFalse(obj.checkCondition(player));
     }
 
     /**
