@@ -9,6 +9,7 @@ public class CommonObjective12 extends CommonObjective{
         int i;
         int j;
 
+        // Checks if the bookshelf is empty and in case returns false
         if (player.getBookshelf().checkEmptyBoard()) return false;
 
         // checking first diagonal
