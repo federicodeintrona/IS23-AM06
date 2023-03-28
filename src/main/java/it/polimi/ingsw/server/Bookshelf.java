@@ -37,7 +37,16 @@ public class Bookshelf {
             }
             return true;
         }
-        public void addTile(ArrayList<Tiles> tiles, int column){
+
+        public boolean checkEmptyBoard(){
+            for(int i=0;i<5;i++){
+                if(!(tiles.getTile(0,i).equals(Tiles.EMPTY))){
+                    return false;
+                }
+            }
+            return true;
+        }
+    public void addTile(ArrayList<Tiles> tiles, int column){
             int pos=firstFree(column);
             if (tiles.size() == 1) this.tiles.setTile(tiles.get(0), pos, column);
             else if (tiles.size()==2) {
