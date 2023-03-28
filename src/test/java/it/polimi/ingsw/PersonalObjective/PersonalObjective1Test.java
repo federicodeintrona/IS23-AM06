@@ -1,12 +1,11 @@
 package it.polimi.ingsw.PersonalObjective;
 
-import it.polimi.ingsw.Bookshelf;
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Tiles;
-import org.junit.jupiter.api.DisplayName;
+import it.polimi.ingsw.server.Bookshelf;
+import it.polimi.ingsw.server.Player;
+import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.PersonalObjective.PersonalObjective1;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

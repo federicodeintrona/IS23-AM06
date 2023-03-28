@@ -1,5 +1,8 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.server.Board;
+import it.polimi.ingsw.server.Sachet;
+import it.polimi.ingsw.server.Tiles;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

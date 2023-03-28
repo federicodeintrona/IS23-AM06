@@ -1,13 +1,15 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Exceptions.MoveNotPossible;
-import it.polimi.ingsw.View.CLIView;
-import it.polimi.ingsw.View.View;
+import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
+import it.polimi.ingsw.server.Model;
+import it.polimi.ingsw.server.Player;
+import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.View.CLIView;
+import it.polimi.ingsw.server.View.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Random;
 
