@@ -5,8 +5,7 @@ import it.polimi.ingsw.server.Player;
 import it.polimi.ingsw.server.Tiles;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CommonObjective12Test {
 
@@ -56,16 +55,8 @@ class CommonObjective12Test {
     @Test
     void checkConditionSuccess2() {
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.EMPTY;
         int buffer = 1;
         int j;
-
-        // Initializing the bookshelf
-        for (int i = 0; i < 6; i++) {
-            for (j = 0; j < 5; j++) {
-                player.getBookshelf().getTiles().setTile(tiles, i, j);
-            }
-        }
 
         for (int i=1; i<6; i++){
             j = 0;
@@ -142,6 +133,42 @@ class CommonObjective12Test {
      */
     @Test
     void commonObjPointsCalculatorTwoPlayers() {
+        Player player1 = new Player( "Jhon", true);
+        Player player2 = new Player( "Obi", false);
+        Tiles tiles = Tiles.EMPTY;
+        int buffer = 1;
+        int j;
+
+        // Initializing the bookshelf
+        for (int i = 0; i < 6; i++) {
+            for (j = 0; j < 5; j++) {
+                player1.getBookshelf().getTiles().setTile(tiles, i, j);
+                player2.getBookshelf().getTiles().setTile(tiles, i, j);
+            }
+        }
+
+        for (int i=1; i<6; i++){
+            j = 0;
+            while (j < buffer){
+                player1.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+                player2.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+                j++;
+            }
+            buffer++;
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Testing method for player1
+        obj.commonObjPointsCalculator(player1, 2);
+        assertEquals(8, player1.getCommonObjectivePoint());
+        assertEquals(4, obj.getPoints());
+
+        // Testing method for player2
+        obj.commonObjPointsCalculator(player2, 2);
+        assertEquals(4, player2.getCommonObjectivePoint());
+        assertEquals(0, obj.getPoints());
     }
 
     /**
@@ -150,6 +177,48 @@ class CommonObjective12Test {
      */
     @Test
     void commonObjPointsCalculatorFourPlayers() {
+        Player player1 = new Player( "Jhon", true);
+        Player player2 = new Player( "Obi", false);
+        Player player3 = new Player( "Pablo", false);
+        Player player4 = new Player( "Felipe", false);
+        int buffer = 1;
+        int j;
+
+        // Initializing the bookshelf
+        for (int i=1; i<6; i++){
+            j = 0;
+            while (j < buffer){
+                player1.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+                player2.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+                player3.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+                player4.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+                j++;
+            }
+            buffer++;
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Testing method for player1
+        obj.commonObjPointsCalculator(player1, 4);
+        assertEquals(8, player1.getCommonObjectivePoint());
+        assertEquals(6, obj.getPoints());
+
+        // Testing method for player2
+        obj.commonObjPointsCalculator(player2, 4);
+        assertEquals(6, player2.getCommonObjectivePoint());
+        assertEquals(4, obj.getPoints());
+
+        // Testing method for player3
+        obj.commonObjPointsCalculator(player3, 4);
+        assertEquals(4, player3.getCommonObjectivePoint());
+        assertEquals(2, obj.getPoints());
+
+        // Testing method for player4
+        obj.commonObjPointsCalculator(player4, 4);
+        assertEquals(2, player4.getCommonObjectivePoint());
+        assertEquals(0, obj.getPoints());
     }
 
     /**
@@ -158,6 +227,23 @@ class CommonObjective12Test {
      */
     @Test
     void commonObjPointsCalculatorFailure1() {
+        Player player = new Player( "Jhon", true);
+        Tiles tiles = Tiles.EMPTY;
+
+        // Initializing the bookshelf
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
+            }
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Testing method for player
+        obj.commonObjPointsCalculator(player, 2);
+        assertEquals(0, player.getCommonObjectivePoint());
+        assertEquals(8, obj.getPoints());
     }
 
     /**
@@ -166,5 +252,31 @@ class CommonObjective12Test {
      */
     @Test
     void commonObjPointsCalculatorFailure2() {
+        Player player = new Player( "Jhon", true);
+        int buffer = 1;
+        int j;
+
+        // Initializing the bookshelf
+        for (int i=1; i<6; i++){
+            j = 0;
+            while (j < buffer){
+                player.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+                j++;
+            }
+            buffer++;
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Testing method for player first time
+        obj.commonObjPointsCalculator(player, 3);
+        assertEquals(8, player.getCommonObjectivePoint());
+        assertEquals(6, obj.getPoints());
+
+        // Testing method for player second time
+        obj.commonObjPointsCalculator(player, 3);
+        assertEquals(8, player.getCommonObjectivePoint());
+        assertEquals(6, obj.getPoints());
     }
 }
