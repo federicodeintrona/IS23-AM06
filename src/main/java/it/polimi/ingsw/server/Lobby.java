@@ -47,6 +47,7 @@ public class Lobby {
 
     }
 
+
     public synchronized void newLobby(ServerClientHandler client,int numplayers){
         //create a new lobby and add the player
         ArrayList<ServerClientHandler> newLobby = new ArrayList<>();
