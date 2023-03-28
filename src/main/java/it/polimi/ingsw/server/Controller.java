@@ -18,6 +18,11 @@ public class Controller {
 
     private ArrayList<ArrayList<View>> views;
 
+    /**
+     * Contructor
+     * @param loby The lobby of the server
+     * @param models  The hashmap of all current games
+     */
     public Controller(Lobby loby, HashMap<Integer,Model> models) {
         lobby = loby;
        games = models;
@@ -26,10 +31,13 @@ public class Controller {
     }
 
 
-
-
+    /**
+     * Adds the player of the game to the list af all players,
+     * initializes the selected model.
+     * @param ID The ID of the game you want to start
+     */
     public void startGame(int ID)  {
-
+        //Adds
         for(Player p : games.get(ID).getPlayers()) {
             playerIDs.put(p.getUsername(),p);
         }
@@ -57,21 +65,15 @@ public class Controller {
         }
     }
 
-    public void saveState(int gameID){
-        games.get(gameID).saveState();
-    }
+    //public void saveState(int gameID){games.get(gameID).saveState();}
 
     //Lobby methods
-    public boolean waitingLobby(){
-        return lobby.waitingLobbys();
-    }
 
     public void newLobby(ServerClientHandler client,int players){
         lobby.newLobby(client,players);
     }
 
     public Message handleNewClient(ServerClientHandler client){
-
         Message reply = new Message();
         if(lobby.handleClient(client)){
             reply.setType(MessageTypes.WAITING_FOR_PLAYERS);

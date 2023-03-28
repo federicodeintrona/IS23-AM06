@@ -86,8 +86,18 @@ public class ServerClientHandler implements Runnable  {
             switch (incomingMsg.getType()) {
                 case CONNECT -> {
                     System.out.println("Server: connect message received");
+
+                    //Username check
+
+
+
+                    //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
-                    messageOut = controller.handleNewClient(this);}
+                        messageOut = controller.handleNewClient(this);
+                    }
+
+
+
                     this.oos.writeObject(messageOut);
 
                 }
