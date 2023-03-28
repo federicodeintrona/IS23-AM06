@@ -58,6 +58,7 @@ class CommonObjective12Test {
         int buffer = 1;
         int j;
 
+        // Initializing the bookshelf
         for (int i=1; i<6; i++){
             j = 0;
             while (j < buffer){
