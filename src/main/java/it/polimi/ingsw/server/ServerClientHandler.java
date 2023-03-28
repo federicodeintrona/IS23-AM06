@@ -26,6 +26,7 @@ public class ServerClientHandler implements Runnable  {
 
     private Controller controller;
 
+    boolean disconnected = false;
     public ServerClientHandler(Socket socket, Controller controller) {
         this.socket = socket;
         this.controller=controller;
@@ -35,13 +36,14 @@ public class ServerClientHandler implements Runnable  {
         try {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
-            while (socket.isConnected()) {
-                messageIn= (Message) ois.readObject();
 
+            while (socket.isConnected() /* !disconnected*/) {
+
+                messageIn= (Message) ois.readObject();
                 processMessage(messageIn);
 
-
             }
+
             socket.close();
             ois.close();
             oos.close();
@@ -84,7 +86,8 @@ public class ServerClientHandler implements Runnable  {
             switch (incomingMsg.getType()) {
                 case CONNECT -> {
                     System.out.println("Server: connect message received");
-                    messageOut = controller.handleNewClient(this);
+                    synchronized (this){
+                    messageOut = controller.handleNewClient(this);}
                     this.oos.writeObject(messageOut);
 
                 }
@@ -98,16 +101,18 @@ public class ServerClientHandler implements Runnable  {
 
                 }
                 case DISCONNECT -> {
+                    disconnected = true;
 
                 }
                 case REMOVE_FROM_BOARD -> {
                     PointsMessage temp = (PointsMessage) incomingMsg;
                     controller.removeTiles(this.gameID,this.username, temp.getTiles());
-
-
+                }
+                case SWITCH_PLACE -> {
+                    //controller.swapOrder();
                 }
                 case ADD_TO_BOOKSHELF -> {
-
+                    //controller.addToBookshelf();
                 }
                 default -> {
                     System.out.println("Server received: " + incomingMsg.toString());

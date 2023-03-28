@@ -24,7 +24,7 @@ public abstract class PersonalObjective {
 
 
         static{
-            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.PersonalObjective", CommonObjective.class, null)) {
+            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.server.PersonalObjective", CommonObjective.class, null)) {
                 subclasses.add(pojoClass.getClazz());
             }
         }
