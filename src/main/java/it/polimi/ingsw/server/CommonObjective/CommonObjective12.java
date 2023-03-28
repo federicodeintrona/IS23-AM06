@@ -14,7 +14,7 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i<5 && j<5){
 
-            if (!player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
 
             i++;
             j++;
@@ -25,7 +25,7 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i<6 && j<5){
 
-            if (!player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
 
             i++;
             j++;
@@ -36,7 +36,7 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i>0 && j<5){
 
-            if (!player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
 
             i--;
             j++;
@@ -47,7 +47,7 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i>=0 && j<5){
 
-            if (!player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
 
             i--;
             j++;
