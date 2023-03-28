@@ -325,11 +325,18 @@ public class Model  {
 
     //GETTERS AND SETTERS: USELESS FOR NOW
 
-
+    /**
+     * Return the array of all players
+     * @return  Array of all players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Return the board
+     * @return the board
+     */
     public Board getBoard() {
         return board;
     }
@@ -344,22 +351,27 @@ public class Model  {
     /**
      * @return Array of all the personal objectives of all players in the game
      */
-    public ArrayList<PersonalObjective> getPersobj(){
+   /* public ArrayList<PersonalObjective> getPersobj(){
         ArrayList<PersonalObjective> persobj = new ArrayList<>();
         for( Player p : players){
             persobj.add(p.getPersonalObjective());
         }
         return persobj;
-    }
+    }*/
 
-    public Player getCurrPlayer() {
-        return currPlayer;
-    }
 
+    /**
+     * Set the current player (Just for Testing purposes)
+     * @param currPlayer The player to set as current player
+     */
     public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
     }
 
+    /**
+     * Return true if the game is finished, false otherwise
+     * @return isFinished
+     */
     public boolean isFinished() {
         return isFinished;
     }
