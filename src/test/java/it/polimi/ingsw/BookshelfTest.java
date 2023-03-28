@@ -68,6 +68,7 @@ public class BookshelfTest {
         b.addTile( scelta,4 );
         assertEquals(b.checkEndGame(),true,"La matrice è piena");
     }
+    @Test
     void checkCheckEmptyBoard(){
         ArrayList <Tiles> scelta= new ArrayList<>();
         scelta.add(Tiles.BLUE);
