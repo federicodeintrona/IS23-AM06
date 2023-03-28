@@ -9,6 +9,8 @@ public class CommonObjective12 extends CommonObjective{
         int i;
         int j;
 
+        if (player.getBookshelf().checkEmptyBoard()) return false;
+
         // checking first diagonal
         i = 0;
         j = 0;
