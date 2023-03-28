@@ -1,15 +1,17 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.server.Board;
+import it.polimi.ingsw.server.Sachet;
+import it.polimi.ingsw.server.Tiles;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BoardTest {
 
@@ -98,7 +100,7 @@ class BoardTest {
         board.placeTiles(Tiles.GREEN, 3,6);
         boolean result=board.checkBoardReset();
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, true);
+        Assertions.assertTrue(result);
     }
     @DisplayName("Condition to board reset is NOT verified")
     @Test

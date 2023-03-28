@@ -1,11 +1,11 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.server.Matrix;
+import it.polimi.ingsw.server.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 

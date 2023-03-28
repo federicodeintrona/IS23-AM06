@@ -1,7 +1,8 @@
 package it.polimi.ingsw.CommonObjective;
 
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Tiles;
+import it.polimi.ingsw.server.Player;
+import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.CommonObjective.CommonObjective8;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
