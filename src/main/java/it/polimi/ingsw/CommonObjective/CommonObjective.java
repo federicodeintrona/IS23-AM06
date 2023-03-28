@@ -1,5 +1,7 @@
 package it.polimi.ingsw.CommonObjective;
 
+import com.openpojo.reflection.PojoClass;
+import com.openpojo.reflection.impl.PojoClassFactory;
 import it.polimi.ingsw.*;
 
 import java.lang.reflect.Constructor;
@@ -16,29 +18,15 @@ public abstract class CommonObjective {
     protected static ArrayList<Class> subclasses = new ArrayList();
 
     static{
-        try {
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective1");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective2");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective3");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective4");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective5");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective6");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective7");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective8");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective9");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective10");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective11");
-            Class.forName("it.polimi.ingsw.CommonObjective.CommonObjective12");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.CommonObjective", CommonObjective.class, null)) {
+                subclasses.add(pojoClass.getClazz());
+            }
     }
-    public static ArrayList<CommonObjective> randomSubclass(int num) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public static ArrayList<CommonObjective> randomSubclass(int num) {
 
 
-        ArrayList temp = (ArrayList) subclasses.clone();
+        ArrayList<Class> temp = new ArrayList<>();
+        temp.addAll(subclasses);
         Random rand = new Random();
 
 
@@ -46,10 +34,20 @@ public abstract class CommonObjective {
 
 
         for(int i = 0; i<num; i++ ){
-            int index = rand.nextInt(subclasses.size());
-            Constructor c= subclasses.get(index).getDeclaredConstructor();
+            int index = rand.nextInt(temp.size());
+            Constructor c;
+            try {
+                c = temp.get(index).getDeclaredConstructor();
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
             temp.remove(index);
-            result.add((CommonObjective) c.newInstance() );
+            try {
+                result.add((CommonObjective) c.newInstance() );
+            } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
         }
 
 
@@ -60,4 +58,16 @@ public abstract class CommonObjective {
     public abstract boolean checkCondition(Player player);
 
     public abstract void commonObjPointsCalculator(Player player, int numOfPlayers);
+
+    public int getPoints() {
+        return points;
+    }
+
+    public Set<Player> getPlayersWhoCompletedComObj() {
+        return playersWhoCompletedComObj;
+    }
+
+    public static ArrayList<Class> getSubclasses() {
+        return subclasses;
+    }
 }

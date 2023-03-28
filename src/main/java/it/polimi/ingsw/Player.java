@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.PersonalObjective.PersonalObjective;
 
 public class Player {
-    private final String userName;
+    private final String username;
     private Bookshelf bookshelf = new Bookshelf();
     private PersonalObjective personalObjective;
     private int publicPoint;
@@ -12,19 +12,28 @@ public class Player {
     private int personalObjectivePoint;
     private int vicinityPoint;
     private int winnerPoint ;
-    private final boolean chair;
+    private boolean chair;
 
-    public Player(String userName, boolean chair) {
-        this.userName = userName;
+    public Player(String userName) {
+        this.username = userName;
         publicPoint = 0;
         privatePoint = 0;
         commonObjectivePoint = 0;
         personalObjectivePoint = 0;
         vicinityPoint = 0;
         winnerPoint = 0;
-        this.chair=chair;
     }
 
+    public Player(String userName,boolean chair) {
+        this.username = userName;
+        publicPoint = 0;
+        privatePoint = 0;
+        commonObjectivePoint = 0;
+        personalObjectivePoint = 0;
+        vicinityPoint = 0;
+        winnerPoint = 0;
+        this.chair = chair;
+    }
     public Bookshelf getBookshelf(){
         return bookshelf;
     }
@@ -91,5 +100,9 @@ public class Player {
 
     public void setPersonalObjectivePoint(){
         personalObjectivePoint=personalObjective.personalObjectivePoint(this);
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

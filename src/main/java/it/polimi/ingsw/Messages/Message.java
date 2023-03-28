@@ -6,8 +6,20 @@ import java.util.Objects;
 
 public class Message {
 
-    private Point senderID;
+    private String username;
     private MessageTypes type;
-    private int num;
 
+
+
+    public MessageTypes getType() {
+        return type;
+    }
+
+    public void setType(MessageTypes type) {
+        this.type = type;
+    }
+
+    public void setContent(Object o){
+
+    }
 }

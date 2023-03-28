@@ -6,9 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CommonObjective8 extends CommonObjective{
-    static{
-        subclasses.add(CommonObjective8.class);
-    }
+
 
     public boolean checkCondition(Player player){
         int count = 0;

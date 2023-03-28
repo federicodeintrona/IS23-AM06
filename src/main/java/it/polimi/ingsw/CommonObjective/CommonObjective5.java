@@ -5,9 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CommonObjective5 extends CommonObjective{
-    static{
-        subclasses.add(CommonObjective5.class);
-    }
+
 
     public boolean checkCondition(Player player){
         int count = 0;
@@ -32,8 +30,8 @@ public class CommonObjective5 extends CommonObjective{
 
                 if (numOfColor < 4) count++;
                 buffer.clear();
-                i++;
             }
+            i++;
         }
         if (count == 3) return true;
         else return false;

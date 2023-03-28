@@ -9,9 +9,7 @@ import java.util.Set;
 public class CommonObjective1 extends CommonObjective{
 
 
-    static{
-        subclasses.add(CommonObjective1.class);
-    }
+
 
     public boolean checkCondition(Player player){
 
@@ -43,6 +41,11 @@ public class CommonObjective1 extends CommonObjective{
         return false;
     }
 
+    /**
+     *
+     * @param player
+     * @param numOfPlayers
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 

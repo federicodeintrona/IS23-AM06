@@ -4,9 +4,6 @@ import it.polimi.ingsw.*;
 
 public class CommonObjective2 extends CommonObjective{
 
-    static{
-        subclasses.add(CommonObjective2.class);
-    }
 
     public boolean checkCondition(Player player){
 

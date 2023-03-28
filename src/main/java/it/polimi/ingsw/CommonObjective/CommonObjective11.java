@@ -5,9 +5,7 @@ import it.polimi.ingsw.*;
 import java.awt.*;
 
 public class CommonObjective11 extends CommonObjective{
-    static{
-        subclasses.add(CommonObjective11.class);
-    }
+
 
     @Override
     public boolean checkCondition(Player player) {

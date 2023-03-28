@@ -26,7 +26,11 @@ public class Matrix {
         }
     }
 
-
+    /**
+     * Methods that return a selected column
+     * @param col   The index of the column
+     * @return    The selected column
+     */
     public ArrayList<Tiles> getColumn(int col){
         return board.get(col);
     }
@@ -43,6 +47,12 @@ public class Matrix {
         board.get(col).set(row,tile);
 
     }
+
+    /**
+     * Set the the tiles to the
+     * @param tile
+     * @param pos
+     */
     public void setTile(Tiles tile, Point pos) {
 
         board.get(pos.getLocation().y).set(pos.getLocation().x,tile);
@@ -99,10 +109,9 @@ public class Matrix {
     }
     //stampa la matrice
     public void print(){
-        for( int i=0; i<numCols;i++){
-            for( int j=0; j<numRows;j++){
-                System.out.print(board.get(i).get(j));
-                System.out.print(" ");
+        for( int i=0; i<numRows;i++){
+            for( int j=0; j<numCols;j++){
+                System.out.print(board.get(j).get(i));
             }
             System.out.println();
         }
@@ -130,7 +139,7 @@ public class Matrix {
 
     // method to check if row x is full
     public boolean rowIsFull(int x){
-        for (int i=0; i<numRows; i++){
+        for (int i=0; i<numCols; i++){
             if (board.get(i).get(x).equals(Tiles.EMPTY)) return false;
         }
         return true;

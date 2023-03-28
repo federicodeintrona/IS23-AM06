@@ -2,6 +2,10 @@ package it.polimi.ingsw.PersonalObjective;
 
 
 
+import com.openpojo.reflection.PojoClass;
+import com.openpojo.reflection.impl.PojoClassFactory;
+import it.polimi.ingsw.Bookshelf;
+import it.polimi.ingsw.CommonObjective.CommonObjective;
 import it.polimi.ingsw.Player;
 
 import java.lang.reflect.Constructor;
@@ -18,49 +22,44 @@ public abstract class PersonalObjective {
     protected static ArrayList<Class> subclasses = new ArrayList();
 
 
-    static{
-        try {
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective1");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective2");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective3");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective4");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective5");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective6");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective7");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective8");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective9");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective10");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective11");
-            Class.forName("it.polimi.ingsw.PersonalObjective.PersonalObjective12");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+
+        static{
+            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.PersonalObjective", CommonObjective.class, null)) {
+                subclasses.add(pojoClass.getClazz());
+            }
         }
 
-    }
 
 
-    public static PersonalObjective randomSubclass() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+
+    public static ArrayList<PersonalObjective> randomSubclass(int num)  {
 
 
-        ArrayList temp = (ArrayList) subclasses.clone();
+
+        ArrayList<Class> temp = new ArrayList<>();
+        temp.addAll(subclasses);
         Random rand = new Random();
 
-        System.out.println(subclasses.size());
-        System.out.println(temp.size());
 
-        PersonalObjective result;
-
-        /*for (int i = 0; i< temp.size();i++){
-            System.out.println(temp.get(i));
-        }*/
+        ArrayList<PersonalObjective> result = new ArrayList<>();
 
 
-        int index = rand.nextInt(subclasses.size());
-        Constructor c= subclasses.get(index).getDeclaredConstructor();
-        temp.remove(index);
-        result = (PersonalObjective) c.newInstance();
-
+        for(int i = 0; i<num; i++ ){
+            int index = rand.nextInt(temp.size());
+            Constructor c;
+            try {
+                c = temp.get(index).getDeclaredConstructor();
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            temp.remove(index);
+            try {
+                result.add((PersonalObjective) c.newInstance() );
+            } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }
 
 
         return result;
@@ -72,9 +71,10 @@ public abstract class PersonalObjective {
     //ritorna il numero di obiettivi completati -->
     // --> posizione-colore carta PersonalObjective coincide con posizione-colore nella Bookshelf
     public abstract int checkCondition(Player player);
+    public abstract int checkCondition(Bookshelf bookshelf);
 
     //ritorna il punteggio del player
     public abstract int personalObjectivePoint(Player player);
-
+    public abstract int personalObjectivePoint(Bookshelf bookshelf);
 
 }
