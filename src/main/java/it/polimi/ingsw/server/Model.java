@@ -47,23 +47,25 @@ public class Model  {
 
     //PUBLIC METHODS : INTERFACE
 
-
-
-
     /**
      * Initializes the board and the objectives
      */
     public void initialization()  {
-
+        //Create and initialize the board
         board = new Board(players.size(), new Sachet());
         board.BoardInitialization();
+
+        //Initialize common and personal objectives
+
         commonobjInit();
         personalobjInit();
+        //Initializes the point arrays
         for(Player p : players){
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
         }
 
+        //Add the views as change listeners
         for (View v : virtualViews){
             notifier.addPropertyChangeListener(v);
         }
@@ -82,15 +84,14 @@ public class Model  {
         //Checks move legitimacy
         if(!checkRemoveLegit(points,player)) throw new MoveNotPossible();
 
-
+        //Notify the views
         for(int i = 0; i < points.size(); i++){
             Pair<Tiles,Point> p1 = new Pair<>(board.getGamesBoard().getTile(points.get(i)),points.get(i));
             Pair<Tiles,Point> p2 = new Pair<>(Tiles.EMPTY,points.get(i));
-
-
             notifier.firePropertyChange( new PropertyChangeEvent(board,"board", p1,p2));
 
         }
+        //Remove the selected tiles
         board.remove(points);
 
     }
@@ -131,7 +132,8 @@ public class Model  {
             notifier.firePropertyChange(evt1);
 
         }
-        //Advances turns
+
+        //Advances turn
         nextTurn();
 
     }
@@ -144,16 +146,30 @@ public class Model  {
 
 
     //Checks
+
+    /**
+     * If possible, removes the selected tiles from the board.
+     * @param points The array of points you want to remove
+     * @param player The player who wants to remove the tiles
+     * @return Return true if the move is legitimate, false if it is not.
+     */
     private boolean checkRemoveLegit(ArrayList<Point> points, Player player){
+        //Check if the player requesting the move is the current player
         if(!player.equals(currPlayer)) return false;
+        //check if the selected tiles can actually be selected
         else if(!checkPointArrayDomain(points)) return false;
        else return true;
     }
 
+
+
     private boolean checkPointArrayDomain(ArrayList<Point> points){
+        //check if the array is not null
         if(points!=null){
+            //check the length of the array
             if(points.size()>3) return false;
-            else if(!Board.checkAdjacentTiles(points)) return false;
+            else if(!Board.checkAdjacentTiles(points)) return false;  //check if the tiles are adjacent
+            //
             for(Point p : points){
                 if(!checkBoardDomain(p)) return false;
             }
