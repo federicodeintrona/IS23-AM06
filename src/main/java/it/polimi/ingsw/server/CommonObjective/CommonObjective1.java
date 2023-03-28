@@ -10,9 +10,14 @@ import java.util.Set;
 
 public class CommonObjective1 extends CommonObjective{
 
-
-
-
+    /**
+     * Method that takes a player and analyzes his bookshelf to
+     * see if there are 6 groups, made by 2 tiles of the same
+     * color each, inside it and, in case, returns true
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @return      true if the bookshelf meets the criteria, else false
+     */
     public boolean checkCondition(Player player){
 
         // creation of set to contain all tiles approved by the algorithm
@@ -44,9 +49,10 @@ public class CommonObjective1 extends CommonObjective{
     }
 
     /**
+     * Method to calculate the commonObjective points
      *
-     * @param player
-     * @param numOfPlayers
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
      */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
@@ -69,6 +75,9 @@ public class CommonObjective1 extends CommonObjective{
     }
 }
 
+/**
+ * Threads: one to analyze the columns and one for the rows
+ */
 class MyRunnable implements Runnable {
     private String name;
     private final Matrix matrix;
