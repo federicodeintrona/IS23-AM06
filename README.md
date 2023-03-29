@@ -10,6 +10,12 @@
 | Functionality | State           | Current | Comment |
 |---------------|-----------------| ---- | ---- |
 | Early H-L UML | :yellow_circle: | | |
-| Implementation of Classes| 🟡 | | |
 | Final UML     | :red_circle:    | | |
+| Model | 🟡 | | |
+| Controller | 🟡 | | |
+| TCP/IP | :yellow_circle: | | |
+| RMI | :red_circle: | | |
+| TUI | :red_circle: | | |
+| GUI | :red_circle: | | |
+| Full Game | :red_circle: | | |
 
