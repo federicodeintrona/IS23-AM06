@@ -6,14 +6,18 @@ import java.util.List;
 
 public class Board {
 //attributi
-    private static final Matrix gamesBoard=new Matrix(9, 9);
+    private final Matrix gamesBoard=new Matrix(9, 9);
     private int numberOfPlayer;
     private Sachet boardSachet;
 
-    //creazione gamesBoard vera e propria -->
-    // --> vera board (celle che non fanno parte tabellone settati a NOTALLOWED e altre a EMPTY)
-    // --> board in base al numero di giocatori creata nel costruttore  Board(int numberOfPlayer)
-    static {
+//-------------------------------------------------------------------------------------------------------\\
+
+//metodi
+    //costruttore --> assegna numberOfPlayer
+    //            --> crea la Board in base al numero di giocatori
+        // RICHIEDE CHE numberOfPlayer SIA UN NUMERO TRA 2, 3, 4
+    public Board(int numberOfPlayer) {
+        this.numberOfPlayer = numberOfPlayer;
         //tutta matrice EMPTY
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -68,16 +72,7 @@ public class Board {
         for (int i = 6; i < 9; i++) {
             gamesBoard.setNotAllowed(8, i);
         }
-    }
-
-//-------------------------------------------------------------------------------------------------------\\
-
-//metodi
-    //costruttore --> assegna numberOfPlayer
-    //            --> crea la Board in base al numero di giocatori
-        // RICHIEDE CHE numberOfPlayer SIA UN NUMERO TRA 2, 3, 4
-    public Board(int numberOfPlayer) {
-        this.numberOfPlayer = numberOfPlayer;
+        //posizioni matrice dove non possono esserci tessere in base al numero di players
         switch (numberOfPlayer) {
             case 2 -> {
                 gamesBoard.setNotAllowed(0, 3);
@@ -106,33 +101,209 @@ public class Board {
                 gamesBoard.setNotAllowed(8, 5);
             }
             case 3 -> {
+                gamesBoard.setEmpty(0, 3);
                 gamesBoard.setNotAllowed(0, 4);
 
                 gamesBoard.setNotAllowed(1, 5);
 
+                gamesBoard.setEmpty(2, 2);
+                gamesBoard.setEmpty(2, 6);
+
                 gamesBoard.setNotAllowed(3, 1);
+                gamesBoard.setEmpty(3, 8);
 
                 gamesBoard.setNotAllowed(4, 0);
                 gamesBoard.setNotAllowed(4, 8);
 
+                gamesBoard.setEmpty(5, 0);
                 gamesBoard.setNotAllowed(5, 7);
+
+                gamesBoard.setEmpty(6, 2);
+                gamesBoard.setEmpty(6, 6);
 
                 gamesBoard.setNotAllowed(7, 3);
 
                 gamesBoard.setNotAllowed(8, 4);
+                gamesBoard.setEmpty(8, 5);
             }
-            default -> {break;}
+            default -> {}
         }
     }
     //costruttore --> assegna boardSachet
     public Board(Sachet boardSachet) {
         this.boardSachet = boardSachet;
+        //tutta matrice EMPTY
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                gamesBoard.setEmpty(i, j);
+            }
+        }
+        //posizioni matrice che NON possono essere inserite tessere
+        //riga 0
+        for (int i = 0; i < 3; i++) {
+            gamesBoard.setNotAllowed(0, i);
+        }
+        for (int i = 5; i < 9; i++) {
+            gamesBoard.setNotAllowed(0, i);
+        }
+        //riga 1
+        for (int i = 0; i < 3; i++) {
+            gamesBoard.setNotAllowed(1, i);
+        }
+        for (int i = 6; i < 9; i++) {
+            gamesBoard.setNotAllowed(1, i);
+        }
+        //riga 2
+        for (int i = 0; i < 2; i++) {
+            gamesBoard.setNotAllowed(2, i);
+        }
+        for (int i = 7; i < 9; i++) {
+            gamesBoard.setNotAllowed(2, i);
+        }
+        //riga 3
+        gamesBoard.setNotAllowed(3, 0);
+        //riga 4
+        //riga 5
+        gamesBoard.setNotAllowed(5, 8);
+        //riga 6
+        for (int i = 0; i < 2; i++) {
+            gamesBoard.setNotAllowed(6, i);
+        }
+        for (int i = 7; i < 9; i++) {
+            gamesBoard.setNotAllowed(6, i);
+        }
+        //riga 7
+        for (int i = 0; i < 3; i++) {
+            gamesBoard.setNotAllowed(7, i);
+        }
+        for (int i = 6; i < 9; i++) {
+            gamesBoard.setNotAllowed(7, i);
+        }
+        //riga 8
+        for (int i = 0; i < 4; i++) {
+            gamesBoard.setNotAllowed(8, i);
+        }
+        for (int i = 6; i < 9; i++) {
+            gamesBoard.setNotAllowed(8, i);
+        }
+        //posizioni matrice dove non possono esserci tessere in base al numero di players
+        switch (numberOfPlayer) {
+            case 2 -> {
+                gamesBoard.setNotAllowed(0, 3);
+                gamesBoard.setNotAllowed(0, 4);
+
+                gamesBoard.setNotAllowed(1, 5);
+
+                gamesBoard.setNotAllowed(2, 2);
+                gamesBoard.setNotAllowed(2, 6);
+
+                gamesBoard.setNotAllowed(3, 1);
+                gamesBoard.setNotAllowed(3, 8);
+
+                gamesBoard.setNotAllowed(4, 0);
+                gamesBoard.setNotAllowed(4, 8);
+
+                gamesBoard.setNotAllowed(5, 0);
+                gamesBoard.setNotAllowed(5, 7);
+
+                gamesBoard.setNotAllowed(6, 2);
+                gamesBoard.setNotAllowed(6, 6);
+
+                gamesBoard.setNotAllowed(7, 3);
+
+                gamesBoard.setNotAllowed(8, 4);
+                gamesBoard.setNotAllowed(8, 5);
+            }
+            case 3 -> {
+                gamesBoard.setEmpty(0, 3);
+                gamesBoard.setNotAllowed(0, 4);
+
+                gamesBoard.setNotAllowed(1, 5);
+
+                gamesBoard.setEmpty(2, 2);
+                gamesBoard.setEmpty(2, 6);
+
+                gamesBoard.setNotAllowed(3, 1);
+                gamesBoard.setEmpty(3, 8);
+
+                gamesBoard.setNotAllowed(4, 0);
+                gamesBoard.setNotAllowed(4, 8);
+
+                gamesBoard.setEmpty(5, 0);
+                gamesBoard.setNotAllowed(5, 7);
+
+                gamesBoard.setEmpty(6, 2);
+                gamesBoard.setEmpty(6, 6);
+
+                gamesBoard.setNotAllowed(7, 3);
+
+                gamesBoard.setNotAllowed(8, 4);
+                gamesBoard.setEmpty(8, 5);
+            }
+            default -> {}
+        }
     }
     //costruttore --> assegna numberOfPlayer e boardSachet
     //            --> crea la Board in base al numero di giocatori
         // RICHIEDE CHE numberOfPlayer SIA UN NUMERO TRA 2, 3, 4
     public Board(int numberOfPlayer, Sachet boardSachet) {
         this.numberOfPlayer = numberOfPlayer;
+        this.boardSachet = boardSachet;
+        //tutta matrice EMPTY
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                gamesBoard.setEmpty(i, j);
+            }
+        }
+        //posizioni matrice che NON possono essere inserite tessere
+        //riga 0
+        for (int i = 0; i < 3; i++) {
+            gamesBoard.setNotAllowed(0, i);
+        }
+        for (int i = 5; i < 9; i++) {
+            gamesBoard.setNotAllowed(0, i);
+        }
+        //riga 1
+        for (int i = 0; i < 3; i++) {
+            gamesBoard.setNotAllowed(1, i);
+        }
+        for (int i = 6; i < 9; i++) {
+            gamesBoard.setNotAllowed(1, i);
+        }
+        //riga 2
+        for (int i = 0; i < 2; i++) {
+            gamesBoard.setNotAllowed(2, i);
+        }
+        for (int i = 7; i < 9; i++) {
+            gamesBoard.setNotAllowed(2, i);
+        }
+        //riga 3
+        gamesBoard.setNotAllowed(3, 0);
+        //riga 4
+        //riga 5
+        gamesBoard.setNotAllowed(5, 8);
+        //riga 6
+        for (int i = 0; i < 2; i++) {
+            gamesBoard.setNotAllowed(6, i);
+        }
+        for (int i = 7; i < 9; i++) {
+            gamesBoard.setNotAllowed(6, i);
+        }
+        //riga 7
+        for (int i = 0; i < 3; i++) {
+            gamesBoard.setNotAllowed(7, i);
+        }
+        for (int i = 6; i < 9; i++) {
+            gamesBoard.setNotAllowed(7, i);
+        }
+        //riga 8
+        for (int i = 0; i < 4; i++) {
+            gamesBoard.setNotAllowed(8, i);
+        }
+        for (int i = 6; i < 9; i++) {
+            gamesBoard.setNotAllowed(8, i);
+        }
+        //posizioni matrice dove non possono esserci tessere in base al numero di players
         switch (numberOfPlayer) {
             case 2 -> {
                 gamesBoard.setNotAllowed(0, 3);
@@ -161,24 +332,33 @@ public class Board {
                 gamesBoard.setNotAllowed(8, 5);
             }
             case 3 -> {
+                gamesBoard.setEmpty(0, 3);
                 gamesBoard.setNotAllowed(0, 4);
 
                 gamesBoard.setNotAllowed(1, 5);
 
+                gamesBoard.setEmpty(2, 2);
+                gamesBoard.setEmpty(2, 6);
+
                 gamesBoard.setNotAllowed(3, 1);
+                gamesBoard.setEmpty(3, 8);
 
                 gamesBoard.setNotAllowed(4, 0);
                 gamesBoard.setNotAllowed(4, 8);
 
+                gamesBoard.setEmpty(5, 0);
                 gamesBoard.setNotAllowed(5, 7);
+
+                gamesBoard.setEmpty(6, 2);
+                gamesBoard.setEmpty(6, 6);
 
                 gamesBoard.setNotAllowed(7, 3);
 
                 gamesBoard.setNotAllowed(8, 4);
+                gamesBoard.setEmpty(8, 5);
             }
-            default -> {break;}
+            default -> {}
         }
-        this.boardSachet = boardSachet;
     }
 
     //getter gamesBoard --> ritorna la Matrix
@@ -296,7 +476,8 @@ public class Board {
                         }
                     }
                     //siamo sul bordo dx
-                    else if (j==8){
+                    //if (j==8)
+                    else {
                         //adiacenza:
                         //sx
                         if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
@@ -361,8 +542,8 @@ public class Board {
         //RICHIEDE CHE List.size() SIA COMPRESA TRA 1, 2, 3
     public void remove(List<Point> position){
         //per ogni elemento nella position rimuovi il tiles da gamesBoard
-        for (int i = 0; i < position.size(); i++) {
-            gamesBoard.remove(position.get(i).x, position.get(i).y);
+        for (Point point : position) {
+            gamesBoard.remove(point.x, point.y);
         }
     }
 
@@ -448,7 +629,8 @@ public class Board {
             }
         }
         //se siamo nella colonna a dx
-        else if (position.y==8){
+        //if (position.y==8)
+        else {
             //sx
             if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
@@ -477,8 +659,7 @@ public class Board {
     }
 
     public ArrayList<Point> freeTilesMOSTCOMPLICATE(){
-        ArrayList<Point> result=new ArrayList<Point>();
-        Point position=new Point();
+        ArrayList<Point> result=new ArrayList<>();
         //giriamo tutta la board
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -593,7 +774,7 @@ public class Board {
 
     //ritorna la posizione delle tiles adiacenti a quella in ingresso - OK
         //RICHIEDE CHE tile SIA IN UNA POSIZIONE NOTALLOWED
-    public static ArrayList<Point> adjacentTiles(Point tile){
+    public ArrayList<Point> adjacentTiles(Point tile){
         Point p=new Point();
         int x=tile.x;
         int y=tile.y;
@@ -699,7 +880,8 @@ public class Board {
                 }
             }
             //siamo sul bordo dx
-            else if (tile.y==8){
+            //tile.y==8)
+            else {
                 //alto
                 p.x=x-1;
                 p.y=y;

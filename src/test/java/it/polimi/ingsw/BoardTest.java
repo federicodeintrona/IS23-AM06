@@ -95,6 +95,14 @@ class BoardTest {
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
         //act - do the actual calc or method run
+
+        for (int i = 0; i <9; i++) {
+            for (int j = 0; j < 9; j++) {
+                System.out.println(board.getGamesBoard().getTile(i,j));
+            }
+        }
+
+        System.out.println(board.getGamesBoard().getTile(1,3));
         board.placeTiles(Tiles.GREEN, 3,3);
         board.placeTiles(Tiles.GREEN, 4,4);
         board.placeTiles(Tiles.GREEN, 3,6);
