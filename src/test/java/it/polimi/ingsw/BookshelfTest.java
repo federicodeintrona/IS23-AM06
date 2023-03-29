@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.server.Bookshelf;
+import it.polimi.ingsw.server.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -65,6 +67,25 @@ public class BookshelfTest {
         b.addTile( scelta,4 );
         b.addTile( scelta,4 );
         assertEquals(b.checkEndGame(),true,"La matrice è piena");
+    }
+    @Test
+    void checkCheckEmptyBoard(){
+        ArrayList <Tiles> scelta= new ArrayList<>();
+        scelta.add(Tiles.BLUE);
+        scelta.add(Tiles.BLUE);
+        scelta.add(Tiles.BLUE);
+        assertEquals(b.checkEmptyBoard(),true,"La matrice non è ancora piena");
+        b.addTile( scelta,0 );
+        b.addTile( scelta,0 );
+        b.addTile( scelta,1 );
+        b.addTile( scelta,1 );
+        b.addTile( scelta,2 );
+        b.addTile( scelta,2 );
+        b.addTile( scelta,3 );
+        b.addTile( scelta,3 );
+        b.addTile( scelta,4 );
+        b.addTile( scelta,4 );
+        assertEquals(b.checkEmptyBoard(),false,"La matrice è piena");
     }
     /**
      * Test the operation checkColumns from the class bookshelf
