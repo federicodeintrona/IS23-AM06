@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
-import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
+import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.View.View;
 import org.javatuples.Pair;
@@ -14,22 +14,25 @@ import java.util.ArrayList;
 
 public class Model  {
 
+    private GameState state = GameState.STARTING;
     private Board board;
     private ArrayList<Player> players;
     private ArrayList<View> virtualViews;
     private ArrayList<CommonObjective> commonobj = new ArrayList<>();
 
+    private Player currPlayer;
+    private Player nextPlayer;
+    private Player winner;
+
+    //Probably temporary, just used for notification
     private ArrayList<Integer> privatePoints = new ArrayList<>();
 
     private ArrayList<Integer> publicPoints = new ArrayList<>();
 
-    private Player currPlayer;
-    private Player nextPlayer;
-
-    private Player winner;
-    private boolean isFinished = false;
 
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
+
+    private boolean isFinished = false;
 
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
@@ -45,7 +48,12 @@ public class Model  {
         this.nextPlayer = players.get(1);
     }
 
-    //PUBLIC METHODS : INTERFACE
+
+
+
+
+
+    //PUBLIC METHODS
 
     /**
      * Initializes the board and the objectives:
@@ -53,24 +61,31 @@ public class Model  {
      * add the views as change listeners,initialize the arrays of points.
      */
     public void initialization()  {
+
         //Create and initialize the board
         board = new Board(players.size(), new Sachet());
         board.BoardInitialization();
 
         //Initialize common and personal objectives
-
         commonobjInit();
         personalobjInit();
+
+
         //Initializes the arrays of points
         for(Player p : players){
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
         }
 
+
         //Add the views as change listeners
         for (View v : virtualViews){
             notifier.addPropertyChangeListener(v);
         }
+
+
+        //Change game state
+        state = GameState.CHOOSING_TILES;
 
     }
 
@@ -81,20 +96,30 @@ public class Model  {
      * Also notifies the views of changes
      * @param points  The position of the tiles
      */
-    public void removeTileArray( Player player,ArrayList<Point> points) throws MoveNotPossible{
+    public void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
 
         //Checks move legitimacy
-        if(!checkRemoveLegit(points,player)) throw new MoveNotPossible();
+        checkRemoveLegit(points,player);
 
-        //Notify the views
-        for(int i = 0; i < points.size(); i++){
-            Pair<Tiles,Point> p1 = new Pair<>(board.getGamesBoard().getTile(points.get(i)),points.get(i));
-            Pair<Tiles,Point> p2 = new Pair<>(Tiles.EMPTY,points.get(i));
-            notifier.firePropertyChange( new PropertyChangeEvent(board,"board", p1,p2));
+        //Change game state
+        state = GameState.CHOOSING_ORDER;
+
+        //Notify the views and add the removed tiles to the selectedTiles array
+        for (Point point : points) {
+
+            //Adding the removed tiles to selectedTiles array
+            selectedTiles.add(board.getGamesBoard().getTile(point));
+
+            //notification
+            Pair<Tiles, Point> p1 = new Pair<>(board.getGamesBoard().getTile(point), point);
+            Pair<Tiles, Point> p2 = new Pair<>(Tiles.EMPTY, point);
+            notifier.firePropertyChange(new PropertyChangeEvent(board, "board", p1, p2));
 
         }
+
         //Remove the selected tiles
         board.remove(points);
+
 
     }
 
@@ -107,17 +132,23 @@ public class Model  {
      * @param tiles   The color of the tiles to add
      * @param column   The column where you want to add the tiles
      */
-    public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column) throws MoveNotPossible {
+    public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column) throws MoveNotPossible{
+
 
         //Check for move legitimacy
-        if(!checkAddLegit(player,column,tiles.size())) throw new MoveNotPossible();
+        checkAddLegit(player,column,tiles.size());
+
+        //Change game state
+        state = GameState.CHOOSING_TILES;
 
         //Notifying changes
         ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p1 = new Pair<>(temp1, column);
 
+        //Add to bookshelf
         player.getBookshelf().addTile(tiles, column);
 
+        //Notifying changes pt.2
         ArrayList<Tiles> temp2 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p2 = new Pair<>(temp2, column);
 
@@ -135,52 +166,78 @@ public class Model  {
 
         }
 
+
+
+
         //Advances turn
         nextTurn();
 
+
     }
 
-    //public void saveState(){}
+
+
+
+    public void swapOrder(ArrayList<Integer> ints,Player player) throws NotCurrentPlayer {
+
+        if(player.equals(currPlayer)) {
+            ArrayList<Tiles> array = new ArrayList<>();
+            array.addAll(selectedTiles);
+            for (int i = 0; i < ints.size(); i++) {
+                selectedTiles.set(i, array.get(ints.get(i) - 1));
+            }
+        }else throw new NotCurrentPlayer();
+
+        //Change game state
+        state = GameState.CHOOSING_COLUMN;
+    }
 
 
 
 
-    //Checks
+
+
+
+    //Checks to see the legitimacy of moves
+
 
     /**
      * If possible, removes the selected tiles from the board.
      * @param points The array of points you want to remove
      * @param player The player who wants to remove the tiles
-     * @return Return true if the move is legitimate, false if it is not.
      */
-    private boolean checkRemoveLegit(ArrayList<Point> points, Player player){
+    private void checkRemoveLegit(ArrayList<Point> points, Player player) throws MoveNotPossible,IllegalArgumentException {
+
+        if(state.equals(GameState.CHOOSING_TILES)){
         //Check if the player requesting the move is the current player
-        if(!player.equals(currPlayer)) return false;
+        if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
         //check if the selected tiles can actually be selected
-        else if(!checkPointArrayDomain(points)) return false;
-       else return true;
+        else checkPointArrayDomain(points);
+
+        }else throw new MoveNotPossible();
+
     }
 
 
     /**
      * Checks if the selected tiles can actually be removed from the board
      * @param points Array of coordinates of the tiles
-     * @return Returns true if the array of coordinates can actually be removed, false otherwise.
      */
-    private boolean checkPointArrayDomain(ArrayList<Point> points){
+    private void checkPointArrayDomain(ArrayList<Point> points) throws OutOfDomain, IllegalArgumentException, TilesNotAdjacent {
         //check if the array is not null
-        if(points!=null){
+        if(points!=null ){
             //check the length of the array
-            if(points.size()>3) return false;
+            if(points.size()>3) throw new IllegalArgumentException();
             else {  //check if the tiles are adjacent
-                if(!Board.checkAdjacentTiles(points)) return false;}
+                if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
+            }
 
             //Check if the selected tiles are allowed and not empty
             for(Point p : points){
-                if(!checkBoardDomain(p)) return false;
+                if(!checkBoardDomain(p)) throw new OutOfDomain();
             }
-            return true;}
-        else return false;
+        }
+        else throw new IllegalArgumentException();
 
     }
 
@@ -189,27 +246,31 @@ public class Model  {
      * @param player The player trying to add tiles to his bookshelf
      * @param col    The column number where to add the tiles
      * @param size   The number of tiles you want to add
-     * @return  True if the move is possible, false otherwise.
      */
-    private boolean checkAddLegit(Player player,int col,int size){
-        //Check if the player requesting the move is the current player
-        if(!player.equals(currPlayer)) return false;
-        //Check if the selected column exists and if there is enough empty space
-        if(!checkColumn(col,size)) return false;
-        return true;
+    private void checkAddLegit(Player player,int col,int size) throws MoveNotPossible {
+
+        //checks the state of the game
+        if(state.equals(GameState.CHOOSING_ORDER)||state.equals(GameState.CHOOSING_COLUMN)){
+            //Check if the player requesting the move is the current player
+            if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
+
+            //Check if the selected column exists and if there is enough empty space
+            checkColumn(col,size);
+
+        }else throw new MoveNotPossible();
     }
+
 
 
     /**
      * Check if the selected column exists and if there is enough empty space
-     * @param col
+     * @param col The column where you want to put the tiles
      * @param size The number of tiles you want to add
-     * @return
      */
-    private boolean checkColumn(int col,int size){
-        if(col<0||col>5) return false;
-        if(!currPlayer.getBookshelf().checkColumns(size,col)) return false;
-        return true;}
+    private void checkColumn(int col,int size) throws OutOfDomain, ColumnIsFull {
+        if(col<0||col>5) throw new OutOfDomain();
+        else if(!currPlayer.getBookshelf().checkColumns(size,col)) throw new ColumnIsFull();
+    }
 
 
     /**
@@ -231,6 +292,7 @@ public class Model  {
 
 
     //PRIVATE METHODS : UTILITY
+
 
     /**
      * Initializes common objectives
@@ -258,7 +320,7 @@ public class Model  {
      */
     private void updatePoints(){
 
-
+        //Updates vicinity, common objective and personal objective points
         currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
         currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer);
         for(CommonObjective o : commonobj){
@@ -283,6 +345,7 @@ public class Model  {
      */
     private void nextTurn(){
 
+
         //Update the points
         updatePoints();
 
@@ -303,6 +366,7 @@ public class Model  {
      * Select the winner of the game and ends it
      */
     private void endGame(){
+        state = GameState.ENDING;
         selectWInner();
     }
 
@@ -323,7 +387,11 @@ public class Model  {
 
 
 
-    //GETTERS AND SETTERS: USELESS FOR NOW
+
+
+
+
+    //GETTERS AND SETTERS
 
     /**
      * Return the array of all players
@@ -333,6 +401,8 @@ public class Model  {
         return players;
     }
 
+
+
     /**
      * Return the board
      * @return the board
@@ -341,6 +411,27 @@ public class Model  {
         return board;
     }
 
+
+    /**
+     *  Returns the current state of the game
+     * @return The current state of the game
+     */
+    public GameState getState() {
+        return state;
+    }
+
+
+
+    /**
+     * Sets the state of the game
+     * @param state The state you want to set the game to
+     */
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+
+
     /**
      * @return Array of all the common objectives
      */
@@ -348,16 +439,7 @@ public class Model  {
         return commonobj;
     }
 
-    /**
-     * @return Array of all the personal objectives of all players in the game
-     */
-   /* public ArrayList<PersonalObjective> getPersobj(){
-        ArrayList<PersonalObjective> persobj = new ArrayList<>();
-        for( Player p : players){
-            persobj.add(p.getPersonalObjective());
-        }
-        return persobj;
-    }*/
+
 
 
     /**
@@ -377,6 +459,15 @@ public class Model  {
     }
 
 
-
+    /**
+     * @return Array of all the personal objectives of all players in the game
+     */
+   /* public ArrayList<PersonalObjective> getPersobj(){
+        ArrayList<PersonalObjective> persobj = new ArrayList<>();
+        for( Player p : players){
+            persobj.add(p.getPersonalObjective());
+        }
+        return persobj;
+    }*/
 
 }

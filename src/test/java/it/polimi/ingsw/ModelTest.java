@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ModelTest {
     public Model m;
+
     public ArrayList<Player> players = new ArrayList<>();
     public ArrayList<View> views = new ArrayList<>();
 
@@ -97,10 +98,13 @@ class ModelTest {
 
     }
 
-    /*
+
     @Test
-    void saveState() {
-    }*/
+    void swapOrder() {
+
+
+
+    }
 
     @Test
     void gameTest(){

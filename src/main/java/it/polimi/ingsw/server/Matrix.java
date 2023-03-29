@@ -4,9 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Matrix {
-    /**
-     *  Tile Matrix Class
-     */
+
     private final ArrayList<ArrayList<Tiles>> board = new ArrayList<ArrayList<Tiles>>();
     private final int numRows;
     private final int numCols;

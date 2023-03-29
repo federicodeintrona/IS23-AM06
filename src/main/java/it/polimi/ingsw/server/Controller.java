@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
+import it.polimi.ingsw.server.Exceptions.NotCurrentPlayer;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
@@ -56,6 +57,24 @@ public class Controller {
         }
     }
 
+    /**
+     * Swap the order of the array of selected tiles to the order describes in the array ints.
+     * ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
+     *
+     * @param ints The new order in which you want the array
+     * @param gameID ID of the game
+     * @param playerID username of the player
+     */
+    public void swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
+
+        try {
+            games.get(gameID).swapOrder(ints,playerIDs.get(playerID));
+        } catch (NotCurrentPlayer e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     public void removeTiles(int gameID,String playerID, ArrayList<Point> points){
         try {
@@ -64,6 +83,9 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
+
+
+
 
     //public void saveState(int gameID){games.get(gameID).saveState();}
 
@@ -87,15 +109,6 @@ public class Controller {
     }
 
 
-    //Client Side Controller Method
-    public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
-        ArrayList<Tiles> array = new ArrayList<>();
-        array.addAll(tiles);
-        for (int i=0;i<ints.size();i++){
-            tiles.set(i,array.get(ints.get(i)-1));
-        }
-
-    }
 
 
     public void addPlayer(String username, Player player){
