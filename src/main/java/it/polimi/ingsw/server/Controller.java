@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Exceptions.ColumnIsFull;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
+import it.polimi.ingsw.server.Exceptions.NotCurrentPlayer;
+import it.polimi.ingsw.server.Exceptions.OutOfDomain;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
@@ -45,15 +48,61 @@ public class Controller {
     }
 
 
-
-
-    public void addToBookshelf(int gameID, String playerID, ArrayList<Tiles> array, int col ){
+    /**
+     *
+     * @param gameID The ID of the game
+     * @param playerID  The username of the player
+     * @param array The array of tiles
+     * @param col
+     * @return
+     */
+    public Message addToBookshelf(int gameID, String playerID, ArrayList<Tiles> array, int col ){
+        Message reply = new Message();
 
         try {
             games.get(gameID).addToBookShelf(playerIDs.get(playerID),array,col);
-        } catch (MoveNotPossible e) {
-            throw new RuntimeException(e);
+            reply.setType(MessageTypes.OK);
+            reply.setContent("Move successful");
+
+        } catch (OutOfDomain e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("The requested column does not exists");
+
+        }catch (ColumnIsFull e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("The requested column is full");
+
+        }catch (NotCurrentPlayer e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("It's not your turn");
+
+        }catch (MoveNotPossible e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("That move is not allowed at the moment");
+
         }
+
+        return reply;
+    }
+
+    /**
+     * Swap the order of the array of selected tiles to the order describes in the array ints.
+     * ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
+     *
+     * @param ints The new order in which you want the array
+     * @param gameID ID of the game
+     * @param playerID username of the player
+     */
+    public void swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
+
+        try {
+            games.get(gameID).swapOrder(ints,playerIDs.get(playerID));
+        } catch (NotCurrentPlayer e) {
+            throw new RuntimeException(e);
+        } catch (MoveNotPossible e) {
+            Message m = new Message();
+        }
+
     }
 
 
@@ -64,6 +113,9 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
+
+
+
 
     //public void saveState(int gameID){games.get(gameID).saveState();}
 
@@ -87,15 +139,6 @@ public class Controller {
     }
 
 
-    //Client Side Controller Method
-    public void swapOrder(ArrayList<Integer> ints,ArrayList<Tiles> tiles){
-        ArrayList<Tiles> array = new ArrayList<>();
-        array.addAll(tiles);
-        for (int i=0;i<ints.size();i++){
-            tiles.set(i,array.get(ints.get(i)-1));
-        }
-
-    }
 
 
     public void addPlayer(String username, Player player){

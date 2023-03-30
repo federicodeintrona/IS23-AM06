@@ -10,5 +10,7 @@ public enum MessageTypes {
     REMOVE_FROM_BOARD,
     SWITCH_PLACE,
     ADD_TO_BOOKSHELF,
+    OK,
+    ERROR,
     DISCONNECT;
 }

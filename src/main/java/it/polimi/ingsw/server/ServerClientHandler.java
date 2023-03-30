@@ -96,8 +96,6 @@ public class ServerClientHandler implements Runnable  {
                         messageOut = controller.handleNewClient(this);
                     }
 
-
-
                     this.oos.writeObject(messageOut);
 
                 }

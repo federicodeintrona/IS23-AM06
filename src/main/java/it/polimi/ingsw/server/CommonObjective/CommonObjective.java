@@ -18,7 +18,9 @@ public abstract class CommonObjective {
     protected static ArrayList<Class> subclasses = new ArrayList();
 
     static{
-            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType("it.polimi.ingsw.server.CommonObjective", CommonObjective.class, null)) {
+            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
+                    "it.polimi.ingsw.server.CommonObjective", CommonObjective.class,
+                    null)) {
                 subclasses.add(pojoClass.getClazz());
             }
     }

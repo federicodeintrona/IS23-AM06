@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
+import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.server.Player;
 import it.polimi.ingsw.server.Tiles;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ModelTest {
     public Model m;
+
     public ArrayList<Player> players = new ArrayList<>();
     public ArrayList<View> views = new ArrayList<>();
 
@@ -82,8 +84,10 @@ class ModelTest {
 
 
             try {
+                m.setState(GameState.CHOOSING_COLUMN);
                 m.addToBookShelf(players.get(0), array, j);
                 m.setCurrPlayer(players.get(0));
+                m.setState(GameState.CHOOSING_COLUMN);
                 m.addToBookShelf(players.get(0), array, j);
                 m.setCurrPlayer(players.get(0));
             } catch (MoveNotPossible e) {
@@ -93,14 +97,17 @@ class ModelTest {
             assertEquals(Tiles.BLUE,m.getPlayers().get(0).getBookshelf().getTiles().getTile(2,j));
             assertEquals(Tiles.EMPTY,m.getPlayers().get(1).getBookshelf().getTiles().getTile(2,j));
         }
-       assertEquals(true,m.isFinished());
+       assertEquals(true,m.getIsFinished());
 
     }
 
-    /*
+
     @Test
-    void saveState() {
-    }*/
+    void swapOrder() {
+
+
+
+    }
 
     @Test
     void gameTest(){

@@ -15,7 +15,6 @@ public class Message {
         this.type = type;
     }
 
-    public void setContent(Object o){
+    public void setContent(Object o){}
 
-    }
 }

@@ -4,11 +4,13 @@ import java.util.*;
 
 public class Sachet {
 //attributi
-    private static ArrayList<Tiles> sachet=new ArrayList<Tiles>();
+    private final ArrayList<Tiles> sachet=new ArrayList<>();
 
-    //creazione sachet vero e proprio
-    // --> vero sacchetto contenente le tessere (contiene 132 tessere = 6tipi * 22tessere)
-    static{
+//-------------------------------------------------------------------------------------------------------\\
+
+//metodi
+    //costruttore --> creai il sacchetto con 132 tessere iniziali dei 6 colori diversi
+    public  Sachet() {
         //132tiles = 6tipi * 22tiles
         for (int i = 0; i < 22; i++) {
             sachet.add(Tiles.GREEN);
@@ -30,14 +32,6 @@ public class Sachet {
         }
     }
 
-//-------------------------------------------------------------------------------------------------------\\
-
-//metodi
-    //getter sachet --> ritorna il set di Tiles
-    public static ArrayList<Tiles> getSachet() {
-        return sachet;
-    }
-
 
 
     //ritorna una tile randomicamente - OK
@@ -51,10 +45,11 @@ public class Sachet {
         Random random=new Random(); //crea oggetto Random
         Tiles result;
         //scelta numero casuale
-        int n= random.nextInt(sachet.size());
+        int n=random.nextInt(sachet.size());
         //salvataggio tile in posizione casuale
         result=sachet.get(n);
         //rimozione tile da sachet
+        removeTiles(n);
         return result;
     }
 
@@ -66,8 +61,8 @@ public class Sachet {
     //ritorna il numero di tessere rimanenti nel sachet del colore tiles richiesto - OK
     public int remainingTilesPerColor(Tiles tiles){
         int result=0;
-        for (int i = 0; i < sachet.size(); i++) {
-            if (sachet.get(i).equals(tiles)){
+        for (Tiles value : sachet) {
+            if (value.equals(tiles)) {
                 result++;
             }
         }
