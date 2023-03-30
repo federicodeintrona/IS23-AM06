@@ -24,18 +24,21 @@ public class Model  {
     private Player nextPlayer;
     private Player winner;
 
-    //Probably temporary, just used for notification
-    private ArrayList<Integer> privatePoints = new ArrayList<>();
-
-    private ArrayList<Integer> publicPoints = new ArrayList<>();
-
-
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
 
     private boolean isFinished = false;
 
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
+
+    //Probably temporary, just used for notification
+    private ArrayList<Integer> privatePoints = new ArrayList<>();
+
+    private ArrayList<Integer> publicPoints = new ArrayList<>();
+
+
+
+    //Constructors
 
     public Model(ArrayList<Player> players) {
         this.players = players;
@@ -90,11 +93,11 @@ public class Model  {
     }
 
 
-
     /**
      * Removes an array of tiles from the board if the move is legitimate.
      * Also notifies the views of changes
      * @param points  The position of the tiles
+     * @throws MoveNotPossible Throws this exception if
      */
     public void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
 
@@ -131,6 +134,10 @@ public class Model  {
      * @param player  The player who owns the Bookshelf
      * @param tiles   The color of the tiles to add
      * @param column   The column where you want to add the tiles
+     * @throws OutOfDomain if requested column does not exists
+     * @throws ColumnIsFull if the requested column is full
+     * @throws MoveNotPossible if game is not in the right state
+     * @throws NotCurrentPlayer if the player requesting the move is not the current player
      */
     public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column) throws MoveNotPossible{
 
@@ -176,20 +183,29 @@ public class Model  {
     }
 
 
+    /**
+     *  Swap the order of the array of selected tiles to the order describes in the array ints.
+     *       ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
+     * @param ints  The new order of the array
+     * @param player  The player requesting the move
+     * @throws NotCurrentPlayer if the player is not the current player
+     * @throws MoveNotPossible if the game is not in the right state
+     */
+    public void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible {
 
+        if(state.equals(GameState.CHOOSING_ORDER)){
 
-    public void swapOrder(ArrayList<Integer> ints,Player player) throws NotCurrentPlayer {
+            if(player.equals(currPlayer)) {
+                ArrayList<Tiles> array = new ArrayList<>();
+                array.addAll(selectedTiles);
+                for (int i = 0; i < ints.size(); i++) {
+                    selectedTiles.set(i, array.get(ints.get(i) - 1));
+                }
+            }else throw new NotCurrentPlayer();
 
-        if(player.equals(currPlayer)) {
-            ArrayList<Tiles> array = new ArrayList<>();
-            array.addAll(selectedTiles);
-            for (int i = 0; i < ints.size(); i++) {
-                selectedTiles.set(i, array.get(ints.get(i) - 1));
-            }
-        }else throw new NotCurrentPlayer();
-
-        //Change game state
-        state = GameState.CHOOSING_COLUMN;
+            //Change game state
+            state = GameState.CHOOSING_COLUMN;
+        }else throw new MoveNotPossible();
     }
 
 
@@ -201,10 +217,18 @@ public class Model  {
     //Checks to see the legitimacy of moves
 
 
+    //REMOVE CHECKS
+
     /**
      * If possible, removes the selected tiles from the board.
      * @param points The array of points you want to remove
      * @param player The player who wants to remove the tiles
+     * @throws MoveNotPossible if the game is not in the right state
+     * @throws NotCurrentPlayer if the player is not the current player
+     * @throws IllegalArgumentException if the array points is null or the array is too long
+     * @throws TilesNotAdjacent if the tiles are not adjacent
+     * @throws OutOfDomain if at least one of the points is outside the board
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
      */
     private void checkRemoveLegit(ArrayList<Point> points, Player player) throws MoveNotPossible,IllegalArgumentException {
 
@@ -222,8 +246,12 @@ public class Model  {
     /**
      * Checks if the selected tiles can actually be removed from the board
      * @param points Array of coordinates of the tiles
+     * @throws IllegalArgumentException if the array points is null or the array is too long
+     * @throws TilesNotAdjacent if the tiles are not adjacent
+     * @throws OutOfDomain if at least one of the points is outside the board
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
      */
-    private void checkPointArrayDomain(ArrayList<Point> points) throws OutOfDomain, IllegalArgumentException, TilesNotAdjacent {
+    private void checkPointArrayDomain(ArrayList<Point> points) throws MoveNotPossible, IllegalArgumentException {
         //check if the array is not null
         if(points!=null ){
             //check the length of the array
@@ -234,18 +262,55 @@ public class Model  {
 
             //Check if the selected tiles are allowed and not empty
             for(Point p : points){
-                if(!checkBoardDomain(p)) throw new OutOfDomain();
+                checkBoardDomain(p);
             }
         }
         else throw new IllegalArgumentException();
 
     }
 
+
+    /**
+     * Checks if the tiles of coordinates p can be selected (it's in the board, is allowed and not empty)
+     * @param p the coordinates of the tiles
+     * @throws OutOfDomain if at least one of the points is outside the board
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
+     */
+    private void checkBoardDomain(Point p) throws MoveNotPossible {
+        //Check if the point is inside the board
+        checkPointBoardDomain(p);
+        //Check if there is a tile there
+        if(board.getGamesBoard().getTile(p).equals(Tiles.NOTALLOWED) ||
+                board.getGamesBoard().getTile(p).equals(Tiles.EMPTY)){
+            throw new TilesCannotBeSelected();}
+    }
+
+
+
+    /**
+     * Check if the point is inside the board
+     * @param p Coordinates of the point
+     * @throws OutOfDomain If the point is outside the board
+     */
+    private void checkPointBoardDomain(Point p) throws OutOfDomain {
+        //Check if the point is inside the board
+        if(p.getX()<0 || p.getX()>8) throw new OutOfDomain();
+        else if(p.getY()<0 || p.getY()>8) throw new OutOfDomain();
+    }
+
+
+    //ADD CHECKS
+
+
     /**
      *  Check if the player can add tiles to his bookshelf
      * @param player The player trying to add tiles to his bookshelf
      * @param col    The column number where to add the tiles
      * @param size   The number of tiles you want to add
+     * @throws OutOfDomain if requested column does not exists
+     * @throws ColumnIsFull if the requested column is full
+     * @throws MoveNotPossible if game is not in the right state
+     * @throws NotCurrentPlayer if the player requesting the move is not the current player
      */
     private void checkAddLegit(Player player,int col,int size) throws MoveNotPossible {
 
@@ -261,11 +326,12 @@ public class Model  {
     }
 
 
-
     /**
      * Check if the selected column exists and if there is enough empty space
      * @param col The column where you want to put the tiles
      * @param size The number of tiles you want to add
+     * @throws OutOfDomain if requested column does not exists
+     * @throws ColumnIsFull if the requested column is full
      */
     private void checkColumn(int col,int size) throws OutOfDomain, ColumnIsFull {
         if(col<0||col>5) throw new OutOfDomain();
@@ -273,17 +339,6 @@ public class Model  {
     }
 
 
-    /**
-     * Checks if the tiles of coordinates p can be selected (it's in the board, is allowed and not empty)
-     * @param p the coordinates of the tiles
-     * @return Return true if the chosen tile can be selected
-     */
-    private boolean checkBoardDomain(Point p){
-        if(p.getX()<0 || p.getX()>8) return false;
-        else if(p.getY()<0 || p.getY()>8) return false;
-        else if(board.getGamesBoard().getTile(p).equals(Tiles.NOTALLOWED)) return false;
-        else if(board.getGamesBoard().getTile(p).equals(Tiles.EMPTY)) return false;
-        else return true;}
 
 
 
@@ -341,7 +396,6 @@ public class Model  {
      * Update the points of the current player,
      * select the next player and calls the endGame function if the last turn has been played.
      * Also resets the board when needed
-     * @return Return the player who will play the next turn
      */
     private void nextTurn(){
 
@@ -362,6 +416,12 @@ public class Model  {
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
 
     }
+
+
+
+
+
+    //TO BE FINISHED
     /**
      * Select the winner of the game and ends it
      */
@@ -369,6 +429,11 @@ public class Model  {
         state = GameState.ENDING;
         selectWInner();
     }
+
+
+
+
+
 
     /**
      * Select the player who won the game
@@ -454,7 +519,7 @@ public class Model  {
      * Return true if the game is finished, false otherwise
      * @return isFinished
      */
-    public boolean isFinished() {
+    public boolean getIsFinished() {
         return isFinished;
     }
 

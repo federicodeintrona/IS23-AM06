@@ -1,7 +1,9 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Exceptions.ColumnIsFull;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.server.Exceptions.NotCurrentPlayer;
+import it.polimi.ingsw.server.Exceptions.OutOfDomain;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
@@ -46,15 +48,41 @@ public class Controller {
     }
 
 
-
-
-    public void addToBookshelf(int gameID, String playerID, ArrayList<Tiles> array, int col ){
+    /**
+     *
+     * @param gameID The ID of the game
+     * @param playerID  The username of the player
+     * @param array The array of tiles
+     * @param col
+     * @return
+     */
+    public Message addToBookshelf(int gameID, String playerID, ArrayList<Tiles> array, int col ){
+        Message reply = new Message();
 
         try {
             games.get(gameID).addToBookShelf(playerIDs.get(playerID),array,col);
-        } catch (MoveNotPossible e) {
-            throw new RuntimeException(e);
+            reply.setType(MessageTypes.OK);
+            reply.setContent("Move successful");
+
+        } catch (OutOfDomain e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("The requested column does not exists");
+
+        }catch (ColumnIsFull e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("The requested column is full");
+
+        }catch (NotCurrentPlayer e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("It's not your turn");
+
+        }catch (MoveNotPossible e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("That move is not allowed at the moment");
+
         }
+
+        return reply;
     }
 
     /**
@@ -71,6 +99,8 @@ public class Controller {
             games.get(gameID).swapOrder(ints,playerIDs.get(playerID));
         } catch (NotCurrentPlayer e) {
             throw new RuntimeException(e);
+        } catch (MoveNotPossible e) {
+            Message m = new Message();
         }
 
     }
