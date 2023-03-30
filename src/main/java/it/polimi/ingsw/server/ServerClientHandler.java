@@ -15,7 +15,7 @@ public class ServerClientHandler implements Runnable  {
     private String username;
     private int lobbyID;
     private int gameID;
-    private int playerID;
+    private Player player;
 
     private Socket socket;
     private ObjectInputStream ois;
@@ -59,10 +59,6 @@ public class ServerClientHandler implements Runnable  {
         this.gameID = gameID;
     }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
-
     public void setNickname(String nickname) {
         this.username = nickname;
     }
@@ -77,6 +73,14 @@ public class ServerClientHandler implements Runnable  {
 
     public String getNickname() {
         return username;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     private void processMessage(Message incomingMsg) throws IOException {
