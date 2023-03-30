@@ -8,7 +8,15 @@ import java.util.Map;
 
 public class CommonObjective6 extends CommonObjective{
 
-
+    /**
+     * Method that takes a player and analyzes his bookshelf to
+     * see if there are 8 tiles of the color, in any position,
+     * inside it and, in case, returns true
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @return      true if the bookshelf meets the criteria, else false
+     */
+    @Override
     public boolean checkCondition(Player player){
         Map<Tiles, Integer> countMap = new HashMap<>();
 
@@ -37,6 +45,13 @@ public class CommonObjective6 extends CommonObjective{
 
         return false;
     }
+
+    /**
+     * Method to calculate the commonObjective points
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 

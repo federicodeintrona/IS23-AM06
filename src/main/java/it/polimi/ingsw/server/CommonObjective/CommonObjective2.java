@@ -5,7 +5,14 @@ import it.polimi.ingsw.server.Tiles;
 
 public class CommonObjective2 extends CommonObjective{
 
-
+    /**
+     * Method that takes a player and analyzes his bookshelf to
+     * see if the 4 tiles at the bookshelf's corners have the same color
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @return      true if the bookshelf meets the criteria, else false
+     */
+    @Override
     public boolean checkCondition(Player player){
 
         // using tile as a buffer for the first angle of the bookshelf
@@ -24,6 +31,12 @@ public class CommonObjective2 extends CommonObjective{
         return false;
     }
 
+    /**
+     * Method to calculate the commonObjective points
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 

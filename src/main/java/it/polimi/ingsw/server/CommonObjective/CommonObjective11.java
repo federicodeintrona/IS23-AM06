@@ -8,7 +8,14 @@ import java.awt.*;
 
 public class CommonObjective11 extends CommonObjective{
 
-
+    /**
+     * Method that takes a player and analyzes his bookshelf to
+     * see if there are 5 tiles of the same color that form an
+     * x-shape inside it and, in case, returns true
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @return      true if the bookshelf meets the criteria, else false
+     */
     @Override
     public boolean checkCondition(Player player) {
         Point p;
@@ -28,6 +35,14 @@ public class CommonObjective11 extends CommonObjective{
         return false;
     }
 
+    /**
+     * Helping method that returns true if the given point can make an x-shape,
+     * with it in the center, of same colored tiles in the given matrix
+     *
+     * @param coordinate    point that has to be in the center of the x-shape
+     * @param matrix      player's bookshelf
+     * @return      true if an x-shape is possible, else false
+     */
     public static boolean checkForXShape(Point coordinate, Matrix matrix){
         int x = coordinate.x;
         int y = coordinate.y;
@@ -38,6 +53,12 @@ public class CommonObjective11 extends CommonObjective{
         return false;
     }
 
+    /**
+     * Method to calculate the commonObjective points
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 

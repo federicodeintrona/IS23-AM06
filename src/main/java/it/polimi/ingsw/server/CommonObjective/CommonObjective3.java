@@ -12,8 +12,15 @@ import java.util.Queue;
 
 public class CommonObjective3 extends CommonObjective{
 
-
-
+    /**
+     * Method that takes a player and analyzes his bookshelf to
+     * see if there are 4 separate groups, each one made by 4 tiles of the same
+     * color adjacent to one another, inside it and, in case, returns true
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @return      true if the bookshelf meets the criteria, else false
+     */
+    @Override
     public boolean checkCondition(Player player) {
         int numOfGroups = 0;
         boolean[][] visited = new boolean[6][5];
@@ -64,6 +71,14 @@ public class CommonObjective3 extends CommonObjective{
         return false;
     }
 
+    /**
+     * Helping method that takes a matrix, a point inside and returns an ArrayList
+     * of points, adjacent to the given one, that share the same tile color
+     *
+     * @param matrix    player's bookshelf
+     * @param point     coordinates of the analyzed tile
+     * @return      adjacent: ArrayList of points that meet the criteria
+     */
     private static ArrayList<Point> getAdjacentSameColor(Matrix matrix, Point point) {
         ArrayList<Point> adjacent = new ArrayList<>();
         int x = point.x;
@@ -87,6 +102,12 @@ public class CommonObjective3 extends CommonObjective{
         return adjacent;
     }
 
+    /**
+     * Method to calculate the commonObjective points
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 
