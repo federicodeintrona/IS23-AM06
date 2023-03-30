@@ -97,7 +97,12 @@ public class Model  {
      * Removes an array of tiles from the board if the move is legitimate.
      * Also notifies the views of changes
      * @param points  The position of the tiles
-     * @throws MoveNotPossible Throws this exception if
+     * @throws MoveNotPossible if the game is not in the right state
+     * @throws NotCurrentPlayer if the player is not the current player
+     * @throws IllegalArgumentException if the array points is null or the array is too long
+     * @throws TilesNotAdjacent if the tiles are not adjacent
+     * @throws OutOfDomain if at least one of the points is outside the board
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
      */
     public void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
 
