@@ -14,7 +14,7 @@ public class Lobby {
     private HashMap<Integer,Model> games = new HashMap<>();
 
     private int gameNumber = 0;
-    private final Object gamenumberlock = new Object();
+    private final Object gameNumberLock = new Object();
 
 
     public synchronized boolean waitingLobbys(){
@@ -74,7 +74,7 @@ public class Lobby {
         int tempnum;
 
         //add the new game and get its ID
-        synchronized (gamenumberlock) {
+        synchronized (gameNumberLock) {
             gameNumber += 1;
             tempnum = gameNumber;
         }
