@@ -34,73 +34,138 @@ public class Player {
         winnerPoint = 0;
         this.chair = chair;
     }
+
+    /**
+     * Returns the bookshelf
+     * @return Bookshelf of the player
+     */
     public Bookshelf getBookshelf(){
         return bookshelf;
     }
-
+    /**
+     * Returns public points of the player
+     * @return Public points of the player
+     */
     public int getPublicPoint() {
         return publicPoint;
     }
 
+    /**
+     * Sets public points of the player
+     */
     private void setPublicPoint() {
         publicPoint= (vicinityPoint + commonObjectivePoint + winnerPoint) ;
     }
+    /**
+     * Returns common objective points of the player
+     * @return Common objective points of the player
+     */
 
     public int getCommonObjectivePoint() {
         return commonObjectivePoint;
     }
+    /**
+     * Sets common objective points of the player
+     */
 
     public void setCommonObjectivePoint(int commonObjectivePoint) {
         this.commonObjectivePoint = commonObjectivePoint;
     }
+    /**
+     * Returns private points of the player
+     * @return Private points of the player
+     */
 
     public int getPrivatePoint() {
         return privatePoint;
     }
 
+    /**
+     * Sets private points of the player
+     */
     public void setPrivatePoint() {
         privatePoint=personalObjectivePoint+vicinityPoint+commonObjectivePoint + winnerPoint;
     }
+    /**
+     * Returns personal objective points of the player
+     * @return Personal objective points of the player
+     */
 
     public int getPersonalObjectivePoint() {
         return personalObjectivePoint;
     }
+    /**
+     * Sets personal objective points of the player from personal objective
+     */
 
+    public void setPersonalObjectivePoint(){
+        personalObjectivePoint=personalObjective.personalObjectivePoint(this);
+    }
+    /**
+     * Sets personal objective points of the player
+     */
     public void setPersonalObjectivePoint(int personalObjectivePoint) {
         this.personalObjectivePoint = personalObjectivePoint;
     }
+    /**
+     * Returns vicinity points of the player
+     * @return Vicinity points of the player
+     */
 
     public int getVicinityPoint() {
         return vicinityPoint;
     }
 
+    /**
+     * Sets vicinity points of the player
+     */
     public void setVicinityPoint(int vicinityPoint) {
         this.vicinityPoint = vicinityPoint;
     }
 
+    /**
+     * Check if it has chair
+     * @return True if chair is true
+     */
+
     public boolean isChair() {
         return chair;
     }
+    /**
+     * Returns personal objective of the player
+     * @return Personal objective of the player
+     */
 
     public PersonalObjective getPersonalObjective() {
         return personalObjective;
     }
+    /**
+     * Sets personal objective of the player
+     */
 
     public void setPersonalObjective(PersonalObjective personalObjective) {
         this.personalObjective = personalObjective;
     }
+    /**
+     * Returns winner points of the player
+     * @return Winner points of the player
+     */
 
     public int getWinnerPoint() {
         return winnerPoint;
     }
+    /**
+     * Sets winner points of the player
+     */
 
     public void setWinnerPoint(int winnerPoint) {
         this.winnerPoint = winnerPoint;
     }
 
-    public void setPersonalObjectivePoint(){
-        personalObjectivePoint=personalObjective.personalObjectivePoint(this);
-    }
+    /**
+     * Returns username of the player
+     * @return Username of the player
+     */
 
     public String getUsername() {
         return username;
