@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Exceptions.UsernameAlreadyTaken;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,10 +24,31 @@ public class Lobby {
     private final Object gameNumberLock = new Object();
 
 
-    public synchronized boolean waitingLobbys(){
+    public synchronized boolean waitingLobbies(){
         if(waitingLobbys.isEmpty()){
         return false;}
         else return true;
+    }
+
+
+
+
+
+
+    public synchronized boolean handleClient(ServerClientHandler client) throws UsernameAlreadyTaken {
+        if(!clients.containsKey(client.getNickname())){
+
+            clients.put(client.getNickname(),client);
+
+            //if there are waiting lobbies, add the client to the longest waiting lobby and return true
+            if(waitingLobbies()){
+                addClient(client);
+                return true;
+                //if there aren't any, return false
+            }else return false;
+
+        }else throw new UsernameAlreadyTaken();
+
     }
 
 
@@ -100,17 +123,7 @@ public class Lobby {
 
 
 
-    public synchronized boolean handleClient(ServerClientHandler client){
 
-        clients.put(client.getNickname(),client);
-
-        //if there are waiting lobbies, add the client to the longest waiting lobby and return true
-        if(waitingLobbys()){
-            addClient(client);
-            return true;
-        //if there aren't any, return false
-        }else return false;
-    }
 
     private void closeLobby(){}
     public void playerDisconnection(){}

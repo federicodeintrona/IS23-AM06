@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Exceptions.UsernameAlreadyTaken;
 import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
@@ -97,7 +98,11 @@ public class ServerClientHandler implements Runnable  {
 
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
-                        messageOut = controller.handleNewClient(this);
+                        try {
+                            messageOut = controller.handleNewClient(this);
+                        } catch (UsernameAlreadyTaken e) {
+                            throw new RuntimeException(e);
+                        }
                     }
 
                     this.oos.writeObject(messageOut);

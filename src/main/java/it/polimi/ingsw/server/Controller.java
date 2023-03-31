@@ -1,9 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Exceptions.ColumnIsFull;
-import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
-import it.polimi.ingsw.server.Exceptions.NotCurrentPlayer;
-import it.polimi.ingsw.server.Exceptions.OutOfDomain;
+import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
@@ -124,7 +121,7 @@ public class Controller {
         lobby.newLobby(client,players);
     }
 
-    public Message handleNewClient(ServerClientHandler client){
+    public Message handleNewClient(ServerClientHandler client) throws UsernameAlreadyTaken {
         Message reply = new Message();
         if(lobby.handleClient(client)){
             reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
