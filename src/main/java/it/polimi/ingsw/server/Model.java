@@ -17,8 +17,9 @@ public class Model  {
     private GameState state = GameState.STARTING;
     private Board board;
     private ArrayList<Player> players;
+
     private ArrayList<View> virtualViews;
-    private ArrayList<CommonObjective> commonobj = new ArrayList<>();
+    private ArrayList<CommonObjective> commonObj = new ArrayList<>();
 
     private Player currPlayer;
     private Player nextPlayer;
@@ -133,34 +134,33 @@ public class Model  {
 
 
     /**
-     * Adds an ordered array of tiles in the player's bookshelf.
+     * Adds the selected tiles in the player's bookshelf.
      * Since adding tiles to your bookshelf is the last action you can do on your turn,
      * it also calls the nextTurn function
      * @param player  The player who owns the Bookshelf
-     * @param tiles   The color of the tiles to add
      * @param column   The column where you want to add the tiles
      * @throws OutOfDomain if requested column does not exists
      * @throws ColumnIsFull if the requested column is full
      * @throws MoveNotPossible if game is not in the right state
      * @throws NotCurrentPlayer if the player requesting the move is not the current player
      */
-    public void addToBookShelf(Player player, ArrayList<Tiles> tiles, int column) throws MoveNotPossible{
+    public void addToBookShelf(Player player,  int column) throws MoveNotPossible{
 
 
         //Check for move legitimacy
-        checkAddLegit(player,column,tiles.size());
+        checkAddLegit(player,column,selectedTiles.size());
 
         //Change game state
         state = GameState.CHOOSING_TILES;
 
-        //Notifying changes
+        //Notifying changes (communicating a lot of redundant information for now, i'll change it when we do the views)
         ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p1 = new Pair<>(temp1, column);
 
         //Add to bookshelf
-        player.getBookshelf().addTile(tiles, column);
+        player.getBookshelf().addTile(selectedTiles, column);
 
-        //Notifying changes pt.2
+        //Notifying changes pt.2, (communicating a lot of redundant information for now, i'll change it when we do the views)
         ArrayList<Tiles> temp2 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p2 = new Pair<>(temp2, column);
 
@@ -179,6 +179,8 @@ public class Model  {
         }
 
 
+        //Empties the selected tile array
+        selectedTiles.clear();
 
 
         //Advances turn
@@ -358,8 +360,12 @@ public class Model  {
      * Initializes common objectives
      */
     private void commonobjInit() {
-       commonobj = CommonObjective.randomSubclass(2);
+       commonObj = CommonObjective.randomSubclass(2);
     }
+
+
+
+
 
     /**
      * Initializes private objectives
@@ -370,6 +376,8 @@ public class Model  {
             players.get(i).setPersonalObjective(temp.get(i));
         }
     }
+
+
 
 
     /**
@@ -383,7 +391,7 @@ public class Model  {
         //Updates vicinity, common objective and personal objective points
         currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
         currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer);
-        for(CommonObjective o : commonobj){
+        for(CommonObjective o : commonObj){
              o.commonObjPointsCalculator(currPlayer,players.size());
         }
 
@@ -397,13 +405,14 @@ public class Model  {
     }
 
 
+
+
     /**
      * Update the points of the current player,
      * select the next player and calls the endGame function if the last turn has been played.
      * Also resets the board when needed
      */
     private void nextTurn(){
-
 
         //Update the points
         updatePoints();
@@ -438,8 +447,6 @@ public class Model  {
 
 
 
-
-
     /**
      * Select the player who won the game
      */
@@ -462,6 +469,7 @@ public class Model  {
 
 
     //GETTERS AND SETTERS
+
 
     /**
      * Return the array of all players
@@ -503,13 +511,22 @@ public class Model  {
 
 
     /**
-     * @return Array of all the common objectives
+     * @return ArrayList of all the common objectives
      */
-    public ArrayList<CommonObjective> getCommonobj() {
-        return commonobj;
+    public ArrayList<CommonObjective> getCommonObj() {
+        return commonObj;
     }
 
 
+    public ArrayList<Tiles> getSelectedTiles() {
+        return selectedTiles;
+    }
+
+
+
+    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
+        this.selectedTiles = selectedTiles;
+    }
 
 
     /**
@@ -520,24 +537,25 @@ public class Model  {
         this.currPlayer = currPlayer;
     }
 
+
     /**
      * Return true if the game is finished, false otherwise
      * @return isFinished
      */
-    public boolean getIsFinished() {
+    public boolean isFinished() {
         return isFinished;
     }
 
 
     /**
-     * @return Array of all the personal objectives of all players in the game
+     * @return ArrayList of all the personal objectives of all players in the game
      */
-   /* public ArrayList<PersonalObjective> getPersobj(){
+   public ArrayList<PersonalObjective> getPersobj(){
         ArrayList<PersonalObjective> persobj = new ArrayList<>();
         for( Player p : players){
             persobj.add(p.getPersonalObjective());
         }
         return persobj;
-    }*/
+    }
 
 }

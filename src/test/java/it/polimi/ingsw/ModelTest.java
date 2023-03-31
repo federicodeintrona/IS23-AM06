@@ -46,7 +46,7 @@ class ModelTest {
                 assertEquals(Tiles.EMPTY, p.getBookshelf().getTiles().getTile(getRandomPointInBookshelf()));
                 assertEquals(0,p.getPersonalObjective().personalObjectivePoint(p));
             }
-            assertEquals(8,m.getCommonobj().get(0).getPoints());
+            assertEquals(8,m.getCommonObj().get(0).getPoints());
     }
 
     @Test
@@ -78,26 +78,27 @@ class ModelTest {
         for (int i = 0; i < 3; i++) {
             array.add(Tiles.BLUE);
         }
+        m.getSelectedTiles().addAll(array);
         assertEquals(Tiles.BLUE,array.get(2));
         for (int j =0;j<5;j++) {
 
 
 
             try {
+                //Add 1
                 m.setState(GameState.CHOOSING_COLUMN);
-                m.addToBookShelf(players.get(0), array, j);
+                m.addToBookShelf(players.get(0), j);
                 m.setCurrPlayer(players.get(0));
-                m.setState(GameState.CHOOSING_COLUMN);
-                m.addToBookShelf(players.get(0), array, j);
-                m.setCurrPlayer(players.get(0));
+                m.getSelectedTiles().addAll(array);
+
             } catch (MoveNotPossible e) {
                 throw new RuntimeException(e);
             }
 
-            assertEquals(Tiles.BLUE,m.getPlayers().get(0).getBookshelf().getTiles().getTile(2,j));
+            assertEquals(Tiles.BLUE,m.getPlayers().get(0).getBookshelf().getTiles().getTile(4,j),"blue check");
             assertEquals(Tiles.EMPTY,m.getPlayers().get(1).getBookshelf().getTiles().getTile(2,j));
         }
-       assertEquals(true,m.getIsFinished());
+       assertEquals(true,m.isFinished());
 
     }
 
@@ -121,10 +122,11 @@ class ModelTest {
             add.add(m.getBoard().getGamesBoard().getTile(point));
         }
 
+        m.setSelectedTiles(add);
         try {
             m.removeTileArray(players.get(0),remove);
 
-            m.addToBookShelf(players.get(0),add,0);
+            m.addToBookShelf(players.get(0),0);
         } catch (MoveNotPossible e) {
             throw new RuntimeException(e);
         }

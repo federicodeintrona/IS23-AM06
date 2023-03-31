@@ -13,6 +13,11 @@ public class Lobby {
     private HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private HashMap<Integer,Model> games = new HashMap<>();
 
+     private HashMap<String ,Player > playerIDs = new HashMap<>();
+
+    private HashMap<String ,ServerClientHandler > clients = new HashMap<>();
+
+
     private int gameNumber = 0;
     private final Object gameNumberLock = new Object();
 
@@ -77,14 +82,16 @@ public class Lobby {
         synchronized (gameNumberLock) {
             gameNumber += 1;
             tempnum = gameNumber;
+            games.put(tempnum, m);
         }
-        games.put(tempnum, m);
+
 
         //for every client in the lobby, create his player and set the gameID
         for (ServerClientHandler s : lobbys.get(index)) {
             Player p = new Player(s.getNickname());
             players.add(p);
             s.setGameID(tempnum);
+            playerIDs.put(p.getUsername(),p);
         }
 
         //start the game
@@ -94,6 +101,9 @@ public class Lobby {
 
 
     public synchronized boolean handleClient(ServerClientHandler client){
+
+        clients.put(client.getNickname(),client);
+
         //if there are waiting lobbies, add the client to the longest waiting lobby and return true
         if(waitingLobbys()){
             addClient(client);
@@ -112,5 +122,9 @@ public class Lobby {
 
     public HashMap<Integer,Model> getGames() {
         return games;
+    }
+
+    public HashMap<String, Player> getPlayerIDs() {
+        return playerIDs;
     }
 }

@@ -26,11 +26,11 @@ public class Controller {
      * @param loby The lobby of the server
      * @param models  The hashmap of all current games
      */
-    public Controller(Lobby loby, HashMap<Integer,Model> models) {
+    public Controller(Lobby loby, HashMap<Integer,Model> models,HashMap<String ,Player > playerID) {
         lobby = loby;
        games = models;
        views = new ArrayList<>();
-       playerIDs = new HashMap<>();
+       playerIDs = playerID;
     }
 
 
@@ -52,15 +52,14 @@ public class Controller {
      *
      * @param gameID The ID of the game
      * @param playerID  The username of the player
-     * @param array The array of tiles
      * @param col
      * @return
      */
-    public Message addToBookshelf(int gameID, String playerID, ArrayList<Tiles> array, int col ){
+    public Message addToBookshelf(int gameID, String playerID,  int col ){
         Message reply = new Message();
 
         try {
-            games.get(gameID).addToBookShelf(playerIDs.get(playerID),array,col);
+            games.get(gameID).addToBookShelf(playerIDs.get(playerID),col);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
 
