@@ -21,6 +21,7 @@ class ControllerTest {
     public ArrayList<Player> players1 = new ArrayList<>();
     public ArrayList<View> views0 = new ArrayList<>();
     public ArrayList<View> views1 = new ArrayList<>();
+
     @BeforeEach
     void setUp(){
 
@@ -68,15 +69,14 @@ class ControllerTest {
         games.put(0,new Model(players0,views0));
         games.put(1,new Model(players1,views1));
 
-
-
+        controller.startGame(0);
+        controller.startGame(1);
     }
 
     @Test
     void startGame() {
 
         for(int i=0;i<2;i++) {
-            controller.startGame(i);
             assertNotEquals(Tiles.EMPTY, games.get(i).getBoard().getGamesBoard().getTile(4, 4));
             assertEquals(Tiles.NOTALLOWED, games.get(i).getBoard().getGamesBoard().getTile(5, 7));
             for (Player p : games.get(i).getPlayers()) {
@@ -88,6 +88,7 @@ class ControllerTest {
         }
 
     }
+
 
     @Test
     void addToBookshelf() {
@@ -105,6 +106,8 @@ class ControllerTest {
 
     @Test
     void removeTiles() {
+
+
     }
 
     @Test

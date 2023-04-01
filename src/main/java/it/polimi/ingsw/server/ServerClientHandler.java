@@ -96,17 +96,12 @@ public class ServerClientHandler implements Runnable  {
                 case CONNECT -> {
                     System.out.println("Server: connect message received");
 
-                    //Username check
-
-
 
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
-                        try {
+
                             messageOut = controller.handleNewClient(this);
-                        } catch (UsernameAlreadyTaken e) {
-                            throw new RuntimeException(e);
-                        }
+
                     }
 
                     this.oos.writeObject(messageOut);

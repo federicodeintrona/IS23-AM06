@@ -54,9 +54,6 @@ public class Model  {
 
 
 
-
-
-
     //PUBLIC METHODS
 
     /**
@@ -100,7 +97,8 @@ public class Model  {
      * @param points  The position of the tiles
      * @throws MoveNotPossible if the game is not in the right state
      * @throws NotCurrentPlayer if the player is not the current player
-     * @throws IllegalArgumentException if the array points is null or the array is too long
+     * @throws IllegalArgumentException if the array points is null
+     * @throws TooManySelected if the array points is too long
      * @throws TilesNotAdjacent if the tiles are not adjacent
      * @throws OutOfDomain if at least one of the points is outside the board
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
@@ -232,10 +230,11 @@ public class Model  {
      * @param player The player who wants to remove the tiles
      * @throws MoveNotPossible if the game is not in the right state
      * @throws NotCurrentPlayer if the player is not the current player
-     * @throws IllegalArgumentException if the array points is null or the array is too long
+     * @throws IllegalArgumentException if the array points is null
      * @throws TilesNotAdjacent if the tiles are not adjacent
      * @throws OutOfDomain if at least one of the points is outside the board
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
+     * @throws TooManySelected if the array points is too long
      */
     private void checkRemoveLegit(ArrayList<Point> points, Player player) throws MoveNotPossible,IllegalArgumentException {
 
@@ -253,16 +252,17 @@ public class Model  {
     /**
      * Checks if the selected tiles can actually be removed from the board
      * @param points Array of coordinates of the tiles
-     * @throws IllegalArgumentException if the array points is null or the array is too long
+     * @throws IllegalArgumentException if the array points is null
      * @throws TilesNotAdjacent if the tiles are not adjacent
      * @throws OutOfDomain if at least one of the points is outside the board
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
+     * @throws TooManySelected if the array is too long
      */
     private void checkPointArrayDomain(ArrayList<Point> points) throws MoveNotPossible, IllegalArgumentException {
         //check if the array is not null
         if(points!=null ){
             //check the length of the array
-            if(points.size()>3) throw new IllegalArgumentException();
+            if(points.size()>3) throw new TooManySelected();
             else {  //check if the tiles are adjacent
                 if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
             }
@@ -349,10 +349,6 @@ public class Model  {
 
 
 
-
-
-
-
     //PRIVATE METHODS : UTILITY
 
 
@@ -365,8 +361,6 @@ public class Model  {
 
 
 
-
-
     /**
      * Initializes private objectives
      */
@@ -376,8 +370,6 @@ public class Model  {
             players.get(i).setPersonalObjective(temp.get(i));
         }
     }
-
-
 
 
     /**
@@ -403,8 +395,6 @@ public class Model  {
         notifier.firePropertyChange(evt);
 
     }
-
-
 
 
     /**
@@ -453,7 +443,7 @@ public class Model  {
     private void selectWInner(){
         int winnerpos=0;
         for( int i = 0; i< players.size(); i++){
-            if(players.get(i).getPrivatePoint()>players.get(winnerpos).getPrivatePoint()) winnerpos=i;
+            if(players.get(i).getPrivatePoint() >players.get(winnerpos).getPrivatePoint()) winnerpos=i;
         }
 
         winner = players.get(winnerpos);
@@ -518,17 +508,6 @@ public class Model  {
     }
 
 
-    public ArrayList<Tiles> getSelectedTiles() {
-        return selectedTiles;
-    }
-
-
-
-    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
-        this.selectedTiles = selectedTiles;
-    }
-
-
     /**
      * Set the current player (Just for Testing purposes)
      * @param currPlayer The player to set as current player
@@ -548,10 +527,10 @@ public class Model  {
 
     /**
      * Sets the selectedTiles array
-     * @param selectedTiles Array you want to set selectedTiles as
+     * @param selectedTile Array you want to set selectedTiles as
      */
-    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
-        this.selectedTiles = selectedTiles;
+    public void setSelectedTiles(ArrayList<Tiles> selectedTile) {
+        this.selectedTiles = selectedTile;
     }
 
 

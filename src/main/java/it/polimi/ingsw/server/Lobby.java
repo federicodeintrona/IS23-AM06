@@ -28,9 +28,9 @@ public class Lobby {
 
 
     public synchronized boolean handleClient(ServerClientHandler client) throws UsernameAlreadyTaken {
-        if(!clients.containsKey(client.getNickname())){
+        if(!clients.containsKey(client.getNickname().toLowerCase())){
 
-            clients.put(client.getNickname(),client);
+            clients.put(client.getNickname().toLowerCase(),client);
 
             //if there are waiting lobbies, add the client to the longest waiting lobby and return true
             if(waitingLobbies()){
