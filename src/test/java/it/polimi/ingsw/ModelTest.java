@@ -105,6 +105,29 @@ class ModelTest {
 
     @Test
     void swapOrder() {
+        ArrayList<Tiles> selected = new ArrayList<>();
+        selected.add(Tiles.BLUE);
+        selected.add(Tiles.WHITE);
+        selected.add(Tiles.GREEN);
+        m.setSelectedTiles(selected);
+
+        Tiles[] array = {Tiles.WHITE,Tiles.GREEN,Tiles.BLUE};
+
+        ArrayList<Integer> ints = new ArrayList<>();
+        ints.add(1);
+        ints.add(2);
+        ints.add(0);
+
+        m.setState(GameState.CHOOSING_ORDER);
+
+        try {
+            m.swapOrder(ints,players.get(0));
+
+            assertArrayEquals(array,m.getSelectedTiles().toArray());
+
+        } catch (MoveNotPossible e) {
+            throw new RuntimeException(e);
+        }
 
 
 
@@ -126,12 +149,14 @@ class ModelTest {
         try {
 
                 m.removeTileArray(players.get(0), remove);
+                assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
                 m.addToBookShelf(players.get(0), 0);
                 assertNotEquals(Tiles.EMPTY, players.get(0).getBookshelf().getTiles().getColumn(0).get(5));
                 assertThrows(MoveNotPossible.class ,()-> m.addToBookShelf(players.get(0), 0));
                 assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
                 assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(1), remove));
                 assertThrows(IllegalArgumentException.class ,()-> m.removeTileArray(players.get(1), null));
+                assertThrows(MoveNotPossible.class ,()-> m.swapOrder(new ArrayList<>(),players.get(1)));
 
 
                 remove.set(0,new Point(5,0));

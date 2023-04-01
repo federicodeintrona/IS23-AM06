@@ -206,7 +206,7 @@ public class Model  {
                 ArrayList<Tiles> array = new ArrayList<>();
                 array.addAll(selectedTiles);
                 for (int i = 0; i < ints.size(); i++) {
-                    selectedTiles.set(i, array.get(ints.get(i) - 1));
+                    selectedTiles.set(i, array.get(ints.get(i)));
                 }
             }else throw new NotCurrentPlayer();
 
@@ -550,12 +550,12 @@ public class Model  {
     /**
      * @return ArrayList of all the personal objectives of all players in the game
      */
-   public ArrayList<PersonalObjective> getPersobj(){
+  /* public ArrayList<PersonalObjective> getPersobj(){
         ArrayList<PersonalObjective> persobj = new ArrayList<>();
         for( Player p : players){
             persobj.add(p.getPersonalObjective());
         }
         return persobj;
-    }
+    }*/
 
 }
