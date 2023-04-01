@@ -8,7 +8,14 @@ import java.util.Set;
 
 public class CommonObjective9 extends CommonObjective{
 
-
+    /**
+     * Method that takes a player and analyzes his bookshelf to
+     * see if there are 2 filled columns, each one made by 6 tiles of
+     * 6 different colors, inside it and, in case, returns true
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @return      true if the bookshelf meets the criteria, else false
+     */
     @Override
     public boolean checkCondition(Player player) {
         int count = 0;
@@ -47,6 +54,12 @@ public class CommonObjective9 extends CommonObjective{
         else return false;
     }
 
+    /**
+     * Method to calculate the commonObjective points
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 

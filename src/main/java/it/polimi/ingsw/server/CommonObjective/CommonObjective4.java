@@ -9,7 +9,16 @@ import java.util.Map;
 
 public class CommonObjective4 extends CommonObjective{
 
-
+    /**
+     * Method that takes a player and analyzes his bookshelf to
+     * see if there are 2 separate groups, each one made by 4 tiles of the same
+     * color disposed in a 2x2 formation, inside it and, in case, returns true.
+     * The tiles of the 2 groups need to have the same color to meet the criteria
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @return      true if the bookshelf meets the criteria, else false
+     */
+    @Override
     public boolean checkCondition(Player player) {
         Matrix matrix = player.getBookshelf().getTiles();       //creating a copy of player's bookshelf To decrease the number of access
         ArrayList<Tiles> colors = new ArrayList<>();        //to store the colors of the checking matrix 2x2
@@ -49,7 +58,13 @@ public class CommonObjective4 extends CommonObjective{
                              .anyMatch(count -> count >= 2);
     }
 
-    //method to check if a matrix as all elements of same color
+    /**
+     * Helping method that takes an Arraylist of tiles and
+     * returns true only if all of its tiles have the same color
+     *
+     * @param box   ArrayList of tiles
+     * @return      true if all elements of box are the same, else false
+     */
     public static boolean checkColorBox(ArrayList<Tiles> box){
         Tiles case0 = box.get(0);
 
@@ -60,6 +75,12 @@ public class CommonObjective4 extends CommonObjective{
         return true;
     }
 
+    /**
+     * Method to calculate the commonObjective points
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
+     */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 

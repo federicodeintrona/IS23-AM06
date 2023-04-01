@@ -20,17 +20,31 @@ public class Bookshelf {
             }
         }
 
+        /**
+        * Returns the matrix of tiles
+        * @return The matrix of tiles
+         **/
+
         public Matrix getTiles(){
             return tiles;
         }
 
+    /**
+     * Checks if th column given is full of tiles
+     * @param choice number of tiles chosen
+     * @param column index of the colum chosen
+     * @return true if the column is full, false if it isn't
+     */
         public boolean checkColumns(int choice, int column){
             if(tiles.getTile(choice-1,column).equals(Tiles.EMPTY))
                 return true;
             else return false;
         }
 
-
+    /**
+     * Check if the matrix is full
+     * @return true if the matrix is full, false if it isn't
+     */
         public boolean checkEndGame(){
             for(int i=0;i<5;i++){
                 if(tiles.getTile(5,i).equals(Tiles.EMPTY)){
@@ -39,7 +53,10 @@ public class Bookshelf {
             }
             return true;
         }
-
+     /**
+     * Check if the matrix is empty
+     * @return true if the matrix is empty, false if it isn't
+     */
         public boolean checkEmptyBoard(){
             for(int i=0; i<6; i++){
                 for (int j=0; j<5; j++){
@@ -49,6 +66,12 @@ public class Bookshelf {
             return true;
         }
 
+    /**
+     * Insert the array of tiles in the matrix
+     * in the column chosen
+     * @param tiles tiles to put in the matrix
+     * @param column index of the column for tiles
+     */
     public void addTile(ArrayList<Tiles> tiles, int column){
             int pos=firstFree(column);
             if (tiles.size() == 1) this.tiles.setTile(tiles.get(0), pos, column);
@@ -62,6 +85,12 @@ public class Bookshelf {
                 this.tiles.setTile(tiles.get(2), pos-2, column);
             }
         }
+
+    /**
+     * Finds the first free position of the matrix in the given column
+     * @param column index of the column
+     * @return first free row of the matrix
+     */
 
         private int firstFree (int column){
             for (int i=5;i>=0;i--){
@@ -96,8 +125,12 @@ public class Bookshelf {
         return adjacent;
         }
 
-        //ritorna i punti di una vicinanza
-        private int vicinityPointCount(int n){
+    /**
+     * Associate the number of adiacent tiles to the corresponding point
+     * @param n number of adiacent tiles
+     * @return corresponding point
+     */
+    private int vicinityPointCount(int n){
               switch (n){
                   case 3:
                       return 2;
@@ -115,8 +148,11 @@ public class Bookshelf {
               }
         }
 
-        //ritorna il totale dei punti dei punti di vicinanza
-        public int checkVicinityPoints(){
+    /**
+     * Calculate vicinity points
+     * @return vicinity point
+     */
+    public int checkVicinityPoints(){
         int adjPoint=0;
         int sameColor=0;
         boolean[][] visited = new boolean[6][5];

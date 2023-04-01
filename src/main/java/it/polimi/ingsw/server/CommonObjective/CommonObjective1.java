@@ -12,12 +12,13 @@ public class CommonObjective1 extends CommonObjective{
 
     /**
      * Method that takes a player and analyzes his bookshelf to
-     * see if there are 6 groups, made by 2 tiles of the same
+     * see if there are 6 separate groups, made by 2 tiles of the same
      * color each, inside it and, in case, returns true
      *
      * @param player    player whose bookshelf gets analyze
      * @return      true if the bookshelf meets the criteria, else false
      */
+    @Override
     public boolean checkCondition(Player player){
 
         // creation of set to contain all tiles approved by the algorithm
