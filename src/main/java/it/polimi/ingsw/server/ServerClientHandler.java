@@ -32,6 +32,10 @@ public class ServerClientHandler implements Runnable  {
         this.socket = socket;
         this.controller=controller;
     }
+    public ServerClientHandler(Controller controller) {
+        this.controller=controller;
+    }
+
 
     public void run() {
         try {

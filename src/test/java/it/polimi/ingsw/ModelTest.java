@@ -124,9 +124,25 @@ class ModelTest {
 
         m.setSelectedTiles(add);
         try {
-            m.removeTileArray(players.get(0),remove);
 
-            m.addToBookShelf(players.get(0),0);
+                m.removeTileArray(players.get(0), remove);
+                m.addToBookShelf(players.get(0), 0);
+                assertNotEquals(Tiles.EMPTY, players.get(0).getBookshelf().getTiles().getColumn(0).get(5));
+                assertThrows(MoveNotPossible.class ,()-> m.addToBookShelf(players.get(0), 0));
+                assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
+                assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(1), remove));
+                assertThrows(IllegalArgumentException.class ,()-> m.removeTileArray(players.get(1), null));
+
+
+                remove.set(0,new Point(5,0));
+                remove.set(1,new Point(5,1));
+                m.removeTileArray(players.get(1), remove);
+                m.addToBookShelf(players.get(1), 0);
+                assertNotEquals(Tiles.EMPTY, players.get(1).getBookshelf().getTiles().getColumn(0).get(5));
+
+
+
+
         } catch (MoveNotPossible e) {
             throw new RuntimeException(e);
         }

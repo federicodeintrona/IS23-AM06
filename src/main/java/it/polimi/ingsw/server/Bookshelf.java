@@ -23,11 +23,13 @@ public class Bookshelf {
         public Matrix getTiles(){
             return tiles;
         }
+
         public boolean checkColumns(int choice, int column){
             if(tiles.getTile(choice-1,column).equals(Tiles.EMPTY))
                 return true;
             else return false;
         }
+
 
         public boolean checkEndGame(){
             for(int i=0;i<5;i++){

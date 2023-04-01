@@ -14,49 +14,50 @@ public class Controller {
     Lobby lobby;
     private HashMap<Integer,Model> games;
 
-    private HashMap<String ,Player > playerIDs;
+    private HashMap<String,ServerClientHandler> clients;
 
     private ArrayList<ArrayList<View>> views;
 
     /**
      * Contructor
-     * @param loby The lobby of the server
+     * @param mainLobby The lobby of the server
      * @param models  The hashmap of all current games
      */
-    public Controller(Lobby loby, HashMap<Integer,Model> models,HashMap<String ,Player > playerID) {
-        lobby = loby;
-       games = models;
-       views = new ArrayList<>();
-       playerIDs = playerID;
+    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client) {
+        lobby = mainLobby;
+        games = models;
+        views = new ArrayList<>();
+        clients = client;
+    }
+
+    public Controller(HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client){
+        games = models;
+        clients = client;
+
     }
 
 
     /**
-     * Adds the player of the game to the list af all players,
-     * initializes the selected model.
+     * Start the selected game.
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
-        //Adds
-        for(Player p : games.get(ID).getPlayers()) {
-            playerIDs.put(p.getUsername(),p);
-        }
         games.get(ID).initialization();
     }
 
 
     /**
-     *
+     * Adds the selected tiles of the game whose id is 'gameID' in the column 'col'
      * @param gameID The ID of the game
-     * @param playerID  The username of the player
-     * @param col
-     * @return
+     * @param playerID  The username of the player requesting the move
+     * @param col The column where you want to add the tiles
+     * @return The reply to be sent to the client
      */
     public Message addToBookshelf(int gameID, String playerID,  int col ){
         Message reply = new Message();
 
         try {
-            games.get(gameID).addToBookShelf(playerIDs.get(playerID),col);
+            games.get(gameID).addToBookShelf(clients.get(playerID).getPlayer(),col);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
 
@@ -92,7 +93,7 @@ public class Controller {
     public void swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
 
         try {
-            games.get(gameID).swapOrder(ints,playerIDs.get(playerID));
+            games.get(gameID).swapOrder(ints,clients.get(playerID).getPlayer());
         } catch (NotCurrentPlayer e) {
             throw new RuntimeException(e);
         } catch (MoveNotPossible e) {
@@ -102,15 +103,19 @@ public class Controller {
     }
 
 
+    /**
+     * Removes the tiles of coordinates 'points'
+     * @param gameID
+     * @param playerID
+     * @param points
+     */
     public void removeTiles(int gameID,String playerID, ArrayList<Point> points){
         try {
-            games.get(gameID).removeTileArray(playerIDs.get(playerID),points);
+            games.get(gameID).removeTileArray(clients.get(playerID).getPlayer(),points);
         } catch (MoveNotPossible e) {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
     //public void saveState(int gameID){games.get(gameID).saveState();}
@@ -123,6 +128,7 @@ public class Controller {
 
     public Message handleNewClient(ServerClientHandler client) throws UsernameAlreadyTaken {
         Message reply = new Message();
+
         if(lobby.handleClient(client)){
             reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
             reply.setContent("Added to a game. Waiting for other player...");
@@ -135,9 +141,4 @@ public class Controller {
     }
 
 
-
-
-    public void addPlayer(String username, Player player){
-        playerIDs.put(username,player);
-    }
 }

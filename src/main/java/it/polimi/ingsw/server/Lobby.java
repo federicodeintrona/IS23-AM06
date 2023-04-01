@@ -11,15 +11,9 @@ public class Lobby {
     private Controller controller;
     private  ArrayList<ArrayList<ServerClientHandler>> lobbys = new ArrayList<>();
     private Queue<Integer> waitingLobbys = new LinkedList<>();
-
     private HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private HashMap<Integer,Model> games = new HashMap<>();
-
-     private HashMap<String ,Player > playerIDs = new HashMap<>();
-
     private HashMap<String ,ServerClientHandler > clients = new HashMap<>();
-
-
     private int gameNumber = 0;
     private final Object gameNumberLock = new Object();
 
@@ -29,8 +23,6 @@ public class Lobby {
         return false;}
         else return true;
     }
-
-
 
 
 
@@ -95,6 +87,8 @@ public class Lobby {
     }
 
 
+
+
     public void startGame(int index) {
         //create the model and the array that will contain alla players
         ArrayList<Player> players = new ArrayList<>();
@@ -103,18 +97,18 @@ public class Lobby {
 
         //add the new game and get its ID
         synchronized (gameNumberLock) {
-            gameNumber += 1;
             tempnum = gameNumber;
             games.put(tempnum, m);
+            gameNumber += 1;
         }
 
 
         //for every client in the lobby, create his player and set the gameID
         for (ServerClientHandler s : lobbys.get(index)) {
             Player p = new Player(s.getNickname());
-            players.add(p);
+            s.setPlayer(p);
             s.setGameID(tempnum);
-            playerIDs.put(p.getUsername(),p);
+            players.add(p);
         }
 
         //start the game
@@ -137,7 +131,8 @@ public class Lobby {
         return games;
     }
 
-    public HashMap<String, Player> getPlayerIDs() {
-        return playerIDs;
+
+    public HashMap<String, ServerClientHandler> getClients() {
+        return clients;
     }
 }
