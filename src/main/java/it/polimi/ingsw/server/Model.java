@@ -204,7 +204,7 @@ public class Model  {
                 ArrayList<Tiles> array = new ArrayList<>();
                 array.addAll(selectedTiles);
                 for (int i = 0; i < ints.size(); i++) {
-                    selectedTiles.set(i, array.get(ints.get(i) - 1));
+                    selectedTiles.set(i, array.get(ints.get(i)));
                 }
             }else throw new NotCurrentPlayer();
 
@@ -238,10 +238,10 @@ public class Model  {
     private void checkRemoveLegit(ArrayList<Point> points, Player player) throws MoveNotPossible,IllegalArgumentException {
 
         if(state.equals(GameState.CHOOSING_TILES)){
-        //Check if the player requesting the move is the current player
-        if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
-        //check if the selected tiles can actually be selected
-        else checkPointArrayDomain(points);
+            //Check if the player requesting the move is the current player
+            if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
+            //check if the selected tiles can actually be selected
+            else checkPointArrayDomain(points);
 
         }else throw new MoveNotPossible();
 
@@ -526,6 +526,23 @@ public class Model  {
      */
     public boolean getIsFinished() {
         return isFinished;
+    }
+
+    /**
+     * Sets the selectedTiles array
+     * @param selectedTiles Array you want to set selectedTiles as
+     */
+    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
+        this.selectedTiles = selectedTiles;
+    }
+
+
+    /**
+     * Returns the selectedTiles array
+     * @return selectedTiles ArrayList
+     */
+    public ArrayList<Tiles> getSelectedTiles() {
+        return selectedTiles;
     }
 
 

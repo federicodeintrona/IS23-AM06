@@ -104,7 +104,29 @@ class ModelTest {
 
     @Test
     void swapOrder() {
+        ArrayList<Tiles> selected = new ArrayList<>();
+        selected.add(Tiles.BLUE);
+        selected.add(Tiles.WHITE);
+        selected.add(Tiles.GREEN);
+        m.setSelectedTiles(selected);
 
+        Tiles[] array = {Tiles.WHITE,Tiles.GREEN,Tiles.BLUE};
+
+        ArrayList<Integer> ints = new ArrayList<>();
+        ints.add(1);
+        ints.add(2);
+        ints.add(0);
+
+        m.setState(GameState.CHOOSING_ORDER);
+
+        try {
+            m.swapOrder(ints,players.get(0));
+
+            assertArrayEquals(array,m.getSelectedTiles().toArray());
+
+        } catch (MoveNotPossible e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
