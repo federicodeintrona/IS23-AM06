@@ -8,7 +8,7 @@ public class Board {
     private static final int numberOfRows=9;
     private static final int numberOfColumn=9;
 
-    private Matrix gamesBoard=new Matrix(9, 9);
+    private Matrix gamesBoard=new Matrix(numberOfRows, numberOfColumn);
     private int numberOfPlayer;
     private Sachet boardSachet;
 
