@@ -193,24 +193,26 @@ public class Model  {
      *       ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
      * @param ints  The new order of the array
      * @param player  The player requesting the move
-     * @throws NotCurrentPlayer if the player is not the current player
-     * @throws MoveNotPossible if the game is not in the right state
+     * @throws MoveNotPossible The game is not in the right state
+     * @throws NotCurrentPlayer The player is not the current player
+     * @throws IllegalArgumentException The ints array is not of appropriate content
+     * @throws TooManySelected if the array is not of appropriate size
      */
-    public void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible {
+    public void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
 
-        if(state.equals(GameState.CHOOSING_ORDER)){
+        //Check the legitimacy of the move
+        swapCheck(ints,player);
 
-            if(player.equals(currPlayer)) {
-                ArrayList<Tiles> array = new ArrayList<>();
-                array.addAll(selectedTiles);
-                for (int i = 0; i < ints.size(); i++) {
-                    selectedTiles.set(i, array.get(ints.get(i)));
-                }
-            }else throw new NotCurrentPlayer();
+        //Swaps the array around
+        ArrayList<Tiles> array = new ArrayList<>();
+        array.addAll(selectedTiles);
+        for (int i = 0; i < ints.size(); i++) {
+            selectedTiles.set(i, array.get(ints.get(i)));
+        }
 
-            //Change game state
-            state = GameState.CHOOSING_COLUMN;
-        }else throw new MoveNotPossible();
+        //Change game state
+        state = GameState.CHOOSING_COLUMN;
+
     }
 
 
@@ -225,7 +227,7 @@ public class Model  {
     //REMOVE CHECKS
 
     /**
-     * If possible, removes the selected tiles from the board.
+     * Checks if the player can remove the selected tiles from the board.
      * @param points The array of points you want to remove
      * @param player The player who wants to remove the tiles
      * @throws MoveNotPossible if the game is not in the right state
@@ -346,7 +348,41 @@ public class Model  {
     }
 
 
+    /**
+     * Checks if the player can swap the selectedTiles array
+     * @param ints Swap array
+     * @param player Player
+     * @throws MoveNotPossible The game is not in the right state
+     * @throws NotCurrentPlayer The player is not the current player
+     * @throws IllegalArgumentException The ints array is not of appropriate content
+     * @throws TooManySelected if the array is not of appropriate size
+     */
+    private void swapCheck(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
 
+        if(!state.equals(GameState.CHOOSING_ORDER)) throw new MoveNotPossible();
+
+        if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
+
+        intsCheck(ints);
+
+    }
+
+
+    /**
+     * Checks if the array is of appropriate size and content
+     * @param ints Swap array
+     * @throws IllegalArgumentException if the array is not of appropriate content
+     * @throws TooManySelected if the array is not of appropriate size
+     */
+    private void intsCheck(ArrayList<Integer> ints) throws IllegalArgumentException, TooManySelected {
+        //Checks if the swap array is the same size as the selectedTiles array
+        if(ints.size()!=selectedTiles.size()) throw new TooManySelected();
+        //Checks that the integer is between 0 and the array size
+        for(Integer i : ints){
+            if( i<0 || i>ints.size()) throw new IllegalArgumentException();
+        }
+
+    }
 
 
     //PRIVATE METHODS : UTILITY

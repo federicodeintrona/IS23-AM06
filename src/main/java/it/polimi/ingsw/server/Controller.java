@@ -102,9 +102,19 @@ public class Controller {
         } catch (NotCurrentPlayer e) {
             reply.setType(MessageTypes.ERROR);
             reply.setContent("You are not the current player");
-        } catch (MoveNotPossible e) {
+
+        } catch (IllegalArgumentException e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("You cannot choose these positions");
+
+        }catch (TooManySelected e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("Incorrect number of orders ");
+
+        }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
             reply.setContent("You can't fo that now");
+
         }
 
         return reply;
