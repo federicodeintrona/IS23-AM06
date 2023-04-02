@@ -3,18 +3,15 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.server.Board;
 import it.polimi.ingsw.server.Sachet;
 import it.polimi.ingsw.server.Tiles;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
-
 
     //TEST boardInitialization()
     @DisplayName("Board initiliazation for 2 players do NOT put EMPTY tiles")
@@ -28,25 +25,25 @@ class BoardTest {
         //assert - check if actual val is equal to expected val
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
 
     }
     @DisplayName("Board initiliazation for 3 players do NOT put EMPTY tiles")
@@ -60,17 +57,17 @@ class BoardTest {
         //assert - check if actual val is equal to expected val
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
     }
     @DisplayName("Board initiliazation for 3 players do NOT put EMPTY tiles")
     @Test
@@ -83,120 +80,384 @@ class BoardTest {
         //assert - check if actual val is equal to expected val
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
     }
 
     //TEST checkBoardReset
-    @DisplayName("Condition to board reset is verified")
+    @DisplayName("Condition to board reset is verified - 2 players' game")
     @Test
     void checkBoardReset1() {
-        //arrange - setup our test objects
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
-        //act - do the actual calc or method run
-
-        for (int i = 0; i <9; i++) {
+        for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 System.out.println(board.getGamesBoard().getTile(i,j));
             }
         }
-
-        System.out.println(board.getGamesBoard().getTile(1,3));
         board.placeTiles(Tiles.GREEN, 3,3);
         board.placeTiles(Tiles.GREEN, 4,4);
         board.placeTiles(Tiles.GREEN, 3,6);
         boolean result=board.checkBoardReset();
-        //assert - check if actual val is equal to expected val
-        Assertions.assertTrue(result);
+        assertTrue(result);
+
     }
-    @DisplayName("Condition to board reset is NOT verified")
+    @DisplayName("Condition to board reset is verified - 3 players' game")
     @Test
     void checkBoardReset2() {
-        //arrange - setup our test objects
         Sachet sachet=new Sachet();
-        Board board=new Board(2, sachet);
-        //act - do the actual calc or method run
+        Board board=new Board(3, sachet);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                System.out.println(board.getGamesBoard().getTile(i,j));
+            }
+        }
         board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 4,3);
+        board.placeTiles(Tiles.GREEN, 4,4);
         board.placeTiles(Tiles.GREEN, 3,6);
         boolean result=board.checkBoardReset();
-        //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, false);
+        assertTrue(result);
+
+    }
+    @DisplayName("Condition to board reset is verified - 4 players' game")
+    @Test
+    void checkBoardReset3() {
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                System.out.println(board.getGamesBoard().getTile(i,j));
+            }
+        }
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 4,4);
+        board.placeTiles(Tiles.GREEN, 3,6);
+        boolean result=board.checkBoardReset();
+        assertTrue(result);
+
+    }
+    @DisplayName("Condition to board reset is NOT verified - 2 players' game")
+    @Test
+    void checkBoardReset4() {
+        boolean result;
+        Sachet sachet=new Sachet();
+        Board board=new Board(2, sachet);
+        //we are NOT on the edge board --> left adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 3,2);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 3,2);
+
+        //we are NOT on the edge board --> right adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 3,4);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 3,4);
+
+        //we are NOT on the edge board --> upper adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 2,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 2,3);
+
+        //we are NOT on the edge board --> bottom adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 4,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 4,3);
+    }
+    @DisplayName("Condition to board reset is NOT verified - 3 players' game")
+    @Test
+    void checkBoardReset5() {
+        boolean result;
+        Sachet sachet=new Sachet();
+        Board board=new Board(3, sachet);
+        //we are NOT on the edge board --> left adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 3,2);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 3,2);
+
+        //we are NOT on the edge board --> right adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 3,4);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 3,4);
+
+        //we are NOT on the edge board --> upper adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 2,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 2,3);
+
+        //we are NOT on the edge board --> bottom adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 4,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 4,3);
+
+
+        //we are on the upper edge --> bottom adjacency
+        board.placeTiles(Tiles.GREEN, 0,3);
+        board.placeTiles(Tiles.GREEN, 1,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 0,3);
+        board.placeTiles(Tiles.EMPTY, 1,3);
+
+
+        //we are on the bottom edge --> up adjacency
+        board.placeTiles(Tiles.GREEN, 8,5);
+        board.placeTiles(Tiles.GREEN, 7,5);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 8,5);
+        board.placeTiles(Tiles.EMPTY, 7,5);
+
+
+        //we are on the left edge --> right adjacency
+        board.placeTiles(Tiles.GREEN, 5,0);
+        board.placeTiles(Tiles.GREEN, 5,1);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 5,0);
+        board.placeTiles(Tiles.EMPTY, 5,1);
+
+
+        //we are on the right edge --> left adjacency
+        board.placeTiles(Tiles.GREEN, 3,8);
+        board.placeTiles(Tiles.GREEN, 3,7);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,8);
+        board.placeTiles(Tiles.EMPTY, 3,7);
+    }
+    @DisplayName("Condition to board reset is NOT verified - 4 players' game")
+    @Test
+    void checkBoardReset6() {
+        boolean result;
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        //we are NOT on the edge board --> left adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 3,2);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 3,2);
+
+        //we are NOT on the edge board --> right adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 3,4);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 3,4);
+
+        //we are NOT on the edge board --> upper adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 2,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 2,3);
+
+        //we are NOT on the edge board --> bottom adjacency
+        board.placeTiles(Tiles.GREEN, 3,3);
+        board.placeTiles(Tiles.GREEN, 4,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,3);
+        board.placeTiles(Tiles.EMPTY, 4,3);
+
+
+        //we are on the upper edge --> bottom adjacency
+        board.placeTiles(Tiles.GREEN, 0,3);
+        board.placeTiles(Tiles.GREEN, 1,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 0,3);
+        board.placeTiles(Tiles.EMPTY, 1,3);
+
+        //we are on the upper edge --> right adjacency
+        board.placeTiles(Tiles.GREEN, 0,3);
+        board.placeTiles(Tiles.GREEN, 0,4);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 0,3);
+        board.placeTiles(Tiles.EMPTY, 0,4);
+
+        //we are on the upper edge --> left adjacency
+        board.placeTiles(Tiles.GREEN, 0,4);
+        board.placeTiles(Tiles.GREEN, 0,3);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 0,4);
+        board.placeTiles(Tiles.EMPTY, 0,3);
+
+
+        //we are on the bottom edge --> up adjacency
+        board.placeTiles(Tiles.GREEN, 8,5);
+        board.placeTiles(Tiles.GREEN, 7,5);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 8,5);
+        board.placeTiles(Tiles.EMPTY, 7,5);
+
+        //we are on the bottom edge --> left adjacency
+        board.placeTiles(Tiles.GREEN, 8,5);
+        board.placeTiles(Tiles.GREEN, 8,4);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 8,5);
+        board.placeTiles(Tiles.EMPTY, 8,4);
+
+        //we are on the bottom edge --> right adjacency
+        board.placeTiles(Tiles.GREEN, 8,4);
+        board.placeTiles(Tiles.GREEN, 8,5);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 8,4);
+        board.placeTiles(Tiles.EMPTY, 8,5);
+
+
+        //we are on the left edge --> right adjacency
+        board.placeTiles(Tiles.GREEN, 5,0);
+        board.placeTiles(Tiles.GREEN, 5,1);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 5,0);
+        board.placeTiles(Tiles.EMPTY, 5,1);
+
+        //we are on the left edge --> upper adjacency
+        board.placeTiles(Tiles.GREEN, 5,0);
+        board.placeTiles(Tiles.GREEN, 4,0);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 5,0);
+        board.placeTiles(Tiles.EMPTY, 4,0);
+
+        //we are on the left edge --> bottom adjacency
+        board.placeTiles(Tiles.GREEN, 4,0);
+        board.placeTiles(Tiles.GREEN, 5,0);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 4,0);
+        board.placeTiles(Tiles.EMPTY, 5,0);
+
+
+        //we are on the right edge --> left adjacency
+        board.placeTiles(Tiles.GREEN, 3,8);
+        board.placeTiles(Tiles.GREEN, 3,7);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,8);
+        board.placeTiles(Tiles.EMPTY, 3,7);
+
+        //we are on the right edge --> upper adjacency
+        board.placeTiles(Tiles.GREEN, 4,8);
+        board.placeTiles(Tiles.GREEN, 3,8);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 4,8);
+        board.placeTiles(Tiles.EMPTY, 3,8);
+
+        //we are on the right edge --> bottom adjacency
+        board.placeTiles(Tiles.GREEN, 3,8);
+        board.placeTiles(Tiles.GREEN, 4,8);
+        result=board.checkBoardReset();
+        assertFalse(result);
+        board.placeTiles(Tiles.EMPTY, 3,8);
+        board.placeTiles(Tiles.EMPTY, 4,8);
     }
 
     //TEST boardResetENG()
     @DisplayName("Board is reset according to the English rules - 2 players")
     @Test
     void boardResetENG1() {
-        //arrange - setup our test objects
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        //assert - check if actual val is equal to expected val
+        board.getGamesBoard().setTile(Tiles.GREEN, 4,4);
+        board.boardResetENG();
+
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
 
     }
     @DisplayName("Board is reset according to the English rules - 3 players")
     @Test
     void boardResetENG2() {
-        //arrange - setup our test objects
         Sachet sachet=new Sachet();
         Board board=new Board(3, sachet);
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        //assert - check if actual val is equal to expected val
+        board.getGamesBoard().setTile(Tiles.GREEN, 4,4);
+        board.boardResetENG();
+
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
 
     }
     @DisplayName("Board is reset according to the English rules - 4 players")
     @Test
     void boardResetENG3() {
-        //arrange - setup our test objects
         Sachet sachet=new Sachet();
-        Board board=new Board(2, sachet);
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        //assert - check if actual val is equal to expected val
+        Board board=new Board(4, sachet);
+        board.getGamesBoard().setTile(Tiles.GREEN, 4,4);
+        board.boardResetENG();
+
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
+
+
     }
 
     //TEST boardResetITA()
@@ -213,29 +474,29 @@ class BoardTest {
         //assert - check if actual val is equal to expected val
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
 
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
 
     }
     @DisplayName("Board is reset according to the Italian rules - 3 players")
@@ -251,21 +512,21 @@ class BoardTest {
         //assert - check if actual val is equal to expected val
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
 
-        Assertions.assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
-        Assertions.assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
 
     }
     @DisplayName("Board is reset according to the Italian rules - 4 players")
@@ -281,12 +542,12 @@ class BoardTest {
         //assert - check if actual val is equal to expected val
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assertions.assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
+                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
             }
         }
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
-        Assertions.assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
+        assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
 
     }
 
@@ -302,7 +563,7 @@ class BoardTest {
         board.placeTiles(tiles, 3,3);
 
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(board.getGamesBoard().getTile(3,3), tiles);
+        assertEquals(board.getGamesBoard().getTile(3,3), tiles);
     }
 
     //TEST remove(List<Point>)
@@ -312,7 +573,6 @@ class BoardTest {
         //arrange - setup our test objects
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
-        Tiles tiles=sachet.draw();
         //act - do the actual calc or method run
         board.BoardInitialization();
         ArrayList<Point> points=new ArrayList<>();
@@ -321,8 +581,8 @@ class BoardTest {
         points.add(new Point(6,3));
         board.remove(points);
         //assert - check if actual val is equal to expected val
-        for (int i = 0; i < points.size(); i++) {
-            Assertions.assertEquals(board.getGamesBoard().getTile(points.get(i).x, points.get(i).y), Tiles.EMPTY);
+        for (Point point : points) {
+            assertEquals(board.getGamesBoard().getTile(point.x, point.y), Tiles.EMPTY);
         }
     }
 
@@ -336,7 +596,7 @@ class BoardTest {
         //act - do the actual calc or method run
         board.BoardInitialization();
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(board.checkFreeTiles(new Point(3,3)), false);
+        assertFalse(board.checkFreeTiles(new Point(3, 3)));
     }
     @DisplayName("Tile in specified position is free")
     @Test
@@ -353,7 +613,7 @@ class BoardTest {
         points.add(new Point(3,4));
         board.remove(points);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(board.checkFreeTiles(new Point(3,3)), true);
+        assertTrue(board.checkFreeTiles(new Point(3, 3)));
     }
     @DisplayName("Tile in specified position is free")
     @Test
@@ -364,7 +624,7 @@ class BoardTest {
         //act - do the actual calc or method run
         board.BoardInitialization();
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(board.checkFreeTiles(new Point(0,3)), true);
+        assertTrue(board.checkFreeTiles(new Point(0, 3)));
     }
 
     //TEST freeTiles()
@@ -414,7 +674,7 @@ class BoardTest {
         arr.add(new Point(0, 2));
         boolean result=board.checkAdjacentTiles(arr);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, true);
+        assertTrue(result);
     }
     @DisplayName("Tiles are adjacent because in the same column")
     @Test
@@ -428,7 +688,7 @@ class BoardTest {
         arr.add(new Point(2, 0));
         boolean result=board.checkAdjacentTiles(arr);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, true);
+        assertTrue(result);
     }
     @DisplayName("Tiles are NOT adjacent")
     @Test
@@ -442,7 +702,7 @@ class BoardTest {
         arr.add(new Point(5, 0));
         boolean result=board.checkAdjacentTiles(arr);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, false);
+        assertFalse(result);
     }
 
     //TEST adjacentTiles(Point)
@@ -452,7 +712,7 @@ class BoardTest {
         //arrange - setup our test objects
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
-        ArrayList<Point> result=new ArrayList<>();
+        ArrayList<Point> result;
         //act - do the actual calc or method run
         board.BoardInitialization();
         result=board.adjacentTiles(new Point(3,3));
@@ -469,7 +729,7 @@ class BoardTest {
         //arrange - setup our test objects
         Sachet sachet=new Sachet();
         Board board=new Board(4, sachet);
-        ArrayList<Point> result=new ArrayList<>();
+        ArrayList<Point> result;
         //act - do the actual calc or method run
         board.BoardInitialization();
         result=board.adjacentTiles(new Point(0,3));
@@ -484,7 +744,7 @@ class BoardTest {
         //arrange - setup our test objects
         Sachet sachet=new Sachet();
         Board board=new Board(4, sachet);
-        ArrayList<Point> result=new ArrayList<>();
+        ArrayList<Point> result;
         //act - do the actual calc or method run
         board.BoardInitialization();
         result=board.adjacentTiles(new Point(8,4));
@@ -493,7 +753,6 @@ class BoardTest {
         assertTrue(result.contains(new Point(8, 5)));
         assertTrue(result.contains(new Point(7, 4)));
     }
-
 
     //TEST checkSameColumn(List<Point)
     @DisplayName("Point in the same row")
@@ -508,7 +767,7 @@ class BoardTest {
         arr.add(new Point(0, 5));
         boolean result=board.checkSameRow(arr);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, true);
+        assertTrue(result);
     }
     @DisplayName("Point NOT in the same row")
     @Test
@@ -522,7 +781,7 @@ class BoardTest {
         arr.add(new Point(0, 5));
         boolean result=board.checkSameRow(arr);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, false);
+        assertFalse(result);
     }
 
     //TEST checkSameColumn(List<Point)
@@ -538,7 +797,7 @@ class BoardTest {
         arr.add(new Point(5, 0));
         boolean result=board.checkSameColumn(arr);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, true);
+        assertTrue(result);
     }
     @DisplayName("Point NOT in the same column")
     @Test
@@ -552,11 +811,29 @@ class BoardTest {
         arr.add(new Point(5, 0));
         boolean result=board.checkSameColumn(arr);
         //assert - check if actual val is equal to expected val
-        Assertions.assertEquals(result, false);
+        assertFalse(result);
     }
 }
 
 
+
+
+
+
+/*
+    checkBoardReset():  il check a sx e sopra NON lo fa mai
+                        perchè return false prima --> a sx ritorna la posizione prima (dx prima)
+                                                  --> a up ritorna la posizione sotto (down prima)
+
+                    -->
+                   |
+                   |
+                   V
+                        xx    si chiede: dx è occupata? Sì
+                        x     si chiede: dw è occupata? Sì
+
+                        li lascio o li tolgo??????
+ */
 
 
 
