@@ -1,12 +1,11 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.server.Board;
-import it.polimi.ingsw.server.Sachet;
-import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class SachetTest {
 
@@ -14,10 +13,23 @@ class SachetTest {
     //TEST draw()
     @DisplayName("Return a randomic Tiles")
     @Test
-    void draw() {
+    void draw1() {
         Sachet sachet=new Sachet();
-        assertNotEquals(sachet.draw(), Tiles.EMPTY);
-        assertNotEquals(sachet.draw(), Tiles.NOTALLOWED);
+        Tiles tiles=sachet.draw();
+        assertNotEquals(tiles, Tiles.EMPTY);
+        assertNotEquals(tiles, Tiles.NOTALLOWED);
+    }
+    @DisplayName("Return Tiles.EMPTY if there are NO tiles in sachet")
+    @Test
+    void draw2(){
+        Sachet sachet=new Sachet();
+        Tiles tiles;
+        for (int i = 0; i < 132; i++) {
+            tiles=sachet.draw();
+            assertNotEquals(tiles, Tiles.EMPTY);
+            assertNotEquals(tiles, Tiles.NOTALLOWED);
+        }
+        assertEquals(sachet.draw(), Tiles.EMPTY);
     }
 
     //TEST remainigTiles()
