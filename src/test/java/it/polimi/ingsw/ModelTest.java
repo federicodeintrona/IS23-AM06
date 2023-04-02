@@ -105,11 +105,10 @@ class ModelTest {
 
     @Test
     void swapOrder() {
-        ArrayList<Tiles> selected = new ArrayList<>();
-        selected.add(Tiles.BLUE);
-        selected.add(Tiles.WHITE);
-        selected.add(Tiles.GREEN);
-        m.setSelectedTiles(selected);
+        m.getSelectedTiles().add(Tiles.BLUE);
+        m.getSelectedTiles().add(Tiles.WHITE);
+        m.getSelectedTiles().add(Tiles.GREEN);
+
 
         Tiles[] array = {Tiles.WHITE,Tiles.GREEN,Tiles.BLUE};
 
