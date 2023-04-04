@@ -133,126 +133,6 @@ public class Board {
         }
     }
     /**
-     * Constructor --> assign boardSachet
-     *             --> create Board based on number of player
-     *
-     * @param boardSachet   Sachet that will fill the Board
-     */
-    public Board(Sachet boardSachet) {
-        this.boardSachet = boardSachet;
-        //assign Tiles.EMPTY to all position of matrix gamesBoard
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumn; j++) {
-                gamesBoard.setEmpty(i, j);
-            }
-        }
-        //positions where do NOT put tiles --> assign Tiles.NOTALLOWED
-        //row 0
-        for (int i = 0; i < 3; i++) {
-            gamesBoard.setNotAllowed(0, i);
-        }
-        for (int i = 5; i < 9; i++) {
-            gamesBoard.setNotAllowed(0, i);
-        }
-        //row 1
-        for (int i = 0; i < 3; i++) {
-            gamesBoard.setNotAllowed(1, i);
-        }
-        for (int i = 6; i < 9; i++) {
-            gamesBoard.setNotAllowed(1, i);
-        }
-        //row 2
-        for (int i = 0; i < 2; i++) {
-            gamesBoard.setNotAllowed(2, i);
-        }
-        for (int i = 7; i < 9; i++) {
-            gamesBoard.setNotAllowed(2, i);
-        }
-        //row 3
-        gamesBoard.setNotAllowed(3, 0);
-        //row 4
-        //row 5
-        gamesBoard.setNotAllowed(5, 8);
-        //riga 6
-        for (int i = 0; i < 2; i++) {
-            gamesBoard.setNotAllowed(6, i);
-        }
-        for (int i = 7; i < 9; i++) {
-            gamesBoard.setNotAllowed(6, i);
-        }
-        //row 7
-        for (int i = 0; i < 3; i++) {
-            gamesBoard.setNotAllowed(7, i);
-        }
-        for (int i = 6; i < 9; i++) {
-            gamesBoard.setNotAllowed(7, i);
-        }
-        //row 8
-        for (int i = 0; i < 4; i++) {
-            gamesBoard.setNotAllowed(8, i);
-        }
-        for (int i = 6; i < 9; i++) {
-            gamesBoard.setNotAllowed(8, i);
-        }
-        //positions where do NOT put tiles based on numberOfPlayer --> assign Tiles.NOTALLOWED
-        switch (numberOfPlayer) {
-            case 2 -> {
-                gamesBoard.setNotAllowed(0, 3);
-                gamesBoard.setNotAllowed(0, 4);
-
-                gamesBoard.setNotAllowed(1, 5);
-
-                gamesBoard.setNotAllowed(2, 2);
-                gamesBoard.setNotAllowed(2, 6);
-
-                gamesBoard.setNotAllowed(3, 1);
-                gamesBoard.setNotAllowed(3, 8);
-
-                gamesBoard.setNotAllowed(4, 0);
-                gamesBoard.setNotAllowed(4, 8);
-
-                gamesBoard.setNotAllowed(5, 0);
-                gamesBoard.setNotAllowed(5, 7);
-
-                gamesBoard.setNotAllowed(6, 2);
-                gamesBoard.setNotAllowed(6, 6);
-
-                gamesBoard.setNotAllowed(7, 3);
-
-                gamesBoard.setNotAllowed(8, 4);
-                gamesBoard.setNotAllowed(8, 5);
-            }
-            case 3 -> {
-                gamesBoard.setEmpty(0, 3);
-                gamesBoard.setNotAllowed(0, 4);
-
-                gamesBoard.setNotAllowed(1, 5);
-
-                gamesBoard.setEmpty(2, 2);
-                gamesBoard.setEmpty(2, 6);
-
-                gamesBoard.setNotAllowed(3, 1);
-                gamesBoard.setEmpty(3, 8);
-
-                gamesBoard.setNotAllowed(4, 0);
-                gamesBoard.setNotAllowed(4, 8);
-
-                gamesBoard.setEmpty(5, 0);
-                gamesBoard.setNotAllowed(5, 7);
-
-                gamesBoard.setEmpty(6, 2);
-                gamesBoard.setEmpty(6, 6);
-
-                gamesBoard.setNotAllowed(7, 3);
-
-                gamesBoard.setNotAllowed(8, 4);
-                gamesBoard.setEmpty(8, 5);
-            }
-            default -> {}
-        }
-    }
-    /**
-     *
      * Constructor --> assign numberOfPlayer
      *             --> assign boardSachet
      *             --> create Board based on number of player
@@ -610,7 +490,7 @@ public class Board {
     /**
      * return if tile are free --> tile has at least 1 free side
      *
-     * REQUIRES THAT position IS IN THE REAL BOARD
+     * REQUIRES THAT position IS CORRECT --> tile!=EMPTY && !=NOTALLOWED
      *
      * @param position  position of tile to check
      * @return boolean  are free tiles?
@@ -641,14 +521,19 @@ public class Board {
 
     /**
      * return if the tiles in the List are adjacent --> tiles have a common side
+     * if List has List.size()==1 return FALSE
      *
-     * REQUIRES THAT THERE IS NOT EQUALS Point IN THE LIST
+     * REQUIRES THAT THERE IS NOT EQUALS position IN THE LIST
+     * REQUIRES THAT ALL POSITION IN THE List ARE CORRECT --> tile!=EMPTY && !=NOTALLOWED
      *
      * @param position  the position to check
      * @return boolean  are the tiles adjacent?
      */
     public static boolean checkAdjacentTiles(List<Point> position){
-        //stessa riga o stessa colonna
+        if (position.size()==1){
+            return false;
+        }
+        //same row or same column
         Point p=new Point();
         Point p1=new Point();
         if (!checkSameRow(position) && !checkSameColumn(position)){
@@ -868,8 +753,6 @@ public class Board {
         return result;
     }
 
-    //ritorna TRUE se i Point sono sulla stessa riga - OK
-
     /**
      * return if Points are on the same row
      *
@@ -886,8 +769,6 @@ public class Board {
         }
         return true;
     }
-
-    //ritorna TRUE se i Point sono sulla stessa colonna - OK
 
     /**
      * return if Points are on the same column

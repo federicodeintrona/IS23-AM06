@@ -12,6 +12,295 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
+    //TEST Constructor and Getter method
+    @DisplayName("Testing the Constructor and Getter method")
+    @Test
+    void constructorTest(){
+        Board board=new Board(2);
+        assertEquals(board.getNumberOfPlayer(), 2);
+        Board board1=new Board(3);
+        assertEquals(board1.getNumberOfPlayer(), 3);
+        Board board2=new Board(4);
+        assertEquals(board2.getNumberOfPlayer(), 4);
+
+        Board board4=new Board(2, new Sachet());
+        assertEquals(board4.getNumberOfPlayer(), 2);
+        Board board5=new Board(3, new Sachet());
+        assertEquals(board5.getNumberOfPlayer(), 3);
+        Board board6=new Board(4, new Sachet());
+        assertEquals(board6.getNumberOfPlayer(), 4);
+
+        //check the NOTALLOWED position
+        assertEquals(board.getGamesBoard().getTile(0,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(0,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(1,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(2,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(5,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(6,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(7,8), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,0), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,1), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,2), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,3), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,6), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,7), Tiles.NOTALLOWED);
+        assertEquals(board.getGamesBoard().getTile(8,8), Tiles.NOTALLOWED);
+
+        assertEquals(board1.getGamesBoard().getTile(0,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(0,1), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(0,2), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(0,5), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(0,6), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(0,7), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(0,8), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(1,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(1,1), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(1,2), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(1,6), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(1,7), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(1,8), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(2,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(2,1), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(2,7), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(2,8), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(3,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(5,8), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(6,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(6,1), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(6,7), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(6,8), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(7,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(7,1), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(7,2), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(7,6), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(7,7), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(7,8), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,0), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,1), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,2), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,3), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,6), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,7), Tiles.NOTALLOWED);
+        assertEquals(board1.getGamesBoard().getTile(8,8), Tiles.NOTALLOWED);
+
+        assertEquals(board2.getGamesBoard().getTile(0,0), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(0,1), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(0,2), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(0,5), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(0,6), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(0,7), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(0,8), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(1,0), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(1,1), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(1,2), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(1,6), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(1,7), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(1,8), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(2,0), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(2,1), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(2,7), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(2,8), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(3,0), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(5,8), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(6,0), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(6,1), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(6,7), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(6,8), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(7,0), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(7,1), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(7,2), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(7,6), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(7,7), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(7,8), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(8,0), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(8,1), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(8,2), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(8,3), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(8,6), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(8,7), Tiles.NOTALLOWED);
+        assertEquals(board2.getGamesBoard().getTile(8,8), Tiles.NOTALLOWED);
+
+        assertEquals(board4.getGamesBoard().getTile(0,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,1), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,2), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,3), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,5), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,6), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,7), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(0,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(1,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(1,1), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(1,2), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(1,6), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(1,7), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(1,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(2,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(2,1), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(2,2), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(2,6), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(2,7), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(2,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(3,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(3,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(5,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(5,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(6,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(6,1), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(6,2), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(6,6), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(6,7), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(6,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(7,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(7,1), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(7,2), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(7,6), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(7,7), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(7,8), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,0), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,1), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,2), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,3), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,5), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,6), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,7), Tiles.NOTALLOWED);
+        assertEquals(board4.getGamesBoard().getTile(8,8), Tiles.NOTALLOWED);
+
+        assertEquals(board5.getGamesBoard().getTile(0,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(0,1), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(0,2), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(0,4), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(0,5), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(0,6), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(0,7), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(0,8), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(1,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(1,1), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(1,2), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(1,5), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(1,6), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(1,7), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(1,8), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(2,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(2,1), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(2,7), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(2,8), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(3,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(3,1), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(4,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(4,8), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(5,7), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(5,8), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(6,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(6,1), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(6,7), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(6,8), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(7,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(7,1), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(7,2), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(7,3), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(7,6), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(7,7), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(7,8), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,0), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,1), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,2), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,3), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,4), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,6), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,7), Tiles.NOTALLOWED);
+        assertEquals(board5.getGamesBoard().getTile(8,8), Tiles.NOTALLOWED);
+
+        assertEquals(board6.getGamesBoard().getTile(0,0), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(0,1), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(0,2), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(0,5), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(0,6), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(0,7), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(0,8), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(1,0), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(1,1), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(1,2), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(1,6), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(1,7), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(1,8), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(2,0), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(2,1), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(2,7), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(2,8), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(3,0), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(5,8), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(6,0), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(6,1), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(6,7), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(6,8), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(7,0), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(7,1), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(7,2), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(7,6), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(7,7), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(7,8), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(8,0), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(8,1), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(8,2), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(8,3), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(8,6), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(8,7), Tiles.NOTALLOWED);
+        assertEquals(board6.getGamesBoard().getTile(8,8), Tiles.NOTALLOWED);
+    }
 
     //TEST boardInitialization()
     @DisplayName("Board initiliazation for 2 players do NOT put EMPTY tiles")
@@ -662,47 +951,254 @@ class BoardTest {
     }
 
     //TEST checkAdjacentTiles(List<Point>)
-    @DisplayName("Tiles are adjacent because in the same row")
+    @DisplayName("Tiles are adjacent because in the same row - 2 players' game")
     @Test
     void checkAdjacentTiles1() {
-        //arrange - setup our test objects
         ArrayList<Point> arr=new ArrayList<>();
         Board board=new Board(2);
-        //act - do the actual calc or method run
-        arr.add(new Point(0, 0));
-        arr.add(new Point(0, 1));
-        arr.add(new Point(0, 2));
-        boolean result=board.checkAdjacentTiles(arr);
-        //assert - check if actual val is equal to expected val
-        assertTrue(result);
+        arr.add(new Point(3, 2));
+        arr.add(new Point(3, 3));
+        arr.add(new Point(3, 4));
+        assertTrue(board.checkAdjacentTiles(arr));
     }
-    @DisplayName("Tiles are adjacent because in the same column")
+    @DisplayName("Tiles are adjacent because in the same row - 3 players' game")
     @Test
     void checkAdjacentTiles2() {
-        //arrange - setup our test objects
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(3);
+        //x,y
+        arr.add(new Point(3, 2));
+        arr.add(new Point(3, 3));
+        arr.add(new Point(3, 4));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,0
+        arr.add(new Point(4,0));
+        arr.add(new Point(4,2));
+        arr.add(new Point(4,1));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,8
+        arr.add(new Point(3,6));
+        arr.add(new Point(3,7));
+        arr.add(new Point(3,8));
+        assertTrue(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are adjacent because in the same row - 4 players' game")
+    @Test
+    void checkAdjacentTiles3() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(4);
+        //x,y
+        arr.add(new Point(3, 2));
+        arr.add(new Point(3, 3));
+        arr.add(new Point(3, 4));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,0
+        arr.add(new Point(4,0));
+        arr.add(new Point(4,2));
+        arr.add(new Point(4,1));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,8
+        arr.add(new Point(3,6));
+        arr.add(new Point(3,7));
+        arr.add(new Point(3,8));
+        assertTrue(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are adjacent because in the same column - 2 players' game")
+    @Test
+    void checkAdjacentTiles4() {
         ArrayList<Point> arr=new ArrayList<>();
         Board board=new Board(2);
-        //act - do the actual calc or method run
-        arr.add(new Point(1, 0));
-        arr.add(new Point(0, 0));
-        arr.add(new Point(2, 0));
-        boolean result=board.checkAdjacentTiles(arr);
-        //assert - check if actual val is equal to expected val
-        assertTrue(result);
+        //x,y
+        arr.add(new Point(3, 3));
+        arr.add(new Point(4, 3));
+        arr.add(new Point(2, 3));
+        assertTrue(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are adjacent because in the same column - 3 players' game")
+    @Test
+    void checkAdjacentTiles5() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(3);
+        //x,y
+        arr.add(new Point(3, 3));
+        arr.add(new Point(4, 3));
+        arr.add(new Point(2, 3));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //0,y
+        arr.add(new Point(0, 3));
+        arr.add(new Point(1, 3));
+        arr.add(new Point(2, 3));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //8,y
+        arr.add(new Point(8, 5));
+        arr.add(new Point(7, 5));
+        arr.add(new Point(6, 5));
+        assertTrue(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are adjacent because in the same column - 4 players' game")
+    @Test
+    void checkAdjacentTiles6() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(4);
+        //x,y
+        arr.add(new Point(3, 3));
+        arr.add(new Point(4, 3));
+        arr.add(new Point(2, 3));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //0,y
+        arr.add(new Point(0, 3));
+        arr.add(new Point(1, 3));
+        arr.add(new Point(2, 3));
+        assertTrue(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //8,y
+        arr.add(new Point(8, 5));
+        arr.add(new Point(7, 5));
+        arr.add(new Point(6, 5));
+        assertTrue(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are NOT adjacent but in the same column - 2 players' game")
+    @Test
+    void checkAdjacentTiles7() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(2);
+        //x,y
+        arr.add(new Point(1, 3));
+        arr.add(new Point(3, 3));
+        arr.add(new Point(5, 3));
+        assertFalse(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are NOT adjacent but in the same column - 3 players' game")
+    @Test
+    void checkAdjacentTiles8() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(3);
+        //x,y
+        arr.add(new Point(1, 3));
+        arr.add(new Point(3, 3));
+        arr.add(new Point(5, 3));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //0,y
+        arr.add(new Point(0,3));
+        arr.add(new Point(2,3));
+        arr.add(new Point(3,3));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //8,y
+        arr.add(new Point(8,5));
+        arr.add(new Point(6,5));
+        arr.add(new Point(5,5));
+        assertFalse(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are NOT adjacent but in the same column - 4 players' game")
+    @Test
+    void checkAdjacentTiles9() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(4);
+        //x,y
+        arr.add(new Point(1, 3));
+        arr.add(new Point(3, 3));
+        arr.add(new Point(5, 3));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //0,y
+        arr.add(new Point(0,3));
+        arr.add(new Point(2,3));
+        arr.add(new Point(3,3));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //8,y
+        arr.add(new Point(8,5));
+        arr.add(new Point(6,5));
+        arr.add(new Point(5,5));
+        assertFalse(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are NOT adjacent but in the same row - 2 players' game")
+    @Test
+    void checkAdjacentTiles10() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(2);
+        //x,y
+        arr.add(new Point(4, 1));
+        arr.add(new Point(4, 3));
+        arr.add(new Point(4, 5));
+        assertFalse(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are NOT adjacent but in the same row - 3 players' game")
+    @Test
+    void checkAdjacentTiles11() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(3);
+        //x,y
+        arr.add(new Point(4, 1));
+        arr.add(new Point(4, 3));
+        arr.add(new Point(4, 5));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,0
+        arr.add(new Point(5,0));
+        arr.add(new Point(5,2));
+        arr.add(new Point(5,3));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,8
+        arr.add(new Point(3,8));
+        arr.add(new Point(3,6));
+        arr.add(new Point(3,5));
+        assertFalse(board.checkAdjacentTiles(arr));
+    }
+    @DisplayName("Tiles are NOT adjacent but in the same row - 4 players' game")
+    @Test
+    void checkAdjacentTiles12() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(4);
+        //x,y
+        arr.add(new Point(4, 1));
+        arr.add(new Point(4, 3));
+        arr.add(new Point(4, 5));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,0
+        arr.add(new Point(5,0));
+        arr.add(new Point(5,2));
+        arr.add(new Point(5,3));
+        assertFalse(board.checkAdjacentTiles(arr));
+        arr.removeAll(arr);
+        //x,8
+        arr.add(new Point(3,8));
+        arr.add(new Point(3,6));
+        arr.add(new Point(3,5));
+        assertFalse(board.checkAdjacentTiles(arr));
     }
     @DisplayName("Tiles are NOT adjacent")
     @Test
-    void checkAdjacentTiles3() {
+    void checkAdjacentTiles13() {
         //arrange - setup our test objects
         ArrayList<Point> arr=new ArrayList<>();
         Board board=new Board(2);
         //act - do the actual calc or method run
-        arr.add(new Point(1, 0));
-        arr.add(new Point(0, 0));
-        arr.add(new Point(5, 0));
+        arr.add(new Point(3, 3));
+        arr.add(new Point(4, 4));
+        arr.add(new Point(5, 5));
         boolean result=board.checkAdjacentTiles(arr);
         //assert - check if actual val is equal to expected val
         assertFalse(result);
+    }
+    @DisplayName("List consist of only 1 elemets")
+    @Test
+    void checkAdjacentTiles14() {
+        ArrayList<Point> arr=new ArrayList<>();
+        Board board=new Board(2);
+        arr.add(new Point(3, 3));
+        assertFalse(board.checkAdjacentTiles(arr));
     }
 
     //TEST adjacentTiles(Point)

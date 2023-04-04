@@ -23,13 +23,13 @@ public abstract class PersonalObjective {
 
 
 
-        static{
-            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
-                    "it.polimi.ingsw.server.PersonalObjective", PersonalObjective.class,
-                    null)) {
-                subclasses.add(pojoClass.getClazz());
-            }
+    static{
+        for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
+                "it.polimi.ingsw.server.PersonalObjective", PersonalObjective.class,
+                null)) {
+            subclasses.add(pojoClass.getClazz());
         }
+    }
 
 
 
@@ -69,14 +69,37 @@ public abstract class PersonalObjective {
     }
 
 
-//metodi
-    //ritorna il numero di obiettivi completati -->
-    // --> posizione-colore carta PersonalObjective coincide con posizione-colore nella Bookshelf
+
+    /**
+     * return the number of position that match with the PersonalObjective's card
+     *
+     * @param player    the player whose correct position number you want to calculate
+     * @return int  number of position that match with the PersonalObjective's card
+     */
     public abstract int checkCondition(Player player);
+
+    /**
+     * return the number of position that match with the PersonalObjective's card
+     *
+     * @param bookshelf the bookshelf whose correct position number you want to calculate
+     * @return int  number of position that match with the PersonalObjective's card
+     */
     public abstract int checkCondition(Bookshelf bookshelf);
 
-    //ritorna il punteggio del player
+    /**
+     * return the score of PersonalObjective's card
+     *
+     * @param player    the player whose score you want to calculate
+     * @return int  score of PersonalObjective's card
+     */
     public abstract int personalObjectivePoint(Player player);
+
+    /**
+     * return the score of PersonalObjective's card
+     *
+     * @param bookshelf the bookshelf whose score you want to calculate
+     * @return int  score of PersonalObjective's card
+     */
     public abstract int personalObjectivePoint(Bookshelf bookshelf);
 
 }
