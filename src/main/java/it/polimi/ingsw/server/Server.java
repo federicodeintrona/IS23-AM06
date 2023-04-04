@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 
 public class Server
 {
-    private static int port =9898;
+    private static int port = 9898;     // Da sistemare
     private static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
     private Controller controller= new Controller(lobby,lobby.getGames(),lobby.getClients());
