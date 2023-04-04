@@ -3,62 +3,89 @@ package it.polimi.ingsw.server;
 import java.util.*;
 
 public class Sachet {
-//attributi
-    private final ArrayList<Tiles> sachet=new ArrayList<>();
+    /**
+     * defining number of tiles for each color
+     */
+    private static final int numberOfTilesPerColor=22;
+    /**
+     * defining number of different color
+     */
+    private static final int numberOfDifferentColor=6;
+    /**
+     * defining number of tiles in the sachet --> #Color * #TilesPerColor
+     */
+    private static final int maximumNumberOfTiles=numberOfDifferentColor*numberOfTilesPerColor;
+    private ArrayList<Tiles> sachet;
 
-//-------------------------------------------------------------------------------------------------------\\
 
-//metodi
-    //costruttore --> creai il sacchetto con 132 tessere iniziali dei 6 colori diversi
+
+    /**
+     * Constructor --> create sachet that contains 132 tiles, 22 for each of 6 different color
+     */
     public  Sachet() {
-        //132tiles = 6tipi * 22tiles
-        for (int i = 0; i < 22; i++) {
+        sachet=new ArrayList<>();
+        //132tiles = 6color * 22tiles
+        for (int i = 0; i < numberOfTilesPerColor; i++) {
             sachet.add(Tiles.GREEN);
         }
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < numberOfTilesPerColor; i++) {
             sachet.add(Tiles.BLUE);
         }
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < numberOfTilesPerColor; i++) {
             sachet.add(Tiles.YELLOW);
         }
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < numberOfTilesPerColor; i++) {
             sachet.add(Tiles.WHITE);
         }
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < numberOfTilesPerColor; i++) {
             sachet.add(Tiles.PINK);
         }
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < numberOfTilesPerColor; i++) {
             sachet.add(Tiles.LIGHT_BLUE);
         }
     }
 
 
 
-    //ritorna una tile randomicamente - OK
-    //se il sachet è vuoto ritorna EMPTY
-    //1. scegliere una tile --> posizione randomica
-    //2. rimuovere la tile dal set --> removeTiles
+    /**
+     * return a randomic tile,
+     * if sachet is empty (sachet.size()==0) return tiles.EMPTY
+     *
+     * 1. choose tile --> randomic position in sachet (ArrayList<Tiles>)
+     * 2. remove tile --> remove tiles from sachet (ArrayList<Tiles>) --> removeTiles(position)
+     *
+     * @return Tiles    randomic tile
+     */
     public Tiles draw(){
         if (sachet.size()==0){
             return Tiles.EMPTY;
         }
-        Random random=new Random(); //crea oggetto Random
+        Random random=new Random(); //creat Random object
         Tiles result;
-        //scelta numero casuale
+        //choose random number
         int n=random.nextInt(sachet.size());
-        //salvataggio tile in posizione casuale
+        //saving tile in the random position --> get(n)
         result=sachet.get(n);
-        //rimozione tile da sachet
+        //remove tile from sachet
         removeTiles(n);
         return result;
    }
 
-    //ritorna il numero di tessere rimanenti nel sachet - OK
+    /**
+     * return number of tiles in the sachet --> sachet.size()
+     *
+     * @return int  number of tiles in the sachet
+     */
     public int remainingTiles(){
         return sachet.size();
     }
 
-    //ritorna il numero di tessere rimanenti nel sachet del colore tiles richiesto - OK
+    /**
+     * return number of tiles in the sachet for color
+     *
+     * @param tiles the color of interest
+     * @return int  number of tiles in the sachet for color
+     */
     public int remainingTilesPerColor(Tiles tiles){
         int result=0;
         for (Tiles value : sachet) {
@@ -69,26 +96,42 @@ public class Sachet {
         return result;
     }
 
-    //aggiunge tiles nel sachet --> aggiunta ad array list - OK
+    /**
+     * add tiles in the sachet --> sachet.add(til)
+     *
+     * 1.0. check if til can add in sachet --> size()+1<=132
+     * 1.1. check if til can add in sachet --> remainingTilesPerColor(til)+1<=22
+     * 2. add tile --> add(til)
+     *
+     * @param til   tile to add in sachet
+     */
     public void addTiles(Tiles til){
-        //controllare se til si può aggiungere:
+        //check if til can add in sachet:
         //sachet.size()+1<=132
-        if (sachet.size()+1<=132){
+        if (sachet.size()+1<=maximumNumberOfTiles){
             //remainingTilesperColor(til)<=22
-            if (remainingTilesPerColor(til)+1<=22){
+            if (remainingTilesPerColor(til)+1<=numberOfTilesPerColor){
                 sachet.add(til);
             }
         }
     }
 
-    //rimuove tiles dal sachet in posizione i - OK
+    /**
+     * remove the tile in position i --> remove(i)
+     *
+     * @param i position of the tiles to remove
+     */
     public void removeTiles(int i){
         sachet.remove(i);
     }
 
-    //rimuove tile dal sachet di colore tiles - OK
-    public void removeTiles(Tiles tiles){
-        sachet.remove(tiles);
+    /**
+     * remove the first tile of color til --> remove(til)
+     *
+     * @param til the color of tile to remove
+     */
+    public void removeTiles(Tiles til){
+        sachet.remove(til);
     }
 
 }
