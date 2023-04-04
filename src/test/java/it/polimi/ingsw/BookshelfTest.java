@@ -189,4 +189,40 @@ public class BookshelfTest {
         b.addTile( scelta2,4 );
         assertEquals(b.checkVicinityPoints(),0,"I punti non sono 0");
     }
+    @Test
+    void checkCheckVicinityPoints4(){
+        ArrayList <Tiles> scelta= new ArrayList<>();
+        scelta.add(Tiles.BLUE);
+        scelta.add(Tiles.BLUE);
+        scelta.add(Tiles.BLUE);
+        ArrayList <Tiles> scelta2= new ArrayList<>();
+        scelta2.add(Tiles.GREEN);
+        scelta2.add(Tiles.GREEN);
+        scelta2.add(Tiles.GREEN);
+        ArrayList <Tiles> scelta3= new ArrayList<>();
+        scelta3.add(Tiles.BLUE);
+        scelta3.add(Tiles.BLUE);
+        scelta3.add(Tiles.WHITE);
+        ArrayList <Tiles> scelta4= new ArrayList<>();
+        scelta4.add(Tiles.GREEN);
+        scelta4.add(Tiles.YELLOW);
+        scelta4.add(Tiles.YELLOW);
+        ArrayList <Tiles> scelta5= new ArrayList<>();
+        scelta5.add(Tiles.LIGHT_BLUE);
+        scelta5.add(Tiles.LIGHT_BLUE);
+        scelta5.add(Tiles.LIGHT_BLUE);
+        assertEquals(b.checkVicinityPoints(),0,"I punti non sono zero");
+        b.addTile( scelta,0 );
+        b.addTile( scelta3,0 );
+        b.addTile( scelta2,1 );
+        b.addTile( scelta4,1 );
+        b.addTile( scelta5,2 );
+        b.addTile( scelta5,2 );
+        b.addTile( scelta5,3 );
+        b.addTile( scelta5,3 );
+        b.addTile( scelta5,4 );
+        b.addTile( scelta5,4 );
+        assertEquals(b.checkVicinityPoints(),16,"I punti non sono 16");
+    }
 }
+

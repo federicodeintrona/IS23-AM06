@@ -10,7 +10,7 @@ public class Bookshelf {
         int num_of_tiles;
 
     /**
-     * Inizialize the bookshelf with the Matrix
+     * Initialize the bookshelf with the Matrix
      * and set every position to EMPTY
      */
         public Bookshelf(){
@@ -40,9 +40,7 @@ public class Bookshelf {
      * @return true if the column is full, false if it isn't
      */
         public boolean checkColumns(int choice, int column){
-            if(tiles.getTile(choice-1,column).equals(Tiles.EMPTY))
-                return true;
-            else return false;
+            return tiles.getTile(choice - 1, column).equals(Tiles.EMPTY);
         }
 
     /**
@@ -50,17 +48,26 @@ public class Bookshelf {
      * @return true if the matrix is full, false if it isn't
      */
         public boolean checkEndGame(){
-            if (num_of_tiles==30) return true;
-            return false;
+            return num_of_tiles == 30;
         }
      /**
      * Check if the matrix is empty
      * @return true if the matrix is empty, false if it isn't
      */
         public boolean checkEmptyBoard(){
-            if (num_of_tiles==0) return true;
-            return false;
+            return num_of_tiles == 0;
         }
+
+    /**
+     * Check if the matrix is empty
+     * @return true if the matrix is empty, false if it isn't
+     */
+    public boolean isEmpty(){
+        for (int j=0; j<5; j++){
+            if (!tiles.getTile(5, j).equals(Tiles.EMPTY)) return false;
+        }
+        return true;
+    }
 
     /**
      * Insert the array of tiles in the matrix
@@ -103,6 +110,15 @@ public class Bookshelf {
         }
 
         //ritorna l'ArrayList delle posizioni con colori adiacenti
+
+    /**
+     * Helping method that takes a matrix, a point inside and returns an ArrayList
+     * of points, adjacent to the given one, that share the same tile color
+     *
+     * @param matrix    player's bookshelf
+     * @param point coordinates of the analyzed tile
+     * @return ArrayList    position with adjacent color
+     */
         private static ArrayList<Point> getAdjacentSameColor(Matrix matrix, Point point) {
         ArrayList<Point> adjacent = new ArrayList<>();
         int x = point.x;
@@ -127,26 +143,29 @@ public class Bookshelf {
         }
 
     /**
-     * Associate the number of adiacent tiles to the corresponding point
-     * @param n number of adiacent tiles
+     * Associate the number of adjacent tiles to the corresponding point
+     * @param n number of adjacent tiles
      * @return corresponding point
      */
     private int vicinityPointCount(int n){
-              switch (n){
-                  case 3:
-                      return 2;
-                  case 4:
-                      return 3;
-                  case 5:
-                      return 5;
-                  default:
-                      if (n>=6){
-                          return 8;
-                      }
-                      else {
-                          return 0;
-                      }
-              }
+        switch (n) {
+            case 3 -> {
+                return 2;
+            }
+            case 4 -> {
+                return 3;
+            }
+            case 5 -> {
+                return 5;
+            }
+            default -> {
+                if (n >= 6) {
+                    return 8;
+                } else {
+                    return 0;
+                }
+            }
+        }
         }
 
     /**
@@ -155,33 +174,33 @@ public class Bookshelf {
      */
     public int checkVicinityPoints(){
         int adjPoint=0;
-        int sameColor=0;
+        int sameColor;
         boolean[][] visited = new boolean[6][5];
 
-        //per ogni posizione
+        //for each position
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-                //se NON è stato ancora visitato && la tile!=EMPTY
+                //if position is NOT visited yet && tile!=EMPTY
                 if (!visited[i][j] && !getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
-                    //inizializiamo coda
+                    //queue initialization
                     Queue<Point> queue=new LinkedList<>();
                     queue.add(new Point(i, j));
                     visited[i][j]=true;
                     sameColor=1;
-                    //fino tanto che ci sono elementi nella coda
+                    //as long as there is elemet in queue
                     while (!queue.isEmpty()){
-                        //legge elemento in testa e lo rimuove
+                        //read head element and remove it
                         Point current=queue.poll();
-                        //controlliamo tutte le celle adiacenti con lo stesso colore
+                        //check all adjacent positions that have same color
                         for (Point adj : getAdjacentSameColor(getTiles(), current)){
-                            //se NON è stata ancora visitata
+                            //if there is NOT visited yet
                             if (!visited[adj.x][adj.y]){
-                                visited[adj.x][adj.y]=true; //ora è stata visitata
+                                visited[adj.x][adj.y]=true; //now position is visited
                                 queue.add(adj);
                                 sameColor++;
                             }
                         }
-                        //sameColor ha il numero di tiles dello stesso colore vicine
+                        //sameColor has the number of adjacent tiles with the same color
 
                     }
                     adjPoint+=vicinityPointCount(sameColor);
