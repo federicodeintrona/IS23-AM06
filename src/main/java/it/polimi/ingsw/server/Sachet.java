@@ -15,7 +15,6 @@ public class Sachet {
      * defining number of tiles in the sachet --> #Color * #TilesPerColor
      */
     private static final int maximumNumberOfTiles=numberOfDifferentColor*numberOfTilesPerColor;
-
     private ArrayList<Tiles> sachet;
 
 
