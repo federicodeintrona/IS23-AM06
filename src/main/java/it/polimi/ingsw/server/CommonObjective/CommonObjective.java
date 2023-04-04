@@ -17,7 +17,6 @@ public abstract class CommonObjective {
 
 
 
-
     public static ArrayList<CommonObjective> randomSubclass(int num) {
 
         ArrayList<Class> subclasses = new ArrayList();
