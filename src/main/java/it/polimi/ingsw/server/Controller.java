@@ -11,10 +11,10 @@ import java.util.HashMap;
 
 public class Controller {
 
-    Lobby lobby;
-    private HashMap<Integer,Model> games;
+    private Lobby lobby;
+    private final HashMap<Integer,Model> games;
 
-    private HashMap<String,ServerClientHandler> clients;
+    private final HashMap<String,ServerClientHandler> clients;
 
     private ArrayList<ArrayList<View>> views;
 
@@ -51,7 +51,7 @@ public class Controller {
      * @param gameID The ID of the game
      * @param playerID  The username of the player requesting the move
      * @param col The column where you want to add the tiles
-     * @return The reply to be sent to the client
+     * @return The reply to be sent to the client, it can either be OK or ERROR message
      */
     public Message addToBookshelf(int gameID, String playerID,  int col ){
         Message reply = new Message();
@@ -90,7 +90,7 @@ public class Controller {
      * @param ints The new order in which you want the array
      * @param gameID The ID of the game
      * @param playerID The username of the player
-     * @return The reply to be sent to the client
+     * @return The reply to be sent to the client, it can either be OK or ERROR message
      */
     public Message swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
         Message reply = new Message();
@@ -126,7 +126,7 @@ public class Controller {
      * @param gameID The ID of the game
      * @param playerID  The username of the player requesting the move
      * @param points The coordinates of the tiles
-     * @return The reply to be sent to the client
+     * @return The reply to be sent to the client, it can either be OK or ERROR message
      */
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points){
         Message reply = new Message();
@@ -139,7 +139,7 @@ public class Controller {
 
         }catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("Ypu selected a point outside the board");
+            reply.setContent("You selected a point outside the board");
 
         }catch (TilesCannotBeSelected e) {
             reply.setType(MessageTypes.ERROR);
@@ -174,13 +174,33 @@ public class Controller {
 
     //Lobby methods
 
+    /**
+     * Calls for the lobby to create a new game of "players" number of players,
+     * and adds the client to it.
+     * @param client The client creating the new game
+     * @param players The number of player wanted in the game
+     * @return The reply to be sent to the client
+     */
+    public Message newLobby(ServerClientHandler client,int players){
+        Message reply = new Message();
 
-    public void newLobby(ServerClientHandler client,int players){
         lobby.newLobby(client,players);
+
+        reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
+        reply.setContent("Lobby created. Waiting for other players...");
+
+        return reply;
     }
 
 
-
+    /**
+     * Calls for the lobby to handle the client.
+     * If the username of the client is already taken, it asks the client to select a new one.
+     * It either puts the new client into an already existing game (not started) or asks the client
+     * to create a new one and select the number of player.
+     * @param client The client
+     * @return The reply to be sent to the client
+     */
     public Message handleNewClient(ServerClientHandler client) {
         Message reply = new Message();
 

@@ -11,14 +11,18 @@ import java.util.concurrent.Executors;
 public class Server
 {
     private static int port = 9898;     // Da sistemare
-    private static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
+    private final static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
-    private Controller controller= new Controller(lobby,lobby.getGames(),lobby.getClients());
+    private final Controller controller= new Controller(lobby,lobby.getGames(),lobby.getClients());
 
     public static void main( String[] args ) {
 
+
+
+
         Server EchoServer = new Server();
         try {
+
             EchoServer.startServer();
         }
         catch (IOException e){

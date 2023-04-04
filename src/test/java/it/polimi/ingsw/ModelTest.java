@@ -90,6 +90,11 @@ class ModelTest {
                 m.addToBookShelf(players.get(0), j);
                 m.setCurrPlayer(players.get(0));
                 m.getSelectedTiles().addAll(array);
+                //Add 2
+                m.setState(GameState.CHOOSING_COLUMN);
+                m.addToBookShelf(players.get(0), j);
+                m.setCurrPlayer(players.get(0));
+                m.getSelectedTiles().addAll(array);
 
             } catch (MoveNotPossible e) {
                 throw new RuntimeException(e);

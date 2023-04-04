@@ -38,19 +38,25 @@ public class ServerClientHandler implements Runnable  {
 
     public void run() {
         try {
+            //Object streams: used for communicating between client and server,
+            // they pass an object between the two.
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
             while (socket.isConnected() /* !disconnected*/) {
 
+                //Get the object (message in this case) coming from the client
                 messageIn= (Message) ois.readObject();
+                //process the message and send the response
                 processMessage(messageIn);
 
             }
 
+            //Closing socket and object stream when the client disconnects
             socket.close();
             ois.close();
             oos.close();
+
         }
         catch (IOException e){
             System.err.println(e.getMessage());
@@ -87,47 +93,87 @@ public class ServerClientHandler implements Runnable  {
         this.player = player;
     }
 
+
+
+
+
+
+    /*
+    * Mancano ancora i casi per:
+    * -Annullare la mossa appena fatta
+    * -Anche altri che ora non ricordo ma probabilmente scriverò qui
+    *
+    */
+
     private void processMessage(Message incomingMsg) throws IOException {
         if(incomingMsg != null)
         {
-            System.out.println("Server received " + incomingMsg.toString() + "from: " + username);
+            //Print just for debugging purposes
+            System.out.println("Server received " + incomingMsg + "from: " + username);
+
+            //Gets the type of the message and calls gor the appropriate controller method
             switch (incomingMsg.getType()) {
+
+                //First time client connections (or for clients whose selected username was already taken)
                 case CONNECT -> {
+
                     System.out.println("Server: connect message received");
 
 
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
 
+                        /*Controller calls for the lobby to handle the new client:
+                          if the username is already taken, it asks the client to select a new one,
+                          if there are games waiting for players, adds the client to them,
+                          if there aren't any games, it creates a new one and asks the client to
+                          select the number of players.
+                        */
                         messageOut = controller.handleNewClient(this);
 
                     }
 
+                    //Sends the response to the client
                     this.oos.writeObject(messageOut);
 
                 }
-
+                //When a client has decided the number of players they want in the game
                 case NUM_OF_PLAYERS -> {
-                    IntMessage message = (IntMessage) incomingMsg;
-                    controller.newLobby(this, message.getNum());
 
-                    messageOut.setType(MessageTypes.WAITING_FOR_PLAYERS);
-                    messageOut.setContent("Lobby created. Waiting for other players...");
+                    //Class cast to a specific subclass to use its methods
+                    IntMessage message = (IntMessage) incomingMsg;
+
+                    //Creates a new game with the selected number of players
+                    messageOut = controller.newLobby(this, message.getNum());
+
+                    //Sends the response to the client
+                    this.oos.writeObject(messageOut);
 
                 }
-                case DISCONNECT -> {
+                case DISCONNECT -> { //Completamente da fare, mancano anche i relativi metodi nelle altre classi
                     disconnected = true;
 
                 }
-                case REMOVE_FROM_BOARD -> {
-                    PointsMessage temp = (PointsMessage) incomingMsg;
-                    controller.removeTiles(this.gameID,this.username, temp.getTiles());
+                case REMOVE_FROM_BOARD -> {  //Solo accennato, da finire
+
+                    //Class cast to a specific subclass to use its methods
+                    PointsMessage message = (PointsMessage) incomingMsg;
+
+                    messageOut = controller.removeTiles(this.gameID,this.username, message.getTiles());
+
+                    //Sends the response to the client
+                    this.oos.writeObject(messageOut);
+
                 }
                 case SWITCH_PLACE -> {
-                    //controller.swapOrder();
+                   // messageOut = controller.swapOrder();
+
+                    this.oos.writeObject(messageOut);
                 }
                 case ADD_TO_BOOKSHELF -> {
-                    //controller.addToBookshelf();
+                    //messageOut = controller.addToBookshelf();
+
+                    this.oos.writeObject(messageOut);
                 }
                 default -> {
                     System.out.println("Server received: " + incomingMsg.toString());

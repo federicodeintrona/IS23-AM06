@@ -9,24 +9,53 @@ import java.util.Queue;
 
 public class Lobby {
     private Controller controller;
-    private  ArrayList<ArrayList<ServerClientHandler>> lobbys = new ArrayList<>();
-    private Queue<Integer> waitingLobbys = new LinkedList<>();
-    private HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
-    private HashMap<Integer,Model> games = new HashMap<>();
-    private HashMap<String ,ServerClientHandler > clients = new HashMap<>();
+
+    //Array di array che contiene tutti i cliemt separati in base al gioco a cui appartengono
+    //quelle che io chiamo lobby sono i sotto array che contengono tutti i client di un singolo model/game
+    private final ArrayList<ArrayList<ServerClientHandler>> lobbys = new ArrayList<>();
+
+    //Coda delle lobbies che stanno ancora aspettando giocatori
+    private final Queue<Integer> waitingLobbys = new LinkedList<>();
+
+    //Mappa che contiene il numero di giocatori voluti da ogni game
+    private final HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
+
+    //Mappa che contiene tutti i model (viene passata anche al controller, la creo qui per
+    //evitare problemi di sincronizzazione)
+    private final HashMap<Integer,Model> games = new HashMap<>();
+
+    //Mappa che contiene tutti i client (viene passata anche al controller,
+    // per fargli recuperare i player che sono dentro al client ed evitare di avere troppe strutture dati,
+    //la creo qui per evitare problemi di sincronizzazione)
+    private final HashMap<String ,ServerClientHandler > clients = new HashMap<>();
+
+    //Numero delle partite che sono state avviate, viene anche usato come ID del model
     private int gameNumber = 0;
+
+    //Lock per la sincronizzazione, molto probabilmente tutte queste sincronizzazioni sono ridondanti
+    //ma le tolgo quando testiamo in caso
     private final Object gameNumberLock = new Object();
 
 
+    /**
+     * @return true if there are games waiting for players, false otherwise
+     */
     public synchronized boolean waitingLobbies(){
-        if(waitingLobbys.isEmpty()){
-        return false;}
-        else return true;
+        return !waitingLobbys.isEmpty();
     }
 
 
-
-
+    /**
+     * The lobby handles the new client:
+     * if the username is already taken, it asks the client to select a new one,
+     * if there are games waiting for players, adds the client to them, and returns true
+     * if there aren't any games, it creates a new one and asks the client to
+     * select the number of players.
+     *
+     * @param client the client
+     * @return true: if there are games waiting for players , false otherwise
+     * @throws UsernameAlreadyTaken if the username selected by the client is already taken
+     */
     public synchronized boolean handleClient(ServerClientHandler client) throws UsernameAlreadyTaken {
         if(!clients.containsKey(client.getNickname().toLowerCase())){
 
@@ -46,7 +75,7 @@ public class Lobby {
 
     /**
      * Adds a client to a waiting lobby and starts the game when it is full
-     * @param client    The client you want to add
+     * @param client The client you want to add
      */
     public synchronized void addClient(ServerClientHandler client){
         //Get the ID of the lobby that is waiting for the longest time
@@ -63,11 +92,15 @@ public class Lobby {
                 startGame(index);
 
             }
-        }
+        }else throw new RuntimeException("Waiting lobbies is empty");
 
     }
 
-
+    /**
+     * Creates a new game and adds the client to it
+     * @param client the client creating the new game
+     * @param numplayers the number of player selected for the game
+     */
     public synchronized void newLobby(ServerClientHandler client,int numplayers){
         //create a new lobby and add the player
         ArrayList<ServerClientHandler> newLobby = new ArrayList<>();
@@ -79,7 +112,7 @@ public class Lobby {
         //record the selected number of player
         gamePlayerNumber.put(lobbys.size()-1, numplayers);
 
-        //add i to the waiting lobbies list
+        //add the lobby to the waiting lobbies list
         waitingLobbys.add(lobbys.size()-1);
 
         //set the client lobbyID
@@ -87,13 +120,16 @@ public class Lobby {
     }
 
 
-
-
+    /**
+     * Start a game (creates its players and model and calls for the controller to initialise the game)
+     * @param index The index of the game ready to start
+     */
     public void startGame(int index) {
-        //create the model and the array that will contain alla players
+        //create the model and the array that will contain all players
         ArrayList<Player> players = new ArrayList<>();
         Model m = new Model(players);
         int tempnum;
+
 
         //add the new game and get its ID
         synchronized (gameNumberLock) {
@@ -118,7 +154,7 @@ public class Lobby {
 
 
 
-
+    //DA FARE
     private void closeLobby(){}
     public void playerDisconnection(){}
 
