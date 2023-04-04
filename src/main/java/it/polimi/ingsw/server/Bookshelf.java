@@ -9,6 +9,10 @@ public class Bookshelf {
         Matrix tiles;
         int num_of_tiles;
 
+    /**
+     * Inizialize the bookshelf with the Matrix
+     * and set every position to EMPTY
+     */
         public Bookshelf(){
             tiles=new Matrix(6,5);
             num_of_tiles=0;
@@ -46,24 +50,16 @@ public class Bookshelf {
      * @return true if the matrix is full, false if it isn't
      */
         public boolean checkEndGame(){
-            for(int i=0;i<5;i++){
-                if(tiles.getTile(5,i).equals(Tiles.EMPTY)){
-                    return false;
-                }
-            }
-            return true;
+            if (num_of_tiles==30) return true;
+            return false;
         }
      /**
      * Check if the matrix is empty
      * @return true if the matrix is empty, false if it isn't
      */
         public boolean checkEmptyBoard(){
-            for(int i=0; i<6; i++){
-                for (int j=0; j<5; j++){
-                    if (!tiles.getTile(i, j).equals(Tiles.EMPTY)) return false;
-                }
-            }
-            return true;
+            if (num_of_tiles==0) return true;
+            return false;
         }
 
     /**
@@ -74,15 +70,20 @@ public class Bookshelf {
      */
     public void addTile(ArrayList<Tiles> tiles, int column){
             int pos=firstFree(column);
-            if (tiles.size() == 1) this.tiles.setTile(tiles.get(0), pos, column);
+            if (tiles.size() == 1) {
+                this.tiles.setTile(tiles.get(0), pos, column);
+                num_of_tiles++;
+            }
             else if (tiles.size()==2) {
                 this.tiles.setTile(tiles.get(0), pos, column);
                 this.tiles.setTile(tiles.get(1), pos-1, column);
+                num_of_tiles=num_of_tiles+2;
             }
             else {
                 this.tiles.setTile(tiles.get(0), pos, column);
                 this.tiles.setTile(tiles.get(1), pos-1, column);
                 this.tiles.setTile(tiles.get(2), pos-2, column);
+                num_of_tiles=num_of_tiles+3;
             }
         }
 
