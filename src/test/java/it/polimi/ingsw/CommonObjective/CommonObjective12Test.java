@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommonObjective12Test {
 
+
     /**
      * Testing all method's branches for success using a
      * bookshelf that has only the boxes under the first
