@@ -86,43 +86,43 @@ class PersonalObjective4Test {
         assertEquals(0, po.personalObjectivePoint(bookshelf));
 
         //controllo tutti i possibili casi corretti
-        bookshelf.getTiles().setTile(Tiles.LIGHT_BLUE, 2,0);
-        player.getBookshelf().getTiles().setTile(Tiles.LIGHT_BLUE, 2,0);
+        bookshelf.getTiles().setTile(Tiles.GREEN, 2,0);
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 2,0);
         assertEquals(0, po.checkCondition(player));
         assertEquals(0, po.checkCondition(bookshelf));
         assertEquals(0, po.personalObjectivePoint(player));
         assertEquals(0, po.personalObjectivePoint(bookshelf));
 
-        bookshelf.getTiles().setTile(Tiles.YELLOW, 0,4);
-        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 0,4);
+        bookshelf.getTiles().setTile(Tiles.GREEN, 0,4);
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 0,4);
         assertEquals(0, po.checkCondition(player));
         assertEquals(0, po.checkCondition(bookshelf));
         assertEquals(0, po.personalObjectivePoint(player));
         assertEquals(0, po.personalObjectivePoint(bookshelf));
 
-        bookshelf.getTiles().setTile(Tiles.WHITE, 4,1);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4,1);
+        bookshelf.getTiles().setTile(Tiles.GREEN, 4,1);
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 4,1);
         assertEquals(0, po.checkCondition(player));
         assertEquals(0, po.checkCondition(bookshelf));
         assertEquals(0, po.personalObjectivePoint(player));
         assertEquals(0, po.personalObjectivePoint(bookshelf));
 
-        bookshelf.getTiles().setTile(Tiles.GREEN, 4,2);
-        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 4,2);
+        bookshelf.getTiles().setTile(Tiles.WHITE, 4,2);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4,2);
         assertEquals(0, po.checkCondition(player));
         assertEquals(0, po.checkCondition(bookshelf));
         assertEquals(0, po.personalObjectivePoint(player));
         assertEquals(0, po.personalObjectivePoint(bookshelf));
 
-        bookshelf.getTiles().setTile(Tiles.BLUE, 2,2);
-        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 2,2);
+        bookshelf.getTiles().setTile(Tiles.GREEN, 2,2);
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 2,2);
         assertEquals(0, po.checkCondition(player));
         assertEquals(0, po.checkCondition(bookshelf));
         assertEquals(0, po.personalObjectivePoint(player));
         assertEquals(0, po.personalObjectivePoint(bookshelf));
 
-        bookshelf.getTiles().setTile(Tiles.PINK, 3,3);
-        player.getBookshelf().getTiles().setTile(Tiles.PINK, 3,3);
+        bookshelf.getTiles().setTile(Tiles.GREEN, 3,3);
+        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 3,3);
         assertEquals(0, po.checkCondition(player));
         assertEquals(0, po.checkCondition(bookshelf));
         assertEquals(0, po.personalObjectivePoint(player));
