@@ -63,6 +63,19 @@ public class Bookshelf {
         }
 
     /**
+     * Check if the matrix is empty
+     * @return true if the matrix is empty, false if it isn't
+     */
+    public boolean isEmpty(){
+        for(int i=5; i>=0; i--){
+            for (int j=0; j<5; j++){
+                if (!tiles.getTile(i, j).equals(Tiles.EMPTY)) return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Insert the array of tiles in the matrix
      * in the column chosen
      * @param tiles tiles to put in the matrix
