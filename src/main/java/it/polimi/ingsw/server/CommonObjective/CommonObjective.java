@@ -15,17 +15,18 @@ public abstract class CommonObjective {
     int points = 8;
     Set<Player> playersWhoCompletedComObj = new HashSet<>();
 
-    protected static ArrayList<Class> subclasses = new ArrayList();
 
-    static{
-            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
-                    "it.polimi.ingsw.server.CommonObjective", CommonObjective.class,
-                    null)) {
-                subclasses.add(pojoClass.getClazz());
-            }
-    }
+
+
     public static ArrayList<CommonObjective> randomSubclass(int num) {
 
+        ArrayList<Class> subclasses = new ArrayList();
+
+        for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
+                "it.polimi.ingsw.server.CommonObjective", CommonObjective.class,
+                null)) {
+            subclasses.add(pojoClass.getClazz());
+        }
 
         ArrayList<Class> temp = new ArrayList<>();
         temp.addAll(subclasses);
@@ -69,7 +70,5 @@ public abstract class CommonObjective {
         return playersWhoCompletedComObj;
     }
 
-    public static ArrayList<Class> getSubclasses() {
-        return subclasses;
-    }
+
 }

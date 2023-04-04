@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Exceptions.UsernameAlreadyTaken;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,18 +11,36 @@ public class Lobby {
     private Controller controller;
     private  ArrayList<ArrayList<ServerClientHandler>> lobbys = new ArrayList<>();
     private Queue<Integer> waitingLobbys = new LinkedList<>();
-
     private HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private HashMap<Integer,Model> games = new HashMap<>();
-
+    private HashMap<String ,ServerClientHandler > clients = new HashMap<>();
     private int gameNumber = 0;
-    private final Object gamenumberlock = new Object();
+    private final Object gameNumberLock = new Object();
 
 
-    public synchronized boolean waitingLobbys(){
+    public synchronized boolean waitingLobbies(){
         if(waitingLobbys.isEmpty()){
         return false;}
         else return true;
+    }
+
+
+
+
+    public synchronized boolean handleClient(ServerClientHandler client) throws UsernameAlreadyTaken {
+        if(!clients.containsKey(client.getNickname().toLowerCase())){
+
+            clients.put(client.getNickname().toLowerCase(),client);
+
+            //if there are waiting lobbies, add the client to the longest waiting lobby and return true
+            if(waitingLobbies()){
+                addClient(client);
+                return true;
+                //if there aren't any, return false
+            }else return false;
+
+        }else throw new UsernameAlreadyTaken();
+
     }
 
 
@@ -67,6 +87,8 @@ public class Lobby {
     }
 
 
+
+
     public void startGame(int index) {
         //create the model and the array that will contain alla players
         ArrayList<Player> players = new ArrayList<>();
@@ -74,17 +96,19 @@ public class Lobby {
         int tempnum;
 
         //add the new game and get its ID
-        synchronized (gamenumberlock) {
-            gameNumber += 1;
+        synchronized (gameNumberLock) {
             tempnum = gameNumber;
+            games.put(tempnum, m);
+            gameNumber += 1;
         }
-        games.put(tempnum, m);
+
 
         //for every client in the lobby, create his player and set the gameID
         for (ServerClientHandler s : lobbys.get(index)) {
             Player p = new Player(s.getNickname());
-            players.add(p);
+            s.setPlayer(p);
             s.setGameID(tempnum);
+            players.add(p);
         }
 
         //start the game
@@ -93,14 +117,7 @@ public class Lobby {
 
 
 
-    public synchronized boolean handleClient(ServerClientHandler client){
-        //if there are waiting lobbies, add the client to the longest waiting lobby and return true
-        if(waitingLobbys()){
-            addClient(client);
-            return true;
-        //if there aren't any, return false
-        }else return false;
-    }
+
 
     private void closeLobby(){}
     public void playerDisconnection(){}
@@ -112,5 +129,10 @@ public class Lobby {
 
     public HashMap<Integer,Model> getGames() {
         return games;
+    }
+
+
+    public HashMap<String, ServerClientHandler> getClients() {
+        return clients;
     }
 }

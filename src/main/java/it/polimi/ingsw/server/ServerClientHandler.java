@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Exceptions.UsernameAlreadyTaken;
 import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
@@ -15,8 +16,7 @@ public class ServerClientHandler implements Runnable  {
     private String username;
     private int lobbyID;
     private int gameID;
-    private int playerID;
-
+    private Player player;
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -31,6 +31,10 @@ public class ServerClientHandler implements Runnable  {
         this.socket = socket;
         this.controller=controller;
     }
+    public ServerClientHandler(Controller controller) {
+        this.controller=controller;
+    }
+
 
     public void run() {
         try {
@@ -59,10 +63,6 @@ public class ServerClientHandler implements Runnable  {
         this.gameID = gameID;
     }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
-
     public void setNickname(String nickname) {
         this.username = nickname;
     }
@@ -79,6 +79,14 @@ public class ServerClientHandler implements Runnable  {
         return username;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     private void processMessage(Message incomingMsg) throws IOException {
         if(incomingMsg != null)
         {
@@ -87,13 +95,12 @@ public class ServerClientHandler implements Runnable  {
                 case CONNECT -> {
                     System.out.println("Server: connect message received");
 
-                    //Username check
-
-
 
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
+
                         messageOut = controller.handleNewClient(this);
+
                     }
 
                     this.oos.writeObject(messageOut);
