@@ -10,7 +10,7 @@ public class CheckManager {
     private Player currPlayer;
     private GameState state;
 
-    private ArrayList<Tiles> selectedTiles;
+    private final ArrayList<Tiles> selectedTiles;
 
 
     public CheckManager(ArrayList<Tiles> selectedTiles) {

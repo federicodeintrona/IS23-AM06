@@ -15,29 +15,27 @@ import java.util.ArrayList;
 public class Model  {
 
     private GameState state = GameState.STARTING;
-    private Board board;
-    private ArrayList<Player> players;
-
+    private  Board board;
+    private final ArrayList<Player> players;
     private ArrayList<View> virtualViews;
-    private ArrayList<CommonObjective> commonObj = new ArrayList<>();
+    private  ArrayList<CommonObjective> commonObj = new ArrayList<>();
 
     private Player currPlayer;
     private Player nextPlayer;
     private Player winner;
-
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
 
     private boolean isFinished = false;
 
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
-    private CheckManager checks = new CheckManager(selectedTiles);
+    private final CheckManager checks = new CheckManager(selectedTiles);
 
 
     //Probably temporary, just used for notification
-    private ArrayList<Integer> privatePoints = new ArrayList<>();
+    private final ArrayList<Integer> privatePoints = new ArrayList<>();
 
-    private ArrayList<Integer> publicPoints = new ArrayList<>();
+    private final ArrayList<Integer> publicPoints = new ArrayList<>();
 
 
 

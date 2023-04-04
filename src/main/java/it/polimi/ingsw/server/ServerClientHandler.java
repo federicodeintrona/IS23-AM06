@@ -17,7 +17,6 @@ public class ServerClientHandler implements Runnable  {
     private int lobbyID;
     private int gameID;
     private Player player;
-
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -100,7 +99,7 @@ public class ServerClientHandler implements Runnable  {
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
 
-                            messageOut = controller.handleNewClient(this);
+                        messageOut = controller.handleNewClient(this);
 
                     }
 

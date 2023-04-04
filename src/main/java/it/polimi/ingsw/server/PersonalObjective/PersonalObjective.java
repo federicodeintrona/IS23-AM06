@@ -19,23 +19,18 @@ public abstract class PersonalObjective {
     private static int numOfComplitedObjective;
 
 
-    protected static ArrayList<Class> subclasses = new ArrayList();
-
-
-
-        static{
-            for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
-                    "it.polimi.ingsw.server.PersonalObjective", PersonalObjective.class,
-                    null)) {
-                subclasses.add(pojoClass.getClazz());
-            }
-        }
-
-
-
 
     public static ArrayList<PersonalObjective> randomSubclass(int num)  {
 
+
+        ArrayList<Class> subclasses = new ArrayList();
+
+
+        for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
+                "it.polimi.ingsw.server.PersonalObjective", PersonalObjective.class,
+                null)) {
+            subclasses.add(pojoClass.getClazz());
+        }
 
 
         ArrayList<Class> temp = new ArrayList<>();
