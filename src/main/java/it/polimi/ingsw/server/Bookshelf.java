@@ -63,10 +63,8 @@ public class Bookshelf {
      * @return true if the matrix is empty, false if it isn't
      */
     public boolean isEmpty(){
-        for(int i=5; i>=0; i--){
-            for (int j=0; j<5; j++){
-                if (!tiles.getTile(i, j).equals(Tiles.EMPTY)) return false;
-            }
+        for (int j=0; j<5; j++){
+            if (!tiles.getTile(5, j).equals(Tiles.EMPTY)) return false;
         }
         return true;
     }
