@@ -21,7 +21,7 @@
 | TUI             | :red_circle: | |                                                                                                                |
 | GUI             | :red_circle: | |                                                                                                                |
 | Full Game       | :red_circle: | |                                                                                                                |
-| UML Peer Review | :green_circle: | | We have revised the UML of AM15 group [Peer Review AM15]()<br/><br/>Our UML is revised by AM43 [Peer Review AM06]() |
+| UML Peer Review | :green_circle: | | We have revised the UML of AM15 group [Peer Review AM15](https://github.com/federicodeintrona/IS23-AM06/blob/main/Peer%20Review/peer_review_am15.pdf)<br/><br/>Our UML is revised by AM43 [Peer Review AM06](https://github.com/federicodeintrona/IS23-AM06/blob/main/Peer%20Review/PEER%20REVIEW%20AM-06.pdf) |
 
 ## Folder
 - [Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Peer%20Review)
