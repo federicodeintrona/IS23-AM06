@@ -7,15 +7,19 @@
 
 # Development State
 
-| Functionality | State           | Current | Comment |
-|---------------|-----------------| ---- | ---- |
-| Early H-L UML | :yellow_circle: | | |
-| Final UML     | :red_circle:    | | |
-| Model | 🟡 | | |
-| Controller | 🟡 | | |
-| TCP/IP | :yellow_circle: | | |
-| RMI | :red_circle: | | |
-| TUI | :red_circle: | | |
-| GUI | :red_circle: | | |
-| Full Game | :red_circle: | | |
+| Functionality   | State           | Current | Comment                                                                                                        |
+|-----------------|-----------------| ---- |----------------------------------------------------------------------------------------------------------------|
+| Early H-L UML   | :yellow_circle: | | in [UML folder]()                                                                                              |
+| Final UML       | :red_circle:    | | in [UML folder]()                                                                                              |
+| Model           | 🟡 | |                                                                                                                |
+| Controller      | 🟡 | |                                                                                                                |
+| TCP/IP          | :yellow_circle: | |                                                                                                                |
+| RMI             | :red_circle: | |                                                                                                                |
+| TUI             | :red_circle: | |                                                                                                                |
+| GUI             | :red_circle: | |                                                                                                                |
+| Full Game       | :red_circle: | |                                                                                                                |
+| UML Peer Review | :green_circle: | | We have revised the UML of AM15 group [Peer Review AM15]()<br/><br/>Our UML is revised by AM43 [Peer Review AM06]() |
 
+# Folder
+- [Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Peer%20Review)
+- [UML](https://github.com/federicodeintrona/IS23-AM06/tree/main/UML)

@@ -1309,6 +1309,14 @@ class BoardTest {
         //assert - check if actual val is equal to expected val
         assertFalse(result);
     }
+
+    @DisplayName("Add tile to the board")
+    @Test
+    void addTile(){
+        Board board=new Board(2);
+        board.addTile(Tiles.GREEN, 3,3);
+        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
+    }
 }
 
 
