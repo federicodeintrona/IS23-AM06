@@ -6,10 +6,12 @@ import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
 
 import java.awt.*;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller {
+public class Controller extends UnicastRemoteObject implements ControllerInterface{
 
     private Lobby lobby;
     private final HashMap<Integer,Model> games;
@@ -23,14 +25,14 @@ public class Controller {
      * @param mainLobby The lobby of the server
      * @param models  The hashmap of all current games
      */
-    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client) {
+    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client)  throws RemoteException {
         lobby = mainLobby;
         games = models;
         views = new ArrayList<>();
         clients = client;
     }
 
-    public Controller(HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client){
+    public Controller(HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client)  throws RemoteException{
         games = models;
         clients = client;
 
