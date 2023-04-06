@@ -3,26 +3,30 @@ package it.polimi.ingsw.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class Server
-{
+public class Server extends UnicastRemoteObject {
     private static int port = 9898;     // Da sistemare
     private final static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
     private final Controller controller= new Controller(lobby,lobby.getGames(),lobby.getClients());
 
-    public static void main( String[] args ) {
+    protected Server() throws RemoteException {
+        super();
+    }
 
-
-
-
+    public static void main( String[] args ) throws RemoteException {
         Server EchoServer = new Server();
-        try {
 
+        try {
             EchoServer.startServer();
         }
         catch (IOException e){
@@ -35,12 +39,21 @@ public class Server
     public void startServer() throws IOException{
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
+
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             System.err.println(e.getMessage()); // Porta non disponibile
             return;
         }
+
+        try {
+            Registry registry = LocateRegistry.createRegistry(1099);
+            registry.bind("RemoteController", controller);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
         System.out.println("Server pronto");
         while (true) {
             try {
