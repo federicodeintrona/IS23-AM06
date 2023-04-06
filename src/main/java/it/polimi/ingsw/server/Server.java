@@ -48,7 +48,7 @@ public class Server extends UnicastRemoteObject {
         }
 
         try {
-            Registry registry = LocateRegistry.createRegistry(1099);
+            Registry registry = LocateRegistry.createRegistry(port);
             registry.bind("RemoteController", controller);
         } catch (Exception e) {
             System.err.println(e.getMessage());
