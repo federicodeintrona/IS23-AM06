@@ -17,5 +17,6 @@ public enum MessageTypes {
     ROLLBACK,
     DISCONNECT,
     ERROR,
-    VIEW;
+    VIEW,
+    END_GAME;
 }
