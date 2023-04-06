@@ -2,8 +2,6 @@ package it.polimi.ingsw.server.Messages;
 
 public enum MessageTypes {
     CONNECT,
-    CONNECTION_FAILED,
-    CONNECTION_SUCCESSFUL,
     NEW_LOBBY,
     WAITING_FOR_PLAYERS,
     NUM_OF_PLAYERS,

@@ -462,7 +462,7 @@ public class Board {
     }
 
     /**
-     * add tile on the board
+     * add tile on the board and remove tile from sachet
      *
      * @param tile  tile to add on the board
      * @param row   number of row
@@ -471,6 +471,17 @@ public class Board {
     public void placeTiles(Tiles tile, int row, int col){
         gamesBoard.setTile(tile, row, col);
         boardSachet.removeTiles(tile);
+    }
+
+    /**
+     * add tile on the board
+     *
+     * @param tile  tile to add on the board
+     * @param row   number of row
+     * @param col   number of column
+     */
+    public void addTile(Tiles tile, int row, int col){
+        gamesBoard.setTile(tile, row, col);
     }
 
     /**
@@ -485,6 +496,17 @@ public class Board {
         for (Point point : position) {
             gamesBoard.remove(point.x, point.y);
         }
+    }
+
+    /**
+     * tiles in the position shown are removing
+     *
+     * REQUIRE THAT position IS CORRECT --> tile!=EMPTY && !=NOTALLOWED
+     *
+     * @param position  position where remove tiles
+     */
+    public void remove(Point position){
+        gamesBoard.remove(position.x, position.y);
     }
 
     /**
