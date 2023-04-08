@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.Messages;
 
 public enum MessageTypes {
     CONNECT,
+    USERNAME,
     NEW_LOBBY,
     WAITING_FOR_PLAYERS,
     NUM_OF_PLAYERS,
@@ -9,6 +10,13 @@ public enum MessageTypes {
     SWITCH_PLACE,
     ADD_TO_BOOKSHELF,
     OK,
+    REMOVE,
+    SWITCH,
+    ADD,
+    CHAT,
+    ROLLBACK,
+    DISCONNECT,
     ERROR,
-    DISCONNECT;
+    VIEW,
+    END_GAME;
 }
