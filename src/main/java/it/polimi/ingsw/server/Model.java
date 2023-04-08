@@ -153,14 +153,14 @@ public class Model  {
         //Change game state
         state = GameState.CHOOSING_TILES;
 
-        //Notifying changes (communicating a lot of redundant information for now, i'll change it when we do the views)
+        //Notifying changes (communicating a lot of redundant information for now, I'll change it when we do the views)
         ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p1 = new Pair<>(temp1, column);
 
         //Add to bookshelf
         player.getBookshelf().addTile(selectedTiles, column);
 
-        //Notifying changes pt.2, (communicating a lot of redundant information for now, i'll change it when we do the views)
+        //Notifying changes pt.2, (communicating a lot of redundant information for now, I'll change it when we do the views)
         ArrayList<Tiles> temp2 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
         Pair<ArrayList<Tiles>, Integer> p2 = new Pair<>(temp2, column);
 
@@ -244,10 +244,21 @@ public class Model  {
      * Initializes private objectives
      */
     private void personalobjInit() {
-        ArrayList<PersonalObjective> temp = PersonalObjective.randomSubclass(players.size());
-        for(int i = 0;i<players.size();i++){
-            players.get(i).setPersonalObjective(temp.get(i));
+        PersonalObjective po;
+        ArrayList<PersonalObjective> tmp=new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            //check if there are NOT 2 equals PersonalObjective
+            do {
+                po=new PersonalObjective();
+            }while (tmp.contains(po));
+            tmp.add(po);
         }
+
+
+        for(int i = 0;i<players.size();i++){
+            players.get(i).setPersonalObjective(tmp.get(i));
+        }
+
     }
 
 
