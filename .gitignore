@@ -1,2 +1,35 @@
+#ignore all folders
 /target/
 /.idea/
+
+#ignore all compiled sources
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+#ignore all packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+#ignore all logs & databases
+*.log
+*.sql
+*.sqlite
+
+#ignore all OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
