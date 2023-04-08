@@ -98,9 +98,7 @@ public class ServerClientHandler implements Runnable  {
 
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
-
-                        messageOut = controller.handleNewClient(this);
-
+                        messageOut = controller.handleNewClient(this.username);
                     }
 
                     this.oos.writeObject(messageOut);
@@ -108,11 +106,11 @@ public class ServerClientHandler implements Runnable  {
                 }
 
                 case NUM_OF_PLAYERS -> {
-                    IntMessage message = (IntMessage) incomingMsg;
-                    controller.newLobby(this, message.getNum());
 
-                    messageOut.setType(MessageTypes.WAITING_FOR_PLAYERS);
-                    messageOut.setContent("Lobby created. Waiting for other players...");
+                    IntMessage message = (IntMessage) incomingMsg;
+                    messageOut = controller.newLobby(this.username, message.getNum());
+
+                    this.oos.writeObject(messageOut);
 
                 }
                 case DISCONNECT -> {

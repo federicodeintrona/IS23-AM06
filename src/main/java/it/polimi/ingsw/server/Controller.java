@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.Exceptions.*;
+import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
@@ -14,7 +15,7 @@ public class Controller {
     Lobby lobby;
     private HashMap<Integer,Model> games;
 
-    private HashMap<String,ServerClientHandler> clients;
+    private HashMap<String,Player> players;
 
     private ArrayList<ArrayList<View>> views;
 
@@ -23,16 +24,16 @@ public class Controller {
      * @param mainLobby The lobby of the server
      * @param models  The hashmap of all current games
      */
-    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client) {
+    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,Player > playerMap) {
         lobby = mainLobby;
         games = models;
         views = new ArrayList<>();
-        clients = client;
+        players = playerMap;
     }
 
-    public Controller(HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client){
+    public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
         games = models;
-        clients = client;
+        players = playerMap;
 
     }
 
@@ -42,6 +43,7 @@ public class Controller {
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
+
         games.get(ID).initialization();
     }
 
@@ -57,7 +59,7 @@ public class Controller {
         Message reply = new Message();
 
         try {
-            games.get(gameID).addToBookShelf(clients.get(playerID).getPlayer(),col);
+            games.get(gameID).addToBookShelf(players.get(playerID),col);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
 
@@ -96,7 +98,7 @@ public class Controller {
         Message reply = new Message();
 
         try {
-            games.get(gameID).swapOrder(ints,clients.get(playerID).getPlayer());
+            games.get(gameID).swapOrder(ints,players.get(playerID));
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
         } catch (NotCurrentPlayer e) {
@@ -133,7 +135,7 @@ public class Controller {
 
 
         try {
-            games.get(gameID).removeTileArray(clients.get(playerID).getPlayer(),points);
+            games.get(gameID).removeTileArray(players.get(playerID),points);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
 
@@ -175,32 +177,46 @@ public class Controller {
     //Lobby methods
 
 
-    public void newLobby(ServerClientHandler client,int players){
-        lobby.newLobby(client,players);
+    public Message newLobby(String client,int players){
+        IntMessage msg = new IntMessage();
+        int gameNum =  lobby.newLobby(client,players);
+        msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
+        msg.setContent("Lobby created. Waiting for other players...");
+        msg.setNum(gameNum);
+        return msg;
     }
 
 
 
-    public Message handleNewClient(ServerClientHandler client) {
-        Message reply = new Message();
+    public synchronized Message handleNewClient(String client) {
+
 
         try {
-            boolean response = lobby.handleClient(client);
 
-            if (response) {
-                reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
-                reply.setContent("Added to a game. Waiting for other player...");
-            } else {
+
+            int response = lobby.handleClient(client);
+
+            if (response == -1) {
+                Message reply = new Message();
                 reply.setType(MessageTypes.NEW_LOBBY);
                 reply.setContent("Select the number of players (2 to 4)");
+                return reply;
+            } else {
+                IntMessage reply = new IntMessage();
+                reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
+                reply.setContent("Added to a game. Waiting for other player...");
+                reply.setNum(response);
+                return reply;
             }
         } catch (UsernameAlreadyTaken e) {
+            Message reply = new Message();
             reply.setType(MessageTypes.ERROR);
             reply.setContent("Username already taken");
+            return reply;
         }
 
 
-        return reply;
+
     }
 
 

@@ -13,7 +13,7 @@ public class Server
     private static int port =9898;
     private static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
-    private Controller controller= new Controller(lobby,lobby.getGames(),lobby.getClients());
+    private Controller controller= new Controller(lobby,lobby.getGames(),lobby.getPlayers());
 
     public static void main( String[] args ) {
 

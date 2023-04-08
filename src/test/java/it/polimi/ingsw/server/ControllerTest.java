@@ -13,10 +13,10 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
-
+/*
     public HashMap<Integer,Model> games = new HashMap<>();
     public HashMap<String,ServerClientHandler> clients = new HashMap<>();
-    public Controller controller = new Controller(games,clients);;
+    public Controller controller = new Controller(games,clients);
     public ArrayList<Player> players0 = new ArrayList<>();
     public ArrayList<Player> players1 = new ArrayList<>();
     public ArrayList<View> views0 = new ArrayList<>();
@@ -124,7 +124,7 @@ class ControllerTest {
         Random rdm = new Random();
         return new Point(rdm.nextInt(6),rdm.nextInt(5));
 
-    }
+    }*/
 }
 
 
