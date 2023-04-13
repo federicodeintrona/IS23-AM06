@@ -11,7 +11,7 @@ public class ClientBase {
         Scanner scanner = new Scanner(System.in);
         String decision = null;
 
-        System.out.print("Witch connection protocol do you choose? (RMI/TCP): ");
+        System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
 
         switch (decision) {
