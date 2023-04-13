@@ -19,7 +19,14 @@ public class NetworkerRmi {
     private Message messageOut;
     private static Controller controller;
 
-    public void RmiConnection () throws MalformedURLException, NotBoundException, RemoteException {
+    /**
+     * Method to initialize an RMI connection
+     *
+     * @throws MalformedURLException
+     * @throws NotBoundException
+     * @throws RemoteException
+     */
+    public void initializeConnection () throws MalformedURLException, NotBoundException, RemoteException {
         String serverHost = "localhost";
         controller = (Controller) Naming.lookup("rmi://" + serverHost + "/RemoteController");
 
