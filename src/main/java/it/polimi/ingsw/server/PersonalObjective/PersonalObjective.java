@@ -132,15 +132,7 @@ public class PersonalObjective {
      * @return int  number of position that match with the PersonalObjective's card
      */
     private int checkCondition(Player player) {
-        int result=0;
-        for (Point key: card.keySet()){
-            //player-->bookshelf-->matrice-->tile(x, y) == card.get(key)
-            // = Tiles                                  == Tiles
-            if (player.getBookshelf().getTiles().getTile(key).equals(card.get(key))){
-                result++;
-            }
-        }
-        return result;
+        return checkCondition(player.getBookshelf());
     }
     /**
      * return the number of position that match with the PersonalObjective's card
@@ -165,15 +157,7 @@ public class PersonalObjective {
      * @return int  score of PersonalObjective's card
      */
     public int personalObjectivePoint(Player player){
-        return switch (checkCondition(player)) {
-            case 1 -> 1;
-            case 2 -> 2;
-            case 3 -> 4;
-            case 4 -> 6;
-            case 5 -> 9;
-            case 6 -> 12;
-            default -> 0;
-        };
+        return personalObjectivePoint(player.getBookshelf());
     }
 
     /**
