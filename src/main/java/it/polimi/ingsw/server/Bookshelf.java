@@ -8,7 +8,7 @@ import java.util.Queue;
 public class Bookshelf {
     private static final int numberOfRows=6;
     private static final int numberOfColumns=5;
-    private static final int maxNumberOfTiles=numberOfRows*numberOfColumns;
+    private static final int maxNumberOfTiles=Define.NUMBEROFROWS_BOOKSHELF.getI()*Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();
 
         Matrix tiles;
         int num_of_tiles;
@@ -18,7 +18,7 @@ public class Bookshelf {
      * and set every position to EMPTY
      */
         public Bookshelf(){
-            tiles=new Matrix(numberOfRows,numberOfColumns);
+            tiles=new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(),Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
             num_of_tiles=0;
             for( int i=0; i<tiles.getNumRows();i++){
                 for( int j=0; j<tiles.getNumCols();j++){
@@ -52,7 +52,7 @@ public class Bookshelf {
      * @return true if the matrix is full, false if it isn't
      */
         public boolean checkEndGame(){
-            return num_of_tiles == maxNumberOfTiles;
+            return num_of_tiles == Define.MAXNUMBEROFTILES_BOOKSHELF.getI();
         }
      /**
      * Check if the matrix is empty
@@ -67,7 +67,7 @@ public class Bookshelf {
      * @return true if the matrix is empty, false if it isn't
      */
     public boolean isEmpty(){
-        for (int j=0; j<numberOfColumns; j++){
+        for (int j=0; j<Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++){
             if (!tiles.getTile(5, j).equals(Tiles.EMPTY)) return false;
         }
         return true;
@@ -178,11 +178,11 @@ public class Bookshelf {
     public int checkVicinityPoints(){
         int adjPoint=0;
         int sameColor;
-        boolean[][] visited = new boolean[numberOfRows][numberOfColumns];
+        boolean[][] visited = new boolean[Define.NUMBEROFROWS_BOOKSHELF.getI()][Define.NUMBEROFCOLUMNS_BOOKSHELF.getI()];
 
         //for each position
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 //if position is NOT visited yet && tile!=EMPTY
                 if (!visited[i][j] && !getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
                     //queue initialization
