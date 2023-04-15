@@ -9,6 +9,8 @@ import java.util.Set;
 import static it.polimi.ingsw.server.CommonObjective.CommonObjective.randomSubclass;
 
 public class Game {
+    private static final int numberOfCommonObjectives=2;
+
     int turns;
     int numOfPlayers;
     Set<Player> players;
@@ -29,6 +31,6 @@ public class Game {
         board = new Board(numOfPlayers);
 
         // initializing 2 random commonObjectives
-        commonObjectives = randomSubclass(2);
+        commonObjectives = randomSubclass(numberOfCommonObjectives);
     }
 }

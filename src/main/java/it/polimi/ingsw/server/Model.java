@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 
 public class Model  {
+    private static final int numberOfCommonObjectives=2;
+
 
     private GameState state = GameState.STARTING;
     private  Board board;
@@ -235,7 +237,7 @@ public class Model  {
      * Initializes common objectives
      */
     private void commonobjInit() {
-       commonObj = CommonObjective.randomSubclass(2);
+       commonObj = CommonObjective.randomSubclass(numberOfCommonObjectives);
     }
 
 

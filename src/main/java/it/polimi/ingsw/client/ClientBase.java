@@ -16,10 +16,10 @@ public class ClientBase {
 
         switch (decision) {
             case "RMI":
-                NetworkerRmi client = new NetworkerRmi();
-                client.initializeConnection();
+                break;
 
             case "TCP":
+                break;
         }
     }
 }

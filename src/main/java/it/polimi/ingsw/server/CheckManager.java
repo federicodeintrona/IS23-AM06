@@ -6,6 +6,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CheckManager {
+    private static final int maxNumberOfSelectedTiles=3;
+    private static final int numberOfBoardRows=9;
+    private static final int numberOfBoardColumns=9;
+    private static final int numberOfBookshelColumns=5;
 
     private Player currPlayer;
     private GameState state;
@@ -70,7 +74,7 @@ public class CheckManager {
         //check if the array is not null
         if(points!=null ){
             //check the length of the array
-            if(points.size()>3) throw new TooManySelected();
+            if(points.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
             else {  //check if the tiles are adjacent
                 if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
             }
@@ -109,8 +113,8 @@ public class CheckManager {
      */
     private void checkPointBoardDomain(Point p) throws OutOfDomain {
         //Check if the point is inside the board
-        if(p.getX()<0 || p.getX()>8) throw new OutOfDomain();
-        else if(p.getY()<0 || p.getY()>8) throw new OutOfDomain();
+        if(p.getX()<0 || p.getX()>numberOfBoardRows-1) throw new OutOfDomain();
+        else if(p.getY()<0 || p.getY()>numberOfBoardColumns-1) throw new OutOfDomain();
     }
 
 
@@ -149,7 +153,7 @@ public class CheckManager {
      * @throws ColumnIsFull if the requested column is full
      */
     private void checkColumn(int col,int size) throws OutOfDomain, ColumnIsFull {
-        if(col<0||col>5) throw new OutOfDomain();
+        if(col<0||col>numberOfBookshelColumns) throw new OutOfDomain();
         else if(!currPlayer.getBookshelf().checkColumns(size,col)) throw new ColumnIsFull();
     }
 

@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Bookshelf {
+    private static final int numberOfRows=6;
+    private static final int numberOfColumns=5;
+    private static final int maxNumberOfTiles=numberOfRows*numberOfColumns;
+
         Matrix tiles;
         int num_of_tiles;
 
@@ -14,7 +18,7 @@ public class Bookshelf {
      * and set every position to EMPTY
      */
         public Bookshelf(){
-            tiles=new Matrix(6,5);
+            tiles=new Matrix(numberOfRows,numberOfColumns);
             num_of_tiles=0;
             for( int i=0; i<tiles.getNumRows();i++){
                 for( int j=0; j<tiles.getNumCols();j++){
@@ -48,7 +52,7 @@ public class Bookshelf {
      * @return true if the matrix is full, false if it isn't
      */
         public boolean checkEndGame(){
-            return num_of_tiles == 30;
+            return num_of_tiles == maxNumberOfTiles;
         }
      /**
      * Check if the matrix is empty
@@ -63,7 +67,7 @@ public class Bookshelf {
      * @return true if the matrix is empty, false if it isn't
      */
     public boolean isEmpty(){
-        for (int j=0; j<5; j++){
+        for (int j=0; j<numberOfColumns; j++){
             if (!tiles.getTile(5, j).equals(Tiles.EMPTY)) return false;
         }
         return true;
@@ -109,7 +113,6 @@ public class Bookshelf {
             return -1;
         }
 
-        //ritorna l'ArrayList delle posizioni con colori adiacenti
 
     /**
      * Helping method that takes a matrix, a point inside and returns an ArrayList
@@ -175,11 +178,11 @@ public class Bookshelf {
     public int checkVicinityPoints(){
         int adjPoint=0;
         int sameColor;
-        boolean[][] visited = new boolean[6][5];
+        boolean[][] visited = new boolean[numberOfRows][numberOfColumns];
 
         //for each position
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < numberOfRows; i++) {
+            for (int j = 0; j < numberOfColumns; j++) {
                 //if position is NOT visited yet && tile!=EMPTY
                 if (!visited[i][j] && !getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
                     //queue initialization
