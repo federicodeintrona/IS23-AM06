@@ -14,12 +14,14 @@ public class ClientBase {
         System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
 
+        Networker client;
         switch (decision) {
             case "RMI":
-                break;
+                client = new NetworkerRmi();
+                client.initializeConnection();
 
             case "TCP":
-                break;
+                client = new NetworkerTcp();
         }
     }
 }
