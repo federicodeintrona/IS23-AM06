@@ -17,7 +17,7 @@
 | Model           | 🟡 | |                                                                                                                |
 | Controller      | 🟡 | |                                                                                                                |
 | TCP/IP          | :yellow_circle: | |                                                                                                                |
-| RMI             | :red_circle: | |                                                                                                                |
+| RMI             | :yellow_circle: | |                                                                                                                |
 | CLI             | :yellow_circle: | |                                                                                                                |
 | GUI             | :red_circle: | |                                                                                                                |
 | Full Game       | :red_circle: | |                                                                                                                |
