@@ -48,3 +48,4 @@ public enum ColorCLI {
 
 //todo scegliere colore EMPTY
 //todo scegliere colore NOTALLOWED
+//todo javadoc

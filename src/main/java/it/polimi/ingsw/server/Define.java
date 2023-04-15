@@ -22,3 +22,5 @@ public enum Define {
         return i;
     }
 }
+
+//todo javadoc

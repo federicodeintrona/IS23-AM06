@@ -9,9 +9,6 @@ import it.polimi.ingsw.server.Tiles;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 public class CLIView extends View{
 
@@ -244,7 +241,7 @@ public class CLIView extends View{
 
 
 
-
+//todo diversi metodi
     /*
         metodo per avviare la CLI
 
