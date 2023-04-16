@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -21,7 +24,15 @@ public class ClientBase {
                 client.initializeConnection();
 
             case "TCP":
-                client = new NetworkerTcp();
+                try {
+                    client = new NetworkerTcp();
+                    client.initializeConnection();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
         }
     }
 }

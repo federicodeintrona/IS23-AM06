@@ -54,7 +54,7 @@ public class NetworkerRmi implements Networker{
             System.out.print("Inserisci un username: ");
             username = scanner.nextLine();
 
-            messageOut = controller.handleNewClient(this.username);
+            //messageOut = controller.handleNewClient(this.username);
 
             if (!messageOut.getType().equals(MessageTypes.ERROR)) validUsername = true;
 
@@ -67,7 +67,7 @@ public class NetworkerRmi implements Networker{
      * @param numberOfPlayers
      */
     public void numberOfPlayersSelection(int numberOfPlayers) {
-        messageOut = controller.newLobby(this, numberOfPlayers);
+        //messageOut = controller.newLobby(this, numberOfPlayers);
 
         System.out.println(messageOut);
     }
