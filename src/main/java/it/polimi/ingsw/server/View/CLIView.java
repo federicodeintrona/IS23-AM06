@@ -8,9 +8,17 @@ import it.polimi.ingsw.server.Tiles;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class CLIView extends View{
+
+    private static final String STR_INPUT_CANCELED = "User input canceled.";
+
+    private Thread inputThread;
+
 
 
     @Override
@@ -182,7 +190,73 @@ public class CLIView extends View{
         System.out.println("\n");
     }
 
+    //todo stampa tutti i comandi che può fare il client  -help -h
+    public void help(){
+
+    }
+
     //todo stampa i personal objective
+    public static void printPersonalObjective(){
+
+    }
+
+    //todo chiedere Ing Conti
+    //leggere da stdIN
+    public String readLine() throws ExecutionException{
+        //FutureTask è un'implementazione di Future Interface --> metodi controllano se computazione è finita
+        FutureTask<String> futureTask = new FutureTask<>(new InputReader());
+        inputThread = new Thread(futureTask);
+        inputThread.start();
+
+        String input = null;
+
+        try {
+            input = futureTask.get();
+        } catch (InterruptedException e) {
+            futureTask.cancel(true);
+            Thread.currentThread().interrupt();
+        }
+        return input;
+    }
+
+    //todo creare messaggi da line letta da stdIN
+    // chiedere Ing Conti se meglio continuare a passare messaggi anche per richiesta nickname / IP & port ...
+    // o creare classi observer per fare la stessa cosa ???
+    //void o deve ritornare qualcosa
+    public void createMessage(){
+
+    }
+
+    //avvia la CLI
+    public void runCLI() {
+        System.out.println("Welcome to My Shelfie game");
+        askServerInfo();
+    }
+
+    //pulisce CLI
+    public void clearCLI(){
+        System.out.println(ColorCLI.CLEAR);
+        System.out.flush();
+    }
+
+    //todo richiesta IP & port
+    public void askServerInfo(){
+
+    }
+
+    //richista nickname
+    public void askNickname() {
+        System.out.print("Enter your nickname: ");
+        try {
+            String nickname = readLine();
+
+        } catch (ExecutionException e) {
+            System.out.println(STR_INPUT_CANCELED);
+        }
+    }
+
+    //todo richiesta varie mosse che deve fare giocatore
+
 
 
 
@@ -235,24 +309,4 @@ public class CLIView extends View{
 
     }
 
-
-
-
-
-
-
-//todo diversi metodi
-    /*
-        metodo per avviare la CLI
-
-        metodo per pulire la CLI
-
-        metodo per chiedere IP e port
-
-        metodo per leggere nickname
-
-        metodo per leggere i comandi durante la partita
-
-        metodo per mostrare i comandi durante la partita
-     */
 }
