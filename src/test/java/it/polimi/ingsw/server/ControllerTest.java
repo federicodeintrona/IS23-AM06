@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
 
     public HashMap<Integer,Model> games = new HashMap<>();
-    public HashMap<String,ServerClientHandler> clients = new HashMap<>();
+    public HashMap<String,Player> clients = new HashMap<>();
     public Controller controller = new Controller(games,clients);
     public ArrayList<Player> players0 = new ArrayList<>();
     public ArrayList<Player> players1 = new ArrayList<>();

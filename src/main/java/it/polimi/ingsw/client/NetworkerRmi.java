@@ -67,7 +67,7 @@ public class NetworkerRmi implements Networker{
      * @param numberOfPlayers
      */
     public void numberOfPlayersSelection(int numberOfPlayers) {
-        messageOut = controller.newLobby(this, numberOfPlayers);
+        messageOut = controller.newLobby(this.username, numberOfPlayers);
 
         System.out.println(messageOut);
     }
