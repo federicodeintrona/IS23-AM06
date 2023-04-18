@@ -5,8 +5,8 @@ import it.polimi.ingsw.server.GameState;
 import it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.server.Player;
 import it.polimi.ingsw.server.Tiles;
-import it.polimi.ingsw.server.View.CLIView;
-import it.polimi.ingsw.server.View.View;
+import it.polimi.ingsw.client.View.CLIView;
+import it.polimi.ingsw.client.View.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

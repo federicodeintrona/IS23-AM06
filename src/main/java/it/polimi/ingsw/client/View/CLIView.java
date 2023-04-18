@@ -1,21 +1,23 @@
-package it.polimi.ingsw.server.View;
+package it.polimi.ingsw.client.View;
 
-import it.polimi.ingsw.server.Board;
-import it.polimi.ingsw.server.Bookshelf;
+import it.polimi.ingsw.server.*;
+import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.server.Sachet;
-import it.polimi.ingsw.server.Tiles;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 public class CLIView extends View{
 
     private static final String STR_INPUT_CANCELED = "User input canceled.";
+//    private final Networker net;
+    private final ArrayList<String> player;
+
+    public CLIView(ArrayList<String> player) {
+        this.player = player;
+    }
 
     private Thread inputThread;
 
@@ -95,19 +97,19 @@ public class CLIView extends View{
     //stampa la bookshelf
     public static void printBookshelf(Bookshelf bookshelf){
         System.out.print("  ");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             System.out.print(i+" ");
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 System.out.print(tileColorBG(bookshelf.getTiles().getTile(i,j)) + "   " + ColorCLI.RESET);
             }
             System.out.println(" "+i);
         }
         System.out.print("  ");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println("\n");
@@ -126,13 +128,13 @@ public class CLIView extends View{
     public static void printPersonalObjective(PersonalObjective personalObjective){
         Bookshelf bookshelf=personalObjectiveReturn(personalObjective);
         System.out.print("  ");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             System.out.print(i+" ");
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
                     System.out.print(tileColorBG(bookshelf.getTiles().getTile(i,j)) + "\u001b[30m X " + ColorCLI.RESET);
                 }
@@ -143,7 +145,7 @@ public class CLIView extends View{
             System.out.println(" "+i);
         }
         System.out.print("  ");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println("\n");
@@ -153,13 +155,13 @@ public class CLIView extends View{
     public static void printBookshelfPersonalObjective(Bookshelf bookshelf, PersonalObjective personalObjective){
         Bookshelf bookshelfPO=personalObjectiveReturn(personalObjective);
         System.out.print("  ");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             System.out.print(i+" ");
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 //posizioni della PersonalObjective card
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
                     //posizione della Board == PersonalObjective
@@ -184,7 +186,7 @@ public class CLIView extends View{
             System.out.println(" "+i);
         }
         System.out.print("  ");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println("\n");
@@ -192,6 +194,14 @@ public class CLIView extends View{
 
     //todo stampa tutti i comandi che può fare il client  -help -h
     public void help(){
+        /*
+            remove //rimuove le tiles
+            switch //cambio ordine
+            add    //aggiunta alla colonna
+            rollback //annulla
+            chat   //chat a tutti
+            whisper //chat a specifico
+         */
 
     }
 
@@ -220,11 +230,9 @@ public class CLIView extends View{
     }
 
     //todo creare messaggi da line letta da stdIN
-    // chiedere Ing Conti se meglio continuare a passare messaggi anche per richiesta nickname / IP & port ...
-    // o creare classi observer per fare la stessa cosa ???
     //void o deve ritornare qualcosa
-    public void createMessage(){
-
+    public Message createMessage(){
+        return null;
     }
 
     //avvia la CLI
@@ -256,6 +264,9 @@ public class CLIView extends View{
     }
 
     //todo richiesta varie mosse che deve fare giocatore
+
+    //todo ricevi aggiornamento view
+    // Ing Conti meglio inviare tutto o solo aggiornamenti
 
 
 
@@ -316,4 +327,10 @@ public class CLIView extends View{
     più estendibile
 
     client server messaggi ok
+ */
+
+
+/*
+     invio messaggi a: Networker
+     ricevo messaggi da: Networker
  */

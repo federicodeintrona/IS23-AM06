@@ -3,7 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.server.View.View;
+import it.polimi.ingsw.client.View.View;
 import org.javatuples.Pair;
 
 import java.awt.*;
