@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -23,7 +24,7 @@ public class Server extends UnicastRemoteObject {
     private static Integer port;     // Da sistemare
     private final static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
-    private final Controller controller= new Controller(lobby,lobby.getGames(),lobby.getClients());
+    private final Controller controller= new Controller(lobby,lobby.getGames(),lobby.getPlayers());
 
     protected Server() throws RemoteException, IOException, ParseException{
         super();
@@ -32,7 +33,14 @@ public class Server extends UnicastRemoteObject {
     }
 
     public static void main( String[] args ) throws RemoteException {
-        Server EchoServer = new Server();
+        Server EchoServer = null;
+        try {
+            EchoServer = new Server();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             EchoServer.startServer();
@@ -57,7 +65,7 @@ public class Server extends UnicastRemoteObject {
 
         try {
             Registry registry = LocateRegistry.createRegistry(port);
-            registry.bind("RemoteController", controller);
+            registry.bind("RemoteController", (Remote) controller);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
