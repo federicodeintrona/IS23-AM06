@@ -18,10 +18,6 @@ public class Message {
         this.type = type;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void setContent(Object o){}
 
 
