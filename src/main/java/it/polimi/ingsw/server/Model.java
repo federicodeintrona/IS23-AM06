@@ -18,7 +18,7 @@ public class Model  {
 
     private GameState state = GameState.STARTING;
     private  Board board;
-    private final ArrayList<Player> players;
+    private  ArrayList<Player> players;
     private ArrayList<View> virtualViews;
     private  ArrayList<CommonObjective> commonObj = new ArrayList<>();
 
@@ -43,6 +43,9 @@ public class Model  {
 
     //Constructors
 
+    public Model(){
+
+    }
     public Model(ArrayList<Player> players) {
         this.players = players;
     }
@@ -439,6 +442,9 @@ public class Model  {
         return selectedTiles;
     }
 
+    public void addPlayers(ArrayList<Player> players){
+        this.players.addAll(players);
+    }
 
     /**
      * @return ArrayList of all the personal objectives of all players in the game
