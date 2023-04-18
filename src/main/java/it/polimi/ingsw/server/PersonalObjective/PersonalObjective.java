@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.PersonalObjective;
 
 import it.polimi.ingsw.server.Model.Bookshelf;
-import it.polimi.ingsw.server.Model.Define;
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.Model.Tiles;
 import org.json.simple.JSONArray;

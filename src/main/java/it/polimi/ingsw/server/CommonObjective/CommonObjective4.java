@@ -1,4 +1,5 @@
 package it.polimi.ingsw.server.CommonObjective;
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.Model.Tiles;
@@ -23,7 +24,7 @@ public class CommonObjective4 extends CommonObjective{
         Matrix matrix = player.getBookshelf().getTiles();       //creating a copy of player's bookshelf To decrease the number of access
         ArrayList<Tiles> colors = new ArrayList<>();        //to store the colors of the checking matrix 2x2
         Map<Tiles, Integer> groupsPerColor = new HashMap<>();       //keeps track of the number of groups per color
-        boolean[][] visited = new boolean[6][5];        //used to eliminate groups that are not detached
+        boolean[][] visited = new boolean[Define.NUMBEROFROWS_BOOKSHELF.getI()][Define.NUMBEROFCOLUMNS_BOOKSHELF.getI()];        //used to eliminate groups that are not detached
 
         for (int i=0; i<5; i++){
             for (int j=0; j<4; j++){

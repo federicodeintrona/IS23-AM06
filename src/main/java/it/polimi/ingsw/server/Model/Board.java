@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;

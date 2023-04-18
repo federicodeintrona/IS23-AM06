@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.CommonObjective;
 
 
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.Model.Tiles;
@@ -23,11 +24,11 @@ public class CommonObjective3 extends CommonObjective{
     @Override
     public boolean checkCondition(Player player) {
         int numOfGroups = 0;
-        boolean[][] visited = new boolean[6][5];
+        boolean[][] visited = new boolean[Define.NUMBEROFROWS_BOOKSHELF.getI()][Define.NUMBEROFCOLUMNS_BOOKSHELF.getI()];
 
         // Loop through all the cells in the matrix
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (visited[i][j] || player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
 
                     // Skip if cell already visited or set to EMPTY

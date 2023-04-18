@@ -48,4 +48,5 @@ public enum ColorCLI {
 
 //todo scegliere colore EMPTY
 //todo scegliere colore NOTALLOWED
+//todo provare a fare i quadrati --> BIOS esempio
 //todo javadoc
