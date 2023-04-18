@@ -1,10 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
-import it.polimi.ingsw.server.GameState;
-import it.polimi.ingsw.server.Model;
-import it.polimi.ingsw.server.Player;
-import it.polimi.ingsw.server.Tiles;
 import it.polimi.ingsw.server.View.CLIView;
 import it.polimi.ingsw.server.View.View;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +17,7 @@ class ModelTest {
     public Model m;
 
     public ArrayList<Player> players = new ArrayList<>();
-    public ArrayList<View> views = new ArrayList<>();
+    public ArrayList<VirtualView> views = new ArrayList<>();
 
     @BeforeEach
     void setUp(){
@@ -30,9 +27,9 @@ class ModelTest {
         players.add(p0);
         players.add(p1);
         players.add(p2);
-        views.add(new CLIView());
-        views.add(new CLIView());
-        views.add(new CLIView());
+        views.add(new VirtualView());
+        views.add(new VirtualView());
+        views.add(new VirtualView());
         m = new Model(players,views);
         m.initialization();
 
