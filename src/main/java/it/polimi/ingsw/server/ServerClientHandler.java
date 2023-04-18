@@ -91,7 +91,7 @@ public class ServerClientHandler implements Runnable  {
         {
             System.out.println("Server received " + incomingMsg.toString() + "from: " + username);
             switch (incomingMsg.getType()) {
-                case CONNECT -> {
+                case USERNAME -> {
                     System.out.println("Server: connect message received");
 
 

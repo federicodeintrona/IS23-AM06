@@ -1,51 +1,43 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class NetworkerTcp implements Networker{
-    private int port;
+    private static int port; //da sistemare
     Socket socket ;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    private String username;
+    private int lobbyID;
+    private int gameID;
     private Message messageOut;
+    private View view;
 
-    public NetworkerTcp() {
+    public NetworkerTcp() throws IOException, ParseException {
         JsonReader config;
         try {
             config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
         port=config.getInt("port");
     }
 
-    @Override
     public void initializeConnection() {
-
-    }
-    public void initializeConnection(String host) {
         try {
-            socket = new Socket(host, port);
-            ois = new ObjectInputStream(socket.getInputStream());
-            oos = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("Created TCP connection with Server");
-    }
-    public void initializeConnection(String host, int port) {
-        try {
-            socket = new Socket(host, port);
+            socket = new Socket("127.0.0.1", 9876);
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
@@ -54,58 +46,69 @@ public class NetworkerTcp implements Networker{
         System.out.println("Created TCP connection with Server");
     }
 
+    public void firstConnection (){
+        Scanner scanner = new Scanner(System.in);
+        String username;
+        boolean validUsername = false;
 
-    public Message firstConnection (Message username){
-        try {
-            oos.writeObject(username);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        while (!validUsername) {
+            System.out.print("Inserisci un username: ");
+            username = scanner.nextLine();
+            try {
+                oos.writeObject(username);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-        try {
-            return messageOut= (Message) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            try {
+                messageOut= (Message) ois.readObject();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            if (!messageOut.getType().equals(MessageTypes.ERROR)) validUsername = true;
+
+            System.out.println(messageOut);
         }
     };
-    public Message numberOfPlayersSelection(Message numberOfPlayers){
+    public void numberOfPlayersSelection(int numberOfPlayers){
         try {
             oos.writeObject(numberOfPlayers);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            return messageOut= (Message) ois.readObject();
+            messageOut= (Message) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        System.out.println(messageOut);
     };
-    public Message removeTilesFromBoard(Message tiles){
+    public void removeTilesFromBoard(ArrayList<Point> tiles){
         try {
             oos.writeObject(tiles);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-           return messageOut= (Message) ois.readObject();
+            view= (View) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     };
-    public Message switchTilesOrder(Message ints){
+    public void switchTilesOrder(ArrayList<Integer> ints){
         try {
             oos.writeObject(ints);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            return messageOut= (Message) ois.readObject();
+            view= (View) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -113,14 +116,14 @@ public class NetworkerTcp implements Networker{
         }
     };
 
-    public Message addTilesToBookshelf (Message column){
+    public void addTilesToBookshelf (int column){
         try {
             oos.writeObject(column);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            return messageOut= (Message) ois.readObject();
+            view= (View) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

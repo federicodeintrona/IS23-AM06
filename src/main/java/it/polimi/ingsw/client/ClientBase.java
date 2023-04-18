@@ -22,12 +22,16 @@ public class ClientBase {
             case "RMI":
                 client = new NetworkerRmi();
 
-
             case "TCP":
-                client = new NetworkerTcp();
+                try {
+                    client = new NetworkerTcp();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
 
         }
         client.initializeConnection();
-
     }
 }
