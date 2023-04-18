@@ -1,8 +1,5 @@
 package it.polimi.ingsw.client;
 
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
