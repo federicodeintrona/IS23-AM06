@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.View;
 import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.Messages.ServerInfoMessage;
+import it.polimi.ingsw.server.Model.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 import java.awt.*;
@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
+
 public class CLIView extends View{
 
     private static final String STR_INPUT_CANCELED = "User input canceled.";
-//    private final Networker net;
+    //    private final Networker net;
     private final ArrayList<String> player;
     private static String username;
     private boolean checkReceivedMesage;
@@ -27,24 +28,6 @@ public class CLIView extends View{
 
 
 
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-        switch (evt.getPropertyName()){
-            case "board":
-                break;
-
-
-            case "bookshelf" :
-                break;
-
-
-            case "points" :
-                break;
-        }
-
-    }
 
 
 
@@ -171,7 +154,7 @@ public class CLIView extends View{
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
                     //posizione della Board == PersonalObjective
                     if ( personalObjective.getCard().get(new Point(i,j))
-                        .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
+                            .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
                                 String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
                                 "\u001b[30m V " +
