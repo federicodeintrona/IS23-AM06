@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.CommonObjective;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import it.polimi.ingsw.server.Player;
+import it.polimi.ingsw.server.Model.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

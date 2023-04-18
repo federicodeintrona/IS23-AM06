@@ -1,9 +1,9 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.client.View.View;
+import it.polimi.ingsw.server.VirtualView;
 import org.javatuples.Pair;
 
 import java.awt.*;

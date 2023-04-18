@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.View;
 
-import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.server.Model.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 import java.awt.*;

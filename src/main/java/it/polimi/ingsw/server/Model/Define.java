@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.Model;
 
 public enum Define {
     NUMBEROFROWS_BOOKSHELF (6),

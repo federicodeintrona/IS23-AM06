@@ -1,4 +1,8 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.Model;
+
+import it.polimi.ingsw.server.Controller;
+import it.polimi.ingsw.server.Lobby;
+import it.polimi.ingsw.server.ServerClientHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;

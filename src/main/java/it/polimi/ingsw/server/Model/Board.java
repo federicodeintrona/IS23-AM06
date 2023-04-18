@@ -1,4 +1,6 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.Model;
+
+import it.polimi.ingsw.server.Matrix;
 
 import java.awt.*;
 import java.util.ArrayList;

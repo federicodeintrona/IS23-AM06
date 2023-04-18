@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.CommonObjective;
-import it.polimi.ingsw.server.Player;
-import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.Model.Player;
+import it.polimi.ingsw.server.Model.Tiles;
 
 import java.util.HashSet;
 import java.util.Set;
