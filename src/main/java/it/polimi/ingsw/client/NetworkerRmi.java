@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.server.Controller;
+import it.polimi.ingsw.server.Messages.IntArrayMessage;
 import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.PointsMessage;
@@ -34,31 +35,6 @@ public class NetworkerRmi implements Networker {
         }
 
         System.out.println("Created RMI connection with Server");
-    }
-
-    @Override
-    public Message firstConnection(Message username) {
-        return null;
-    }
-
-    @Override
-    public Message numberOfPlayersSelection(Message numberOfPlayers) {
-        return null;
-    }
-
-    @Override
-    public Message removeTilesFromBoard(Message tiles) {
-        return null;
-    }
-
-    @Override
-    public Message switchTilesOrder(Message ints) {
-        return null;
-    }
-
-    @Override
-    public Message addTilesToBookshelf(Message column) {
-        return null;
     }
 
     /**
@@ -101,7 +77,7 @@ public class NetworkerRmi implements Networker {
      */
     public Message switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
-        message = controller.swapOrder(tempMessage.getInts(), gameID, username);
+        message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
 
        return message;
     }
