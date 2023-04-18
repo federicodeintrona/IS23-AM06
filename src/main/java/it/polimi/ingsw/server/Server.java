@@ -13,10 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.polimi.ingsw.utils.JsonReader;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
-import org.json.simple.parser.JSONParser;
 
 
 public class Server extends UnicastRemoteObject {

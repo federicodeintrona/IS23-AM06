@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+
 import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
@@ -11,7 +12,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class NetworkerRmi implements Networker {
     private String username;
     private int lobbyID;
