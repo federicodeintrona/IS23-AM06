@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client.View;
 
+import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.Model.*;
+import it.polimi.ingsw.server.Messages.ServerInfoMessage;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.utils.Define;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -13,8 +13,9 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 public class CLIView extends View{
+
     private static final String STR_INPUT_CANCELED = "User input canceled.";
-    //    private final Networker net;
+//    private final Networker net;
     private final ArrayList<String> player;
     private static String username;
     private boolean checkReceivedMesage;
@@ -26,6 +27,24 @@ public class CLIView extends View{
 
 
 
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+        switch (evt.getPropertyName()){
+            case "board":
+                break;
+
+
+            case "bookshelf" :
+                break;
+
+
+            case "points" :
+                break;
+        }
+
+    }
 
 
 
@@ -58,8 +77,8 @@ public class CLIView extends View{
         };
     }
 
-    //STAMPA
-//stampa la board
+//STAMPA
+    //stampa la board
     public static void printBoard(Board board){
         System.out.print("  ");
         for (int i = 0; i < 9; i++) {
@@ -152,7 +171,7 @@ public class CLIView extends View{
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
                     //posizione della Board == PersonalObjective
                     if ( personalObjective.getCard().get(new Point(i,j))
-                            .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
+                        .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
                                 String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
                                 "\u001b[30m V " +
@@ -197,7 +216,7 @@ public class CLIView extends View{
     }
 
 
-    //LEGGI, RICEVI E INVIA MESSAGGI
+//LEGGI, RICEVI E INVIA MESSAGGI
     //leggere da stdIN
     public String readLine() {
         //istanzia scanner che legge da stdIN
@@ -234,7 +253,7 @@ public class CLIView extends View{
     }
 
 
-    //RICHIESTA DA CLI
+//RICHIESTA DA CLI
     //avvia la CLI
     public void runCLI()  {
         System.out.println("Welcome to My Shelfie game");
@@ -285,6 +304,7 @@ public class CLIView extends View{
 
     //todo ricevi aggiornamento view
     // Ing Conti meglio inviare tutto o solo aggiornamenti
+    // meglio inviare .JSON o JSONOject
 
 
 
@@ -307,8 +327,6 @@ public class CLIView extends View{
         printBoard(board);
 
         Bookshelf bookshelf=new Bookshelf();
-        printBookshelf(bookshelf);
-
         ArrayList<Tiles> arrayList=new ArrayList<>();
         arrayList.add(Tiles.BLUE);
         arrayList.add(Tiles.BLUE);
@@ -328,6 +346,7 @@ public class CLIView extends View{
         bookshelf.addTile(arrayList, 4);
         bookshelf.addTile(arrayList, 4);
 
+        printBookshelf(bookshelf);
 
         PersonalObjective personalObjective=new PersonalObjective(1);
         printPersonalObjective(personalObjective);
@@ -340,13 +359,6 @@ public class CLIView extends View{
     }
 
 }
-
-/*
-    possiamo fare observer per mandare virtual view da server a client
-    più estendibile
-
-    client server messaggi ok
- */
 
 
 /*
