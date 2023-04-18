@@ -2,11 +2,14 @@ package it.polimi.ingsw.client.View;
 
 import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.server.Messages.MessageTypes;
+import it.polimi.ingsw.server.Messages.ServerInfoMessage;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 public class CLIView extends View{
@@ -14,12 +17,14 @@ public class CLIView extends View{
     private static final String STR_INPUT_CANCELED = "User input canceled.";
 //    private final Networker net;
     private final ArrayList<String> player;
+    private static String username;
+    private boolean checkReceivedMesage;
 
     public CLIView(ArrayList<String> player) {
         this.player = player;
+        checkReceivedMesage=false;
     }
 
-    private Thread inputThread;
 
 
 
@@ -72,7 +77,7 @@ public class CLIView extends View{
         };
     }
 
-
+//STAMPA
     //stampa la board
     public static void printBoard(Board board){
         System.out.print("  ");
@@ -210,35 +215,69 @@ public class CLIView extends View{
 
     }
 
+
+//LEGGI, RICEVI E INVIA MESSAGGI
     //leggere da stdIN
-    public String readLine() throws ExecutionException{
-       /* //FutureTask è un'implementazione di Future Interface --> metodi controllano se computazione è finita
-        FutureTask<String> futureTask = new FutureTask<>(new InputReader());
-        inputThread = new Thread(futureTask);
-        inputThread.start();
+    public String readLine() {
+        //istanzia scanner che legge da stdIN
+        Scanner scanner=new Scanner(System.in);
+        //stringhe lette da stdIN
+        String world=new String();
 
-        String input = null;
+        //aspetta emissione dati e li legge
+        world=scanner.next();
 
-        try {
-            input = futureTask.get();
-        } catch (InterruptedException e) {
-            futureTask.cancel(true);
-            Thread.currentThread().interrupt();
-        }
-        return input;*/
-        return null;
+        return world;
+    }
+
+    //legge messaggi, li crea, li invia a chi di dovere
+    public void readMessage(){
+        String st=readLine();
+        Message message=createMessage(st);
+        sendMessage(message);
     }
 
     //todo creare messaggi da line letta da stdIN
-    //void o deve ritornare qualcosa
-    public Message createMessage(){
+    public Message createMessage(String st){
         return null;
     }
 
+    //todo invia messaggi a Networker
+    public void sendMessage(Message message){
+
+    }
+
+    //todo ricevi messaggi
+    public void receivedMessage(Message message){
+        checkReceivedMesage=true;
+    }
+
+
+//RICHIESTA DA CLI
     //avvia la CLI
-    public void runCLI() {
+    public void runCLI()  {
         System.out.println("Welcome to My Shelfie game");
-        askServerInfo();
+        //richiesta nickname
+        sendMessage(askNickname());
+        //arrivano altri messaggi
+        while (true){
+            //se abbiamo ricevuto messaggi dal server
+            if (checkReceivedMesage){
+                //fai qualcosa in base al messaggio che ti è arrivato
+                //se è il messaggio di fine partita --> esci dal while true
+            }
+            checkReceivedMesage=false;
+            //leggi messaggi che inserisce client
+            readMessage();
+            //se abbiamo ricevuto messaggi dal server
+            if (checkReceivedMesage){
+                //fai qualcosa in base al messaggio che ti è arrivato
+                //se è il messaggio di fine partita --> esci dal while true
+            }
+            checkReceivedMesage=false;
+
+        }
+
     }
 
     //pulisce CLI
@@ -247,26 +286,25 @@ public class CLIView extends View{
         System.out.flush();
     }
 
-    //todo richiesta IP & port
-    public void askServerInfo(){
-
-    }
-
     //richista nickname
-    public void askNickname() {
-        System.out.print("Enter your nickname: ");
-        try {
-            String nickname = readLine();
+    public Message askNickname() {
+        Message message=new Message();
 
-        } catch (ExecutionException e) {
-            System.out.println(STR_INPUT_CANCELED);
-        }
+        System.out.print("Enter your nickname: ");
+        String nickname = readLine();
+        message.setUsername(nickname);
+        message.setType(MessageTypes.USERNAME);
+        username=nickname;
+
+        return message;
+
     }
 
     //todo richiesta varie mosse che deve fare giocatore
 
     //todo ricevi aggiornamento view
     // Ing Conti meglio inviare tutto o solo aggiornamenti
+    // meglio inviare .JSON o JSONOject
 
 
 
@@ -321,13 +359,6 @@ public class CLIView extends View{
     }
 
 }
-
-/*
-    possiamo fare observer per mandare virtual view da server a client
-    più estendibile
-
-    client server messaggi ok
- */
 
 
 /*
