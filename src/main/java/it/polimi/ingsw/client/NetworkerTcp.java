@@ -23,12 +23,13 @@ public class NetworkerTcp implements Networker{
     private int lobbyID;
     private int gameID;
     private Message messageOut;
-    private View view;
 
-    public NetworkerTcp() throws IOException, ParseException {
+    public NetworkerTcp()  {
         JsonReader config;
         try {
             config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -46,94 +47,57 @@ public class NetworkerTcp implements Networker{
         System.out.println("Created TCP connection with Server");
     }
 
-    @Override
-    public Message firstConnection(Message username) {
-        return null;
-    }
+    public Message firstConnection (Message username){
+        try {
+            oos.writeObject(username);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-    @Override
-    public Message numberOfPlayersSelection(Message numberOfPlayers) {
-        return null;
-    }
-
-    @Override
-    public Message removeTilesFromBoard(Message tiles) {
-        return null;
-    }
-
-    @Override
-    public Message switchTilesOrder(Message ints) {
-        return null;
-    }
-
-    @Override
-    public Message addTilesToBookshelf(Message column) {
-        return null;
-    }
-
-    public void firstConnection (){
-        Scanner scanner = new Scanner(System.in);
-        String username;
-        boolean validUsername = false;
-
-        while (!validUsername) {
-            System.out.print("Inserisci un username: ");
-            username = scanner.nextLine();
-            try {
-                oos.writeObject(username);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            try {
-                messageOut= (Message) ois.readObject();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            if (!messageOut.getType().equals(MessageTypes.ERROR)) validUsername = true;
-
-            System.out.println(messageOut);
+        try {
+            return (Message) ois.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     };
-    public void numberOfPlayersSelection(int numberOfPlayers){
+    public Message numberOfPlayersSelection(Message numberOfPlayers){
         try {
             oos.writeObject(numberOfPlayers);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            messageOut= (Message) ois.readObject();
+            return (Message) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(messageOut);
     };
-    public void removeTilesFromBoard(ArrayList<Point> tiles){
+    public Message removeTilesFromBoard(Message tiles){
         try {
             oos.writeObject(tiles);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            view= (View) ois.readObject();
+            return (Message) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     };
-    public void switchTilesOrder(ArrayList<Integer> ints){
+    public Message switchTilesOrder(Message ints){
         try {
             oos.writeObject(ints);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            view= (View) ois.readObject();
+            return (Message) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -141,14 +105,14 @@ public class NetworkerTcp implements Networker{
         }
     };
 
-    public void addTilesToBookshelf (int column){
+    public Message addTilesToBookshelf (Message column){
         try {
             oos.writeObject(column);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            view= (View) ois.readObject();
+            return (Message) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
