@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,18 +13,27 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import it.polimi.ingsw.utils.JsonReader;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
+
 
 public class Server extends UnicastRemoteObject {
-    private static int port = 9898;     // Da sistemare
+    private JsonReader config;
+    private static Integer port;     // Da sistemare
     private final static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
     private final Controller controller= new Controller(lobby,lobby.getGames(),lobby.getClients());
 
-    protected Server() throws RemoteException {
+    protected Server() throws RemoteException, IOException, ParseException{
         super();
+        config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
+        port=config.getInt("port");
     }
 
-    public static void main( String[] args ) throws RemoteException {
+    public static void main( String[] args ) throws RemoteException, IOException, ParseException{
         Server EchoServer = new Server();
 
         try {
@@ -33,6 +44,10 @@ public class Server extends UnicastRemoteObject {
         }
 
 
+    }
+
+    public static int getPort() {
+        return port;
     }
 
     public void startServer() throws IOException{

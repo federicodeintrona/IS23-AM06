@@ -3,6 +3,8 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
+import it.polimi.ingsw.utils.JsonReader;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NetworkerTcp implements Networker{
-    private static int port = 9876; //da sistemare
+    private static int port; //da sistemare
     Socket socket ;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -22,6 +24,13 @@ public class NetworkerTcp implements Networker{
     private int gameID;
     private Message messageOut;
     private View view;
+
+    public NetworkerTcp() throws IOException, ParseException {
+        JsonReader config;
+        config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
+        port=config.getInt("port");
+    }
+
     public void initializeConnection() {
         try {
             socket = new Socket("127.0.0.1", 9876);

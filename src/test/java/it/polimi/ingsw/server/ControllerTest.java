@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -21,6 +22,9 @@ class ControllerTest {
     public ArrayList<Player> players1 = new ArrayList<>();
     public ArrayList<View> views0 = new ArrayList<>();
     public ArrayList<View> views1 = new ArrayList<>();
+
+    ControllerTest() throws RemoteException {
+    }
 
     @BeforeEach
     void setUp(){

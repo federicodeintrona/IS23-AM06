@@ -1,14 +1,19 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.utils.JsonReader;
+import org.json.simple.parser.ParseException;
+
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Bookshelf {
-    private static final int numberOfRows=6;
-    private static final int numberOfColumns=5;
-    private static final int maxNumberOfTiles=numberOfRows*numberOfColumns;
+    private JsonReader config;
+    private static int numberOfRows;
+    private static int numberOfColumns;
+    private static int maxNumberOfTiles;
 
         Matrix tiles;
         int num_of_tiles;
@@ -18,10 +23,20 @@ public class Bookshelf {
      * and set every position to EMPTY
      */
         public Bookshelf(){
+            try {
+                config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Bookshelf.json");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            numberOfRows=config.getInt("numrows");
+            numberOfColumns=config.getInt("numcol");
+            maxNumberOfTiles=numberOfRows*numberOfColumns;
             tiles=new Matrix(numberOfRows,numberOfColumns);
             num_of_tiles=0;
-            for( int i=0; i<tiles.getNumRows();i++){
-                for( int j=0; j<tiles.getNumCols();j++){
+            for( int i=0; i<numberOfRows;i++){
+                for( int j=0; j<numberOfColumns;j++){
                     tiles.setEmpty(i,j);
                 }
 
