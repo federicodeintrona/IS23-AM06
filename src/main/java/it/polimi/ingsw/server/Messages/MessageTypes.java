@@ -1,8 +1,7 @@
 package it.polimi.ingsw.server.Messages;
 
 public enum MessageTypes {
-    CONNECT,
-    USERNAME,
+    USERNAME, //invio username
     NEW_LOBBY,
     WAITING_FOR_PLAYERS,
     NUM_OF_PLAYERS,
