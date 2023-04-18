@@ -3,8 +3,6 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.View.View;
-import it.polimi.ingsw.utils.JsonReader;
-import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.IOException;

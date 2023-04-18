@@ -1,4 +1,7 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.server.Model;
+
+import it.polimi.ingsw.server.Model.Define;
+import it.polimi.ingsw.server.Model.Tiles;
 
 import java.util.*;
 
@@ -14,7 +17,7 @@ public class Sachet {
     /**
      * defining number of tiles in the sachet --> #Color * #TilesPerColor
      */
-    private static final int maxmumNumberOfTiles=Define.NUMBEROFCOLOR_SACHET.getI()*Define.NUMBEROFTILEPERCOLOR_SACHET.getI();
+    private static final int maxmumNumberOfTiles= Define.NUMBEROFCOLOR_SACHET.getI()*Define.NUMBEROFTILEPERCOLOR_SACHET.getI();
 
     /**
      * attribute used as a real sachet

@@ -5,6 +5,8 @@ import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.client.View.View;
+import it.polimi.ingsw.server.Model.Model;
+import it.polimi.ingsw.server.Model.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,9 +15,9 @@ import java.util.HashMap;
 public class Controller {
 
     Lobby lobby;
-    private HashMap<Integer,Model> games;
+    private HashMap<Integer, Model> games;
 
-    private HashMap<String,Player> players;
+    private HashMap<String, Player> players;
 
     private ArrayList<ArrayList<View>> views;
 

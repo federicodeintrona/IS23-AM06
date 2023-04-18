@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.Model.Tiles;
+
 import java.awt.*;
 import java.util.ArrayList;
 

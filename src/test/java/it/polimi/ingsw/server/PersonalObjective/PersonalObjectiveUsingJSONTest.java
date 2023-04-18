@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.PersonalObjective;
 
-import it.polimi.ingsw.server.Bookshelf;
-import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.Model.Bookshelf;
+import it.polimi.ingsw.server.Model.Tiles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

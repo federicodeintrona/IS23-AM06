@@ -2,8 +2,9 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.Exceptions.LobbyNotExists;
 import it.polimi.ingsw.server.Exceptions.UsernameAlreadyTaken;
+import it.polimi.ingsw.server.Model.Model;
+import it.polimi.ingsw.server.Model.Player;
 
-import java.lang.invoke.LambdaConversionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,8 +16,8 @@ public class Lobby {
     private final HashMap<Integer,ArrayList<String>> lobbys = new HashMap<>();
     private final HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private final Queue<Integer> waitingLobbys = new LinkedList<>();
-    private final HashMap<Integer,Model> games = new HashMap<>();
-    private final HashMap<String ,Player > players = new HashMap<>();
+    private final HashMap<Integer, Model> games = new HashMap<>();
+    private final HashMap<String , Player> players = new HashMap<>();
     private int gameNumber = 0;
 
 

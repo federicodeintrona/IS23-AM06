@@ -1,9 +1,8 @@
 package it.polimi.ingsw.server.PersonalObjective;
 
-import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.Model.Tiles;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -11,7 +10,6 @@ import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class PersonalObjectiveJSON {
     public static void create1(){

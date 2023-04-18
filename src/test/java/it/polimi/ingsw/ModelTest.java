@@ -2,8 +2,10 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
-import it.polimi.ingsw.server.View.CLIView;
-import it.polimi.ingsw.server.View.View;
+import it.polimi.ingsw.server.Model.GameState;
+import it.polimi.ingsw.server.Model.Model;
+import it.polimi.ingsw.server.Model.Player;
+import it.polimi.ingsw.server.Model.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
