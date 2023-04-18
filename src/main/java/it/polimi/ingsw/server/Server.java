@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,7 +31,7 @@ public class Server extends UnicastRemoteObject {
         port=config.getInt("port");
     }
 
-    public static void main( String[] args ) throws RemoteException, IOException, ParseException{
+    public static void main( String[] args ) throws RemoteException {
         Server EchoServer = new Server();
 
         try {
@@ -44,10 +42,6 @@ public class Server extends UnicastRemoteObject {
         }
 
 
-    }
-
-    public static int getPort() {
-        return port;
     }
 
     public void startServer() throws IOException{

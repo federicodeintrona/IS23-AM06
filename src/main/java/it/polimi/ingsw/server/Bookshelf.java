@@ -1,8 +1,5 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.utils.JsonReader;
-import org.json.simple.parser.ParseException;
-
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;

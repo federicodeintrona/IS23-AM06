@@ -7,4 +7,8 @@ public class IntMessage extends Message{
     public int getNum() {
         return num;
     }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 }

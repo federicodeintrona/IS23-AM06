@@ -1,8 +1,16 @@
-package it.polimi.ingsw.server.View;
+package it.polimi.ingsw.server;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
-public class CLIView extends View{
+public class VirtualView implements PropertyChangeListener {
+
+    private ArrayList<String> playerNames;
+    private Board board;
+    private ArrayList<Bookshelf> bookshelves;
+    private ArrayList<Integer> points ;
+
 
 
     @Override
@@ -20,6 +28,5 @@ public class CLIView extends View{
             case "points" :
                 break;
         }
-
     }
 }

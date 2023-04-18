@@ -1,22 +1,21 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.Exceptions.*;
+import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.View.View;
+import it.polimi.ingsw.client.View.View;
 
 import java.awt.*;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller extends UnicastRemoteObject implements ControllerInterface{
+public class Controller {
 
-    private Lobby lobby;
-    private final HashMap<Integer,Model> games;
+    Lobby lobby;
+    private HashMap<Integer,Model> games;
 
-    private final HashMap<String,ServerClientHandler> clients;
+    private HashMap<String,Player> players;
 
     private ArrayList<ArrayList<View>> views;
 
@@ -25,16 +24,16 @@ public class Controller extends UnicastRemoteObject implements ControllerInterfa
      * @param mainLobby The lobby of the server
      * @param models  The hashmap of all current games
      */
-    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client)  throws RemoteException {
+    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,Player > playerMap) {
         lobby = mainLobby;
         games = models;
         views = new ArrayList<>();
-        clients = client;
+        players = playerMap;
     }
 
-    public Controller(HashMap<Integer,Model> models,HashMap<String ,ServerClientHandler > client)  throws RemoteException{
+    public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
         games = models;
-        clients = client;
+        players = playerMap;
 
     }
 
@@ -44,6 +43,7 @@ public class Controller extends UnicastRemoteObject implements ControllerInterfa
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
+
         games.get(ID).initialization();
     }
 
@@ -53,13 +53,13 @@ public class Controller extends UnicastRemoteObject implements ControllerInterfa
      * @param gameID The ID of the game
      * @param playerID  The username of the player requesting the move
      * @param col The column where you want to add the tiles
-     * @return The reply to be sent to the client, it can either be OK or ERROR message
+     * @return The reply to be sent to the client
      */
     public Message addToBookshelf(int gameID, String playerID,  int col ){
         Message reply = new Message();
 
         try {
-            games.get(gameID).addToBookShelf(clients.get(playerID).getPlayer(),col);
+            games.get(gameID).addToBookShelf(players.get(playerID),col);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
 
@@ -92,13 +92,13 @@ public class Controller extends UnicastRemoteObject implements ControllerInterfa
      * @param ints The new order in which you want the array
      * @param gameID The ID of the game
      * @param playerID The username of the player
-     * @return The reply to be sent to the client, it can either be OK or ERROR message
+     * @return The reply to be sent to the client
      */
     public Message swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
         Message reply = new Message();
 
         try {
-            games.get(gameID).swapOrder(ints,clients.get(playerID).getPlayer());
+            games.get(gameID).swapOrder(ints,players.get(playerID));
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
         } catch (NotCurrentPlayer e) {
@@ -128,20 +128,20 @@ public class Controller extends UnicastRemoteObject implements ControllerInterfa
      * @param gameID The ID of the game
      * @param playerID  The username of the player requesting the move
      * @param points The coordinates of the tiles
-     * @return The reply to be sent to the client, it can either be OK or ERROR message
+     * @return The reply to be sent to the client
      */
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points){
         Message reply = new Message();
 
 
         try {
-            games.get(gameID).removeTileArray(clients.get(playerID).getPlayer(),points);
+            games.get(gameID).removeTileArray(players.get(playerID),points);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful");
 
         }catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You selected a point outside the board");
+            reply.setContent("Ypu selected a point outside the board");
 
         }catch (TilesCannotBeSelected e) {
             reply.setType(MessageTypes.ERROR);
@@ -176,53 +176,47 @@ public class Controller extends UnicastRemoteObject implements ControllerInterfa
 
     //Lobby methods
 
-    /**
-     * Calls for the lobby to create a new game of "players" number of players,
-     * and adds the client to it.
-     * @param client The client creating the new game
-     * @param players The number of player wanted in the game
-     * @return The reply to be sent to the client
-     */
-    public Message newLobby(ServerClientHandler client,int players){
-        Message reply = new Message();
 
-        lobby.newLobby(client,players);
-
-        reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
-        reply.setContent("Lobby created. Waiting for other players...");
-
-        return reply;
+    public Message newLobby(String client,int players){
+        IntMessage msg = new IntMessage();
+        int gameNum =  lobby.newLobby(client,players);
+        msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
+        msg.setContent("Lobby created. Waiting for other players...");
+        msg.setNum(gameNum);
+        return msg;
     }
 
 
-    /**
-     * Calls for the lobby to handle the client.
-     * If the username of the client is already taken, it asks the client to select a new one.
-     * It either puts the new client into an already existing game (not started) or asks the client
-     * to create a new one and select the number of player.
-     * @param client The client
-     * @return The reply to be sent to the client
-     */
-    public Message handleNewClient(ServerClientHandler client) {
-        Message reply = new Message();
+
+    public synchronized Message handleNewClient(String client) {
+
 
         try {
-            boolean response = lobby.handleClient(client);
 
-            if (response) {
-                reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
-                reply.setContent("Added to a game. Waiting for other player...");
-            } else {
+
+            int response = lobby.handleClient(client);
+
+            if (response == -1) {
+                Message reply = new Message();
                 reply.setType(MessageTypes.NEW_LOBBY);
                 reply.setContent("Select the number of players (2 to 4)");
+                return reply;
+            } else {
+                IntMessage reply = new IntMessage();
+                reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
+                reply.setContent("Added to a game. Waiting for other player...");
+                reply.setNum(response);
+                return reply;
             }
         } catch (UsernameAlreadyTaken e) {
+            Message reply = new Message();
             reply.setType(MessageTypes.ERROR);
             reply.setContent("Username already taken");
+            return reply;
         }
 
 
-        return reply;
+
     }
 
 

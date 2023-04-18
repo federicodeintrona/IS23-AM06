@@ -14,7 +14,7 @@ public class Sachet {
     /**
      * defining number of tiles in the sachet --> #Color * #TilesPerColor
      */
-    private static final int maximumNumberOfTiles=numberOfDifferentColor*numberOfTilesPerColor;
+    private static final int maxmumNumberOfTiles=Define.NUMBEROFCOLOR_SACHET.getI()*Define.NUMBEROFTILEPERCOLOR_SACHET.getI();
 
     /**
      * attribute used as a real sachet
@@ -29,22 +29,22 @@ public class Sachet {
     public  Sachet() {
         sachet=new ArrayList<>();
         //132tiles = 6color * 22tiles
-        for (int i = 0; i < numberOfTilesPerColor; i++) {
+        for (int i = 0; i < Define.NUMBEROFTILEPERCOLOR_SACHET.getI(); i++) {
             sachet.add(Tiles.GREEN);
         }
-        for (int i = 0; i < numberOfTilesPerColor; i++) {
+        for (int i = 0; i < Define.NUMBEROFTILEPERCOLOR_SACHET.getI(); i++) {
             sachet.add(Tiles.BLUE);
         }
-        for (int i = 0; i < numberOfTilesPerColor; i++) {
+        for (int i = 0; i < Define.NUMBEROFTILEPERCOLOR_SACHET.getI(); i++) {
             sachet.add(Tiles.YELLOW);
         }
-        for (int i = 0; i < numberOfTilesPerColor; i++) {
+        for (int i = 0; i < Define.NUMBEROFTILEPERCOLOR_SACHET.getI(); i++) {
             sachet.add(Tiles.WHITE);
         }
-        for (int i = 0; i < numberOfTilesPerColor; i++) {
+        for (int i = 0; i < Define.NUMBEROFTILEPERCOLOR_SACHET.getI(); i++) {
             sachet.add(Tiles.PINK);
         }
-        for (int i = 0; i < numberOfTilesPerColor; i++) {
+        for (int i = 0; i < Define.NUMBEROFTILEPERCOLOR_SACHET.getI(); i++) {
             sachet.add(Tiles.LIGHT_BLUE);
         }
     }
@@ -112,9 +112,9 @@ public class Sachet {
     public void addTiles(Tiles til){
         //check if til can add in sachet:
         //sachet.size()+1<=132
-        if (sachet.size()+1<=maximumNumberOfTiles){
+        if (sachet.size()+1<=Define.MAXNUMBEROFTILES_SACHET.getI()){
             //remainingTilesperColor(til)<=22
-            if (remainingTilesPerColor(til)+1<=numberOfTilesPerColor){
+            if (remainingTilesPerColor(til)+1<=Define.NUMBEROFTILEPERCOLOR_SACHET.getI()){
                 sachet.add(til);
             }
         }

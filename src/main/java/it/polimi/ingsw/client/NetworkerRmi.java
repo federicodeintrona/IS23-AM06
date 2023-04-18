@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class NetworkerRmi implements Networker{
+public class NetworkerRmi {
     private String username;
     private int lobbyID;
     private int gameID;
@@ -26,17 +26,9 @@ public class NetworkerRmi implements Networker{
      * @throws NotBoundException
      * @throws RemoteException
      */
-    public void initializeConnection ()  {
+    public void initializeConnection () throws MalformedURLException, NotBoundException, RemoteException {
         String serverHost = "localhost";
-        try {
-            controller = (Controller) Naming.lookup("rmi://" + serverHost + "/RemoteController");
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        controller = (Controller) Naming.lookup("rmi://" + serverHost + "/RemoteController");
 
         System.out.println("Created RMI connection with Server");
     }
@@ -67,7 +59,7 @@ public class NetworkerRmi implements Networker{
      * @param numberOfPlayers
      */
     public void numberOfPlayersSelection(int numberOfPlayers) {
-        messageOut = controller.newLobby(this, numberOfPlayers);
+        messageOut = controller.newLobby(this.username, numberOfPlayers);
 
         System.out.println(messageOut);
     }

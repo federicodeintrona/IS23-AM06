@@ -3,7 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.server.View.View;
+import it.polimi.ingsw.client.View.View;
 import org.javatuples.Pair;
 
 import java.awt.*;
@@ -18,8 +18,8 @@ public class Model  {
 
     private GameState state = GameState.STARTING;
     private  Board board;
-    private final ArrayList<Player> players;
-    private ArrayList<View> virtualViews;
+    private  ArrayList<Player> players;
+    private ArrayList<VirtualView> virtualViews;
     private  ArrayList<CommonObjective> commonObj = new ArrayList<>();
 
     private Player currPlayer;
@@ -43,11 +43,14 @@ public class Model  {
 
     //Constructors
 
+    public Model(){
+
+    }
     public Model(ArrayList<Player> players) {
         this.players = players;
     }
 
-    public Model(ArrayList<Player> players, ArrayList<View> views) {
+    public Model(ArrayList<Player> players, ArrayList<VirtualView> views) {
         this.players = players;
         this.virtualViews = views;
         this.currPlayer = players.get(0);
@@ -82,7 +85,7 @@ public class Model  {
 
 
         //Add the views as change listeners
-        for (View v : virtualViews){
+        for (VirtualView v : virtualViews){
             notifier.addPropertyChangeListener(v);
         }
 
@@ -439,6 +442,9 @@ public class Model  {
         return selectedTiles;
     }
 
+    public void addPlayers(ArrayList<Player> players){
+        this.players.addAll(players);
+    }
 
     /**
      * @return ArrayList of all the personal objectives of all players in the game

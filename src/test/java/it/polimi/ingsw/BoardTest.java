@@ -380,11 +380,6 @@ class BoardTest {
     void checkBoardReset1() {
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                System.out.println(board.getGamesBoard().getTile(i,j));
-            }
-        }
         board.placeTiles(Tiles.GREEN, 3,3);
         board.placeTiles(Tiles.GREEN, 4,4);
         board.placeTiles(Tiles.GREEN, 3,6);
@@ -397,11 +392,6 @@ class BoardTest {
     void checkBoardReset2() {
         Sachet sachet=new Sachet();
         Board board=new Board(3, sachet);
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                System.out.println(board.getGamesBoard().getTile(i,j));
-            }
-        }
         board.placeTiles(Tiles.GREEN, 3,3);
         board.placeTiles(Tiles.GREEN, 4,4);
         board.placeTiles(Tiles.GREEN, 3,6);
@@ -414,11 +404,6 @@ class BoardTest {
     void checkBoardReset3() {
         Sachet sachet=new Sachet();
         Board board=new Board(4, sachet);
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                System.out.println(board.getGamesBoard().getTile(i,j));
-            }
-        }
         board.placeTiles(Tiles.GREEN, 3,3);
         board.placeTiles(Tiles.GREEN, 4,4);
         board.placeTiles(Tiles.GREEN, 3,6);
