@@ -19,7 +19,7 @@ public class Model  {
     private GameState state = GameState.STARTING;
     private  Board board;
     private  ArrayList<Player> players;
-    private ArrayList<View> virtualViews;
+    private ArrayList<VirtualView> virtualViews;
     private  ArrayList<CommonObjective> commonObj = new ArrayList<>();
 
     private Player currPlayer;
@@ -50,7 +50,7 @@ public class Model  {
         this.players = players;
     }
 
-    public Model(ArrayList<Player> players, ArrayList<View> views) {
+    public Model(ArrayList<Player> players, ArrayList<VirtualView> views) {
         this.players = players;
         this.virtualViews = views;
         this.currPlayer = players.get(0);
@@ -85,7 +85,7 @@ public class Model  {
 
 
         //Add the views as change listeners
-        for (View v : virtualViews){
+        for (VirtualView v : virtualViews){
             notifier.addPropertyChangeListener(v);
         }
 
