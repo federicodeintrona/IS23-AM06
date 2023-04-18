@@ -46,6 +46,31 @@ public class NetworkerTcp implements Networker{
         System.out.println("Created TCP connection with Server");
     }
 
+    @Override
+    public Message firstConnection(Message username) {
+        return null;
+    }
+
+    @Override
+    public Message numberOfPlayersSelection(Message numberOfPlayers) {
+        return null;
+    }
+
+    @Override
+    public Message removeTilesFromBoard(Message tiles) {
+        return null;
+    }
+
+    @Override
+    public Message switchTilesOrder(Message ints) {
+        return null;
+    }
+
+    @Override
+    public Message addTilesToBookshelf(Message column) {
+        return null;
+    }
+
     public void firstConnection (){
         Scanner scanner = new Scanner(System.in);
         String username;
