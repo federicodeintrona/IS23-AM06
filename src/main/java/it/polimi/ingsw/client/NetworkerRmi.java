@@ -2,7 +2,6 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.server.Controller;
-import it.polimi.ingsw.server.Messages.IntArrayMessage;
 import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.PointsMessage;
