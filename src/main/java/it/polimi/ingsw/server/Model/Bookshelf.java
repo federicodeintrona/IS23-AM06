@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.utils.JsonReader;
 import it.polimi.ingsw.utils.Matrix;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.IOException;

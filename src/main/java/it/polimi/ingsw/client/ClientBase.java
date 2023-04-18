@@ -17,22 +17,19 @@ public class ClientBase {
         System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
 
-        Networker client;
+        Networker client = null;
         switch (decision) {
             case "RMI":
                 client = new NetworkerRmi();
-                client.initializeConnection();
 
             case "TCP":
                 try {
                     client = new NetworkerTcp();
-                    client.initializeConnection();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
 
         }
+        client.initializeConnection();
     }
 }
