@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.View;
 import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.Model.*;
+import it.polimi.ingsw.server.Messages.ServerInfoMessage;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 import java.awt.*;
@@ -12,11 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
-
 public class CLIView extends View{
 
     private static final String STR_INPUT_CANCELED = "User input canceled.";
-    //    private final Networker net;
+//    private final Networker net;
     private final ArrayList<String> player;
     private static String username;
     private boolean checkReceivedMesage;
@@ -28,6 +27,24 @@ public class CLIView extends View{
 
 
 
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+        switch (evt.getPropertyName()){
+            case "board":
+                break;
+
+
+            case "bookshelf" :
+                break;
+
+
+            case "points" :
+                break;
+        }
+
+    }
 
 
 
@@ -61,26 +78,26 @@ public class CLIView extends View{
     }
 
 //STAMPA
-//stampa la board
-public static void printBoard(Board board){
-    System.out.print("  ");
-    for (int i = 0; i < 9; i++) {
-        System.out.print(" "+i+" ");
-    }
-    System.out.println();
-    for (int i = 0; i < 9; i++) {
-        System.out.print(i+" ");
-        for (int j = 0; j < 9; j++) {
-            System.out.print(tileColorBG(board.getGamesBoard().getTile(i,j)) + "   " + ColorCLI.RESET);
+    //stampa la board
+    public static void printBoard(Board board){
+        System.out.print("  ");
+        for (int i = 0; i < 9; i++) {
+            System.out.print(" "+i+" ");
         }
-        System.out.println(" "+i);
+        System.out.println();
+        for (int i = 0; i < 9; i++) {
+            System.out.print(i+" ");
+            for (int j = 0; j < 9; j++) {
+                System.out.print(tileColorBG(board.getGamesBoard().getTile(i,j)) + "   " + ColorCLI.RESET);
+            }
+            System.out.println(" "+i);
+        }
+        System.out.print("  ");
+        for (int i = 0; i < 9; i++) {
+            System.out.print(" "+i+" ");
+        }
+        System.out.println("\n");
     }
-    System.out.print("  ");
-    for (int i = 0; i < 9; i++) {
-        System.out.print(" "+i+" ");
-    }
-    System.out.println("\n");
-}
 
     //stampa la bookshelf
     public static void printBookshelf(Bookshelf bookshelf){
@@ -154,7 +171,7 @@ public static void printBoard(Board board){
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
                     //posizione della Board == PersonalObjective
                     if ( personalObjective.getCard().get(new Point(i,j))
-                            .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
+                        .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
                                 String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
                                 "\u001b[30m V " +
