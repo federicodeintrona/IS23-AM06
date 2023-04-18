@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.PersonalObjective;
 
 import it.polimi.ingsw.server.Bookshelf;
+import it.polimi.ingsw.server.Define;
 import it.polimi.ingsw.server.Player;
 import it.polimi.ingsw.server.Tiles;
 import org.json.simple.JSONArray;
@@ -28,7 +29,7 @@ public class PersonalObjective {
     public PersonalObjective() {
         Random random=new Random(); //creat Random object
         //randomization between 1 to numberOfPersonalObjective
-        int n=random.nextInt(numberOfPersonalObjective)+1;
+        int n=random.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI())+1;
         //mapping the card position
         readJSON(n);
     }
@@ -40,6 +41,15 @@ public class PersonalObjective {
     public PersonalObjective(int n) {
         //mapping the card position
         readJSON(n);
+    }
+
+    /**
+     * Getter --> return PersonalObjective card
+     *
+     * @return HashMap  PersonalObjective card
+     */
+    public HashMap<Point, Tiles> getCard(){
+        return card;
     }
 
 

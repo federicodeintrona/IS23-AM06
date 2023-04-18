@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.View.View;
+import it.polimi.ingsw.client.View.View;
 
 import java.awt.*;
 import java.util.ArrayList;

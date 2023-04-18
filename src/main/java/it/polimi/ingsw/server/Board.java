@@ -17,7 +17,7 @@ public class Board {
     /**
      * attribute used as a real board
      */
-    private Matrix gamesBoard=new Matrix(numberOfRows, numberOfColumns);
+    private Matrix gamesBoard=new Matrix(Define.NUMBEROFROWS_BOARD.getI(), Define.NUMBEROFCOLUMNS_BOARD.getI());
     /**
      * attribute for saving the number of player that playing on the gamesBoard
      */
@@ -61,8 +61,8 @@ public class Board {
      */
     private void creationBoard() {
         //assign Tiles.EMPTY to all position of matrix gamesBoard
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 gamesBoard.setEmpty(i, j);
             }
         }
@@ -195,8 +195,8 @@ public class Board {
      * initialization of board
      */
     public void BoardInitialization(){
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 //if tiles==EMPTY --> place randomically tiles
                 if (gamesBoard.getTile(i, j).equals(Tiles.EMPTY)){
                     //in i,j position choose randomically tiles --> sachet.draw()
@@ -209,8 +209,8 @@ public class Board {
     //può servire solo per testare il gioco completo
     public void BoardInitialization(List<Tiles> list){
         int counter=0;
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 if (gamesBoard.getTile(i,j).equals(Tiles.EMPTY)){
                     gamesBoard.setTile(list.get(counter), i,j);
                     counter++;
@@ -226,16 +226,16 @@ public class Board {
      * @return boolean  board needs to be reset
      */
     public boolean checkBoardReset(){
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 //for all tiles that !=NOTALLOWED && !=EMPTY
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
                         !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)){
                     //if a tile has at leat 1 tile adjacent return false
 
                     //if we are NOT on the edge of board
-                    if ((i!=0 && i!=numberOfRows-1) &&
-                            (j!=0 && j!=numberOfColumns-1)){
+                    if ((i!=0 && i!=Define.NUMBEROFROWS_BOARD.getI()-1) &&
+                            (j!=0 && j!=Define.NUMBEROFCOLUMNS_BOARD.getI()-1)){
                         //adjacency:
                         //sx
                         if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
@@ -278,7 +278,7 @@ public class Board {
                         }
                     }
                     //we are on bottom edge
-                    else if (i==numberOfRows-1){
+                    else if (i==Define.NUMBEROFROWS_BOARD.getI()-1){
                         //adjacency:
                         //sx
                         if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
@@ -352,8 +352,8 @@ public class Board {
      */
     public void boardResetENG(){
         //search tiles!=EMPTY && !=NOTALLOWED
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
                         !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)) {
                     //tile's color is added in sachet --> addTiles(Tiles)
@@ -446,8 +446,8 @@ public class Board {
      */
     public ArrayList<Point> freeTiles(){
         ArrayList<Point> result=new ArrayList<>();
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
                         !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &
                                 checkFreeTiles(new Point(i, j))){
@@ -492,7 +492,7 @@ public class Board {
                     }
                 }
                 //we are on x-th row last column
-                else if (position.get(i).y==numberOfColumns-1){
+                else if (position.get(i).y==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
                     p.x=position.get(i).x;
                     p.y=position.get(i).y-1;
                     if (!position.contains(p)){
@@ -526,7 +526,7 @@ public class Board {
                     }
                 }
                 //we are on y-th column last row
-                else if (position.get(i).x==numberOfRows-1){
+                else if (position.get(i).x==Define.NUMBEROFROWS_BOARD.getI()-1){
                     p.x=position.get(i).x-1;
                     p.y=position.get(i).y;
                     if (!position.contains(p)){
@@ -564,8 +564,8 @@ public class Board {
         int y=tile.y;
         ArrayList<Point> result=new ArrayList<>();
         //we are NOT on the edge
-        if ((tile.x!=0 && tile.x!=numberOfRows-1) &&
-                (tile.y!=0 && tile.y!=numberOfColumns-1)){
+        if ((tile.x!=0 && tile.x!=Define.NUMBEROFROWS_BOARD.getI()-1) &&
+                (tile.y!=0 && tile.y!=Define.NUMBEROFCOLUMNS_BOARD.getI()-1)){
             //upper
             p.x=x-1;
             p.y=y;
