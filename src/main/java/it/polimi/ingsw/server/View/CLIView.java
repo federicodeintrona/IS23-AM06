@@ -200,10 +200,9 @@ public class CLIView extends View{
 
     }
 
-    //todo chiedere Ing Conti
     //leggere da stdIN
     public String readLine() throws ExecutionException{
-        //FutureTask è un'implementazione di Future Interface --> metodi controllano se computazione è finita
+       /* //FutureTask è un'implementazione di Future Interface --> metodi controllano se computazione è finita
         FutureTask<String> futureTask = new FutureTask<>(new InputReader());
         inputThread = new Thread(futureTask);
         inputThread.start();
@@ -216,7 +215,8 @@ public class CLIView extends View{
             futureTask.cancel(true);
             Thread.currentThread().interrupt();
         }
-        return input;
+        return input;*/
+        return null;
     }
 
     //todo creare messaggi da line letta da stdIN
@@ -310,3 +310,10 @@ public class CLIView extends View{
     }
 
 }
+
+/*
+    possiamo fare observer per mandare virtual view da server a client
+    più estendibile
+
+    client server messaggi ok
+ */
