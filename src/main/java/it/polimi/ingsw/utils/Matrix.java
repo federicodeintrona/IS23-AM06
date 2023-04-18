@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.server.Model.Tiles;
 

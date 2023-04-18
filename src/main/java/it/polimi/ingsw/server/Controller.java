@@ -192,9 +192,7 @@ public class Controller {
 
     public synchronized Message handleNewClient(String client) {
 
-
         try {
-
 
             int response = lobby.handleClient(client);
 
