@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.server.Matrix;
-import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.server.Model.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

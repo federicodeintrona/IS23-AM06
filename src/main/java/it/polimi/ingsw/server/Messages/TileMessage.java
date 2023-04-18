@@ -1,5 +1,5 @@
 package it.polimi.ingsw.server.Messages;
-import it.polimi.ingsw.server.Tiles;
+import it.polimi.ingsw.server.Model.Tiles;
 
 import java.util.ArrayList;
 
