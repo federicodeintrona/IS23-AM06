@@ -61,26 +61,26 @@ public class CLIView extends View{
     }
 
 //STAMPA
-    //stampa la board
-    public static void printBoard(Board board){
-        System.out.print("  ");
-        for (int i = 0; i < 9; i++) {
-            System.out.print(" "+i+" ");
-        }
-        System.out.println();
-        for (int i = 0; i < 9; i++) {
-            System.out.print(i+" ");
-            for (int j = 0; j < 9; j++) {
-                System.out.print(tileColorBG(board.getGamesBoard().getTile(i,j)) + "   " + ColorCLI.RESET);
-            }
-            System.out.println(" "+i);
-        }
-        System.out.print("  ");
-        for (int i = 0; i < 9; i++) {
-            System.out.print(" "+i+" ");
-        }
-        System.out.println("\n");
+//stampa la board
+public static void printBoard(Board board){
+    System.out.print("  ");
+    for (int i = 0; i < 9; i++) {
+        System.out.print(" "+i+" ");
     }
+    System.out.println();
+    for (int i = 0; i < 9; i++) {
+        System.out.print(i+" ");
+        for (int j = 0; j < 9; j++) {
+            System.out.print(tileColorBG(board.getGamesBoard().getTile(i,j)) + "   " + ColorCLI.RESET);
+        }
+        System.out.println(" "+i);
+    }
+    System.out.print("  ");
+    for (int i = 0; i < 9; i++) {
+        System.out.print(" "+i+" ");
+    }
+    System.out.println("\n");
+}
 
     //stampa la bookshelf
     public static void printBookshelf(Bookshelf bookshelf){
