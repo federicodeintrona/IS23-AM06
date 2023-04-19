@@ -1,27 +1,22 @@
 package it.polimi.ingsw.server;
 
-import org.junit.jupiter.api.Test;
 import org.json.simple.parser.ParseException;
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ServerTest {
-
+public class ServerTest {
     Server server;
 
     {
         try {
             server = new Server();
-        }
-        catch (RemoteException e) {
+        } catch (RemoteException e) {
             throw new RuntimeException(e);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
