@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.View;
 
 import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.Model.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Define;
@@ -8,19 +9,20 @@ import it.polimi.ingsw.utils.Define;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 public class CLIView extends View{
-
     private static final String STR_INPUT_CANCELED = "User input canceled.";
-//    private final Networker net;
+    //    private final Networker net;
     private final ArrayList<String> player;
+    private static String username;
+    private boolean checkReceivedMesage;
 
     public CLIView(ArrayList<String> player) {
         this.player = player;
+        checkReceivedMesage=false;
     }
-
-    private Thread inputThread;
 
 
 
@@ -56,23 +58,23 @@ public class CLIView extends View{
         };
     }
 
-
-    //stampa la board
+    //STAMPA
+//stampa la board
     public static void printBoard(Board board){
         System.out.print("  ");
-        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
+        for (int i = 0; i < 9; i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println();
-        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
+        for (int i = 0; i < 9; i++) {
             System.out.print(i+" ");
-            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+            for (int j = 0; j < 9; j++) {
                 System.out.print(tileColorBG(board.getGamesBoard().getTile(i,j)) + "   " + ColorCLI.RESET);
             }
             System.out.println(" "+i);
         }
         System.out.print("  ");
-        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
+        for (int i = 0; i < 9; i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println("\n");
@@ -150,7 +152,7 @@ public class CLIView extends View{
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
                     //posizione della Board == PersonalObjective
                     if ( personalObjective.getCard().get(new Point(i,j))
-                        .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
+                            .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
                                 String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
                                 "\u001b[30m V " +
@@ -194,35 +196,69 @@ public class CLIView extends View{
 
     }
 
+
+    //LEGGI, RICEVI E INVIA MESSAGGI
     //leggere da stdIN
-    public String readLine() throws ExecutionException{
-       /* //FutureTask è un'implementazione di Future Interface --> metodi controllano se computazione è finita
-        FutureTask<String> futureTask = new FutureTask<>(new InputReader());
-        inputThread = new Thread(futureTask);
-        inputThread.start();
+    public String readLine() {
+        //istanzia scanner che legge da stdIN
+        Scanner scanner=new Scanner(System.in);
+        //stringhe lette da stdIN
+        String world=new String();
 
-        String input = null;
+        //aspetta emissione dati e li legge
+        world=scanner.next();
 
-        try {
-            input = futureTask.get();
-        } catch (InterruptedException e) {
-            futureTask.cancel(true);
-            Thread.currentThread().interrupt();
-        }
-        return input;*/
-        return null;
+        return world;
+    }
+
+    //legge messaggi, li crea, li invia a chi di dovere
+    public void readMessage(){
+        String st=readLine();
+        Message message=createMessage(st);
+        sendMessage(message);
     }
 
     //todo creare messaggi da line letta da stdIN
-    //void o deve ritornare qualcosa
-    public Message createMessage(){
+    public Message createMessage(String st){
         return null;
     }
 
+    //todo invia messaggi a Networker
+    public void sendMessage(Message message){
+
+    }
+
+    //todo ricevi messaggi
+    public void receivedMessage(Message message){
+        checkReceivedMesage=true;
+    }
+
+
+    //RICHIESTA DA CLI
     //avvia la CLI
-    public void runCLI() {
+    public void runCLI()  {
         System.out.println("Welcome to My Shelfie game");
-        askServerInfo();
+        //richiesta nickname
+        sendMessage(askNickname());
+        //arrivano altri messaggi
+        while (true){
+            //se abbiamo ricevuto messaggi dal server
+            if (checkReceivedMesage){
+                //fai qualcosa in base al messaggio che ti è arrivato
+                //se è il messaggio di fine partita --> esci dal while true
+            }
+            checkReceivedMesage=false;
+            //leggi messaggi che inserisce client
+            readMessage();
+            //se abbiamo ricevuto messaggi dal server
+            if (checkReceivedMesage){
+                //fai qualcosa in base al messaggio che ti è arrivato
+                //se è il messaggio di fine partita --> esci dal while true
+            }
+            checkReceivedMesage=false;
+
+        }
+
     }
 
     //pulisce CLI
@@ -231,20 +267,18 @@ public class CLIView extends View{
         System.out.flush();
     }
 
-    //todo richiesta IP & port
-    public void askServerInfo(){
+    //richista nickname
+    public Message askNickname() {
+        Message message=new Message();
 
-    }
-
-    //richiesta nickname
-    public void askNickname() {
         System.out.print("Enter your nickname: ");
-        try {
-            String nickname = readLine();
+        String nickname = readLine();
+        message.setUsername(nickname);
+        message.setType(MessageTypes.USERNAME);
+        username=nickname;
 
-        } catch (ExecutionException e) {
-            System.out.println(STR_INPUT_CANCELED);
-        }
+        return message;
+
     }
 
     //todo richiesta varie mosse che deve fare giocatore
