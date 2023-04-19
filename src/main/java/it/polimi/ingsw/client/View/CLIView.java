@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.Model.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.utils.Define;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
