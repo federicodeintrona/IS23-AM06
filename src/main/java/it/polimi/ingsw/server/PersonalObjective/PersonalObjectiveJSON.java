@@ -11,6 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//classe per creare personal objective
 public class PersonalObjectiveJSON {
     public static void create1(){
         JSONObject obj=new JSONObject();

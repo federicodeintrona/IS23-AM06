@@ -1,7 +1,5 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.server.Model;
 
-import it.polimi.ingsw.server.Model.Bookshelf;
-import it.polimi.ingsw.server.Model.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

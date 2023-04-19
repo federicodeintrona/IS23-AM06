@@ -1,6 +1,3 @@
-
-
-
 package it.polimi.ingsw.utils;
 
 public enum Define {
@@ -26,4 +23,4 @@ public enum Define {
     }
 }
 
-//todo javado
+//todo javadoc

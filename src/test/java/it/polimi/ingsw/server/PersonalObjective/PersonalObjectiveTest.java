@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PersonalObjectiveUsingJSONTest {
+class PersonalObjectiveTest {
 
     @DisplayName("Checking the correct positions of PersonalObjective1")
     @Test

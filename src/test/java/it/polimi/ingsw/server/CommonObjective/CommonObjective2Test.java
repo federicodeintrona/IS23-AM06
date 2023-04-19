@@ -1,20 +1,19 @@
-package it.polimi.ingsw.CommonObjective;
+package it.polimi.ingsw.server.CommonObjective;
 
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.Model.Tiles;
-import it.polimi.ingsw.server.CommonObjective.CommonObjective8;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CommonObjective8Test {
+class CommonObjective2Test {
 
     /**
-     * Testing all method's branches with
-     * a bookshelf full green tiles
+     * Testing all method's branches for success with
+     * a bookshelf completely full of green colored tiles
      */
     @Test
-    void checkConditionSuccess1() {
+    void checkConditionSuccess() {
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
 
@@ -25,19 +24,19 @@ class CommonObjective8Test {
             }
         }
 
-        // Creation of an instance for CommonObjective8
-        CommonObjective8 obj = new CommonObjective8();
+        // Creation of an instance for CommonObjective2
+        CommonObjective2 obj = new CommonObjective2();
 
         // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
     /**
-     * Testing for failure first if statement
-     * with a bookshelf completely empty
+     * Testing first condition of first if statement for
+     * failure: bookshelf completely empty
      */
     @Test
-    void checkConditionFailure1() {
+    void checkConditionFailure1(){
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.EMPTY;
 
@@ -48,53 +47,36 @@ class CommonObjective8Test {
             }
         }
 
-        // Creation of an instance for CommonObjective8
-        CommonObjective8 obj = new CommonObjective8();
+        // Creation of an instance for CommonObjective2
+        CommonObjective2 obj = new CommonObjective2();
 
-        // Checking that the checkCondition method returns true
+        // Checking that the checkCondition method returns false
         assertFalse(obj.checkCondition(player));
     }
 
     /**
-     * Testing the count of same colored tiles per
-     * row with a bookshelf with four rows: 3 that
-     * meet the criteria and 1 that does not
-     * because four of different colors
+     * Testing second and third if statement for failure:
+     * bookshelf completely green except for the left
+     * corner that is white
      */
     @Test
-    void checkConditionFailure2() {
+    void checkConditionFailure2(){
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.EMPTY;
+        Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-
-                // Manually programming each column to have 1 color
-                switch (i) {
-                    case 3:
-                        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 3, j);
-                    case 4:
-                        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, j);
-                    case 5:
-                        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 5, j);
-                    default:
-                        player.getBookshelf().getTiles().setTile(tiles, i, j);
-                }
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
             }
         }
 
-        // Manually programming the row with 4 different colors
-        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 2, 0);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 2, 1);
-        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 2, 2);
-        player.getBookshelf().getTiles().setTile(Tiles.PINK, 2, 3);
-        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 2, 4);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 5, 4);
 
-        // Creation of an instance for CommonObjective8
-        CommonObjective8 obj = new CommonObjective8();
+        // Creation of an instance for CommonObjective2
+        CommonObjective2 obj = new CommonObjective2();
 
-        // Checking that the checkCondition method returns true
+        // Checking that the checkCondition method returns false
         assertFalse(obj.checkCondition(player));
     }
 
@@ -116,8 +98,8 @@ class CommonObjective8Test {
             }
         }
 
-        // Creation of an instance for CommonObjective8
-        CommonObjective8 obj = new CommonObjective8();
+        // Creation of an instance for CommonObjective2
+        CommonObjective2 obj = new CommonObjective2();
 
         // Testing method for player1
         obj.commonObjPointsCalculator(player1, 2);
@@ -135,7 +117,7 @@ class CommonObjective8Test {
      * when points need to be added
      */
     @Test
-    void commonObjPointsCalculatorFourPlayers() {
+    void commonObjPointsCalculatorFourPlayers(){
         Player player1 = new Player( "Jhon", true);
         Player player2 = new Player( "Obi", false);
         Player player3 = new Player( "Pablo", false);
@@ -152,8 +134,8 @@ class CommonObjective8Test {
             }
         }
 
-        // Creation of an instance for CommonObjective8
-        CommonObjective8 obj = new CommonObjective8();
+        // Creation of an instance for CommonObjective2
+        CommonObjective2 obj = new CommonObjective2();
 
         // Testing method for player1
         obj.commonObjPointsCalculator(player1, 4);
@@ -178,12 +160,12 @@ class CommonObjective8Test {
 
     /**
      * Testing first if statement for failure in case player's
-     * bookshelf does not meet the obj8 condition criteria
+     * bookshelf does not meet the obj2 condition criteria
      */
     @Test
-    void commonObjPointsCalculatorFailure1() {
+    void commonObjPointsCalculatorFailure1(){
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.EMPTY;
+        Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
@@ -192,8 +174,12 @@ class CommonObjective8Test {
             }
         }
 
-        // Creation of an instance for CommonObjective8
-        CommonObjective8 obj = new CommonObjective8();
+        for (int i=0; i<5; i++){
+            player.getBookshelf().getTiles().setTile(Tiles.EMPTY,0, i);
+        }
+
+        // Creation of an instance for CommonObjective2
+        CommonObjective2 obj = new CommonObjective2();
 
         // Testing method for player
         obj.commonObjPointsCalculator(player, 2);
@@ -206,7 +192,7 @@ class CommonObjective8Test {
      * already received the commonObjectivePoints
      */
     @Test
-    void commonObjPointsCalculatorFailure2() {
+    void commonObjPointsCalculatorFailure2(){
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
 
@@ -217,8 +203,8 @@ class CommonObjective8Test {
             }
         }
 
-        // Creation of an instance for CommonObjective8
-        CommonObjective8 obj = new CommonObjective8();
+        // Creation of an instance for CommonObjective2
+        CommonObjective2 obj = new CommonObjective2();
 
         // Testing method for player first time
         obj.commonObjPointsCalculator(player, 3);

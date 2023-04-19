@@ -1,16 +1,12 @@
 package it.polimi.ingsw.server;
 
-//import junit.framework.Test;
-//import junit.framework.TestCase;
-//import junit.framework.TestSuite;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-import static org.junit.jupiter.api.Assertions.*;
-public class Servertest {
+public class ServerTest {
     Server server;
 
     {
