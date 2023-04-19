@@ -194,11 +194,11 @@ public class Bookshelf {
     public int checkVicinityPoints(){
         int adjPoint=0;
         int sameColor;
-        boolean[][] visited = new boolean[numberOfRows][numberOfColumns];
+        boolean[][] visited = new boolean[6][5];
 
         //for each position
-        for (int i = 0; i < numberOfRows; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
                 //if position is NOT visited yet && tile!=EMPTY
                 if (!visited[i][j] && !getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
                     //queue initialization

@@ -1,22 +1,21 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Controller;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.MessageTypes;
 
-import java.awt.*;
+import it.polimi.ingsw.server.Controller;
+import it.polimi.ingsw.server.Messages.IntArrayMessage;
+import it.polimi.ingsw.server.Messages.IntMessage;
+import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.server.Messages.PointsMessage;
+
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class NetworkerRmi implements Networker {
     private String username;
     private int lobbyID;
     private int gameID;
-    private Message messageOut;
+    private Message message;
     private static Controller controller;
 
     /**
@@ -42,31 +41,22 @@ public class NetworkerRmi implements Networker {
      * Asks the client to enter a valid username. Once he has
      * done the client gets added to the lobby
      */
-    public void firstConnection () {
-        Scanner scanner = new Scanner(System.in);
-        username = null;
-        boolean validUsername = false;
+    public Message firstConnection (Message username) {
+        message = controller.handleNewClient(username.getUsername());
 
-        while (!validUsername) {
-            System.out.print("Inserisci un username: ");
-            username = scanner.nextLine();
-
-            messageOut = controller.handleNewClient(this.username);
-
-            if (!messageOut.getType().equals(MessageTypes.ERROR)) validUsername = true;
-
-            System.out.println(messageOut);
-        }
+        return message;
     }
 
     /**
      *
      * @param numberOfPlayers
      */
-    public void numberOfPlayersSelection(int numberOfPlayers) {
-        messageOut = controller.newLobby(this.username, numberOfPlayers);
+    public Message numberOfPlayersSelection(Message numberOfPlayers) {
+        IntMessage tempMessage = (IntMessage) numberOfPlayers;
 
-        System.out.println(messageOut);
+        message = controller.newLobby(this.username, tempMessage.getNum());
+
+        return message;
     }
 
     /**
@@ -74,29 +64,32 @@ public class NetworkerRmi implements Networker {
      *
      * @param tiles     ArrayList containing the coordinates of the tiles to remove
      */
-    public void removeTilesFromBoard(ArrayList<Point> tiles) {
-        messageOut = controller.removeTiles(gameID, username, tiles);
+    public Message removeTilesFromBoard(Message tiles) {
+        PointsMessage tempMessage = (PointsMessage) tiles;
+        message = controller.removeTiles(gameID, username, tempMessage.getTiles());
 
-        System.out.println(messageOut);
+        return message;
     }
 
     /**
      *
      * @param ints
      */
-    public void switchTilesOrder(ArrayList<Integer> ints) {
-        messageOut = controller.swapOrder(ints, gameID, username);
+    public Message switchTilesOrder(Message ints) {
+        IntArrayMessage tempMessage = (IntArrayMessage) ints;
+        message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
 
-        System.out.println(messageOut);
+       return message;
     }
 
     /**
      *
      * @param column
      */
-    public void addTilesToBookshelf (int column) {
-        messageOut = controller.addToBookshelf(gameID, username, column);
+    public Message addTilesToBookshelf (Message column) {
+        IntMessage tempMessage = (IntMessage) column;
+        message = controller.addToBookshelf(gameID, username, tempMessage.getNum());
 
-        System.out.println(messageOut);
+        return message;
     }
 }

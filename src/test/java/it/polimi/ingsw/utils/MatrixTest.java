@@ -1,6 +1,5 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.utils;
 
-import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.server.Model.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,17 +9,17 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatrixTest {
-        public Matrix m;
+    public Matrix m;
 
-        @BeforeEach
-        void setUp(){
-             m = new Matrix(3,3);
-            for(int i=0;i<m.getNumCols();i++) {
-                m.setTile(Tiles.GREEN, 0,i);
-                m.setTile(Tiles.BLUE, 1,i);
-                m.setTile(Tiles.YELLOW, 2,i);
-            }
+    @BeforeEach
+    void setUp(){
+        m = new Matrix(3,3);
+        for(int i=0;i<m.getNumCols();i++) {
+            m.setTile(Tiles.GREEN, 0,i);
+            m.setTile(Tiles.BLUE, 1,i);
+            m.setTile(Tiles.YELLOW, 2,i);
         }
+    }
 
 
 
@@ -82,10 +81,10 @@ class MatrixTest {
 
     @Test
     void columnIsFull() {
-       m.remove(2,1);
+        m.remove(2,1);
 
-       assertEquals(true,m.columnIsFull(2));
-       assertEquals(false,m.columnIsFull(1));
+        assertEquals(true,m.columnIsFull(2));
+        assertEquals(false,m.columnIsFull(1));
 
 
 

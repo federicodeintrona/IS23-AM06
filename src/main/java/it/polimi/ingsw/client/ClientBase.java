@@ -23,11 +23,7 @@ public class ClientBase {
                 client = new NetworkerRmi();
 
             case "TCP":
-                try {
-                    client = new NetworkerTcp();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                client = new NetworkerTcp();
 
         }
         client.initializeConnection();

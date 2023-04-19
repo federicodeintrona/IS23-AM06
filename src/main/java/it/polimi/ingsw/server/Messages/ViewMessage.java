@@ -1,16 +1,17 @@
 package it.polimi.ingsw.server.Messages;
 
 import it.polimi.ingsw.server.VirtualView;
+import org.json.simple.JSONObject;
 
 public class ViewMessage extends Message{
 
-    private VirtualView View;
+    private JSONObject View;
 
-    public VirtualView getView() {
+    public JSONObject getView() {
         return View;
     }
 
-    public void setView(VirtualView view) {
+    public void setView(JSONObject view) {
         View = view;
     }
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.View;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Model.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.utils.Define;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -59,19 +60,19 @@ public class CLIView extends View{
     //stampa la board
     public static void printBoard(Board board){
         System.out.print("  ");
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
             System.out.print(i+" ");
-            for (int j = 0; j < 9; j++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 System.out.print(tileColorBG(board.getGamesBoard().getTile(i,j)) + "   " + ColorCLI.RESET);
             }
             System.out.println(" "+i);
         }
         System.out.print("  ");
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
             System.out.print(" "+i+" ");
         }
         System.out.println("\n");
@@ -235,7 +236,7 @@ public class CLIView extends View{
 
     }
 
-    //richista nickname
+    //richiesta nickname
     public void askNickname() {
         System.out.print("Enter your nickname: ");
         try {
@@ -272,6 +273,8 @@ public class CLIView extends View{
         printBoard(board);
 
         Bookshelf bookshelf=new Bookshelf();
+        printBookshelf(bookshelf);
+
         ArrayList<Tiles> arrayList=new ArrayList<>();
         arrayList.add(Tiles.BLUE);
         arrayList.add(Tiles.BLUE);
@@ -291,7 +294,6 @@ public class CLIView extends View{
         bookshelf.addTile(arrayList, 4);
         bookshelf.addTile(arrayList, 4);
 
-        printBookshelf(bookshelf);
 
         PersonalObjective personalObjective=new PersonalObjective(1);
         printPersonalObjective(personalObjective);

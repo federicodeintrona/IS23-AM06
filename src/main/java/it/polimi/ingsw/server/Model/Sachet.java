@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.Model;
 
-import it.polimi.ingsw.server.Model.Define;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Define;
 
 import java.util.*;
 

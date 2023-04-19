@@ -1,11 +1,7 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
-import it.polimi.ingsw.server.Model.GameState;
-import it.polimi.ingsw.server.Model.Model;
-import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.Model.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,13 +35,13 @@ class ModelTest {
 
     @Test
     void initialization() {
-            assertNotEquals(Tiles.EMPTY,m.getBoard().getGamesBoard().getTile(4,4));
-            assertEquals(Tiles.NOTALLOWED,m.getBoard().getGamesBoard().getTile(5,7));
-            for (Player p : m.getPlayers()) {
-                assertEquals(Tiles.EMPTY, p.getBookshelf().getTiles().getTile(getRandomPointInBookshelf()));
-                assertEquals(0,p.getPersonalObjective().personalObjectivePoint(p));
-            }
-            assertEquals(8,m.getCommonObj().get(0).getPoints());
+        assertNotEquals(Tiles.EMPTY,m.getBoard().getGamesBoard().getTile(4,4));
+        assertEquals(Tiles.NOTALLOWED,m.getBoard().getGamesBoard().getTile(5,7));
+        for (Player p : m.getPlayers()) {
+            assertEquals(Tiles.EMPTY, p.getBookshelf().getTiles().getTile(getRandomPointInBookshelf()));
+            assertEquals(0,p.getPersonalObjective().personalObjectivePoint(p));
+        }
+        assertEquals(8,m.getCommonObj().get(0).getPoints());
     }
 
     @Test
@@ -102,7 +98,7 @@ class ModelTest {
             assertEquals(Tiles.BLUE,m.getPlayers().get(0).getBookshelf().getTiles().getTile(4,j),"blue check");
             assertEquals(Tiles.EMPTY,m.getPlayers().get(1).getBookshelf().getTiles().getTile(2,j));
         }
-       assertEquals(true,m.isFinished());
+        assertEquals(true,m.isFinished());
 
     }
 
@@ -151,22 +147,22 @@ class ModelTest {
         m.setSelectedTiles(add);
         try {
 
-                m.removeTileArray(players.get(0), remove);
-                assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
-                m.addToBookShelf(players.get(0), 0);
-                assertNotEquals(Tiles.EMPTY, players.get(0).getBookshelf().getTiles().getColumn(0).get(5));
-                assertThrows(MoveNotPossible.class ,()-> m.addToBookShelf(players.get(0), 0));
-                assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
-                assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(1), remove));
-                assertThrows(IllegalArgumentException.class ,()-> m.removeTileArray(players.get(1), null));
-                assertThrows(MoveNotPossible.class ,()-> m.swapOrder(new ArrayList<>(),players.get(1)));
+            m.removeTileArray(players.get(0), remove);
+            assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
+            m.addToBookShelf(players.get(0), 0);
+            assertNotEquals(Tiles.EMPTY, players.get(0).getBookshelf().getTiles().getColumn(0).get(5));
+            assertThrows(MoveNotPossible.class ,()-> m.addToBookShelf(players.get(0), 0));
+            assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
+            assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(1), remove));
+            assertThrows(IllegalArgumentException.class ,()-> m.removeTileArray(players.get(1), null));
+            assertThrows(MoveNotPossible.class ,()-> m.swapOrder(new ArrayList<>(),players.get(1)));
 
 
-                remove.set(0,new Point(5,0));
-                remove.set(1,new Point(5,1));
-                m.removeTileArray(players.get(1), remove);
-                m.addToBookShelf(players.get(1), 0);
-                assertNotEquals(Tiles.EMPTY, players.get(1).getBookshelf().getTiles().getColumn(0).get(5));
+            remove.set(0,new Point(5,0));
+            remove.set(1,new Point(5,1));
+            m.removeTileArray(players.get(1), remove);
+            m.addToBookShelf(players.get(1), 0);
+            assertNotEquals(Tiles.EMPTY, players.get(1).getBookshelf().getTiles().getColumn(0).get(5));
 
 
 

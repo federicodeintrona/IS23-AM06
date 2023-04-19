@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public interface Networker {
     public void initializeConnection ();
-    public void firstConnection ();
-    public void numberOfPlayersSelection(int numberOfPlayers);
-    public void removeTilesFromBoard(ArrayList<Point> tiles);
-    public void switchTilesOrder(ArrayList<Integer> ints);
-    public void addTilesToBookshelf (int column);
+    public Message firstConnection (Message username);
+    public Message numberOfPlayersSelection(Message numberOfPlayers);
+    public Message removeTilesFromBoard(Message tiles);
+    public Message switchTilesOrder(Message ints);
+    public Message addTilesToBookshelf (Message column);
 }
