@@ -1,16 +1,17 @@
 package it.polimi.ingsw.client.View;
 
-import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.Messages.ServerInfoMessage;
+import it.polimi.ingsw.server.Model.Board;
+import it.polimi.ingsw.server.Model.Bookshelf;
+import it.polimi.ingsw.server.Model.Sachet;
+import it.polimi.ingsw.server.Model.Tiles;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.utils.Define;
 
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 public class CLIView extends View{
 
@@ -27,24 +28,6 @@ public class CLIView extends View{
 
 
 
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-        switch (evt.getPropertyName()){
-            case "board":
-                break;
-
-
-            case "bookshelf" :
-                break;
-
-
-            case "points" :
-                break;
-        }
-
-    }
 
 
 
