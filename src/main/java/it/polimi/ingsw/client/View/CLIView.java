@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.View;
 
+import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.MessageTypes;
@@ -9,6 +10,10 @@ import it.polimi.ingsw.utils.Define;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -17,20 +22,15 @@ import java.util.concurrent.ExecutionException;
 public class CLIView extends View{
 
     private static final String STR_INPUT_CANCELED = "User input canceled.";
-    //    private final Networker net;
-    private final ArrayList<String> player;
+    private Networker net;
     private static String username;
-    private boolean checkReceivedMesage;
 
-    public CLIView(ArrayList<String> player) {
-        this.player = player;
-        checkReceivedMesage=false;
+
+
+//COSTRUTTORE
+    public CLIView(Networker net) {
+        this.net = net;
     }
-
-
-
-
-
 
 
     //ritorna il colore della tile - lettera
@@ -62,8 +62,8 @@ public class CLIView extends View{
     }
 
 //STAMPA
-//stampa la board
-public static void printBoard(Board board){
+    //stampa la board
+    public static void printBoard(Board board){
     System.out.print("  ");
     for (int i = 0; i < 9; i++) {
         System.out.print(" "+i+" ");
@@ -181,17 +181,15 @@ public static void printBoard(Board board){
         System.out.println("\n");
     }
 
-    //todo stampa tutti i comandi che può fare il client  -help -h
-    public void help(){
-        /*
-            remove //rimuove le tiles
-            switch //cambio ordine
-            add    //aggiunta alla colonna
-            rollback //annulla
-            chat   //chat a tutti
-            whisper //chat a specifico
-         */
-
+    //stampa tutti i comandi che può fare il client  #help #h
+    public static void help(){
+        System.out.println("All command, WITH EXAMPLE, are:");
+        System.out.println("#remove (0,0), (0,0), (0,0) ..... It is also possible not to fill all the relatives");
+        System.out.println("#switch 2, 0, 1 ................. Switch the order of the selected tiles");
+        System.out.println("#add 0 .......................... Add the tiles in the column of the bookshelf");
+        System.out.println("#rollback ....................... Return to the previous move");
+        System.out.println("#chat -hello- ................... Chatting with all players");
+        System.out.println("#whisper @username -hello- ...... Chatting with username player");
     }
 
     //todo stampa i personal objective
@@ -202,29 +200,48 @@ public static void printBoard(Board board){
 
 //LEGGI, RICEVI E INVIA MESSAGGI
     //leggere da stdIN
-    public String readLine() {
+    public static String readLine() {
         //istanzia scanner che legge da stdIN
         Scanner scanner=new Scanner(System.in);
         //stringhe lette da stdIN
         String world=new String();
-
         //aspetta emissione dati e li legge
-        world=scanner.next();
-
+        world= String.valueOf(scanner.nextLine());
         return world;
     }
 
-    //legge messaggi, li crea, li invia a chi di dovere
+    //legge messaggi, li crea, li invia
     public void readMessage(){
         String st=readLine();
-        Message message=createMessage(st);
-        sendMessage(message);
+        sendMessage(createMessage(st));
     }
 
+    //capire come trasformare stringa in valori accettabili
     //todo creare messaggi da line letta da stdIN
-    public Message createMessage(String st){
+    public static Message createMessage(String st){
+        System.out.println(st);
+        switch (st) {
+            case "#remove" -> {
+
+                        System.out.println(st + "\n#remove (0,0), (0,0), (0,0) ..... It is also possible not to fill all the relatives");
+            }
+            case "#switch" -> {
+                /*
+                    1. vai avanti di 1
+                    2. if leggi "\n"
+                 */
+                System.out.println("#switch 2, 0, 1 ................. Switch the order of the selected tiles");
+            }
+            case "#add" -> System.out.println("#add 0 .......................... Add the tiles in the column of the bookshelf");
+            case "#rollback" -> System.out.println("#rollback ....................... Return to the previous move");
+            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
+            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
+            case "#help", "#h" -> help();
+            default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
+        }
         return null;
     }
+
 
     //todo invia messaggi a Networker
     public void sendMessage(Message message){
@@ -233,7 +250,6 @@ public static void printBoard(Board board){
 
     //todo ricevi messaggi
     public void receivedMessage(Message message){
-        checkReceivedMesage=true;
     }
 
 
@@ -246,19 +262,7 @@ public static void printBoard(Board board){
         //arrivano altri messaggi
         while (true){
             //se abbiamo ricevuto messaggi dal server
-            if (checkReceivedMesage){
-                //fai qualcosa in base al messaggio che ti è arrivato
-                //se è il messaggio di fine partita --> esci dal while true
-            }
-            checkReceivedMesage=false;
-            //leggi messaggi che inserisce client
-            readMessage();
-            //se abbiamo ricevuto messaggi dal server
-            if (checkReceivedMesage){
-                //fai qualcosa in base al messaggio che ti è arrivato
-                //se è il messaggio di fine partita --> esci dal while true
-            }
-            checkReceivedMesage=false;
+
 
         }
 
@@ -340,6 +344,9 @@ public static void printBoard(Board board){
         Bookshelf bookshelf1=new Bookshelf();
         printBookshelfPersonalObjective(bookshelf1, personalObjective);
 
+        String h=readLine();
+//        help();
+        createMessage(h);
     }
 
 }
@@ -348,4 +355,7 @@ public static void printBoard(Board board){
 /*
      invio messaggi a: Networker
      ricevo messaggi da: Networker
+
+
+     quando ricevo messaggi faccio partire la stampa / salvo soltanto
  */
