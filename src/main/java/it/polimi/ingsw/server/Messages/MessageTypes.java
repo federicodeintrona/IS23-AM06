@@ -5,15 +5,15 @@ public enum MessageTypes {
     NEW_LOBBY,
     WAITING_FOR_PLAYERS,
     NUM_OF_PLAYERS,
-    REMOVE_FROM_BOARD,
-    SWITCH_PLACE,
-    ADD_TO_BOOKSHELF,
+    REMOVE_FROM_BOARD, //rimuove dall board
+    SWITCH_PLACE, //scambia posizioni tessere
+    ADD_TO_BOOKSHELF, //colonna in cui inserire tiles
     OK,
     REMOVE,
     SWITCH,
     ADD,
     CHAT,
-    ROLLBACK,
+    ROLLBACK, //torna all mossa precedente
     DISCONNECT,
     ERROR,
     VIEW,

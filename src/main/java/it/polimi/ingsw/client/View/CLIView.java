@@ -2,8 +2,7 @@ package it.polimi.ingsw.client.View;
 
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.server.CommonObjective.*;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.MessageTypes;
+import it.polimi.ingsw.server.Messages.*;
 import it.polimi.ingsw.server.Model.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Define;
@@ -18,19 +17,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class CLIView extends View{
 
-    private Networker net;
-    private static String username;
+    private Networker net; //a chi mandare messaggi
+    private static String username; //username del mio utente
 
-    private Bookshelf myBookshelf;
-    private ArrayList<Bookshelf> allBookshelf;
-    private Board board;
-    private ArrayList<String> allUsername;
-    private PersonalObjective myPO;
-    private ArrayList<CommonObjective> commonObjectives;
+    private Bookshelf myBookshelf; //mia bookshelf
+    private ArrayList<Bookshelf> allBookshelf; //tutte le bookshelf - le posizioni sono uguali alle posizioni di allUsername
+    private Board board; //la board di gioco
+    private ArrayList<String> allUsername; //tutti gli username
+    private PersonalObjective myPO; //il mio personal objective
+    private ArrayList<CommonObjective> commonObjectives; //i common objective
 
 
 //COSTRUTTORE
@@ -358,72 +359,18 @@ public class CLIView extends View{
         return world;
     }
 
-    //todo legge messaggi, li crea, li invia a chi di dovere
-    public void readMessage(){
-        String st=readLine();
-        switch (st) {
-            case "#remove" -> {
+    //legge solo i numeri presenti nella stringa
+    //I NUMERI SONO DA 0-9
+    private static ArrayList<Integer> readNumber(String s){
+        ArrayList<Integer> result=new ArrayList<>();
 
-                System.out.println(st + "\n#remove (0,0), (0,0), (0,0) ..... It is also possible not to fill all the relatives");
-            }
-            case "#switch" -> {
-                /*
-                    1. vai avanti di 1
-                    2. if leggi "\n"
-                 */
-                System.out.println("#switch 2, 0, 1 ................. Switch the order of the selected tiles");
-            }
-            case "#add" -> System.out.println("#add 0 .......................... Add the tiles in the column of the bookshelf");
-            case "#rollback" -> System.out.println("#rollback ....................... Return to the previous move");
-            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
-            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
-            case "#help", "#h" -> help();
-            case "#printpersonal" -> {
-                System.out.println("printPersonalObjective(personalObjective);"); //todo sistemare
-                System.out.println("printBooksehlfPersonal(personalObjective);"); //todo sistemare
-            }
-            case "#printboard" -> System.out.println("printBoard(board);"); //todo sistemare
-            case "#printyourbookshelf" -> {
-                System.out.println("printBookshelf(bookshelf);"); //todo sistemare
-                System.out.println("printBooksehlfPersonal(personalObjective);"); //todo sistemare
-            }
-            case "#printbookshelf" -> System.out.println("printBookshelf(bookshelf);"); //todo sistemare - dell'username
-            case "#printcommon" -> System.out.println("printCommonObjective(commonObjective)"); //todo sistemare x2
-            default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
+        Pattern pattern = Pattern.compile("\\d");
+        Matcher matcher= pattern.matcher(s);
+        while(matcher.find()){
+            result.add(Integer.valueOf(matcher.group()));
         }
 
-    }
-
-
-    //todo invia messaggi a Networker
-    public void sendMessage(Message message){
-
-    }
-
-    //todo ricevi messaggi
-    public void receivedMessage(Message message){
-    }
-
-
-//RICHIESTA DA CLI
-    //todo avvia la CLI
-    public void runCLI()  {
-        System.out.println("Welcome to My Shelfie game");
-        //richiesta nickname
-        sendMessage(askUsername());
-        //arrivano altri messaggi
-        while (true){
-            //se abbiamo ricevuto messaggi dal server
-
-
-        }
-
-    }
-
-    //pulisce CLI
-    public static void clearCLI(){
-        System.out.println(ColorCLI.CLEAR);
-        System.out.flush();
+        return result;
     }
 
     //richista nickname
@@ -438,6 +385,170 @@ public class CLIView extends View{
 
         return message;
     }
+
+    //legge messaggi, li crea, li invia a chi di dovere
+    public void readMessage(){
+        String st=readLine();
+        ArrayList<Integer> number=readNumber(st);
+        switch (st) {
+            case "#remove" -> {
+                if (number.size()!=2 && number.size()!=4 && number.size()!=6){
+                    System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
+                    break;
+                }
+                createRemoveMessage(number);
+            }
+            case "#switch" -> {
+                if (number.size()<1 || number.size()>3){
+                    System.out.println(st+": Type of command correct but data entered wrong \nIf you need help put #help or #h");
+                    break;
+                }
+                createSwitchMessage(number);
+            }
+            case "#add" -> {
+                if (number.size()!=1){
+                    System.out.println(st+": Type of command correct but data entered wrong \nIf you need help put #help or #h");
+                    break;
+                }
+                createAddMessage(number);
+            }
+            case "#rollback" -> {
+                createRollbackMessage();
+            }
+//            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
+//            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
+            case "#help", "#h" -> help();
+            case "#printpersonal" -> {
+                System.out.println("printPersonalObjective(personalObjective);"); //todo sistemare
+                System.out.println("printBooksehlfPersonal(personalObjective);"); //todo sistemare
+            }
+            case "#printboard" -> printBoard(board);
+            case "#printyourbookshelf" -> {
+                //todo QUALE STAMPO???
+                printBookshelf(myBookshelf);
+                printBookshelfPersonalObjective(myBookshelf, myPO);
+            }
+            case "#printbookshelf" -> {
+                int i=st.indexOf("@");
+                if (i==-1){
+                    System.out.println(st+": Type of command correct but you do NOT inserted the username of player \nIf you need help put #help or #h");
+                    break;
+                }
+                String sub=st.substring(i+1);
+
+                //posizione dell'username desiderato
+                int position=allUsername.indexOf(sub);
+                if (position==-1){
+                    System.out.println(st+": Type of command correct but you do NOT inserted the username of a player in this game \nIf you need help put #help or #h");
+                    break;
+                }
+                printBookshelf(allBookshelf.get(position));
+            }
+            case "#printcommon" -> printCommonObjective(commonObjectives.get(0), commonObjectives.get(1));
+            default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
+        }
+
+    }
+
+    //crea il messaggio Remove Tiles dall board
+    private void createRemoveMessage(ArrayList<Integer> input){
+        PointsMessage pointsMessage=new PointsMessage();
+        ArrayList<Point> result=new ArrayList<>();
+
+        //crea l'ArrayList di Point
+        int i=0;
+        while (i< input.size()){
+            int x=input.get(i);
+            i=i+1;
+            int y=input.get(i);
+            i=i+1;
+            result.add(new Point(x,y));
+        }
+
+        //setta il messaggio
+        pointsMessage.setUsername(username);
+        pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
+        pointsMessage.setTiles(result);
+
+        //invia il messaggio
+        sendMessage(pointsMessage);
+    }
+
+    //crea il messaggio Switch Tiles
+    private void createSwitchMessage(ArrayList<Integer> input){
+        IntArrayMessage intArrayMessage=new IntArrayMessage();
+
+        //setto il messaggio
+        intArrayMessage.setUsername(username);
+        intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
+        intArrayMessage.setIntegers(input);
+
+        //invia il messaggio
+        sendMessage(intArrayMessage);
+    }
+
+    //crea il messaggio Add to bookshelf
+    private void createAddMessage(ArrayList<Integer> input){
+        IntMessage intMessage=new IntMessage();
+
+        //setta il messaggio
+        intMessage.setUsername(username);
+        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
+        intMessage.setNum(input.get(0));
+
+        //invia il messaggio
+        sendMessage(intMessage);
+    }
+
+    //crea il messaggio di Rollback
+    private void createRollbackMessage(){
+        Message message=new Message();
+
+        //setta il messaggio
+        message.setUsername(username);
+        message.setType(MessageTypes.ROLLBACK);
+
+        //invia il messaggio
+        sendMessage(message);
+    }
+
+
+    //invia messaggi a Networker
+    public void sendMessage(Message message){
+        switch (message.getType()){
+            case REMOVE_FROM_BOARD -> net.removeTilesFromBoard(message);
+            case SWITCH_PLACE -> net.switchTilesOrder(message);
+            case ADD_TO_BOOKSHELF -> net.addTilesToBookshelf(message);
+            //todo MANCA MESSAGGIO DI ROLLBACK DA PARTE DEL NETWORKER
+//            case ROLLBACK -> net.rollback(message);
+        }
+    }
+
+    //todo ricevi messaggi
+    public void receivedMessage(Message message){
+    }
+
+
+//RICHIESTA DA CLI
+    //todo avvia la CLI
+    public void runCLI()  {
+        System.out.println("Welcome to My Shelfie game");
+
+        //richiesta nickname
+        sendMessage(askUsername());
+
+        //arrivano messaggi dal server
+
+        //arrivano comandi da stdIN
+
+    }
+
+    //pulisce CLI
+    public static void clearCLI(){
+        System.out.println(ColorCLI.CLEAR);
+        System.out.flush();
+    }
+
 
     //todo richiesta varie mosse che deve fare giocatore
 
@@ -499,6 +610,9 @@ public class CLIView extends View{
         CommonObjective4 co2=new CommonObjective4();
 
         printCommonObjective(co1, co2);
+
+        String st=readLine();
+        System.out.println(readNumber(st));
     }
 
 }
