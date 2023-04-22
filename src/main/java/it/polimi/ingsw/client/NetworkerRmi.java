@@ -1,37 +1,53 @@
 package it.polimi.ingsw.client;
 
 
-import it.polimi.ingsw.server.Controller;
+import it.polimi.ingsw.server.ControllerInterface;
 import it.polimi.ingsw.server.Messages.IntArrayMessage;
 import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.PointsMessage;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 public class NetworkerRmi implements Networker {
+    private static int port = 1234;
     private String username;
     private int lobbyID;
     private int gameID;
     private Message message;
-    private static Controller controller;
+    private static ControllerInterface controller;
+
+    /*
+    public NetworkerRmi()  {
+        JsonReader config;
+        try {
+            config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        port=config.getInt("port");
+    }
+
+     */
 
     /**
      * Method to initialize an RMI connection
      *
      */
     public void initializeConnection () {
-        String serverHost = "localhost";
         try {
-            controller = (Controller) Naming.lookup("rmi://" + serverHost + "/RemoteController");
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            // Getting the registry
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", port);
+            // Looking up the registry for the remote object
+            controller = (ControllerInterface) registry.lookup("Controller");
+
+        } catch (Exception e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
         }
 
         System.out.println("Created RMI connection with Server");
@@ -42,7 +58,11 @@ public class NetworkerRmi implements Networker {
      * done the client gets added to the lobby
      */
     public Message firstConnection (Message username) {
-        message = controller.handleNewClient(username.getUsername());
+        try {
+            message = controller.handleNewClient(username.getUsername());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         return message;
     }
@@ -54,7 +74,11 @@ public class NetworkerRmi implements Networker {
     public Message numberOfPlayersSelection(Message numberOfPlayers) {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
 
-        message = controller.newLobby(this.username, tempMessage.getNum());
+        try {
+            message = controller.newLobby(this.username, tempMessage.getNum());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         return message;
     }
@@ -66,7 +90,11 @@ public class NetworkerRmi implements Networker {
      */
     public Message removeTilesFromBoard(Message tiles) {
         PointsMessage tempMessage = (PointsMessage) tiles;
-        message = controller.removeTiles(gameID, username, tempMessage.getTiles());
+        try {
+            message = controller.removeTiles(gameID, username, tempMessage.getTiles());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         return message;
     }
@@ -77,9 +105,13 @@ public class NetworkerRmi implements Networker {
      */
     public Message switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
-        message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
+        try {
+            message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
-       return message;
+        return message;
     }
 
     /**
@@ -88,7 +120,11 @@ public class NetworkerRmi implements Networker {
      */
     public Message addTilesToBookshelf (Message column) {
         IntMessage tempMessage = (IntMessage) column;
-        message = controller.addToBookshelf(gameID, username, tempMessage.getNum());
+        try {
+            message = controller.addToBookshelf(gameID, username, tempMessage.getNum());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         return message;
     }

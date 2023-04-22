@@ -17,7 +17,7 @@ public interface ControllerInterface extends Remote {
 
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points) throws RemoteException;
 
-    public Message newLobby(ServerClientHandler client,int players) throws RemoteException;
+    public Message newLobby(String client,int players) throws RemoteException;
 
-    public Message handleNewClient(ServerClientHandler client) throws RemoteException;
+    public Message handleNewClient(String client) throws RemoteException;
     }

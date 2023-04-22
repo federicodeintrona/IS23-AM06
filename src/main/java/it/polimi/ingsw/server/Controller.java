@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller {
+public class Controller implements ControllerInterface{
 
     Lobby lobby;
     private HashMap<Integer, Model> games;
