@@ -11,4 +11,5 @@ public enum Tiles {
     LIGHT_BLUE,
     NOTALLOWED,
     EMPTY,
+    POSITION,
 }

@@ -58,7 +58,7 @@ public class PersonalObjective {
      *
      * @param n is the ID of Personal Objective to read
      */
-    private static void readJSON(int n){
+    private void readJSON(int n){
         JSONParser jsonParser=new JSONParser();
 
         try {
