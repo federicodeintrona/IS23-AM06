@@ -22,7 +22,7 @@ public class Controller implements ControllerInterface{
     private ArrayList<ArrayList<View>> views;
 
     /**
-     * Contructor
+     * Constructor
      * @param mainLobby The lobby of the server
      * @param models  The hashmap of all current games
      */
