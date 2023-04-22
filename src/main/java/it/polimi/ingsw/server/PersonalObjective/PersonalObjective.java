@@ -10,7 +10,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -123,13 +122,7 @@ public class PersonalObjective {
 
 
         }
-        catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        catch (ParseException e) {
+        catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
 

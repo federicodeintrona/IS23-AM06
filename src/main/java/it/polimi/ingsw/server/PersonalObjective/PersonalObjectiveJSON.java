@@ -16,14 +16,14 @@ public class PersonalObjectiveJSON {
     public static void create1(){
         JSONObject obj=new JSONObject();
 
-        HashMap<String, ArrayList> po1=new HashMap<>();
+        HashMap<String, ArrayList<Integer>> po1=new HashMap<>();
         ArrayList<Integer> lP1=new ArrayList<>();
 
 
 
 
 
-        HashMap<String, ArrayList> m1=new HashMap<>();
+        HashMap<String, ArrayList<Integer>> m1=new HashMap<>();
         ArrayList<Integer> l1=new ArrayList<>();
 
         l1.add(0, 11); //x
@@ -34,7 +34,7 @@ public class PersonalObjectiveJSON {
         l2.add(1, 0); //y
         m1.put("BLUE", l2);
 
-        HashMap<String, ArrayList> m2=new HashMap<>();
+        HashMap<String, ArrayList<Integer>> m2=new HashMap<>();
         ArrayList<Integer> l3=new ArrayList<>();
 
         l3.add(0, 1); //x

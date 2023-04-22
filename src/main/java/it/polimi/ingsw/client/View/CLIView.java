@@ -12,7 +12,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.regex.Pattern;
 
 public class CLIView extends View{
 
-    private Networker net; //a chi mandare messaggi
+    private final Networker net; //a chi mandare messaggi
     private static String username; //username del mio utente
 
     private Bookshelf myBookshelf; //mia bookshelf
@@ -328,11 +327,7 @@ public class CLIView extends View{
             System.out.println(type);
             printBookshelf(bookshelf);
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -353,10 +348,11 @@ public class CLIView extends View{
         //istanzia scanner che legge da stdIN
         Scanner scanner=new Scanner(System.in);
         //stringhe lette da stdIN
-        String world=new String();
+        String word;
         //aspetta emissione dati e li legge
-        world= String.valueOf(scanner.nextLine());
-        return world;
+        word= String.valueOf(scanner.nextLine());
+        clearCLI();
+        return word;
     }
 
     //legge solo i numeri presenti nella stringa
@@ -412,16 +408,11 @@ public class CLIView extends View{
                 }
                 createAddMessage(number);
             }
-            case "#rollback" -> {
-                createRollbackMessage();
-            }
+            case "#rollback" -> createRollbackMessage();
 //            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
 //            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
             case "#help", "#h" -> help();
-            case "#printpersonal" -> {
-                System.out.println("printPersonalObjective(personalObjective);"); //todo sistemare
-                System.out.println("printBooksehlfPersonal(personalObjective);"); //todo sistemare
-            }
+            case "#printpersonal" -> printPersonalObjective(myPO);
             case "#printboard" -> printBoard(board);
             case "#printyourbookshelf" -> {
                 //todo QUALE STAMPO???
@@ -550,10 +541,12 @@ public class CLIView extends View{
     }
 
 
-    //todo richiesta varie mosse che deve fare giocatore
 
-    //todo ricevi aggiornamento view
 
+    //todo capire come leggere da stdIN e intanto aspettare gli aggiornamenti lato server
+
+
+    //todo javadoc
 
 
 
