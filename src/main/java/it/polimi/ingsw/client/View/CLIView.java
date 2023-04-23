@@ -341,10 +341,12 @@ public class CLIView extends View{
 
     }
 
+    //todo devo fare qualcosa per dire all'utente GUARDA è IL TUO TURNO ???????
+
 
 //LEGGI, RICEVI E INVIA MESSAGGI
     //leggere da stdIN
-    public static String readLine() {
+    private static String readLine() {
         //istanzia scanner che legge da stdIN
         Scanner scanner=new Scanner(System.in);
         //stringhe lette da stdIN
