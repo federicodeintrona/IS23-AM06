@@ -11,6 +11,16 @@ import java.util.ArrayList;
 
 public class MainThread {
 
+
+
+    /*
+        TODO
+            ClientBase crea lock e lo passa a main, read, print
+            PrintError lato PrintThread
+            io leggo l'username e lo invio a networker FirstConnection??
+            fare metodo run CLI per creare e iniziare a elaborare i dati da cli
+     */
+
     private final Networker net; //a chi mandare messaggi
     private String username; //username del mio utente
 
