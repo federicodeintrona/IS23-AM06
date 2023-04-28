@@ -7,12 +7,15 @@ import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.PointsMessage;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class NetworkerRmi implements Networker {
     private static int port = 1234;
+    private static String clientIP;
     private String username;
     private int lobbyID;
     private int gameID;
@@ -40,17 +43,20 @@ public class NetworkerRmi implements Networker {
      */
     public void initializeConnection () {
         try {
+            clientIP = getClientIP();
+
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", port);
             // Looking up the registry for the remote object
             controller = (ControllerInterface) registry.lookup("Controller");
 
         } catch (Exception e) {
-            System.err.println("Client exception: " + e.toString());
+            System.err.println("Client exception: " + e);
             e.printStackTrace();
         }
 
         System.out.println("Created RMI connection with Server");
+        System.out.println(clientIP);
     }
 
     /**
@@ -127,5 +133,10 @@ public class NetworkerRmi implements Networker {
         }
 
         return message;
+    }
+
+    private String getClientIP() throws UnknownHostException {
+        InetAddress addr = InetAddress.getLocalHost();
+        return addr.getHostAddress();
     }
 }
