@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.View;
+package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
@@ -7,7 +7,7 @@ import it.polimi.ingsw.utils.Matrix;
 
 import java.util.ArrayList;
 
-public class ClientState {
+public class ClientState implements ClientStateRemoteInterface {
 
     private Networker net; //TODO controlla se ci va o meno non ricordo
     private String username; //username del mio utente
