@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.View;
 import com.sun.tools.javac.Main;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.server.CommonObjective.*;
+import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Tiles;
@@ -30,6 +31,11 @@ public class PrintThread extends Thread{
     public void setMt(MainThread mt) {
         this.mt = mt;
     }
+
+
+
+
+
 
     //ritorna il colore della tile - lettera
     private static ColorCLI tileColor(Tiles tiles){
@@ -284,6 +290,12 @@ public class PrintThread extends Thread{
         System.out.println("\nCOMMONOBJECTIVE 2:");
         readJSONCO(co2);
 
+    }
+
+    //stampa l'errore - c'è un errore
+    //RICHIEDE CHE CI SIA VERAMENTE UN ERRORE
+    public void printError(Message error){
+        System.out.println(error.getUsername());
     }
 
 
