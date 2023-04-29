@@ -1,21 +1,8 @@
 package it.polimi.ingsw.client.View;
 
-import it.polimi.ingsw.client.Networker;
-import it.polimi.ingsw.server.CommonObjective.*;
 import it.polimi.ingsw.server.Messages.*;
-import it.polimi.ingsw.server.Model.Board;
-import it.polimi.ingsw.server.Model.Bookshelf;
-import it.polimi.ingsw.server.Model.Tiles;
-import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.utils.Define;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -23,6 +10,11 @@ import java.util.regex.Pattern;
 
 
 public class ReadThread extends Thread{
+
+    /*
+        TODO
+            leggo da ClientState
+     */
 
 
     private MainThread mt;

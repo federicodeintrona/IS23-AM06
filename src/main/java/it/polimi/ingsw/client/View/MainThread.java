@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.utils.Matrix;
 
 import java.util.ArrayList;
 
@@ -24,9 +25,9 @@ public class MainThread {
     private final Networker net; //a chi mandare messaggi
     private String username; //username del mio utente
 
-    private Bookshelf myBookshelf; //mia bookshelf
-    private ArrayList<Bookshelf> allBookshelf; //tutte le bookshelf - le posizioni sono uguali alle posizioni di allUsername
-    private Board board; //la board di gioco
+    private Matrix myBookshelf; //mia bookshelf
+    private ArrayList<Matrix> allBookshelf; //tutte le bookshelf - le posizioni sono uguali alle posizioni di allUsername
+    private Matrix board; //la board di gioco
     private ArrayList<String> allUsername; //tutti gli username
     private PersonalObjective myPO; //il mio personal objective
     private ArrayList<CommonObjective> commonObjectives; //i common objective
@@ -73,27 +74,27 @@ public class MainThread {
         this.username = username;
     }
 
-    public Bookshelf getMyBookshelf() {
+    public Matrix getMyBookshelf() {
         return myBookshelf;
     }
 
-    public void setMyBookshelf(Bookshelf myBookshelf) {
+    public void setMyBookshelf(Matrix myBookshelf) {
         this.myBookshelf = myBookshelf;
     }
 
-    public ArrayList<Bookshelf> getAllBookshelf() {
+    public ArrayList<Matrix> getAllBookshelf() {
         return allBookshelf;
     }
 
-    public void setAllBookshelf(ArrayList<Bookshelf> allBookshelf) {
+    public void setAllBookshelf(ArrayList<Matrix> allBookshelf) {
         this.allBookshelf = allBookshelf;
     }
 
-    public Board getBoard() {
+    public Matrix getBoard() {
         return board;
     }
 
-    public void setBoard(Board board) {
+    public void setBoard(Matrix board) {
         this.board = board;
     }
 

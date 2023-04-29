@@ -1,14 +1,12 @@
 package it.polimi.ingsw.client.View;
 
-import com.sun.tools.javac.Main;
-import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.server.CommonObjective.*;
 import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Tiles;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Define;
+import it.polimi.ingsw.utils.Matrix;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -70,7 +68,7 @@ public class PrintThread extends Thread{
 
     //STAMPA
     //stampa la board
-    public void printBoard(Board board){
+    public void printBoard(Matrix board){
         System.out.print("  ");
         for (int i = 0; i < 9; i++) {
             System.out.print(" "+i+" ");
@@ -79,7 +77,7 @@ public class PrintThread extends Thread{
         for (int i = 0; i < 9; i++) {
             System.out.print(i+" ");
             for (int j = 0; j < 9; j++) {
-                System.out.print(tileColorBG(board.getGamesBoard().getTile(i,j)) + "   " + ColorCLI.RESET);
+                System.out.print(tileColorBG(board.getTile(i,j)) + "   " + ColorCLI.RESET);
             }
             System.out.println(" "+i);
         }
@@ -91,7 +89,7 @@ public class PrintThread extends Thread{
     }
 
     //stampa la bookshelf
-    public void printBookshelf(Bookshelf bookshelf){
+    public void printBookshelf(Matrix bookshelf){
         System.out.print("  ");
         for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
             System.out.print(" "+i+" ");
@@ -100,7 +98,7 @@ public class PrintThread extends Thread{
         for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             System.out.print(i+" ");
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
-                System.out.print(tileColorBG(bookshelf.getTiles().getTile(i,j)) + "   " + ColorCLI.RESET);
+                System.out.print(tileColorBG(bookshelf.getTile(i,j)) + "   " + ColorCLI.RESET);
             }
             System.out.println(" "+i);
         }
@@ -148,7 +146,7 @@ public class PrintThread extends Thread{
     }
 
     //stampa la Bookshelf insieme al Personal Objective
-    public void printBookshelfPersonalObjective(Bookshelf bookshelf, PersonalObjective personalObjective){
+    public void printBookshelfPersonalObjective(Matrix bookshelf, PersonalObjective personalObjective){
         Bookshelf bookshelfPO=personalObjectiveReturn(personalObjective);
         System.out.print("  ");
         for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
@@ -162,21 +160,21 @@ public class PrintThread extends Thread{
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
                     //posizione della Board == PersonalObjective
                     if ( personalObjective.getCard().get(new Point(i,j))
-                            .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
+                            .equals(bookshelf.getTile(new Point(i,j))) ){
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
-                                String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
+                                String.valueOf(tileColorBG(bookshelf.getTile(i,j))) +
                                 "\u001b[30m V " +
                                 ColorCLI.RESET);
                     }
                     else {
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
-                                String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
+                                String.valueOf(tileColorBG(bookshelf.getTile(i,j))) +
                                 "\u001b[1m X " +
                                 ColorCLI.RESET);
                     }
                 }
                 else{
-                    System.out.print(tileColorBG(bookshelf.getTiles().getTile(i,j)) + "   " + ColorCLI.RESET);
+                    System.out.print(tileColorBG(bookshelf.getTile(i,j)) + "   " + ColorCLI.RESET);
                 }
             }
             System.out.println(" "+i);
@@ -206,7 +204,7 @@ public class PrintThread extends Thread{
 
     //legge da JSON il Common Objective d'interesse
     private void readJSONCO(CommonObjective commonObjective){
-        Bookshelf bookshelf=new Bookshelf();
+        Matrix bookshelf=new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(), Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
         JSONParser jsonParser=new JSONParser();
 
         try {
@@ -270,7 +268,7 @@ public class PrintThread extends Thread{
 
             //inserimento posizioni nella bookshelf
             for (Point point : points) {
-                bookshelf.getTiles().setTile(Tiles.POSITION, point);
+                bookshelf.setTile(Tiles.POSITION, point);
             }
 
             //stampaggio
