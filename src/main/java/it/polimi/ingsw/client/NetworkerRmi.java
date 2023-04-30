@@ -14,7 +14,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class NetworkerRmi implements Networker {
-    private static int port = 1234;
+    private static int port = 1099;
     private static String clientIP;
     private String username;
     private int lobbyID;
@@ -46,7 +46,7 @@ public class NetworkerRmi implements Networker {
             clientIP = getClientIP();
 
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("127.0.0.1", port);
+            Registry registry = LocateRegistry.getRegistry("192.168.1.213", port);
             // Looking up the registry for the remote object
             controller = (ControllerInterface) registry.lookup("Controller");
 
