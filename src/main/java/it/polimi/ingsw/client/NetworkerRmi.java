@@ -7,11 +7,13 @@ import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Messages.PointsMessage;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.*;
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
     private static int port = 1099;
@@ -21,6 +23,8 @@ public class NetworkerRmi implements Networker {
     private int gameID;
     private Message message;
     private static ControllerInterface controller;
+
+    private ClientState clientState;
 
     /*
     public NetworkerRmi()  {
@@ -57,6 +61,35 @@ public class NetworkerRmi implements Networker {
 
         System.out.println("Created RMI connection with Server");
         System.out.println(clientIP);
+
+        clientStateExportRmi();
+    }
+
+    /**
+     * Preparing the instance of clientState to export through RMI connection
+     */
+    private void clientStateExportRmi () {
+        clientState = new ClientState();
+        ClientStateRemoteInterface stub = null;
+        try {
+            stub = (ClientStateRemoteInterface) UnicastRemoteObject.exportObject(clientState, 1234);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        // Bind the remote object's stub in the registry
+        Registry registry = null;
+        try {
+            registry = LocateRegistry.createRegistry(1234);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        try {
+            registry.bind("ClientState", stub);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (AlreadyBoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -138,5 +171,26 @@ public class NetworkerRmi implements Networker {
     private String getClientIP() throws UnknownHostException {
         InetAddress addr = InetAddress.getLocalHost();
         return addr.getHostAddress();
+    }
+
+    public static String getLocalIPAddress() throws SocketException {
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface current = interfaces.nextElement();
+            if (!current.isUp() || current.isLoopback() || current.isVirtual()) {
+                continue;
+            }
+            Enumeration<InetAddress> addresses = current.getInetAddresses();
+            while (addresses.hasMoreElements()) {
+                InetAddress currentAddr = addresses.nextElement();
+                if (currentAddr.isLoopbackAddress()) {
+                    continue;
+                }
+                if (currentAddr instanceof Inet4Address) {
+                    return currentAddr.getHostAddress();
+                }
+            }
+        }
+        return null;
     }
 }
