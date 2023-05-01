@@ -16,7 +16,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
-    private static int port = 1099;
+    private static int portIn = 1099;
+    private static int portOut = 1234;
     private static String clientIP;
     private String username;
     private int lobbyID;
@@ -50,7 +51,7 @@ public class NetworkerRmi implements Networker {
             clientIP = getClientIP();
 
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("192.168.1.213", port);
+            Registry registry = LocateRegistry.getRegistry("192.168.1.213", portIn);
             // Looking up the registry for the remote object
             controller = (ControllerInterface) registry.lookup("Controller");
 
@@ -72,14 +73,14 @@ public class NetworkerRmi implements Networker {
         clientState = new ClientState();
         ClientStateRemoteInterface stub = null;
         try {
-            stub = (ClientStateRemoteInterface) UnicastRemoteObject.exportObject(clientState, 1234);
+            stub = (ClientStateRemoteInterface) UnicastRemoteObject.exportObject(clientState, portOut);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         // Bind the remote object's stub in the registry
         Registry registry = null;
         try {
-            registry = LocateRegistry.createRegistry(1234);
+            registry = LocateRegistry.createRegistry(portOut);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
