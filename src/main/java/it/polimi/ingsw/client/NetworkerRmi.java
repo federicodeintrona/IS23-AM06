@@ -2,10 +2,7 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.server.ControllerInterface;
-import it.polimi.ingsw.server.Messages.IntArrayMessage;
-import it.polimi.ingsw.server.Messages.IntMessage;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.PointsMessage;
+import it.polimi.ingsw.server.Messages.*;
 
 import java.net.*;
 import java.rmi.AlreadyBoundException;
@@ -24,7 +21,6 @@ public class NetworkerRmi implements Networker {
     private int gameID;
     private Message message;
     private static ControllerInterface controller;
-
     private ClientState clientState;
 
     /*
@@ -104,7 +100,22 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
+        // Calling the completeRmiConnection() method to complete the client-server connection
+        if (!message.getType().equals(MessageTypes.ERROR)) completeRmiConnection();
+
         return message;
+    }
+
+    /**
+     * Method used privately to make the controller accept the
+     * instance of clientState previously prepared
+     */
+    private void completeRmiConnection () {
+        try {
+            controller.acceptRmiConnection(clientIP, portOut);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

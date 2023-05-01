@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.Messages.IntMessage;
 import it.polimi.ingsw.server.Messages.Message;
@@ -9,6 +10,8 @@ import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 
 import java.awt.*;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -217,6 +220,25 @@ public class Controller implements ControllerInterface{
 
 
 
+    }
+
+    /**
+     * Gets the instance of clientState from a specific Client given his ip address and port
+     *
+     * @param ipAddress     the client ip address
+     * @param port      the port used by the client to share the instance of clientState
+     */
+    public void acceptRmiConnection (String ipAddress, int port) {
+        try {
+            // Getting the registry
+            Registry registry = LocateRegistry.getRegistry(ipAddress, port);
+            // Looking up the registry for the remote object
+            ClientStateRemoteInterface clientState = (ClientStateRemoteInterface) registry.lookup("ClientState");
+
+        } catch (Exception e) {
+            System.err.println("Client exception: " + e);
+            e.printStackTrace();
+        }
     }
 
 
