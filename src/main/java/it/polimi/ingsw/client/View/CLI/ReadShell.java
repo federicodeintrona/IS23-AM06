@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.View;
+package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.server.Messages.*;
 
@@ -9,28 +9,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class ReadThread extends Thread{
-
-    /*
-        TODO
-            leggo da ClientState
-     */
+public class ReadShell extends Thread{
 
 
-    private MainThread mt;
+    private final CLIMain cliMain;
 
-    public MainThread getMt() {
-        return mt;
-    }
 
-    public void setMt(MainThread mt) {
-        this.mt = mt;
+    public ReadShell(CLIMain cliMain) {
+        this.cliMain=cliMain;
     }
 
 
-    //LEGGI, RICEVI E INVIA MESSAGGI
+
+
+
+
     //pulisce CLI
-    public static void clearCLI(){
+    public void clearCLI(){
         System.out.println(ColorCLI.CLEAR);
         System.out.flush();
     }
@@ -69,13 +64,12 @@ public class ReadThread extends Thread{
         String nickname = readLine();
         message.setUsername(nickname);
         message.setType(MessageTypes.USERNAME);
-        mt.setUsername(nickname);
-
+        //io non setto niente ci penserà il Networker
         return message;
     }
 
     //legge messaggi, li crea, li invia a chi di dovere
-    public void readMessage(){
+    public void readCommand(){
         String st=readLine();
         ArrayList<Integer> number=readNumber(st);
         switch (st) {
@@ -103,13 +97,13 @@ public class ReadThread extends Thread{
             case "#rollback" -> createRollbackMessage();
 //            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
 //            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
-            case "#help", "#h" -> mt.getPt().help();
-            case "#printpersonal" -> mt.getPt().printPersonalObjective(mt.getMyPO());
-            case "#printboard" -> mt.getPt().printBoard(mt.getBoard());
+            case "#help", "#h" -> cliMain.getCliPrint().help();
+            case "#printpersonal" -> cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPO());
+            case "#printboard" -> cliMain.getCliPrint().printBoard(cliMain.getClientState().getBoard());
             case "#printyourbookshelf" -> {
                 //todo QUALE STAMPO???
-                mt.getPt().printBookshelf(mt.getMyBookshelf());
-                mt.getPt().printBookshelfPersonalObjective(mt.getMyBookshelf(), mt.getMyPO());
+                cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getMyBookshelf());
+                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPO());
             }
             case "#printbookshelf" -> {
                 int i=st.indexOf("@");
@@ -120,14 +114,14 @@ public class ReadThread extends Thread{
                 String sub=st.substring(i+1);
 
                 //posizione dell'username desiderato
-                int position=mt.getAllUsername().indexOf(sub);
+                int position=cliMain.getClientState().getAllUsername().indexOf(sub);
                 if (position==-1){
                     System.out.println(st+": Type of command correct but you do NOT inserted the username of a player in this game \nIf you need help put #help or #h");
                     break;
                 }
-                mt.getPt().printBookshelf(mt.getAllBookshelf().get(position));
+                cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(position));
             }
-            case "#printcommon" -> mt.getPt().printCommonObjective(mt.getCommonObjectives().get(0), mt.getCommonObjectives().get(1));
+            case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getCommonObjectives().get(0), cliMain.getClientState().getCommonObjectives().get(1));
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
 
@@ -149,7 +143,7 @@ public class ReadThread extends Thread{
         }
 
         //setta il messaggio
-        pointsMessage.setUsername(mt.getUsername());
+        pointsMessage.setUsername(cliMain.getClientState().getUsername());
         pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
         pointsMessage.setTiles(result);
 
@@ -162,7 +156,7 @@ public class ReadThread extends Thread{
         IntArrayMessage intArrayMessage=new IntArrayMessage();
 
         //setto il messaggio
-        intArrayMessage.setUsername(mt.getUsername());
+        intArrayMessage.setUsername(cliMain.getClientState().getUsername());
         intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
         intArrayMessage.setIntegers(input);
 
@@ -175,7 +169,7 @@ public class ReadThread extends Thread{
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(mt.getUsername());
+        intMessage.setUsername(cliMain.getClientState().getUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(input.get(0));
 
@@ -188,7 +182,7 @@ public class ReadThread extends Thread{
         Message message=new Message();
 
         //setta il messaggio
-        message.setUsername(mt.getUsername());
+        message.setUsername(cliMain.getClientState().getUsername());
         message.setType(MessageTypes.ROLLBACK);
 
         //invia il messaggio
@@ -197,11 +191,11 @@ public class ReadThread extends Thread{
 
 
     //invia messaggi a Networker
-    public void sendMessage(Message message){
+    private void sendMessage(Message message){
         switch (message.getType()){
-            case REMOVE_FROM_BOARD -> mt.getNet().removeTilesFromBoard(message);
-            case SWITCH_PLACE -> mt.getNet().switchTilesOrder(message);
-            case ADD_TO_BOOKSHELF -> mt.getNet().addTilesToBookshelf(message);
+            case REMOVE_FROM_BOARD -> cliMain.getNet().removeTilesFromBoard(message);
+            case SWITCH_PLACE -> cliMain.getNet().switchTilesOrder(message);
+            case ADD_TO_BOOKSHELF -> cliMain.getNet().addTilesToBookshelf(message);
             //todo MANCA MESSAGGIO DI ROLLBACK DA PARTE DEL NETWORKER
 //            case ROLLBACK -> net.rollback(message);
         }
@@ -210,6 +204,9 @@ public class ReadThread extends Thread{
 
     @Override
     public void run() {
-        //leggere da stdIN
+        //TODO chiedo io username???
+        while(!cliMain.getClientState().isEndGame()){
+            readCommand();
+        }
     }
 }

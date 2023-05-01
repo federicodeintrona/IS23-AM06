@@ -1,13 +1,15 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 public class ClientState implements ClientStateRemoteInterface {
+
+    private final Lock viewLock;
 
     private Networker net; //TODO controlla se ci va o meno non ricordo
     private String username; //username del mio utente
@@ -18,67 +20,166 @@ public class ClientState implements ClientStateRemoteInterface {
     private ArrayList<String> allUsername; //tutti gli username
     private PersonalObjective myPO; //il mio personal objective
     private ArrayList<CommonObjective> commonObjectives; //i common objective
+    private String currentPlayer; //giocatore corrente
+    private String nextPlayer; //prossimo giocatore
+    private boolean endGame; //è finita la partita?
+    private String winnerPlayer; //vincitore della partita
+    private ArrayList<Integer> allPlayerPonits; //i punti di tutti i giocatori
+
+    public ClientState(Lock viewLock) {
+        this.viewLock = viewLock;
+    }
+
 
 
 
     public Networker getNet() {
-        return net;
+        synchronized (viewLock){
+            return net;
+        }
     }
 
     public String getUsername() {
-        return username;
+        synchronized (viewLock) {
+            return username;
+        }
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        synchronized (viewLock) {
+            this.username = username;
+        }
     }
 
     public Matrix getMyBookshelf() {
-        return myBookshelf;
+        synchronized (viewLock) {
+            return myBookshelf;
+        }
     }
 
     public void setMyBookshelf(Matrix myBookshelf) {
-        this.myBookshelf = myBookshelf;
+        synchronized (viewLock) {
+            this.myBookshelf = myBookshelf;
+        }
     }
 
     public ArrayList<Matrix> getAllBookshelf() {
-        return allBookshelf;
+        synchronized (viewLock) {
+            return allBookshelf;
+        }
     }
 
     public void setAllBookshelf(ArrayList<Matrix> allBookshelf) {
-        this.allBookshelf = allBookshelf;
+        synchronized (viewLock) {
+            this.allBookshelf = allBookshelf;
+        }
     }
 
     public Matrix getBoard() {
-        return board;
+        synchronized (viewLock) {
+            return board;
+        }
     }
 
     public void setBoard(Matrix board) {
-        this.board = board;
+        synchronized (viewLock) {
+            this.board = board;
+        }
     }
 
     public ArrayList<String> getAllUsername() {
-        return allUsername;
+        synchronized (viewLock) {
+            return allUsername;
+        }
     }
 
     public void setAllUsername(ArrayList<String> allUsername) {
-        this.allUsername = allUsername;
+        synchronized (viewLock) {
+            this.allUsername = allUsername;
+        }
     }
 
     public PersonalObjective getMyPO() {
-        return myPO;
+        synchronized (viewLock) {
+            return myPO;
+        }
     }
 
     public void setMyPO(PersonalObjective myPO) {
-        this.myPO = myPO;
+        synchronized (viewLock) {
+            this.myPO = myPO;
+        }
     }
 
     public ArrayList<CommonObjective> getCommonObjectives() {
-        return commonObjectives;
+        synchronized (viewLock) {
+            return commonObjectives;
+        }
     }
 
     public void setCommonObjectives(ArrayList<CommonObjective> commonObjectives) {
-        this.commonObjectives = commonObjectives;
+        synchronized (viewLock) {
+            this.commonObjectives = commonObjectives;
+        }
     }
 
+    public String getCurrentPlayer() {
+        synchronized (viewLock) {
+            return currentPlayer;
+        }
+    }
+
+    public void setCurrentPlayer(String currentPlayer) {
+        synchronized (viewLock) {
+            this.currentPlayer = currentPlayer;
+        }
+    }
+
+    public boolean isEndGame() {
+        synchronized (viewLock) {
+            return endGame;
+        }
+    }
+
+    public void setEndGame(boolean endGame) {
+        synchronized (viewLock) {
+            this.endGame = endGame;
+        }
+    }
+
+    public String getWinnerPlayer() {
+        synchronized (viewLock) {
+            return winnerPlayer;
+        }
+    }
+
+    public void setWinnerPlayer(String winnerPlayer) {
+        synchronized (viewLock) {
+            this.winnerPlayer = winnerPlayer;
+        }
+    }
+
+    public ArrayList<Integer> getAllPlayerPonits() {
+        synchronized (viewLock) {
+            return allPlayerPonits;
+        }
+    }
+
+    public void setAllPlayerPonits(ArrayList<Integer> allPlayerPonits) {
+        synchronized (viewLock) {
+            this.allPlayerPonits = allPlayerPonits;
+        }
+    }
+
+    public String getNextPlayer() {
+        synchronized (viewLock) {
+            return nextPlayer;
+        }
+    }
+
+    public void setNextPlayer(String nextPlayer) {
+        synchronized (viewLock){
+            this.nextPlayer = nextPlayer;
+        }
+    }
 }

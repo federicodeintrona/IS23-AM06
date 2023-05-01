@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.View;
+package it.polimi.ingsw.client.View.CLI;
 
 public enum ColorCLI {
     //colore di fine stringa e di reset
