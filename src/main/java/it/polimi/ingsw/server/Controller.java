@@ -228,7 +228,7 @@ public class Controller implements ControllerInterface{
      * @param ipAddress     the client ip address
      * @param port      the port used by the client to share the instance of clientState
      */
-    public void acceptRmiConnection (String ipAddress, int port) {
+    public void acceptRmiConnection (String username, String ipAddress, int port) {
         try {
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry(ipAddress, port);

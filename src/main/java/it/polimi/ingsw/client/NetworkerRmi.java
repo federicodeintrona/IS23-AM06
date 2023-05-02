@@ -112,7 +112,7 @@ public class NetworkerRmi implements Networker {
      */
     private void completeRmiConnection () {
         try {
-            controller.acceptRmiConnection(clientIP, portOut);
+            controller.acceptRmiConnection(username, clientIP, portOut);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

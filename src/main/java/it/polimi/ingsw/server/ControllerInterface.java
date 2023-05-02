@@ -21,5 +21,5 @@ public interface ControllerInterface extends Remote {
 
     public Message handleNewClient(String client) throws RemoteException;
 
-    public void acceptRmiConnection (String ipAddress, int port) throws RemoteException;
+    public void acceptRmiConnection (String username, String ipAddress, int port) throws RemoteException;
     }
