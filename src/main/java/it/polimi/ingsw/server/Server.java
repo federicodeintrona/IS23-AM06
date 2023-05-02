@@ -1,8 +1,11 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,6 +15,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,7 +29,9 @@ public class Server extends UnicastRemoteObject {
 
     protected Server() throws RemoteException, IOException, ParseException{
         super();
-        config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
+        ClassLoader classLoader= PersonalObjective.class.getClassLoader();
+        File file=new File(Objects.requireNonNull(classLoader.getResource("Server.json")).getFile());
+        config = new JsonReader(file);
         port=config.getInt("port");
     }
 
@@ -63,14 +69,14 @@ public class Server extends UnicastRemoteObject {
         // Preparing for the RMI connections
         ControllerInterface stub = null;
         try {
-            stub = (ControllerInterface) UnicastRemoteObject.exportObject(controller, 1234);
+            stub = (ControllerInterface) UnicastRemoteObject.exportObject(controller, 0);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         // Bind the remote object's stub in the registry
         Registry registry = null;
         try {
-            registry = LocateRegistry.createRegistry(1234);
+            registry = LocateRegistry.createRegistry(1099);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

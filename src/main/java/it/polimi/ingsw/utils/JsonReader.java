@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ public class JsonReader {
     private FileReader reader;
     JSONObject config;
 
-    public JsonReader(String url) throws IOException, ParseException {
+    public JsonReader(File url) throws IOException, ParseException {
         reader=new FileReader(url);
         config= (JSONObject) parser.parse(reader);
     }

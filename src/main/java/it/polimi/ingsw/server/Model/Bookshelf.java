@@ -1,13 +1,17 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.JsonReader;
 import it.polimi.ingsw.utils.Matrix;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 public class Bookshelf {
@@ -25,7 +29,9 @@ public class Bookshelf {
      */
         public Bookshelf(){
             try {
-                config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Bookshelf.json");
+                ClassLoader classLoader= PersonalObjective.class.getClassLoader();
+                File file=new File(Objects.requireNonNull(classLoader.getResource("Bookshelf.json")).getFile());
+                config = new JsonReader(file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ParseException e) {
