@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.server.VirtualView;
+import it.polimi.ingsw.server.VirtualView.VirtualView;
 import org.javatuples.Pair;
 
 import java.awt.*;
@@ -14,8 +14,6 @@ import java.util.ArrayList;
 
 public class Model  {
     private static final int numberOfCommonObjectives=2;
-
-
     private GameState state = GameState.STARTING;
     private  Board board;
     private  ArrayList<Player> players;
@@ -89,6 +87,9 @@ public class Model  {
             notifier.addPropertyChangeListener(v);
         }
 
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                board.getGamesBoard(), "start",
+                (players.stream().map(Player::getUsername).toList()) ,"common and personal" ));
 
         //Change game state
         state = GameState.CHOOSING_TILES;
@@ -294,7 +295,7 @@ public class Model  {
 
 
     private void updateCheckManager(GameState state,Player current){
-        checks .setState(state);
+        checks.setState(state);
         checks.setCurrPlayer(current);
     }
 
@@ -308,6 +309,8 @@ public class Model  {
 
         //Update the points
         updatePoints();
+        notifier.firePropertyChange(new PropertyChangeEvent(board, "player",
+                                    currPlayer.getUsername(), nextPlayer.getUsername()));
 
         //changes current player
         currPlayer=nextPlayer;
@@ -416,6 +419,27 @@ public class Model  {
         this.currPlayer = currPlayer;
     }
 
+    //TEST
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public Player getNextPlayer() {
+        return nextPlayer;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public ArrayList<Integer> getPrivatePoints() {
+        return privatePoints;
+    }
+
+    public ArrayList<Integer> getPublicPoints() {
+        return publicPoints;
+    }
+
 
     /**
      * Return true if the game is finished, false otherwise
@@ -446,15 +470,29 @@ public class Model  {
         this.players.addAll(players);
     }
 
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+
+
+    public ArrayList<VirtualView> getVirtualViews() {
+        return virtualViews;
+    }
+
+    public void setVirtualViews(ArrayList<VirtualView> virtualViews) {
+        this.virtualViews = virtualViews;
+    }
+
     /**
      * @return ArrayList of all the personal objectives of all players in the game
      */
-  /* public ArrayList<PersonalObjective> getPersobj(){
+   private ArrayList<PersonalObjective> getPersObj(){
         ArrayList<PersonalObjective> persobj = new ArrayList<>();
         for( Player p : players){
             persobj.add(p.getPersonalObjective());
         }
         return persobj;
-    }*/
+    }
 
 }

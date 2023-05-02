@@ -7,4 +7,7 @@ public class IntArrayMessage extends Message{
 
     public ArrayList<Integer> getIntegers () { return integers; }
 
+    public void setIntegers(ArrayList<Integer> integers) {
+        this.integers = integers;
+    }
 }

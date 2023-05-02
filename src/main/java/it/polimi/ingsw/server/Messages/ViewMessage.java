@@ -1,17 +1,16 @@
 package it.polimi.ingsw.server.Messages;
 
-import it.polimi.ingsw.server.VirtualView;
+import it.polimi.ingsw.utils.Matrix;
 import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
 
 public class ViewMessage extends Message{
 
-    private JSONObject View;
+    private Matrix board;
+    private ArrayList<String> usernames;
+    private ArrayList<Integer> privateObj;
+    private ArrayList<Integer> commonObj;
 
-    public JSONObject getView() {
-        return View;
-    }
 
-    public void setView(JSONObject view) {
-        View = view;
-    }
 }

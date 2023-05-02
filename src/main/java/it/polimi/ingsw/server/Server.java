@@ -21,7 +21,7 @@ public class Server extends UnicastRemoteObject {
     private static Integer port;     // Da sistemare
     private final static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
-    private final Controller controller= new Controller(lobby,lobby.getGames(),lobby.getPlayers());
+    private final Controller controller= new Controller(lobby);
 
     protected Server() throws RemoteException, IOException, ParseException{
         super();
