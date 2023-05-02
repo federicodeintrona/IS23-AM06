@@ -57,7 +57,7 @@ public class ReadShell extends Thread{
     }
 
     //richista nickname
-    public Message askUsername() {
+    public void askUsername() {
         Message message=new Message();
 
         System.out.print("Enter your nickname: ");
@@ -65,7 +65,8 @@ public class ReadShell extends Thread{
         message.setUsername(nickname);
         message.setType(MessageTypes.USERNAME);
         //io non setto niente ci penserà il Networker
-        return message;
+        //todo
+        sendMessage(message);
     }
 
     //legge messaggi, li crea, li invia a chi di dovere
@@ -198,6 +199,8 @@ public class ReadShell extends Thread{
             case ADD_TO_BOOKSHELF -> cliMain.getNet().addTilesToBookshelf(message);
             //MANCA MESSAGGIO DI ROLLBACK DA PARTE DEL NETWORKER
 //            case ROLLBACK -> net.rollback(message);
+            //TODO case username -> first connection
+            //TODO case number of player -> number of player selection
         }
     }
 

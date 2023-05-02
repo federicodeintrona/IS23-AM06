@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
+import it.polimi.ingsw.server.Model.Tiles;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Matrix;
 
@@ -25,6 +26,8 @@ public class ClientState implements ClientStateRemoteInterface {
     private boolean endGame; //è finita la partita?
     private String winnerPlayer; //vincitore della partita
     private ArrayList<Integer> allPlayerPonits; //i punti di tutti i giocatori
+    private ArrayList<Tiles> order; //ordine delle tessere
+    private int myPoints; //i miei punti
 
     public ClientState(Lock viewLock) {
         this.viewLock = viewLock;
@@ -181,5 +184,21 @@ public class ClientState implements ClientStateRemoteInterface {
         synchronized (viewLock){
             this.nextPlayer = nextPlayer;
         }
+    }
+
+    public ArrayList<Tiles> getOrder() {
+        return order;
+    }
+
+    public void setOrder(ArrayList<Tiles> order) {
+        this.order = order;
+    }
+
+    public int getMyPoints() {
+        return myPoints;
+    }
+
+    public void setMyPoints(int myPoints) {
+        this.myPoints = myPoints;
     }
 }

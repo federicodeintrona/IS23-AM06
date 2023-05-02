@@ -14,11 +14,13 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CLIPrint{
+public class CLIPrint implements PropertyChangeListener {
 
 
     private final CLIMain cliMain;
@@ -29,7 +31,8 @@ public class CLIPrint{
     }
 
 
-
+//TODO stampa chi ha la sedia
+//    messaggi di ok ritornati da gestire
 
 
 
@@ -305,6 +308,7 @@ public class CLIPrint{
         }
     }
 
+    //TODO ricevi messaggi dal server e fai robe
     //stampa l'errore - c'è un errore
     //RICHIEDE CHE CI SIA VERAMENTE UN ERRORE
     public void printError(Message error){
@@ -347,4 +351,8 @@ public class CLIPrint{
     }
 
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }
