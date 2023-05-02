@@ -231,7 +231,7 @@ public class CLIPrint{
             JSONParser jsonParser = new JSONParser();
 
             try {
-                FileReader reader = new FileReader("src/main/java/it/polimi/ingsw/server/CommonObjective/CommonObjective.json");
+                FileReader reader = new FileReader("src/main/java/it/polimi/ingsw/View/CLI/CommonObjective.json");
                 Object obj = jsonParser.parse(reader);
                 JSONObject co = (JSONObject) obj;
                 JSONObject coDetails = new JSONObject();
