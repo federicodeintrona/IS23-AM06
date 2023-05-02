@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.server.CommonObjective.*;
 import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Tiles;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
@@ -309,6 +310,9 @@ public class CLIPrint{
     public void printError(Message error){
         synchronized (cliMain.getLock()) {
             System.out.println(error.getUsername());
+            if (error.getType()== MessageTypes.NEW_LOBBY){
+                cliMain.getReadShell().askNumberOfPlayerMessage();
+            }
         }
     }
 

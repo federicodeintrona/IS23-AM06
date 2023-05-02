@@ -201,6 +201,23 @@ public class ReadShell extends Thread{
         }
     }
 
+    //richiede il numero di giocatori con cui giocare
+    public void askNumberOfPlayerMessage(){
+        IntMessage message=new IntMessage();
+
+        System.out.print("Enter number of palyer: ");
+        String num = readLine();
+
+        //setta il messaggio
+        message.setUsername(cliMain.getClientState().getUsername());
+        message.setNum(Integer.parseInt(num));
+        message.setType(MessageTypes.NUM_OF_PLAYERS);
+
+        //invia il messaggio
+        sendMessage(message);
+
+    }
+
 
     @Override
     public void run() {
