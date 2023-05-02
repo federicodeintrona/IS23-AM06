@@ -201,4 +201,24 @@ public class ClientState implements ClientStateRemoteInterface {
     public void setMyPoints(int myPoints) {
         this.myPoints = myPoints;
     }
+
+    //TODO punti e libreria modifica singola input username
+
+
+    /*
+        TODO
+            all username - primo chair
+            mio username
+            personal - Hash
+            common - array<integer> - da modificare print
+            all bookshelf - Map<username, matrix>
+            board
+            all point - Map<username, integer> - pubblici
+            my point
+            current
+            next
+            isEndGame
+            winner
+            order selected tiles
+     */
 }
