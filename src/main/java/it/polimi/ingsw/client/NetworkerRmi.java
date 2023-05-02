@@ -47,7 +47,7 @@ public class NetworkerRmi implements Networker {
             clientIP = getClientIP();
 
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("192.168.1.213", portIn);
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
             // Looking up the registry for the remote object
             controller = (ControllerInterface) registry.lookup("Controller");
 
