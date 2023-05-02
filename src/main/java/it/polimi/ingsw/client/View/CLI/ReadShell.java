@@ -94,7 +94,7 @@ public class ReadShell extends Thread{
                 }
                 createAddMessage(number);
             }
-            case "#rollback" -> createRollbackMessage();
+//            case "#rollback" -> createRollbackMessage();
 //            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
 //            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
             case "#help", "#h" -> cliMain.getCliPrint().help();
@@ -196,7 +196,7 @@ public class ReadShell extends Thread{
             case REMOVE_FROM_BOARD -> cliMain.getNet().removeTilesFromBoard(message);
             case SWITCH_PLACE -> cliMain.getNet().switchTilesOrder(message);
             case ADD_TO_BOOKSHELF -> cliMain.getNet().addTilesToBookshelf(message);
-            //todo MANCA MESSAGGIO DI ROLLBACK DA PARTE DEL NETWORKER
+            //MANCA MESSAGGIO DI ROLLBACK DA PARTE DEL NETWORKER
 //            case ROLLBACK -> net.rollback(message);
         }
     }
