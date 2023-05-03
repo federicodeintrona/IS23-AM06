@@ -37,7 +37,7 @@ public class CLIView extends View{
             case WHITE -> ColorCLI.WHITE;
             case PINK -> ColorCLI.PINK;
             case LIGHT_BLUE -> ColorCLI.LIGHT_BLUE;
-            case NOTALLOWED -> ColorCLI.NOTALLOWED;
+            case NOTALLOWED -> ColorCLI.BLACK;
             case EMPTY -> ColorCLI.EMPTY;
         };
     }
@@ -51,7 +51,7 @@ public class CLIView extends View{
             case WHITE -> ColorCLI.WHITEBG;
             case PINK -> ColorCLI.PINKBG;
             case LIGHT_BLUE -> ColorCLI.LIGHT_BLUEBG;
-            case NOTALLOWED -> ColorCLI.NOTALLOWEDBG;
+            case NOTALLOWED -> ColorCLI.BLACK;
             case EMPTY -> ColorCLI.EMPTYBG;
         };
     }
@@ -120,7 +120,7 @@ public class CLIView extends View{
             System.out.print(i+" ");
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (personalObjective.getCard().containsKey(new Point(i,j))){
-                    System.out.print(tileColorBG(bookshelf.getTiles().getTile(i,j)) + "\u001b[30m X " + ColorCLI.RESET);
+                    System.out.print(tileColorBG(bookshelf.getTiles().getTile(i,j)) + " " + ColorCLI.BLACK + "X " + ColorCLI.RESET);
                 }
                 else{
                     System.out.print(tileColorBG(bookshelf.getTiles().getTile(i,j)) + "   " + ColorCLI.RESET);
@@ -153,13 +153,13 @@ public class CLIView extends View{
                         .equals(bookshelf.getTiles().getTile(new Point(i,j))) ){
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
                                 String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
-                                "\u001b[30m V " +
+                                ColorCLI.BLACK + " V " +
                                 ColorCLI.RESET);
                     }
                     else {
                         System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
                                 String.valueOf(tileColorBG(bookshelf.getTiles().getTile(i,j))) +
-                                "\u001b[1m X " +
+                                ColorCLI.BOLD+ " X " +
                                 ColorCLI.RESET);
                     }
                 }

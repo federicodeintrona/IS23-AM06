@@ -6,7 +6,7 @@ public enum ColorCLI {
     CLEAR ("\033[H\033[2J"),
 
     //lettere colorate
-    NOTALLOWED ("\u001b[30m"),
+    BLACK ("\u001b[30m"),
     GREEN ("\u001B[38;5;46m"),
     YELLOW ("\u001B[38;5;220m"),
     BLUE ("\u001B[38;5;21m"),
@@ -24,6 +24,11 @@ public enum ColorCLI {
     LIGHT_BLUEBG ("\u001B[48;5;39m"), //106;183;183
     WHITEBG ("\u001B[48;5;231m"), //237;226;191
     EMPTYBG ("\u001b[48;5;94m"),
+
+    //Bold, UnderLine, Reversed
+    BOLD ("\u001b[1m"),
+    UNDERLINE ("\u001b[4m"),
+    REVERSED ("\u001b[7m"),
 
     GREENBG1 ("\u001B[48;2;145;165;65m"), //145;165;65
     YELLOWBG1 ("\u001B[48;2;223;159;69m"), //223;159;69
