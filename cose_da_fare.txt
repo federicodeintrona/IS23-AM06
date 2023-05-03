@@ -3,3 +3,9 @@ modificare CLIprint - cambia cosa c'è in ClientState
 copiare Message folder in client
 pushare ClientState su develop
 sistemare colori enumeration - come fatto nel main
+
+
+
+1. ClientState da ricopiare
+2. sistemare quello che succede con nuovo ClientState
+3. modificare CliPrint
