@@ -12,9 +12,9 @@ public class JsonReader {
     private FileReader reader;
     JSONObject config;
 
-    public JsonReader(InputStreamReader is) throws IOException, ParseException {
-//        reader=new FileReader(url);
-        config= (JSONObject) parser.parse(is);
+    public JsonReader(String url) throws IOException, ParseException {
+        reader=new FileReader(url);
+        config= (JSONObject) parser.parse(reader);
     }
 
     public String getString(String reference){

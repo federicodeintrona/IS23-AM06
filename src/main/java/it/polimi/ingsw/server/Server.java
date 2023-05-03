@@ -28,8 +28,7 @@ public class Server extends UnicastRemoteObject {
 
     protected Server() throws RemoteException, IOException, ParseException{
         super();
-        InputStream is=getClass().getClassLoader().getResourceAsStream("Server.json");
-        config = new JsonReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        config = new JsonReader("src/main/resources/Server.json");
         port=config.getInt("port");
     }
 

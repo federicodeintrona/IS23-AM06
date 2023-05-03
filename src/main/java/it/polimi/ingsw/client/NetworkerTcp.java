@@ -21,8 +21,7 @@ public class NetworkerTcp implements Networker{
     public NetworkerTcp()  {
         JsonReader config;
         try {
-            InputStream is=getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
-            config = new JsonReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            config = new JsonReader("src/main/resources/NetworkerTcp.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {

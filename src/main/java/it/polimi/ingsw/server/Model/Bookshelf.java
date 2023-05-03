@@ -28,8 +28,7 @@ public class Bookshelf {
      */
         public Bookshelf(){
             try {
-                InputStream is=getClass().getClassLoader().getResourceAsStream("Bookshelf.json");
-                config = new JsonReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                config = new JsonReader("src/main/resources/Bookshelf.json");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ParseException e) {
