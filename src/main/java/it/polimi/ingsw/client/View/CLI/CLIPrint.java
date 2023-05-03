@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class CLIPrint implements PropertyChangeListener {
 
+    //TODO sistemare colori enumeration - nel main l'ho fatto
+
 
     private final CLIMain cliMain;
 
