@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Console;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -348,6 +349,12 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
+    //pulire la CLI funziona solo su terminale - no terminale IDE
+    public void clearSheel()  {
+        System.out.print(ColorCLI.CLEAR);
+        System.out.flush();
+
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
