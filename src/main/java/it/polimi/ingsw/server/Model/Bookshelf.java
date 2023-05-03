@@ -28,7 +28,9 @@ public class Bookshelf {
      */
         public Bookshelf(){
             try {
-                config = new JsonReader("src/main/resources/Bookshelf.json");
+                InputStream is=this.getClass().getClassLoader().getResourceAsStream("Bookshelf.json");
+                config=new JsonReader(is);
+//                config = new JsonReader("src/main/resources/Bookshelf.json");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ParseException e) {
