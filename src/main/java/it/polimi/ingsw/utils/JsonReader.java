@@ -4,9 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 
 public class JsonReader {
@@ -14,9 +12,9 @@ public class JsonReader {
     private FileReader reader;
     JSONObject config;
 
-    public JsonReader(File url) throws IOException, ParseException {
-        reader=new FileReader(url);
-        config= (JSONObject) parser.parse(reader);
+    public JsonReader(InputStreamReader is) throws IOException, ParseException {
+//        reader=new FileReader(url);
+        config= (JSONObject) parser.parse(is);
     }
 
     public String getString(String reference){

@@ -6,9 +6,8 @@ import it.polimi.ingsw.utils.Matrix;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -29,9 +28,8 @@ public class Bookshelf {
      */
         public Bookshelf(){
             try {
-                ClassLoader classLoader= PersonalObjective.class.getClassLoader();
-                File file=new File(Objects.requireNonNull(classLoader.getResource("Bookshelf.json")).getFile());
-                config = new JsonReader(file);
+                InputStream is=getClass().getClassLoader().getResourceAsStream("Bookshelf.json");
+                config = new JsonReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ParseException e) {

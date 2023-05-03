@@ -10,10 +10,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
@@ -64,11 +62,9 @@ public class PersonalObjective {
         JSONParser jsonParser=new JSONParser();
 
         try {
-            ClassLoader classLoader=PersonalObjective.class.getClassLoader();
-            File file=new File(Objects.requireNonNull(classLoader.getResource("PersonalObjective.json")).getFile());
-            FileReader reader=new FileReader(file);
+            InputStream is=getClass().getClassLoader().getResourceAsStream("PersonalObjective");
             //read all JSON file
-            Object obj=jsonParser.parse(reader);
+            Object obj=jsonParser.parse(new InputStreamReader(is, StandardCharsets.UTF_8));
             JSONObject po=(JSONObject) obj;
             //read the specific Personal Objective
             JSONObject poDetails = switch (n) {
