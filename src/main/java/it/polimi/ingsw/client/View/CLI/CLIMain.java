@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.server.Messages.Message;
 
 public class CLIMain {
 
@@ -48,6 +49,11 @@ public class CLIMain {
     }
 
 
+    public void receivedMessage(Message message){
+        switch (message.getType()){
+            //TODO fare tutti i case
+        }
+    }
 
 
 
@@ -60,8 +66,11 @@ public class CLIMain {
         Thread th1=new Thread(readShell);
         th1.start();
 
+        //chi ha la sedia?
+        getCliPrint().printChair();
+
         while(!clientState.isEndGame()){
-            //controllo se è il tuno del prossimo giocatore
+            //controllo se è il turno del prossimo giocatore
             if (getClientState().getCurrentPlayer().equals(next)){
                 //stampa quello che devi stampare all'inizio di un turno di gioco
                 cliPrint.playerTurn();

@@ -22,19 +22,12 @@ import java.util.ArrayList;
 
 public class CLIPrint implements PropertyChangeListener {
 
-    //TODO sistemare colori enumeration - nel main l'ho fatto
-
-
     private final CLIMain cliMain;
 
 
     public CLIPrint(CLIMain cliMain) {
         this.cliMain=cliMain;
     }
-
-
-//TODO stampa chi ha la sedia
-//    messaggi di ok ritornati da gestire
 
 
 
@@ -310,15 +303,18 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //TODO ricevi messaggi dal server e fai robe
+    //stampa chi ha la sedia
+    public void printChair(){
+        synchronized (cliMain.getLock()){
+            System.out.println("The first player, that have chair, is: " +
+                               cliMain.getClientState().getAllUsername().get(0));
+        }
+    }
+
     //stampa l'errore - c'è un errore
-    //RICHIEDE CHE CI SIA VERAMENTE UN ERRORE
-    public void printError(Message error){
+    public void printError(String error){
         synchronized (cliMain.getLock()) {
-            System.out.println(error.getUsername());
-            if (error.getType()== MessageTypes.NEW_LOBBY){
-                cliMain.getReadShell().askNumberOfPlayerMessage();
-            }
+            System.out.println(error);
         }
     }
 
