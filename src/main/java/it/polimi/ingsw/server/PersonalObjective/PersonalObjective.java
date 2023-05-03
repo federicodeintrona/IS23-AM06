@@ -62,9 +62,9 @@ public class PersonalObjective {
         JSONParser jsonParser=new JSONParser();
 
         try {
-            FileReader reader=new FileReader("src/main/resources/PersonalObjective.json");
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("PersonalObjective.json");
             //read all JSON file
-            Object obj=jsonParser.parse(reader);
+            Object obj=jsonParser.parse(new InputStreamReader(is));
             JSONObject po=(JSONObject) obj;
             //read the specific Personal Objective
             JSONObject poDetails = switch (n) {
