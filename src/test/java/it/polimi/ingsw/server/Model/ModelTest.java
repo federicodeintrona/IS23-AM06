@@ -1,7 +1,8 @@
 package it.polimi.ingsw.server.Model;
 
-import it.polimi.ingsw.server.*;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
+import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
+import it.polimi.ingsw.server.VirtualView.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +26,9 @@ class ModelTest {
         players.add(p0);
         players.add(p1);
         players.add(p2);
-        views.add(new VirtualView());
-        views.add(new VirtualView());
-        views.add(new VirtualView());
+        views.add(new RMIVirtualView("p0"));
+        views.add(new RMIVirtualView("p1"));
+        views.add(new RMIVirtualView("p2"));
         m = new Model(players,views);
         m.initialization();
 

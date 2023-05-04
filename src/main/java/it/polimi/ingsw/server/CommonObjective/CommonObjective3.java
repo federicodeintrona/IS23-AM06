@@ -13,6 +13,11 @@ import java.util.Queue;
 
 public class CommonObjective3 extends CommonObjective{
 
+
+    public CommonObjective3() {
+        this.setNum(3);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 4 separate groups, each one made by 4 tiles of the same

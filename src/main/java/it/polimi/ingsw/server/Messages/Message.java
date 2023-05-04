@@ -5,7 +5,7 @@ public class Message {
     private String username;
     private MessageTypes type;
 
-    public void setUsername(String username) {
+    public void setContent(String username) {
         this.username = username;
     }
 
@@ -18,7 +18,7 @@ public class Message {
         this.type = type;
     }
 
-    public void setContent(Object o){}
-
-
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

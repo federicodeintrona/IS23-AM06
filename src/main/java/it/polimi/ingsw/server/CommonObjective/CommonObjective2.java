@@ -5,6 +5,11 @@ import it.polimi.ingsw.server.Model.Tiles;
 
 public class CommonObjective2 extends CommonObjective{
 
+
+    public CommonObjective2() {
+        this.setNum(2);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if the 4 tiles at the bookshelf's corners have the same color

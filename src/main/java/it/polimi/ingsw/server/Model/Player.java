@@ -6,12 +6,13 @@ public class Player {
     private final String username;
     private Bookshelf bookshelf = new Bookshelf();
     private PersonalObjective personalObjective;
-    private int publicPoint;
     private int privatePoint;
     private int commonObjectivePoint;
     private int personalObjectivePoint;
     private int vicinityPoint;
     private int winnerPoint ;
+
+    private int publicPoint;
     private boolean chair;
 
     public Player(String userName) {
@@ -53,7 +54,7 @@ public class Player {
     /**
      * Sets public points of the player
      */
-    private void setPublicPoint() {
+    public void setPublicPoint() {
         publicPoint= (vicinityPoint + commonObjectivePoint + winnerPoint) ;
     }
     /**

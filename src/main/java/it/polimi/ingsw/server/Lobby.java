@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.Exceptions.LobbyNotExists;
 import it.polimi.ingsw.server.Exceptions.UsernameAlreadyTaken;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
+import it.polimi.ingsw.server.VirtualView.VirtualView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class Lobby {
     private final Queue<Integer> waitingLobbys = new LinkedList<>();
     private final HashMap<Integer, Model> games = new HashMap<>();
     private final HashMap<String , Player> players = new HashMap<>();
+    private final HashMap<String , VirtualView> views = new HashMap<>();
     private int gameNumber = 0;
 
 
@@ -33,6 +35,7 @@ public class Lobby {
 
         if(!usernames.contains(client.toLowerCase())) {
             usernames.add(client.toLowerCase());
+
 
             //if there are waiting lobbies, add the client to the longest waiting lobby
             if (waitingLobbies()) {
@@ -111,7 +114,7 @@ public class Lobby {
     public void startGame(int index) {
         //create the model and the array that will contain alla players
         ArrayList<Player> playerList = new ArrayList<>();
-
+        ArrayList<VirtualView> virtualViews = new ArrayList<>();
 
 
         //for every client in the lobby, create his player and add it to the player map
@@ -119,11 +122,12 @@ public class Lobby {
             Player p = new Player(s);
 
             players.put(s,p);
-
             playerList.add(p);
+            virtualViews.add(views.get(s));
         }
 
-        games.get(index).addPlayers(playerList);
+        games.get(index).setVirtualViews(virtualViews);
+        games.get(index).setPlayers(playerList);
 
         //start the game
         controller.startGame(index);
@@ -152,5 +156,9 @@ public class Lobby {
 
     public HashMap<String, Player> getPlayers() {
         return players;
+    }
+
+    public HashMap<String, VirtualView> getViews() {
+        return views;
     }
 }

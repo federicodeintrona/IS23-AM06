@@ -8,6 +8,10 @@ import java.util.Map;
 
 public class CommonObjective6 extends CommonObjective{
 
+    public CommonObjective6() {
+        this.setNum(6);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 8 tiles of the color, in any position,
