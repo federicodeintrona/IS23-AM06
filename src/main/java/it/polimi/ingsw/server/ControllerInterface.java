@@ -20,4 +20,6 @@ public interface ControllerInterface extends Remote {
     public Message newLobby(String client,int players) throws RemoteException;
 
     public Message handleNewClient(String client) throws RemoteException;
+
+    public void acceptRmiConnection (String username, String ipAddress, int port) throws RemoteException;
     }

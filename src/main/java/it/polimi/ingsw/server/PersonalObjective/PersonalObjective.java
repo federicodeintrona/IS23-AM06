@@ -10,10 +10,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public class PersonalObjective {
@@ -58,13 +58,13 @@ public class PersonalObjective {
      *
      * @param n is the ID of Personal Objective to read
      */
-    private static void readJSON(int n){
+    private void readJSON(int n){
         JSONParser jsonParser=new JSONParser();
 
         try {
-            FileReader reader=new FileReader("src/main/java/it/polimi/ingsw/server/PersonalObjective/PersonalObjective.json");
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("PersonalObjective.json");
             //read all JSON file
-            Object obj=jsonParser.parse(reader);
+            Object obj=jsonParser.parse(new InputStreamReader(is));
             JSONObject po=(JSONObject) obj;
             //read the specific Personal Objective
             JSONObject poDetails = switch (n) {
@@ -133,6 +133,7 @@ public class PersonalObjective {
             throw new RuntimeException(e);
         }
 
+        System.out.println(card);
     }
 
     /**
@@ -187,6 +188,7 @@ public class PersonalObjective {
             default -> 0;
         };
     }
+
 
 
 
