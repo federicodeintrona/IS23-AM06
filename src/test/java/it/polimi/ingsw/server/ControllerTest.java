@@ -35,15 +35,16 @@ class ControllerTest {
 
 
         for(int j = 0; j<gameNumber; j++) {
+
             modelmap.put(j,new Model());
             players.add(new ArrayList<>());
             views.add(new ArrayList<>());
 
             for (int i = 0; i < playerNumber; i++) {
 
-                players.get(j).add(new Player("User" + i));
+                players.get(j).add(new Player("User" + j + i));
                 playermap.put(players.get(j).get(i).getUsername(), players.get(j).get(i));
-                views.get(j).add(new RMIVirtualView("User" + i));
+                views.get(j).add(new RMIVirtualView("User" + j + i));
             }
 
             modelmap.get(j).setPlayers(players.get(j));
