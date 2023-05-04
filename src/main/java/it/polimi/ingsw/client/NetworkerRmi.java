@@ -23,29 +23,24 @@ public class NetworkerRmi implements Networker {
     private static ControllerInterface controller;
     private ClientState clientState;
 
-    /*
+    /**
+     * Constructor
+     */
     public NetworkerRmi()  {
-        JsonReader config;
+        clientState = new ClientState();
+
         try {
-            config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+            clientIP = getLocalIPAddress();
+        } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-        port=config.getInt("port");
     }
-
-     */
 
     /**
      * Method to initialize an RMI connection
-     *
      */
     public void initializeConnection () {
         try {
-            clientIP = getClientIP();
-
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
             // Looking up the registry for the remote object
@@ -66,7 +61,6 @@ public class NetworkerRmi implements Networker {
      * Preparing the instance of clientState to export through RMI connection
      */
     private void clientStateExportRmi () {
-        clientState = new ClientState();
         ClientStateRemoteInterface stub = null;
         try {
             stub = (ClientStateRemoteInterface) UnicastRemoteObject.exportObject(clientState, portOut);
