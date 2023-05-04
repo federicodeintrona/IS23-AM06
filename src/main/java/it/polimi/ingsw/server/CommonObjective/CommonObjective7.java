@@ -6,6 +6,10 @@ import it.polimi.ingsw.server.Model.Tiles;
 
 public class CommonObjective7 extends CommonObjective{
 
+    public CommonObjective7() {
+        this.setNum(7);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 5 tiles of the same color in a diagonal

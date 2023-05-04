@@ -101,7 +101,7 @@ public class ServerClientHandler implements Runnable  {
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.username=incomingMsg.getUsername();
-                        controller.addView(username,new TCPVirtualView(this.socket));
+                        controller.addView(new TCPVirtualView(username,this.socket));
                     }
 
                 }

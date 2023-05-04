@@ -215,8 +215,8 @@ public class Controller implements ControllerInterface{
         }
     }
 
-    public void addView(String username, VirtualView view){
-        views.put(username,view);
+    public void addView(VirtualView view){
+        views.put(view.getUsername(),view);
     }
 
 

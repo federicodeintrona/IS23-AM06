@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.VirtualView;
 
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.Messages.*;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
@@ -12,68 +13,48 @@ import java.util.ArrayList;
 
 public class TCPVirtualView extends VirtualView{
 
-    Socket socket;
-    ObjectOutputStream oos;
+    private Socket socket;
+    private ObjectOutputStream oos;
 
-    public TCPVirtualView(Socket socket) throws IOException {
+    public TCPVirtualView(String username,Socket socket) throws IOException {
         this.socket = socket;
         oos = new ObjectOutputStream(socket.getOutputStream());
+        this.setUsername(username);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        switch (evt.getPropertyName()) {
-            case "start" ->
-            {
-                ViewMessage viewmsg = new ViewMessage();
-                //Board
-                //Obj
-                //Usernames
+        //objectName           Object
+
+        //board                Matrix
+        //bookshelf w/ name    Matrix
+        //currPlayer           String
+        //playerNames          List<String>
+        //commonObj            List<Integer>
+        //publicPoints w/ name List<Integer>
+        //selectedTiles        List<Tiles>
+        //personalObj          HashMap
+        //privatePoints        int
+        //Chat                 Message??
+
+        //w/name vuol dire che nel campo username del messaggio scrivo
+        //lo username del proprietario
 
 
-            }
-            case "board" -> {
-                MatrixMessage boardmsg = new MatrixMessage();
-                boardmsg.setMatrix(((Board) evt.getSource()).getGamesBoard());
-                boardmsg.setType(MessageTypes.VIEW);
-                try {
-                    oos.writeObject(boardmsg);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            case "bookshelf" -> {
-                MatrixMessage bookmsg = new MatrixMessage();
-                bookmsg.setMatrix(((Bookshelf) evt.getSource()).getTiles());
-                bookmsg.setType(MessageTypes.VIEW);
-                try {
-                    oos.writeObject(bookmsg);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            case "points" -> {
-                IntArrayMessage pointsmsg = new IntArrayMessage();
-                pointsmsg.setIntegers(((ArrayList<Integer>) evt.getNewValue()));
-                pointsmsg.setType(MessageTypes.VIEW);
-                try {
-                    oos.writeObject(pointsmsg);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            case "player" -> {
-                Message playersmsg = new Message();
-                playersmsg.setUsername(((String) evt.getNewValue()));
-                playersmsg.setType(MessageTypes.VIEW);
-                try {
-                    oos.writeObject(playersmsg);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        ViewMessage viewMsg = new ViewMessage();
+        viewMsg.setType(MessageTypes.VIEW);
+        viewMsg.setContent(evt.getSource());
+        viewMsg.setObjectName(evt.getPropertyName());
+        viewMsg.setUsername((String) evt.getOldValue());
+
+
+        try {
+            oos.writeObject(viewMsg);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
     }
 
 }

@@ -7,6 +7,10 @@ import java.util.Set;
 
 public class CommonObjective5 extends CommonObjective{
 
+    public CommonObjective5() {
+        this.setNum(5);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 3 filled columns, each one made by tiles of

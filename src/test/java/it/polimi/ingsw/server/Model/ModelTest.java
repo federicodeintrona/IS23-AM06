@@ -26,9 +26,9 @@ class ModelTest {
         players.add(p0);
         players.add(p1);
         players.add(p2);
-        views.add(new RMIVirtualView());
-        views.add(new RMIVirtualView());
-        views.add(new RMIVirtualView());
+        views.add(new RMIVirtualView("p0"));
+        views.add(new RMIVirtualView("p1"));
+        views.add(new RMIVirtualView("p2"));
         m = new Model(players,views);
         m.initialization();
 

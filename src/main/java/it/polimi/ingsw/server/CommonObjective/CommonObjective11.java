@@ -8,6 +8,10 @@ import java.awt.*;
 
 public class CommonObjective11 extends CommonObjective{
 
+    public CommonObjective11() {
+        this.setNum(11);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 5 tiles of the same color that form an

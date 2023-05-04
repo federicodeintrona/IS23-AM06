@@ -21,104 +21,118 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
 
     public Controller controller;
-    public Model model0 = new Model();
-    public Model model1 = new Model();
-    public ArrayList<Player> players0 = new ArrayList<>();
-    public ArrayList<Player> players1 = new ArrayList<>();
-    public ArrayList<VirtualView> views0 = new ArrayList<>();
-    public ArrayList<VirtualView> views1 = new ArrayList<>();
     public HashMap<String,Player> playermap = new HashMap<>();
     public HashMap<Integer,Model> modelmap = new HashMap<>();
 
+    public ArrayList<ArrayList<Player>> players = new ArrayList<>();
+    public ArrayList<ArrayList<VirtualView>> views = new ArrayList<>();
+
+    public int gameNumber=2;
+    public int playerNumber=3;
     @BeforeEach
     void setUp() {
-        modelmap.put(0,model0);
-        modelmap.put(1,model1);
 
-        //Model0
-        for(int i=0;i<3;i++){
-            players0.add(new Player("User"+i));
-            playermap.put(players0.get(i).getUsername(),players0.get(i));
-            views0.add(new RMIVirtualView());
-        }
-        model0.setPlayers(players0);
-        model0.setVirtualViews(views0);
+        modelmap.put(0,new Model());
+        modelmap.put(1,new Model());
 
-        //Model1
-        for(int i=0;i<3;i++){
-            players1.add(new Player("User"+i));
-            playermap.put(players1.get(i).getUsername(),players1.get(i));
-            views1.add(new RMIVirtualView());
+        //j = number of games
+        for(int j = 0; j<gameNumber; j++) {
+
+            //Add a game
+            players.add(new ArrayList<>());
+            views.add(new ArrayList<>());
+
+            for (int i = 0; i < playerNumber; i++) {
+
+                players.get(j).add(new Player("User" + i));
+                playermap.put(players.get(j).get(i).getUsername(), players.get(j).get(i));
+                views.get(j).add(new RMIVirtualView("User" + i));
+            }
+
+            modelmap.get(j).setPlayers(players.get(j));
+            modelmap.get(j).setVirtualViews(views.get(j));
+
         }
-        model1.setPlayers(players1);
-        model1.setVirtualViews(views1);
 
         controller=new Controller(modelmap,playermap);
+        controller.startGame(0);
+        controller.startGame(1);
     }
 
     @Test
     void startGame() {
 
-        controller.startGame(0);
-        assertEquals(model0.getState(), GameState.CHOOSING_TILES);
-
-        controller.startGame(1);
-        assertEquals(model1.getState(), GameState.CHOOSING_TILES);
+        assertEquals(modelmap.get(0).getState(), GameState.CHOOSING_TILES);
+        assertEquals(modelmap.get(1).getState(), GameState.CHOOSING_TILES);
 
     }
+
+
+
+    //I punti specifici devono ancora essere settati
 
     @Test
     void removeTiles() {
         ArrayList<Point> points = new ArrayList<>();
         Message msg;
 
+
         //OutOfDomain
         points.add(new Point(45,20));
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"You selected a point outside the board");
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
+        msg = controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
+        assertEquals("You selected a point outside the board",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
 
         //TilesCannotBeSelected
         points.add(new Point(45,20));
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"One of the tiles cannot be selected");
+        msg = controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
+        assertEquals("One of the tiles cannot be selected",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
 
         //TilesNotAdjacent
         points.add(new Point(45,20));
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"The tiles are not adjacent to each other");
+        msg = controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
+        assertEquals("The tiles are not adjacent to each other",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
 
         //IllegalArgumentException
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"You selected 0 tiles");
+        msg = controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
+        assertEquals("You selected 0 tiles",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
 
         //TooManySelected
         points.add(new Point(45,20));
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"You selected too many tiles");
+        msg = controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
+        assertEquals("You selected too many tiles",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
 
         //NotCurrentPlayer
-        points.add(new Point(45,20));
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"It's not your turn");
+        points.add(new Point(3,5));
+        msg = controller.removeTiles(0,modelmap.get(0).getNextPlayer().getUsername(),points);
+        assertEquals("It's not your turn",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
 
         //MoveNotPossible
         points.add(new Point(45,20));
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"You can't do that now");
+        msg = controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
+        assertEquals("You can't do that now",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
 
 
         //Normal
         points.add(new Point(45,20));
-        msg = controller.removeTiles(0,model0.getCurrPlayer().getUsername(),points);
-        assertEquals(msg.getUsername(),"Move successful");
+        msg = controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
+        assertEquals("Move successful",msg.getUsername());
         points.removeAll(points);
+        modelmap.get(0).setState(GameState.CHOOSING_TILES);
     }
 
     @Test
@@ -127,7 +141,7 @@ class ControllerTest {
         selected.add(Tiles.GREEN);
         selected.add(Tiles.BLUE);
         selected.add(Tiles.YELLOW);
-        model0.setSelectedTiles(selected);
+        modelmap.get(0).setSelectedTiles(selected);
         Message msg;
 
         ArrayList<Integer> order = new ArrayList<>();
@@ -136,16 +150,16 @@ class ControllerTest {
         order.add(0);
         order.add(1);
         order.add(2);
-        msg = controller.swapOrder(order,0,model0.getNextPlayer().getUsername());
-        assertEquals(msg.getUsername(),"You are not the current player");
+        msg = controller.swapOrder(order,0,modelmap.get(0).getNextPlayer().getUsername());
+        assertEquals("You are not the current player",msg.getUsername());
         order.removeAll(order);
 
         //IllegalArgument
         order.add(0);
         order.add(23);
         order.add(2);
-        msg = controller.swapOrder(order,0,model0.getCurrPlayer().getUsername());
-        assertEquals(msg.getUsername(),"You cannot choose these positions");
+        msg = controller.swapOrder(order,0,modelmap.get(0).getCurrPlayer().getUsername());
+        assertEquals("You cannot choose these positions",msg.getUsername());
         order.removeAll(order);
 
         //TooManySelected
@@ -153,24 +167,24 @@ class ControllerTest {
         order.add(1);
         order.add(2);
         order.add(3);
-        msg = controller.swapOrder(order,0,model0.getCurrPlayer().getUsername());
-        assertEquals(msg.getUsername(),"Incorrect number of orders ");
+        msg = controller.swapOrder(order,0,modelmap.get(0).getCurrPlayer().getUsername());
+        assertEquals("Incorrect number of orders",msg.getUsername());
         order.removeAll(order);
 
         //MoveNotPossible
         order.add(0);
         order.add(1);
         order.add(2);
-        msg = controller.swapOrder(order,0,model0.getCurrPlayer().getUsername());
-        assertEquals(msg.getUsername(),"You can't do that now");
+        msg = controller.swapOrder(order,0,modelmap.get(0).getCurrPlayer().getUsername());
+        assertEquals("You can't do that now",msg.getUsername());
         order.removeAll(order);
 
         //Normal
         order.add(0);
         order.add(2);
         order.add(1);
-        msg = controller.swapOrder(order,0,model0.getCurrPlayer().getUsername());
-        assertEquals(msg.getUsername(),"Move successful");
+        msg = controller.swapOrder(order,0,modelmap.get(0).getCurrPlayer().getUsername());
+        assertEquals("Move successful",msg.getUsername());
 
     }
 
@@ -179,9 +193,6 @@ class ControllerTest {
     void addToBookshelf() {
 
     }
-
-
-
 
     @Test
     void newLobby() {
