@@ -20,6 +20,7 @@ import java.io.Console;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CLIPrint implements PropertyChangeListener {
 
@@ -115,32 +116,31 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
     //stampa tutte le bookshelf
-    //TODO forse c'è un deadlock
-    public void printAllBookshelf(ArrayList<Matrix> allMatrix){
+    public void printAllBookshelf(HashMap<String, Matrix> allMatrix){
         synchronized (cliMain.getLock()){
-            for (int i = 0; i < cliMain.getClientState().getAllBookshelf().size(); i++) {
-                System.out.println(cliMain.getClientState().getAllUsername().get(i) + ": ");
-                printBookshelf(cliMain.getClientState().getMyBookshelf());
+            for (String key: allMatrix.keySet()){
+                System.out.println("Bookshelf of: "+key);
+                printBookshelf(allMatrix.get(key));
                 System.out.println("\n");
             }
         }
     }
 
     //recupera il Personal Objective
-    private Bookshelf personalObjectiveReturn(PersonalObjective personalObjective){
+    private Matrix personalObjectiveReturn(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
-            Bookshelf bookshelf = new Bookshelf();
-            for (Point key : personalObjective.getCard().keySet()) {
-                bookshelf.getTiles().setTile(personalObjective.getCard().get(key), key);
+            Matrix bookshelf=new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(), Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
+            for (Point key : personalObjective.keySet()){
+                bookshelf.setTile(personalObjective.get(key), key);
             }
             return bookshelf;
         }
     }
 
     //stampa il personal Objective
-    public void printPersonalObjective(PersonalObjective personalObjective){
+    public void printPersonalObjective(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
-            Bookshelf bookshelf = personalObjectiveReturn(personalObjective);
+            Matrix bookshelf = personalObjectiveReturn(personalObjective);
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
@@ -149,10 +149,10 @@ public class CLIPrint implements PropertyChangeListener {
             for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
                 System.out.print(i + " ");
                 for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
-                    if (personalObjective.getCard().containsKey(new Point(i, j))) {
-                        System.out.print(tileColorBG(bookshelf.getTiles().getTile(i, j)) + "\u001b[30m X " + ColorCLI.RESET);
+                    if (personalObjective.containsKey(new Point(i, j))) {
+                        System.out.print(tileColorBG(bookshelf.getTile(i, j)) + "\u001b[30m X " + ColorCLI.RESET);
                     } else {
-                        System.out.print(tileColorBG(bookshelf.getTiles().getTile(i, j)) + "   " + ColorCLI.RESET);
+                        System.out.print(tileColorBG(bookshelf.getTile(i, j)) + "   " + ColorCLI.RESET);
                     }
                 }
                 System.out.println(" " + i);
@@ -166,9 +166,9 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
     //stampa la Bookshelf insieme al Personal Objective
-    public void printBookshelfPersonalObjective(Matrix bookshelf, PersonalObjective personalObjective){
+    public void printBookshelfPersonalObjective(Matrix bookshelf, HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
-            Bookshelf bookshelfPO = personalObjectiveReturn(personalObjective);
+            Matrix bookshelfPO = personalObjectiveReturn(personalObjective);
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
@@ -178,16 +178,16 @@ public class CLIPrint implements PropertyChangeListener {
                 System.out.print(i + " ");
                 for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                     //posizioni della PersonalObjective card
-                    if (personalObjective.getCard().containsKey(new Point(i, j))) {
+                    if (personalObjective.containsKey(new Point(i, j))) {
                         //posizione della Board == PersonalObjective
-                        if (personalObjective.getCard().get(new Point(i, j))
+                        if (personalObjective.get(new Point(i, j))
                                 .equals(bookshelf.getTile(new Point(i, j)))) {
-                            System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
+                            System.out.print(tileColor(bookshelfPO.getTile(i, j)) +
                                     String.valueOf(tileColorBG(bookshelf.getTile(i, j))) +
                                     "\u001b[30m V " +
                                     ColorCLI.RESET);
                         } else {
-                            System.out.print(tileColor(bookshelfPO.getTiles().getTile(i, j)) +
+                            System.out.print(tileColor(bookshelfPO.getTile(i, j)) +
                                     String.valueOf(tileColorBG(bookshelf.getTile(i, j))) +
                                     "\u001b[1m X " +
                                     ColorCLI.RESET);
@@ -225,7 +225,7 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
     //legge da JSON il Common Objective d'interesse
-    private void readJSONCO(CommonObjective commonObjective){
+    private void readJSONCO(Integer commonObjective){
         synchronized (cliMain.getLock()) {
             Matrix bookshelf = new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(), Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
             JSONParser jsonParser = new JSONParser();
@@ -237,30 +237,20 @@ public class CLIPrint implements PropertyChangeListener {
                 JSONObject coDetails = new JSONObject();
 
                 //che common objective sei?
-                if (commonObjective.getClass().equals(CommonObjective1.class)) {
-                    coDetails = (JSONObject) co.get("CO1");
-                } else if (commonObjective.getClass().equals(CommonObjective2.class)) {
-                    coDetails = (JSONObject) co.get("CO2");
-                } else if (commonObjective.getClass().equals(CommonObjective3.class)) {
-                    coDetails = (JSONObject) co.get("CO3");
-                } else if (commonObjective.getClass().equals(CommonObjective4.class)) {
-                    coDetails = (JSONObject) co.get("CO4");
-                } else if (commonObjective.getClass().equals(CommonObjective5.class)) {
-                    coDetails = (JSONObject) co.get("CO5");
-                } else if (commonObjective.getClass().equals(CommonObjective6.class)) {
-                    coDetails = (JSONObject) co.get("CO6");
-                } else if (commonObjective.getClass().equals(CommonObjective7.class)) {
-                    coDetails = (JSONObject) co.get("CO7");
-                } else if (commonObjective.getClass().equals(CommonObjective8.class)) {
-                    coDetails = (JSONObject) co.get("CO8");
-                } else if (commonObjective.getClass().equals(CommonObjective9.class)) {
-                    coDetails = (JSONObject) co.get("CO9");
-                } else if (commonObjective.getClass().equals(CommonObjective10.class)) {
-                    coDetails = (JSONObject) co.get("CO10");
-                } else if (commonObjective.getClass().equals(CommonObjective11.class)) {
-                    coDetails = (JSONObject) co.get("CO11");
-                } else if (commonObjective.getClass().equals(CommonObjective12.class)) {
-                    coDetails = (JSONObject) co.get("CO12");
+                switch (commonObjective){
+                    case 1 -> coDetails = (JSONObject) co.get("CO1");
+                    case 2 -> coDetails = (JSONObject) co.get("CO2");
+                    case 3 -> coDetails = (JSONObject) co.get("CO3");
+                    case 4 -> coDetails = (JSONObject) co.get("CO4");
+                    case 5 -> coDetails = (JSONObject) co.get("CO5");
+                    case 6 -> coDetails = (JSONObject) co.get("CO6");
+                    case 7 -> coDetails = (JSONObject) co.get("CO7");
+                    case 8 -> coDetails = (JSONObject) co.get("CO8");
+                    case 9 -> coDetails = (JSONObject) co.get("CO9");
+                    case 10-> coDetails = (JSONObject) co.get("CO10");
+                    case 11-> coDetails = (JSONObject) co.get("CO11");
+                    case 12-> coDetails = (JSONObject) co.get("CO12");
+
                 }
 
                 //salvataggio quantità e tipo
@@ -295,12 +285,12 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
     //stampa i common objective
-    public void printCommonObjective(CommonObjective co1, CommonObjective co2){
+    public void printCommonObjective(ArrayList<Integer> commonObjective){
         synchronized (cliMain.getLock()) {
             System.out.println("COMMON OBJECTIVE 1:");
-            readJSONCO(co1);
+            readJSONCO(commonObjective.get(0));
             System.out.println("\nCOMMONOBJECTIVE 2:");
-            readJSONCO(co2);
+            readJSONCO(commonObjective.get(1));
         }
     }
 
@@ -322,7 +312,7 @@ public class CLIPrint implements PropertyChangeListener {
     //stampa di chi è il turno
     private void printTurn(){
         synchronized (cliMain.getLock()){
-            if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getUsername())){
+            if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername())){
                 System.out.println("It is YOUR turn");
             }
             else {
@@ -335,7 +325,7 @@ public class CLIPrint implements PropertyChangeListener {
     public void playerTurn(){
         printTurn();
         printBoard(cliMain.getClientState().getBoard());
-        printCommonObjective(cliMain.getClientState().getCommonObjectives().get(0), cliMain.getClientState().getCommonObjectives().get(1));
+        printCommonObjective(cliMain.getClientState().getGameCommonObjective());
         printAllBookshelf(cliMain.getClientState().getAllBookshelf());
     }
 
@@ -344,8 +334,8 @@ public class CLIPrint implements PropertyChangeListener {
         System.out.println("The Game is ended");
         System.out.println("THE WINNER IS: " + cliMain.getClientState().getWinnerPlayer());
         System.out.println("\n\nALL THE PLAYERS POINTS: ");
-        for (int i = 0; i < cliMain.getClientState().getAllPlayerPonits().size(); i++) {
-            System.out.println(cliMain.getClientState().getAllUsername().get(i) + ": " + cliMain.getClientState().getAllPlayerPonits().get(i));
+        for (String key: cliMain.getClientState().getAllPublicPoints().keySet()){
+            System.out.println(key+": "+cliMain.getClientState().getAllPublicPoints().get(key));
         }
     }
 

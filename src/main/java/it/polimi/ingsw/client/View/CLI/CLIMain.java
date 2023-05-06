@@ -69,7 +69,7 @@ public class CLIMain {
         //chi ha la sedia?
         getCliPrint().printChair();
 
-        while(!clientState.isEndGame()){
+        while(!clientState.isGameIsEnded()){
             //controllo se è il turno del prossimo giocatore
             if (getClientState().getCurrentPlayer().equals(next)){
                 //stampa quello che devi stampare all'inizio di un turno di gioco

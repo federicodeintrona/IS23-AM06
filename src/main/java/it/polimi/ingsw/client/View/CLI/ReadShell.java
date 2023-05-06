@@ -99,12 +99,12 @@ public class ReadShell extends Thread{
 //            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
 //            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
             case "#help", "#h" -> cliMain.getCliPrint().help();
-            case "#printpersonal" -> cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPO());
+            case "#printpersonal" -> cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPersonalObjective());
             case "#printboard" -> cliMain.getCliPrint().printBoard(cliMain.getClientState().getBoard());
             case "#printyourbookshelf" -> {
                 //todo QUALE STAMPO???
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getMyBookshelf());
-                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPO());
+                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
             }
             case "#printbookshelf" -> {
                 int i=st.indexOf("@");
@@ -122,7 +122,7 @@ public class ReadShell extends Thread{
                 }
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(position));
             }
-            case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getCommonObjectives().get(0), cliMain.getClientState().getCommonObjectives().get(1));
+            case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective());
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
 
@@ -144,7 +144,7 @@ public class ReadShell extends Thread{
         }
 
         //setta il messaggio
-        pointsMessage.setUsername(cliMain.getClientState().getUsername());
+        pointsMessage.setUsername(cliMain.getClientState().getMyUsername());
         pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
         pointsMessage.setTiles(result);
 
@@ -157,7 +157,7 @@ public class ReadShell extends Thread{
         IntArrayMessage intArrayMessage=new IntArrayMessage();
 
         //setto il messaggio
-        intArrayMessage.setUsername(cliMain.getClientState().getUsername());
+        intArrayMessage.setUsername(cliMain.getClientState().getMyUsername());
         intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
         intArrayMessage.setIntegers(input);
 
@@ -170,7 +170,7 @@ public class ReadShell extends Thread{
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(cliMain.getClientState().getUsername());
+        intMessage.setUsername(cliMain.getClientState().getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(input.get(0));
 
@@ -183,7 +183,7 @@ public class ReadShell extends Thread{
         Message message=new Message();
 
         //setta il messaggio
-        message.setUsername(cliMain.getClientState().getUsername());
+        message.setUsername(cliMain.getClientState().getMyUsername());
         message.setType(MessageTypes.ROLLBACK);
 
         //invia il messaggio
@@ -212,7 +212,7 @@ public class ReadShell extends Thread{
         String num = readLine();
 
         //setta il messaggio
-        message.setUsername(cliMain.getClientState().getUsername());
+        message.setUsername(cliMain.getClientState().getMyUsername());
         message.setNum(Integer.parseInt(num));
         message.setType(MessageTypes.NUM_OF_PLAYERS);
 
@@ -225,7 +225,7 @@ public class ReadShell extends Thread{
     @Override
     public void run() {
         //TODO chiedo io username???
-        while(!cliMain.getClientState().isEndGame()){
+        while(!cliMain.getClientState().isGameIsEnded()){
             readCommand();
         }
     }
