@@ -1,128 +1,174 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Model.Tiles;
-import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Matrix;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 
-public class ClientState implements ClientStateRemoteInterface {
+public class ClientState implements ClientStateRemoteInterface{
 
-    private final Lock viewLock;
+    private Lock viewLock; //TODO da fare final
 
     private Networker net; //TODO controlla se ci va o meno non ricordo
-    private String username; //username del mio utente
 
-    private Matrix myBookshelf; //mia bookshelf
-    private ArrayList<Matrix> allBookshelf; //tutte le bookshelf - le posizioni sono uguali alle posizioni di allUsername
-    private Matrix board; //la board di gioco
-    private ArrayList<String> allUsername; //tutti gli username
-    private PersonalObjective myPO; //il mio personal objective
-    private ArrayList<CommonObjective> commonObjectives; //i common objective
-    private String currentPlayer; //giocatore corrente
-    private String nextPlayer; //prossimo giocatore
-    private boolean endGame; //è finita la partita?
-    private String winnerPlayer; //vincitore della partita
-    private ArrayList<Integer> allPlayerPonits; //i punti di tutti i giocatori
-    private ArrayList<Tiles> order; //ordine delle tessere
-    private int myPoints; //i miei punti
+    private String myUsername;
+    private ArrayList<String> allUsername;
+    private HashMap<Point, Tiles> myPersonalObjective;
+    private ArrayList<Integer> gameCommonObjective;
+    private Matrix board;
+    private Matrix myBookshelf;
+    private HashMap<String, Matrix> allBookshelf;
+    private Integer myPoints;
+    private HashMap<String, Integer> allPublicPoints;
+    private ArrayList<Point> selectedTiles;
+    private String currentPlayer;
+    private String nextPlayer;
+    private String winnerPlayer;
+    private boolean gameIsEnded;
 
-    public ClientState(Lock viewLock) {
-        this.viewLock = viewLock;
+//    public ClientState(Lock viewLock) {
+//        this.viewLock = viewLock;
+//    }
+
+
+    public ClientState() {
     }
 
-
-
-
-    public Networker getNet() {
+    public String getMyUsername() {
         synchronized (viewLock){
-            return net;
+            return myUsername;
         }
     }
 
-    public String getUsername() {
-        synchronized (viewLock) {
-            return username;
-        }
-    }
-
-    public void setUsername(String username) {
-        synchronized (viewLock) {
-            this.username = username;
-        }
-    }
-
-    public Matrix getMyBookshelf() {
-        synchronized (viewLock) {
-            return myBookshelf;
-        }
-    }
-
-    public void setMyBookshelf(Matrix myBookshelf) {
-        synchronized (viewLock) {
-            this.myBookshelf = myBookshelf;
-        }
-    }
-
-    public ArrayList<Matrix> getAllBookshelf() {
-        synchronized (viewLock) {
-            return allBookshelf;
-        }
-    }
-
-    public void setAllBookshelf(ArrayList<Matrix> allBookshelf) {
-        synchronized (viewLock) {
-            this.allBookshelf = allBookshelf;
-        }
-    }
-
-    public Matrix getBoard() {
-        synchronized (viewLock) {
-            return board;
-        }
-    }
-
-    public void setBoard(Matrix board) {
-        synchronized (viewLock) {
-            this.board = board;
+    public void setMyUsername(String myUsername) {
+        synchronized (viewLock){
+            this.myUsername = myUsername;
         }
     }
 
     public ArrayList<String> getAllUsername() {
-        synchronized (viewLock) {
+        synchronized (viewLock){
             return allUsername;
         }
     }
 
     public void setAllUsername(ArrayList<String> allUsername) {
-        synchronized (viewLock) {
+        synchronized (viewLock){
             this.allUsername = allUsername;
         }
     }
 
-    public PersonalObjective getMyPO() {
-        synchronized (viewLock) {
-            return myPO;
+    public HashMap<Point, Tiles> getMyPersonalObjective() {
+        synchronized (viewLock){
+            return myPersonalObjective;
         }
     }
 
-    public void setMyPO(PersonalObjective myPO) {
-        synchronized (viewLock) {
-            this.myPO = myPO;
+    public void setMyPersonalObjective(HashMap<Point, Tiles> myPersonalObjective) {
+        synchronized (viewLock){
+            this.myPersonalObjective = myPersonalObjective;
         }
     }
 
-    public ArrayList<CommonObjective> getCommonObjectives() {
-        synchronized (viewLock) {
-            return commonObjectives;
+    public ArrayList<Integer> getGameCommonObjective() {
+        synchronized (viewLock){
+            return gameCommonObjective;
         }
     }
 
-    public void setCommonObjectives(ArrayList<CommonObjective> commonObjectives) {
+    public void setGameCommonObjective(ArrayList<Integer> gameCommonObjective) {
+        synchronized (viewLock){
+            this.gameCommonObjective = gameCommonObjective;
+        }
+    }
+
+    public Matrix getBoard() {
+        synchronized (viewLock){
+            return board;
+        }
+    }
+
+    public void setBoard(Matrix board) {
+        synchronized (viewLock){
+            this.board = board;
+        }
+    }
+
+    public Matrix getMyBookshelf() {
+        synchronized (viewLock){
+            return myBookshelf;
+        }
+    }
+
+    public void setMyBookshelf(Matrix myBookshelf) {
+        synchronized (viewLock){
+            this.myBookshelf = myBookshelf;
+        }
+    }
+
+    public HashMap<String, Matrix> getAllBookshelf() {
+        synchronized (viewLock){
+            return allBookshelf;
+        }
+    }
+
+    public void setAllBookshelf(HashMap<String, Matrix> allBookshelf) {
+        synchronized (viewLock){
+            this.allBookshelf = allBookshelf;
+        }
+    }
+
+    public void setAllBookshelf(String username, Matrix bookshelf){
         synchronized (viewLock) {
-            this.commonObjectives = commonObjectives;
+            allBookshelf.put(username, bookshelf);
+            if (myUsername.equals(username)) {
+                myBookshelf = bookshelf;
+            }
+        }
+    }
+
+    public Integer getMyPoints() {
+        synchronized (viewLock) {
+            return myPoints;
+        }
+    }
+
+    public void setMyPoints(Integer myPoints) {
+        synchronized (viewLock) {
+            this.myPoints = myPoints;
+        }
+    }
+
+    public HashMap<String, Integer> getAllPublicPoints() {
+        synchronized (viewLock) {
+            return allPublicPoints;
+        }
+    }
+
+    public void setAllPublicPoints(HashMap<String, Integer> allPublicPoints) {
+        synchronized (viewLock) {
+            this.allPublicPoints = allPublicPoints;
+        }
+    }
+
+    public void setAllPublicPoints(String username, Integer point){
+        synchronized (viewLock) {
+            allPublicPoints.put(username, point);
+        }
+    }
+
+    public ArrayList<Point> getSelectedTiles() {
+        synchronized (viewLock) {
+            return selectedTiles;
+        }
+    }
+
+    public void setSelectedTiles(ArrayList<Point> selectedTiles) {
+        synchronized (viewLock) {
+            this.selectedTiles = selectedTiles;
         }
     }
 
@@ -138,15 +184,15 @@ public class ClientState implements ClientStateRemoteInterface {
         }
     }
 
-    public boolean isEndGame() {
+    public String getNextPlayer() {
         synchronized (viewLock) {
-            return endGame;
+            return nextPlayer;
         }
     }
 
-    public void setEndGame(boolean endGame) {
+    public void setNextPlayer(String nextPlayer) {
         synchronized (viewLock) {
-            this.endGame = endGame;
+            this.nextPlayer = nextPlayer;
         }
     }
 
@@ -162,63 +208,22 @@ public class ClientState implements ClientStateRemoteInterface {
         }
     }
 
-    public ArrayList<Integer> getAllPlayerPonits() {
+    public boolean isGameIsEnded() {
         synchronized (viewLock) {
-            return allPlayerPonits;
+            return gameIsEnded;
         }
     }
 
-    public void setAllPlayerPonits(ArrayList<Integer> allPlayerPonits) {
+    public void setGameIsEnded(boolean gameIsEnded) {
         synchronized (viewLock) {
-            this.allPlayerPonits = allPlayerPonits;
+            this.gameIsEnded = gameIsEnded;
         }
     }
 
-    public String getNextPlayer() {
-        synchronized (viewLock) {
-            return nextPlayer;
-        }
-    }
-
-    public void setNextPlayer(String nextPlayer) {
-        synchronized (viewLock){
-            this.nextPlayer = nextPlayer;
-        }
-    }
-
-    public ArrayList<Tiles> getOrder() {
-        return order;
-    }
-
-    public void setOrder(ArrayList<Tiles> order) {
-        this.order = order;
-    }
-
-    public int getMyPoints() {
-        return myPoints;
-    }
-
-    public void setMyPoints(int myPoints) {
-        this.myPoints = myPoints;
-    }
-
-    //TODO punti e libreria modifica singola input username
 
 
-    /*
-        TODO
-            all username - primo chair
-            mio username
-            personal - Hash
-            common - array<integer> - da modificare print
-            all bookshelf - Map<username, matrix>
-            board
-            all point - Map<username, integer> - pubblici
-            my point
-            current
-            next
-            isEndGame
-            winner
-            order selected tiles
-     */
+
+
+
+
 }

@@ -9,9 +9,6 @@ public enum MessageTypes {
     SWITCH_PLACE, //scambia posizioni tessere
     ADD_TO_BOOKSHELF, //colonna in cui inserire tiles
     OK,
-    REMOVE,
-    SWITCH,
-    ADD,
     CHAT,
     ROLLBACK, //torna all mossa precedente
     DISCONNECT,

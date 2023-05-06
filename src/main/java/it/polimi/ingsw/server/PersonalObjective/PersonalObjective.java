@@ -10,9 +10,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public class PersonalObjective {
@@ -61,7 +64,9 @@ public class PersonalObjective {
         JSONParser jsonParser=new JSONParser();
 
         try {
-            FileReader reader=new FileReader("src/main/java/it/polimi/ingsw/server/PersonalObjective/PersonalObjective.json");
+            ClassLoader classLoader=PersonalObjective.class.getClassLoader();
+            File file=new File(Objects.requireNonNull(classLoader.getResource("PersonalObjective.json")).getFile());
+            FileReader reader=new FileReader(file);
             //read all JSON file
             Object obj=jsonParser.parse(reader);
             JSONObject po=(JSONObject) obj;
@@ -122,10 +127,17 @@ public class PersonalObjective {
 
 
         }
-        catch (IOException | ParseException e) {
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
+        System.out.println(card);
     }
 
     /**
@@ -180,6 +192,7 @@ public class PersonalObjective {
             default -> 0;
         };
     }
+
 
 
 
