@@ -126,9 +126,14 @@ class CLIPrintTest {
         CommonObjective commonObjective2=new CommonObjective2();
 
         ArrayList<Integer> arrayList=new ArrayList<>();
-        //TODO da modificare
+        arrayList.add(1);
+        arrayList.add(2);
+
+        cliPrint.printCommonObjective(arrayList);
 
     }
+
+
 
 
 
