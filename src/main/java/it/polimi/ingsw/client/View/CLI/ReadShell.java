@@ -159,6 +159,7 @@ public class ReadShell extends Thread{
         //setto il messaggio
         intArrayMessage.setUsername(cliMain.getClientState().getMyUsername());
         intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
+        intArrayMessage.setIntegers(input);
 
         //invia il messaggio
         sendMessage(intArrayMessage);
