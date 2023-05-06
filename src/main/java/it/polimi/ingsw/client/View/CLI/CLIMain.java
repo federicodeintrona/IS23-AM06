@@ -11,7 +11,6 @@ public class CLIMain {
     /*
         TODO
             creare oggetto lock
-            io leggo l'username e lo invio a networker FirstConnection??
      */
 
 
@@ -51,7 +50,8 @@ public class CLIMain {
 
     public void receivedMessage(Message message){
         switch (message.getType()){
-            //TODO fare tutti i case
+            case NUM_OF_PLAYERS -> readShell.askForNumberOfPlayer();
+            //TODO capire che messaggi mi arrivano e in che formato
         }
     }
 
@@ -62,6 +62,11 @@ public class CLIMain {
         readShell=new ReadShell(this);
         String next= getClientState().getCurrentPlayer();
 
+        //richieste iniziali - username e numero di giocatori
+        readShell.initialRequests();
+
+
+        //COMANDI GIOCO
         //facciamo partite readShell
         Thread th1=new Thread(readShell);
         th1.start();

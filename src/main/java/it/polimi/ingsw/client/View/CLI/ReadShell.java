@@ -199,8 +199,8 @@ public class ReadShell extends Thread{
             case ADD_TO_BOOKSHELF -> cliMain.getNet().addTilesToBookshelf(message);
             //MANCA MESSAGGIO DI ROLLBACK DA PARTE DEL NETWORKER
 //            case ROLLBACK -> net.rollback(message);
-            //TODO case username -> first connection
-            //TODO case number of player -> number of player selection
+            case USERNAME -> cliMain.getNet().firstConnection(message);
+            case NUM_OF_PLAYERS -> cliMain.getNet().numberOfPlayersSelection(message);
         }
     }
 
@@ -218,13 +218,27 @@ public class ReadShell extends Thread{
 
         //invia il messaggio
         sendMessage(message);
+    }
 
+    //richieste iniziali
+    public void initialRequests(){
+        //richiesta username
+        askUsername();
+
+        //richiesta numero di giocatori - solo se serve
+        //TODO capire come fare - secondo me... boh non mi convince
+        if (askForNumberOfPlayer()){
+            askNumberOfPlayerMessage();
+        }
+    }
+
+    public boolean askForNumberOfPlayer(){
+        return true;
     }
 
 
     @Override
     public void run() {
-        //TODO chiedo io username???
         while(!cliMain.getClientState().isGameIsEnded()){
             readCommand();
         }
