@@ -4,11 +4,10 @@ import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -29,9 +28,9 @@ public class Server extends UnicastRemoteObject {
 
     protected Server() throws RemoteException, IOException, ParseException{
         super();
-        ClassLoader classLoader= PersonalObjective.class.getClassLoader();
-        File file=new File(Objects.requireNonNull(classLoader.getResource("Server.json")).getFile());
-        config = new JsonReader(file);
+        InputStream is=this.getClass().getClassLoader().getResourceAsStream("Server.json");
+        config=new JsonReader(is);
+//        config = new JsonReader("src/main/resources/Server.json");
         port=config.getInt("port");
     }
 

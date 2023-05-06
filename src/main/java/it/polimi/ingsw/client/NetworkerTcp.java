@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 
@@ -20,9 +21,9 @@ public class NetworkerTcp implements Networker{
     public NetworkerTcp()  {
         JsonReader config;
         try {
-            ClassLoader classLoader= PersonalObjective.class.getClassLoader();
-            File file=new File(Objects.requireNonNull(classLoader.getResource("Server.json")).getFile());
-            config = new JsonReader(file);
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
+            config=new JsonReader(is);
+//            config = new JsonReader("src/main/resources/NetworkerTcp.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
