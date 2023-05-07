@@ -1,3 +1,5 @@
 chiedere perchè non va jar - da errori che non capisco --> merge con jar_javafx
 
 cosa altro metter in client
+
+ricordarsi di non committare cose_da_fare su main
