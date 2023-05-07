@@ -15,6 +15,7 @@ public abstract class CommonObjective {
     int points = 8;
     Set<Player> playersWhoCompletedComObj = new HashSet<>();
 
+    private int num;
 
 
     public static ArrayList<CommonObjective> randomSubclass(int num) {
@@ -69,5 +70,11 @@ public abstract class CommonObjective {
         return playersWhoCompletedComObj;
     }
 
+    public int getNum() {
+        return num;
+    }
 
+    public void setNum(int num) {
+        this.num = num;
+    }
 }

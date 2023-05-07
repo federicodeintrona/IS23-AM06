@@ -8,6 +8,10 @@ import java.util.Set;
 
 public class CommonObjective10 extends CommonObjective{
 
+    public CommonObjective10() {
+        this.setNum(10);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 2 filled rows, each one made by 5 tiles of

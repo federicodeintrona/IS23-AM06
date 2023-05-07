@@ -1,13 +1,8 @@
 package it.polimi.ingsw.utils;
 
-import it.polimi.ingsw.server.Model.Board;
-import it.polimi.ingsw.server.Model.Bookshelf;
-import it.polimi.ingsw.server.VirtualView;
-import org.json.simple.JSONArray;
+import it.polimi.ingsw.server.VirtualView.VirtualView;
 import org.json.simple.JSONObject;
 
-import java.awt.*;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 
@@ -17,11 +12,12 @@ public class JSONWriter {
     public JSONObject writeVirtualView(VirtualView view){
         JSONObject viewJson = new JSONObject();
 
+        /*
         viewJson.put("Username", nameToJSON(view.getPlayerNames()));
         viewJson.put("Board", boardToJSON(view.getBoard()));
         viewJson.put("Bookshelf", bookShelfToJSON(view.getBookshelves()));
         viewJson.put("Points", pointsToJSON(view.getPrivatePoints(),view.getPublicPoints()));
-
+*/
 
 
         return viewJson;
