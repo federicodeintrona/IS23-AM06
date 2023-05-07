@@ -16,9 +16,7 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.Console;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -231,8 +229,9 @@ public class CLIPrint implements PropertyChangeListener {
             JSONParser jsonParser = new JSONParser();
 
             try {
-                FileReader reader = new FileReader("src/main/resources/CommonObjective.json");
-                Object obj = jsonParser.parse(reader);
+//                FileReader reader = new FileReader("src/main/resources/CommonObjective.json");
+                InputStream is=this.getClass().getClassLoader().getResourceAsStream("CommonObjective.json");
+                Object obj = jsonParser.parse(new InputStreamReader(is));
                 JSONObject co = (JSONObject) obj;
                 JSONObject coDetails = new JSONObject();
 
