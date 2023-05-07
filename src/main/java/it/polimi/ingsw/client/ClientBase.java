@@ -1,18 +1,16 @@
 package it.polimi.ingsw.client;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class ClientBase {
 
-    public static void main( String[] args ) throws MalformedURLException, NotBoundException, RemoteException {
+    public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
-        String decision = null;
+        String decision ;
 
         System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
+        ClientState clientState=new ClientState();
 
         Networker client = null;
         switch (decision) {
@@ -21,7 +19,7 @@ public class ClientBase {
                 break;
 
             case "TCP":
-                client = new NetworkerTcp();
+                client = new NetworkerTcp(clientState);
                 break;
 
         }

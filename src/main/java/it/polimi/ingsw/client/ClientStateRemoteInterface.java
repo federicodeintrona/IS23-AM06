@@ -16,7 +16,7 @@ public interface ClientStateRemoteInterface extends Remote {
 
     public void setAllBookshelf(HashMap<String, Matrix> allBookshelf) throws RemoteException;
 
-    public void setAllBookshelf(String username, Matrix bookshelf) throws RemoteException;
+    public void setBookshelf(String username, Matrix bookshelf) throws RemoteException;
 
     public void setBoard(Matrix board) throws RemoteException;
 
@@ -32,7 +32,7 @@ public interface ClientStateRemoteInterface extends Remote {
 
     public void setAllPublicPoints(String username, Integer point) throws RemoteException;
 
-    public void setSelectedTiles(ArrayList<Point> selectedTiles) throws RemoteException;
+    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) throws RemoteException;
 
     public void setCurrentPlayer(String currentPlayer) throws RemoteException;
 
