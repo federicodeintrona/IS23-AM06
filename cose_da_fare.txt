@@ -1,0 +1,6 @@
+sistemare json in resources - CommonObjective.json per CLI
+
+copiare Message folder in client
+
+
+

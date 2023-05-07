@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.View;
+package it.polimi.ingsw.client.View.CLI;
 
 public enum ColorCLI {
     //colore di fine stringa e di reset
@@ -14,6 +14,7 @@ public enum ColorCLI {
     LIGHT_BLUE ("\u001B[38;5;39m"),
     WHITE ("\u001B[38;5;231m"),
     EMPTY ("\u001b[38;5;94m"),
+    POSITION ("\u001b[31;1m"),
 
     //solo colore di background
     NOTALLOWEDBG (""),
@@ -24,6 +25,7 @@ public enum ColorCLI {
     LIGHT_BLUEBG ("\u001B[48;5;39m"), //106;183;183
     WHITEBG ("\u001B[48;5;231m"), //237;226;191
     EMPTYBG ("\u001b[48;5;94m"),
+    POSITIONBG ("\u001b[41;1m"),
 
     GREENBG1 ("\u001B[48;2;145;165;65m"), //145;165;65
     YELLOWBG1 ("\u001B[48;2;223;159;69m"), //223;159;69
