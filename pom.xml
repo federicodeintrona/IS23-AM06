@@ -15,6 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>19</maven.compiler.source>
     <maven.compiler.target>19</maven.compiler.target>
+    <junit.version>5.9.1</junit.version>
   </properties>
 
   <dependencies>
@@ -48,6 +49,31 @@
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
       <version>1.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>20-ea+4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>20-ea+4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+
     </dependency>
   </dependencies>
 
