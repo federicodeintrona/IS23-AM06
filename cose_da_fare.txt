@@ -1,6 +1,3 @@
-sistemare json in resources - CommonObjective.json per CLI
+chiedere perchè non va jar - da errori che non capisco --> merge con jar_javafx
 
-copiare Message folder in client
-
-
-
+cosa altro metter in client
