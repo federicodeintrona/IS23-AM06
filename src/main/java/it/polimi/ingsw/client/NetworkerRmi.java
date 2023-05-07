@@ -87,7 +87,7 @@ public class NetworkerRmi implements Networker {
      * Asks the client to enter a valid username. Once he has
      * done the client gets added to the lobby
      */
-    public Message firstConnection (Message username) {
+    public void firstConnection (Message username) {
         try {
             message = controller.handleNewClient(username.getUsername());
         } catch (RemoteException e) {
@@ -96,8 +96,6 @@ public class NetworkerRmi implements Networker {
 
         // Calling the completeRmiConnection() method to complete the client-server connection
         if (!message.getType().equals(MessageTypes.ERROR)) completeRmiConnection();
-
-        return message;
     }
 
     /**
@@ -116,7 +114,7 @@ public class NetworkerRmi implements Networker {
      *
      * @param numberOfPlayers
      */
-    public Message numberOfPlayersSelection(Message numberOfPlayers) {
+    public void numberOfPlayersSelection(Message numberOfPlayers) {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
 
         try {
@@ -124,8 +122,6 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-
-        return message;
     }
 
     /**
@@ -133,37 +129,33 @@ public class NetworkerRmi implements Networker {
      *
      * @param tiles     ArrayList containing the coordinates of the tiles to remove
      */
-    public Message removeTilesFromBoard(Message tiles) {
+    public void removeTilesFromBoard(Message tiles) {
         PointsMessage tempMessage = (PointsMessage) tiles;
         try {
             message = controller.removeTiles(gameID, username, tempMessage.getTiles());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-
-        return message;
     }
 
     /**
      *
      * @param ints
      */
-    public Message switchTilesOrder(Message ints) {
+    public void switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
         try {
             message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-
-        return message;
     }
 
     /**
      *
      * @param column
      */
-    public Message addTilesToBookshelf (Message column) {
+    public void addTilesToBookshelf (Message column) {
         IntMessage tempMessage = (IntMessage) column;
         try {
             message = controller.addToBookshelf(gameID, username, tempMessage.getNum());
@@ -171,7 +163,6 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        return message;
     }
 
     private String getClientIP() throws UnknownHostException {

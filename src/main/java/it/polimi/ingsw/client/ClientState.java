@@ -23,7 +23,7 @@ public class ClientState implements ClientStateRemoteInterface{
     private HashMap<String, Matrix> allBookshelf;
     private Integer myPoints;
     private HashMap<String, Integer> allPublicPoints;
-    private ArrayList<Point> selectedTiles;
+    private ArrayList<Tiles> selectedTiles;
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
@@ -121,7 +121,7 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
-    public void setAllBookshelf(String username, Matrix bookshelf){
+    public void setBookshelf(String username, Matrix bookshelf){
         synchronized (viewLock) {
             allBookshelf.put(username, bookshelf);
             if (myUsername.equals(username)) {
@@ -160,13 +160,13 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
-    public ArrayList<Point> getSelectedTiles() {
+    public ArrayList<Tiles> getSelectedTiles() {
         synchronized (viewLock) {
             return selectedTiles;
         }
     }
 
-    public void setSelectedTiles(ArrayList<Point> selectedTiles) {
+    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
         synchronized (viewLock) {
             this.selectedTiles = selectedTiles;
         }

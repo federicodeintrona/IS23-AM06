@@ -25,7 +25,7 @@ public class TCPVirtualView extends VirtualView{
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        //objectName           Object
+        //objectName      3     Object
 
         //board                Matrix
         //bookshelf w/ name    Matrix
