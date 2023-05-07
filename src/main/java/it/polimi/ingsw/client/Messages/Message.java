@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.client.Messages;
 
 import java.io.Serializable;
 
@@ -7,9 +7,6 @@ public class Message implements Serializable {
     private String username;
     private MessageTypes type;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public MessageTypes getType() {
         return type;
@@ -18,6 +15,10 @@ public class Message implements Serializable {
 
     public void setType(MessageTypes type) {
         this.type = type;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setContent(Object o){}
