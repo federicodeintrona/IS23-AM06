@@ -11,12 +11,14 @@ import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller implements ControllerInterface{
+public class Controller implements ControllerInterface, PropertyChangeListener {
 
     private Lobby lobby;
     private HashMap<Integer, Model> games;
@@ -235,6 +237,8 @@ public class Controller implements ControllerInterface{
             // Looking up the registry for the remote object
             ClientStateRemoteInterface clientState = (ClientStateRemoteInterface) registry.lookup("ClientState");
 
+
+
         } catch (Exception e) {
             System.err.println("Client exception: " + e);
             e.printStackTrace();
@@ -242,4 +246,9 @@ public class Controller implements ControllerInterface{
     }
 
 
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }

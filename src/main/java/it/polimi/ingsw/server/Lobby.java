@@ -145,7 +145,6 @@ public class Lobby {
     private void closeLobby(){}
     public void playerDisconnection(){}
 
-
     public void setController(Controller controller) {
         this.controller = controller;
     }

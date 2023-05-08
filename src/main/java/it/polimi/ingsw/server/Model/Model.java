@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
+import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
@@ -63,7 +64,11 @@ public class Model  {
         this.virtualViews = views;
     }
 
-
+    public Model(ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
+        this.players = players;
+        this.virtualViews = views;
+        notifier.addPropertyChangeListener("end", controller);
+    }
 
     //PUBLIC METHODS
 
@@ -348,6 +353,8 @@ public class Model  {
     private void endGame(){
         state = GameState.ENDING;
         selectWInner();
+        //Notify controller of game end ???
+        notifier.firePropertyChange(new PropertyChangeEvent(this,"end","",winner));
     }
 
 
