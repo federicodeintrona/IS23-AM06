@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ClientState;
+import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Model.GameState;
 import it.polimi.ingsw.server.Model.Model;
@@ -15,6 +17,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +49,8 @@ class ControllerTest {
 
                 players.get(j).add(new Player("User"+ j + i));
                 playermap.put(players.get(j).get(i).getUsername(), players.get(j).get(i));
-                views.get(j).add(new RMIVirtualView("User" + j + i));
+                views.get(j).add(new RMIVirtualView("User" + j + i,
+                                new ClientState("User" + j + i,new ReentrantLock())));
             }
 
             modelmap.get(j).setPlayers(players.get(j));

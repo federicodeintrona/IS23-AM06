@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
+import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 
 import java.awt.*;
@@ -36,7 +37,6 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
         views = lobby.getViews() ;
         players = lobby.getPlayers();
     }
-
 
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
         games = models;
@@ -237,7 +237,7 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
             // Looking up the registry for the remote object
             ClientStateRemoteInterface clientState = (ClientStateRemoteInterface) registry.lookup("ClientState");
 
-
+            addView(new RMIVirtualView(username,clientState));
 
         } catch (Exception e) {
             System.err.println("Client exception: " + e);
@@ -245,10 +245,14 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
         }
     }
 
-
+    public void playerDisconnection(String username){
+        lobby.playerDisconnection(username);
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
+        lobby.closeGame(((Model)evt.getSource()).getGameID());
 
     }
 }

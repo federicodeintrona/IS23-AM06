@@ -13,6 +13,8 @@ import java.util.Queue;
 
 public class Lobby {
     private Controller controller;
+
+    //Diventa una mappa tra username e  indirizzo ip e facciamo i check li
     private final ArrayList<String> usernames = new ArrayList<>();
     private final HashMap<Integer,ArrayList<String>> lobbys = new HashMap<>();
     private final HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
@@ -81,7 +83,6 @@ public class Lobby {
 
 
 
-
     /**
      * Adds a client to a waiting lobby and starts the game when it is full
      * @param client    The client you want to add
@@ -92,12 +93,14 @@ public class Lobby {
         Integer index = waitingLobbys.peek();
 
         if(index!=null) {
+
             //Add the client to the lobby and set his lobbyID
             lobbys.get(index).add(client);
 
             //If the lobby reached the max number of player, start the game.
             if (lobbys.get(index).size() == gamePlayerNumber.get(index)) {
                 waitingLobbys.remove();
+                lobbys.remove(index);
                 startGame(index);
 
             }
@@ -107,8 +110,6 @@ public class Lobby {
 
         }else throw new LobbyNotExists();
     }
-
-
 
 
     public void startGame(int index) {
@@ -141,23 +142,40 @@ public class Lobby {
     }
 
 
+    public void closeGame(int gameID){
 
-    private void closeLobby(){}
-    public void playerDisconnection(){}
+        for(String s : games.get(gameID).getPlayers().stream().map(Player::getUsername).toList()){
+            players.remove(s);
+        }
+
+        //Remove the model
+        games.remove(gameID);
+
+    }
+    public void playerDisconnection(String username){
+        //Forever player disconnection
+        views.remove(username);
+        players.remove(username);
+        usernames.remove(username);
+
+
+    }
+
+
+
+
 
     public void setController(Controller controller) {
         this.controller = controller;
     }
-
     public HashMap<Integer,Model> getGames() {
         return games;
     }
-
     public HashMap<String, Player> getPlayers() {
         return players;
     }
-
     public HashMap<String, VirtualView> getViews() {
         return views;
     }
+
 }

@@ -20,9 +20,9 @@ public class ClientState implements ClientStateRemoteInterface{
     private ArrayList<Integer> gameCommonObjective;
     private Matrix board;
     private Matrix myBookshelf;
-    private HashMap<String, Matrix> allBookshelf;
+    private HashMap<String, Matrix> allBookshelf = new HashMap<>();
     private Integer myPoints;
-    private HashMap<String, Integer> allPublicPoints;
+    private HashMap<String, Integer> allPublicPoints = new HashMap<>();
     private ArrayList<Point> selectedTiles;
     private String currentPlayer;
     private String nextPlayer;
@@ -37,11 +37,21 @@ public class ClientState implements ClientStateRemoteInterface{
     public ClientState() {
     }
 
+    public ClientState(Lock lock) {
+        viewLock = lock;
+    }
+    public ClientState(String username,Lock lock) {
+        viewLock = lock;
+        myUsername = username;
+    }
+
     public String getMyUsername() {
         synchronized (viewLock){
             return myUsername;
         }
     }
+
+
 
     public void setMyUsername(String myUsername) {
         synchronized (viewLock){
