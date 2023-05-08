@@ -1,5 +1,7 @@
 chiedere perchè non va jar - da errori che non capisco --> merge con jar_javafx
 
-cosa altro metter in client
+cosa altro mettere in client
 
 ricordarsi di non committare cose_da_fare su main
+
+errore per jar --> non va bene in CommonObjective il temp.size() nel random
