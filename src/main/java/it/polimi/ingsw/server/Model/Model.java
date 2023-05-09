@@ -116,6 +116,18 @@ public class Model  {
             notifier.firePropertyChange(new PropertyChangeEvent(
                     p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
+            //Notify Bookshelf
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getBookshelf().getTiles(),
+                    "all", p.getUsername(), "bookshelf"));
+
+            //Notify publicPoints
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getPublicPoint(), "all",
+                    p.getUsername(), "publicPoints"));
+
+            //Notify privatePoints
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
+                    p.getUsername(), "privatePoints"));
+
         }
 
         //Notify Board
@@ -131,6 +143,9 @@ public class Model  {
                 commonObj.stream().map(CommonObjective::getNum).toList(), "all", "0","commonObj" ));
 
 
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(
+               true, "all", "0","start" ));
 
 
 
@@ -313,7 +328,7 @@ public class Model  {
         //Notify privatePoints
         if(currPlayer.getPrivatePoint()!=privatePoints.get(players.indexOf(currPlayer))) {
 
-            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), "all",
+            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), currPlayer.getUsername(),
                     currPlayer.getUsername(), "privatePoints"));
 
         }
@@ -359,8 +374,8 @@ public class Model  {
     private void endGame(){
         state = GameState.ENDING;
         selectWInner();
-        //Notify controller of game end ???
-        notifier.firePropertyChange(new PropertyChangeEvent(this,"end","",winner));
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","start" ));
     }
 
 

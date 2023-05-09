@@ -49,7 +49,6 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
-
         games.get(ID).initialization();
     }
 

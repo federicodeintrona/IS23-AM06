@@ -32,13 +32,12 @@ public class RMIVirtualView extends VirtualView{
     public void propertyChange(PropertyChangeEvent evt) {
 
         try {
-
             switch ((String) evt.getNewValue()) {
-                case ("board") -> {
-                    clientState.setBoard((Matrix) evt.getSource());
-                }
                 case ("playerNames") -> {
                     clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));
+                }
+                case ("board") -> {
+                    clientState.setBoard((Matrix) evt.getSource());
                 }
                 case ("commonObj") -> {
                     clientState.setGameCommonObjective(new ArrayList<>((List<Integer>) evt.getSource()));
@@ -64,7 +63,12 @@ public class RMIVirtualView extends VirtualView{
                 case("winner")->{
                     clientState.setWinnerPlayer((String) evt.getSource());
                 }
-
+                case("start")->{
+                    clientState.setGameHasStarted((boolean) evt.getSource());
+                }
+                case("end")->{
+                    clientState.setGameIsEnded((boolean) evt.getSource());
+                }
 
             }
 

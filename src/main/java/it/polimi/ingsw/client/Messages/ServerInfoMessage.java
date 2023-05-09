@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.Messages;
 public class ServerInfoMessage extends Message {
 
     private int ip;
-
     private int port;
 
     public int getIp() {

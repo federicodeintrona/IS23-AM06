@@ -28,6 +28,7 @@ public class ClientState implements ClientStateRemoteInterface{
     private String nextPlayer;
     private String winnerPlayer;
     private boolean gameIsEnded;
+    private boolean gameHasStarted;
 
 //    public ClientState(Lock viewLock) {
 //        this.viewLock = viewLock;
@@ -231,9 +232,15 @@ public class ClientState implements ClientStateRemoteInterface{
     }
 
 
+    public boolean isGameHasStarted() {
+        synchronized (viewLock) {
+            return gameHasStarted;
+        }
+    }
 
-
-
-
-
+    public void setGameHasStarted(boolean gameHasStarted) {
+        synchronized (viewLock) {
+            this.gameHasStarted = gameHasStarted;
+        }
+    }
 }
