@@ -7,11 +7,21 @@ import it.polimi.ingsw.server.Messages.Message;
 public class CLIMain {
 
 
-
-    /*
-        TODO
-            creare oggetto lock
-     */
+/*
+    TODO
+        partita inizia quando
+        send message
+                received message
+        .
+            -username
+                -error
+                -new_lobby -> chiedere il numero di giocatori
+                -waiting_for_players -> print aspetto
+            -num_of_player
+            .
+            -ok
+            -error
+ */
 
 
     private final Object lock; //su cosa lockare - comune con ClientState
@@ -25,6 +35,7 @@ public class CLIMain {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        //net.setUserInterface(this);
     }
 
     public Object getLock() {
@@ -60,6 +71,30 @@ public class CLIMain {
     public void runCLI (){
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
+
+        Thread th1=new Thread(readShell);
+        th1.start();
+
+
+
+        /*
+            richieste iniziali
+
+            waiting_for_players
+                ciclo gameHasStarted!=true
+
+            inizia partita
+                ciclo gameIsEnded!=true
+
+            fine partita
+         */
+
+
+
+
+
+
+
         String next= getClientState().getCurrentPlayer();
 
         //richieste iniziali - username e numero di giocatori
@@ -68,8 +103,6 @@ public class CLIMain {
 
         //COMANDI GIOCO
         //facciamo partite readShell
-        Thread th1=new Thread(readShell);
-        th1.start();
 
         //chi ha la sedia?
         getCliPrint().printChair();
