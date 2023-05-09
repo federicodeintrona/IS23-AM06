@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 
+import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.server.ControllerInterface;
 import it.polimi.ingsw.server.Messages.*;
 
@@ -22,12 +23,13 @@ public class NetworkerRmi implements Networker {
     private Message message;
     private static ControllerInterface controller;
     private ClientState clientState;
+    private CLIMain cliMain;
 
     /**
      * Constructor
      */
-    public NetworkerRmi()  {
-        clientState = new ClientState();
+    public NetworkerRmi(ClientState clientState)  {
+        this.clientState = clientState;
 
         try {
             clientIP = getLocalIPAddress();
@@ -55,6 +57,9 @@ public class NetworkerRmi implements Networker {
         System.out.println(clientIP);
 
         clientStateExportRmi();
+    }
+    public void setUserInterface(CLIMain cliMain) {
+        this.cliMain= cliMain;
     }
 
     /**
@@ -96,6 +101,7 @@ public class NetworkerRmi implements Networker {
 
         // Calling the completeRmiConnection() method to complete the client-server connection
         if (!message.getType().equals(MessageTypes.ERROR)) completeRmiConnection();
+        cliMain.receivedMessage(message);
     }
 
     /**
@@ -108,6 +114,7 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        cliMain.receivedMessage(message);
     }
 
     /**
@@ -122,6 +129,7 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        cliMain.receivedMessage(message);
     }
 
     /**
@@ -136,6 +144,7 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        cliMain.receivedMessage(message);
     }
 
     /**
@@ -149,6 +158,7 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        cliMain.receivedMessage(message);
     }
 
     /**
@@ -162,7 +172,7 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-
+        cliMain.receivedMessage(message);
     }
 
     private String getClientIP() throws UnknownHostException {

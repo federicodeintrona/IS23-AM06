@@ -25,6 +25,7 @@ public class CLIMain {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        net.setUserInterface(this);
     }
 
     public Object getLock() {

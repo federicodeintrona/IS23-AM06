@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 
+import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
@@ -15,10 +16,9 @@ import java.net.Socket;
 public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
     Socket socket ;
-    private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private Reader reader;
     private final ClientState clientState;
+    private CLIMain cliMain;
 
     public NetworkerTcp(ClientState clientState) {
         JsonReader config;
@@ -36,6 +36,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     public void initializeConnection() {
+        Reader reader;
+        ObjectInputStream ois;
         try {
             socket = new Socket("127.0.0.1", port);
             ois = new ObjectInputStream(socket.getInputStream());
@@ -47,6 +49,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         reader.run();
     }
 
+    @Override
+    public void setUserInterface(CLIMain cliMain) {
+        this.cliMain= cliMain;
+    }
+
     public void firstConnection (Message username){
         try {
             oos.writeObject(username);
@@ -54,7 +61,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             throw new RuntimeException(e);
         }
 
-    };
+    }
     public void numberOfPlayersSelection(Message numberOfPlayers){
         try {
             oos.writeObject(numberOfPlayers);
@@ -62,14 +69,14 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             throw new RuntimeException(e);
         }
 
-    };
+    }
     public void removeTilesFromBoard(Message tiles){
         try {
             oos.writeObject(tiles);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    };
+    }
     public void switchTilesOrder(Message ints){
         try {
             oos.writeObject(ints);
@@ -88,9 +95,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()){
-            case "ERROR":
-
-        }
+        cliMain.receivedMessage((Message) evt.getNewValue());
     }
 }

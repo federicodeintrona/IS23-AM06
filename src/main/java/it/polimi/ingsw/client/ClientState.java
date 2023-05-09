@@ -6,14 +6,10 @@ import it.polimi.ingsw.utils.Matrix;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
 
 public class ClientState implements ClientStateRemoteInterface{
 
-    private Lock viewLock; //TODO da fare final
-
-    private Networker net; //TODO controlla se ci va o meno non ricordo
-
+    private final Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective;
@@ -29,13 +25,10 @@ public class ClientState implements ClientStateRemoteInterface{
     private String winnerPlayer;
     private boolean gameIsEnded;
 
-//    public ClientState(Lock viewLock) {
-//        this.viewLock = viewLock;
-//    }
+    public ClientState(Object viewLock) {
+        this.viewLock = viewLock;
+   }
 
-
-    public ClientState() {
-    }
 
     public String getMyUsername() {
         synchronized (viewLock){
@@ -115,13 +108,7 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
-    public void setAllBookshelf(HashMap<String, Matrix> allBookshelf) {
-        synchronized (viewLock){
-            this.allBookshelf = allBookshelf;
-        }
-    }
-
-    public void setBookshelf(String username, Matrix bookshelf){
+    public void setAllBookshelf(String username, Matrix bookshelf){
         synchronized (viewLock) {
             allBookshelf.put(username, bookshelf);
             if (myUsername.equals(username)) {
@@ -145,12 +132,6 @@ public class ClientState implements ClientStateRemoteInterface{
     public HashMap<String, Integer> getAllPublicPoints() {
         synchronized (viewLock) {
             return allPublicPoints;
-        }
-    }
-
-    public void setAllPublicPoints(HashMap<String, Integer> allPublicPoints) {
-        synchronized (viewLock) {
-            this.allPublicPoints = allPublicPoints;
         }
     }
 

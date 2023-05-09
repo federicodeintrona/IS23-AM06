@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import static java.lang.System.out;
 
@@ -52,7 +51,7 @@ public class Reader implements Runnable{
                     case "bookshelf":
                         Matrix bookshelf=(Matrix ) message.getContent();
                         String Username= message.getUsername();
-                        clientState.setBookshelf(Username, bookshelf);
+                        clientState.setAllBookshelf(Username, bookshelf);
                     case "currPlayer":
                         String currPlayer=(String) message.getContent();
                         clientState.setCurrentPlayer(currPlayer);
@@ -63,8 +62,9 @@ public class Reader implements Runnable{
                         ArrayList<Integer> commonObj = (ArrayList<Integer>) message.getContent();
                         clientState.setGameCommonObjective(commonObj);
                     case "publicPoints":
-                        HashMap<String,Integer> publicPoints = (HashMap<String,Integer>) message.getContent();
-                        clientState.setAllPublicPoints(publicPoints);
+                        int publicPoints = (int) message.getContent();
+                        String username = message.getUsername();
+                        clientState.setAllPublicPoints(username, publicPoints);
                     case "selectedTiles":
                         ArrayList<Tiles> selectedTiles = (ArrayList<Tiles>) message.getContent();
                         clientState.setSelectedTiles(selectedTiles);
