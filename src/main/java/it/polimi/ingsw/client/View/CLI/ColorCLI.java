@@ -6,7 +6,7 @@ public enum ColorCLI {
     CLEAR ("\033[H\033[2J"),
 
     //lettere colorate
-    BLACK ("\u001b[30m"),
+    NOTALLOWED ("\u001b[30m"),
     GREEN ("\u001B[38;5;46m"),
     YELLOW ("\u001B[38;5;220m"),
     BLUE ("\u001B[38;5;21m"),
