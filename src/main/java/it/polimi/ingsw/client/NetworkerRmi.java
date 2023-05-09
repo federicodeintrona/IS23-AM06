@@ -95,7 +95,9 @@ public class NetworkerRmi implements Networker {
         }
 
         // Calling the completeRmiConnection() method to complete the client-server connection
-        if (!message.getType().equals(MessageTypes.ERROR)) completeRmiConnection();
+        if (!message.getType().equals(MessageTypes.ERROR)){
+           gameID = ((IntMessage) message).getNum();
+           completeRmiConnection();}
 
         return message;
     }

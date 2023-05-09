@@ -15,6 +15,7 @@ public class ClientBase {
         decision = scanner.nextLine();
 
         Networker client = null;
+
         switch (decision) {
             case "RMI":
                 client = new NetworkerRmi();
