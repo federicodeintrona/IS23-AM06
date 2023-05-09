@@ -36,7 +36,6 @@ public class Model  {
 
     //Probably temporary, just used for notification
     private final ArrayList<Integer> privatePoints = new ArrayList<>();
-
     private final ArrayList<Integer> publicPoints = new ArrayList<>();
 
 
