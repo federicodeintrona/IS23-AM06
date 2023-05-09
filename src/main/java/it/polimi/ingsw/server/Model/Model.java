@@ -581,7 +581,6 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 players.stream().map(Player::getUsername).toList(), p.getUsername(), "0","playerNames" ));
 
-
         //Notify commonObjectives
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getNum).toList(), p.getUsername(), "0","commonObj" ));
@@ -590,14 +589,13 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
-        //Notisy currPlayer
+        //Notify currPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
                 currPlayer.getUsername(), "currPlayer"));
 
         //Notify privatePoints
         notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
                 p.getUsername(), "privatePoints"));
-
 
 
         for(Player player : players){
