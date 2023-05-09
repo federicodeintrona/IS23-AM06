@@ -2,10 +2,7 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.server.ControllerInterface;
-import it.polimi.ingsw.server.Messages.IntArrayMessage;
-import it.polimi.ingsw.server.Messages.IntMessage;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.PointsMessage;
+import it.polimi.ingsw.server.Messages.*;
 
 import java.net.*;
 import java.rmi.AlreadyBoundException;
@@ -24,34 +21,28 @@ public class NetworkerRmi implements Networker {
     private int gameID;
     private Message message;
     private static ControllerInterface controller;
-
     private ClientState clientState;
 
-    /*
+    /**
+     * Constructor
+     */
     public NetworkerRmi()  {
-        JsonReader config;
+        clientState = new ClientState();
+
         try {
-            config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+            clientIP = getLocalIPAddress();
+        } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-        port=config.getInt("port");
     }
-
-     */
 
     /**
      * Method to initialize an RMI connection
-     *
      */
     public void initializeConnection () {
         try {
-            clientIP = getClientIP();
-
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("192.168.1.213", portIn);
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
             // Looking up the registry for the remote object
             controller = (ControllerInterface) registry.lookup("Controller");
 
@@ -70,7 +61,6 @@ public class NetworkerRmi implements Networker {
      * Preparing the instance of clientState to export through RMI connection
      */
     private void clientStateExportRmi () {
-        clientState = new ClientState();
         ClientStateRemoteInterface stub = null;
         try {
             stub = (ClientStateRemoteInterface) UnicastRemoteObject.exportObject(clientState, portOut);
@@ -104,7 +94,22 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
+        // Calling the completeRmiConnection() method to complete the client-server connection
+        if (!message.getType().equals(MessageTypes.ERROR)) completeRmiConnection();
+
         return message;
+    }
+
+    /**
+     * Method used privately to make the controller accept the
+     * instance of clientState previously prepared
+     */
+    private void completeRmiConnection () {
+        try {
+            controller.acceptRmiConnection(username, clientIP, portOut);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
