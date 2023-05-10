@@ -220,23 +220,6 @@ public class ReadShell extends Thread{
         sendMessage(message);
     }
 
-    //richieste iniziali
-    public void initialRequests(){
-        //richiesta username
-        askUsername();
-
-        //richiesta numero di giocatori - solo se serve
-        //TODO capire come fare - secondo me... boh non mi convince
-        if (askForNumberOfPlayer()){
-            askNumberOfPlayerMessage();
-        }
-    }
-
-    public boolean askForNumberOfPlayer(){
-        return true;
-    }
-
-
     @Override
     public void run() {
         while(!cliMain.getClientState().isGameIsEnded()){

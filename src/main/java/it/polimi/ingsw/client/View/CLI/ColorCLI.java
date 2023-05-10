@@ -15,6 +15,7 @@ public enum ColorCLI {
     WHITE ("\u001B[38;5;231m"),
     EMPTY ("\u001b[38;5;94m"),
     POSITION ("\u001b[31;1m"),
+    RED ("\u001b[31m"),
 
     //solo colore di background
     NOTALLOWEDBG (""),

@@ -7,21 +7,6 @@ import it.polimi.ingsw.server.Messages.Message;
 public class CLIMain {
 
 
-/*
-    TODO
-        partita inizia quando
-        send message
-                received message
-        .
-            -username
-                -error
-                -new_lobby -> chiedere il numero di giocatori
-                -waiting_for_players -> print aspetto
-            -num_of_player
-            .
-            -ok
-            -error
- */
 
 
     private final Object lock; //su cosa lockare - comune con ClientState
@@ -59,22 +44,61 @@ public class CLIMain {
     }
 
 
+
+    /*
+        TODO
+            send message
+                    received message
+            .
+                -username
+                    -new_lobby -> chiedere il numero di giocatori
+                    -waiting_for_players -> print aspetto
+                -num_of_player
+                .
+                -ok
+                -error
+     */
     public void receivedMessage(Message message){
         switch (message.getType()){
-            case NUM_OF_PLAYERS -> readShell.askForNumberOfPlayer();
-            //TODO capire che messaggi mi arrivano e in che formato
+            case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
+            case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
+            case ERROR -> cliPrint.printError(message.getUsername()); //TODO il messaggio di errore dove lo trovo
+            default -> {
+                break;
+            }
         }
     }
 
 
 
-    public void runCLI (){
+    public void runCLI () throws InterruptedException {
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
 
         Thread th1=new Thread(readShell);
         th1.start();
 
+        //richiesta username
+        readShell.askUsername();
+
+        //TODO restiamo in attesa di nuovi giocatori
+//        while (!clientState.isGameHasStarted()){
+//            cliPrint.printWaiting();
+//            Thread.sleep(10000);
+//        }
+
+        //inizia la partita
+        cliPrint.clearSheel();
+        cliPrint.gameHasStarted();
+
+        while (!clientState.isGameIsEnded()){
+            cliPrint.playerTurn();
+        }
+
+        //è finita la partita
+        cliPrint.printEndGame();
+        //eliminiamo il thread
+        th1.interrupt();
 
 
         /*
@@ -88,38 +112,6 @@ public class CLIMain {
 
             fine partita
          */
-
-
-
-
-
-
-
-        String next= getClientState().getCurrentPlayer();
-
-        //richieste iniziali - username e numero di giocatori
-        readShell.initialRequests();
-
-
-        //COMANDI GIOCO
-        //facciamo partite readShell
-
-        //chi ha la sedia?
-        getCliPrint().printChair();
-
-        while(!clientState.isGameIsEnded()){
-            //controllo se è il turno del prossimo giocatore
-            if (getClientState().getCurrentPlayer().equals(next)){
-                //stampa quello che devi stampare all'inizio di un turno di gioco
-                cliPrint.playerTurn();
-                next= clientState.getNextPlayer();
-            }
-        }
-
-        //se è finito il gioco stampa end game
-        getCliPrint().printEndGame();
-        //elimina thread
-        th1.interrupt();
 
     }
 

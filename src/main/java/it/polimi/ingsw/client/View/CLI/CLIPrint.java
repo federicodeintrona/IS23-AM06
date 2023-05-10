@@ -61,7 +61,6 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
 
-    //STAMPA
     //stampa la board
     public void printBoard(Matrix board){
         synchronized (cliMain.getLock()) {
@@ -303,11 +302,25 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
+    //stampa che siamo in attesa di nuovi giocatori
+    public void printWaiting(){
+        synchronized (cliMain.getLock()){
+            System.out.println("Waiting for the other players...");
+        }
+    }
+
+    //stampa che sta per iniziare la partita
+    public void gameHasStarted(){
+        synchronized (cliMain.getLock()){
+            System.out.println("The number of players has been reached \n\n\nMY SHELFIE GAME HAS STARTED\n\n\n\n\n");
+        }
+    }
+
     //stampa di chi è il turno
     private void printTurn(){
         synchronized (cliMain.getLock()){
             if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername())){
-                System.out.println("It is YOUR turn");
+                System.out.println(ColorCLI.RED + "It is YOUR turn" + ColorCLI.BOLD);
             }
             else {
                 System.out.println("It is " + cliMain.getClientState().getCurrentPlayer() + " turn");
