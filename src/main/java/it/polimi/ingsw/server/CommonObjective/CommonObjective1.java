@@ -10,6 +10,10 @@ import java.util.Set;
 
 public class CommonObjective1 extends CommonObjective{
 
+    public CommonObjective1() {
+        this.setNum(1);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 6 separate groups, made by 2 tiles of the same

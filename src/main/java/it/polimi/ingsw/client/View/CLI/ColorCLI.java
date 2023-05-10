@@ -27,6 +27,11 @@ public enum ColorCLI {
     EMPTYBG ("\u001b[48;5;94m"),
     POSITIONBG ("\u001b[41;1m"),
 
+    //Bold, UnderLine, Reversed
+    BOLD ("\u001b[1m"),
+    UNDERLINE ("\u001b[4m"),
+    REVERSED ("\u001b[7m"),
+
     GREENBG1 ("\u001B[48;2;145;165;65m"), //145;165;65
     YELLOWBG1 ("\u001B[48;2;223;159;69m"), //223;159;69
     BLUEBG1 ("\u001B[48;2;0;103;105m"), //0;103;105

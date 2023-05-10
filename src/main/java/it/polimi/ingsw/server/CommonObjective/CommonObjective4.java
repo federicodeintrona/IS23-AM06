@@ -10,6 +10,10 @@ import java.util.Map;
 
 public class CommonObjective4 extends CommonObjective{
 
+    public CommonObjective4() {
+        this.setNum(4);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 2 separate groups, each one made by 4 tiles of the same

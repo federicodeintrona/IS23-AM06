@@ -8,6 +8,10 @@ import java.util.Set;
 
 public class CommonObjective9 extends CommonObjective{
 
+    public CommonObjective9() {
+        this.setNum(9);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 2 filled columns, each one made by 6 tiles of

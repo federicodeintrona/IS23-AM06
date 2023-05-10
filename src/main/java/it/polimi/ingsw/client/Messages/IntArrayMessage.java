@@ -1,12 +1,14 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.client.Messages;
 
 import java.util.ArrayList;
 
-public class IntArrayMessage extends Message{
+public class IntArrayMessage extends Message {
     private ArrayList<Integer> integers;
-    public ArrayList<Integer> getIntegers () { return integers; }
 
     public void setIntegers(ArrayList<Integer> integers) {
         this.integers = integers;
     }
+
+    public ArrayList<Integer> getIntegers () { return integers; }
+
 }

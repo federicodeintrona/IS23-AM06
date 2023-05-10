@@ -3,43 +3,51 @@ package it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
-import it.polimi.ingsw.server.VirtualView;
+import it.polimi.ingsw.server.VirtualView.VirtualView;
 import org.javatuples.Pair;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Model  {
-    private static final int numberOfCommonObjectives=2;
 
-
-    private GameState state = GameState.STARTING;
-    private  Board board;
-    private  ArrayList<Player> players;
+    private Board board;
+    private ArrayList<Player> players;
     private ArrayList<VirtualView> virtualViews;
-    private  ArrayList<CommonObjective> commonObj = new ArrayList<>();
+    private ArrayList<CommonObjective> commonObj = new ArrayList<>();
 
+    //Utility variables
+    private GameState state = GameState.STARTING;
     private Player currPlayer;
     private Player nextPlayer;
     private Player winner;
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
-
     private boolean isFinished = false;
 
+    //Utility objects
+    private final CheckManager checks = new CheckManager(selectedTiles);
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
 
-    private final CheckManager checks = new CheckManager(selectedTiles);
+    /* Notification event pattern:
+     (source object to send, receiver name ("all" or username),
+     username of the owner of the sent object ("0" if there isn't any ), property name)
+
+      I know it's not the correct way to use PropertyChangeEvent, but it's easier this way, doesn't
+      cause any problem and I wanted to use the PropertyChangeSupport object*/
+
 
 
     //Probably temporary, just used for notification
+    //Array of the old points values to see if they have changed
     private final ArrayList<Integer> privatePoints = new ArrayList<>();
-
     private final ArrayList<Integer> publicPoints = new ArrayList<>();
 
-
+    //Constant value
+    private static final int numberOfCommonObjectives=2;
 
     //Constructors
 
@@ -53,8 +61,6 @@ public class Model  {
     public Model(ArrayList<Player> players, ArrayList<VirtualView> views) {
         this.players = players;
         this.virtualViews = views;
-        this.currPlayer = players.get(0);
-        this.nextPlayer = players.get(1);
     }
 
 
@@ -77,17 +83,44 @@ public class Model  {
         personalobjInit();
 
 
+        //Add the views as change listeners
+        for (VirtualView v : virtualViews){
+            notifier.addPropertyChangeListener("all",v);
+            notifier.addPropertyChangeListener(v.getUsername(),v);
+        }
+
+
+        Random random = new Random();
+        int index = random.nextInt(players.size());
+        currPlayer = players.get(0) ;
+        selectNext();
+
+
         //Initializes the arrays of points
         for(Player p : players){
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
+
+            //Notify personal objective
+            notifier.firePropertyChange(new PropertyChangeEvent(
+                    p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
+
         }
 
+        //Notify Board
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                board.getGamesBoard(), "all", "0","board" ));
 
-        //Add the views as change listeners
-        for (VirtualView v : virtualViews){
-            notifier.addPropertyChangeListener(v);
-        }
+        //Notify PlayerNames
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                        players.stream().map(Player::getUsername).toList(), "all", "0","playerNames" ));
+
+        //Notify commonObjectives
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getNum).toList(), "all", "0","commonObj" ));
+
+
+
 
 
         //Change game state
@@ -123,15 +156,20 @@ public class Model  {
             //Adding the removed tiles to selectedTiles array
             selectedTiles.add(board.getGamesBoard().getTile(point));
 
-            //notification
-            Pair<Tiles, Point> p1 = new Pair<>(board.getGamesBoard().getTile(point), point);
-            Pair<Tiles, Point> p2 = new Pair<>(Tiles.EMPTY, point);
-            notifier.firePropertyChange(new PropertyChangeEvent(board, "board", p1, p2));
 
         }
 
         //Remove the selected tiles
         board.remove(points);
+
+
+        //Notify Selected Tiles
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                selectedTiles, "all", "0","selectedTiles" ));
+
+        //Notify Board
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                board.getGamesBoard(), "all", "0","board" ));
 
 
     }
@@ -158,35 +196,29 @@ public class Model  {
         //Change game state
         state = GameState.CHOOSING_TILES;
 
-        //Notifying changes (communicating a lot of redundant information for now, I'll change it when we do the views)
-        ArrayList<Tiles> temp1 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
-        Pair<ArrayList<Tiles>, Integer> p1 = new Pair<>(temp1, column);
 
         //Add to bookshelf
         player.getBookshelf().addTile(selectedTiles, column);
 
-        //Notifying changes pt.2, (communicating a lot of redundant information for now, I'll change it when we do the views)
-        ArrayList<Tiles> temp2 = new ArrayList<>(player.getBookshelf().getTiles().getColumn(column));
-        Pair<ArrayList<Tiles>, Integer> p2 = new Pair<>(temp2, column);
-
-        notifier.firePropertyChange(new PropertyChangeEvent(player, "bookshelf", p1, p2));
+        //Notify Bookshelf
+        notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
+                            "all", player.getUsername(), "bookshelf"));
 
 
         //Checks if player filled his bookshelf
         if(!isFinished && player.getBookshelf().checkEndGame()){
             isFinished=true;
             player.setWinnerPoint(1);
-            PropertyChangeEvent evt1 = new PropertyChangeEvent(player, "points",
-                    publicPoints.get(players.indexOf(player)),player.getPublicPoint());
+            player.setPublicPoint();
 
-            notifier.firePropertyChange(evt1);
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), "all",
+                    player.getUsername(), "publicPoints"));
 
         }
 
 
         //Empties the selected tile array
         selectedTiles.clear();
-
 
         //Advances turn
         nextTurn();
@@ -207,8 +239,6 @@ public class Model  {
      */
     public void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
 
-
-
         //Check the legitimacy of the move
         updateCheckManager(state,currPlayer);
         checks.swapCheck(ints,player);
@@ -220,51 +250,22 @@ public class Model  {
             selectedTiles.set(i, array.get(ints.get(i)));
         }
 
+        //Notify Selected Tiles
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                selectedTiles, "all", "0","selectedTiles" ));
+
+
+
         //Change game state
         state = GameState.CHOOSING_COLUMN;
 
+
     }
-
-
-
-
-
-
 
 
 
     //PRIVATE METHODS : UTILITY
 
-
-    /**
-     * Initializes common objectives
-     */
-    private void commonobjInit() {
-       commonObj = CommonObjective.randomSubclass(numberOfCommonObjectives);
-    }
-
-
-
-    /**
-     * Initializes private objectives
-     */
-    private void personalobjInit() {
-        PersonalObjective po;
-        ArrayList<PersonalObjective> tmp=new ArrayList<>();
-        for (int i = 0; i < players.size(); i++) {
-            //check if there are NOT 2 equals PersonalObjective
-            do {
-                po=new PersonalObjective();
-            }while (tmp.contains(po));
-            tmp.add(po);
-        }
-
-
-        for(int i = 0;i<players.size();i++){
-            players.get(i).setPersonalObjective(tmp.get(i));
-        }
-
-    }
 
 
     /**
@@ -275,28 +276,40 @@ public class Model  {
      */
     private void updatePoints(){
 
+        //Update points array
+        publicPoints.set(players.indexOf(currPlayer),currPlayer.getPublicPoint());
+        privatePoints.set(players.indexOf(currPlayer), currPlayer.getPrivatePoint());
+
         //Updates vicinity, common objective and personal objective points
         currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
         currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer);
+
         for(CommonObjective o : commonObj){
              o.commonObjPointsCalculator(currPlayer,players.size());
         }
 
+        currPlayer.setPrivatePoint();
+        currPlayer.setPublicPoint();
 
-        //Notify the changes to the views
-        PropertyChangeEvent evt = new PropertyChangeEvent(currPlayer, "points",
-                publicPoints.get(players.indexOf(currPlayer)),currPlayer.getPublicPoint());
+        //Notify publicPoints
+        if(currPlayer.getPublicPoint()!=publicPoints.get(players.indexOf(currPlayer))) {
 
-        notifier.firePropertyChange(evt);
+            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPublicPoint(), "all",
+                    currPlayer.getUsername(), "publicPoints"));
 
+        }
+
+        //Notify privatePoints
+        if(currPlayer.getPrivatePoint()!=privatePoints.get(players.indexOf(currPlayer))) {
+
+            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), "all",
+                    currPlayer.getUsername(), "privatePoints"));
+
+        }
     }
 
 
 
-    private void updateCheckManager(GameState state,Player current){
-        checks .setState(state);
-        checks.setCurrPlayer(current);
-    }
 
 
     /**
@@ -309,10 +322,10 @@ public class Model  {
         //Update the points
         updatePoints();
 
-        //changes current player
+
+        //Update current player
         currPlayer=nextPlayer;
-        if(currPlayer==players.get(players.size()-1)){ nextPlayer = players.get(0);}
-        else nextPlayer = players.get(players.indexOf(currPlayer)+1);
+        selectNext();
 
 
         //checks if the board needs to reset
@@ -321,13 +334,14 @@ public class Model  {
         //checks if someone completed all their bookshelf
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
 
+
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "currPlayer"));
+
     }
 
 
 
-
-
-    //TO BE FINISHED
     /**
      * Select the winner of the game and ends it
      */
@@ -335,8 +349,6 @@ public class Model  {
         state = GameState.ENDING;
         selectWInner();
     }
-
-
 
 
     /**
@@ -351,6 +363,49 @@ public class Model  {
         winner = players.get(winnerpos);
 
     }
+
+    private void selectNext() {
+        if(currPlayer==players.get(players.size()-1)){ nextPlayer = players.get(0);}
+        else nextPlayer = players.get(players.indexOf(currPlayer)+1);
+    }
+
+    private void updateCheckManager(GameState state,Player current){
+        checks.setState(state);
+        checks.setCurrPlayer(current);
+    }
+
+
+    /**
+     * Initializes common objectives
+     */
+    private void commonobjInit() {
+        commonObj = CommonObjective.randomSubclass(numberOfCommonObjectives);
+    }
+
+
+    /**
+     * Initializes private objectives
+     */
+    private void personalobjInit() {
+        PersonalObjective po;
+        ArrayList<PersonalObjective> tmp=new ArrayList<>();
+
+        for (int i = 0; i < players.size(); i++) {
+            //check if there are NOT 2 equals PersonalObjective
+            do {
+                po =new PersonalObjective();
+            }while (tmp.contains(po));
+            tmp.add(po);
+        }
+
+
+        for(int i = 0;i<players.size();i++){
+            players.get(i).setPersonalObjective(tmp.get(i));
+        }
+
+    }
+
+
 
 
 
@@ -369,8 +424,6 @@ public class Model  {
         return players;
     }
 
-
-
     /**
      * Return the board
      * @return the board
@@ -378,7 +431,6 @@ public class Model  {
     public Board getBoard() {
         return board;
     }
-
 
     /**
      *  Returns the current state of the game
@@ -388,8 +440,6 @@ public class Model  {
         return state;
     }
 
-
-
     /**
      * Sets the state of the game
      * @param state The state you want to set the game to
@@ -398,8 +448,6 @@ public class Model  {
         this.state = state;
     }
 
-
-
     /**
      * @return ArrayList of all the common objectives
      */
@@ -407,13 +455,33 @@ public class Model  {
         return commonObj;
     }
 
-
     /**
      * Set the current player (Just for Testing purposes)
      * @param currPlayer The player to set as current player
      */
     public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
+    }
+
+    //TEST
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public Player getNextPlayer() {
+        return nextPlayer;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public ArrayList<Integer> getPrivatePoints() {
+        return privatePoints;
+    }
+
+    public ArrayList<Integer> getPublicPoints() {
+        return publicPoints;
     }
 
 
@@ -446,15 +514,27 @@ public class Model  {
         this.players.addAll(players);
     }
 
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public ArrayList<VirtualView> getVirtualViews() {
+        return virtualViews;
+    }
+
+    public void setVirtualViews(ArrayList<VirtualView> virtualViews) {
+        this.virtualViews = virtualViews;
+    }
+
     /**
      * @return ArrayList of all the personal objectives of all players in the game
      */
-  /* public ArrayList<PersonalObjective> getPersobj(){
+   private ArrayList<PersonalObjective> getPersObj(){
         ArrayList<PersonalObjective> persobj = new ArrayList<>();
         for( Player p : players){
             persobj.add(p.getPersonalObjective());
         }
         return persobj;
-    }*/
+    }
 
 }

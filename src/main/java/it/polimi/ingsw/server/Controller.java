@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.Messages.MessageTypes;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
+import it.polimi.ingsw.server.VirtualView.VirtualView;
 
 import java.awt.*;
 import java.rmi.registry.LocateRegistry;
@@ -17,29 +18,27 @@ import java.util.HashMap;
 
 public class Controller implements ControllerInterface{
 
-    Lobby lobby;
+    private Lobby lobby;
     private HashMap<Integer, Model> games;
-
     private HashMap<String, Player> players;
+    private HashMap<String, VirtualView> views;
 
-    private ArrayList<ArrayList<View>> views;
 
     /**
      * Constructor
      * @param mainLobby The lobby of the server
-     * @param models  The hashmap of all current games
      */
-    public Controller(Lobby mainLobby, HashMap<Integer,Model> models,HashMap<String ,Player > playerMap) {
+    public Controller(Lobby mainLobby) {
         lobby = mainLobby;
-        games = models;
-        views = new ArrayList<>();
-        players = playerMap;
+        games = lobby.getGames();
+        views = lobby.getViews() ;
+        players = lobby.getPlayers();
     }
+
 
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
         games = models;
         players = playerMap;
-
     }
 
 
@@ -120,7 +119,7 @@ public class Controller implements ControllerInterface{
 
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You can't fo that now");
+            reply.setContent("You can't do that now");
 
         }
 
@@ -146,7 +145,7 @@ public class Controller implements ControllerInterface{
 
         }catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("Ypu selected a point outside the board");
+            reply.setContent("You selected a point outside the board");
 
         }catch (TilesCannotBeSelected e) {
             reply.setType(MessageTypes.ERROR);
@@ -154,7 +153,7 @@ public class Controller implements ControllerInterface{
 
         }catch (TilesNotAdjacent e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("The tiles are noy adjacent to each other");
+            reply.setContent("The tiles are not adjacent to each other");
 
         }catch (IllegalArgumentException e) {
             reply.setType(MessageTypes.ERROR);
@@ -217,9 +216,10 @@ public class Controller implements ControllerInterface{
             reply.setContent("Username already taken");
             return reply;
         }
+    }
 
-
-
+    public void addView(VirtualView view){
+        views.put(view.getUsername(),view);
     }
 
     /**
