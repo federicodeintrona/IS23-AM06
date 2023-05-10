@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.client.Messages;
 
 public enum MessageTypes {
     USERNAME, //invio username

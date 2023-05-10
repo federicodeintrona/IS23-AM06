@@ -5,6 +5,10 @@ import it.polimi.ingsw.server.Model.Tiles;
 
 public class CommonObjective12 extends CommonObjective{
 
+    public CommonObjective12() {
+        this.setNum(12);
+    }
+
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 5 columns of growing or decreasing height,

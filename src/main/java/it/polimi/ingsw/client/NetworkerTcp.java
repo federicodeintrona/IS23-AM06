@@ -2,13 +2,14 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 
 public class NetworkerTcp implements Networker{
@@ -20,7 +21,9 @@ public class NetworkerTcp implements Networker{
     public NetworkerTcp()  {
         JsonReader config;
         try {
-            config = new JsonReader("src/main/java/it/polimi/ingsw/server/config/Server.json");
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
+            config=new JsonReader(is);
+//            config = new JsonReader("src/main/resources/NetworkerTcp.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
