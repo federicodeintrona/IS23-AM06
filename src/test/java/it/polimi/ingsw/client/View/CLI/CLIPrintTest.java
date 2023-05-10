@@ -23,11 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CLIPrintTest {
 
-    @Test
-    public void aa(){
-        System.out.println(ColorCLI.RED +"ciao");
-        System.out.println(ColorCLI.RED +"ciao"+ColorCLI.BOLD);
-    }
 
     @DisplayName("Print Board")
     @Test

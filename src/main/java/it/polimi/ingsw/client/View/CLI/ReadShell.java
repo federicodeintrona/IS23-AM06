@@ -64,8 +64,6 @@ public class ReadShell extends Thread{
         String nickname = readLine();
         message.setUsername(nickname);
         message.setType(MessageTypes.USERNAME);
-        //io non setto niente ci penserà il Networker
-        //todo
         sendMessage(message);
     }
 
@@ -123,6 +121,8 @@ public class ReadShell extends Thread{
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(position));
             }
             case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective());
+            case "#printpoints" -> cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
+            case "#printmypoint" -> cliMain.getCliPrint().printMyPoints(cliMain.getClientState().getMyPoints());
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
 

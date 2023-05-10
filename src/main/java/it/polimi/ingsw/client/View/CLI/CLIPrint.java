@@ -213,6 +213,8 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println("#printboard ..................... Print the board");
             System.out.println("#printyourbookshelf ............. Print your bookshelf");
             System.out.println("#printbookshelf @username ....... Print the username's bookshelf");
+            System.out.println("#printpoints .................... Print all public points");
+            System.out.println("#printmypoint ................... Print my points");
         }
     }
 
@@ -287,6 +289,19 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
+    //stampa i punti
+    public void printPoints(HashMap<String, Integer> publicPoints){
+        System.out.println("All Public Points: ");
+        for (String key: publicPoints.keySet()){
+            System.out.println(key+": "+publicPoints.get(key));
+        }
+    }
+
+    //stampa i mie punti
+    public void printMyPoints(Integer point){
+        System.out.println("My Points: "+point);
+    }
+
     //stampa chi ha la sedia
     public void printChair(){
         synchronized (cliMain.getLock()){
@@ -320,7 +335,7 @@ public class CLIPrint implements PropertyChangeListener {
     private void printTurn(){
         synchronized (cliMain.getLock()){
             if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername())){
-                System.out.println(ColorCLI.RED + "It is YOUR turn" + ColorCLI.BOLD);
+                System.out.println(ColorCLI.RED + String.valueOf(ColorCLI.BOLD) + "It is YOUR turn");
             }
             else {
                 System.out.println("It is " + cliMain.getClientState().getCurrentPlayer() + " turn");
@@ -334,6 +349,7 @@ public class CLIPrint implements PropertyChangeListener {
         printBoard(cliMain.getClientState().getBoard());
         printCommonObjective(cliMain.getClientState().getGameCommonObjective());
         printAllBookshelf(cliMain.getClientState().getAllBookshelf());
+        printPoints(cliMain.getClientState().getAllPublicPoints());
     }
 
     //è finito il gioco
