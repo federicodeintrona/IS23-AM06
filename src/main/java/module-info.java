@@ -11,4 +11,6 @@ module it.polimi.ingsw {
 
     opens it.polimi.ingsw.app to javafx.fxml, javafx.controls, javafx.graphics;
     exports it.polimi.ingsw.app;
+
+    opens it.polimi.ingsw.server.CommonObjective to openpojo;
 }

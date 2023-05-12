@@ -31,9 +31,9 @@ public class HelloApplication extends Application{
             else if (p0.equals("--client")) {
                 runAsClient(args);
             }
-            else {
-                launch();
-            }
+        }
+        else {
+            launch();
         }
     }
 

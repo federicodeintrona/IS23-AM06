@@ -6,10 +6,7 @@ import it.polimi.ingsw.server.Model.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public abstract class CommonObjective {
     int points = 8;
@@ -20,10 +17,11 @@ public abstract class CommonObjective {
     public static ArrayList<CommonObjective> randomSubclass(int num) {
 
         ArrayList<Class> subclasses = new ArrayList();
-
-        for (PojoClass pojoClass : PojoClassFactory.enumerateClassesByExtendingType(
+        List<PojoClass> list = PojoClassFactory.enumerateClassesByExtendingType(
                 "it.polimi.ingsw.server.CommonObjective", CommonObjective.class,
-                null)) {
+                null);
+
+        for (PojoClass pojoClass : list) {
             subclasses.add(pojoClass.getClazz());
         }
 

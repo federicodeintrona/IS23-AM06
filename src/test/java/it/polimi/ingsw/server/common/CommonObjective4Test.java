@@ -1,17 +1,17 @@
-package it.polimi.ingsw.server.CommonObjective;
+package it.polimi.ingsw.server.common;
 
+import it.polimi.ingsw.server.CommonObjective.CommonObjective4;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.Model.Tiles;
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CommonObjective5Test {
+class CommonObjective4Test {
 
     /**
-     * Testing all method's branches with a bookshelf
-     * completely full of green colored tiles
+     * Testing for success alla method's branches
+     * with a bookshelf full of green tiles
      */
     @Test
     void checkConditionSuccess1() {
@@ -25,57 +25,58 @@ class CommonObjective5Test {
             }
         }
 
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
 
         // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
     /**
-     * Testing the minimum case for the method to return true:
-     * only 3 columns selectable composed exactly by 3 different
-     * colors each
+     * Testing the case of exactly 2 groups that meet the
+     * commonObjective4 criteria in a bookshelf full of
+     * tiles with no homonyms next to each others
      */
     @Test
     void checkConditionSuccess2() {
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.GREEN;
+        Tiles[] values = Tiles.values();
+        int x = 0;
 
         // Initializing the bookshelf
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 5; j++) {
-                player.getBookshelf().getTiles().setTile(tiles, i, j);
+        for (int i=0; i<6; i++){
+            for (int j=0; j<5; j++){
+                player.getBookshelf().getTiles().setTile(values[x], i, j);
+                x++;
+                if (x == 6) x = 0;
             }
         }
 
-        player.getBookshelf().getTiles().setTile(Tiles.EMPTY, 0, 0);
-        player.getBookshelf().getTiles().setTile(Tiles.EMPTY, 0, 1);
+        // Manually programming the only 2 groups in the bookshelf
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 0);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 1);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 1, 0);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 1, 1);
 
-        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 1, 2);
-        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 2, 2);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 3);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 4);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 5, 3);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 5, 4);
 
-        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 1, 3);
-        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 2, 3);
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
 
-        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 1, 4);
-        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 2, 4);
-
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
-
-        // Checking that the checkCondition method returns true
+        // Checking that the checkCondition method returns false
         assertTrue(obj.checkCondition(player));
     }
 
     /**
-     * Testing for failure the first if statement:
-     * no column is full
+     * Testing result in case of bookshelf completely empty
      */
     @Test
-    void checkConditionFailure1(){
+    void checkConditionFailure1() {
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.GREEN;
+        Tiles tiles = Tiles.EMPTY;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
@@ -84,52 +85,102 @@ class CommonObjective5Test {
             }
         }
 
-        // Adding a row of empty tiles so that there are no full columns
-        for (int i=0; i<5; i++){
-            player.getBookshelf().getTiles().setTile(Tiles.EMPTY,0, i);
-        }
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
 
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
-
-        // Checking that the checkCondition method returns false
+        // Checking that the checkCondition method returns true
         assertFalse(obj.checkCondition(player));
     }
 
     /**
-     * Testing for failure the third if statement:
-     * all columns are composed by 4 different colors
+     * Testing the particular case of a group of 6 tiles
+     * to make sure that the method recognizes it as 1 amd not 2
      */
     @Test
-    void checkConditionFailure2(){
+    void checkConditionFailure2() {
         Player player = new Player( "Jhon", true);
+        Tiles tiles = Tiles.EMPTY;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-
-                // Manually programming each column to have 4 different colors
-                switch (i) {
-                    case 0:
-                        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 0, j);
-                    case 1:
-                        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 1, j);
-                    case 2:
-                        player.getBookshelf().getTiles().setTile(Tiles.LIGHT_BLUE, 2, j);
-                    case 3:
-                        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 3, j);
-                    case 4:
-                        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, j);
-                    case 5:
-                        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 5, j);
-                }
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
             }
         }
 
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
+        // Manually programming the group of 6 tiles
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 3, 2);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 3, 3);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 4, 2);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 4, 3);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 5, 2);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 5, 3);
 
-        // Checking that the checkCondition method returns false
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
+
+        // Checking that the checkCondition method returns true
+        assertFalse(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing the case of a bookshelf completely full
+     * and no same colored tiles next to each other
+     */
+    @Test
+    void checkConditionFailure3() {
+        Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        int x = 0;
+
+        // Initializing the bookshelf
+        for (int i=0; i<6; i++){
+            for (int j=0; j<5; j++){
+                player.getBookshelf().getTiles().setTile(values[x], i, j);
+                x++;
+                if (x == 6) x = 0;
+            }
+        }
+
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
+
+        // Checking that the checkCondition method returns true
+        assertFalse(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing the case of a bookshelf completely
+     * empty except for two groups that however
+     * don't have the same color
+     */
+    @Test
+    void checkConditionFailure4() {
+        Player player = new Player( "Jhon", true);
+        Tiles tiles = Tiles.EMPTY;
+
+        // Initializing the bookshelf
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
+            }
+        }
+
+        // Manually programming 2 groups with different colors
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 4, 0);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 4, 1);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 5, 0);
+        player.getBookshelf().getTiles().setTile(Tiles.BLUE, 5, 1);
+
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 3);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 4);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 3);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 4);
+
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
+
+        // Checking that the checkCondition method returns true
         assertFalse(obj.checkCondition(player));
     }
 
@@ -151,8 +202,8 @@ class CommonObjective5Test {
             }
         }
 
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
 
         // Testing method for player1
         obj.commonObjPointsCalculator(player1, 2);
@@ -187,8 +238,8 @@ class CommonObjective5Test {
             }
         }
 
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
 
         // Testing method for player1
         obj.commonObjPointsCalculator(player1, 4);
@@ -213,12 +264,12 @@ class CommonObjective5Test {
 
     /**
      * Testing first if statement for failure in case player's
-     * bookshelf does not meet the obj5 condition criteria
+     * bookshelf does not meet the obj4 condition criteria
      */
     @Test
-    void commonObjPointsCalculatorFailure1(){
+    void commonObjPointsCalculatorFailure1() {
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.GREEN;
+        Tiles tiles = Tiles.EMPTY;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
@@ -227,12 +278,8 @@ class CommonObjective5Test {
             }
         }
 
-        for (int i=0; i<5; i++){
-            player.getBookshelf().getTiles().setTile(Tiles.EMPTY,0, i);
-        }
-
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
 
         // Testing method for player
         obj.commonObjPointsCalculator(player, 2);
@@ -245,7 +292,7 @@ class CommonObjective5Test {
      * already received the commonObjectivePoints
      */
     @Test
-    void commonObjPointsCalculatorFailure2(){
+    void commonObjPointsCalculatorFailure2() {
         Player player = new Player( "Jhon", true);
         Tiles tiles = Tiles.GREEN;
 
@@ -256,8 +303,8 @@ class CommonObjective5Test {
             }
         }
 
-        // Creation of an instance for CommonObjective5
-        CommonObjective5 obj = new CommonObjective5();
+        // Creation of an instance for CommonObjective4
+        CommonObjective4 obj = new CommonObjective4();
 
         // Testing method for player first time
         obj.commonObjPointsCalculator(player, 3);
