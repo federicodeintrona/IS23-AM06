@@ -15,6 +15,7 @@ public class CLIMain {
 
     private static CLIPrint cliPrint;
     private static ReadShell readShell;
+    private boolean IHaveToRequestTheUsername=true;
 
     public CLIMain(Object lock, ClientState clientState, Networker net) {
         this.lock = lock;
@@ -43,6 +44,13 @@ public class CLIMain {
         return readShell;
     }
 
+    public boolean isIHaveToRequestTheUsername() {
+        return IHaveToRequestTheUsername;
+    }
+
+    public void setIHaveToRequestTheUsername(boolean IHaveToRequestTheUsername) {
+        this.IHaveToRequestTheUsername = IHaveToRequestTheUsername;
+    }
 
 
     /*
@@ -79,7 +87,7 @@ public class CLIMain {
         th1.start();
 
         //richiesta username
-        readShell.askUsername();
+        readShell.readCommand();
 
         //TODO restiamo in attesa di nuovi giocatori
 //        while (!clientState.isGameHasStarted()){
@@ -90,9 +98,19 @@ public class CLIMain {
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
+        Thread.sleep(10000);
+
+        cliPrint.playerTurn();
+        //ho già stampato il primo turno di gioco
+        String curr=clientState.getNextPlayer();
 
         while (!clientState.isGameIsEnded()){
-            cliPrint.playerTurn();
+            //stampa nuovo turno se il current è il next di prima
+            if (clientState.getCurrentPlayer().equals(curr)){
+                cliPrint.playerTurn();
+                curr=clientState.getNextPlayer();
+            }
+
         }
 
         //è finita la partita
