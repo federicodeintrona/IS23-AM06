@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
-import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.utils.Messages.*;
 
 public class CLIMain {
 
