@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CLIPrintTest {
 
+
     @DisplayName("Print Board")
     @Test
     public void printBoard(){

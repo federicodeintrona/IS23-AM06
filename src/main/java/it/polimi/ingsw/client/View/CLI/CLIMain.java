@@ -2,16 +2,11 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
-import it.polimi.ingsw.utils.Messages.*;
+import it.polimi.ingsw.server.Messages.Message;
 
 public class CLIMain {
 
 
-
-    /*
-        TODO
-            creare oggetto lock
-     */
 
 
     private final Object lock; //su cosa lockare - comune con ClientState
@@ -20,11 +15,13 @@ public class CLIMain {
 
     private static CLIPrint cliPrint;
     private static ReadShell readShell;
+    private boolean IHaveToRequestTheUsername=true;
 
     public CLIMain(Object lock, ClientState clientState, Networker net) {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        //net.setUserInterface(this);
     }
 
     public Object getLock() {
@@ -47,44 +44,92 @@ public class CLIMain {
         return readShell;
     }
 
+    public boolean isIHaveToRequestTheUsername() {
+        return IHaveToRequestTheUsername;
+    }
 
+    public void setIHaveToRequestTheUsername(boolean IHaveToRequestTheUsername) {
+        this.IHaveToRequestTheUsername = IHaveToRequestTheUsername;
+    }
+
+
+    /*
+        TODO
+            send message
+                    received message
+            .
+                -username
+                    -new_lobby -> chiedere il numero di giocatori
+                    -waiting_for_players -> print aspetto
+                -num_of_player
+                .
+                -ok
+                -error
+     */
     public void receivedMessage(Message message){
         switch (message.getType()){
-            case NUM_OF_PLAYERS -> readShell.askForNumberOfPlayer();
-            //TODO capire che messaggi mi arrivano e in che formato
+            case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
+            case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
+            case ERROR -> cliPrint.printError(message.getUsername()); //TODO il messaggio di errore dove lo trovo
+            default -> {
+                break;
+            }
         }
     }
 
 
 
-    public void runCLI (){
+    public void runCLI () throws InterruptedException {
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
-        String next= getClientState().getCurrentPlayer();
 
-        //richieste iniziali - username e numero di giocatori
-        readShell.initialRequests();
-
-
-        //COMANDI GIOCO
-        //facciamo partite readShell
         Thread th1=new Thread(readShell);
         th1.start();
 
+        //richiesta username
+        readShell.readCommand();
 
-        while(!clientState.isGameIsEnded()){
-            //controllo se è il turno del prossimo giocatore
-            if (getClientState().getCurrentPlayer().equals(next)){
-                //stampa quello che devi stampare all'inizio di un turno di gioco
+        //TODO restiamo in attesa di nuovi giocatori
+//        while (!clientState.isGameHasStarted()){
+//            cliPrint.printWaiting();
+//            Thread.sleep(10000);
+//        }
+
+        //inizia la partita
+        cliPrint.clearSheel();
+        cliPrint.gameHasStarted();
+        Thread.sleep(10000);
+
+        cliPrint.playerTurn();
+        //ho già stampato il primo turno di gioco
+        String curr=clientState.getNextPlayer();
+
+        while (!clientState.isGameIsEnded()){
+            //stampa nuovo turno se il current è il next di prima
+            if (clientState.getCurrentPlayer().equals(curr)){
                 cliPrint.playerTurn();
-                next= clientState.getNextPlayer();
+                curr=clientState.getNextPlayer();
             }
+
         }
 
-        //se è finito il gioco stampa end game
-        getCliPrint().printEndGame();
-        //elimina thread
+        //è finita la partita
+        cliPrint.printEndGame();
+        //eliminiamo il thread
         th1.interrupt();
+
+
+        /*
+            richieste iniziali
+
+            waiting_for_players
+                ciclo gameHasStarted!=true
+
+            inizia partita
+                ciclo gameIsEnded!=true
+
+            fine partita
+         */
 
     }
 
