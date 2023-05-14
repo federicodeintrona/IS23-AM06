@@ -90,10 +90,10 @@ public class CLIMain {
         th1.start();
 
         //TODO restiamo in attesa di nuovi giocatori
-//        while (!clientState.isGameHasStarted()){
-//            cliPrint.printWaiting();
-//            Thread.sleep(10000);
-//        }
+        while (!clientState.isGameHasStarted()){
+           cliPrint.printWaiting();
+           Thread.sleep(10000);
+       }
 
         //inizia la partita
         cliPrint.clearSheel();

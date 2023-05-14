@@ -6,6 +6,8 @@ import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 
+import java.security.SecureRandom;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,7 +39,7 @@ public class Lobby {
 
         if(!usernames.contains(client.toLowerCase())) {
             usernames.add(client.toLowerCase());
-
+            System.out.println("handleClient lobby" + client);
 
             //if there are waiting lobbies, add the client to the longest waiting lobby
             if (waitingLobbies()) {
@@ -68,12 +70,13 @@ public class Lobby {
         //add the new lobby to the lobby list
         lobbys.put(gameNumber,newLobby);
 
+        System.out.println("new lobby :" + gameNumber);
         //record the selected number of player
         gamePlayerNumber.put(gameNumber, numplayers);
 
         //add it to the waiting lobbies list
         waitingLobbys.add(gameNumber);
-
+        System.out.println("waiting new lobby"+waitingLobbys.peek());
         //create the new game
         newGame(gameNumber);
 
@@ -93,17 +96,11 @@ public class Lobby {
         Integer index = waitingLobbys.peek();
 
         if(index!=null) {
-
+            System.out.println("add client: "+index);
             //Add the client to the lobby and set his lobbyID
             lobbys.get(index).add(client);
 
-            //If the lobby reached the max number of player, start the game.
-            if (lobbys.get(index).size() == gamePlayerNumber.get(index)) {
-                waitingLobbys.remove();
-                lobbys.remove(index);
-                startGame(index);
-
-            }
+           //Check start
 
             //return the game number
             return index;
@@ -111,15 +108,24 @@ public class Lobby {
         }else throw new LobbyNotExists();
     }
 
+    public void checkStart(int index){
+        //If the lobby reached the max number of player, start the game.
+        if (lobbys.get(index).size() == gamePlayerNumber.get(index)) {
+            waitingLobbys.remove();
+            startGame(index);
+        }
+    }
 
     public void startGame(int index) {
         //create the model and the array that will contain alla players
         ArrayList<Player> playerList = new ArrayList<>();
         ArrayList<VirtualView> virtualViews = new ArrayList<>();
+        ArrayList<String> myLobby = lobbys.get(index);
 
-
+        System.out.println("Start game:"+index);
         //for every client in the lobby, create his player and add it to the player map
-        for (String s : lobbys.get(index)) {
+        for (String s : myLobby) {
+            System.out.println("start game lobby"+s);
             Player p = new Player(s);
 
             players.put(s,p);
@@ -138,6 +144,7 @@ public class Lobby {
     public void newGame(int num){
         Model m = new Model();
         games.put(num, m);
+        m.setGameID(num);
 
     }
 

@@ -50,6 +50,7 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
+        System.out.println("controller start game: "+games.get(ID).getGameID());
         games.get(ID).initialization();
     }
 
@@ -185,6 +186,7 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
 
     public IntMessage newLobby(String client, int players){
         IntMessage msg = new IntMessage();
+        System.out.println("new lobby controller"+client);
         int gameNum =  lobby.newLobby(client,players);
         msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
         msg.setContent("Lobby created. Waiting for other players...");
@@ -231,12 +233,14 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
      * @param port      the port used by the client to share the instance of clientState
      */
     public void acceptRmiConnection (String username, String ipAddress, int port) {
+
         try {
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry(ipAddress, port);
             // Looking up the registry for the remote object
             ClientStateRemoteInterface clientState = (ClientStateRemoteInterface) registry.lookup("ClientState");
 
+            System.out.println("rmi vv: " + username);
             addView(new RMIVirtualView(username,clientState));
 
         } catch (Exception e) {

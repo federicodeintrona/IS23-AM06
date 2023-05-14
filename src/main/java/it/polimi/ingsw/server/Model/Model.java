@@ -96,6 +96,7 @@ public class Model  {
 
         //Add the views as change listeners
         for (VirtualView v : virtualViews){
+            System.out.println("vv model init :"+v.getUsername());
             notifier.addPropertyChangeListener("all",v);
             notifier.addPropertyChangeListener(v.getUsername(),v);
         }
@@ -557,6 +558,10 @@ public class Model  {
 
     public void setVirtualViews(ArrayList<VirtualView> virtualViews) {
         this.virtualViews = virtualViews;
+    }
+
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
     }
 
     /**

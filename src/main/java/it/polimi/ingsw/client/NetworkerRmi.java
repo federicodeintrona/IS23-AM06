@@ -17,7 +17,7 @@ import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
     private static int portIn = 1099;
-    private static int portOut = 1234;
+    private static int portOut = 1233;
     private static String clientIP;
     private String username;
     private int lobbyID;
@@ -112,8 +112,10 @@ public class NetworkerRmi implements Networker {
 
         // Calling the completeRmiConnection() method to complete the client-server connection
         if (!message1.getType().equals(MessageTypes.ERROR)){
-           gameID = ( message1).getNum();
-           completeRmiConnection();}
+           this.username = username.getUsername();
+           gameID =  (message1).getNum();
+           completeRmiConnection();
+        }
 
         cli.receivedMessage(message1);
     }

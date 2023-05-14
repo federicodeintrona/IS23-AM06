@@ -27,6 +27,10 @@ public class ClientBase {
         CLIMain cli = new CLIMain(lock,state,client);
         client.setCli(cli);
         client.initializeConnection();
-        cli.runCLI();
+        try {
+            cli.runCLI();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
