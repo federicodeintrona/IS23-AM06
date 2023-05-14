@@ -20,7 +20,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller implements ControllerInterface, PropertyChangeListener {
+public class Controller implements PropertyChangeListener {
 
     private Lobby lobby;
     private HashMap<Integer, Model> games;
@@ -196,11 +196,11 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
 
 
 
-    public IntMessage handleNewClient(String client) throws RemoteException {
+    public IntMessage handleNewClient(String client,VirtualView view) throws RemoteException {
 
         try {
 
-            int response = lobby.handleClient(client);
+            int response = lobby.handleClient(client,view);
 
             if (response == -1) {
                 IntMessage reply = new IntMessage();
@@ -225,6 +225,9 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
     public void addView(VirtualView view){
         views.put(view.getUsername(),view);
     }
+    public boolean checkUsername(String username){
+        return lobby.checkUsername(username);
+    }
 
     /**
      * Gets the instance of clientState from a specific Client given his ip address and port
@@ -234,19 +237,7 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
      */
     public void acceptRmiConnection (String username, String ipAddress, int port) {
 
-        try {
-            // Getting the registry
-            Registry registry = LocateRegistry.getRegistry(ipAddress, port);
-            // Looking up the registry for the remote object
-            ClientStateRemoteInterface clientState = (ClientStateRemoteInterface) registry.lookup("ClientState");
 
-            System.out.println("rmi vv: " + username);
-            addView(new RMIVirtualView(username,clientState));
-
-        } catch (Exception e) {
-            System.err.println("Client exception: " + e);
-            e.printStackTrace();
-        }
     }
 
     public void playerDisconnection(String username){

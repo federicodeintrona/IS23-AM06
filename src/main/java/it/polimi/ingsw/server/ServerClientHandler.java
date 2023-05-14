@@ -65,13 +65,13 @@ public class ServerClientHandler implements Runnable  {
                 case USERNAME -> {
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
-                        messageOut = controller.handleNewClient(incomingMsg.getUsername());
+                        messageOut = controller.handleNewClient(incomingMsg.getUsername(),
+                                new TCPVirtualView(incomingMsg.getUsername(),this.socket));
                     }
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
                         this.username=incomingMsg.getUsername();
-                        controller.addView(new TCPVirtualView(username,this.socket));
                     }
 
                 }

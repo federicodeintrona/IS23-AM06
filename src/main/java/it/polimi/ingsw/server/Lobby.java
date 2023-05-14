@@ -27,18 +27,16 @@ public class Lobby {
     private int gameNumber = 0;
 
 
-    //private final Object gameNumberLock = new Object();
-
-
     public synchronized boolean waitingLobbies(){
         return !waitingLobbys.isEmpty();
     }
 
-
-    public synchronized int handleClient(String client) throws UsernameAlreadyTaken {
+    public synchronized int handleClient(String client,VirtualView view) throws UsernameAlreadyTaken {
 
         if(!usernames.contains(client.toLowerCase())) {
             usernames.add(client.toLowerCase());
+            controller.addView(view);
+
             System.out.println("handleClient lobby" + client);
 
             //if there are waiting lobbies, add the client to the longest waiting lobby
@@ -96,11 +94,11 @@ public class Lobby {
         Integer index = waitingLobbys.peek();
 
         if(index!=null) {
-            System.out.println("add client: "+index);
+            System.out.println("add client: " + index);
             //Add the client to the lobby and set his lobbyID
             lobbys.get(index).add(client);
 
-           //Check start
+            //Send ready message
 
             //return the game number
             return index;
@@ -168,9 +166,9 @@ public class Lobby {
 
     }
 
-
-
-
+    public boolean checkUsername(String username){
+        return usernames.contains(username.toLowerCase());
+    }
 
     public void setController(Controller controller) {
         this.controller = controller;
