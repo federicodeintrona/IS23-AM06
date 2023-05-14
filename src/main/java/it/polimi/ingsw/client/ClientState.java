@@ -6,13 +6,10 @@ import it.polimi.ingsw.utils.Matrix;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
 
 public class ClientState implements ClientStateRemoteInterface{
 
     private Object viewLock; //TODO da fare final
-
-    private Networker net; //TODO controlla se ci va o meno non ricordo
 
     private String myUsername;
     private ArrayList<String> allUsername;
@@ -20,30 +17,21 @@ public class ClientState implements ClientStateRemoteInterface{
     private ArrayList<Integer> gameCommonObjective;
     private Matrix board;
     private Matrix myBookshelf;
-    private HashMap<String, Matrix> allBookshelf = new HashMap<>();
+    private HashMap<String, Matrix> allBookshelf;
     private Integer myPoints;
-    private HashMap<String, Integer> allPublicPoints = new HashMap<>();
+    private HashMap<String, Integer> allPublicPoints;
     private ArrayList<Point> selectedTiles;
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
-    private boolean gameIsEnded;
     private boolean gameHasStarted;
+    private boolean gameIsEnded;
 
-   public ClientState(Object viewLock) {
-      this.viewLock = viewLock;
-   }
-
+    public ClientState(Object viewLock) {
+        this.viewLock = viewLock;
+    }
 
     public ClientState() {
-    }
-
-    public ClientState(Lock lock) {
-        viewLock = lock;
-    }
-    public ClientState(String username,Lock lock) {
-        viewLock = lock;
-        myUsername = username;
     }
 
     public String getMyUsername() {
@@ -51,8 +39,6 @@ public class ClientState implements ClientStateRemoteInterface{
             return myUsername;
         }
     }
-
-
 
     public void setMyUsername(String myUsername) {
         synchronized (viewLock){
@@ -231,16 +217,14 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
-
-    public boolean isGameHasStarted() {
-        synchronized (viewLock) {
-            return gameHasStarted;
-        }
+    public boolean gameHasStarted () {
+        synchronized (viewLock){ return gameHasStarted; }
     }
 
-    public void setGameHasStarted(boolean gameHasStarted) {
+    public void setGameHasStarted (boolean gameHasStarted) {
         synchronized (viewLock) {
             this.gameHasStarted = gameHasStarted;
         }
     }
+
 }
