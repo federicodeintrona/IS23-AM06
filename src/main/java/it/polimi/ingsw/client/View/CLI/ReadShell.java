@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.View.CLI;
 
-import it.polimi.ingsw.server.Messages.*;
+import it.polimi.ingsw.utils.Messages.*;
+
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -199,7 +200,7 @@ public class ReadShell extends Thread{
             case ADD_TO_BOOKSHELF -> cliMain.getNet().addTilesToBookshelf(message);
             //MANCA MESSAGGIO DI ROLLBACK DA PARTE DEL NETWORKER
 //            case ROLLBACK -> net.rollback(message);
-            case USERNAME -> cliMain.getNet().firstConnection(message);
+            case USERNAME -> cliMain.getNet().firstConnection( message);
             case NUM_OF_PLAYERS -> cliMain.getNet().numberOfPlayersSelection(message);
         }
     }

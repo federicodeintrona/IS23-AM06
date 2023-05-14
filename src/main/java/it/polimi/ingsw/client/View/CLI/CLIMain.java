@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
-import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.utils.Messages.*;
 
 public class CLIMain {
 
@@ -71,8 +71,6 @@ public class CLIMain {
         Thread th1=new Thread(readShell);
         th1.start();
 
-        //chi ha la sedia?
-        getCliPrint().printChair();
 
         while(!clientState.isGameIsEnded()){
             //controllo se è il turno del prossimo giocatore

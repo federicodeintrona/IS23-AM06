@@ -2,16 +2,19 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Exceptions.*;
-import it.polimi.ingsw.server.Messages.IntMessage;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.MessageTypes;
+import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Messages.IntMessage;
+import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
+
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -58,7 +61,7 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
      * @param col The column where you want to add the tiles
      * @return The reply to be sent to the client
      */
-    public Message addToBookshelf(int gameID, String playerID,  int col ){
+    public Message addToBookshelf(int gameID, String playerID, int col ){
         Message reply = new Message();
 
         try {
@@ -180,7 +183,7 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
     //Lobby methods
 
 
-    public Message newLobby(String client,int players){
+    public IntMessage newLobby(String client, int players){
         IntMessage msg = new IntMessage();
         int gameNum =  lobby.newLobby(client,players);
         msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
@@ -191,14 +194,14 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
 
 
 
-    public synchronized Message handleNewClient(String client) {
+    public IntMessage handleNewClient(String client) throws RemoteException {
 
         try {
 
             int response = lobby.handleClient(client);
 
             if (response == -1) {
-                Message reply = new Message();
+                IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.NEW_LOBBY);
                 reply.setContent("Select the number of players (2 to 4)");
                 return reply;
@@ -210,7 +213,7 @@ public class Controller implements ControllerInterface, PropertyChangeListener {
                 return reply;
             }
         } catch (UsernameAlreadyTaken e) {
-            Message reply = new Message();
+            IntMessage reply = new IntMessage();
             reply.setType(MessageTypes.ERROR);
             reply.setContent("Username already taken");
             return reply;

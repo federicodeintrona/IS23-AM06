@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.utils.Messages.*;
+import it.polimi.ingsw.utils.Messages.IntMessage;
+import it.polimi.ingsw.utils.Messages.Message;
 
 import java.awt.*;
 import java.rmi.Remote;
@@ -17,9 +19,9 @@ public interface ControllerInterface extends Remote {
 
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points) throws RemoteException;
 
-    public Message newLobby(String client,int players) throws RemoteException;
+    public IntMessage newLobby(String client, int players) throws RemoteException;
 
-    public Message handleNewClient(String client) throws RemoteException;
+    public IntMessage handleNewClient(String client) throws RemoteException;
 
     public void acceptRmiConnection (String username, String ipAddress, int port) throws RemoteException;
     }

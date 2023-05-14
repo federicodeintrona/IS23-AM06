@@ -9,28 +9,24 @@ import java.util.Scanner;
 
 public class ClientBase {
 
-    public static void main( String[] args ) throws MalformedURLException, NotBoundException, RemoteException {
+    public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
         String decision = null;
 
         System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
+        Object lock = new Object();
+        ClientState state = new ClientState(lock);
 
-        ClientState state = new ClientState();
-        Networker client = null;
+        Networker client = switch (decision) {
+            case "RMI" -> new NetworkerRmi(state);
+            case "TCP" -> new NetworkerTcp();
+            default -> null;
+        };
 
-        switch (decision) {
-            case "RMI":
-                client = new NetworkerRmi();
-                break;
-
-            case "TCP":
-                client = new NetworkerTcp();
-                break;
-
-        }
+        CLIMain cli = new CLIMain(lock,state,client);
+        client.setCli(cli);
         client.initializeConnection();
-
-      //  CLIMain cli = new CLIMain(new Object(),)
+        cli.runCLI();
     }
 }

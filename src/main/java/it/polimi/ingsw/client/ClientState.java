@@ -10,7 +10,7 @@ import java.util.concurrent.locks.Lock;
 
 public class ClientState implements ClientStateRemoteInterface{
 
-    private Lock viewLock; //TODO da fare final
+    private Object viewLock; //TODO da fare final
 
     private Networker net; //TODO controlla se ci va o meno non ricordo
 
@@ -30,9 +30,9 @@ public class ClientState implements ClientStateRemoteInterface{
     private boolean gameIsEnded;
     private boolean gameHasStarted;
 
-//    public ClientState(Lock viewLock) {
-//        this.viewLock = viewLock;
-//    }
+   public ClientState(Object viewLock) {
+      this.viewLock = viewLock;
+   }
 
 
     public ClientState() {

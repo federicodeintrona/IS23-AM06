@@ -1,8 +1,11 @@
 package it.polimi.ingsw.client;
 
 
+
+import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.server.ControllerInterface;
-import it.polimi.ingsw.server.Messages.*;
+import it.polimi.ingsw.utils.Messages.*;
+
 
 import java.net.*;
 import java.rmi.AlreadyBoundException;
@@ -22,12 +25,24 @@ public class NetworkerRmi implements Networker {
     private Message message;
     private static ControllerInterface controller;
     private ClientState clientState;
+    private CLIMain cli;
+
 
     /**
      * Constructor
      */
     public NetworkerRmi()  {
         clientState = new ClientState();
+
+        try {
+            clientIP = getLocalIPAddress();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public NetworkerRmi(ClientState state)  {
+        clientState = state;
 
         try {
             clientIP = getLocalIPAddress();
@@ -87,19 +102,20 @@ public class NetworkerRmi implements Networker {
      * Asks the client to enter a valid username. Once he has
      * done the client gets added to the lobby
      */
-    public Message firstConnection (Message username) {
+    public void firstConnection (Message username) {
+        IntMessage message1;
         try {
-            message = controller.handleNewClient(username.getUsername());
+             message1 = controller.handleNewClient(username.getUsername());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
 
         // Calling the completeRmiConnection() method to complete the client-server connection
-        if (!message.getType().equals(MessageTypes.ERROR)){
-           gameID = ((IntMessage) message).getNum();
+        if (!message1.getType().equals(MessageTypes.ERROR)){
+           gameID = ( message1).getNum();
            completeRmiConnection();}
 
-        return message;
+        cli.receivedMessage(message1);
     }
 
     /**
@@ -118,7 +134,7 @@ public class NetworkerRmi implements Networker {
      *
      * @param numberOfPlayers
      */
-    public Message numberOfPlayersSelection(Message numberOfPlayers) {
+    public void numberOfPlayersSelection(Message numberOfPlayers) {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
 
         try {
@@ -127,7 +143,7 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        return message;
+        cli.receivedMessage(message);
     }
 
     /**
@@ -135,7 +151,7 @@ public class NetworkerRmi implements Networker {
      *
      * @param tiles     ArrayList containing the coordinates of the tiles to remove
      */
-    public Message removeTilesFromBoard(Message tiles) {
+    public void removeTilesFromBoard(Message tiles) {
         PointsMessage tempMessage = (PointsMessage) tiles;
         try {
             message = controller.removeTiles(gameID, username, tempMessage.getTiles());
@@ -143,14 +159,14 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        return message;
+        cli.receivedMessage(message);
     }
 
     /**
      *
      * @param ints
      */
-    public Message switchTilesOrder(Message ints) {
+    public void switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
         try {
             message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
@@ -158,14 +174,14 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        return message;
+        cli.receivedMessage(message);
     }
 
     /**
      *
      * @param column
      */
-    public Message addTilesToBookshelf (Message column) {
+    public void addTilesToBookshelf (Message column) {
         IntMessage tempMessage = (IntMessage) column;
         try {
             message = controller.addToBookshelf(gameID, username, tempMessage.getNum());
@@ -173,7 +189,7 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        return message;
+        cli.receivedMessage(message);
     }
 
     private String getClientIP() throws UnknownHostException {
@@ -200,5 +216,10 @@ public class NetworkerRmi implements Networker {
             }
         }
         return null;
+    }
+
+
+    public void setCli(CLIMain cli) {
+        this.cli = cli;
     }
 }

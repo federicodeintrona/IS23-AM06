@@ -1,11 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
-import it.polimi.ingsw.server.CommonObjective.*;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Tiles;
-import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import org.json.simple.JSONArray;

@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public interface ClientStateRemoteInterface extends Remote {
     public void setMyUsername(String myUsername) throws RemoteException;
 
@@ -42,5 +43,5 @@ public interface ClientStateRemoteInterface extends Remote {
 
     public void setGameIsEnded(boolean gameIsEnded) throws RemoteException;
 
-    void setGameHasStarted(boolean start);
+    public void setGameHasStarted(boolean gameHasStarted) throws RemoteException;
 }

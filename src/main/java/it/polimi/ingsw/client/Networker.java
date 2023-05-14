@@ -1,16 +1,14 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Controller;
-import it.polimi.ingsw.server.Messages.Message;
-
-import java.awt.*;
-import java.util.ArrayList;
+import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.utils.Messages.*;
 
 public interface Networker {
     public void initializeConnection ();
-    public Message firstConnection (Message username);
-    public Message numberOfPlayersSelection(Message numberOfPlayers);
-    public Message removeTilesFromBoard(Message tiles);
-    public Message switchTilesOrder(Message ints);
-    public Message addTilesToBookshelf (Message column);
+    public void firstConnection (Message username);
+    public void numberOfPlayersSelection(Message numberOfPlayers);
+    public void removeTilesFromBoard(Message tiles);
+    public void switchTilesOrder(Message ints);
+    public void addTilesToBookshelf (Message column);
+    public void setCli(CLIMain cli);
 }

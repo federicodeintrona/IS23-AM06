@@ -1,11 +1,6 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.utils.Messages;
 
-import it.polimi.ingsw.utils.Matrix;
-import org.json.simple.JSONObject;
-
-import java.util.ArrayList;
-
-public class ViewMessage extends Message{
+public class ViewMessage extends Message {
 
     private String objectName;
     private Object content;

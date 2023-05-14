@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Messages.*;
+
+import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.TCPVirtualView;
+import it.polimi.ingsw.utils.Messages.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
