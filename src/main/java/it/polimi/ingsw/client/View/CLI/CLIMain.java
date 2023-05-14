@@ -52,25 +52,11 @@ public class CLIMain {
         this.IHaveToRequestTheUsername = IHaveToRequestTheUsername;
     }
 
-
-    /*
-        TODO
-            send message
-                    received message
-            .
-                -username
-                    -new_lobby -> chiedere il numero di giocatori
-                    -waiting_for_players -> print aspetto
-                -num_of_player
-                .
-                -ok
-                -error
-     */
     public void receivedMessage(Message message){
         switch (message.getType()){
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
             case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
-            case ERROR -> cliPrint.printError(message.getUsername()); //TODO il messaggio di errore dove lo trovo
+            case ERROR -> cliPrint.printError(message.getUsername());
             default -> {
                 break;
             }
@@ -89,11 +75,10 @@ public class CLIMain {
         Thread th1=new Thread(readShell);
         th1.start();
 
-        //TODO restiamo in attesa di nuovi giocatori
-        while (!clientState.isGameHasStarted()){
-           cliPrint.printWaiting();
-           Thread.sleep(10000);
-       }
+        //TODO da sistemare
+        while (!clientState.gameHasStarted()){
+            Thread.sleep(500);
+        }
 
         //inizia la partita
         cliPrint.clearSheel();
