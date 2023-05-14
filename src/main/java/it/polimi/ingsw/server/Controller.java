@@ -2,10 +2,9 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Exceptions.*;
-import it.polimi.ingsw.server.Messages.IntMessage;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.client.View.View;
+import it.polimi.ingsw.utils.Messages.IntMessage;
+import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.VirtualView;

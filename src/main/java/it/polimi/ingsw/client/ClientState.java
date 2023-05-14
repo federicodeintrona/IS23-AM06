@@ -6,11 +6,12 @@ import it.polimi.ingsw.utils.Matrix;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 
 public class ClientState implements ClientStateRemoteInterface{
 
-    private Lock viewLock; //TODO da fare final
+    private Object viewLock; //TODO da fare final
 
     private Networker net; //TODO controlla se ci va o meno non ricordo
 
@@ -29,10 +30,9 @@ public class ClientState implements ClientStateRemoteInterface{
     private String winnerPlayer;
     private boolean gameIsEnded;
 
-//    public ClientState(Lock viewLock) {
-//        this.viewLock = viewLock;
-//    }
-
+    public ClientState(Object viewLock) {
+        this.viewLock = viewLock;
+    }
 
     public ClientState() {
     }

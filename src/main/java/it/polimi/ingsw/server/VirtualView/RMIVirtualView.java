@@ -1,12 +1,9 @@
 package it.polimi.ingsw.server.VirtualView;
 
-import it.polimi.ingsw.server.Messages.*;
-import it.polimi.ingsw.server.Model.Board;
-import it.polimi.ingsw.server.Model.Bookshelf;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
+import it.polimi.ingsw.utils.Messages.ViewMessage;
 
 import java.beans.PropertyChangeEvent;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class RMIVirtualView extends VirtualView{
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.utils.Messages;
 
 public class IntMessage extends Message{
 

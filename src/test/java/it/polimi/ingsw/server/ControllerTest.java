@@ -1,18 +1,13 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Messages.Message;
 import it.polimi.ingsw.server.Model.GameState;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.Model.Tiles;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
-import it.polimi.ingsw.server.VirtualView.TCPVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

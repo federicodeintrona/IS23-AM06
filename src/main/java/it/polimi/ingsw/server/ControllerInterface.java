@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.utils.Messages.Message;
 
 import java.awt.*;
 import java.rmi.Remote;

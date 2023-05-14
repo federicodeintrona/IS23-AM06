@@ -1,15 +1,13 @@
 package it.polimi.ingsw.client;
 
 
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 
 public class NetworkerTcp implements Networker{
@@ -17,6 +15,11 @@ public class NetworkerTcp implements Networker{
     Socket socket ;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    private CLIMain cli;
+
+    public void setCli(CLIMain cli) {
+        this.cli = cli;
+    }
 
     public NetworkerTcp()  {
         JsonReader config;
@@ -43,7 +46,7 @@ public class NetworkerTcp implements Networker{
         System.out.println("Created TCP connection with Server");
     }
 
-    public Message firstConnection (Message username){
+    public void firstConnection (Message username){
         try {
             oos.writeObject(username);
         } catch (IOException e) {
@@ -51,49 +54,49 @@ public class NetworkerTcp implements Networker{
         }
 
         try {
-            return (Message) ois.readObject();
+            cli.receivedMessage((Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     };
-    public Message numberOfPlayersSelection(Message numberOfPlayers){
+    public void numberOfPlayersSelection(Message numberOfPlayers){
         try {
             oos.writeObject(numberOfPlayers);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            return (Message) ois.readObject();
+            cli.receivedMessage((Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     };
-    public Message removeTilesFromBoard(Message tiles){
+    public void removeTilesFromBoard(Message tiles){
         try {
             oos.writeObject(tiles);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            return (Message) ois.readObject();
+            cli.receivedMessage((Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     };
-    public Message switchTilesOrder(Message ints){
+    public void switchTilesOrder(Message ints){
         try {
             oos.writeObject(ints);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            return (Message) ois.readObject();
+            cli.receivedMessage((Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -101,18 +104,20 @@ public class NetworkerTcp implements Networker{
         }
     };
 
-    public Message addTilesToBookshelf (Message column){
+    public void addTilesToBookshelf (Message column){
         try {
             oos.writeObject(column);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            return (Message) ois.readObject();
+            cli.receivedMessage((Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     };
+
+
 }

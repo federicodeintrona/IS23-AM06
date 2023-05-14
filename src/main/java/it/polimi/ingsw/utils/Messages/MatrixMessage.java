@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.utils.Messages;
 
 import it.polimi.ingsw.utils.Matrix;
 

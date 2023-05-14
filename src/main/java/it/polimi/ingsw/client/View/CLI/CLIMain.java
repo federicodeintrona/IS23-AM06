@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
-import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.utils.Messages.Message;
 
 public class CLIMain {
 
@@ -83,11 +83,11 @@ public class CLIMain {
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
 
+        //richiesta username
+        readShell.askUsername();
+
         Thread th1=new Thread(readShell);
         th1.start();
-
-        //richiesta username
-        readShell.readCommand();
 
         //TODO restiamo in attesa di nuovi giocatori
 //        while (!clientState.isGameHasStarted()){

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
-import it.polimi.ingsw.server.Messages.*;
+import it.polimi.ingsw.utils.Messages.*;
 
 import java.awt.*;
 import java.util.ArrayList;

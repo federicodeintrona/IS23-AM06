@@ -1,6 +1,8 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.utils.Messages;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
 
     private String username;
     private MessageTypes type;

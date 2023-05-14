@@ -1,6 +1,6 @@
-package it.polimi.ingsw.client.Messages;
+package it.polimi.ingsw.utils.Messages;
 
-public class ServerInfoMessage extends Message {
+public class ServerInfoMessage extends Message{
 
     private int ip;
 
