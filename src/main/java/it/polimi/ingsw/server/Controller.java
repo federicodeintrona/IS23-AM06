@@ -196,7 +196,7 @@ public class Controller implements PropertyChangeListener {
 
 
 
-    public IntMessage handleNewClient(String client,VirtualView view) throws RemoteException {
+    public IntMessage handleNewClient(String client,VirtualView view) {
 
         try {
 
@@ -225,13 +225,10 @@ public class Controller implements PropertyChangeListener {
     public void addView(VirtualView view){
         views.put(view.getUsername(),view);
     }
-    public boolean checkUsername(String username){
-        return lobby.checkUsername(username);
-    }
-
     public void playerDisconnection(String username){
         lobby.playerDisconnection(username);
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

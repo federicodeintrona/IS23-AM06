@@ -100,19 +100,6 @@ public class ServerClientHandler implements Runnable  {
         }
     }
 
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
-    }
-
-    public void setNickname(String nickname) {
-        this.username = nickname;
-    }
-
-
-    public String getNickname() {
-        return username;
-    }
-
     public Player getPlayer() {
         return player;
     }

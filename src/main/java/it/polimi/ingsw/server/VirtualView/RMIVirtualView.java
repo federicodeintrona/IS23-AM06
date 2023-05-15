@@ -11,7 +11,9 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,6 +51,7 @@ public class RMIVirtualView extends VirtualView{
                     clientState.setSelectedTiles((ArrayList<Point>) evt.getSource());
                 }
                 case ("bookshelf") -> {
+                    System.out.println((String)evt.getOldValue());
                     clientState.setAllBookshelf((String)evt.getOldValue(),(Matrix) evt.getSource());
                 }
                 case ("publicPoints") -> {
@@ -73,6 +76,7 @@ public class RMIVirtualView extends VirtualView{
             }
 
         }catch (RemoteException e){
+            System.out.println(Arrays.toString(e.getStackTrace()));
             throw  new RuntimeException();
         }
 

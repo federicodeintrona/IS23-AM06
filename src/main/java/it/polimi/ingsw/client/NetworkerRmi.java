@@ -3,7 +3,6 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
-import it.polimi.ingsw.server.ControllerInterface;
 import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.Messages.*;
 
@@ -18,13 +17,12 @@ import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
     private static int portIn = 1099;
-    private static int portOut = 5099;
+    private static int portOut = 1234;
     private static String clientIP;
     private String username;
-    private int lobbyID;
     private int gameID;
     private Message message;
-    private static RMIHandlerInterface controller;
+    private static RMIHandlerInterface rmiHandler;
     private ClientState clientState;
     private CLIMain cli;
 
@@ -60,7 +58,7 @@ public class NetworkerRmi implements Networker {
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
             // Looking up the registry for the remote object
-            controller = (RMIHandlerInterface) registry.lookup("Controller");
+            rmiHandler = (RMIHandlerInterface) registry.lookup("RMIHandler");
 
         } catch (Exception e) {
             System.err.println("Client exception: " + e);
@@ -106,7 +104,7 @@ public class NetworkerRmi implements Networker {
     public void firstConnection (Message username) {
         IntMessage message1;
         try {
-             message1 = controller.acceptRmiConnection(username.getUsername(), clientIP, portOut);
+             message1 = rmiHandler.acceptRmiConnection(username.getUsername(), clientIP, portOut);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -115,7 +113,6 @@ public class NetworkerRmi implements Networker {
         if (!message1.getType().equals(MessageTypes.ERROR)){
            this.username = username.getUsername();
            gameID =  (message1).getNum();
-           completeRmiConnection();
         }
 
         cli.receivedMessage(message1);
@@ -127,7 +124,7 @@ public class NetworkerRmi implements Networker {
      */
     private void completeRmiConnection () {
         try {
-            controller.acceptRmiConnection(username, clientIP, portOut);
+            rmiHandler.acceptRmiConnection(username, clientIP, portOut);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -141,7 +138,7 @@ public class NetworkerRmi implements Networker {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
 
         try {
-            message = controller.newLobby(this.username, tempMessage.getNum());
+            message = rmiHandler.newLobby(this.username, tempMessage.getNum());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -157,7 +154,7 @@ public class NetworkerRmi implements Networker {
     public void removeTilesFromBoard(Message tiles) {
         PointsMessage tempMessage = (PointsMessage) tiles;
         try {
-            message = controller.removeTiles(gameID, username, tempMessage.getTiles());
+            message = rmiHandler.removeTiles(gameID, username, tempMessage.getTiles());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -172,7 +169,7 @@ public class NetworkerRmi implements Networker {
     public void switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
         try {
-            message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
+            message = rmiHandler.swapOrder(tempMessage.getIntegers(), gameID, username);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -187,7 +184,7 @@ public class NetworkerRmi implements Networker {
     public void addTilesToBookshelf (Message column) {
         IntMessage tempMessage = (IntMessage) column;
         try {
-            message = controller.addToBookshelf(gameID, username, tempMessage.getNum());
+            message = rmiHandler.addToBookshelf(gameID, username, tempMessage.getNum());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

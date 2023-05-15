@@ -13,8 +13,6 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 public class RMIHandler implements RMIHandlerInterface{
-
-
     private final Controller controller;
 
     public RMIHandler(Controller controller) {
@@ -62,7 +60,7 @@ public class RMIHandler implements RMIHandlerInterface{
             System.out.println("rmi vv: " + username);
 
             message = controller.handleNewClient(username,new RMIVirtualView(username,clientState));
-
+            System.out.println(message.getType());
 
         } catch (Exception e) {
             System.err.println("Client exception: " + e);

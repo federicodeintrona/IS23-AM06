@@ -81,7 +81,7 @@ public class Server extends UnicastRemoteObject {
             e.printStackTrace();
         }
         try {
-            registry.bind("Controller", stub);
+            registry.bind("RMIHandler", stub);
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (AlreadyBoundException e) {
