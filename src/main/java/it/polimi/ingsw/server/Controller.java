@@ -173,6 +173,10 @@ public class Controller implements PropertyChangeListener {
             reply.setType(MessageTypes.ERROR);
             reply.setContent("It's not your turn");
 
+        }catch (SameElement e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("Tou cannot choose the same tile multiple times");
+
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
             reply.setContent("You can't do that now");

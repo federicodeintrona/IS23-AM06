@@ -5,6 +5,8 @@ import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CheckManager {
     private static final int maxNumberOfSelectedTiles=3;
@@ -76,9 +78,12 @@ public class CheckManager {
         if(points!=null ){
             //check the length of the array
             if(points.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
-            else {  //check if the tiles are adjacent
-                if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
-            }
+             //check if the tiles are adjacent
+            if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
+
+            HashSet<Point> set = new HashSet<>(points);
+            if(points.size()!=set.size()) throw new SameElement();
+
             //Check if the selected tiles are allowed and not empty
             for(Point p : points){
                 checkBoardDomain(p,board);
@@ -189,7 +194,7 @@ public class CheckManager {
         if(ints.size()!=selectedTiles.size()) throw new TooManySelected();
         //Checks that the integer is between 0 and the array size
         for(Integer i : ints){
-            if( i<0 || i>ints.size()) throw new IllegalArgumentException();
+            if( i<1 || i>ints.size()) throw new IllegalArgumentException();
         }
 
     }

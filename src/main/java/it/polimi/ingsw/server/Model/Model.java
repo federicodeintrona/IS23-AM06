@@ -285,8 +285,9 @@ public class Model  {
         //Swaps the array around
         ArrayList<Tiles> array = new ArrayList<>();
         array.addAll(selectedTiles);
+
         for (int i = 0; i < ints.size(); i++) {
-            selectedTiles.set(i, array.get(ints.get(i)));
+            selectedTiles.set(i, array.get(ints.get(i)-1));
         }
 
         //Notify Selected Tiles
