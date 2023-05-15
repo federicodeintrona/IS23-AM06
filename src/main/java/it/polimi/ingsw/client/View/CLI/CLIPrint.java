@@ -138,7 +138,6 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //TODO stampa 2 personal insieme
     //stampa il personal Objective
     public void printPersonalObjective(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {

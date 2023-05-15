@@ -17,7 +17,7 @@ import java.util.Random;
 public class PersonalObjective {
     private static final int numberOfPersonalObjective=12;
 
-    private static final HashMap<Point, Tiles> card=new HashMap<>();
+    private HashMap<Point, Tiles> card=new HashMap<>();
 
 
 
@@ -131,7 +131,7 @@ public class PersonalObjective {
             throw new RuntimeException(e);
         }
 
-//        System.out.println(card);
+        System.out.println(card);
     }
 
     /**

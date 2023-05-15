@@ -14,6 +14,7 @@ class PersonalObjectiveTest {
     void personalObjectivePoint11(){
         Bookshelf bookshelf=new Bookshelf();
         PersonalObjective po=new PersonalObjective(1);
+        PersonalObjective po1=new PersonalObjective(2);
 
         //controllo con bookshelf vuota
         assertEquals(0, po.personalObjectivePoint(bookshelf));
