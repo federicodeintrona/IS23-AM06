@@ -28,7 +28,7 @@ class CLIPrintTest {
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
-        Board board=new Board(2, new Sachet());
+        Board board=new Board(3, new Sachet());
         board.BoardInitialization();
 
         cliPrint.printBoard(board.getGamesBoard());
