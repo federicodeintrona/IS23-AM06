@@ -5,7 +5,7 @@ public enum MessageTypes {
     NEW_LOBBY,
     WAITING_FOR_PLAYERS,
     NUM_OF_PLAYERS,
-    REMOVE_FROM_BOARD, //rimuove dall board
+    REMOVE_FROM_BOARD, //rimuove dalla board
     SWITCH_PLACE, //scambia posizioni tessere
     ADD_TO_BOOKSHELF, //colonna in cui inserire tiles
     OK,

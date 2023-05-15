@@ -107,7 +107,7 @@ public class ReadShell extends Thread{
             case "#printyourbookshelf" -> {
                 //todo QUALE STAMPO???
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getMyBookshelf());
-                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
+//                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
             }
             case "#printbookshelf" -> {
                 int i=st.indexOf("@");
@@ -128,6 +128,7 @@ public class ReadShell extends Thread{
             case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective());
             case "#printpoints" -> cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
             case "#printmypoint" -> cliMain.getCliPrint().printMyPoints(cliMain.getClientState().getMyPoints());
+            case "#printchair" -> cliMain.getCliPrint().printChair();
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
 
@@ -213,7 +214,7 @@ public class ReadShell extends Thread{
     public void askNumberOfPlayerMessage(){
         IntMessage message=new IntMessage();
 
-        System.out.print("Enter number of palyer: ");
+        System.out.print("Enter number of player: ");
         String num = readLine();
 
         //setta il messaggio

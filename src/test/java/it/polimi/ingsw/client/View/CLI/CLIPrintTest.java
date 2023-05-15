@@ -3,9 +3,7 @@ package it.polimi.ingsw.client.View.CLI;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.NetworkerRmi;
-import it.polimi.ingsw.server.CommonObjective.CommonObjective;
-import it.polimi.ingsw.server.CommonObjective.CommonObjective1;
-import it.polimi.ingsw.server.CommonObjective.CommonObjective2;
+import it.polimi.ingsw.server.CommonObjective.*;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Sachet;
@@ -120,14 +118,40 @@ class CLIPrintTest {
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
-        CommonObjective commonObjective1=new CommonObjective1();
-        CommonObjective commonObjective2=new CommonObjective2();
 
         ArrayList<Integer> arrayList=new ArrayList<>();
         arrayList.add(1);
         arrayList.add(2);
 
         cliPrint.printCommonObjective(arrayList);
+
+        ArrayList<Integer> arrayList1=new ArrayList<>();
+        arrayList1.add(3);
+        arrayList1.add(4);
+        cliPrint.printCommonObjective(arrayList1);
+
+        ArrayList<Integer> arrayList2=new ArrayList<>();
+        arrayList2.add(5);
+        arrayList2.add(6);
+        cliPrint.printCommonObjective(arrayList2);
+
+        ArrayList<Integer> arrayList3=new ArrayList<>();
+        arrayList3.add(7);
+        arrayList3.add(8);
+        cliPrint.printCommonObjective(arrayList3);
+
+        ArrayList<Integer> arrayList4=new ArrayList<>();
+        arrayList4.add(9);
+        arrayList4.add(10);
+        cliPrint.printCommonObjective(arrayList4);
+
+        ArrayList<Integer> arrayList5=new ArrayList<>();
+        arrayList5.add(11);
+        arrayList5.add(12);
+        cliPrint.printCommonObjective(arrayList5);
+
+
+
 
     }
 

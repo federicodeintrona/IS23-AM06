@@ -57,6 +57,7 @@ public class CLIMain {
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
             case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
             case ERROR -> cliPrint.printError(message.getUsername());
+            //TODO se username è sbagliato cosa mi ritorni
             default -> {
                 break;
             }
@@ -83,22 +84,25 @@ public class CLIMain {
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
-        Thread.sleep(10000);
+        Thread.sleep(500);
 
+        cliPrint.printChair();
         cliPrint.playerTurn();
         //ho già stampato il primo turno di gioco
         String curr=clientState.getNextPlayer();
 
-     while (!clientState.isGameIsEnded()){
+        while (!clientState.isGameIsEnded()){
             //stampa nuovo turno se il current è il next di prima
            if (clientState.getCurrentPlayer().equals(curr)){
-                cliPrint.playerTurn();
-                curr=clientState.getNextPlayer();
+               cliPrint.clearSheel();
+               cliPrint.playerTurn();
+               curr=clientState.getNextPlayer();
           }
 
         }
 
         //è finita la partita
+        cliPrint.clearSheel();
         cliPrint.printEndGame();
         //eliminiamo il thread
         th1.interrupt();
@@ -117,9 +121,6 @@ public class CLIMain {
          */
 
     }
-
-
-//TODO modificare player
 
 
 

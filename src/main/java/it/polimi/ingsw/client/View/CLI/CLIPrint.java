@@ -30,14 +30,14 @@ public class CLIPrint implements PropertyChangeListener {
     private ColorCLI tileColor(Tiles tiles){
         synchronized (cliMain.getLock()) {
             return switch (tiles) {
-                case GREEN -> ColorCLI.GREEN;
-                case BLUE -> ColorCLI.BLUE;
-                case YELLOW -> ColorCLI.YELLOW;
-                case WHITE -> ColorCLI.WHITE;
-                case PINK -> ColorCLI.PINK;
-                case LIGHT_BLUE -> ColorCLI.LIGHT_BLUE;
+                case GREEN -> ColorCLI.GREEN1;
+                case BLUE -> ColorCLI.BLUE1;
+                case YELLOW -> ColorCLI.YELLOW1;
+                case WHITE -> ColorCLI.WHITE1;
+                case PINK -> ColorCLI.PINK1;
+                case LIGHT_BLUE -> ColorCLI.LIGHT_BLUE1;
                 case NOTALLOWED -> ColorCLI.NOTALLOWED;
-                case EMPTY -> ColorCLI.EMPTY;
+                case EMPTY -> ColorCLI.EMPTY1;
                 case POSITION -> ColorCLI.POSITION;
             };
         }
@@ -47,14 +47,14 @@ public class CLIPrint implements PropertyChangeListener {
     private ColorCLI tileColorBG(Tiles tiles){
         synchronized (cliMain.getLock()) {
             return switch (tiles) {
-                case GREEN -> ColorCLI.GREENBG;
-                case BLUE -> ColorCLI.BLUEBG;
-                case YELLOW -> ColorCLI.YELLOWBG;
-                case WHITE -> ColorCLI.WHITEBG;
-                case PINK -> ColorCLI.PINKBG;
-                case LIGHT_BLUE -> ColorCLI.LIGHT_BLUEBG;
+                case GREEN -> ColorCLI.GREENBG1;
+                case BLUE -> ColorCLI.BLUEBG1;
+                case YELLOW -> ColorCLI.YELLOWBG1;
+                case WHITE -> ColorCLI.WHITEBG1;
+                case PINK -> ColorCLI.PINKBG1;
+                case LIGHT_BLUE -> ColorCLI.LIGHT_BLUEBG1;
                 case NOTALLOWED -> ColorCLI.NOTALLOWEDBG;
-                case EMPTY -> ColorCLI.EMPTYBG;
+                case EMPTY -> ColorCLI.EMPTYBG1;
                 case POSITION -> ColorCLI.POSITIONBG;
             };
         }
@@ -111,8 +111,17 @@ public class CLIPrint implements PropertyChangeListener {
     public void printAllBookshelf(HashMap<String, Matrix> allMatrix){
         synchronized (cliMain.getLock()){
             for (String key: allMatrix.keySet()){
-                System.out.println("Bookshelf of: "+key);
-                printBookshelf(allMatrix.get(key));
+                if (key.equals(cliMain.getClientState().getMyUsername())){
+                    System.out.println(ColorCLI.RED + "My Bookshelf: " + ColorCLI.RESET);
+                    //TODO quale metto solo bookshelf or bookshelf + personal
+                    printBookshelf(allMatrix.get(key));
+//                    printBookshelfPersonalObjective(allMatrix.get(key), cliMain.getClientState().getMyPersonalObjective());
+                }
+                else{
+                    System.out.println("Bookshelf of: "+key);
+                    printBookshelf(allMatrix.get(key));
+                }
+
                 System.out.println("\n");
             }
         }
@@ -205,9 +214,9 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println("#remove (0,0), (0,0), (0,0) ..... It is also possible not to fill all the relatives");
             System.out.println("#switch 2, 0, 1 ................. Switch the order of the selected tiles");
             System.out.println("#add 0 .......................... Add the tiles in the column of the bookshelf");
-            System.out.println("#rollback ....................... Return to the previous move");
-            System.out.println("#chat -hello- ................... Chatting with all players");
-            System.out.println("#whisper @username -hello- ...... Chatting with username player");
+//            System.out.println("#rollback ....................... Return to the previous move");
+//            System.out.println("#chat -hello- ................... Chatting with all players");
+//            System.out.println("#whisper @username -hello- ...... Chatting with username player");
             System.out.println("#printpersonal .................. Print your personal objective");
             System.out.println("#printcommon .................... Print the common objective for this game");
             System.out.println("#printboard ..................... Print the board");
@@ -215,6 +224,7 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println("#printbookshelf @username ....... Print the username's bookshelf");
             System.out.println("#printpoints .................... Print all public points");
             System.out.println("#printmypoint ................... Print my points");
+            System.out.println("#printchair ..................... Print who has the chair - who is the first player?");
         }
     }
 
@@ -249,7 +259,6 @@ public class CLIPrint implements PropertyChangeListener {
                 }
 
                 //salvataggio quantità e tipo
-                int quantity = Integer.parseInt(coDetails.get("QUANTITY").toString());
                 String type = coDetails.get("TYPE").toString();
 
                 JSONArray coPosition = (JSONArray) coDetails.get("POSITION");
@@ -269,7 +278,6 @@ public class CLIPrint implements PropertyChangeListener {
                 }
 
                 //stampaggio
-                System.out.println("X" + quantity);
                 System.out.println(type);
                 printBookshelf(bookshelf);
 
@@ -307,6 +315,18 @@ public class CLIPrint implements PropertyChangeListener {
         synchronized (cliMain.getLock()){
             System.out.println("The first player, that have chair, is: " +
                                cliMain.getClientState().getAllUsername().get(0));
+            try{
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    //stampa l'oridne delle tiles selezionate
+    public void printOrderTiles(ArrayList<Tiles> order){
+        for (int i = 0; i < order.size(); i++) {
+            System.out.println(tileColor(order.get(i))+"   " + ColorCLI.RESET + " ");
         }
     }
 
@@ -317,10 +337,23 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa che siamo in attesa di nuovi giocatori
-    public void printWaiting(){
+    //siamo in attesa di nuovi giocatori - singolo
+    private void printWaitingPrivate(){
         synchronized (cliMain.getLock()){
             System.out.println("Waiting for the other players...");
+        }
+    }
+
+    //stampa che siamo in attesa di giocatori - fino a che
+    public void printWaiting(){
+        while (!cliMain.getClientState().gameHasStarted()){
+            printWaitingPrivate();
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
