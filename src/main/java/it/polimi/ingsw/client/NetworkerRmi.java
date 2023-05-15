@@ -99,7 +99,9 @@ public class NetworkerRmi implements Networker {
         // Calling the completeRmiConnection() method to complete the client-server connection
         if (!message1.getType().equals(MessageTypes.ERROR)){
            this.username = username.getUsername();
-           gameID =  (message1).getNum();
+        }
+        if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS)){
+            gameID =  message1.getNum();
         }
 
         cli.receivedMessage(message1);
@@ -113,14 +115,14 @@ public class NetworkerRmi implements Networker {
      */
     public void numberOfPlayersSelection(Message numberOfPlayers) {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
-
+        IntMessage message1;
         try {
-            message = rmiHandler.newLobby(this.username, tempMessage.getNum());
+            message1 = rmiHandler.newLobby(this.username, tempMessage.getNum());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-
-        cli.receivedMessage(message);
+        this.gameID = message1.getNum();
+        cli.receivedMessage(message1);
     }
 
     /**

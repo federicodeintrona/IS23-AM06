@@ -78,7 +78,7 @@ public class Lobby {
         System.out.println("waiting new lobby"+waitingLobbys.peek());
         //create the new game
         newGame(gameNumber);
-
+        System.out.println("lobby new lobby game number: " +gameNumber);
         //return the game number
         return gameNumber;
     }

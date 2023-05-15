@@ -77,9 +77,8 @@ public class CheckManager {
             //check the length of the array
             if(points.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
             else {  //check if the tiles are adjacent
-                if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
+                if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
             }
-
             //Check if the selected tiles are allowed and not empty
             for(Point p : points){
                 checkBoardDomain(p,board);
