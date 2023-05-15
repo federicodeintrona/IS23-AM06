@@ -736,7 +736,7 @@ public class Board {
      * @param point     position to check
      * @return boolean  is an empty point?
      */
-    public boolean checkEmpty(Point point){
+    private boolean checkEmpty(Point point){
         return gamesBoard.getTile(point).equals(Tiles.EMPTY);
     }
 
@@ -746,7 +746,7 @@ public class Board {
      * @param point     position to check
      * @return boolean  is a NotAllowed point?
      */
-    public boolean checkNotAllowed(Point point){
+    private boolean checkNotAllowed(Point point){
         return gamesBoard.getTile(point).equals(Tiles.NOTALLOWED);
     }
 
@@ -760,27 +760,33 @@ public class Board {
      * @return boolean  are the positions pickable?
      */
     public boolean tilesArePickable(List<Point> position){
-        //controllo che sono al più 3 Point
+        //check that position are at most 3 Point
         if (position.size()>Define.MAXNUMBEROFTILESPICKABLE.getI()){
             return false;
         }
-        //controllo se sono libere
+        //check that position are free / !=EMPTY / !=NOTALLOWED
         for (Point point : position) {
             if (!checkFreeTiles(point)) {
                 return false;
             }
+            if (checkEmpty(point)){
+                return false;
+            }
+            if (checkNotAllowed(point)){
+                return false;
+            }
         }
-        //controllo se sono adiacenti
+        //check that all Point are adjacent
         if (!checkAdjacentTiles(position)){
             return false;
         }
 
-        //se ha superato i controlli
-        return true; //tessere selezionabili
+        //if it passed the check...
+        return true; //tiles pickable
     }
 
 
-//TODO checkEmpty / checkNotAllowed / tilesArePickable
+//TODO tilesArePickable
 
 
 }
