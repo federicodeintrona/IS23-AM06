@@ -138,6 +138,7 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
+    //TODO stampa 2 personal insieme
     //stampa il personal Objective
     public void printPersonalObjective(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
@@ -292,7 +293,7 @@ public class CLIPrint implements PropertyChangeListener {
         synchronized (cliMain.getLock()) {
             System.out.println("COMMON OBJECTIVE 1:");
             readJSONCO(commonObjective.get(0));
-            System.out.println("\nCOMMONOBJECTIVE 2:");
+            System.out.println("\nCOMMON OBJECTIVE 2:");
             readJSONCO(commonObjective.get(1));
         }
     }
@@ -349,7 +350,7 @@ public class CLIPrint implements PropertyChangeListener {
         while (!cliMain.getClientState().gameHasStarted()){
             printWaitingPrivate();
             try {
-                Thread.sleep(10000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
