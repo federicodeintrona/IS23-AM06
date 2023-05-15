@@ -62,6 +62,7 @@ public class ReadShell extends Thread{
 
         System.out.print("Enter your nickname: ");
         String nickname = readLine();
+        cliMain.getClientState().setMyUsername(nickname);
         message.setUsername(nickname);
         message.setType(MessageTypes.USERNAME);
         sendMessage(message);
@@ -71,8 +72,11 @@ public class ReadShell extends Thread{
     public void readCommand(){
 
         String st=readLine();
+        st=st+' ';
         ArrayList<Integer> number=readNumber(st);
-        switch (st) {
+        int n=st.indexOf(" ");
+        String substring=st.substring(0, n);
+        switch (substring) {
             case "#remove" -> {
                 if (number.size()!=2 && number.size()!=4 && number.size()!=6){
                     System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");

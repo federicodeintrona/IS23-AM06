@@ -48,18 +48,14 @@ public class RMIHandler implements RMIHandlerInterface{
      * @param port      the port used by the client to share the instance of clientState
      */
     @Override
-    public IntMessage acceptRmiConnection(String username, String ipAddress, int port) throws RemoteException {
+    public IntMessage acceptRmiConnection(String username, String ipAddress, int port, ClientStateRemoteInterface state) throws RemoteException {
 
         IntMessage message = null;
         try {
-            // Getting the registry
-            Registry registry = LocateRegistry.getRegistry(ipAddress, port);
-            // Looking up the registry for the remote object
-            ClientStateRemoteInterface clientState = (ClientStateRemoteInterface) registry.lookup("ClientState");
 
             System.out.println("rmi vv: " + username);
 
-            message = controller.handleNewClient(username,new RMIVirtualView(username,clientState));
+            message = controller.handleNewClient(username,new RMIVirtualView(username,state));
             System.out.println(message.getType());
 
         } catch (Exception e) {

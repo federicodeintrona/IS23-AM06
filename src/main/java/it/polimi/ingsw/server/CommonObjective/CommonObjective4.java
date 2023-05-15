@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.CommonObjective;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.util.ArrayList;
 import java.util.HashMap;

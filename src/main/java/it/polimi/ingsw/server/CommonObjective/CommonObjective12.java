@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.CommonObjective;
 
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 
 public class CommonObjective12 extends CommonObjective{
 

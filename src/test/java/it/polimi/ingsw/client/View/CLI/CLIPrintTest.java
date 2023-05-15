@@ -9,7 +9,7 @@ import it.polimi.ingsw.server.CommonObjective.CommonObjective2;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Sachet;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Matrix;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CLIPrintTest {
 

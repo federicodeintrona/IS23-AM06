@@ -5,7 +5,7 @@ import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.GameState;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +47,7 @@ class ControllerTest {
                 players.get(j).add(new Player("User"+ j + i));
                 playermap.put(players.get(j).get(i).getUsername(), players.get(j).get(i));
                 views.get(j).add(new RMIVirtualView("User" + j + i,
-                                new ClientState("User" + j + i,new ReentrantLock())));
+                                new ClientState("User" + j + i,new Object())));
             }
 
             modelmap.get(j).setPlayers(players.get(j));

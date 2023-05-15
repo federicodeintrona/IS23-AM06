@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
@@ -13,13 +13,13 @@ public class ClientState implements ClientStateRemoteInterface{
 
     private String myUsername;
     private ArrayList<String> allUsername;
-    private HashMap<Point, Tiles> myPersonalObjective;
-    private ArrayList<Integer> gameCommonObjective;
+    private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
+    private ArrayList<Integer> gameCommonObjective ;
     private Matrix board;
     private Matrix myBookshelf;
-    private HashMap<String, Matrix> allBookshelf;
+    private HashMap<String, Matrix> allBookshelf = new HashMap<>();
     private Integer myPoints;
-    private HashMap<String, Integer> allPublicPoints;
+    private HashMap<String, Integer> allPublicPoints= new HashMap<>();
     private ArrayList<Point> selectedTiles;
     private String currentPlayer;
     private String nextPlayer;
@@ -32,6 +32,11 @@ public class ClientState implements ClientStateRemoteInterface{
     }
 
     public ClientState() {
+    }
+
+    public ClientState(String s, Object o) {
+        myUsername=s;
+        viewLock=o;
     }
 
     public String getMyUsername() {

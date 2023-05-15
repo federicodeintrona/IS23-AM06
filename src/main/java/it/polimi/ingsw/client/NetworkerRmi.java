@@ -17,7 +17,7 @@ import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
     private static int portIn = 1099;
-    private static int portOut = 1234;
+    private static int portOut = 0;
     private static String clientIP;
     private String username;
     private int gameID;
@@ -81,20 +81,7 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        // Bind the remote object's stub in the registry
-        Registry registry = null;
-        try {
-            registry = LocateRegistry.createRegistry(portOut);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
-            registry.bind("ClientState", stub);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (AlreadyBoundException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**
@@ -104,7 +91,7 @@ public class NetworkerRmi implements Networker {
     public void firstConnection (Message username) {
         IntMessage message1;
         try {
-             message1 = rmiHandler.acceptRmiConnection(username.getUsername(), clientIP, portOut);
+             message1 = rmiHandler.acceptRmiConnection(username.getUsername(), clientIP, portOut,clientState);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -118,17 +105,7 @@ public class NetworkerRmi implements Networker {
         cli.receivedMessage(message1);
     }
 
-    /**
-     * Method used privately to make the controller accept the
-     * instance of clientState previously prepared
-     */
-    private void completeRmiConnection () {
-        try {
-            rmiHandler.acceptRmiConnection(username, clientIP, portOut);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     /**
      *

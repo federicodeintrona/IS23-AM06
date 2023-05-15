@@ -1,17 +1,12 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
-import it.polimi.ingsw.utils.Messages.*;
-import it.polimi.ingsw.server.Model.Board;
-import it.polimi.ingsw.server.Model.Bookshelf;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
-import java.io.IOException;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -63,6 +58,9 @@ public class RMIVirtualView extends VirtualView{
                 case ("currPlayer") -> {
                     clientState.setCurrentPlayer((String) evt.getSource());
                 }
+                case ("nextPlayer") -> {
+                    clientState.setNextPlayer((String) evt.getSource());
+                }
                 case("winner")->{
                     clientState.setWinnerPlayer((String) evt.getSource());
                 }
@@ -76,6 +74,8 @@ public class RMIVirtualView extends VirtualView{
             }
 
         }catch (RemoteException e){
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
             throw  new RuntimeException();
         }

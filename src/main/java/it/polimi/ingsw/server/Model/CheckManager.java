@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.server.Exceptions.*;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.util.ArrayList;

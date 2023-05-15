@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

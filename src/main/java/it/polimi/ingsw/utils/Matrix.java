@@ -1,11 +1,10 @@
 package it.polimi.ingsw.utils;
 
-import it.polimi.ingsw.server.Model.Tiles;
-
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Matrix {
+public class Matrix implements Serializable {
 
     private final ArrayList<ArrayList<Tiles>> board = new ArrayList<ArrayList<Tiles>>();
     private final int numRows;

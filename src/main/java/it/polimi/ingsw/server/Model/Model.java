@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
-import org.javatuples.Pair;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -119,6 +119,7 @@ public class Model  {
                     p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
             System.out.println("book");
+
             //Notify Bookshelf
             notifier.firePropertyChange(new PropertyChangeEvent(p.getBookshelf().getTiles(),
                     "all", p.getUsername(), "bookshelf"));
@@ -148,6 +149,12 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getNum).toList(), "all", "0","commonObj" ));
 
+        //Notify curr and next Player
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "currPlayer"));
+
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
 
         //Notify game Start
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -369,6 +376,8 @@ public class Model  {
 
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
                 currPlayer.getUsername(), "currPlayer"));
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
 
     }
 
