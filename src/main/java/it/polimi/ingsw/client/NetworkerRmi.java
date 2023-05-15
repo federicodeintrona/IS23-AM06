@@ -4,6 +4,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.server.ControllerInterface;
+import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.Messages.*;
 
 
@@ -17,13 +18,13 @@ import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
     private static int portIn = 1099;
-    private static int portOut = 1233;
+    private static int portOut = 5099;
     private static String clientIP;
     private String username;
     private int lobbyID;
     private int gameID;
     private Message message;
-    private static ControllerInterface controller;
+    private static RMIHandlerInterface controller;
     private ClientState clientState;
     private CLIMain cli;
 
@@ -59,7 +60,7 @@ public class NetworkerRmi implements Networker {
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
             // Looking up the registry for the remote object
-            controller = (ControllerInterface) registry.lookup("Controller");
+            controller = (RMIHandlerInterface) registry.lookup("Controller");
 
         } catch (Exception e) {
             System.err.println("Client exception: " + e);
@@ -105,7 +106,7 @@ public class NetworkerRmi implements Networker {
     public void firstConnection (Message username) {
         IntMessage message1;
         try {
-             message1 = controller.handleNewClient(username.getUsername());
+             message1 = controller.acceptRmiConnection(username.getUsername(), clientIP, portOut);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

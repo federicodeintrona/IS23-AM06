@@ -229,17 +229,6 @@ public class Controller implements PropertyChangeListener {
         return lobby.checkUsername(username);
     }
 
-    /**
-     * Gets the instance of clientState from a specific Client given his ip address and port
-     *
-     * @param ipAddress     the client ip address
-     * @param port      the port used by the client to share the instance of clientState
-     */
-    public void acceptRmiConnection (String username, String ipAddress, int port) {
-
-
-    }
-
     public void playerDisconnection(String username){
         lobby.playerDisconnection(username);
     }
