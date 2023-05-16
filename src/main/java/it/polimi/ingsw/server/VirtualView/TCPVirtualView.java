@@ -14,9 +14,9 @@ public class TCPVirtualView extends VirtualView{
     private Socket socket;
     private ObjectOutputStream oos;
 
-    public TCPVirtualView(String username,Socket socket) throws IOException {
+    public TCPVirtualView(String username,Socket socket,ObjectOutputStream os) throws IOException {
         this.socket = socket;
-        oos = new ObjectOutputStream(socket.getOutputStream());
+        oos =os;
         this.setUsername(username);
     }
 

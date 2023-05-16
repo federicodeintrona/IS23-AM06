@@ -31,11 +31,8 @@ public class RMITimeout extends Thread implements ClientInterface {
 
     @Override
     public void disconnect() {
-        if(username==null){
-            this.interrupt();
-        }
-
-
+        System.out.println("Disconnection");
+        this.interrupt();
     }
 
     @Override
