@@ -912,7 +912,7 @@ public class Board {
             }
         }
         //check that all Point are adjacent
-        if (!checkAdjacentTiles(position)){
+        if (position.size()>1 && !checkAdjacentTiles(position)){
             return false;
         }
 

@@ -326,7 +326,7 @@ public class Model  {
 
         //Updates vicinity, common objective and personal objective points
         currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
-        currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer);
+        currPlayer.setPersonalObjectivePoint(currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer));
 
         for(CommonObjective o : commonObj){
              o.commonObjPointsCalculator(currPlayer,players.size());
