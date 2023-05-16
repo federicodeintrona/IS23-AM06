@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

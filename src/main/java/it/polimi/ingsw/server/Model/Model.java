@@ -1,10 +1,11 @@
 package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
+import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
-import org.javatuples.Pair;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -14,7 +15,7 @@ import java.util.Random;
 
 
 public class Model  {
-
+    private int gameID;
     private Board board;
     private ArrayList<Player> players;
     private ArrayList<VirtualView> virtualViews;
@@ -63,7 +64,17 @@ public class Model  {
         this.virtualViews = views;
     }
 
-
+    public Model(ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
+        this.players = players;
+        this.virtualViews = views;
+        notifier.addPropertyChangeListener("end", controller);
+    }
+    public Model(int iD, ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
+        this.gameID = iD;
+        this.players = players;
+        this.virtualViews = views;
+        notifier.addPropertyChangeListener("end", controller);
+    }
 
     //PUBLIC METHODS
 
@@ -85,6 +96,7 @@ public class Model  {
 
         //Add the views as change listeners
         for (VirtualView v : virtualViews){
+            System.out.println("vv model init :"+v.getUsername());
             notifier.addPropertyChangeListener("all",v);
             notifier.addPropertyChangeListener(v.getUsername(),v);
         }
@@ -101,12 +113,30 @@ public class Model  {
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
 
+            System.out.println("po");
             //Notify personal objective
             notifier.firePropertyChange(new PropertyChangeEvent(
                     p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
+            System.out.println("book");
+
+            //Notify Bookshelf
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getBookshelf().getTiles(),
+                    "all", p.getUsername(), "bookshelf"));
+
+            System.out.println("pubp");
+            //Notify publicPoints
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getPublicPoint(), "all",
+                    p.getUsername(), "publicPoints"));
+
+            System.out.println("perp");
+            //Notify privatePoints
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
+                    p.getUsername(), "privatePoints"));
+
         }
 
+        System.out.println("board");
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
                 board.getGamesBoard(), "all", "0","board" ));
@@ -119,7 +149,16 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getNum).toList(), "all", "0","commonObj" ));
 
+        //Notify curr and next Player
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "currPlayer"));
 
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
+
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(
+               true, "all", "0","start" ));
 
 
 
@@ -246,8 +285,9 @@ public class Model  {
         //Swaps the array around
         ArrayList<Tiles> array = new ArrayList<>();
         array.addAll(selectedTiles);
+
         for (int i = 0; i < ints.size(); i++) {
-            selectedTiles.set(i, array.get(ints.get(i)));
+            selectedTiles.set(i, array.get(ints.get(i)-1));
         }
 
         //Notify Selected Tiles
@@ -302,7 +342,7 @@ public class Model  {
         //Notify privatePoints
         if(currPlayer.getPrivatePoint()!=privatePoints.get(players.indexOf(currPlayer))) {
 
-            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), "all",
+            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), currPlayer.getUsername(),
                     currPlayer.getUsername(), "privatePoints"));
 
         }
@@ -337,6 +377,8 @@ public class Model  {
 
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
                 currPlayer.getUsername(), "currPlayer"));
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
 
     }
 
@@ -348,6 +390,8 @@ public class Model  {
     private void endGame(){
         state = GameState.ENDING;
         selectWInner();
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","start" ));
     }
 
 
@@ -361,6 +405,8 @@ public class Model  {
         }
 
         winner = players.get(winnerpos);
+
+        notifier.firePropertyChange(new PropertyChangeEvent(winner.getUsername(),"all","0","winner"));
 
     }
 
@@ -484,6 +530,9 @@ public class Model  {
         return publicPoints;
     }
 
+    public int getGameID() {
+        return gameID;
+    }
 
     /**
      * Return true if the game is finished, false otherwise
@@ -526,6 +575,10 @@ public class Model  {
         this.virtualViews = virtualViews;
     }
 
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
+    }
+
     /**
      * @return ArrayList of all the personal objectives of all players in the game
      */
@@ -535,6 +588,49 @@ public class Model  {
             persobj.add(p.getPersonalObjective());
         }
         return persobj;
+    }
+
+
+    private void updatePlayer(Player p){
+
+
+        //Notify Board
+        notifier.firePropertyChange(new PropertyChangeEvent(board.getGamesBoard(), p.getUsername(), "0","board" ));
+
+        //Notify PlayerNames
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                players.stream().map(Player::getUsername).toList(), p.getUsername(), "0","playerNames" ));
+
+        //Notify commonObjectives
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getNum).toList(), p.getUsername(), "0","commonObj" ));
+
+        //Notify personal objective
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
+
+        //Notify currPlayer
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
+                currPlayer.getUsername(), "currPlayer"));
+
+        //Notify privatePoints
+        notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
+                p.getUsername(), "privatePoints"));
+
+
+        for(Player player : players){
+
+            //Notify Bookshelf
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
+                    p.getUsername(), player.getUsername(), "bookshelf"));
+
+            //Notify publicPoints
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), p.getUsername(),
+                    player.getUsername(), "publicPoints"));
+        }
+
+
+
     }
 
 }

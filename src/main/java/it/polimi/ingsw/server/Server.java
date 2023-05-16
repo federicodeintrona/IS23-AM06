@@ -25,6 +25,7 @@ public class Server extends UnicastRemoteObject {
     private final static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
     private final Controller controller= new Controller(lobby);
+    private final RMIHandlerInterface rmiHandler = new RMIHandler(controller);
 
     protected Server() throws RemoteException, IOException, ParseException{
         super();
@@ -57,7 +58,7 @@ public class Server extends UnicastRemoteObject {
     public void startServer() throws IOException{
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
-
+        lobby.setController(controller);
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
@@ -66,9 +67,9 @@ public class Server extends UnicastRemoteObject {
         }
 
         // Preparing for the RMI connections
-        ControllerInterface stub = null;
+        RMIHandlerInterface stub = null;
         try {
-            stub = (ControllerInterface) UnicastRemoteObject.exportObject(controller, 0);
+            stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -80,7 +81,7 @@ public class Server extends UnicastRemoteObject {
             e.printStackTrace();
         }
         try {
-            registry.bind("Controller", stub);
+            registry.bind("RMIHandler", stub);
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (AlreadyBoundException e) {

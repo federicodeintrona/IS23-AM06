@@ -3,6 +3,8 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
 
@@ -49,7 +51,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         reader.run();
     }
 
-    @Override
     public void setUserInterface(CLIMain cliMain) {
         this.cliMain= cliMain;
     }

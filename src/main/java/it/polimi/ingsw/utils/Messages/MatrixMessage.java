@@ -1,8 +1,8 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.utils.Messages;
 
 import it.polimi.ingsw.utils.Matrix;
 
-public class MatrixMessage extends Message{
+public class MatrixMessage extends Message {
 
     private Matrix matrix;
 

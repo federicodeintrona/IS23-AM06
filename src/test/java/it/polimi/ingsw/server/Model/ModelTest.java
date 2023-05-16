@@ -1,14 +1,17 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,9 +29,9 @@ class ModelTest {
         players.add(p0);
         players.add(p1);
         players.add(p2);
-        views.add(new RMIVirtualView("p0"));
-        views.add(new RMIVirtualView("p1"));
-        views.add(new RMIVirtualView("p2"));
+        views.add(new RMIVirtualView("p0", new ClientState("p0",new ReentrantLock())));
+        views.add(new RMIVirtualView("p1", new ClientState("p1",new ReentrantLock())));
+        views.add(new RMIVirtualView("p2", new ClientState("p2",new ReentrantLock())));
         m = new Model(players,views);
         m.initialization();
 

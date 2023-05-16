@@ -9,20 +9,25 @@ public class ClientBase {
     public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
         String decision ;
-        Object lock = new Object();
 
         System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
-        ClientState clientState=new ClientState(lock);
+        Object lock = new Object();
+        ClientState state = new ClientState(lock);
 
         Networker client = switch (decision) {
-            case "RMI" -> new NetworkerRmi(clientState);
-            case "TCP" -> new NetworkerTcp(clientState);
+            case "RMI" -> new NetworkerRmi(state);
+            case "TCP" -> new NetworkerTcp(state);
             default -> null;
         };
-        client.initializeConnection();
 
-        CLIMain cli= new CLIMain(lock, clientState, client);
-        cli.runCLI();
+        CLIMain cli = new CLIMain(lock,state,client);
+        client.setCli(cli);
+        client.initializeConnection();
+        try {
+            cli.runCLI();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

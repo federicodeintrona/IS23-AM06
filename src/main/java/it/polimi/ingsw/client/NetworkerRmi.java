@@ -1,9 +1,11 @@
 package it.polimi.ingsw.client;
 
 
+
 import it.polimi.ingsw.client.View.CLI.CLIMain;
-import it.polimi.ingsw.server.ControllerInterface;
-import it.polimi.ingsw.server.Messages.*;
+import it.polimi.ingsw.server.RMIHandlerInterface;
+import it.polimi.ingsw.utils.Messages.*;
+
 
 import java.net.*;
 import java.rmi.AlreadyBoundException;
@@ -15,21 +17,31 @@ import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
     private static int portIn = 1099;
-    private static int portOut = 1234;
+    private static int portOut = 0;
     private static String clientIP;
     private String username;
-    private int lobbyID;
     private int gameID;
     private Message message;
-    private static ControllerInterface controller;
+    private static RMIHandlerInterface rmiHandler;
     private ClientState clientState;
-    private CLIMain cliMain;
+    private CLIMain cli;
+
 
     /**
      * Constructor
      */
-    public NetworkerRmi(ClientState clientState)  {
-        this.clientState = clientState;
+    public NetworkerRmi()  {
+        clientState = new ClientState();
+
+        try {
+            clientIP = getLocalIPAddress();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public NetworkerRmi(ClientState state)  {
+        clientState = state;
 
         try {
             clientIP = getLocalIPAddress();
@@ -46,7 +58,7 @@ public class NetworkerRmi implements Networker {
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
             // Looking up the registry for the remote object
-            controller = (ControllerInterface) registry.lookup("Controller");
+            rmiHandler = (RMIHandlerInterface) registry.lookup("RMIHandler");
 
         } catch (Exception e) {
             System.err.println("Client exception: " + e);
@@ -57,9 +69,6 @@ public class NetworkerRmi implements Networker {
         System.out.println(clientIP);
 
         clientStateExportRmi();
-    }
-    public void setUserInterface(CLIMain cliMain) {
-        this.cliMain= cliMain;
     }
 
     /**
@@ -72,20 +81,7 @@ public class NetworkerRmi implements Networker {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        // Bind the remote object's stub in the registry
-        Registry registry = null;
-        try {
-            registry = LocateRegistry.createRegistry(portOut);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
-            registry.bind("ClientState", stub);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (AlreadyBoundException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**
@@ -93,29 +89,25 @@ public class NetworkerRmi implements Networker {
      * done the client gets added to the lobby
      */
     public void firstConnection (Message username) {
+        IntMessage message1;
         try {
-            message = controller.handleNewClient(username.getUsername());
+             message1 = rmiHandler.acceptRmiConnection(username.getUsername(), clientIP, portOut,clientState);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
 
         // Calling the completeRmiConnection() method to complete the client-server connection
-        if (!message.getType().equals(MessageTypes.ERROR)) completeRmiConnection();
-        cliMain.receivedMessage(message);
+        if (!message1.getType().equals(MessageTypes.ERROR)){
+           this.username = username.getUsername();
+        }
+        if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS)){
+            gameID =  message1.getNum();
+        }
+
+        cli.receivedMessage(message1);
     }
 
-    /**
-     * Method used privately to make the controller accept the
-     * instance of clientState previously prepared
-     */
-    private void completeRmiConnection () {
-        try {
-            controller.acceptRmiConnection(username, clientIP, portOut);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        cliMain.receivedMessage(message);
-    }
+
 
     /**
      *
@@ -123,13 +115,14 @@ public class NetworkerRmi implements Networker {
      */
     public void numberOfPlayersSelection(Message numberOfPlayers) {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
-
+        IntMessage message1;
         try {
-            message = controller.newLobby(this.username, tempMessage.getNum());
+            message1 = rmiHandler.newLobby(this.username, tempMessage.getNum());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        cliMain.receivedMessage(message);
+        this.gameID = message1.getNum();
+        cli.receivedMessage(message1);
     }
 
     /**
@@ -140,11 +133,12 @@ public class NetworkerRmi implements Networker {
     public void removeTilesFromBoard(Message tiles) {
         PointsMessage tempMessage = (PointsMessage) tiles;
         try {
-            message = controller.removeTiles(gameID, username, tempMessage.getTiles());
+            message = rmiHandler.removeTiles(gameID, username, tempMessage.getTiles());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        cliMain.receivedMessage(message);
+
+        cli.receivedMessage(message);
     }
 
     /**
@@ -154,11 +148,12 @@ public class NetworkerRmi implements Networker {
     public void switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
         try {
-            message = controller.swapOrder(tempMessage.getIntegers(), gameID, username);
+            message = rmiHandler.swapOrder(tempMessage.getIntegers(), gameID, username);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        cliMain.receivedMessage(message);
+
+        cli.receivedMessage(message);
     }
 
     /**
@@ -168,11 +163,12 @@ public class NetworkerRmi implements Networker {
     public void addTilesToBookshelf (Message column) {
         IntMessage tempMessage = (IntMessage) column;
         try {
-            message = controller.addToBookshelf(gameID, username, tempMessage.getNum());
+            message = rmiHandler.addToBookshelf(gameID, username, tempMessage.getNum());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        cliMain.receivedMessage(message);
+
+        cli.receivedMessage(message);
     }
 
     private String getClientIP() throws UnknownHostException {
@@ -199,5 +195,10 @@ public class NetworkerRmi implements Networker {
             }
         }
         return null;
+    }
+
+
+    public void setCli(CLIMain cli) {
+        this.cli = cli;
     }
 }

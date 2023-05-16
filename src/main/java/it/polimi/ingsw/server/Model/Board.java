@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -263,45 +264,100 @@ public class Board {
                     }
                     //we are on upper edge
                     else if (i==0){
-                        //adjacency:
-                        //sx
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                            return false;
+                        //we are on upper - left corner
+                        if(j==0){
+                            //bottom
+                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //dx
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
                         }
-                        //dx
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                            return false;
+                        //we are on upper - right corner
+                        else if (j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1) {
+                            //bottom
+                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //sx
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
                         }
-                        //bottom
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                            return false;
+                        //we are in the middle
+                        else{
+                            //sx
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //dx
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //bottom
+                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
+                                return false;
+                            }
                         }
                     }
                     //we are on bottom edge
                     else if (i==Define.NUMBEROFROWS_BOARD.getI()-1){
-                        //adjacency:
-                        //sx
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                            return false;
+                        //we are bottom - left corner
+                        if (j==0){
+                            //dx
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //upper
+                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                                return false;
+                            }
                         }
-                        //dx
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                            return false;
+                        //we are bottom - right corner
+                        else if (j == Define.NUMBEROFCOLUMNS_BOARD.getI() - 1) {
+                            //sx
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //upper
+                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                                return false;
+                            }
                         }
-                        //upper
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
-                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                            return false;
+                        //we are in the middle
+                        else{
+                            //sx
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //dx
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
+                                return false;
+                            }
+                            //upper
+                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
+                                return false;
+                            }
                         }
                     }
                     //we are on left edge
                     else if (j==0){
-                        //adjacency:
                         //dx
                         if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
                                 !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
@@ -321,7 +377,6 @@ public class Board {
                     //we are on right edge
                     //if (j==numberOfColumn-1)
                     else {
-                        //adjacency:
                         //sx
                         if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
                                 !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
@@ -578,6 +633,7 @@ public class Board {
             }
             //bottom
             p.x=x+1;
+            p.y=y;
             if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                 result.add(new Point(x+1, y));
@@ -590,6 +646,7 @@ public class Board {
                 result.add(new Point(x, y-1));
             }
             //dx
+            p.x=x;
             p.y=y+1;
             if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
@@ -600,48 +657,124 @@ public class Board {
         else {
             //we are on the upper edge
             if (tile.x==0){
-                //bottom
-                p.x=x+1;
-                p.y=y;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                        !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(new Point(x+1, y));
+                //we are on upper - left corner
+                if (tile.y==0){
+                    //bottom
+                    p.x=x+1;
+                    p.y=y;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x+1, y));
+                    }
+                    //dx
+                    p.x=x;
+                    p.y=y+1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x, y+1));
+                    }
                 }
-                //sx
-                p.x=x;
-                p.y=y-1;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                        !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(new Point(x,y-1));
+                //we are on upper - right corner
+                else if (tile.y==Define.NUMBEROFCOLUMNS_BOARD.getI()-1) {
+                    //bottom
+                    p.x=x+1;
+                    p.y=y;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x+1, y));
+                    }
+                    //sx
+                    p.x=x;
+                    p.y=y-1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x,y-1));
+                    }
                 }
-                //dx
-                p.y=y+1;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                        !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y+1));
+                //we are in the middle
+                else {
+                    //bottom
+                    p.x=x+1;
+                    p.y=y;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x+1, y));
+                    }
+                    //sx
+                    p.x=x;
+                    p.y=y-1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x,y-1));
+                    }
+                    //dx
+                    p.x=x;
+                    p.y=y+1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x, y+1));
+                    }
                 }
             }
             //we are on the bottom edge
-            else if (tile.x==8){
-                //upper
-                p.x=x-1;
-                p.y=y;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                        !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(new Point(x-1, y));
+            else if (tile.x==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
+                //we are on bottom - left corner
+                if (tile.y==0){
+                    //upper
+                    p.x=x-1;
+                    p.y=y;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x-1, y));
+                    }
+                    //dx
+                    p.x=x;
+                    p.y=y+1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x, y+1));
+                    }
                 }
-                //sx
-                p.x=x;
-                p.y=y-1;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                        !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y-1));
+                //we are on bottom - right corner
+                else if (tile.y==Define.NUMBEROFCOLUMNS_BOARD.getI()-1) {
+                    //upper
+                    p.x=x-1;
+                    p.y=y;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x-1, y));
+                    }
+                    //sx
+                    p.x=x;
+                    p.y=y-1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x, y-1));
+                    }
                 }
-                //dx
-                p.y=y+1;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
-                        !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y+1));
+                //we are in the middle
+                else{
+                    //upper
+                    p.x=x-1;
+                    p.y=y;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x-1, y));
+                    }
+                    //sx
+                    p.x=x;
+                    p.y=y-1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x, y-1));
+                    }
+                    //dx
+                    p.x=x;
+                    p.y=y+1;
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                            !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
+                        result.add(new Point(x, y+1));
+                    }
                 }
             }
             //we are on the left edge
@@ -655,11 +788,13 @@ public class Board {
                 }
                 //bottom
                 p.x=x+1;
+                p.y=y;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x+1, y));
                 }
                 //dx
+                p.x=x;
                 p.y=y+1;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
@@ -678,6 +813,7 @@ public class Board {
                 }
                 //bottom
                 p.x=x+1;
+                p.y=y;
                 if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x+1, y));
@@ -729,8 +865,63 @@ public class Board {
         return true;
     }
 
+    /**
+     * return if Point are Empty or not
+     *
+     * @param point     position to check
+     * @return boolean  is an empty point?
+     */
+    private boolean checkEmpty(Point point){
+        return gamesBoard.getTile(point).equals(Tiles.EMPTY);
+    }
+
+    /**
+     * return if Point are NotAllowed or not
+     *
+     * @param point     position to check
+     * @return boolean  is a NotAllowed point?
+     */
+    private boolean checkNotAllowed(Point point){
+        return gamesBoard.getTile(point).equals(Tiles.NOTALLOWED);
+    }
 
 
+    /**
+     * return if Points are pickable
+     *
+     * REQUIRES THAT tile POSITION IS CORRECT --> tile!=EMPTY && !=NOTALLOWED
+     *
+     * @param position  List of position to check
+     * @return boolean  are the positions pickable?
+     */
+    public boolean tilesArePickable(List<Point> position){
+        //check that position are at most 3 Point
+        if (position.size()>Define.MAXNUMBEROFTILESPICKABLE.getI()){
+            return false;
+        }
+        //check that position are free / !=EMPTY / !=NOTALLOWED
+        for (Point point : position) {
+            if (!checkFreeTiles(point)) {
+                return false;
+            }
+            if (checkEmpty(point)){
+                return false;
+            }
+            if (checkNotAllowed(point)){
+                return false;
+            }
+        }
+        //check that all Point are adjacent
+        if (!checkAdjacentTiles(position)){
+            return false;
+        }
+
+        //if it passed the check...
+        return true; //tiles pickable
+    }
+
+
+//TODO tilesArePickable
 
 
 }

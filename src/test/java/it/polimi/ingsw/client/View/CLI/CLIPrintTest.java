@@ -3,13 +3,11 @@ package it.polimi.ingsw.client.View.CLI;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.NetworkerRmi;
-import it.polimi.ingsw.server.CommonObjective.CommonObjective;
-import it.polimi.ingsw.server.CommonObjective.CommonObjective1;
-import it.polimi.ingsw.server.CommonObjective.CommonObjective2;
+import it.polimi.ingsw.server.CommonObjective.*;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Sachet;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.Matrix;
 import org.junit.jupiter.api.DisplayName;
@@ -25,13 +23,12 @@ class CLIPrintTest {
     @Test
     public void printBoard(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
-        Networker networker=new NetworkerRmi(clientState);
+        ClientState clientState=new ClientState();
+        Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
-        Board board=new Board(2, new Sachet());
+        Board board=new Board(3, new Sachet());
         board.BoardInitialization();
 
         cliPrint.printBoard(board.getGamesBoard());
@@ -41,9 +38,8 @@ class CLIPrintTest {
     @Test
     public void printBookshelf(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
-        Networker networker=new NetworkerRmi(clientState);
+        ClientState clientState=new ClientState();
+        Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
@@ -70,9 +66,8 @@ class CLIPrintTest {
     @Test
     public void printPersonalObjective(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
-        Networker networker=new NetworkerRmi(clientState);
+        ClientState clientState=new ClientState();
+        Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
@@ -86,9 +81,8 @@ class CLIPrintTest {
     @Test
     public void printBookshelfPersonalObjective(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
-        Networker networker=new NetworkerRmi(clientState);
+        ClientState clientState=new ClientState();
+        Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
@@ -107,9 +101,8 @@ class CLIPrintTest {
     @Test
     public void printHelp(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
-        Networker networker=new NetworkerRmi(clientState);
+        ClientState clientState=new ClientState();
+        Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
@@ -120,20 +113,45 @@ class CLIPrintTest {
     @Test
     public void printCommonObjective(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
-        Networker networker=new NetworkerRmi(clientState);
+        ClientState clientState=new ClientState();
+        Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
-        CommonObjective commonObjective1=new CommonObjective1();
-        CommonObjective commonObjective2=new CommonObjective2();
 
         ArrayList<Integer> arrayList=new ArrayList<>();
         arrayList.add(1);
         arrayList.add(2);
 
         cliPrint.printCommonObjective(arrayList);
+
+        ArrayList<Integer> arrayList1=new ArrayList<>();
+        arrayList1.add(3);
+        arrayList1.add(4);
+        cliPrint.printCommonObjective(arrayList1);
+
+        ArrayList<Integer> arrayList2=new ArrayList<>();
+        arrayList2.add(5);
+        arrayList2.add(6);
+        cliPrint.printCommonObjective(arrayList2);
+
+        ArrayList<Integer> arrayList3=new ArrayList<>();
+        arrayList3.add(7);
+        arrayList3.add(8);
+        cliPrint.printCommonObjective(arrayList3);
+
+        ArrayList<Integer> arrayList4=new ArrayList<>();
+        arrayList4.add(9);
+        arrayList4.add(10);
+        cliPrint.printCommonObjective(arrayList4);
+
+        ArrayList<Integer> arrayList5=new ArrayList<>();
+        arrayList5.add(11);
+        arrayList5.add(12);
+        cliPrint.printCommonObjective(arrayList5);
+
+
+
 
     }
 

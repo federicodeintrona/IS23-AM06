@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
@@ -36,5 +36,9 @@ public interface ClientStateRemoteInterface extends Remote {
 
     void setWinnerPlayer(String winnerPlayer) throws RemoteException;
 
+    void setWinnerPlayer(String winnerPlayer) throws RemoteException;
+
     void setGameIsEnded(boolean gameIsEnded) throws RemoteException;
+
+    void setGameHasStarted(boolean gameHasStarted) throws RemoteException;
 }

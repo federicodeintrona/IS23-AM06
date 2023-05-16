@@ -1,34 +1,43 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
 
 public class ClientState implements ClientStateRemoteInterface{
 
     private final Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;
-    private HashMap<Point, Tiles> myPersonalObjective;
-    private ArrayList<Integer> gameCommonObjective;
+    private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
+    private ArrayList<Integer> gameCommonObjective ;
     private Matrix board;
     private Matrix myBookshelf;
-    private HashMap<String, Matrix> allBookshelf;
+    private HashMap<String, Matrix> allBookshelf = new HashMap<>();
     private Integer myPoints;
-    private HashMap<String, Integer> allPublicPoints;
-    private ArrayList<Tiles> selectedTiles;
+    private HashMap<String, Integer> allPublicPoints= new HashMap<>();
+    private ArrayList<Point> selectedTiles; //TODO dovrebbe essere di tiles - facciamo vedere il colore
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
+    private boolean gameHasStarted;
     private boolean gameIsEnded;
 
     public ClientState(Object viewLock) {
         this.viewLock = viewLock;
-   }
+    }
 
+    public ClientState() {
+    }
+
+    public ClientState(String s, Object o) {
+        myUsername=s;
+        viewLock=o;
+    }
 
     public String getMyUsername() {
         synchronized (viewLock){
@@ -108,6 +117,12 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
+    public void setAllBookshelf(HashMap<String, Matrix> allBookshelf) {
+        synchronized (viewLock){
+            this.allBookshelf = allBookshelf;
+        }
+    }
+
     public void setAllBookshelf(String username, Matrix bookshelf){
         synchronized (viewLock) {
             allBookshelf.put(username, bookshelf);
@@ -135,19 +150,25 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
+    public void setAllPublicPoints(HashMap<String, Integer> allPublicPoints) {
+        synchronized (viewLock) {
+            this.allPublicPoints = allPublicPoints;
+        }
+    }
+
     public void setAllPublicPoints(String username, Integer point){
         synchronized (viewLock) {
             allPublicPoints.put(username, point);
         }
     }
 
-    public ArrayList<Tiles> getSelectedTiles() {
+    public ArrayList<Point> getSelectedTiles() {
         synchronized (viewLock) {
             return selectedTiles;
         }
     }
 
-    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
+    public void setSelectedTiles(ArrayList<Point> selectedTiles) {
         synchronized (viewLock) {
             this.selectedTiles = selectedTiles;
         }
@@ -201,10 +222,14 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
+    public boolean gameHasStarted () {
+        synchronized (viewLock){ return gameHasStarted; }
+    }
 
-
-
-
-
+    public void setGameHasStarted (boolean gameHasStarted) {
+        synchronized (viewLock) {
+            this.gameHasStarted = gameHasStarted;
+        }
+    }
 
 }

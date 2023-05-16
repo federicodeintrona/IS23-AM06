@@ -2,16 +2,11 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
-import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.utils.Messages.Message;
 
 public class CLIMain {
 
 
-
-    /*
-        TODO
-            creare oggetto lock
-     */
 
 
     private final Object lock; //su cosa lockare - comune con ClientState
@@ -20,12 +15,12 @@ public class CLIMain {
 
     private static CLIPrint cliPrint;
     private static ReadShell readShell;
+    private boolean IHaveToRequestTheUsername=true;
 
     public CLIMain(Object lock, ClientState clientState, Networker net) {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
-        net.setUserInterface(this);
     }
 
     public Object getLock() {
@@ -48,51 +43,83 @@ public class CLIMain {
         return readShell;
     }
 
+    public boolean isIHaveToRequestTheUsername() {
+        return IHaveToRequestTheUsername;
+    }
+
+    public void setIHaveToRequestTheUsername(boolean IHaveToRequestTheUsername) {
+        this.IHaveToRequestTheUsername = IHaveToRequestTheUsername;
+    }
 
     public void receivedMessage(Message message){
         switch (message.getType()){
-            case NUM_OF_PLAYERS -> readShell.askForNumberOfPlayer();
-            //TODO capire che messaggi mi arrivano e in che formato
+            case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
+            case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
+            case ERROR -> cliPrint.printError(message.getUsername());
+            //TODO se username è sbagliato cosa mi ritorni
+            default -> {
+                break;
+            }
         }
     }
 
 
 
-    public void runCLI (){
+    public void runCLI () throws InterruptedException {
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
-        String next= getClientState().getCurrentPlayer();
 
-        //richieste iniziali - username e numero di giocatori
-        readShell.initialRequests();
+        //richiesta username
+        readShell.askUsername();
 
-
-        //COMANDI GIOCO
-        //facciamo partite readShell
         Thread th1=new Thread(readShell);
         th1.start();
 
-        //chi ha la sedia?
-        getCliPrint().printChair();
-
-        while(!clientState.isGameIsEnded()){
-            //controllo se è il turno del prossimo giocatore
-            if (getClientState().getCurrentPlayer().equals(next)){
-                //stampa quello che devi stampare all'inizio di un turno di gioco
-                cliPrint.playerTurn();
-                next= clientState.getNextPlayer();
-            }
+        //TODO da sistemare
+        while (!clientState.gameHasStarted()){
+            Thread.sleep(500);
         }
 
-        //se è finito il gioco stampa end game
-        getCliPrint().printEndGame();
-        //elimina thread
+        //inizia la partita
+        cliPrint.clearSheel();
+        cliPrint.gameHasStarted();
+        Thread.sleep(500);
+
+        cliPrint.printChair();
+        cliPrint.playerTurn();
+        //ho già stampato il primo turno di gioco
+        String curr=clientState.getNextPlayer();
+
+        while (!clientState.isGameIsEnded()){
+            //stampa nuovo turno se il current è il next di prima
+           if (clientState.getCurrentPlayer().equals(curr)){
+               cliPrint.clearSheel();
+               cliPrint.playerTurn();
+               curr=clientState.getNextPlayer();
+          }
+
+        }
+
+        //è finita la partita
+        cliPrint.clearSheel();
+        cliPrint.printEndGame();
+        //eliminiamo il thread
         th1.interrupt();
 
+
+        /*
+            richieste iniziali
+
+            waiting_for_players
+                ciclo gameHasStarted!=true
+
+            inizia partita
+                ciclo gameIsEnded!=true
+
+            fine partita
+         */
+
     }
-
-
-
 
 
 

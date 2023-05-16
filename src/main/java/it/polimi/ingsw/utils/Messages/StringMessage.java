@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.Messages;
+package it.polimi.ingsw.utils.Messages;
 
 public class StringMessage extends Message {
 
