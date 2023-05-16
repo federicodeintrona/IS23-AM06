@@ -17,8 +17,10 @@ import java.net.Socket;
 
 public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
+    private static String host;
     Socket socket ;
     private ObjectOutputStream oos;
+    private ObjectInputStream ois;
     private final ClientState clientState;
     private CLIMain cliMain;
 
@@ -27,7 +29,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
             config=new JsonReader(is);
-//            config = new JsonReader("src/main/resources/NetworkerTcp.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
@@ -36,19 +37,37 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         this.clientState = clientState;
         port=config.getInt("port");
     }
+    public NetworkerTcp(ClientState clientState,String host) {
+        JsonReader config;
+        try {
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
+            config=new JsonReader(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        this.clientState = clientState;
+        this.host=host;
+        port=config.getInt("port");
+    }
 
     public void initializeConnection() {
         Reader reader;
-        ObjectInputStream ois;
         try {
-            socket = new Socket("127.0.0.1", port);
-            ois = new ObjectInputStream(socket.getInputStream());
+            socket = new Socket(host, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
+            ois = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         reader=new Reader(ois,this, clientState);
-        reader.run();
+        reader.start();
+        try {
+            cliMain.runCLI();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setUserInterface(CLIMain cliMain) {

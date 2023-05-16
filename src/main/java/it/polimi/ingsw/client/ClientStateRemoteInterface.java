@@ -38,4 +38,6 @@ public interface ClientStateRemoteInterface extends Remote {
     void setGameIsEnded(boolean gameIsEnded) throws RemoteException;
 
     void setGameHasStarted(boolean gameHasStarted) throws RemoteException;
+
+    void setCurrentPlayer(String source) throws RemoteException;
 }

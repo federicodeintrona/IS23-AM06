@@ -81,14 +81,15 @@ public class CLIMain {
         //richiesta username
         readShell.askUsername();
 
-        Thread th1=new Thread(readShell);
-        th1.start();
+
 
         //TODO da sistemare
         while (!clientState.gameHasStarted()){
             Thread.sleep(500);
         }
 
+        Thread th1=new Thread(readShell);
+        th1.start();
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();

@@ -36,7 +36,6 @@ public class ServerClientHandler implements Runnable  {
         try {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
-
             while (!disconnected) {
 
                 if(!socket.isConnected()){
@@ -66,7 +65,7 @@ public class ServerClientHandler implements Runnable  {
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
                         messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                                new TCPVirtualView(incomingMsg.getUsername(),this.socket));
+                                new TCPVirtualView(incomingMsg.getUsername(),this.socket,oos));
                     }
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
