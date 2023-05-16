@@ -69,7 +69,7 @@ public class Controller implements PropertyChangeListener {
         try {
             games.get(gameID).addToBookShelf(players.get(playerID),col);
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful");
+            reply.setContent("Move successful add to bookshelf");
 
         } catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
@@ -110,7 +110,7 @@ public class Controller implements PropertyChangeListener {
         try {
             games.get(gameID).swapOrder(ints,players.get(playerID));
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful");
+            reply.setContent("Move successful swap order");
         } catch (NotCurrentPlayer e) {
             reply.setType(MessageTypes.ERROR);
             reply.setContent("You are not the current player");
@@ -148,7 +148,7 @@ public class Controller implements PropertyChangeListener {
         try {
             games.get(gameID).removeTileArray(players.get(playerID),points);
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful");
+            reply.setContent("Move successful remove tiles");
 
         }catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);

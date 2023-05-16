@@ -20,7 +20,7 @@ public class ClientState implements ClientStateRemoteInterface{
     private HashMap<String, Matrix> allBookshelf = new HashMap<>();
     private Integer myPoints;
     private HashMap<String, Integer> allPublicPoints= new HashMap<>();
-    private ArrayList<Point> selectedTiles; //TODO dovrebbe essere di tiles - facciamo vedere il colore
+    private ArrayList<Tiles> selectedTiles;
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
@@ -162,13 +162,13 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
-    public ArrayList<Point> getSelectedTiles() {
+    public ArrayList<Tiles> getSelectedTiles() {
         synchronized (viewLock) {
             return selectedTiles;
         }
     }
 
-    public void setSelectedTiles(ArrayList<Point> selectedTiles) {
+    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
         synchronized (viewLock) {
             this.selectedTiles = selectedTiles;
         }

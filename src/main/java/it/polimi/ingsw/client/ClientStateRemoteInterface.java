@@ -33,7 +33,7 @@ public interface ClientStateRemoteInterface extends Remote {
 
     public void setAllPublicPoints(String username, Integer point) throws RemoteException;
 
-    public void setSelectedTiles(ArrayList<Point> selectedTiles) throws RemoteException;
+    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) throws RemoteException;
 
     public void setCurrentPlayer(String currentPlayer) throws RemoteException;
 

@@ -93,11 +93,11 @@ public class CLIPrint implements PropertyChangeListener {
             }
             System.out.println();
             for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
-                System.out.print(i + " ");
+                System.out.print("  ");
                 for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                     System.out.print(tileColorBG(bookshelf.getTile(i, j)) + "   " + ColorCLI.RESET);
                 }
-                System.out.println(" " + i);
+                System.out.println();
             }
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
@@ -114,8 +114,8 @@ public class CLIPrint implements PropertyChangeListener {
                 if (key.equals(cliMain.getClientState().getMyUsername())){
                     System.out.println(ColorCLI.RED + "My Bookshelf: " + ColorCLI.RESET);
                     //TODO quale metto solo bookshelf or bookshelf + personal
-                    printBookshelf(allMatrix.get(key));
-//                    printBookshelfPersonalObjective(allMatrix.get(key), cliMain.getClientState().getMyPersonalObjective());
+//                    printBookshelf(allMatrix.get(key));
+                    printBookshelfPersonalObjective(allMatrix.get(key), cliMain.getClientState().getMyPersonalObjective());
                 }
                 else{
                     System.out.println("Bookshelf of: "+key);
@@ -148,7 +148,7 @@ public class CLIPrint implements PropertyChangeListener {
             }
             System.out.println();
             for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
-                System.out.print(i + " ");
+                System.out.print("  ");
                 for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                     if (personalObjective.containsKey(new Point(i, j))) {
                         System.out.print(tileColorBG(bookshelf.getTile(i, j)) + "\u001b[30m X " + ColorCLI.RESET);
@@ -156,7 +156,7 @@ public class CLIPrint implements PropertyChangeListener {
                         System.out.print(tileColorBG(bookshelf.getTile(i, j)) + "   " + ColorCLI.RESET);
                     }
                 }
-                System.out.println(" " + i);
+                System.out.println();
             }
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
@@ -176,7 +176,7 @@ public class CLIPrint implements PropertyChangeListener {
             }
             System.out.println();
             for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
-                System.out.print(i + " ");
+                System.out.print("  ");
                 for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                     //posizioni della PersonalObjective card
                     if (personalObjective.containsKey(new Point(i, j))) {
@@ -197,7 +197,7 @@ public class CLIPrint implements PropertyChangeListener {
                         System.out.print(tileColorBG(bookshelf.getTile(i, j)) + "   " + ColorCLI.RESET);
                     }
                 }
-                System.out.println(" " + i);
+                System.out.println();
             }
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
@@ -320,14 +320,22 @@ public class CLIPrint implements PropertyChangeListener {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            try{
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("\n");
         }
     }
 
     //stampa l'oridne delle tiles selezionate
     public void printOrderTiles(ArrayList<Tiles> order){
-        for (int i = 0; i < order.size(); i++) {
-            System.out.println(tileColor(order.get(i))+"   " + ColorCLI.RESET + " ");
+        System.out.print("Selected tiles: ");
+        for (Tiles tiles : order) {
+            System.out.print(tileColorBG(tiles) + "   " + ColorCLI.RESET + " ");
         }
+        System.out.println("\n\n");
     }
 
     //stampa l'errore - c'è un errore
@@ -380,7 +388,6 @@ public class CLIPrint implements PropertyChangeListener {
     public void playerTurn(){
         printTurn();
         printBoard(cliMain.getClientState().getBoard());
-        printCommonObjective(cliMain.getClientState().getGameCommonObjective());
         printAllBookshelf(cliMain.getClientState().getAllBookshelf());
         printPoints(cliMain.getClientState().getAllPublicPoints());
     }

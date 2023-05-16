@@ -43,7 +43,7 @@ public class RMIVirtualView extends VirtualView{
                     clientState.setMyPersonalObjective((HashMap<Point, Tiles>) evt.getSource());
                 }
                 case ("selectedTiles") -> {
-                    clientState.setSelectedTiles((ArrayList<Point>) evt.getSource());
+                    clientState.setSelectedTiles((ArrayList<Tiles>) evt.getSource());
                 }
                 case ("bookshelf") -> {
                     System.out.println((String)evt.getOldValue());
