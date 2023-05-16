@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
@@ -12,6 +13,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 
 public class Model  {
@@ -433,28 +437,31 @@ public class Model  {
      * Initializes private objectives
      */
     private void personalobjInit() {
-        PersonalObjective po;
-        ArrayList<PersonalObjective> tmp=new ArrayList<>();
+        ArrayList<PersonalObjective> tmp = new ArrayList<>();
+        ArrayList<Integer> numbers = new ArrayList<>();
+        Random rdm = new Random();
+        int num;
 
         for (int i = 0; i < players.size(); i++) {
             //check if there are NOT 2 equals PersonalObjective
+
             do {
-                po =new PersonalObjective();
-            }while (tmp.contains(po));
-            tmp.add(po);
+                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI());
+            } while (numbers.contains(num));
+
+            numbers.add(num);
+            players.get(i).setPersonalObjective(new PersonalObjective(num));
+
+
         }
-
-
-        for(int i = 0;i<players.size();i++){
-            players.get(i).setPersonalObjective(tmp.get(i));
-        }
-
     }
 
 
 
 
 
+  //  ScheduledExecutorService e1 = Executors.newScheduledThreadPool();
+ //   ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
 
 
 

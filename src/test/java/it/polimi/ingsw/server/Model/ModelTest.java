@@ -117,9 +117,9 @@ class ModelTest {
         Tiles[] array = {Tiles.WHITE,Tiles.GREEN,Tiles.BLUE};
 
         ArrayList<Integer> ints = new ArrayList<>();
-        ints.add(1);
         ints.add(2);
-        ints.add(0);
+        ints.add(3);
+        ints.add(1);
 
         m.setState(GameState.CHOOSING_ORDER);
 
