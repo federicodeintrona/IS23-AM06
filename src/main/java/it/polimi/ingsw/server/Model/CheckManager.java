@@ -84,6 +84,8 @@ public class CheckManager {
             HashSet<Point> set = new HashSet<>(points);
             if(points.size()!=set.size()) throw new SameElement();
 
+            if(!board.tilesArePickable(points)) throw  new TilesCannotBeSelected();
+
             //Check if the selected tiles are allowed and not empty
             for(Point p : points){
                 checkBoardDomain(p,board);

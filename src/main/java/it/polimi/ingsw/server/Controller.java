@@ -219,7 +219,7 @@ public class Controller implements PropertyChangeListener {
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
                 reply.setContent("Added to a game. Waiting for other player...");
-                System.out.println("controller handle client respone "+response);
+                System.out.println("controller handle client response "+response);
                 reply.setNum(response);
                 return reply;
             }
