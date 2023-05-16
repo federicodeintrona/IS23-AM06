@@ -15,6 +15,7 @@ public class ClientBase {
 
         System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
+        decision=decision.toUpperCase();
         Object lock = new Object();
         ClientState state = new ClientState(lock);
 
