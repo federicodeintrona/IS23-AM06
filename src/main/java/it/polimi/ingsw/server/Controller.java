@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Controller implements PropertyChangeListener {
-
     private Lobby lobby;
-    private HashMap<Integer, Model> games;
-    private HashMap<String, Player> players;
+    private final HashMap<Integer, Model> games;
+    private final HashMap<String, Player> players;
     private HashMap<String, VirtualView> views;
 
 

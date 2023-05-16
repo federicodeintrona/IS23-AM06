@@ -59,7 +59,7 @@ public class NetworkerRmi implements Networker {
     public void initializeConnection () {
         try {
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("172.20.10.4", portIn);
+            Registry registry = LocateRegistry.getRegistry("192.168.43.227", portIn);
             // Looking up the registry for the remote object
             rmiHandler = (RMIHandlerInterface) registry.lookup("RMIHandler");
 

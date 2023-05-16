@@ -13,9 +13,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 
 public class Model  {
@@ -56,9 +53,7 @@ public class Model  {
 
     //Constructors
 
-    public Model(){
-
-    }
+    public Model(){}
     public Model(ArrayList<Player> players) {
         this.players = players;
     }
@@ -87,7 +82,7 @@ public class Model  {
      * Create and initialize the board,initialize common and personal objectives,
      * add the views as change listeners,initialize the arrays of points.
      */
-    public void initialization()  {
+    public synchronized void  initialization()  {
 
         //Create and initialize the board
         board = new Board(players.size(), new Sachet());
@@ -184,7 +179,7 @@ public class Model  {
      * @throws OutOfDomain if at least one of the points is outside the board
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
      */
-    public void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
+    public synchronized void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
 
         //Checks move legitimacy
         updateCheckManager(state,currPlayer);
@@ -229,7 +224,7 @@ public class Model  {
      * @throws MoveNotPossible if game is not in the right state
      * @throws NotCurrentPlayer if the player requesting the move is not the current player
      */
-    public void addToBookShelf(Player player,  int column) throws MoveNotPossible{
+    public synchronized void addToBookShelf(Player player,  int column) throws MoveNotPossible{
 
 
         //Check for move legitimacy
@@ -280,7 +275,7 @@ public class Model  {
      * @throws IllegalArgumentException The ints array is not of appropriate content
      * @throws TooManySelected if the array is not of appropriate size
      */
-    public void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
+    public synchronized void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
 
         //Check the legitimacy of the move
         updateCheckManager(state,currPlayer);
@@ -473,7 +468,7 @@ public class Model  {
      * Return the array of all players
      * @return  Array of all players
      */
-    public ArrayList<Player> getPlayers() {
+    public  ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -481,7 +476,7 @@ public class Model  {
      * Return the board
      * @return the board
      */
-    public Board getBoard() {
+    public  Board getBoard() {
         return board;
     }
 
@@ -489,7 +484,7 @@ public class Model  {
      *  Returns the current state of the game
      * @return The current state of the game
      */
-    public GameState getState() {
+    public  GameState getState() {
         return state;
     }
 
@@ -512,29 +507,8 @@ public class Model  {
      * Set the current player (Just for Testing purposes)
      * @param currPlayer The player to set as current player
      */
-    public void setCurrPlayer(Player currPlayer) {
+    public synchronized void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
-    }
-
-    //TEST
-    public Player getCurrPlayer() {
-        return currPlayer;
-    }
-
-    public Player getNextPlayer() {
-        return nextPlayer;
-    }
-
-    public Player getWinner() {
-        return winner;
-    }
-
-    public ArrayList<Integer> getPrivatePoints() {
-        return privatePoints;
-    }
-
-    public ArrayList<Integer> getPublicPoints() {
-        return publicPoints;
     }
 
     public int getGameID() {
@@ -553,7 +527,7 @@ public class Model  {
      * Sets the selectedTiles array
      * @param selectedTile Array you want to set selectedTiles as
      */
-    public void setSelectedTiles(ArrayList<Tiles> selectedTile) {
+    public synchronized void setSelectedTiles(ArrayList<Tiles> selectedTile) {
         this.selectedTiles = selectedTile;
     }
 
@@ -566,16 +540,8 @@ public class Model  {
         return selectedTiles;
     }
 
-    public void addPlayers(ArrayList<Player> players){
-        this.players.addAll(players);
-    }
-
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
-    }
-
-    public ArrayList<VirtualView> getVirtualViews() {
-        return virtualViews;
     }
 
     public void setVirtualViews(ArrayList<VirtualView> virtualViews) {

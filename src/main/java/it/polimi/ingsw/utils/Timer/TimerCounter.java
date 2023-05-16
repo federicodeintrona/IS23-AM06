@@ -1,36 +1,26 @@
 package it.polimi.ingsw.utils.Timer;
 
-import it.polimi.ingsw.server.ClientInterface;
-
 import java.util.TimerTask;
 
 public class TimerCounter extends TimerTask {
+    ClientTimerInterface client;
+    private static final int timeout = 20;
 
-    TimoutCheckerInterface timeOutChecker;
-    ClientInterface client;
-
-    public TimerCounter(TimoutCheckerInterface timeOutChecker) {
-        this.timeOutChecker = timeOutChecker;
-    }
-    public TimerCounter(TimoutCheckerInterface timeOutChecker, ClientInterface client) {
-        this.timeOutChecker = timeOutChecker;
+    public TimerCounter(ClientTimerInterface client) {
         this.client=client;
     }
 
 
     @Override
     public void run() {
-
-        Boolean stop = timeOutChecker.check(client.updateTime());
-        if (stop) {
-
-            System.out.println("Timeout");
+        int time = client.updateTime();
+        if (time>timeout) {
+            System.out.println(client.getUsername() + " timed out");
             client.disconnect();
             this.cancel();
 
         }
     }
-
 
 }
 
