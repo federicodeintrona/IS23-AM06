@@ -56,8 +56,12 @@ public class CLIMain {
         switch (message.getType()){
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
             case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
-            case ERROR -> cliPrint.printError(message.getUsername());
-            //TODO se username è sbagliato cosa mi ritorni
+            case ERROR -> {
+                cliPrint.printError(message.getUsername());
+                if (message.getUsername().equals("Username already taken")){
+                    readShell.askUsername();
+                }
+            }
             default -> {
                 break;
             }
@@ -87,6 +91,7 @@ public class CLIMain {
         Thread.sleep(500);
 
         cliPrint.printChair();
+        cliPrint.printCommonObjective(clientState.getGameCommonObjective());
         cliPrint.playerTurn();
         //ho già stampato il primo turno di gioco
         String curr=clientState.getNextPlayer();

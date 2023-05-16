@@ -23,7 +23,7 @@ class CLIPrintTest {
     @Test
     public void printBoard(){
         Object obj=new Object();
-        ClientState clientState=new ClientState();
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -38,7 +38,7 @@ class CLIPrintTest {
     @Test
     public void printBookshelf(){
         Object obj=new Object();
-        ClientState clientState=new ClientState();
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -66,7 +66,7 @@ class CLIPrintTest {
     @Test
     public void printPersonalObjective(){
         Object obj=new Object();
-        ClientState clientState=new ClientState();
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -81,7 +81,7 @@ class CLIPrintTest {
     @Test
     public void printBookshelfPersonalObjective(){
         Object obj=new Object();
-        ClientState clientState=new ClientState();
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -101,7 +101,7 @@ class CLIPrintTest {
     @Test
     public void printHelp(){
         Object obj=new Object();
-        ClientState clientState=new ClientState();
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -113,7 +113,7 @@ class CLIPrintTest {
     @Test
     public void printCommonObjective(){
         Object obj=new Object();
-        ClientState clientState=new ClientState();
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);

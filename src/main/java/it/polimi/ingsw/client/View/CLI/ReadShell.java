@@ -110,12 +110,14 @@ public class ReadShell extends Thread{
 //                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
             }
             case "#printbookshelf" -> {
-                int i=st.indexOf("@");
-                if (i==-1){
+                int indice=st.indexOf("@");
+                System.out.println(indice);
+                if (indice==-1){
                     System.out.println(st+": Type of command correct but you do NOT inserted the username of player \nIf you need help put #help or #h");
                     break;
                 }
-                String sub=st.substring(i+1);
+                String sub=st.substring(indice+1, st.length()-1);
+                System.out.println(sub);
 
                 //posizione dell'username desiderato
                 int position=cliMain.getClientState().getAllUsername().indexOf(sub);
@@ -123,7 +125,7 @@ public class ReadShell extends Thread{
                     System.out.println(st+": Type of command correct but you do NOT inserted the username of a player in this game \nIf you need help put #help or #h");
                     break;
                 }
-                cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(position));
+                cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(sub));
             }
             case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective());
             case "#printpoints" -> cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
