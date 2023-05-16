@@ -131,7 +131,7 @@ public class PersonalObjective {
             throw new RuntimeException(e);
         }
 
-        System.out.println(card);
+//        System.out.println(card);
     }
 
     /**

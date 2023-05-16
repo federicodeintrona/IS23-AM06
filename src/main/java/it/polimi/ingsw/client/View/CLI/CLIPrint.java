@@ -335,6 +335,7 @@ public class CLIPrint implements PropertyChangeListener {
         for (Tiles tiles : order) {
             System.out.print(tileColorBG(tiles) + "   " + ColorCLI.RESET + " ");
         }
+        System.out.println("\n\n");
     }
 
     //stampa l'errore - c'è un errore
