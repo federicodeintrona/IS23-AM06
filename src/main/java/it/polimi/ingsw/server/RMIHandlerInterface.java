@@ -15,4 +15,5 @@ public interface RMIHandlerInterface extends Remote {
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points) throws RemoteException;
     public IntMessage newLobby(String client, int players) throws RemoteException;
     public IntMessage acceptRmiConnection (String username, ClientStateRemoteInterface state) throws RemoteException;
+    boolean pingPong() throws RemoteException;
 }

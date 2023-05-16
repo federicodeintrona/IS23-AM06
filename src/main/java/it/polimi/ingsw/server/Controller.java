@@ -103,6 +103,7 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
+
         System.out.println("add to " + gameID + " from " + playerID + " in " + ints);
         Message reply = new Message();
 

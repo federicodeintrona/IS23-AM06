@@ -59,6 +59,7 @@ public class Server extends UnicastRemoteObject {
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
         lobby.setController(controller);
+
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {

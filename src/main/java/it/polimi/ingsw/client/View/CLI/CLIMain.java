@@ -104,6 +104,7 @@ public class CLIMain {
         while (!clientState.isGameIsEnded()){
             //stampa nuovo turno se il current è il next di prima
            if (clientState.getCurrentPlayer().equals(curr)){
+               //TODO sleep
                cliPrint.clearSheel();
                cliPrint.playerTurn();
                curr=clientState.getNextPlayer();

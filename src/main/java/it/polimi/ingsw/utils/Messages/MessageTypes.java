@@ -14,5 +14,6 @@ public enum MessageTypes {
     DISCONNECT,
     ERROR,
     VIEW,
-    END_GAME;
+    PING,
+    PONG;
 }

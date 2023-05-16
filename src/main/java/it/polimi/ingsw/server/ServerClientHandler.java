@@ -4,15 +4,21 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.TCPVirtualView;
-import it.polimi.ingsw.utils.Messages.*;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimoutCheckerInterface;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class ServerClientHandler implements Runnable  {
-
+public class ServerClientHandler implements Runnable, ClientInterface {
+    private Controller controller;
     private String username;
     private int gameID;
     private Player player;
@@ -21,9 +27,11 @@ public class ServerClientHandler implements Runnable  {
     private ObjectOutputStream oos;
     private Message messageIn;
     private Message messageOut;
-    private Controller controller;
 
+    private int time = 0;
+    private int timeout=20;
     boolean disconnected = false;
+
     public ServerClientHandler(Socket socket, Controller controller) {
         this.socket = socket;
         this.controller=controller;
@@ -42,6 +50,7 @@ public class ServerClientHandler implements Runnable  {
                 if(!socket.isConnected()){
                     disconnected=false;
                 }
+
                 messageIn= (Message) ois.readObject();
                 processMessage(messageIn);
 
@@ -66,14 +75,13 @@ public class ServerClientHandler implements Runnable  {
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
                         messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                                new TCPVirtualView(incomingMsg.getUsername(),this.socket));
+                                new TCPVirtualView(incomingMsg.getUsername(),this.socket,oos));
                     }
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
                         this.username=incomingMsg.getUsername();
                     }
-
                 }
                 case NUM_OF_PLAYERS -> {
                     messageOut = controller.newLobby(this.username,((IntMessage) incomingMsg).getNum());
@@ -92,6 +100,9 @@ public class ServerClientHandler implements Runnable  {
                     controller.playerDisconnection(username);
                     disconnected = true;
                 }
+                case PONG -> {
+                    time=0;
+                }
                 default -> {
                     System.out.println("Server received: " + incomingMsg.toString());
                 }
@@ -109,4 +120,48 @@ public class ServerClientHandler implements Runnable  {
     }
 
 
+    public void pingPongSender(){
+
+         ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+         e.scheduleAtFixedRate(()->{
+             Message msg = new Message();
+             msg.setType(MessageTypes.PING);
+             System.out.println("scheduled");
+             try {
+                 oos.writeObject(msg);
+             } catch (IOException ex) {
+                 throw new RuntimeException(ex);
+             }
+
+         },10,500, TimeUnit.MILLISECONDS);
+
+
+        TimoutCheckerInterface timeOutChecker = (l) -> {
+            System.out.println(l);
+            Boolean timeoutReached = l>timeout;
+            if (timeoutReached){
+                System.out.println("Got timeout inside server class");
+                return true;
+            }
+            return false;
+        };
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerCounter(timeOutChecker,this);
+        int initialDelay = 50;
+        int delta = 1000;
+        timer.schedule(task, initialDelay, delta);
+
+    }
+
+    @Override
+    public void disconnect() {
+        this.disconnected=true;
+    }
+
+    @Override
+    public int updateTime() {
+        this.time+=1;
+        return this.time;
+    }
 }

@@ -52,8 +52,15 @@ public class RMIHandler implements RMIHandlerInterface{
         try {
 
             System.out.println("rmi vv: " + username);
+            RMIVirtualView myView = new RMIVirtualView(username,state);
+            message = controller.handleNewClient(username, myView);
+            RMITimeout myTimeout = new RMITimeout(username,myView,controller);
+            myTimeout.start();
 
-            message = controller.handleNewClient(username,new RMIVirtualView(username,state));
+            if(!message.getType().equals(MessageTypes.ERROR)){
+                myTimeout.setUsername(username);
+            }
+
             System.out.println(message.getType());
 
         } catch (Exception e) {
@@ -62,5 +69,10 @@ public class RMIHandler implements RMIHandlerInterface{
         }
 
         return message;
+    }
+
+    @Override
+    public boolean pingPong() throws RemoteException {
+        return true;
     }
 }
