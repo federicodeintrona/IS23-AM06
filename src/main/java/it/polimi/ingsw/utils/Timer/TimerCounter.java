@@ -24,7 +24,7 @@ public class TimerCounter extends TimerTask {
         Boolean stop = timeOutChecker.check(client.updateTime());
         if (stop) {
 
-            System.out.println("Got stop inside TimerTask");
+            System.out.println("Timeout");
             client.disconnect();
             this.cancel();
 

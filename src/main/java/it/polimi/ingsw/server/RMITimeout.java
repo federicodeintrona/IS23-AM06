@@ -16,9 +16,14 @@ import java.util.concurrent.TimeUnit;
 
 public class RMITimeout extends Thread implements ClientInterface {
 
+    private ScheduledExecutorService e;
     private String username=null;
-    private RMIVirtualView view;
-    private Controller controller;
+    private final RMIVirtualView view;
+    private final Controller controller;
+    private int time = 0;
+    private static final int timeout=20;
+    private static final int initialDelay = 50;
+    private static final int delta = 1000;
 
     public RMITimeout(String username, RMIVirtualView view,Controller controller) {
         this.username = username;
@@ -26,13 +31,13 @@ public class RMITimeout extends Thread implements ClientInterface {
         this.controller=controller;
     }
 
-    private int time = 0;
-    private int timeout=20;
+
 
     @Override
     public void disconnect() {
         System.out.println("Disconnection");
-        this.interrupt();
+        e.shutdown();
+        interrupt();
     }
 
     @Override
@@ -50,23 +55,22 @@ public class RMITimeout extends Thread implements ClientInterface {
 
     public void pingPongSender(){
 
-        ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+        e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
-            System.out.println("scheduled");
 
             try {
                 if(view.getClientState().pingPong()){
                     this.time=0;
                 }
             } catch (RemoteException ex) {
-                disconnect();
+                System.out.println(username+" is not responding...");
             }
 
-        },10,500, TimeUnit.MILLISECONDS);
+        },10,1000, TimeUnit.MILLISECONDS);
 
 
         TimoutCheckerInterface timeOutChecker = (l) -> {
-            System.out.println(l);
+            System.out.println("Waiting "+username+ " for : " +l+" seconds");
             Boolean timeoutReached = l>timeout;
             if (timeoutReached){
                 System.out.println("Got timeout inside server class");
@@ -77,8 +81,7 @@ public class RMITimeout extends Thread implements ClientInterface {
 
         Timer timer = new Timer();
         TimerTask task = new TimerCounter(timeOutChecker,this);
-        int initialDelay = 50;
-        int delta = 1000;
+
         timer.schedule(task, initialDelay, delta);
 
     }
