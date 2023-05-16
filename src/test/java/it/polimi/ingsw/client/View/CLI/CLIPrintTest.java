@@ -16,15 +16,13 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 class CLIPrintTest {
 
     @DisplayName("Print Board")
     @Test
     public void printBoard(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -39,8 +37,7 @@ class CLIPrintTest {
     @Test
     public void printBookshelf(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -68,8 +65,7 @@ class CLIPrintTest {
     @Test
     public void printPersonalObjective(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -84,8 +80,7 @@ class CLIPrintTest {
     @Test
     public void printBookshelfPersonalObjective(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -105,8 +100,7 @@ class CLIPrintTest {
     @Test
     public void printHelp(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -118,8 +112,7 @@ class CLIPrintTest {
     @Test
     public void printCommonObjective(){
         Object obj=new Object();
-        Object lock= new Object();
-        ClientState clientState=new ClientState(lock);
+        ClientState clientState=new ClientState(obj);
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
