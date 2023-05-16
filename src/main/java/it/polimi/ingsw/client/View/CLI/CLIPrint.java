@@ -331,9 +331,11 @@ public class CLIPrint implements PropertyChangeListener {
 
     //stampa l'oridne delle tiles selezionate
     public void printOrderTiles(ArrayList<Tiles> order){
-        for (int i = 0; i < order.size(); i++) {
-            System.out.println(tileColor(order.get(i))+"   " + ColorCLI.RESET + " ");
+        System.out.print("Selected tiles: ");
+        for (Tiles tiles : order) {
+            System.out.print(tileColorBG(tiles) + "   " + ColorCLI.RESET + " ");
         }
+        System.out.println("\n\n");
     }
 
     //stampa l'errore - c'è un errore

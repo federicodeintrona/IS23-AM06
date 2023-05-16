@@ -154,6 +154,24 @@ class CLIPrintTest {
 
     }
 
+    @DisplayName("Print selected tile")
+    @Test
+    public void printSelectedTiles(){
+        Object obj=new Object();
+        ClientState clientState=new ClientState(obj);
+        Networker networker=new NetworkerRmi();
+        CLIMain cliMain=new CLIMain(obj, clientState, networker);
+        CLIPrint cliPrint=new CLIPrint(cliMain);
+
+        ArrayList<Tiles> arrayList=new ArrayList<>();
+        arrayList.add(Tiles.BLUE);
+        arrayList.add(Tiles.LIGHT_BLUE);
+        arrayList.add(Tiles.GREEN);
+        clientState.setSelectedTiles(arrayList);
+
+        cliPrint.printOrderTiles(clientState.getSelectedTiles());
+    }
+
 
 
 

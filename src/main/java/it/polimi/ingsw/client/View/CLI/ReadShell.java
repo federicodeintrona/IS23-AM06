@@ -73,6 +73,7 @@ public class ReadShell extends Thread{
 
         String st=readLine();
         st=st+' ';
+        st=st.toLowerCase();
         ArrayList<Integer> number=readNumber(st);
         int n=st.indexOf(" ");
         String substring=st.substring(0, n);

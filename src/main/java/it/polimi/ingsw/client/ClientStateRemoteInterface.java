@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public interface ClientStateRemoteInterface extends Remote {
     void setMyUsername(String myUsername) throws RemoteException;
 
@@ -29,8 +30,6 @@ public interface ClientStateRemoteInterface extends Remote {
     void setAllPublicPoints(String username, Integer point) throws RemoteException;
 
     void setSelectedTiles(ArrayList<Tiles> selectedTiles) throws RemoteException;
-
-    void setCurrentPlayer(String currentPlayer) throws RemoteException;
 
     void setNextPlayer(String nextPlayer) throws RemoteException;
 

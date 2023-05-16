@@ -61,6 +61,11 @@ public class CLIMain {
                     readShell.askUsername();
                 }
             }
+            case OK -> {
+                if (message.getUsername().equals("Move successful remove tiles")){
+                    cliPrint.printOrderTiles(clientState.getSelectedTiles());
+                }
+            }
             default -> {
                 break;
             }
