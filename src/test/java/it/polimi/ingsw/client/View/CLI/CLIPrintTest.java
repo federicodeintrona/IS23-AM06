@@ -13,6 +13,7 @@ import it.polimi.ingsw.utils.Matrix;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +24,12 @@ class CLIPrintTest {
     @Test
     public void printBoard(){
         Object obj=new Object();
-        ClientState clientState=new ClientState(obj);
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -38,7 +44,12 @@ class CLIPrintTest {
     @Test
     public void printBookshelf(){
         Object obj=new Object();
-        ClientState clientState=new ClientState(obj);
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -66,7 +77,12 @@ class CLIPrintTest {
     @Test
     public void printPersonalObjective(){
         Object obj=new Object();
-        ClientState clientState=new ClientState(obj);
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -81,7 +97,12 @@ class CLIPrintTest {
     @Test
     public void printBookshelfPersonalObjective(){
         Object obj=new Object();
-        ClientState clientState=new ClientState(obj);
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -101,7 +122,12 @@ class CLIPrintTest {
     @Test
     public void printHelp(){
         Object obj=new Object();
-        ClientState clientState=new ClientState(obj);
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -113,7 +139,12 @@ class CLIPrintTest {
     @Test
     public void printCommonObjective(){
         Object obj=new Object();
-        ClientState clientState=new ClientState(obj);
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
@@ -159,7 +190,12 @@ class CLIPrintTest {
     @Test
     public void printSelectedTiles(){
         Object obj=new Object();
-        ClientState clientState=new ClientState(obj);
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         Networker networker=new NetworkerRmi();
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
