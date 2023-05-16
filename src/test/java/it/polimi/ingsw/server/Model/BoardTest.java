@@ -3,6 +3,8 @@ package it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -658,6 +660,14 @@ class BoardTest {
         assertFalse(result);
         board.placeTiles(Tiles.EMPTY, 3,8);
         board.placeTiles(Tiles.EMPTY, 4,8);
+    }
+    @Test
+    public void checkBoardReset7(){
+        Board board=new Board(2, new Sachet());
+        board.placeTiles(Tiles.GREEN, 4, 4);
+        board.placeTiles(Tiles.BLUE, 5, 5);
+
+        assertTrue(board.checkBoardReset());
     }
 
     //TEST boardResetENG()
