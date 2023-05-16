@@ -31,7 +31,8 @@ public class NetworkerRmi implements Networker {
      * Constructor
      */
     public NetworkerRmi()  {
-        clientState = new ClientState();
+        Object lock = new Object();
+        clientState = new ClientState(lock);
 
         try {
             clientIP = getLocalIPAddress();

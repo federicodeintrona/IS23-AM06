@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.server.Messages.ViewMessage;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
+import it.polimi.ingsw.utils.Messages.ViewMessage;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

@@ -2,7 +2,7 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
-import it.polimi.ingsw.server.Messages.Message;
+import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.JsonReader;
@@ -92,6 +92,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void setCli(CLIMain cli) {
+        this.cliMain=cli;
     }
 
     @Override
