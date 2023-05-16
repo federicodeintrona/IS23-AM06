@@ -82,6 +82,7 @@ public class RMIVirtualView extends VirtualView{
 
     }
 
-
-
+    public ClientStateRemoteInterface getClientState() {
+        return clientState;
+    }
 }

@@ -44,4 +44,5 @@ public interface ClientStateRemoteInterface extends Remote {
     public void setGameIsEnded(boolean gameIsEnded) throws RemoteException;
 
     public void setGameHasStarted(boolean gameHasStarted) throws RemoteException;
+    boolean pingPong() throws RemoteException;
 }
