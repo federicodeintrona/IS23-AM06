@@ -31,7 +31,11 @@ public class NetworkerRmi implements Networker {
      * Constructor
      */
     public NetworkerRmi()  {
-        clientState = new ClientState();
+        try {
+            clientState = new ClientState();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             clientIP = getLocalIPAddress();
@@ -67,21 +71,6 @@ public class NetworkerRmi implements Networker {
 
         System.out.println("Created RMI connection with Server");
         System.out.println(clientIP);
-
-        clientStateExportRmi();
-    }
-
-    /**
-     * Preparing the instance of clientState to export through RMI connection
-     */
-    private void clientStateExportRmi () {
-        ClientStateRemoteInterface stub = null;
-        try {
-            stub = (ClientStateRemoteInterface) UnicastRemoteObject.exportObject(clientState, portOut);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
     }
 
     /**
@@ -91,7 +80,7 @@ public class NetworkerRmi implements Networker {
     public void firstConnection (Message username) {
         IntMessage message1;
         try {
-             message1 = rmiHandler.acceptRmiConnection(username.getUsername(), clientIP, portOut,clientState);
+             message1 = rmiHandler.acceptRmiConnection(username.getUsername(),clientState);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

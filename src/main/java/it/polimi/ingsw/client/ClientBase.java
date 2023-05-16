@@ -17,7 +17,12 @@ public class ClientBase {
         decision = scanner.nextLine();
         decision=decision.toUpperCase();
         Object lock = new Object();
-        ClientState state = new ClientState(lock);
+        ClientState state = null;
+        try {
+            state = new ClientState(lock);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         Networker client = switch (decision) {
             case "RMI" -> new NetworkerRmi(state);

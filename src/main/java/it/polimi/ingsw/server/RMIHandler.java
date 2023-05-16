@@ -44,11 +44,9 @@ public class RMIHandler implements RMIHandlerInterface{
      * Gets the instance of clientState from a specific Client given his ip address and port
      *
      * @param username      client's username
-     * @param ipAddress     the client ip address
-     * @param port      the port used by the client to share the instance of clientState
      */
     @Override
-    public IntMessage acceptRmiConnection(String username, String ipAddress, int port, ClientStateRemoteInterface state) throws RemoteException {
+    public IntMessage acceptRmiConnection(String username, ClientStateRemoteInterface state) throws RemoteException {
 
         IntMessage message = null;
         try {
