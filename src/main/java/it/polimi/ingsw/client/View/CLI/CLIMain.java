@@ -7,7 +7,7 @@ import it.polimi.ingsw.utils.Messages.Message;
 public class CLIMain {
 
 
-
+    //TODO stampa swap
 
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
