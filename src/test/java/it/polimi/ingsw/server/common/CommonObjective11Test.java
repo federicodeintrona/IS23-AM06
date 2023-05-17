@@ -1,83 +1,68 @@
-package it.polimi.ingsw.server.CommonObjective;
+package it.polimi.ingsw.server.common;
 
+import it.polimi.ingsw.server.CommonObjective.CommonObjective11;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CommonObjective12Test {
+class CommonObjective11Test {
 
     /**
-     * Testing all method's branches for success using a
-     * bookshelf that has only the boxes under the first
-     * diagonal full of no same colored tiles next to each other
+     * Testing all method's branches using a
+     * bookshelf fill with green tiles
      */
     @Test
     void checkConditionSuccess1() {
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.EMPTY;
-        Tiles[] values = Tiles.values();
-        int x = 0;
-        int buffer = 1;
-        int j;
+        Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
-            for (j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; j++) {
                 player.getBookshelf().getTiles().setTile(tiles, i, j);
             }
         }
 
-        for (int i=1; i<6; i++){
-            j = 0;
-            while (j < buffer){
-                player.getBookshelf().getTiles().setTile(values[x], i, j);
-                x++;
-                j++;
-                if (x == 6) x = 0;
-            }
-            buffer++;
-        }
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
-
-        // Checking that the checkCondition method returns false
+        // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
     /**
-     * Testing the case of full bookshelf with the first
-     * diagonal programmed to have same colored tiles
+     * Testing a casual scenario possible in a game:
+     * bookshelf not 100% filled and all tiles with
+     * different colors adjacent to each other
      */
     @Test
     void checkConditionSuccess2() {
         Player player = new Player( "Jhon", true);
-        int buffer = 1;
-        int j;
+        Tiles[] values = Tiles.values();
+        int x = 0;
 
         // Initializing the bookshelf
         for (int i=1; i<6; i++){
-            j = 0;
-            while (j < buffer){
-                player.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                j++;
+            for (int j=0; j<4; j++){
+                player.getBookshelf().getTiles().setTile(values[x], i, j);
+                x++;
+                if (x == 6) x = 0;
             }
-            buffer++;
         }
 
-        // Manually programming the diagonal
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 0);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 1, 1);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 2, 2);
+        // Manually programming the x-shaped group of tiles
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 3, 1);
         player.getBookshelf().getTiles().setTile(Tiles.WHITE, 3, 3);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 4);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 2);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 5, 1);
+        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 5, 3);
 
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
-        // Checking that the checkCondition method returns false
+        // Checking that the checkCondition method returns true
         assertTrue(obj.checkCondition(player));
     }
 
@@ -97,31 +82,35 @@ class CommonObjective12Test {
             }
         }
 
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
         // Checking that the checkCondition method returns true
         assertFalse(obj.checkCondition(player));
     }
 
     /**
-     * Testing for failure first if statement
-     * with a bookshelf completely full of green tiles
+     * Testing the case of bookshelf filled up with
+     * tiles that do not have same colored tiles
+     * adjacent to each other
      */
     @Test
     void checkConditionFailure2() {
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.GREEN;
+        Tiles[] values = Tiles.values();
+        int x = 0;
 
         // Initializing the bookshelf
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 5; j++) {
-                player.getBookshelf().getTiles().setTile(tiles, i, j);
+        for (int i=0; i<6; i++){
+            for (int j=0; j<5; j++){
+                player.getBookshelf().getTiles().setTile(values[x], i, j);
+                x++;
+                if (x == 6) x = 0;
             }
         }
 
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
         // Checking that the checkCondition method returns true
         assertFalse(obj.checkCondition(player));
@@ -135,30 +124,18 @@ class CommonObjective12Test {
     void commonObjPointsCalculatorTwoPlayers() {
         Player player1 = new Player( "Jhon", true);
         Player player2 = new Player( "Obi", false);
-        Tiles tiles = Tiles.EMPTY;
-        int buffer = 1;
-        int j;
+        Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
         for (int i = 0; i < 6; i++) {
-            for (j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; j++) {
                 player1.getBookshelf().getTiles().setTile(tiles, i, j);
                 player2.getBookshelf().getTiles().setTile(tiles, i, j);
             }
         }
 
-        for (int i=1; i<6; i++){
-            j = 0;
-            while (j < buffer){
-                player1.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player2.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                j++;
-            }
-            buffer++;
-        }
-
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
         // Testing method for player1
         obj.commonObjPointsCalculator(player1, 2);
@@ -181,24 +158,20 @@ class CommonObjective12Test {
         Player player2 = new Player( "Obi", false);
         Player player3 = new Player( "Pablo", false);
         Player player4 = new Player( "Felipe", false);
-        int buffer = 1;
-        int j;
+        Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
-        for (int i=1; i<6; i++){
-            j = 0;
-            while (j < buffer){
-                player1.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player2.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player3.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player4.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                j++;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                player1.getBookshelf().getTiles().setTile(tiles, i, j);
+                player2.getBookshelf().getTiles().setTile(tiles, i, j);
+                player3.getBookshelf().getTiles().setTile(tiles, i, j);
+                player4.getBookshelf().getTiles().setTile(tiles, i, j);
             }
-            buffer++;
         }
 
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
         // Testing method for player1
         obj.commonObjPointsCalculator(player1, 4);
@@ -223,7 +196,7 @@ class CommonObjective12Test {
 
     /**
      * Testing first if statement for failure in case player's
-     * bookshelf does not meet the obj12 condition criteria
+     * bookshelf does not meet the obj11 condition criteria
      */
     @Test
     void commonObjPointsCalculatorFailure1() {
@@ -237,8 +210,8 @@ class CommonObjective12Test {
             }
         }
 
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
         // Testing method for player
         obj.commonObjPointsCalculator(player, 2);
@@ -253,21 +226,17 @@ class CommonObjective12Test {
     @Test
     void commonObjPointsCalculatorFailure2() {
         Player player = new Player( "Jhon", true);
-        int buffer = 1;
-        int j;
+        Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
-        for (int i=1; i<6; i++){
-            j = 0;
-            while (j < buffer){
-                player.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                j++;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
             }
-            buffer++;
         }
 
-        // Creation of an instance for CommonObjective12
-        CommonObjective12 obj = new CommonObjective12();
+        // Creation of an instance for CommonObjective11
+        CommonObjective11 obj = new CommonObjective11();
 
         // Testing method for player first time
         obj.commonObjPointsCalculator(player, 3);

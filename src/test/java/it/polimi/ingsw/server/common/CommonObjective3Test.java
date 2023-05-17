@@ -1,5 +1,6 @@
-package it.polimi.ingsw.server.CommonObjective;
+package it.polimi.ingsw.server.common;
 
+import it.polimi.ingsw.server.CommonObjective.CommonObjective3;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.Test;
