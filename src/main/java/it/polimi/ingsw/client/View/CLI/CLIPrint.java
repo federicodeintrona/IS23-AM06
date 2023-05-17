@@ -301,7 +301,12 @@ public class CLIPrint implements PropertyChangeListener {
     public void printPoints(HashMap<String, Integer> publicPoints){
         System.out.println("All Public Points: ");
         for (String key: publicPoints.keySet()){
-            System.out.println(key+": "+publicPoints.get(key));
+            if (key.equals(cliMain.getClientState().getMyUsername())){
+                System.out.println(ColorCLI.RED + "my points: "+publicPoints.get(key)+ ColorCLI.RESET);
+            }
+            else{
+                System.out.println(key+": "+publicPoints.get(key));
+            }
         }
         System.out.println("\n");
     }
