@@ -22,6 +22,7 @@ public class CommonObjective12 extends CommonObjective{
     public boolean checkCondition(Player player) {
         int i;
         int j;
+        int diagonalsNotFound = 4;
 
         // Checks if the bookshelf is empty and in case returns false
         if (player.getBookshelf().isEmpty()) return false;
@@ -31,7 +32,10 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i<5 && j<5){
 
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
+                diagonalsNotFound --;
+                break;
+            }
 
             i++;
             j++;
@@ -42,7 +46,10 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i<6 && j<5){
 
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
+                diagonalsNotFound --;
+                break;
+            }
 
             i++;
             j++;
@@ -53,7 +60,10 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i>0 && j<5){
 
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
+                diagonalsNotFound --;
+                break;
+            }
 
             i--;
             j++;
@@ -64,11 +74,16 @@ public class CommonObjective12 extends CommonObjective{
         j = 0;
         while (i>=0 && j<5){
 
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) {
+                diagonalsNotFound --;
+                break;
+            }
 
             i--;
             j++;
         }
+
+        if (diagonalsNotFound > 0) return true;
 
         return false;
     }
