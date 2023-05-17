@@ -5,7 +5,6 @@ import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.utils.Messages.IntMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
-import it.polimi.ingsw.utils.Timer.RMITimer;
 
 import java.awt.*;
 import java.rmi.RemoteException;

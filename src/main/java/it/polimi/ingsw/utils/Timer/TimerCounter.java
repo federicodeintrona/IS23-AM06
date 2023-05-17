@@ -3,10 +3,10 @@ package it.polimi.ingsw.utils.Timer;
 import java.util.TimerTask;
 
 public class TimerCounter extends TimerTask {
-    ClientTimerInterface client;
+    TimerInterface client;
     private static final int timeout = 20;
 
-    public TimerCounter(ClientTimerInterface client) {
+    public TimerCounter(TimerInterface client) {
         this.client=client;
     }
 
@@ -15,7 +15,7 @@ public class TimerCounter extends TimerTask {
     public void run() {
         int time = client.updateTime();
         if (time>timeout) {
-            System.out.println(client.getUsername() + " timed out");
+            System.out.println(client.getErrorMessage());
             client.disconnect();
             this.cancel();
 

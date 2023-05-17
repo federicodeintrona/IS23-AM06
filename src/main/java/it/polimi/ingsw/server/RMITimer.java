@@ -1,7 +1,9 @@
-package it.polimi.ingsw.utils.Timer;
+package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 
 import java.rmi.RemoteException;
 import java.util.Timer;
@@ -10,8 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class RMITimer implements ClientTimerInterface {
-
+public class RMITimer implements TimerInterface {
+    private boolean disconnected=false;
     private ScheduledExecutorService e;
     private String username = null;
     private final RMIVirtualView view;
@@ -34,7 +36,7 @@ public class RMITimer implements ClientTimerInterface {
 
         e.shutdown();
         timer.cancel();
-
+        disconnected=true;
         if(username!=null){
             controller.playerDisconnection(username);
         }
@@ -51,7 +53,6 @@ public class RMITimer implements ClientTimerInterface {
 
 
     public void pingPong(){
-        System.out.println(username + "'s timer has started");
 
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
@@ -61,10 +62,11 @@ public class RMITimer implements ClientTimerInterface {
                     this.time=0;
                 }
             } catch (RemoteException ex) {
-                System.out.println(username+" is not responding...");
+                if(!disconnected)
+                  System.out.println(username + " is not responding...");
             }
 
-        },10,1000, TimeUnit.MILLISECONDS);
+        },50,1000, TimeUnit.MILLISECONDS);
 
         TimerTask task = new TimerCounter(this);
         timer.schedule(task, initialDelay, delta);
@@ -72,8 +74,8 @@ public class RMITimer implements ClientTimerInterface {
     }
 
 
-    public String getUsername() {
-        return username;
+    public String getErrorMessage() {
+        return username+" timed out";
     }
 
     public void setUsername(String username) {

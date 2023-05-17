@@ -46,7 +46,6 @@ public class RMIVirtualView extends VirtualView{
                     clientState.setSelectedTiles((ArrayList<Tiles>) evt.getSource());
                 }
                 case ("bookshelf") -> {
-                    System.out.println((String)evt.getOldValue());
                     clientState.setAllBookshelf((String)evt.getOldValue(),(Matrix) evt.getSource());
                 }
                 case ("publicPoints") -> {

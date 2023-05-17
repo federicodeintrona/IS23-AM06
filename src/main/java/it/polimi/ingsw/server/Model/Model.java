@@ -84,6 +84,8 @@ public class Model  {
      */
     public synchronized void  initialization()  {
 
+        System.out.println("Game number: "+gameID+" is starting...");
+
         //Create and initialize the board
         board = new Board(players.size(), new Sachet());
         board.BoardInitialization();
@@ -95,7 +97,6 @@ public class Model  {
 
         //Add the views as change listeners
         for (VirtualView v : virtualViews){
-            System.out.println("vv model init :"+v.getUsername());
             notifier.addPropertyChangeListener("all",v);
             notifier.addPropertyChangeListener(v.getUsername(),v);
         }
@@ -112,30 +113,26 @@ public class Model  {
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
 
-            System.out.println("po");
             //Notify personal objective
             notifier.firePropertyChange(new PropertyChangeEvent(
                     p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
-            System.out.println("book");
 
             //Notify Bookshelf
             notifier.firePropertyChange(new PropertyChangeEvent(p.getBookshelf().getTiles(),
                     "all", p.getUsername(), "bookshelf"));
 
-            System.out.println("pubp");
             //Notify publicPoints
             notifier.firePropertyChange(new PropertyChangeEvent(p.getPublicPoint(), "all",
                     p.getUsername(), "publicPoints"));
 
-            System.out.println("perp");
+
             //Notify privatePoints
             notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
                     p.getUsername(), "privatePoints"));
 
         }
 
-        System.out.println("board");
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
                 board.getGamesBoard(), "all", "0","board" ));

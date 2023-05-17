@@ -38,7 +38,7 @@ public class Lobby {
             usernames.add(client.toLowerCase());
             controller.addView(view);
 
-            System.out.println("handleClient lobby" + client);
+            System.out.println(client+ " has logged in successfully");
 
             //if there are waiting lobbies, add the client to the longest waiting lobby
             if (waitingLobbies()) {
@@ -62,6 +62,7 @@ public class Lobby {
         //Update the game number
         gameNumber+=1;
 
+        System.out.println(client+" has created a new lobby. Number of players: "+ numplayers + " ID: " +gameNumber);
         //create a new lobby and add the player
         ArrayList<String> newLobby = new ArrayList<>();
         newLobby.add(client);
@@ -69,16 +70,13 @@ public class Lobby {
         //add the new lobby to the lobby list
         lobbys.put(gameNumber,newLobby);
 
-        System.out.println("new lobby :" + gameNumber);
         //record the selected number of player
         gamePlayerNumber.put(gameNumber, numplayers);
 
         //add it to the waiting lobbies list
         waitingLobbys.add(gameNumber);
-        System.out.println("waiting new lobby"+waitingLobbys.peek());
         //create the new game
         newGame(gameNumber);
-        System.out.println("lobby new lobby game number: " +gameNumber);
         //return the game number
         return gameNumber;
     }
@@ -95,7 +93,7 @@ public class Lobby {
         Integer index = waitingLobbys.peek();
 
         if(index!=null) {
-            System.out.println("add client: " + index);
+            System.out.println( client+ " added to lobby number: " + index);
             //Add the client to the lobby and set his lobbyID
             lobbys.get(index).add(client);
 
@@ -121,10 +119,8 @@ public class Lobby {
         ArrayList<VirtualView> virtualViews = new ArrayList<>();
         ArrayList<String> myLobby = lobbys.get(index);
 
-        System.out.println("Start game:"+index);
         //for every client in the lobby, create his player and add it to the player map
         for (String s : myLobby) {
-            System.out.println("start game lobby"+s);
             Player p = new Player(s);
 
             players.put(s,p);

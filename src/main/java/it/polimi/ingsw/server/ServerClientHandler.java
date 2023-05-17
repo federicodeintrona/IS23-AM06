@@ -2,7 +2,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.TCPVirtualView;
 import it.polimi.ingsw.utils.Messages.*;
-import it.polimi.ingsw.utils.Timer.ClientTimerInterface;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class ServerClientHandler implements Runnable, ClientTimerInterface {
+public class ServerClientHandler implements Runnable, TimerInterface {
     private final Controller controller;
     private String username;
     private int gameID;
@@ -67,15 +67,17 @@ public class ServerClientHandler implements Runnable, ClientTimerInterface {
 
     private void processMessage(Message incomingMsg) throws IOException {
         if(incomingMsg != null) {
-            System.out.println("Server received " + incomingMsg.getType()+ incomingMsg.getUsername() + "from: " + username);
+
+            System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
+
             switch (incomingMsg.getType()) {
                 case USERNAME -> {
                     messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                                new TCPVirtualView(incomingMsg.getUsername(),this.socket,oos));
+                            new TCPVirtualView(incomingMsg.getUsername(),this.socket,oos));
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
-                        this.username=incomingMsg.getUsername();
+                        this.username = incomingMsg.getUsername();
                     }
                 }
                 case NUM_OF_PLAYERS -> {
@@ -92,14 +94,13 @@ public class ServerClientHandler implements Runnable, ClientTimerInterface {
                     controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
                 }
                 case DISCONNECT -> {
-                    controller.playerDisconnection(username);
-                    this.disconnected = true;
+                    disconnect();
                 }
                 case PONG -> {
                     this.time=0;
                 }
                 default -> {
-                    System.out.println("Server received: " + incomingMsg.toString());
+                    System.out.println("Server received: "+incomingMsg.getType() +" from " + username);
                 }
             }
             this.oos.writeObject(messageOut);
@@ -107,8 +108,7 @@ public class ServerClientHandler implements Runnable, ClientTimerInterface {
     }
 
 
-    private void pingPong() throws IOException{
-        System.out.println(username + "'s timer has started");
+    private void pingPong(){
 
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
@@ -117,7 +117,8 @@ public class ServerClientHandler implements Runnable, ClientTimerInterface {
             try {
                 oos.writeObject(msg);
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                if(!disconnected)
+                    System.out.println(username + " is not responding...");
             }
         },10,500, TimeUnit.MILLISECONDS);
 
@@ -144,8 +145,8 @@ public class ServerClientHandler implements Runnable, ClientTimerInterface {
     }
 
     @Override
-    public String getUsername() {
-        return this.username;
+    public String getErrorMessage() {
+        return this.username+" timed out";
     }
 
     public Player getPlayer() {

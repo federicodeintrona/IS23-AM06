@@ -1,8 +1,8 @@
 package it.polimi.ingsw.utils.Timer;
 
-public interface ClientTimerInterface{
+public interface TimerInterface {
      void disconnect();
      int updateTime();
-     String getUsername();
+     String getErrorMessage();
 
 }
