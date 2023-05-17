@@ -7,7 +7,6 @@ import it.polimi.ingsw.utils.Messages.Message;
 public class CLIMain {
 
 
-    //TODO stampa swap
 
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
@@ -66,6 +65,9 @@ public class CLIMain {
                 if (message.getUsername().equals("Move successful remove tiles")){
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
+                else if (message.getUsername().equals("Move successful swap order")) {
+                    cliPrint.printOrderTiles(clientState.getSelectedTiles());
+                }
             }
             default -> {
                 break;
@@ -85,9 +87,8 @@ public class CLIMain {
         Thread th1=new Thread(readShell);
         th1.start();
 
-        //TODO da sistemare
         while (!clientState.gameHasStarted()){
-            Thread.sleep(500);
+            Thread.sleep(1000);
         }
 
         //inizia la partita
@@ -104,7 +105,7 @@ public class CLIMain {
         while (!clientState.isGameIsEnded()){
             //stampa nuovo turno se il current è il next di prima
            if (clientState.getCurrentPlayer().equals(curr)){
-               //TODO sleep
+               Thread.sleep(1000);
                cliPrint.clearSheel();
                cliPrint.playerTurn();
                curr=clientState.getNextPlayer();
