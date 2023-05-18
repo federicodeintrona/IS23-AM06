@@ -1,11 +1,8 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
-import it.polimi.ingsw.server.VirtualView.VirtualView;
-import it.polimi.ingsw.utils.Messages.Message;
-import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
-import it.polimi.ingsw.utils.Timer.TimoutCheckerInterface;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 
 import java.rmi.RemoteException;
 import java.util.Timer;
@@ -14,18 +11,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class RMITimeout extends Thread implements ClientInterface {
-
+public class RMITimer implements TimerInterface {
+    private boolean disconnected=false;
     private ScheduledExecutorService e;
-    private String username=null;
+    private String username;
     private final RMIVirtualView view;
     private final Controller controller;
+    private final Timer timer = new Timer();
     private int time = 0;
-    private static final int timeout=20;
     private static final int initialDelay = 50;
     private static final int delta = 1000;
 
-    public RMITimeout(String username, RMIVirtualView view,Controller controller) {
+    public RMITimer(String username, RMIVirtualView view, Controller controller) {
         this.username = username;
         this.view = view;
         this.controller=controller;
@@ -35,25 +32,25 @@ public class RMITimeout extends Thread implements ClientInterface {
 
     @Override
     public void disconnect() {
-        System.out.println("Disconnection");
         e.shutdown();
-        interrupt();
+        timer.cancel();
+        disconnected=true;
+        if(username!=null){
+            controller.playerDisconnection(username);
+        }else System.out.println("A client has disconnected before having successfully logged in");
+
     }
 
-    @Override
+
+
     public int updateTime() {
         this.time+=1;
         return this.time;
     }
 
-    @Override
-    public void run() {
-        pingPongSender();
-
-    }
 
 
-    public void pingPongSender(){
+    public void pingPong(){
 
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
@@ -63,32 +60,20 @@ public class RMITimeout extends Thread implements ClientInterface {
                     this.time=0;
                 }
             } catch (RemoteException ex) {
-                System.out.println(username+" is not responding...");
+                if(!disconnected)
+                  System.out.println(username + " is not responding...");
             }
 
-        },10,1000, TimeUnit.MILLISECONDS);
+        },50,1000, TimeUnit.MILLISECONDS);
 
-
-        TimoutCheckerInterface timeOutChecker = (l) -> {
-            System.out.println("Waiting "+username+ " for : " +l+" seconds");
-            Boolean timeoutReached = l>timeout;
-            if (timeoutReached){
-                System.out.println("Got timeout inside server class");
-                return true;
-            }
-            return false;
-        };
-
-        Timer timer = new Timer();
-        TimerTask task = new TimerCounter(timeOutChecker,this);
-
+        TimerTask task = new TimerCounter(this);
         timer.schedule(task, initialDelay, delta);
 
     }
 
 
-    public String getUsername() {
-        return username;
+    public String getErrorMessage() {
+        return username+" timed out";
     }
 
     public void setUsername(String username) {

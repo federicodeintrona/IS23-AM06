@@ -8,8 +8,6 @@ import it.polimi.ingsw.utils.Messages.MessageTypes;
 
 import java.awt.*;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 public class RMIHandler implements RMIHandlerInterface{
@@ -51,20 +49,18 @@ public class RMIHandler implements RMIHandlerInterface{
         IntMessage message = null;
         try {
 
-            System.out.println("rmi vv: " + username);
             RMIVirtualView myView = new RMIVirtualView(username,state);
+            RMITimer myTimeout = new RMITimer(username,myView,controller);
+            myTimeout.pingPong();
+
             message = controller.handleNewClient(username, myView);
-            RMITimeout myTimeout = new RMITimeout(username,myView,controller);
-            myTimeout.start();
 
             if(!message.getType().equals(MessageTypes.ERROR)){
                 myTimeout.setUsername(username);
             }
 
-            System.out.println(message.getType());
 
         } catch (Exception e) {
-            System.err.println("Client exception: " + e);
             e.printStackTrace();
         }
 

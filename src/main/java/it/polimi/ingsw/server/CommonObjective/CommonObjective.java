@@ -17,8 +17,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 public abstract class CommonObjective {
-    int points = 8;
-    Set<Player> playersWhoCompletedComObj = new HashSet<>();
+    public int points = 8;
+    public Set<Player> playersWhoCompletedComObj = new HashSet<>();
 
     private int num;
 

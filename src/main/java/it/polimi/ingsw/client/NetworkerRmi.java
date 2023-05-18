@@ -1,18 +1,14 @@
 package it.polimi.ingsw.client;
 
 
-
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.Messages.*;
 
-
 import java.net.*;
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
@@ -59,7 +55,7 @@ public class NetworkerRmi implements Networker {
     public void initializeConnection () {
         try {
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("172.20.10.4", portIn);
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
             // Looking up the registry for the remote object
             rmiHandler = (RMIHandlerInterface) registry.lookup("RMIHandler");
 

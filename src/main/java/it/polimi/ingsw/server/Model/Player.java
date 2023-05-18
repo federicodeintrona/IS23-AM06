@@ -85,7 +85,7 @@ public class Player {
      * Sets private points of the player
      */
     public void setPrivatePoint() {
-        privatePoint=personalObjectivePoint+vicinityPoint+commonObjectivePoint + winnerPoint;
+        privatePoint=personalObjectivePoint+vicinityPoint+commonObjectivePoint+winnerPoint;
     }
     /**
      * Returns personal objective points of the player
@@ -171,4 +171,12 @@ public class Player {
     public String getUsername() {
         return username;
     }
+
+
+    public void updatePoints(){
+        this.publicPoint= vicinityPoint + commonObjectivePoint + winnerPoint;
+        this.privatePoint = personalObjectivePoint + vicinityPoint + commonObjectivePoint + winnerPoint;
+    }
+
+
 }
