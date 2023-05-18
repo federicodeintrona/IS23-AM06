@@ -1,22 +1,15 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Exceptions.*;
-import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Messages.IntMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
-
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -61,7 +54,7 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message addToBookshelf(int gameID, String playerID, int col ){
-        System.out.println("Controller: add to game " + gameID + " by " + playerID + " in " + col);
+        System.out.println("Controller: add to game " + gameID + " by " + playerID + " in column number " + col);
         Message reply = new Message();
 
         try {

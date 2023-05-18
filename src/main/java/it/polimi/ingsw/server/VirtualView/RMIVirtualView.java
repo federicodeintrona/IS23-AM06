@@ -69,19 +69,17 @@ public class RMIVirtualView extends VirtualView{
                 case("end")->{
                     clientState.setGameIsEnded((boolean) evt.getSource());
                 }
-
             }
-
         }catch (RemoteException e){
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
             throw  new RuntimeException();
         }
-
     }
 
     public ClientStateRemoteInterface getClientState() {
         return clientState;
     }
+
 }

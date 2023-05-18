@@ -7,7 +7,6 @@ import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Tiles;
-
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
@@ -40,7 +39,6 @@ public class Model  {
 
       I know it's not the correct way to use PropertyChangeEvent, but it's easier this way, doesn't
       cause any problem and I wanted to use the PropertyChangeSupport object*/
-
 
 
     //Probably temporary, just used for notification
@@ -104,7 +102,7 @@ public class Model  {
 
         Random random = new Random();
         int index = random.nextInt(players.size());
-        currPlayer = players.get(0) ;
+        currPlayer = players.get(index) ;
         selectNext();
 
 
@@ -187,16 +185,12 @@ public class Model  {
 
         //Notify the views and add the removed tiles to the selectedTiles array
         for (Point point : points) {
-
             //Adding the removed tiles to selectedTiles array
             selectedTiles.add(board.getGamesBoard().getTile(point));
-
-
         }
 
         //Remove the selected tiles
         board.remove(points);
-
 
         //Notify Selected Tiles
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -205,7 +199,6 @@ public class Model  {
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
                 board.getGamesBoard(), "all", "0","board" ));
-
 
     }
 
@@ -223,14 +216,12 @@ public class Model  {
      */
     public synchronized void addToBookShelf(Player player,  int column) throws MoveNotPossible{
 
-
         //Check for move legitimacy
         updateCheckManager(state,currPlayer);
         checks.checkAddLegit(player,column,selectedTiles.size());
 
         //Change game state
         state = GameState.CHOOSING_TILES;
-
 
         //Add to bookshelf
         player.getBookshelf().addTile(selectedTiles, column);
@@ -251,13 +242,11 @@ public class Model  {
 
         }
 
-
         //Empties the selected tile array
         selectedTiles.clear();
 
         //Advances turn
         nextTurn();
-
 
     }
 
@@ -279,8 +268,7 @@ public class Model  {
         checks.swapCheck(ints,player);
 
         //Swaps the array around
-        ArrayList<Tiles> array = new ArrayList<>();
-        array.addAll(selectedTiles);
+        ArrayList<Tiles> array = new ArrayList<>(selectedTiles);
 
         for (int i = 0; i < ints.size(); i++) {
             selectedTiles.set(i, array.get(ints.get(i)-1));
@@ -290,12 +278,8 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 selectedTiles, "all", "0","selectedTiles" ));
 
-
-
         //Change game state
         state = GameState.CHOOSING_COLUMN;
-
-
     }
 
 
@@ -324,8 +308,15 @@ public class Model  {
              o.commonObjPointsCalculator(currPlayer,players.size());
         }
 
-        currPlayer.setPrivatePoint();
-        currPlayer.setPublicPoint();
+        System.out.println(currPlayer.getUsername()+ "'s personal obj points: "+currPlayer.getPersonalObjectivePoint());
+        System.out.println(currPlayer.getUsername()+ "'s common obj points: "+currPlayer.getCommonObjectivePoint());
+        System.out.println(currPlayer.getUsername()+ "'s vicinity points: "+currPlayer.getVicinityPoint());
+        System.out.println(currPlayer.getUsername()+ "'s winner points: "+currPlayer.getWinnerPoint());
+
+        currPlayer.updatePoints();
+
+        System.out.println(currPlayer.getUsername()+ "'s private points: "+currPlayer.getPrivatePoint());
+        System.out.println(currPlayer.getUsername()+ "'s public points: "+currPlayer.getPublicPoint());
 
         //Notify publicPoints
         if(currPlayer.getPublicPoint()!=publicPoints.get(players.indexOf(currPlayer))) {

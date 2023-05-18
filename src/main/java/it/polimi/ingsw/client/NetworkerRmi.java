@@ -1,18 +1,14 @@
 package it.polimi.ingsw.client;
 
 
-
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.Messages.*;
 
-
 import java.net.*;
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {

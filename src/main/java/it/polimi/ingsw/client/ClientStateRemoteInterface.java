@@ -11,38 +11,34 @@ import java.util.HashMap;
 
 
 public interface ClientStateRemoteInterface extends Remote {
-    public void setMyUsername(String myUsername) throws RemoteException;
+    void setMyUsername(String myUsername) throws RemoteException;
 
-    public void setMyBookshelf(Matrix myBookshelf) throws RemoteException;
+    void setMyBookshelf(Matrix myBookshelf) throws RemoteException;
 
-    public void setAllBookshelf(HashMap<String, Matrix> allBookshelf) throws RemoteException;
+    void setAllBookshelf(String username, Matrix bookshelf) throws RemoteException;
 
-    public void setAllBookshelf(String username, Matrix bookshelf) throws RemoteException;
+    void setBoard(Matrix board) throws RemoteException;
 
-    public void setBoard(Matrix board) throws RemoteException;
+    void setAllUsername(ArrayList<String> allUsername) throws RemoteException;
 
-    public void setAllUsername(ArrayList<String> allUsername) throws RemoteException;
+    void setMyPersonalObjective(HashMap<Point, Tiles> myPersonalObjective) throws RemoteException;
 
-    public void setMyPersonalObjective(HashMap<Point, Tiles> myPersonalObjective) throws RemoteException;
+    void setGameCommonObjective(ArrayList<Integer> gameCommonObjective) throws RemoteException;
 
-    public void setGameCommonObjective(ArrayList<Integer> gameCommonObjective) throws RemoteException;
+    void setMyPoints(Integer myPoints) throws RemoteException;
 
-    public void setMyPoints(Integer myPoints) throws RemoteException;
+    void setAllPublicPoints(String username, Integer point) throws RemoteException;
 
-    public void setAllPublicPoints(HashMap<String, Integer> allPublicPoints) throws RemoteException;
+    void setSelectedTiles(ArrayList<Tiles> selectedTiles) throws RemoteException;
 
-    public void setAllPublicPoints(String username, Integer point) throws RemoteException;
+    void setCurrentPlayer(String currentPlayer) throws RemoteException;
 
-    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) throws RemoteException;
+    void setNextPlayer(String nextPlayer) throws RemoteException;
 
-    public void setCurrentPlayer(String currentPlayer) throws RemoteException;
+    void setWinnerPlayer(String winnerPlayer) throws RemoteException;
 
-    public void setNextPlayer(String nextPlayer) throws RemoteException;
+    void setGameIsEnded(boolean gameIsEnded) throws RemoteException;
 
-    public void setWinnerPlayer(String winnerPlayer) throws RemoteException;
-
-    public void setGameIsEnded(boolean gameIsEnded) throws RemoteException;
-
-    public void setGameHasStarted(boolean gameHasStarted) throws RemoteException;
+    void setGameHasStarted(boolean gameHasStarted) throws RemoteException;
     boolean pingPong() throws RemoteException;
 }

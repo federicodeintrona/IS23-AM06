@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
@@ -15,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class RMITimer implements TimerInterface {
     private boolean disconnected=false;
     private ScheduledExecutorService e;
-    private String username = null;
+    private String username;
     private final RMIVirtualView view;
     private final Controller controller;
     private final Timer timer = new Timer();
@@ -33,14 +32,13 @@ public class RMITimer implements TimerInterface {
 
     @Override
     public void disconnect() {
-
         e.shutdown();
         timer.cancel();
         disconnected=true;
         if(username!=null){
             controller.playerDisconnection(username);
-        }
-        System.out.println(username + " has disconnected");
+        }else System.out.println("A client has disconnected before having successfully logged in");
+
     }
 
 

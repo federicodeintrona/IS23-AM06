@@ -18,10 +18,10 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private String username;
     private int gameID;
     private Player player;
-    private Socket socket;
+    private final Socket socket;
     private ObjectOutputStream oos;
     private Message messageOut;
-    boolean disconnected = false;
+    private boolean disconnected = false;
 
     //Timer
     private ScheduledExecutorService e;
@@ -73,7 +73,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             switch (incomingMsg.getType()) {
                 case USERNAME -> {
                     messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                            new TCPVirtualView(incomingMsg.getUsername(),this.socket,oos));
+                            new TCPVirtualView(incomingMsg.getUsername(),oos));
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
@@ -133,8 +133,8 @@ public class ServerClientHandler implements Runnable, TimerInterface {
 
         if(username!=null){
             controller.playerDisconnection(username);
-        }
-        System.out.println(username + " has disconnected");
+        }else System.out.println("A client has disconnected before having successfully logged in");
+
         this.disconnected=true;
     }
 

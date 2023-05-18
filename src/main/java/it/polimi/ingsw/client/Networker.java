@@ -4,11 +4,11 @@ import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.utils.Messages.*;
 
 public interface Networker {
-    public void initializeConnection ();
-    public void firstConnection (Message username);
-    public void numberOfPlayersSelection(Message numberOfPlayers);
-    public void removeTilesFromBoard(Message tiles);
-    public void switchTilesOrder(Message ints);
-    public void addTilesToBookshelf (Message column);
-    public void setCli(CLIMain cli);
+    void initializeConnection ();
+    void firstConnection (Message username);
+    void numberOfPlayersSelection(Message numberOfPlayers);
+    void removeTilesFromBoard(Message tiles);
+    void switchTilesOrder(Message ints);
+    void addTilesToBookshelf (Message column);
+    void setCli(CLIMain cli);
 }
