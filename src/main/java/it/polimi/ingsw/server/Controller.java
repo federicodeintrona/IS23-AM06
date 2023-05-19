@@ -1,30 +1,22 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Exceptions.*;
-import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Messages.IntMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
-
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Controller implements PropertyChangeListener {
-
     private Lobby lobby;
-    private HashMap<Integer, Model> games;
-    private HashMap<String, Player> players;
+    private final HashMap<Integer, Model> games;
+    private final HashMap<String, Player> players;
     private HashMap<String, VirtualView> views;
 
 
@@ -50,7 +42,6 @@ public class Controller implements PropertyChangeListener {
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
-        System.out.println("controller start game: "+games.get(ID).getGameID());
         games.get(ID).initialization();
     }
 
@@ -63,7 +54,7 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message addToBookshelf(int gameID, String playerID, int col ){
-        System.out.println("add to " + gameID + " from " + playerID + " in " + col);
+        System.out.println("Controller: add to game " + gameID + " by " + playerID + " in column number " + col);
         Message reply = new Message();
 
         try {
@@ -103,7 +94,8 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
-        System.out.println("add to " + gameID + " from " + playerID + " in " + ints);
+
+        System.out.println("Controller: swap in game: " + gameID + " by " + playerID);
         Message reply = new Message();
 
         try {
@@ -140,7 +132,7 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points){
-        System.out.println("add to " + gameID + " from " + playerID + " in " + points);
+        System.out.println("Controller: remove from game: " + gameID + " by " + playerID + " in " + points);
         Message reply = new Message();
 
 
@@ -193,9 +185,7 @@ public class Controller implements PropertyChangeListener {
 
     public IntMessage newLobby(String client, int players){
         IntMessage msg = new IntMessage();
-        System.out.println("new lobby controller "+client);
         int gameNum =  lobby.newLobby(client,players);
-        System.out.println("controller new lobby gamenum: " + gameNum);
         msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
         msg.setContent("Lobby created. Waiting for other players...");
         msg.setNum(gameNum);
@@ -219,7 +209,6 @@ public class Controller implements PropertyChangeListener {
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
                 reply.setContent("Added to a game. Waiting for other player...");
-                System.out.println("controller handle client response "+response);
                 reply.setNum(response);
                 return reply;
             }
@@ -235,13 +224,14 @@ public class Controller implements PropertyChangeListener {
         views.put(view.getUsername(),view);
     }
     public void playerDisconnection(String username){
+        System.out.println(username+ " was disconnected by the controller");
         lobby.playerDisconnection(username);
     }
 
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
         lobby.closeGame(((Model)evt.getSource()).getGameID());
 
     }

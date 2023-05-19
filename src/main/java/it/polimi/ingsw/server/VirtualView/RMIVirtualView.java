@@ -46,7 +46,6 @@ public class RMIVirtualView extends VirtualView{
                     clientState.setSelectedTiles((ArrayList<Tiles>) evt.getSource());
                 }
                 case ("bookshelf") -> {
-                    System.out.println((String)evt.getOldValue());
                     clientState.setAllBookshelf((String)evt.getOldValue(),(Matrix) evt.getSource());
                 }
                 case ("publicPoints") -> {
@@ -70,18 +69,17 @@ public class RMIVirtualView extends VirtualView{
                 case("end")->{
                     clientState.setGameIsEnded((boolean) evt.getSource());
                 }
-
             }
-
         }catch (RemoteException e){
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
             throw  new RuntimeException();
         }
-
     }
 
-
+    public ClientStateRemoteInterface getClientState() {
+        return clientState;
+    }
 
 }

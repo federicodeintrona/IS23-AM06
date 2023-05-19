@@ -8,8 +8,6 @@ import it.polimi.ingsw.utils.Messages.MessageTypes;
 
 import java.awt.*;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 public class RMIHandler implements RMIHandlerInterface{
@@ -44,25 +42,33 @@ public class RMIHandler implements RMIHandlerInterface{
      * Gets the instance of clientState from a specific Client given his ip address and port
      *
      * @param username      client's username
-     * @param ipAddress     the client ip address
-     * @param port      the port used by the client to share the instance of clientState
      */
     @Override
-    public IntMessage acceptRmiConnection(String username, String ipAddress, int port, ClientStateRemoteInterface state) throws RemoteException {
+    public IntMessage acceptRmiConnection(String username, ClientStateRemoteInterface state) throws RemoteException {
 
         IntMessage message = null;
         try {
 
-            System.out.println("rmi vv: " + username);
+            RMIVirtualView myView = new RMIVirtualView(username,state);
+            RMITimer myTimeout = new RMITimer(username,myView,controller);
+            myTimeout.pingPong();
 
-            message = controller.handleNewClient(username,new RMIVirtualView(username,state));
-            System.out.println(message.getType());
+            message = controller.handleNewClient(username, myView);
+
+            if(!message.getType().equals(MessageTypes.ERROR)){
+                myTimeout.setUsername(username);
+            }
+
 
         } catch (Exception e) {
-            System.err.println("Client exception: " + e);
             e.printStackTrace();
         }
 
         return message;
+    }
+
+    @Override
+    public boolean pingPong() throws RemoteException {
+        return true;
     }
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
@@ -29,9 +30,21 @@ class ModelTest {
         players.add(p0);
         players.add(p1);
         players.add(p2);
-        views.add(new RMIVirtualView("p0", new ClientState("p0",new ReentrantLock())));
-        views.add(new RMIVirtualView("p1", new ClientState("p1",new ReentrantLock())));
-        views.add(new RMIVirtualView("p2", new ClientState("p2",new ReentrantLock())));
+        try {
+            views.add(new RMIVirtualView("p0", new ClientState("p0",new ReentrantLock())));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            views.add(new RMIVirtualView("p1", new ClientState("p1",new ReentrantLock())));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            views.add(new RMIVirtualView("p2", new ClientState("p2",new ReentrantLock())));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         m = new Model(players,views);
         m.initialization();
 

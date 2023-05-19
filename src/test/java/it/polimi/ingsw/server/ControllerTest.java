@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantLock;
@@ -46,8 +47,12 @@ class ControllerTest {
 
                 players.get(j).add(new Player("User"+ j + i));
                 playermap.put(players.get(j).get(i).getUsername(), players.get(j).get(i));
-                views.get(j).add(new RMIVirtualView("User" + j + i,
-                                new ClientState("User" + j + i,new Object())));
+                try {
+                    views.get(j).add(new RMIVirtualView("User" + j + i,
+                                    new ClientState("User" + j + i,new Object())));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             modelmap.get(j).setPlayers(players.get(j));

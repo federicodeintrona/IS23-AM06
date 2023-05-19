@@ -1,29 +1,36 @@
 package it.polimi.ingsw.server;
-
-
-import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.TCPVirtualView;
 import it.polimi.ingsw.utils.Messages.*;
-
+import it.polimi.ingsw.utils.Timer.TimerInterface;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class ServerClientHandler implements Runnable  {
-
+public class ServerClientHandler implements Runnable, TimerInterface {
+    private final Controller controller;
     private String username;
     private int gameID;
     private Player player;
-    private Socket socket;
-    private ObjectInputStream ois;
+    private final Socket socket;
     private ObjectOutputStream oos;
-    private Message messageIn;
     private Message messageOut;
-    private Controller controller;
+    private boolean disconnected = false;
 
-    boolean disconnected = false;
+    //Timer
+    private ScheduledExecutorService e;
+    private final Timer timer = new Timer();
+    private static final int initialDelay = 50;
+    private static final int delta = 1000;
+    private int time = 0;
+
+
     public ServerClientHandler(Socket socket, Controller controller) {
         this.socket = socket;
         this.controller=controller;
@@ -36,12 +43,16 @@ public class ServerClientHandler implements Runnable  {
         try {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
+
+            pingPong();
+
             while (!disconnected) {
 
                 if(!socket.isConnected()){
                     disconnected=false;
                 }
-                messageIn= (Message) ois.readObject();
+
+                Message messageIn = (Message) ois.readObject();
                 processMessage(messageIn);
 
             }
@@ -59,7 +70,9 @@ public class ServerClientHandler implements Runnable  {
 
     private void processMessage(Message incomingMsg) throws IOException {
         if(incomingMsg != null) {
-            System.out.println("Server received " + incomingMsg.getType()+ incomingMsg.getUsername() + "from: " + username);
+
+            System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
+
             switch (incomingMsg.getType()) {
                 case USERNAME -> {
                     //Check if there are waiting rooms or the client has to start another game
@@ -70,9 +83,8 @@ public class ServerClientHandler implements Runnable  {
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
-                        this.username=incomingMsg.getUsername();
+                        this.username = incomingMsg.getUsername();
                     }
-
                 }
                 case NUM_OF_PLAYERS -> {
                     messageOut = controller.newLobby(this.username,((IntMessage) incomingMsg).getNum());
@@ -88,8 +100,10 @@ public class ServerClientHandler implements Runnable  {
                     controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
                 }
                 case DISCONNECT -> {
-                    controller.playerDisconnection(username);
-                    disconnected = true;
+                    disconnect();
+                }
+                case PONG -> {
+                    this.time=0;
                 }
                 default -> {
                     System.out.println("Server received: " + incomingMsg.toString());
@@ -99,6 +113,48 @@ public class ServerClientHandler implements Runnable  {
         }
     }
 
+
+    private void pingPong(){
+
+        e = Executors.newSingleThreadScheduledExecutor();
+        e.scheduleAtFixedRate(()->{
+             Message msg = new Message();
+             msg.setType(MessageTypes.PING);
+            try {
+                oos.writeObject(msg);
+            } catch (IOException ex) {
+                if(!disconnected)
+                    System.out.println(username + " is not responding...");
+            }
+        },10,500, TimeUnit.MILLISECONDS);
+
+        timer.schedule(new TimerCounter(this), initialDelay, delta);
+
+    }
+
+    @Override
+    public void disconnect() {
+        e.shutdown();
+        timer.cancel();
+
+        if(username!=null){
+            controller.playerDisconnection(username);
+        }else System.out.println("A client has disconnected before having successfully logged in");
+
+        this.disconnected=true;
+    }
+
+    @Override
+    public int updateTime() {
+        this.time+=1;
+        return this.time;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return this.username+" timed out";
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -106,6 +162,4 @@ public class ServerClientHandler implements Runnable  {
     public void setPlayer(Player player) {
         this.player = player;
     }
-
-
 }

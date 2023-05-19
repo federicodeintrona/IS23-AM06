@@ -4,11 +4,14 @@ import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClientState implements ClientStateRemoteInterface{
-    private final Object viewLock;
+    private Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
@@ -25,7 +28,8 @@ public class ClientState implements ClientStateRemoteInterface{
     private boolean gameHasStarted;
     private boolean gameIsEnded;
 
-    public ClientState(Object viewLock) {
+    public ClientState(Object viewLock) throws RemoteException {
+        super();
         this.viewLock = viewLock;
     }
     public ClientState(String s, Object o) {
@@ -224,6 +228,11 @@ public class ClientState implements ClientStateRemoteInterface{
         synchronized (viewLock) {
             this.gameHasStarted = gameHasStarted;
         }
+    }
+
+    @Override
+    public boolean pingPong() throws RemoteException {
+        return true;
     }
 
 }

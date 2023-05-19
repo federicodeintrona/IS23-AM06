@@ -113,7 +113,6 @@ public class CLIPrint implements PropertyChangeListener {
             for (String key: allMatrix.keySet()){
                 if (key.equals(cliMain.getClientState().getMyUsername())){
                     System.out.println(ColorCLI.RED + "My Bookshelf: " + ColorCLI.RESET);
-                    //TODO quale metto solo bookshelf or bookshelf + personal
 //                    printBookshelf(allMatrix.get(key));
                     printBookshelfPersonalObjective(allMatrix.get(key), cliMain.getClientState().getMyPersonalObjective());
                 }
@@ -225,6 +224,7 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println("#printpoints .................... Print all public points");
             System.out.println("#printmypoint ................... Print my points");
             System.out.println("#printchair ..................... Print who has the chair - who is the first player?");
+            System.out.println("\n");
         }
     }
 
@@ -290,7 +290,7 @@ public class CLIPrint implements PropertyChangeListener {
     //stampa i common objective
     public void printCommonObjective(ArrayList<Integer> commonObjective){
         synchronized (cliMain.getLock()) {
-            System.out.println("COMMON OBJECTIVE 1:");
+            System.out.println("\nCOMMON OBJECTIVE 1:");
             readJSONCO(commonObjective.get(0));
             System.out.println("\nCOMMON OBJECTIVE 2:");
             readJSONCO(commonObjective.get(1));
@@ -301,8 +301,14 @@ public class CLIPrint implements PropertyChangeListener {
     public void printPoints(HashMap<String, Integer> publicPoints){
         System.out.println("All Public Points: ");
         for (String key: publicPoints.keySet()){
-            System.out.println(key+": "+publicPoints.get(key));
+            if (key.equals(cliMain.getClientState().getMyUsername())){
+                System.out.println(ColorCLI.RED + "my points: "+publicPoints.get(key)+ ColorCLI.RESET);
+            }
+            else{
+                System.out.println(key+": "+publicPoints.get(key));
+            }
         }
+        System.out.println("\n");
     }
 
     //stampa i mie punti
@@ -331,17 +337,19 @@ public class CLIPrint implements PropertyChangeListener {
 
     //stampa l'oridne delle tiles selezionate
     public void printOrderTiles(ArrayList<Tiles> order){
+        clearSheel();
         System.out.print("Selected tiles: ");
         for (Tiles tiles : order) {
             System.out.print(tileColorBG(tiles) + "   " + ColorCLI.RESET + " ");
         }
-        System.out.println("\n\n");
+        System.out.println("\n");
     }
 
     //stampa l'errore - c'è un errore
     public void printError(String error){
         synchronized (cliMain.getLock()) {
             System.out.println(error);
+            System.out.println("\n");
         }
     }
 

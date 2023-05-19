@@ -8,7 +8,6 @@ public class CLIMain {
 
 
 
-
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
     private final Networker net; //a chi mandare messaggi
@@ -65,6 +64,9 @@ public class CLIMain {
                 if (message.getUsername().equals("Move successful remove tiles")){
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
+                else if (message.getUsername().equals("Move successful swap order")) {
+                    cliPrint.printOrderTiles(clientState.getSelectedTiles());
+                }
             }
             default -> {
                 break;
@@ -83,9 +85,8 @@ public class CLIMain {
 
 
 
-        //TODO da sistemare
         while (!clientState.gameHasStarted()){
-            Thread.sleep(500);
+            Thread.sleep(1000);
         }
 
         Thread th1=new Thread(readShell);
@@ -104,6 +105,7 @@ public class CLIMain {
         while (!clientState.isGameIsEnded()){
             //stampa nuovo turno se il current è il next di prima
            if (clientState.getCurrentPlayer().equals(curr)){
+               Thread.sleep(1000);
                cliPrint.clearSheel();
                cliPrint.playerTurn();
                curr=clientState.getNextPlayer();
