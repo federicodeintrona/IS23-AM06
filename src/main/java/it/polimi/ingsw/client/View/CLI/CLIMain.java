@@ -91,6 +91,7 @@ public class CLIMain {
             Thread.sleep(1000);
         }
 
+        clientState.setChair(clientState.getCurrentPlayer());
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
