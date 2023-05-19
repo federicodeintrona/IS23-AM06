@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.CommonObjective;
 
 import it.polimi.ingsw.server.Model.Player;
+import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
 public class CommonObjective12 extends CommonObjective{
@@ -20,57 +21,37 @@ public class CommonObjective12 extends CommonObjective{
      */
     @Override
     public boolean checkCondition(Player player) {
-        int i;
-        int j;
 
         // Checks if the bookshelf is empty and in case returns false
-        if (player.getBookshelf().isEmpty()) return false;
+        if ( (player.getBookshelf().getNum_of_tiles() != 10) && (player.getBookshelf().getNum_of_tiles() != 15) && (player.getBookshelf().getNum_of_tiles() != 20) ) return false;
 
-        // checking first diagonal
-        i = 0;
-        j = 0;
-        while (i<5 && j<5){
+        CommonObjective12.DiagonalAnalyzerThread thread1 = new CommonObjective12.DiagonalAnalyzerThread(player.getBookshelf().getTiles(), 0, 1, 3, 4, false);
+        CommonObjective12.DiagonalAnalyzerThread thread2 = new CommonObjective12.DiagonalAnalyzerThread(player.getBookshelf().getTiles(), 0, 0, 4, 4, false);
+        CommonObjective12.DiagonalAnalyzerThread thread3 = new CommonObjective12.DiagonalAnalyzerThread(player.getBookshelf().getTiles(), 1, 0, 5, 4, false);
 
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
+        CommonObjective12.DiagonalAnalyzerThread thread4 = new CommonObjective12.DiagonalAnalyzerThread(player.getBookshelf().getTiles(), 0, 3, 3, 0, true);
+        CommonObjective12.DiagonalAnalyzerThread thread5 = new CommonObjective12.DiagonalAnalyzerThread(player.getBookshelf().getTiles(), 0, 4, 4, 0, true);
+        CommonObjective12.DiagonalAnalyzerThread thread6 = new CommonObjective12.DiagonalAnalyzerThread(player.getBookshelf().getTiles(), 1, 4, 5, 0, true);
 
-            i++;
-            j++;
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+        thread5.start();
+        thread6.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+            thread4.join();
+            thread5.join();
+            thread6.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        // checking second diagonal
-        i = 1;
-        j = 0;
-        while (i<6 && j<5){
-
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
-
-            i++;
-            j++;
-        }
-
-        // checking first inverse-diagonal
-        i = 5;
-        j = 0;
-        while (i>0 && j<5){
-
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
-
-            i--;
-            j++;
-        }
-
-        // checking second inverse-diagonal
-        i = 4;
-        j = 0;
-        while (i>=0 && j<5){
-
-            if (player.getBookshelf().getTiles().getTile(i, j).equals(Tiles.EMPTY)) return true;
-
-            i--;
-            j++;
-        }
-
-        return false;
+        return thread1.areAllElementsEqual() || thread2.areAllElementsEqual() || thread3.areAllElementsEqual() || thread4.areAllElementsEqual() || thread5.areAllElementsEqual() || thread6.areAllElementsEqual();
     }
 
     /**
@@ -95,6 +76,109 @@ public class CommonObjective12 extends CommonObjective{
             else {
                 player.setCommonObjectivePoint(points);
                 points -= 2;
+            }
+        }
+    }
+
+    /**
+     * Thread class:
+     * regulates the work of 6 threads each one
+     * dedicated to analyze one out of 6 possible diagonals
+     */
+    private static class DiagonalAnalyzerThread extends Thread {
+        Matrix matrix;
+        private final int rowStart;
+        private final int colStart;
+        private final int rowEnd;
+        private final int colEnd;
+        private final boolean isInverse;        // Switch used to differentiate between diagonal and inverse-diagonal
+        private volatile boolean areAllElementsEqual;
+        private volatile boolean stop;
+
+        /**
+         * Initializer for each thread
+         *
+         * @param matrix    player's bookshelf
+         * @param rowStart      the starting index for the row
+         * @param colStart      the starting index for the column
+         * @param rowEnd    the ending index for the row
+         * @param colEnd    the ending index for the column
+         * @param isInverse     switch case
+         */
+        public DiagonalAnalyzerThread(Matrix matrix, int rowStart, int colStart, int rowEnd, int colEnd, boolean isInverse) {
+            this.matrix = matrix;
+            this.rowStart = rowStart;
+            this.colStart = colStart;
+            this.rowEnd = rowEnd;
+            this.colEnd = colEnd;
+            this.areAllElementsEqual = true;
+            this.stop = false;
+            this.isInverse = isInverse;
+        }
+
+        /**
+         * Helping method that returns the boolean areAllElementsEqual
+         *
+         * @return  areAllElementsEqual
+         */
+        public boolean areAllElementsEqual() {
+            return areAllElementsEqual;
+        }
+
+        /**
+         * Thread's code: analyzes each element of the respective diagonal.
+         * <p>
+         * Through an if-else construct decides if the
+         * diagonal to analyze is an inverse or not
+         * <p>
+         * It sets the areAllElementsEqual boolean to false in case its
+         * diagonal does not meet the criteria, else it calls the
+         * helping method stopOtherThreads() to end the other threads
+         */
+        @Override
+        public void run() {
+            int row = rowStart;
+            int col = colStart;
+
+            if (isInverse) {
+                while (row <= rowEnd && col >= colEnd && !stop) {
+                    if (!matrix.getTile(row, col).equals(Tiles.EMPTY)) {
+                        areAllElementsEqual = false;
+                        break;
+                    }
+                    row++;
+                    col--;
+                }
+            }
+            else {
+                while (row <= rowEnd && col <= colEnd && !stop) {
+                    if (!matrix.getTile(row, col).equals(Tiles.EMPTY)) {
+                        areAllElementsEqual = false;
+                        break;
+                    }
+                    row++;
+                    col++;
+                }
+            }
+
+            if (areAllElementsEqual) stopOtherThreads();
+        }
+
+        /**
+         * Helping method used to end all the threads
+         * except for the one who calls it
+         */
+        private void stopOtherThreads() {
+            if (areAllElementsEqual) {
+                stop = true;
+                ThreadGroup group = Thread.currentThread().getThreadGroup();
+                Thread[] threads = new Thread[group.activeCount()];
+                group.enumerate(threads);
+                for (Thread thread : threads) {
+                    if (thread instanceof CommonObjective12.DiagonalAnalyzerThread && thread != this) {
+                        ((CommonObjective12.DiagonalAnalyzerThread) thread).stop = true;
+                    }
+                }
             }
         }
     }
