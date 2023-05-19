@@ -11,15 +11,13 @@ import java.net.Socket;
 
 public class TCPVirtualView extends VirtualView{
 
-    private final ObjectOutputStream oos;
+    private ObjectOutputStream oos;
+    private Socket socket;
 
     public TCPVirtualView(String username,ObjectOutputStream os) {
         this.oos = os;
-    public TCPVirtualView(String username,Socket socket, ObjectOutputStream oos) throws IOException {
-        this.socket = socket;
-        this.oos = oos;
-        this.setUsername(username);
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

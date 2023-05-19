@@ -18,7 +18,8 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private String username;
     private int gameID;
     private Player player;
-    private final Socket socket;
+    private Socket socket;
+    private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private Message messageOut;
     private boolean disconnected = false;
@@ -78,7 +79,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
                         messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                                new TCPVirtualView(incomingMsg.getUsername(),this.socket,oos));
+                                new TCPVirtualView(incomingMsg.getUsername(),oos));
                     }
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){

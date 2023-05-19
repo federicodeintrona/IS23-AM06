@@ -5,8 +5,6 @@ import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

@@ -2,11 +2,12 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class ClientBase {
 
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws RemoteException {
         Scanner scanner = new Scanner(System.in);
         String decision ;
 

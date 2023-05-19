@@ -27,7 +27,7 @@ public class NetworkerRmi implements Networker {
      */
     public NetworkerRmi()  {
         try {
-            clientState = new ClientState();
+            clientState = new ClientState(new Object());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
