@@ -39,18 +39,20 @@ public class TCPVirtualView extends VirtualView{
 
 
         ViewMessage viewMsg = new ViewMessage();
+        viewMsg.setUsername(getUsername());
         viewMsg.setType(MessageTypes.VIEW);
         viewMsg.setContent(evt.getSource());
         viewMsg.setObjectName(evt.getPropertyName());
         viewMsg.setUsername((String) evt.getOldValue());
 
-
-        try {
-            oos.writeObject(viewMsg);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(!isDisconnected()) {
+            try {
+                oos.writeObject(viewMsg);
+            } catch (IOException e) {
+                System.out.println(getUsername()+" is not responding...");
+                throw new RuntimeException(e);
+            }
         }
-
     }
 
 }

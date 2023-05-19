@@ -156,6 +156,7 @@ public class Lobby {
     }
     public void playerDisconnection(String username){
         //Forever player disconnection
+        views.get(username).setDisconnected(false);
         views.remove(username);
         players.remove(username);
         usernames.remove(username);

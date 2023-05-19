@@ -11,7 +11,15 @@ import java.util.ArrayList;
 public abstract class VirtualView implements PropertyChangeListener {
 
     private String username;
+    private boolean disconnected = false;
 
+    public boolean isDisconnected() {
+        return disconnected;
+    }
+
+    public void setDisconnected(boolean disconnected) {
+        this.disconnected = disconnected;
+    }
 
     public String getUsername() {
         return username;
