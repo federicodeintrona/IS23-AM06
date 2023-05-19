@@ -36,6 +36,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         }
         this.clientState = clientState;
         port=config.getInt("port");
+        port=9876;
     }
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;

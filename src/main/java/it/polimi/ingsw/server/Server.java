@@ -67,6 +67,7 @@ public class Server extends UnicastRemoteObject {
         }
 
         // Preparing for the RMI connections
+
         RMIHandlerInterface stub = null;
         try {
             stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
