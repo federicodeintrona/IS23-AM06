@@ -15,10 +15,15 @@ public class TCPVirtualView extends VirtualView{
     private Socket socket;
 
     public TCPVirtualView(String username,ObjectOutputStream os) {
+        setUsername(username);
         this.oos = os;
     }
 
-
+    public TCPVirtualView(String username,ObjectOutputStream os,Socket sckt) {
+        setUsername(username);
+        this.oos = os;
+        this.socket=sckt;
+    }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
@@ -48,6 +53,8 @@ public class TCPVirtualView extends VirtualView{
 
         try {
             oos.writeObject(viewMsg);
+            System.out.println(getUsername());
+            System.out.println(oos);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

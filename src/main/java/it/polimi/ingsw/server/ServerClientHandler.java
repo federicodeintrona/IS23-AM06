@@ -45,7 +45,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
-            pingPong();
+//            pingPong();
 
             while (!disconnected) {
 
@@ -79,7 +79,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
                         messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                                new TCPVirtualView(incomingMsg.getUsername(),oos));
+                                new TCPVirtualView(incomingMsg.getUsername(),oos,socket));
                     }
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
