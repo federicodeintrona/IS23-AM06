@@ -1,9 +1,12 @@
 package it.polimi.ingsw.client.View.GUI;
 
+import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
-import java.awt.*;
 
 public class LoginController {
     @FXML
@@ -15,13 +18,32 @@ public class LoginController {
 
     @FXML
     public void loginClick(ActionEvent actionEvent) {
-        String username=usernameField.getText();
-
-        if (username.compareTo("ale")==0){
-            usernameStatus.setText("username va bene");
+        if (usernameField==null){
+            usernameStatus.setText("Inserire username");
         }
         else {
-            usernameStatus.setText("username NON va bene");
+            String username=usernameField.getText();
+
+        /*
+            if username.lenght()==0
+                insert username
+            if username corretto
+                login
+            if username sbagliato
+                Username already taken
+         */
+            if (username==null){
+                usernameStatus.setText("Inserire username");
+            }
+            else if (username.compareTo("ale")==0){
+                usernameStatus.setText("Username Corretto");
+            }
+            else {
+                usernameStatus.setText("Username NON Corretto");
+            }
         }
+
+
+
     }
 }
