@@ -18,11 +18,7 @@ public class LoginController {
 
     @FXML
     public void loginClick(ActionEvent actionEvent) {
-        if (usernameField==null){
-            usernameStatus.setText("Inserire username");
-        }
-        else {
-            String username=usernameField.getText();
+        String username=usernameField.getText();
 
         /*
             if username.lenght()==0
@@ -32,16 +28,16 @@ public class LoginController {
             if username sbagliato
                 Username already taken
          */
-            if (username==null){
-                usernameStatus.setText("Inserire username");
-            }
-            else if (username.compareTo("ale")==0){
-                usernameStatus.setText("Username Corretto");
-            }
-            else {
-                usernameStatus.setText("Username NON Corretto");
-            }
+        if (username.length()==0){
+            usernameStatus.setText("Inserire username");
         }
+        else if (username.compareTo("ale")==0){
+            usernameStatus.setText("Username Corretto");
+        }
+        else {
+            usernameStatus.setText("Username NON Corretto");
+        }
+
 
 
 
