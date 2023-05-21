@@ -24,6 +24,7 @@ public class Lobby {
     private final HashMap<Integer, Model> games = new HashMap<>();
     private final HashMap<String , Player> players = new HashMap<>();
     private final HashMap<String , VirtualView> views = new HashMap<>();
+    private final HashMap<String,Integer> playerToGame = new HashMap<>();
     private int gameNumber = 0;
 
 
@@ -126,6 +127,7 @@ public class Lobby {
             players.put(s,p);
             playerList.add(p);
             virtualViews.add(views.get(s));
+            playerToGame.put(s,index);
         }
 
         games.get(index).setVirtualViews(virtualViews);
@@ -156,7 +158,11 @@ public class Lobby {
     }
     public void playerDisconnection(String username){
         //Forever player disconnection
-        views.get(username).setDisconnected(false);
+        views.get(username).setDisconnected(true);
+        Integer gameID=playerToGame.get(username);
+        if(gameID!=null){
+            games.get(gameID).disconnectPlayer(players.get(username));
+        }
         views.remove(username);
         players.remove(username);
         usernames.remove(username);
@@ -176,4 +182,7 @@ public class Lobby {
         return views;
     }
 
+    public HashMap<String, Integer> getPlayerToGame() {
+        return playerToGame;
+    }
 }

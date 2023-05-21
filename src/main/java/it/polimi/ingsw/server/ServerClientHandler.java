@@ -65,7 +65,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
         }
     }
 
-    private void processMessage(Message incomingMsg) throws IOException {
+    public void processMessage(Message incomingMsg) throws IOException {
         if(incomingMsg != null) {
 
             System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
@@ -73,7 +73,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             switch (incomingMsg.getType()) {
                 case USERNAME -> {
                     messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                            new TCPVirtualView(incomingMsg.getUsername(),oos));
+                            new TCPVirtualView(incomingMsg.getUsername(),this));
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
@@ -98,6 +98,9 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                 }
                 case PONG -> {
                     this.time=0;
+                }
+                case VIEW ->{
+                    messageOut = incomingMsg;
                 }
                 default -> {
                     System.out.println("Server received: "+incomingMsg.getType() +" from " + username);

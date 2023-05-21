@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.VirtualView;
 
+import it.polimi.ingsw.server.ServerClientHandler;
 import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
@@ -11,10 +12,10 @@ import java.net.Socket;
 
 public class TCPVirtualView extends VirtualView{
 
-    private final ObjectOutputStream oos;
+    private final ServerClientHandler client;
 
-    public TCPVirtualView(String username,ObjectOutputStream os) {
-        this.oos = os;
+    public TCPVirtualView(String username,ServerClientHandler handler) {
+        this.client = handler;
         this.setUsername(username);
     }
 
@@ -47,7 +48,7 @@ public class TCPVirtualView extends VirtualView{
 
         if(!isDisconnected()) {
             try {
-                oos.writeObject(viewMsg);
+                client.processMessage(viewMsg);
             } catch (IOException e) {
                 System.out.println(getUsername()+" is not responding...");
                 throw new RuntimeException(e);
