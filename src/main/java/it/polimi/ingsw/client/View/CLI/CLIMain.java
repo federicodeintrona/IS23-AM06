@@ -20,6 +20,7 @@ public class CLIMain {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        //net.setUserInterface(this);
     }
 
     public Object getLock() {
@@ -83,11 +84,14 @@ public class CLIMain {
         //richiesta username
         readShell.askUsername();
 
+        Thread th1=new Thread(readShell);
+        th1.start();
 
         while (!clientState.gameHasStarted()){
             Thread.sleep(1000);
         }
 
+        clientState.setChair(clientState.getCurrentPlayer());
         Thread th1=new Thread(readShell);
         th1.start();
         //inizia la partita
