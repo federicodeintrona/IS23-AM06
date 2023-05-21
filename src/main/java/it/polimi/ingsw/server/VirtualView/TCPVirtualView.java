@@ -14,8 +14,8 @@ import java.net.Socket;
 
 public class TCPVirtualView extends VirtualView{
 
-    private ServerClientHandler client;
     private final ServerClientHandler client;
+
 
     public TCPVirtualView(String username,ServerClientHandler handler) {
         setUsername(username);
@@ -49,9 +49,9 @@ public class TCPVirtualView extends VirtualView{
         viewMsg.setObjectName((String)evt.getNewValue());
         viewMsg.setUsername((String) evt.getOldValue());
 
-
-        client.sendMessage(viewMsg);
-
+        if(!isDisconnected()) {
+            client.sendMessage(viewMsg);
+        }
     }
 
 }
