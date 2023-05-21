@@ -5,10 +5,11 @@ import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ClientState implements ClientStateRemoteInterface{
+public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
     private Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;
@@ -31,7 +32,8 @@ public class ClientState implements ClientStateRemoteInterface{
         super();
         this.viewLock = viewLock;
     }
-    public ClientState(String s, Object o) {
+    public ClientState(String s, Object o) throws RemoteException {
+        super();
         myUsername=s;
         viewLock=o;
     }

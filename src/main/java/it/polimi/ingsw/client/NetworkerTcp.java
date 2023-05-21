@@ -58,7 +58,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         try {
             socket = new Socket(host, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
+            ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
