@@ -5,5 +5,6 @@ public enum GameState {
     CHOOSING_TILES,
     CHOOSING_ORDER,
     CHOOSING_COLUMN,
+    STOPPED,
     ENDING;
 }

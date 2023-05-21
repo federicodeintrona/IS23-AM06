@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 public class Player {
     private final String username;
+    private boolean disconnected = false;
     private Bookshelf bookshelf = new Bookshelf();
     private PersonalObjective personalObjective;
     private int privatePoint;
@@ -179,4 +180,11 @@ public class Player {
     }
 
 
+    public boolean isDisconnected() {
+        return disconnected;
+    }
+
+    public void setDisconnected(boolean disconnected) {
+        this.disconnected = disconnected;
+    }
 }

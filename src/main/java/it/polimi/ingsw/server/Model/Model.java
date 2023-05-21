@@ -7,14 +7,20 @@ import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Tiles;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
+
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
 
 
-public class Model  {
+public class Model implements TimerInterface {
     private int gameID;
     private Board board;
     private ArrayList<Player> players;
@@ -29,9 +35,17 @@ public class Model  {
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
     private boolean isFinished = false;
 
+
+    //Timer
+    private int time = 0;
+    private final Timer timer = new Timer();
+    private static final int initialDelay = 50;
+    private static final int delta = 1000;
+
     //Utility objects
     private final CheckManager checks = new CheckManager(selectedTiles);
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
+    private ScheduledExecutorService e;
 
     /* Notification event pattern:
      (source object to send, receiver name ("all" or username),
@@ -378,7 +392,7 @@ public class Model  {
         state = GameState.ENDING;
         selectWInner();
         //Notify game Start
-        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","start" ));
+        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","end" ));
     }
 
 
@@ -398,10 +412,45 @@ public class Model  {
     }
 
     private void selectNext() {
-        if(currPlayer==players.get(players.size()-1)){ nextPlayer = players.get(0);}
-        else nextPlayer = players.get(players.indexOf(currPlayer)+1);
+        Player player;
+
+        if(currPlayer==players.get(players.size()-1)){
+            player = selectNextNotDisconnected(0);
+        } else{
+            player = selectNextNotDisconnected(players.indexOf(currPlayer)+1);
+        }
+
+        if(player!=null){
+            nextPlayer = player;
+        }else {
+            state=GameState.STOPPED;
+            nextPlayer=currPlayer==players.get(players.size()-1)?players.get(0):players.get(players.indexOf(currPlayer)+1);
+            startEndTimer();
+        }
+        //Game state stopped
     }
 
+    private Player selectNextNotDisconnected(int start){
+
+        Player player;
+        int index = start;
+        int count=0;
+        do{
+            player=players.get(index);
+            if(!player.isDisconnected()){
+                return player;
+            } else if (players.indexOf(player)==players.size()-1) {
+                index=0;
+                count++;
+            }else{
+                index++;
+                count++;
+            }
+
+        }while(count!=players.size()-1);
+
+        return null;
+    }
     private void updateCheckManager(GameState state,Player current){
         checks.setState(state);
         checks.setCurrPlayer(current);
@@ -438,6 +487,7 @@ public class Model  {
 
         }
     }
+
 
 
 
@@ -589,9 +639,46 @@ public class Model  {
             notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), p.getUsername(),
                     player.getUsername(), "publicPoints"));
         }
+    }
 
 
+    public void disconnectPlayer(Player player){
+
+       System.out.println("player disconnected: " + player.getUsername());
+       player.setDisconnected(true);
+
+       int i = 0;
+       for(Player p :players){
+           if(!player.isDisconnected()) i++;
+       }
+
+       if(i<=1) startEndTimer();
+
+       if(player.equals(currPlayer)) nextTurn();
+    }
+
+
+
+    private void startEndTimer(){
+        System.out.println("start timer");
+        TimerTask task = new TimerCounter(this);
+        timer.schedule(task, initialDelay, delta);
 
     }
 
+    @Override
+    public void disconnect() {
+        endGame();
+    }
+
+    @Override
+    public int updateTime() {
+        time++;
+        return time;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "There is only one player left. Ending game number: " +gameID;
+    }
 }

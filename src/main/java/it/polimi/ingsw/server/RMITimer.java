@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class RMITimer implements TimerInterface {
-    private boolean disconnected=false;
+    private boolean disconnected = false;
     private ScheduledExecutorService e;
     private String username;
     private final RMIVirtualView view;
@@ -20,7 +20,7 @@ public class RMITimer implements TimerInterface {
     private final Timer timer = new Timer();
     private int time = 0;
     private static final int initialDelay = 50;
-    private static final int delta = 1000;
+    private static final int delta = 2000;
 
     public RMITimer(String username, RMIVirtualView view, Controller controller) {
         this.username = username;

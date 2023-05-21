@@ -17,7 +17,9 @@ public class Controller implements PropertyChangeListener {
     private Lobby lobby;
     private final HashMap<Integer, Model> games;
     private final HashMap<String, Player> players;
-    private HashMap<String, VirtualView> views;
+    private  HashMap<String ,Integer> playerToGame;
+    private  HashMap<String, VirtualView> views;
+
 
 
     /**
@@ -29,6 +31,7 @@ public class Controller implements PropertyChangeListener {
         games = lobby.getGames();
         views = lobby.getViews() ;
         players = lobby.getPlayers();
+        this.playerToGame=lobby.getPlayerToGame();
     }
 
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
@@ -226,6 +229,7 @@ public class Controller implements PropertyChangeListener {
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");
         lobby.playerDisconnection(username);
+
     }
 
 
@@ -233,6 +237,5 @@ public class Controller implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
         lobby.closeGame(((Model)evt.getSource()).getGameID());
-
     }
 }

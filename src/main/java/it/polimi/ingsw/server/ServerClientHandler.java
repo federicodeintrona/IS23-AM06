@@ -77,10 +77,9 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             switch (incomingMsg.getType()) {
                 case USERNAME -> {
                     //Check if there are waiting rooms or the client has to start another game
-                    synchronized (this){
-                        messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                                new TCPVirtualView(incomingMsg.getUsername(),this));
-                    }
+
+                    messageOut = controller.handleNewClient(incomingMsg.getUsername(),
+                            new TCPVirtualView(incomingMsg.getUsername(),this));
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
