@@ -62,13 +62,9 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        reader=new Reader(ois,this, clientState);
+        reader=new Reader(ois,oos,this, clientState);
         reader.start();
-        try {
-            cliMain.runCLI();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     public void setUserInterface(CLIMain cliMain) {
@@ -122,5 +118,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         cliMain.receivedMessage((Message) evt.getNewValue());
+
     }
 }

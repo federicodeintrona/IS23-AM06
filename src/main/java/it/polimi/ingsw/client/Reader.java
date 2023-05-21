@@ -11,24 +11,31 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.out;
 
 public class Reader extends Thread{
     private Socket socket;
     private final ObjectInputStream client;
+    private final ObjectOutputStream oos;
     private final NetworkerTcp networkerTcp;
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private final ClientState clientState;
+    private boolean disconnected = false;
 
-
-    public Reader(ObjectInputStream client, NetworkerTcp networkerTcp, ClientState clientState) {
+    public Reader(ObjectInputStream client,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) {
         this.client = client;
+        this.oos=oos;
         this.networkerTcp = networkerTcp;
         this.clientState = clientState;
     }
@@ -36,17 +43,19 @@ public class Reader extends Thread{
     public void run() {
         notifier.addPropertyChangeListener(networkerTcp);
         out.println("Sono nel reader");
+        pingPong();
         Message newMessage;
         Message oldMessage = null;
         while(true){
             try {
                 newMessage = (Message) client.readObject();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            if(newMessage.getType()== MessageTypes.VIEW){
+            if(newMessage!=null && newMessage.getType()== MessageTypes.VIEW){
                 ViewMessage message= (ViewMessage) newMessage;
                 out.println(message.getObjectName());
                 switch (message.getObjectName()) {
@@ -121,10 +130,31 @@ public class Reader extends Thread{
                 }
             }
             else {
-                notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
-                        newMessage.getType().toString(),oldMessage,newMessage));
-                oldMessage= newMessage;
+                if(newMessage!=null) {
+                    if(!newMessage.getType().equals(MessageTypes.PING))out.println(newMessage.getType());
+                    notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
+                            newMessage.getType().toString(), oldMessage, newMessage));
+                    oldMessage=newMessage;
+                }
+
             }
         }
+    }
+
+
+
+    private void pingPong(){
+        ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+        e.scheduleAtFixedRate(()->{
+            Message msg = new Message();
+            msg.setType(MessageTypes.PONG);
+            try {
+                oos.writeObject(msg);
+            } catch (IOException ex) {
+                if(!disconnected)
+                    System.out.println( "Server is not responding...");
+            }
+        },10,500, TimeUnit.MILLISECONDS);
+
     }
 }

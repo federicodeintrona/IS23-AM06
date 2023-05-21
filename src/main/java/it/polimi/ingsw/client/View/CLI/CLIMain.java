@@ -84,7 +84,6 @@ public class CLIMain {
         readShell.askUsername();
 
 
-
         while (!clientState.gameHasStarted()){
             Thread.sleep(1000);
         }

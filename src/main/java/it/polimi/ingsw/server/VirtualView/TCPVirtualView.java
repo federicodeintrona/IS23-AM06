@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.VirtualView;
 
+import it.polimi.ingsw.server.Server;
+import it.polimi.ingsw.server.ServerClientHandler;
 import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
@@ -11,11 +13,11 @@ import java.net.Socket;
 
 public class TCPVirtualView extends VirtualView{
 
-    private ObjectOutputStream oos;
-    private Socket socket;
+    private ServerClientHandler client;
 
-    public TCPVirtualView(String username,ObjectOutputStream os) {
-        this.oos = os;
+    public TCPVirtualView(String username,ServerClientHandler handler) {
+        setUsername(username);
+        this.client = handler;
     }
 
 
@@ -46,11 +48,7 @@ public class TCPVirtualView extends VirtualView{
         viewMsg.setUsername((String) evt.getOldValue());
 
 
-        try {
-            oos.writeObject(viewMsg);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        client.sendMessage(viewMsg);
 
     }
 

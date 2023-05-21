@@ -21,7 +21,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private Message messageOut;
+
     private boolean disconnected = false;
 
     //Timer
@@ -45,7 +45,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
-            pingPong();
+           pingPong();
 
             while (!disconnected) {
 
@@ -70,16 +70,17 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     }
 
     private void processMessage(Message incomingMsg) throws IOException {
+        Message messageOut=null;
         if(incomingMsg != null) {
 
-            System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
+            if(!incomingMsg.getType().equals(MessageTypes.PONG))System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
 
             switch (incomingMsg.getType()) {
                 case USERNAME -> {
                     //Check if there are waiting rooms or the client has to start another game
                     synchronized (this){
                         messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                                new TCPVirtualView(incomingMsg.getUsername(),oos));
+                                new TCPVirtualView(incomingMsg.getUsername(),this));
                     }
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
@@ -110,10 +111,21 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     System.out.println("Server received: " + incomingMsg.toString());
                 }
             }
-            this.oos.writeObject(messageOut);
+            if(messageOut!=null) {
+                System.out.println("sending "+ messageOut.getType());
+                this.oos.writeObject(messageOut);
+            }
         }
     }
 
+    public void sendMessage(Message message){
+
+        try {
+            oos.writeObject(message);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
     private void pingPong(){
 
