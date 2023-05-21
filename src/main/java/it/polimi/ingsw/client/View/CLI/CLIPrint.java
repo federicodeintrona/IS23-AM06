@@ -320,7 +320,7 @@ public class CLIPrint implements PropertyChangeListener {
     public void printChair(){
         synchronized (cliMain.getLock()){
             System.out.println("The first player, that have chair, is: " +
-                               cliMain.getClientState().getAllUsername().get(0));
+                               cliMain.getClientState().getChair());
             try{
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
