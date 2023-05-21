@@ -23,7 +23,6 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private ObjectOutputStream oos;
 
     private boolean disconnected = false;
-
     //Timer
     private ScheduledExecutorService e;
     private final Timer timer = new Timer();
