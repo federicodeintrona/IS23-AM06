@@ -27,6 +27,8 @@ public class GUIMain {
         this.net = net;
     }
 
+    //TODO received message -> in base a quelli modificare il controller opportuno
+
     public void runGUI(){
         Login.setGuiMain(this);
         Login.main(null);
