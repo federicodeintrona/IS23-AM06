@@ -38,9 +38,6 @@ public class Lobby {
 
             usernames.add(client.toLowerCase());
             controller.addView(view);
-            System.out.println(view.getUsername());
-            System.out.println(controller);
-            System.out.println(views);
 
             System.out.println(client+ " has logged in successfully");
 

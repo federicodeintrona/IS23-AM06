@@ -43,7 +43,6 @@ public class TCPVirtualView extends VirtualView{
 
 
         ViewMessage viewMsg = new ViewMessage();
-        viewMsg.setUsername(getUsername());
         viewMsg.setType(MessageTypes.VIEW);
         viewMsg.setContent(evt.getSource());
         viewMsg.setObjectName((String)evt.getNewValue());

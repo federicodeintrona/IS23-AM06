@@ -9,6 +9,7 @@ import it.polimi.ingsw.utils.Matrix;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -33,9 +34,10 @@ public class Reader extends Thread{
     private final ClientState clientState;
     private boolean disconnected = false;
 
-    public Reader(ObjectInputStream client,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) {
-        this.client = client;
-        this.oos=oos;
+    public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
+        this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));;
+        this.oos = oos;
+        this.socket=socket;
         this.networkerTcp = networkerTcp;
         this.clientState = clientState;
     }
@@ -43,12 +45,12 @@ public class Reader extends Thread{
     public void run() {
         notifier.addPropertyChangeListener(networkerTcp);
         out.println("Sono nel reader");
-        pingPong();
+        //pingPong();
         Message newMessage;
         Message oldMessage = null;
         while(true){
             try {
-                newMessage = (Message) client.readObject();
+                newMessage = (Message) client.readUnshared();
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -132,6 +134,7 @@ public class Reader extends Thread{
                     }
                 } else {
                     if (!newMessage.getType().equals(MessageTypes.PING)) out.println(newMessage.getType());
+
                     notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
                             newMessage.getType().toString(), oldMessage, newMessage));
                     oldMessage = newMessage;

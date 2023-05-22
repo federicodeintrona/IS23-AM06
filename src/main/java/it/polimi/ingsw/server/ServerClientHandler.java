@@ -44,7 +44,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
-           pingPong();
+           //pingPong();
 
             while (!disconnected) {
 
@@ -107,12 +107,12 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     this.time=0;
                 }
                 default -> {
-                    System.out.println("Server received: " + incomingMsg.toString());
+                    System.out.println("Server received: " + incomingMsg);
                 }
             }
             if(messageOut!=null) {
-                System.out.println("sending "+ messageOut.getType());
-                this.oos.writeObject(messageOut);
+                oos.reset();
+                this.oos.writeUnshared(messageOut);
             }
         }
     }
@@ -120,7 +120,8 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     public void sendMessage(Message message){
 
         try {
-            oos.writeObject(message);
+            oos.reset();
+            oos.writeUnshared(message);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

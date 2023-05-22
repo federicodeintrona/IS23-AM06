@@ -56,13 +56,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         try {
             socket = new Socket(host, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+            reader=new Reader(socket,oos,this, clientState);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        reader=new Reader(ois,oos,this, clientState);
         reader.start();
-
     }
 
     public void setUserInterface(CLIMain cliMain) {

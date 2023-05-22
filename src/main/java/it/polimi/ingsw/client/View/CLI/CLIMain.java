@@ -87,7 +87,7 @@ public class CLIMain {
 
 
         while (!clientState.gameHasStarted()){
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
 
         clientState.setChair(clientState.getCurrentPlayer());
