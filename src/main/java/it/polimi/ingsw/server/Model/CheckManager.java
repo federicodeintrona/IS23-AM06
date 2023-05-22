@@ -161,7 +161,7 @@ public class CheckManager {
      * @throws ColumnIsFull if the requested column is full
      */
     private void checkColumn(int col,int size) throws OutOfDomain, ColumnIsFull {
-        if(col<0||col>numberOfBookshelColumns) throw new OutOfDomain();
+        if(col<0||col>numberOfBookshelColumns-1) throw new OutOfDomain();
         else if(!currPlayer.getBookshelf().checkColumns(size,col)) throw new ColumnIsFull();
     }
 

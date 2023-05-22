@@ -102,7 +102,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public Matrix getMyBookshelf() {
         synchronized (viewLock){
-            System.out.println("bookshelf in state");
             return myBookshelf;
         }
     }
