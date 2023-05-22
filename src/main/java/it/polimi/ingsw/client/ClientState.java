@@ -24,8 +24,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
-    private boolean gameHasStarted;
-    private boolean gameIsEnded;
+    private boolean gameHasStarted=false;
+    private boolean gameIsEnded=false;
+    private boolean waiting=false;
     private String chair;
 
     public ClientState(Object viewLock) throws RemoteException {
@@ -246,5 +247,13 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock){
             this.chair = chair;
         }
+    }
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
     }
 }

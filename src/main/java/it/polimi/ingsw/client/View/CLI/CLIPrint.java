@@ -354,25 +354,25 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
     //siamo in attesa di nuovi giocatori - singolo
-    private void printWaitingPrivate(){
+    public void printWaiting(){
         //synchronized (cliMain.getLock()){
             System.out.println("Waiting for the other players...");
         //}
     }
 
-    //stampa che siamo in attesa di giocatori - fino a che
-    public void printWaiting(){
-        //while (!cliMain.getClientState().gameHasStarted()){
-            printWaitingPrivate();
-           /*
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }*/
-
-        //}
-    }
+//    //stampa che siamo in attesa di giocatori - fino a che
+//    public void printWaiting(){
+//        //while (!cliMain.getClientState().gameHasStarted()){
+//            printWaitingPrivate();
+//           /*
+//            try {
+//                Thread.sleep(3000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }*/
+//
+//        //}
+//    }
 
     //stampa che sta per iniziare la partita
     public void gameHasStarted(){
