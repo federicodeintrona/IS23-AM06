@@ -1,9 +1,9 @@
 .loginBackground{
     -fx-background-image: url("images/Publisher_material/Display_5.jpg");
-    -fx-background-size: 100%, 100%;
+    -fx-background-size: cover;
 }
 
 .waiting{
     -fx-background-image: url("images/Publisher_material/Display_5.jpg");
-    -fx-background-size: 100%, 100%;
+    -fx-background-size: cover;
 }

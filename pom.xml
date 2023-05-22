@@ -80,6 +80,8 @@
           <include>**/*.json</include>
           <include>**/*.fxml</include>
           <include>**/*.png</include>
+          <include>**/*.jpeg</include>
+          <include>**/*.jpg</include>
           <include>**/*.css</include>
           <include>**/*.gif</include>
         </includes>
