@@ -45,7 +45,7 @@ public class Reader extends Thread{
     public void run() {
         notifier.addPropertyChangeListener(networkerTcp);
         out.println("Sono nel reader");
-        //pingPong();
+        pingPong();
         Message newMessage;
         Message oldMessage = null;
         while(true){

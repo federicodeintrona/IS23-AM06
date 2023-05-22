@@ -44,7 +44,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
-           //pingPong();
+           pingPong();
 
             while (!disconnected) {
 
