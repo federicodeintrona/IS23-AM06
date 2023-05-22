@@ -14,7 +14,7 @@ import java.util.Enumeration;
 public class NetworkerRmi implements Networker {
     private static int portIn = 1099;
     private static String clientIP;
-    private  final String serverIP;
+    private  String serverIP;
     private String username;
     private int gameID;
     private Message message;
