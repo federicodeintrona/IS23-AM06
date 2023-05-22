@@ -47,6 +47,7 @@ class ModelTest {
         }
         m = new Model(players,views);
         m.initialization();
+        m.setCurrPlayer(players.get(0));
 
     }
 
@@ -59,6 +60,7 @@ class ModelTest {
             assertEquals(0,p.getPersonalObjective().personalObjectivePoint(p));
         }
         assertEquals(8,m.getCommonObj().get(0).getPoints());
+
     }
 
     @Test
@@ -70,7 +72,7 @@ class ModelTest {
         try {
             //La casella 0,4 è NOT_ALLOWED con solo 3 giocatori
             assertThrows(MoveNotPossible.class,()-> m.removeTileArray(players.get(0),array));
-
+            m.setCurrPlayer(players.get(0));
             array.set(1,new Point(1,3));
             m.removeTileArray(players.get(0),array);
 
@@ -171,6 +173,7 @@ class ModelTest {
             assertThrows(MoveNotPossible.class ,()-> m.addToBookShelf(players.get(0), 0));
             assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
             assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(1), remove));
+            m.setCurrPlayer(players.get(1));
             assertThrows(IllegalArgumentException.class ,()-> m.removeTileArray(players.get(1), null));
             assertThrows(MoveNotPossible.class ,()-> m.swapOrder(new ArrayList<>(),players.get(1)));
 
