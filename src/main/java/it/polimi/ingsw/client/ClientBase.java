@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.client.View.GUI.GUIMain;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -30,13 +31,25 @@ public class ClientBase {
             default -> null;
         };
 
-        CLIMain cli = new CLIMain(lock,state,client);
-        client.setCli(cli);
-        client.initializeConnection();
-        try {
-            cli.runCLI();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        System.out.print("Which User Interface do you choose? (CLI/GUI): ");
+        decision = scanner.nextLine();
+        decision=decision.toUpperCase();
+        switch (decision){
+            case "CLI" -> {
+                CLIMain cli = new CLIMain(lock, state, client);
+                client.setCli(cli);
+                client.initializeConnection();
+                try {
+                    cli.runCLI();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "GUI" -> {
+                GUIMain gui=new GUIMain(lock, state, client);
+                gui.runGUI();
+            }
         }
+
     }
 }

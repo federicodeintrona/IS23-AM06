@@ -30,6 +30,16 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private boolean gameHasStarted;
     private boolean gameIsEnded;
 
+    private boolean username=true;
+
+    public boolean isUsername() {
+        return username;
+    }
+
+    public void setUsername(boolean username) {
+        this.username = username;
+    }
+
     public ClientState(Object viewLock) throws RemoteException {
         super();
         this.viewLock = viewLock;
