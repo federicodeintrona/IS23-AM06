@@ -14,15 +14,6 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 
 public class Login extends Application {
-    private static GUIMain guiMain;
-
-    public static GUIMain getGuiMain() {
-        return guiMain;
-    }
-
-    public static void setGuiMain(GUIMain guiMain) {
-        Login.guiMain = guiMain;
-    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -42,7 +33,6 @@ public class Login extends Application {
     }
 
     public static void main(String[] args) {
-        LoginController.setGuiMain(guiMain);
         launch();
     }
 }

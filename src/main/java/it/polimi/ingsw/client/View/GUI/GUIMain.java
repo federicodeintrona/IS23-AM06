@@ -28,7 +28,6 @@ public class GUIMain {
     }
 
     public void runGUI(){
-        Login.setGuiMain(this);
         Login.main(null);
     }
 

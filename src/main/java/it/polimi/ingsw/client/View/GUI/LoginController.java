@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.View.GUI;
 
+import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,16 +17,6 @@ import java.io.IOException;
 
 
 public class LoginController {
-    private static GUIMain guiMain;
-
-    public static GUIMain getGuiMain() {
-        return guiMain;
-    }
-
-    public static void setGuiMain(GUIMain guiMain) {
-        LoginController.guiMain = guiMain;
-    }
-
     @FXML
     private TextField usernameField;
     @FXML
@@ -67,19 +59,10 @@ public class LoginController {
         if (username.isEmpty()){
             usernameStatus.setText("Inserire username");
         }
-        else if (guiMain.getClientState().isUsername()){
-            usernameStatus.setText("Username Corretto");
-            Parent root= FXMLLoader.load(getClass().getResource("/fxml/waiting.fxml"));
-            stage=(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            scene=new Scene(root);
-
-            stage.setScene(scene);
-            stage.setFullScreen(true);
-            stage.setTitle("Waiting page");
-            stage.show();
-        }
         else {
-            usernameStatus.setText("Username NON Corretto");
+            Message message=new Message();
+            message.setUsername(username);
+            message.setType(MessageTypes.USERNAME);
         }
     }
 }
