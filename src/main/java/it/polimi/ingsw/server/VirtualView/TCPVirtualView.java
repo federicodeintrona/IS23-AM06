@@ -1,16 +1,10 @@
 package it.polimi.ingsw.server.VirtualView;
 
-import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerClientHandler;
-import it.polimi.ingsw.server.ServerClientHandler;
-import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
 
 import java.beans.PropertyChangeEvent;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 public class TCPVirtualView extends VirtualView{
 
@@ -45,7 +39,7 @@ public class TCPVirtualView extends VirtualView{
         ViewMessage viewMsg = new ViewMessage();
         viewMsg.setType(MessageTypes.VIEW);
         viewMsg.setContent(evt.getSource());
-        viewMsg.setObjectName((String)evt.getNewValue());
+        viewMsg.setObjName((String)evt.getNewValue());
         viewMsg.setUsername((String) evt.getOldValue());
 
         if(!isDisconnected()) {
