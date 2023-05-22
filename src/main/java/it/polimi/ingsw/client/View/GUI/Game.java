@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/game2.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/game.fxml"));
         Scene scene=new Scene(fxmlLoader.load());
         stage.setFullScreen(true);
         stage.setTitle("2 players' game");
