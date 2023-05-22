@@ -54,7 +54,7 @@ public class CLIMain {
     public void receivedMessage(Message message){
         switch (message.getType()){
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
-            case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
+            case WAITING_FOR_PLAYERS -> clientState.setWaiting(true);
             case ERROR -> {
                 cliPrint.printError(message.getUsername());
                 if (message.getUsername().equals("Username already taken")){
@@ -87,7 +87,13 @@ public class CLIMain {
 
 
         while (!clientState.gameHasStarted()){
-            Thread.sleep(2000);
+            if (clientState.isWaiting()){
+                cliPrint.printWaiting();
+                Thread.sleep(3000);
+            }
+            else {
+                Thread.sleep(1000);
+            }
         }
 
         clientState.setChair(clientState.getCurrentPlayer());
