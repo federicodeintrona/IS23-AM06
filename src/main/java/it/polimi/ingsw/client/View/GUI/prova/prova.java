@@ -9,15 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 
 public class prova extends Application {
@@ -41,6 +42,12 @@ public class prova extends Application {
         text.setFont(Font.font("Verdana", 50));
         text.setFill(Color.GREEN);
 
+        //per sfondo TODO capire che cazzo è sta roba
+//        Pane rootbox=new Pane();
+//        BackgroundImage backgroundImage=new BackgroundImage();
+//        Background background=new Background();
+//        rootbox.setBackground();
+//
         root.getChildren().add(text);
 
         //Immagine
@@ -48,7 +55,11 @@ public class prova extends Application {
         System.out.println(is);
 
 
-        Image image=new Image("Publisher.png");
+
+
+        //TODO FileInputStreamer
+//        Image image=new Image("images/Publisher_material/Publisher.png");
+        Image image=new Image(new FileInputStream("images/Publisher_material/Publisher.png"));
         ImageView imageView=new ImageView(image);
         imageView.setX(100);
         imageView.setY(100);
