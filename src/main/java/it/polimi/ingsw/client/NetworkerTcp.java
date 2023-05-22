@@ -2,10 +2,8 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
-import it.polimi.ingsw.utils.Messages.Message;
-import it.polimi.ingsw.client.View.CLI.CLIMain;
-import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.JsonReader;
+import it.polimi.ingsw.utils.Messages.Message;
 import org.json.simple.parser.ParseException;
 
 import java.beans.PropertyChangeEvent;

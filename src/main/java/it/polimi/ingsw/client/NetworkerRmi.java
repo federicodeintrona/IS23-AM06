@@ -14,6 +14,7 @@ import java.util.Enumeration;
 public class NetworkerRmi implements Networker {
     private static int portIn = 1099;
     private static String clientIP;
+    private  final String serverIP;
     private String username;
     private int gameID;
     private Message message;
@@ -38,6 +39,15 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
     }
+    public NetworkerRmi(ClientState state,String serverIP)  {
+        clientState = state;
+        this.serverIP = serverIP;
+        try {
+            clientIP = getLocalIPAddress();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public NetworkerRmi(ClientState state)  {
         clientState = state;
@@ -55,7 +65,7 @@ public class NetworkerRmi implements Networker {
     public void initializeConnection () {
         try {
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
+            Registry registry = LocateRegistry.getRegistry(serverIP, portIn);
             // Looking up the registry for the remote object
             rmiHandler = (RMIHandlerInterface) registry.lookup("RMIHandler");
 

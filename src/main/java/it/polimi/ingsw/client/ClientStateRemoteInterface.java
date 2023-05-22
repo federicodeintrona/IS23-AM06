@@ -13,8 +13,6 @@ import java.util.HashMap;
 public interface ClientStateRemoteInterface extends Remote {
     void setMyUsername(String myUsername) throws RemoteException;
 
-    void setMyBookshelf(Matrix myBookshelf) throws RemoteException;
-
     void setAllBookshelf(String username, Matrix bookshelf) throws RemoteException;
 
     void setBoard(Matrix board) throws RemoteException;

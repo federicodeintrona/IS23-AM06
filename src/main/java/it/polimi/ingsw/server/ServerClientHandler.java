@@ -50,6 +50,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
 
                 if(!socket.isConnected()){
                     disconnected=false;
+                    disconnect();
                 }
 
                 Message messageIn = (Message) ois.readObject();
