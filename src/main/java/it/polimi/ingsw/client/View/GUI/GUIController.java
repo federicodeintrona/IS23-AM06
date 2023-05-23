@@ -84,7 +84,7 @@ public class GUIController implements View {
             case OK -> {
                 if (message.getUsername().equals("Move successful remove tiles")||
                         message.getUsername().equals("Move successful swap order")){
-                    printOrderTiles(state.getSelectedTiles());
+                     printOrderTiles(state.getSelectedTiles());
                 }
             }
         }
