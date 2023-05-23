@@ -12,8 +12,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -28,7 +26,8 @@ private static GUIController contr;
         decision = scanner.nextLine();
         decision=decision.toUpperCase();
         Object lock = new Object();
-        ClientState state = null;
+        ClientState state;
+
         try {
             state = new ClientState(lock);
         } catch (RemoteException e) {
@@ -54,9 +53,9 @@ private static GUIController contr;
             }
             case "GUI" -> {
 
-                contr=new GUIController(networker);
-                GUIFactory.setGuiController(contr);
-                networker.setView(contr);
+                GUIController controller=new GUIController(networker,state);
+                GUIFactory.setGuiController(controller);
+                networker.setView(controller);
                 launch();
             }
         }
@@ -72,7 +71,8 @@ private static GUIController contr;
         fxmlLoader.setController(contr);
 
 
-        Parent root= null;
+        Parent root;
+
         try {
             root = FXMLLoader.load(getClass().getResource("/fxml/loginGriglia.fxml"));
         } catch (IOException e) {

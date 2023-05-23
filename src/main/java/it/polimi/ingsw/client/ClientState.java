@@ -4,6 +4,9 @@ import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -105,7 +108,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public void setBoard(Matrix board) {
         synchronized (viewLock){
-            System.out.println("board in state");
             this.board = board;
         }
     }
@@ -239,6 +241,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public void setGameHasStarted (boolean gameHasStarted) {
         synchronized (viewLock) {
+            notifier.firePropertyChange(new PropertyChangeEvent(this,"start",null,true));
             this.gameHasStarted = gameHasStarted;
         }
     }
@@ -248,6 +251,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         return true;
     }
 
+    public void addListener(PropertyChangeListener listener){
+        notifier.addPropertyChangeListener(listener);
+    }
     public String getChair() {
         synchronized (viewLock) {
             return chair;
