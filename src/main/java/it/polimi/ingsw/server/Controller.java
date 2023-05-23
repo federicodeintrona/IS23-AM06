@@ -32,6 +32,7 @@ public class Controller implements PropertyChangeListener {
     }
 
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
+        lobby=new Lobby(models,playerMap);
         games = models;
         players = playerMap;
     }

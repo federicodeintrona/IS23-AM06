@@ -19,15 +19,24 @@ public class Lobby {
     private final HashMap<Integer,ArrayList<String>> lobbys = new HashMap<>();
     private final HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private final Queue<Integer> waitingLobbys = new LinkedList<>();
-    private final HashMap<Integer, Model> games = new HashMap<>();
+    private final HashMap<Integer, Model> games;
     private int gameNumber = 0;
     private final HashMap<String,Integer> playerToGame = new HashMap<>();
 
     private final ArrayList<String> usernames = new ArrayList<>();
-    private final HashMap<String , Player> players = new HashMap<>();
+    private final HashMap<String , Player> players;
     private final HashMap<String , Player> disconnectedPlayers = new HashMap<>();
     private final HashMap<String , VirtualView> views = new HashMap<>();
 
+    public Lobby() {
+        this.games = new HashMap<>();
+        this.players = new HashMap<>();
+    }
+
+    public Lobby(HashMap<Integer, Model> games, HashMap<String, Player> players) {
+        this.games = games;
+        this.players = players;
+    }
 
     public synchronized boolean waitingLobbies(){
         return !waitingLobbys.isEmpty();
@@ -199,4 +208,6 @@ public class Lobby {
     public HashMap<String, Integer> getPlayerToGame() {
         return playerToGame;
     }
+
+
 }
