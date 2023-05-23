@@ -4,8 +4,10 @@ import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIFactory;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 
 public class LoginController {
@@ -29,16 +32,16 @@ public class LoginController {
     private Scene scene;
     private Parent root;
 
-
-
-    public void showStage(){
-        stage.showAndWait();
+    public void setGuiController(GUIController guiController) {
+        this.guiController = guiController;
     }
+
 
     @FXML
     private void initialize() {
         // Add an action for the "Open Layout2" button
-        loginButton.setOnAction(event -> loginClick());
+        loginButton.setOnAction(this::loginClick);
+
     }
 
 
@@ -67,7 +70,7 @@ public class LoginController {
     }
 
     @FXML
-    public void loginClick() {
+    public void loginClick(ActionEvent actionEvent) {
         String username=usernameField.getText();
 
         if (username.isEmpty()){
@@ -77,6 +80,7 @@ public class LoginController {
             Message message=new Message();
             message.setUsername(username);
             message.setType(MessageTypes.USERNAME);
+            guiController.sendMessage(message);
         }
     }
 }

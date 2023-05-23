@@ -14,12 +14,27 @@ public class GUIController implements View {
 
     private Networker networker;
 
+
     public GUIController(Networker networker) {
         this.networker = networker;
     }
 
+
+    public void sendMessage(Message message){
+
+    }
+
+    
+
     @Override
     public void receivedMessage(Message message) {
+        switch (message.getType()){
+
+
+        }
+
+
+
 
     }
 

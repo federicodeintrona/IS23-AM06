@@ -3,10 +3,8 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIFactory;
-import it.polimi.ingsw.client.View.GUI.GUIMain;
 import it.polimi.ingsw.client.View.GUI.Scene.Login;
 import it.polimi.ingsw.client.View.GUI.Scene.LoginController;
-import it.polimi.ingsw.client.View.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +17,8 @@ import java.util.Scanner;
 
 public class ClientBase extends Application{
 
+
+private static GUIController contr;
     public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
         String decision = null;
@@ -51,9 +51,10 @@ public class ClientBase extends Application{
                 cli.runUI();
             }
             case "GUI" -> {
-                GUIController guiController=new GUIController(networker);
-                GUIFactory.setGuiController(guiController);
-                networker.setView(guiController);
+
+                contr=new GUIController(networker);
+                GUIFactory.setGuiController(contr);
+                networker.setView(contr);
                 launch();
             }
         }
@@ -65,13 +66,17 @@ public class ClientBase extends Application{
     public void start(Stage stage) throws Exception {
 
         FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/loginGriglia.fxml"));
-        fxmlLoader.setController(new LoginController());
+        LoginController contr = new LoginController();
+        fxmlLoader.setController(contr);
+
+
         Parent root= null;
         try {
             root = FXMLLoader.load(getClass().getResource("/fxml/loginGriglia.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
         Scene scene=new Scene(root);
 
