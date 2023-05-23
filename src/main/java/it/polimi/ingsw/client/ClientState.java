@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
+    private PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;

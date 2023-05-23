@@ -20,8 +20,6 @@ module it.polimi.ingsw {
     opens it.polimi.ingsw.client to java.rmi, javafx.controls, javafx.fxml, javafx.graphics;
     opens it.polimi.ingsw.utils.Messages to java.rmi;
     opens it.polimi.ingsw.server to java.rmi;
-    exports it.polimi.ingsw.client.View.GUI.prova;
-    opens it.polimi.ingsw.client.View.GUI.prova to javafx.controls, javafx.fxml, javafx.graphics;
     exports it.polimi.ingsw.client.View.GUI.Scene;
     opens it.polimi.ingsw.client.View.GUI.Scene to javafx.controls, javafx.fxml, javafx.graphics;
 }

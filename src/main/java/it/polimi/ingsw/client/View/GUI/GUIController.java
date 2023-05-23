@@ -5,12 +5,16 @@ import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Tiles;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GUIController implements View {
     private Stage stage;
@@ -49,12 +53,16 @@ public class GUIController implements View {
             }
             //Bisogna fare tutti i casi
             case "bookshelf" ->{
+                updateBookshelf();
 
             }
             case "end" -> {
                 moveToEndScene();
             }
         }
+    }
+
+    private void updateBookshelf() {
     }
 
     private void moveToEndScene() {
@@ -71,42 +79,76 @@ public class GUIController implements View {
     @Override
     public void receivedMessage(Message message) {
         switch (message.getType()){
-            case NEW_LOBBY -> askNumberOfPlayerMessage();
-            case WAITING_FOR_PLAYERS -> printWaiting();
+            case NEW_LOBBY -> goToNumberOfPlayerPage();
+            case WAITING_FOR_PLAYERS -> goToWaitingPage();
             case ERROR -> {
 
-                printError(message.getUsername());
+                showError(message.getUsername());
 
                 if (message.getUsername().equals("Username already taken")){
-                   askUsername();
+                   showErrorLoginPage();
                 }
             }
             case OK -> {
+                /*
                 if (message.getUsername().equals("Move successful remove tiles")||
                         message.getUsername().equals("Move successful swap order")){
                      printOrderTiles(state.getSelectedTiles());
-                }
+                }*/
             }
         }
     }
 
-    private void printOrderTiles(ArrayList<Tiles> selectedTiles) {
+    private void showError(String error) {
     }
 
-    private void printError(String username) {
-    }
-
-    private void askUsername() {
-    }
-
-    private void printWaiting() {
-    }
-
-    private void askNumberOfPlayerMessage() {
+    private void showErrorLoginPage() {
     }
 
 
 
+    private void goToWaitingPage() {
 
-    //TODO qui si faranno i metodi dell'update della GUI
+    }
+
+    private void goToNumberOfPlayerPage() {
+
+        Platform.runLater(()->{
+
+            FXMLLoader fxmlLoader=new FXMLLoader();
+            numberOfPlayerController controller=new numberOfPlayerController();
+            fxmlLoader.setController(controller);
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/numberOfPlayer.fxml")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Scene scene=new Scene(root);
+
+            stage.setFullScreen(true);
+            stage.setTitle("Player Number Page");
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+    }
+
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public void setRoot(Parent root) {
+        this.root = root;
+    }
 }

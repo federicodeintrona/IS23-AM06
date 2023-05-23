@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="464.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.GameController">
+<AnchorPane prefHeight="464.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameController">
     <ImageView id="board_image" fitHeight="210.0" fitWidth="234.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/boards/livingroom.png" />
+        <Image url="@../css/images/boards/livingroom.png" />
     </ImageView>
     <GridPane id="board_matrix" layoutX="23.0" layoutY="21.0" prefHeight="196.0" prefWidth="192.0">
       <columnConstraints>
@@ -56,7 +56,7 @@
     </GridPane>
     <ImageView id="bookshelf1_image" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
         <image>
-          <Image url="@../images/boards/bookshelf_orth.png" />
+          <Image url="@../css/images/boards/bookshelf_orth.png" />
         </image>
     </ImageView>
     <Label layoutX="266.0" layoutY="47.0" text="My Bookshelf" textFill="RED" />
@@ -79,7 +79,7 @@
     </GridPane>
     <ImageView id="bookshelf2_image" fitHeight="150.0" fitWidth="200.0" layoutX="234.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
         <image>
-          <Image url="@../images/boards/bookshelf_orth.png" />
+          <Image url="@../css/images/boards/bookshelf_orth.png" />
         </image>
     </ImageView>
     <Label fx:id="BookshelfUsername2" layoutX="249.0" layoutY="259.0" />
@@ -102,7 +102,7 @@
     </GridPane>
     <ImageView id="bookshelf3_image" fitHeight="150.0" fitWidth="200.0" layoutX="191.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
         <image>
-          <Image url="@../images/boards/bookshelf_orth.png" />
+          <Image url="@../css/images/boards/bookshelf_orth.png" />
         </image>
     </ImageView>
     <Label fx:id="BookshelfUsername3" layoutX="423.0" layoutY="259.0" />
@@ -125,7 +125,7 @@
     </GridPane>
     <ImageView id="bookshelf4_image" fitHeight="150.0" fitWidth="200.0" layoutX="365.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
         <image>
-          <Image url="@../images/boards/bookshelf_orth.png" />
+          <Image url="@../css/images/boards/bookshelf_orth.png" />
         </image>
     </ImageView>
 </AnchorPane>

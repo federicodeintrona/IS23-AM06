@@ -21,7 +21,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     private ObjectOutputStream oos;
     private View view;
     private final ClientState clientState;
-    private CLIMain cliMain;
 
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;
@@ -51,9 +50,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         reader.start();
     }
 
-    public void setUserInterface(CLIMain cliMain) {
-        this.cliMain= cliMain;
-    }
 
     public void firstConnection (Message username){
         try {
@@ -101,7 +97,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        cliMain.receivedMessage((Message) evt.getNewValue());
+        view.receivedMessage((Message) evt.getNewValue());
     }
     @Override
     public void setView(View view) {
