@@ -7,3 +7,17 @@
     -fx-background-image: url("images/Publisher_material/Display_5.jpg");
     -fx-background-size: cover;
 }
+
+.board{
+    -fx-background-image: url("images/boards/livingroom.png");
+    -fx-background-size: cover;
+}
+
+.tiles{
+    -fx-max-width: USE_COMPUTED_SIZE;
+    -fx-max-height: USE_COMPUTED_SIZE;
+    -fx-min-width: USE_COMPUTED_SIZE;
+    -fx-min-height: USE_COMPUTED_SIZE;
+    -fx-pref-width: USE_COMPUTED_SIZE;
+    -fx-pref-height: USE_COMPUTED_SIZE;
+}

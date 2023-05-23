@@ -69,7 +69,7 @@ public class LoginController {
         }
         else if (guiMain.getClientState().isUsername()){
             usernameStatus.setText("Username Corretto");
-            Parent root= FXMLLoader.load(getClass().getResource("/fxml/numberOfPlayer.fxml"));
+            Parent root= FXMLLoader.load(getClass().getResource("/fxml/game2.fxml"));
             stage=(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             scene=new Scene(root);
 
