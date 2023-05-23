@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Define;
+import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
@@ -39,7 +40,7 @@ public class Model implements TimerInterface {
     private int time = 0;
     private final Timer timer = new Timer();
     private static final int initialDelay = 50;
-    private static final int delta = 1000;
+    private static final int delta = 2000;
 
     //Utility objects
     private final CheckManager checks = new CheckManager(selectedTiles);
@@ -144,7 +145,7 @@ public class Model implements TimerInterface {
 
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
-                board.getGamesBoard(), "all", "0","board" ));
+                new Matrix(board.getGamesBoard()), "all", "0","board" ));
 
         //Notify PlayerNames
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -240,7 +241,7 @@ public class Model implements TimerInterface {
 
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
-                board.getGamesBoard(), "all", "0","board" ));
+                new Matrix(board.getGamesBoard()), "all", "0","board" ));
 
     }
 
@@ -321,7 +322,7 @@ public class Model implements TimerInterface {
                 selectedTiles, "all", "0","selectedTiles" ));
 
         //Change game state
-        state = GameState.CHOOSING_COLUMN;
+        state = GameState.CHOOSING_ORDER;
     }
 
 
@@ -396,7 +397,14 @@ public class Model implements TimerInterface {
         state = GameState.CHOOSING_TILES;
 
         //checks if the board needs to reset
-        if(board.checkBoardReset()) board.boardResetENG();
+            if(board.checkBoardReset()){
+
+                board.boardResetENG();
+
+                //Notify Board
+                notifier.firePropertyChange(new PropertyChangeEvent(
+                        new Matrix(board.getGamesBoard()), "all", "0","board" ));
+            }
 
         //checks if someone completed all their bookshelf
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
@@ -488,9 +496,12 @@ public class Model implements TimerInterface {
      * checks if there are enough players and if so makes the game continue.
      * @param player The player to reconnect.
      */
-    public synchronized void playerReconnection(Player player){
+    public synchronized void playerReconnection(Player player,VirtualView view){
         System.out.println(player.getUsername() + " has reconnected");
-        //Reconnect the player
+
+        virtualViews.add(view);
+        notifier.addPropertyChangeListener("all",view);
+        notifier.addPropertyChangeListener(view.getUsername(),view);
         player.setDisconnected(false);
         connectedPlayers++;
         if(connectedPlayers==2) {
@@ -498,7 +509,6 @@ public class Model implements TimerInterface {
             nextTurn();
         }
         updatePlayer(player);
-
     }
 
     /**
@@ -507,7 +517,7 @@ public class Model implements TimerInterface {
      */
     private void updatePlayer(Player p){
         //Notify Board
-        notifier.firePropertyChange(new PropertyChangeEvent(board.getGamesBoard(), p.getUsername(), "0","board" ));
+        notifier.firePropertyChange(new PropertyChangeEvent(new Matrix(board.getGamesBoard()), p.getUsername(), "0","board" ));
 
         //Notify PlayerNames
         notifier.firePropertyChange(new PropertyChangeEvent(

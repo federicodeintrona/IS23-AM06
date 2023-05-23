@@ -15,8 +15,8 @@ import java.util.HashMap;
 
 public class Controller implements PropertyChangeListener {
     private Lobby lobby;
-    private final HashMap<Integer, Model> games;
-    private final HashMap<String, Player> players;
+    private  HashMap<String, Player> players;
+    private  HashMap<Integer,Model> games;
     private  HashMap<String ,Integer> playerToGame;
     private  HashMap<String, VirtualView> views;
 
@@ -28,9 +28,6 @@ public class Controller implements PropertyChangeListener {
      */
     public Controller(Lobby mainLobby) {
         lobby = mainLobby;
-        games = lobby.getGames();
-        views = lobby.getViews() ;
-        players = lobby.getPlayers();
         this.playerToGame=lobby.getPlayerToGame();
     }
 
@@ -45,7 +42,7 @@ public class Controller implements PropertyChangeListener {
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
-        games.get(ID).initialization();
+        lobby.getGames().get(ID).initialization();
     }
 
 
@@ -61,7 +58,7 @@ public class Controller implements PropertyChangeListener {
         Message reply = new Message();
 
         try {
-            games.get(gameID).addToBookShelf(players.get(playerID),col);
+            lobby.getGames().get(gameID).addToBookShelf(lobby.getPlayers().get(playerID),col);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful add to bookshelf");
 
@@ -102,7 +99,7 @@ public class Controller implements PropertyChangeListener {
         Message reply = new Message();
 
         try {
-            games.get(gameID).swapOrder(ints,players.get(playerID));
+            lobby.getGames().get(gameID).swapOrder(ints,lobby.getPlayers().get(playerID));
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful swap order");
         } catch (NotCurrentPlayer e) {
@@ -140,7 +137,7 @@ public class Controller implements PropertyChangeListener {
 
 
         try {
-            games.get(gameID).removeTileArray(players.get(playerID),points);
+            lobby.getGames().get(gameID).removeTileArray(lobby.getPlayers().get(playerID),points);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful remove tiles");
 
@@ -224,13 +221,15 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void addView(VirtualView view){
-        views.put(view.getUsername(),view);
+        lobby.getViews().put(view.getUsername(),view);
     }
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");
         lobby.playerDisconnection(username);
 
     }
+
+
 
 
     @Override

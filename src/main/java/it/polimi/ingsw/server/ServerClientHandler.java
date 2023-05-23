@@ -21,6 +21,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    private Object lock = new Object();
 
     private boolean disconnected = false;
     //Timer
@@ -95,10 +96,10 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     messageOut = controller.removeTiles(this.gameID,this.username, ((PointsMessage) incomingMsg).getTiles());
                 }
                 case SWITCH_PLACE -> {
-                    controller.swapOrder(((IntArrayMessage) incomingMsg).getIntegers(),gameID,username);
+                    messageOut = controller.swapOrder(((IntArrayMessage) incomingMsg).getIntegers(),gameID,username);
                 }
                 case ADD_TO_BOOKSHELF -> {
-                    controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
+                    messageOut = controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
                 }
                 case DISCONNECT -> {
                     disconnect();
@@ -111,34 +112,31 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                 }
             }
             if(messageOut!=null) {
-                oos.reset();
-                this.oos.writeUnshared(messageOut);
+                sendMessage(messageOut);
             }
         }
     }
 
-    public void sendMessage(Message message){
-
-        try {
-            oos.reset();
-            oos.writeUnshared(message);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+    public synchronized void sendMessage(Message message){
+        synchronized (lock) {
+            try {
+                oos.writeUnshared(message);
+                oos.flush();
+                oos.reset();
+            } catch (IOException ex) {
+                if (!disconnected)
+                    System.out.println(username + " is not responding...");
+                throw new RuntimeException(ex);
+            }
         }
     }
 
     private void pingPong(){
-
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
              Message msg = new Message();
              msg.setType(MessageTypes.PING);
-            try {
-                oos.writeObject(msg);
-            } catch (IOException ex) {
-                if(!disconnected)
-                    System.out.println(username + " is not responding...");
-            }
+             sendMessage(msg);
         },10,500, TimeUnit.MILLISECONDS);
 
         timer.schedule(new TimerCounter(this), initialDelay, delta);

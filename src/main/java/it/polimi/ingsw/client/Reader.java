@@ -45,15 +45,11 @@ public class Reader extends Thread{
         pingPong();
         Message newMessage;
         Message oldMessage = null;
-        while(true){
-            try {
+        try {
+        while(!disconnected){
+
                 newMessage = (Message) client.readUnshared();
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
             if(newMessage!=null) {
                 if (newMessage.getType() == MessageTypes.VIEW) {
                     ViewMessage message = (ViewMessage) newMessage;
@@ -125,6 +121,16 @@ public class Reader extends Thread{
                 }
             }
         }
+            socket.close();
+            oos.close();
+            client.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
@@ -136,11 +142,12 @@ public class Reader extends Thread{
             msg.setType(MessageTypes.PONG);
             try {
                 oos.writeObject(msg);
+                oos.flush();
             } catch (IOException ex) {
                 if(!disconnected)
                     System.out.println( "Server is not responding...");
             }
-        },10,500, TimeUnit.MILLISECONDS);
+        },10,1000, TimeUnit.MILLISECONDS);
 
     }
 }
