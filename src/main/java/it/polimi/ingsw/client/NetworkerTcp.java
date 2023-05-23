@@ -22,24 +22,10 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     private final ClientState clientState;
     private CLIMain cliMain;
 
-    public NetworkerTcp(ClientState clientState) {
-        JsonReader config;
-        try {
-            InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
-            config=new JsonReader(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        this.clientState = clientState;
-        port=config.getInt("port");
-        port=9876;
-    }
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;
         try {
-            InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config=new JsonReader(is);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -48,7 +34,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         }
         this.clientState = clientState;
         this.host=host;
-        port=config.getInt("port");
+        port=config.getInt("tcpPort");
     }
 
     public void initializeConnection() {
