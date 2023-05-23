@@ -78,6 +78,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     public void numberOfPlayersSelection(Message numberOfPlayers){
         try {
             oos.writeObject(numberOfPlayers);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -86,6 +87,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     public void removeTilesFromBoard(Message tiles){
         try {
             oos.writeObject(tiles);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -93,6 +95,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     public void switchTilesOrder(Message ints){
         try {
             oos.writeObject(ints);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -101,6 +104,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     public void addTilesToBookshelf (Message column){
         try {
             oos.writeObject(column);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Matrix implements Serializable {
 
-    private final ArrayList<ArrayList<Tiles>> board = new ArrayList<ArrayList<Tiles>>();
+    private final ArrayList<ArrayList<Tiles>> board;
     private final int numRows;
     private final int numCols;
 
@@ -14,7 +14,7 @@ public class Matrix implements Serializable {
     public Matrix(int rows, int columns ){
         numCols=columns;
         numRows=rows;
-
+        board = new ArrayList<>();
         for( int i=0; i<columns;i++){
             board.add(new ArrayList<Tiles>());
             for( int j=0; j<rows;j++){
@@ -22,6 +22,12 @@ public class Matrix implements Serializable {
             }
 
         }
+    }
+
+    public Matrix (Matrix mat){
+        numCols=mat.getNumCols();
+        numRows=mat.getNumRows();
+        this.board = mat.getBoard();
     }
 
     /**
@@ -47,7 +53,7 @@ public class Matrix implements Serializable {
     }
 
     /**
-     * Set the the tiles to the
+     * Set the tiles to the
      * @param tile
      * @param pos
      */

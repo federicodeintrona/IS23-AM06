@@ -211,7 +211,7 @@ public class CLIPrint implements PropertyChangeListener {
         synchronized (cliMain.getLock()) {
             System.out.println("All command, WITH EXAMPLE, are:");
             System.out.println("#remove (0,0), (0,0), (0,0) ..... It is also possible not to fill all the relatives");
-            System.out.println("#switch 2, 0, 1 ................. Switch the order of the selected tiles");
+            System.out.println("#switch 3, 2, 1 ................. Switch the order of the selected tiles");
             System.out.println("#add 0 .......................... Add the tiles in the column of the bookshelf");
 //            System.out.println("#rollback ....................... Return to the previous move");
 //            System.out.println("#chat -hello- ................... Chatting with all players");
@@ -219,7 +219,7 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println("#printpersonal .................. Print your personal objective");
             System.out.println("#printcommon .................... Print the common objective for this game");
             System.out.println("#printboard ..................... Print the board");
-            System.out.println("#printyourbookshelf ............. Print your bookshelf");
+            System.out.println("#printmybookshelf ............... Print my bookshelf");
             System.out.println("#printbookshelf @username ....... Print the username's bookshelf");
             System.out.println("#printpoints .................... Print all public points");
             System.out.println("#printmypoint ................... Print my points");
