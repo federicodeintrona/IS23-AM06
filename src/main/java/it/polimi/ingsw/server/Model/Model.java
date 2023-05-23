@@ -531,9 +531,12 @@ public class Model implements TimerInterface {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
-        //Notify currPlayer
+        //Notify currPlayer and nextPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
                 currPlayer.getUsername(), "currPlayer"));
+
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
 
         //Notify privatePoints
         notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
@@ -550,6 +553,13 @@ public class Model implements TimerInterface {
             notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), p.getUsername(),
                     player.getUsername(), "publicPoints"));
         }
+
+
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                true, "all", "0","start" ));
+
+
     }
 
     private void startEndTimer(){
