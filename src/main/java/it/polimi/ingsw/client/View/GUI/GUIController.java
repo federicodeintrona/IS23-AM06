@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.View.GUI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.Message;
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GUIController implements View {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    private final Networker networker;
+    private  Stage stage;
+    private  Scene scene;
+    private  Parent root;
+    private  final Networker networker;
     private final ClientState state;
 
     public GUIController(Networker networker, ClientState state) {
@@ -50,18 +51,18 @@ public class GUIController implements View {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
             case "start" ->{
-                moveToGameScene();
+                changeScene(Scenes.Game);;
             }
             //Bisogna fare tutti i casi
             case "bookshelf" ->{
                 updateBookshelf((String)evt.getNewValue(),(Matrix) evt.getSource());
-
             }
             case "end" -> {
-                moveToEndScene();
+                changeScene(Scenes.Endgame);
             }
         }
     }
+
 
     private void updateBookshelf(String username,Matrix matrix) {
     }
@@ -80,8 +81,8 @@ public class GUIController implements View {
     @Override
     public void receivedMessage(Message message) {
         switch (message.getType()){
-            case NEW_LOBBY -> goToNumberOfPlayerPage();
-            case WAITING_FOR_PLAYERS -> goToWaitingPage();
+            case NEW_LOBBY ->  changeScene(Scenes.NumOfPlayers);
+            case WAITING_FOR_PLAYERS -> changeScene(Scenes.Waiting);
             case ERROR -> {
 
                 showError(message.getUsername());
@@ -108,20 +109,17 @@ public class GUIController implements View {
 
 
 
-    private void goToWaitingPage() {
 
-    }
-
-    private void goToNumberOfPlayerPage() {
+    public void changeScene(Scenes scenes){
 
         Platform.runLater(()->{
             try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/numberOfPlayer.fxml")));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scenes.getName())));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            scene.setRoot(root);
-            stage.setTitle("Player Number Page");
+            this.scene.setRoot(root);
+            stage.setTitle(scenes.getTitle());
 
         });
     }

@@ -199,6 +199,15 @@ public class Controller implements PropertyChangeListener {
 
         try {
 
+            if(lobby.getDisconnectedPlayers().containsKey(client)) {
+                int idx = lobby.playerReconnection(client,view);
+                IntMessage reply = new IntMessage();
+                reply.setType(MessageTypes.RECONNECT);
+                reply.setNum(idx);
+                reply.setContent("Reconnected to the game");
+                return reply;
+            }
+
             int response = lobby.handleClient(client,view);
 
             if (response == -1) {

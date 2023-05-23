@@ -1,8 +1,7 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
-import it.polimi.ingsw.client.View.CLI.ColorCLI;
 import it.polimi.ingsw.client.View.GUI.GUIController;
-import it.polimi.ingsw.client.View.GUI.GUIFactory;
+import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Sachet;
 import it.polimi.ingsw.utils.Define;
@@ -10,19 +9,16 @@ import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
 public class GameController implements Initializable {
-    private GUIController guiController = GUIFactory.getGuiController();
+    private GUIController guiController = GUIControllerStatic.getGuiController();
     @FXML
     private GridPane boardGrid;
 
@@ -40,7 +36,6 @@ public class GameController implements Initializable {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 if (!matrix.getTile(i,j).equals(Tiles.NOTALLOWED) && !matrix.getTile(i,j).equals(Tiles.EMPTY)) {
                     boardGrid.add(setTiles(matrix.getTile(i, j)), j, i); //lavora colonna - riga
-
                 }
             }
         }

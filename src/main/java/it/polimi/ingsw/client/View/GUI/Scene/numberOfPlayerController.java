@@ -1,8 +1,7 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
-import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.View.GUI.GUIController;
-import it.polimi.ingsw.client.View.GUI.GUIFactory;
+import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class numberOfPlayerController implements Initializable {
 
-    private GUIController guiController = GUIFactory.getGuiController();
+    private GUIController guiController = GUIControllerStatic.getGuiController();
     @FXML
     private Label firstUsernameLabel;
     @FXML

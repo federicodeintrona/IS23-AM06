@@ -1,12 +1,12 @@
 package it.polimi.ingsw.client.View.GUI;
 
-public class GUIFactory {
+public class GUIControllerStatic {
     private static GUIController guiController;
     public static GUIController getGuiController() {
         return guiController;
     }
     public static void setGuiController(GUIController guiController) {
-        GUIFactory.guiController = guiController;
+        GUIControllerStatic.guiController = guiController;
     }
 
 }

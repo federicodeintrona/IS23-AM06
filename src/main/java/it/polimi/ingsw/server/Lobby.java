@@ -51,10 +51,7 @@ public class Lobby {
 
             System.out.println(client+ " has logged in successfully");
 
-            if(disconnectedPlayers.containsKey(client)) {
-                playerReconnection(client,view);
-                return playerToGame.get(client);
-            }else if (waitingLobbies()) {//if there are waiting lobbies, add the client to the longest waiting lobby
+            if (waitingLobbies()) {//if there are waiting lobbies, add the client to the longest waiting lobby
                     try {
                         //return the game number
                         return addClient(client);
@@ -182,13 +179,13 @@ public class Lobby {
 
     }
 
-    public void playerReconnection(String username,VirtualView view){
+    public int playerReconnection(String username,VirtualView view){
         Player player = disconnectedPlayers.get(username);
         players.put(username,player);
         disconnectedPlayers.remove(username);
         int index = playerToGame.get(username);
         games.get(index).playerReconnection(player,view);
-
+        return index;
 
     }
 
@@ -209,5 +206,7 @@ public class Lobby {
         return playerToGame;
     }
 
-
+    public HashMap<String, Player> getDisconnectedPlayers() {
+        return disconnectedPlayers;
+    }
 }

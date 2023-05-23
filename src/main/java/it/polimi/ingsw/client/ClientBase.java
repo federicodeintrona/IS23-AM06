@@ -2,8 +2,8 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.client.View.GUI.GUIController;
-import it.polimi.ingsw.client.View.GUI.GUIFactory;
-import it.polimi.ingsw.client.View.GUI.Scene.LoginController;
+import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
+import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class ClientBase extends Application{
@@ -38,28 +37,30 @@ private static GUIController contr;
         Networker networker = switch (decision.toUpperCase()) {
             case "RMI" -> new NetworkerRmi(state,host);
             case "TCP" -> new NetworkerTcp(state,host);
-            default -> null;
+            default -> new NetworkerTcp(state,host);
         };
 
         System.out.print("Which User Interface do you choose? (CLI/GUI): ");
         decision = scanner.nextLine();
-        decision=decision.toUpperCase();
-        switch (decision){
+        switch (decision.toUpperCase()){
             case "CLI" -> {
                 CLIMain cli = new CLIMain(lock, state, networker);
                 networker.setView(cli);
-                networker.initializeConnection();
                 cli.runUI();
             }
             case "GUI" -> {
-
-                GUIController controller=new GUIController(networker,state);
-                GUIFactory.setGuiController(controller);
-                networker.setView(controller);
-                networker.initializeConnection();
+                GUIControllerStatic.setGuiController(new GUIController(networker,state));
+                networker.setView(GUIControllerStatic.getGuiController());
                 launch();
             }
+            default -> {
+                CLIMain cli = new CLIMain(lock, state, networker);
+                networker.setView(cli);
+                cli.runUI();
+            }
         }
+
+        networker.initializeConnection();
 
     }
 
@@ -70,20 +71,20 @@ private static GUIController contr;
         Parent root;
 
         try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/loginGriglia.fxml")));
+            root = FXMLLoader.load(getClass().getResource(Scenes.Login.getName()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         Scene scene=new Scene(root);
 
-        GUIController guiController= GUIFactory.getGuiController();
+        GUIController guiController= GUIControllerStatic.getGuiController();
         guiController.setStage(stage);
         guiController.setRoot(root);
         guiController.setScene(scene);
 
         stage.setFullScreen(true);
-        stage.setTitle("Login Page");
+        stage.setTitle(Scenes.Login.getTitle());
         stage.setScene(scene);
         stage.show();
     }
