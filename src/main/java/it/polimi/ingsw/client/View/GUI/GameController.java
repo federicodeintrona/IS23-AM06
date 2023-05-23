@@ -38,13 +38,14 @@ public class GameController implements Initializable {
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 if (!matrix.getTile(i,j).equals(Tiles.NOTALLOWED) && !matrix.getTile(i,j).equals(Tiles.EMPTY)) {
-                    boardGrid.add(setTiles(matrix.getTile(i, j), i, j), i, j);
+                    boardGrid.add(setTiles(matrix.getTile(i, j)), j, i); //lavora colonna - riga
+
                 }
             }
         }
     }
 
-    private ImageView setTiles(Tiles tiles, int i, int j){
+    private ImageView setTiles(Tiles tiles){
         Image image;
 //
 //        double cellWidth = boardGrid.getColumnConstraints().get(j).getPercentWidth() / 100.0 * boardGrid.getWidth();
