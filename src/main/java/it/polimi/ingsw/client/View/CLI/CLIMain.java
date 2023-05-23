@@ -5,6 +5,8 @@ import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.Message;
 
+import java.beans.PropertyChangeEvent;
+
 public class CLIMain implements View {
 
     private final Object lock; //su cosa lockare - comune con ClientState
@@ -19,6 +21,7 @@ public class CLIMain implements View {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        clientState.addListener(this);
         //net.setUserInterface(this);
     }
 
@@ -146,7 +149,45 @@ public class CLIMain implements View {
     }
 
 
+    //Volendo possiamo far printare le varie cose quando viene notificata dallo state
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch ((String)evt.getSource()){
+            case "start" ->{
+               // moveToGameScene();
+            }
+            case "nextTurn"->{
+              //  printTurn();
+            }
+            case "end" -> {
+               // moveToEndScene();
+            }
+        }
+    }
 
+    //Per ora ho fatto copia e incolla da quello che c'era nel run
+    private void printTurn() {
+        cliPrint.clearSheel();
+        cliPrint.playerTurn();
+    }
 
+    private void moveToEndScene() {
+        cliPrint.clearSheel();
+        cliPrint.printEndGame();
+    }
 
+    private void moveToGameScene() {
+        cliPrint.clearSheel();
+        cliPrint.gameHasStarted();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        cliPrint.printChair();
+        cliPrint.printCommonObjective(clientState.getGameCommonObjective());
+        cliPrint.playerTurn();
+    }
 }

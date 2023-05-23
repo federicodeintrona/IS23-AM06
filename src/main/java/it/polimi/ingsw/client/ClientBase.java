@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class ClientBase extends Application{
 
 
-private static GUIController contr;
     public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
         String decision = null;
@@ -28,6 +27,7 @@ private static GUIController contr;
         decision=decision.toUpperCase();
         Object lock = new Object();
         ClientState state;
+
         try {
             state = new ClientState(lock);
         } catch (RemoteException e) {
@@ -52,9 +52,9 @@ private static GUIController contr;
             }
             case "GUI" -> {
 
-                contr=new GUIController(networker);
-                GUIFactory.setGuiController(contr);
-                networker.setView(contr);
+                GUIController controller=new GUIController(networker,state);
+                GUIFactory.setGuiController(controller);
+                networker.setView(controller);
                 launch();
             }
         }
@@ -65,12 +65,13 @@ private static GUIController contr;
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/loginGriglia.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader();
         LoginController contr = new LoginController();
         fxmlLoader.setController(contr);
 
 
-        Parent root= null;
+        Parent root;
+
         try {
             root = FXMLLoader.load(getClass().getResource("/fxml/loginGriglia.fxml"));
         } catch (IOException e) {
