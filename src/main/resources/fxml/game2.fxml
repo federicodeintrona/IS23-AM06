@@ -29,19 +29,22 @@
           <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
       </GridPane>
    </children>
 </GridPane>
