@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
 import it.polimi.ingsw.client.View.CLI.ColorCLI;
+import it.polimi.ingsw.client.View.GUI.GUIController;
+import it.polimi.ingsw.client.View.GUI.GUIFactory;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Sachet;
 import it.polimi.ingsw.utils.Define;
@@ -20,10 +22,9 @@ import java.util.ResourceBundle;
 
 
 public class GameController implements Initializable {
+    private GUIController guiController = GUIFactory.getGuiController();
     @FXML
     private GridPane boardGrid;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

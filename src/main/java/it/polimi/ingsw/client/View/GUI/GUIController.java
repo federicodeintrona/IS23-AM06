@@ -124,7 +124,6 @@ public class GUIController implements View {
             stage.setTitle("Player Number Page");
 
         });
-
     }
 
 
