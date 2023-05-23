@@ -51,16 +51,18 @@ private static GUIController contr;
             case "GUI" -> {
                 GUIControllerStatic.setGuiController(new GUIController(networker,state));
                 networker.setView(GUIControllerStatic.getGuiController());
+                networker.initializeConnection();
                 launch();
             }
             default -> {
                 CLIMain cli = new CLIMain(lock, state, networker);
                 networker.setView(cli);
+                networker.initializeConnection();
                 cli.runUI();
             }
         }
 
-        networker.initializeConnection();
+
 
     }
 
