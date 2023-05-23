@@ -105,7 +105,7 @@ public class ReadShell extends Thread{
             case "#help", "#h" -> cliMain.getCliPrint().help();
             case "#printpersonal" -> cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPersonalObjective());
             case "#printboard" -> cliMain.getCliPrint().printBoard(cliMain.getClientState().getBoard());
-            case "#printyourbookshelf" -> {
+            case "#printmybookshelf" -> {
                 //todo QUALE STAMPO???
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getMyBookshelf());
 //                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
