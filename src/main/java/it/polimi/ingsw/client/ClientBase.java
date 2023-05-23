@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -27,10 +28,15 @@ private static GUIController contr;
         decision = scanner.nextLine();
         decision=decision.toUpperCase();
         Object lock = new Object();
-        ClientState state = new ClientState(lock);
+        ClientState state = null;
+        try {
+            state = new ClientState(lock);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Which host do you use?");
         String host = scanner.nextLine();
-        Networker client = switch (decision.toUpperCase()) {
+        Networker networker = switch (decision.toUpperCase()) {
             case "RMI" -> new NetworkerRmi(state,host);
             case "TCP" -> new NetworkerTcp(state,host);
             default -> null;

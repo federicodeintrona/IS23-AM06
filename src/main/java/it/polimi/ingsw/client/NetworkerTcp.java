@@ -7,11 +7,13 @@ import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.net.Socket;
 
 
-public class NetworkerTcp implements Networker{
+public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
     private static String host;
     Socket socket ;
@@ -96,15 +98,11 @@ public class NetworkerTcp implements Networker{
         }
     }
 
-    @Override
-    public void setCli(CLIMain cli) {
-        this.cliMain=cli;
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         cliMain.receivedMessage((Message) evt.getNewValue());
-
+    }
     @Override
     public void setView(View view) {
         this.view=view;

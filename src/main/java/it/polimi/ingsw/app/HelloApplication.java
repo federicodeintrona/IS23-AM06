@@ -1,7 +1,7 @@
 package it.polimi.ingsw.app;
 
 import it.polimi.ingsw.client.ClientBase;
-import it.polimi.ingsw.server.Server;
+import it.polimi.ingsw.server.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
