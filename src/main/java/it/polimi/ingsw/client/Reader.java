@@ -116,7 +116,7 @@ public class Reader extends Thread{
                         }
                     }
                 } else {
-                    if (!newMessage.getType().equals(MessageTypes.PING)) out.println(newMessage.getType());
+                    if (!newMessage.getType().equals(MessageTypes.PING)) // out.println(newMessage.getType());
 
                     notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
                             newMessage.getType().toString(), oldMessage, newMessage));
