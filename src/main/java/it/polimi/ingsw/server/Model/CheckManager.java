@@ -81,9 +81,11 @@ public class CheckManager {
              //check if the tiles are adjacent
             if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
 
+            //check if the player is trying to pick the same tile more than one
             HashSet<Point> set = new HashSet<>(points);
             if(points.size()!=set.size()) throw new SameElement();
 
+            //check if tiles are pickable
             if(!board.tilesArePickable(points)) throw  new TilesCannotBeSelected();
 
             //Check if the selected tiles are allowed and not empty
@@ -92,7 +94,6 @@ public class CheckManager {
             }
         }
         else throw new IllegalArgumentException();
-
     }
 
 
@@ -160,7 +161,7 @@ public class CheckManager {
      * @throws ColumnIsFull if the requested column is full
      */
     private void checkColumn(int col,int size) throws OutOfDomain, ColumnIsFull {
-        if(col<0||col>numberOfBookshelColumns) throw new OutOfDomain();
+        if(col<0||col>numberOfBookshelColumns-1) throw new OutOfDomain();
         else if(!currPlayer.getBookshelf().checkColumns(size,col)) throw new ColumnIsFull();
     }
 
@@ -180,6 +181,7 @@ public class CheckManager {
 
         if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
 
+        //Checks if the array is of appropriate size and content
         intsCheck(ints);
 
     }

@@ -28,60 +28,63 @@ public class RMIVirtualView extends VirtualView{
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        try {
-            switch ((String) evt.getNewValue()) {
-                case ("playerNames") -> {
-                    clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));
-                }
-                case ("board") -> {
-                    clientState.setBoard((Matrix) evt.getSource());
-                }
-                case ("commonObj") -> {
-                    clientState.setGameCommonObjective(new ArrayList<>((List<Integer>) evt.getSource()));
-                }
-                case ("personalObj") -> {
-                    clientState.setMyPersonalObjective((HashMap<Point, Tiles>) evt.getSource());
-                }
-                case ("selectedTiles") -> {
-                    clientState.setSelectedTiles((ArrayList<Tiles>) evt.getSource());
-                }
-                case ("bookshelf") -> {
-                    clientState.setAllBookshelf((String)evt.getOldValue(),(Matrix) evt.getSource());
-                }
-                case ("publicPoints") -> {
-                    clientState.setAllPublicPoints((String) evt.getOldValue(),(Integer) evt.getSource());
-                }
-                case ("privatePoints") -> {
-                    clientState.setMyPoints((Integer) evt.getSource());
-                }
-                case ("currPlayer") -> {
-                    clientState.setCurrentPlayer((String) evt.getSource());
-                }
-                case ("nextPlayer") -> {
-                    clientState.setNextPlayer((String) evt.getSource());
-                }
-                case("winner")->{
-                    clientState.setWinnerPlayer((String) evt.getSource());
-                }
-                case("start")->{
-                    clientState.setGameHasStarted((boolean) evt.getSource());
-                }
-                case("end")->{
-                    clientState.setGameIsEnded((boolean) evt.getSource());
-                }
+        if(!isDisconnected()) {
 
+            try {
+                switch ((String) evt.getNewValue()) {
+                    case ("playerNames") -> {
+                        clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));
+                    }
+                    case ("board") -> {
+                        clientState.setBoard((Matrix) evt.getSource());
+                    }
+                    case ("commonObj") -> {
+                        clientState.setGameCommonObjective(new ArrayList<>((List<Integer>) evt.getSource()));
+                    }
+                    case ("personalObj") -> {
+                        clientState.setMyPersonalObjective((HashMap<Point, Tiles>) evt.getSource());
+                    }
+                    case ("selectedTiles") -> {
+                        clientState.setSelectedTiles((ArrayList<Tiles>) evt.getSource());
+                    }
+                    case ("bookshelf") -> {
+                        clientState.setAllBookshelf((String) evt.getOldValue(), (Matrix) evt.getSource());
+                    }
+                    case ("publicPoints") -> {
+                        clientState.setAllPublicPoints((String) evt.getOldValue(), (Integer) evt.getSource());
+                    }
+                    case ("privatePoints") -> {
+                        clientState.setMyPoints((Integer) evt.getSource());
+                    }
+                    case ("currPlayer") -> {
+                        clientState.setCurrentPlayer((String) evt.getSource());
+                    }
+                    case ("nextPlayer") -> {
+                        clientState.setNextPlayer((String) evt.getSource());
+                    }
+                    case ("winner") -> {
+                        clientState.setWinnerPlayer((String) evt.getSource());
+                    }
+                    case ("start") -> {
+                        clientState.setGameHasStarted((boolean) evt.getSource());
+                    }
+                    case ("end") -> {
+                        clientState.setGameIsEnded((boolean) evt.getSource());
+                    }
+                }
+            } catch (RemoteException e) {
+                System.out.println(getUsername()+" is not responding...");
+                System.out.println(e.getCause());
+                System.out.println(e.getMessage());
+                System.out.println(Arrays.toString(e.getStackTrace()));
+                throw new RuntimeException();
             }
 
-        }catch (RemoteException e){
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
-            System.out.println(Arrays.toString(e.getStackTrace()));
-            throw  new RuntimeException();
         }
-
     }
 
     public ClientStateRemoteInterface getClientState() {
         return clientState;
     }
+
 }

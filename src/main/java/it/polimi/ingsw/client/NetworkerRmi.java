@@ -1,24 +1,24 @@
 package it.polimi.ingsw.client;
 
 
-
 import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.RMIHandlerInterface;
+import it.polimi.ingsw.utils.JsonReader;
 import it.polimi.ingsw.utils.Messages.*;
+import org.json.simple.parser.ParseException;
 
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.*;
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
-    private static int portIn = 1099;
-    private static String clientIP;
+    private static int port;
+    private  String serverIP;
     private String username;
     private int gameID;
     private Message message;
@@ -31,27 +31,38 @@ public class NetworkerRmi implements Networker {
      * Constructor
      */
     public NetworkerRmi()  {
+        JsonReader config;
         try {
-            clientState = new ClientState();
-        } catch (RemoteException e) {
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
+            config = new JsonReader(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+        port = config.getInt("rmiPort");
 
         try {
-            clientIP = getLocalIPAddress();
-        } catch (SocketException e) {
+            clientState = new ClientState(new Object());
+        } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public NetworkerRmi(ClientState state)  {
-        clientState = state;
-
+    public NetworkerRmi(ClientState state,String serverIP)  {
+        JsonReader config;
         try {
-            clientIP = getLocalIPAddress();
-        } catch (SocketException e) {
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
+            config = new JsonReader(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+        port = config.getInt("rmiPort");
+
+        clientState = state;
+        this.serverIP = serverIP;
     }
 
     /**
@@ -60,17 +71,15 @@ public class NetworkerRmi implements Networker {
     public void initializeConnection () {
         try {
             // Getting the registry
-            Registry registry = LocateRegistry.getRegistry("127.0.0.1", portIn);
+            Registry registry = LocateRegistry.getRegistry(serverIP, port);
             // Looking up the registry for the remote object
             rmiHandler = (RMIHandlerInterface) registry.lookup("RMIHandler");
 
+            System.out.println("Created RMI connection with Server");
         } catch (Exception e) {
             System.err.println("Client exception: " + e);
             e.printStackTrace();
         }
-
-        System.out.println("Created RMI connection with Server");
-        System.out.println(clientIP);
     }
 
     /**

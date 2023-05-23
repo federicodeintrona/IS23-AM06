@@ -24,6 +24,7 @@ public class CommonObjective1 extends CommonObjective{
      */
     @Override
     public boolean checkCondition(Player player){
+        System.out.println("common 1 check condition : "+player.getUsername());
 
         // creation of set to contain all tiles approved by the algorithm
         Set<Point> nodes = new HashSet<>();
@@ -47,6 +48,7 @@ public class CommonObjective1 extends CommonObjective{
             e.printStackTrace();
         }
 
+        System.out.println(nodes.size()/2);
         // the division by 2 of the set's size will give us the number of pair found in the bookshelf
         if (nodes.size()/2 > 5) return true;
 
@@ -60,6 +62,10 @@ public class CommonObjective1 extends CommonObjective{
      * @param numOfPlayers      number of player to assign points
      */
     public void commonObjPointsCalculator(Player player, int numOfPlayers){
+
+        System.out.println("Common calculator 1 : "+ player.getUsername());
+        System.out.println(playersWhoCompletedComObj.contains(player));
+
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
 
             // adding the player to the set of players who already received the points
@@ -97,6 +103,8 @@ class MyRunnable implements Runnable {
     }
 
     public void run() {
+
+        System.out.println("my runnable");
 
         // code for the thread 1 that will analyze the rows
         if (name.equals("row-Thread 1")){
@@ -143,9 +151,7 @@ class MyRunnable implements Runnable {
                                 buffer.add(point2);
                             }
                         }
-
                     }
-
                 }
             }
         }

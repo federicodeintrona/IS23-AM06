@@ -54,7 +54,7 @@ public class CLIMain implements View {
     public void receivedMessage(Message message){
         switch (message.getType()){
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
-            case WAITING_FOR_PLAYERS -> cliPrint.printWaiting();
+            case WAITING_FOR_PLAYERS -> clientState.setWaiting(true);
             case ERROR -> {
                 cliPrint.printError(message.getUsername());
                 if (message.getUsername().equals("Username already taken")){
@@ -84,17 +84,29 @@ public class CLIMain implements View {
         //richiesta username
         readShell.askUsername();
 
-        Thread th1=new Thread(readShell);
-        th1.start();
+
 
         while (!clientState.gameHasStarted()){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            if (clientState.isWaiting()){
+                cliPrint.printWaiting();
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
+        clientState.setChair(clientState.getCurrentPlayer());
+        Thread th1=new Thread(readShell);
+        th1.start();
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
@@ -143,6 +155,7 @@ public class CLIMain implements View {
 
             fine partita
          */
+
     }
 
 

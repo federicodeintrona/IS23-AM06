@@ -6,14 +6,11 @@ import it.polimi.ingsw.utils.Matrix;
 import java.awt.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
-
-    private Object viewLock; //TODO da fare final
-
+    private Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
@@ -27,8 +24,10 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
-    private boolean gameHasStarted;
-    private boolean gameIsEnded;
+    private boolean gameHasStarted=false;
+    private boolean gameIsEnded=false;
+    private boolean waiting=false;
+    private String chair;
 
     private boolean username=true;
 
@@ -44,11 +43,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         super();
         this.viewLock = viewLock;
     }
-
-    public ClientState() throws RemoteException {
-        super();
-    }
-
     public ClientState(String s, Object o) throws RemoteException {
         super();
         myUsername=s;
@@ -111,6 +105,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public void setBoard(Matrix board) {
         synchronized (viewLock){
+            System.out.println("board in state");
             this.board = board;
         }
     }
@@ -253,4 +248,23 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         return true;
     }
 
+    public String getChair() {
+        synchronized (viewLock) {
+            return chair;
+        }
+    }
+
+    public void setChair(String chair) {
+        synchronized (viewLock){
+            this.chair = chair;
+        }
+    }
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
 }

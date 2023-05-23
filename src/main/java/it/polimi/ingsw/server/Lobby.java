@@ -16,16 +16,27 @@ import java.util.Queue;
 public class Lobby {
     private Controller controller;
 
-    //Diventa una mappa tra username e  indirizzo ip e facciamo i check li
-    private final ArrayList<String> usernames = new ArrayList<>();
     private final HashMap<Integer,ArrayList<String>> lobbys = new HashMap<>();
     private final HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private final Queue<Integer> waitingLobbys = new LinkedList<>();
-    private final HashMap<Integer, Model> games = new HashMap<>();
-    private final HashMap<String , Player> players = new HashMap<>();
-    private final HashMap<String , VirtualView> views = new HashMap<>();
+    private final HashMap<Integer, Model> games;
     private int gameNumber = 0;
+    private final HashMap<String,Integer> playerToGame = new HashMap<>();
 
+    private final ArrayList<String> usernames = new ArrayList<>();
+    private final HashMap<String , Player> players;
+    private final HashMap<String , Player> disconnectedPlayers = new HashMap<>();
+    private final HashMap<String , VirtualView> views = new HashMap<>();
+
+    public Lobby() {
+        this.games = new HashMap<>();
+        this.players = new HashMap<>();
+    }
+
+    public Lobby(HashMap<Integer, Model> games, HashMap<String, Player> players) {
+        this.games = games;
+        this.players = players;
+    }
 
     public synchronized boolean waitingLobbies(){
         return !waitingLobbys.isEmpty();
@@ -40,18 +51,19 @@ public class Lobby {
 
             System.out.println(client+ " has logged in successfully");
 
-            //if there are waiting lobbies, add the client to the longest waiting lobby
-            if (waitingLobbies()) {
-                try {
-                    //return the game number
-                    return addClient(client);
-                } catch (LobbyNotExists e) {
-                    return -1;
-                }
-
-                //if there aren't any, return -1
-            } else return -1;
-        }else throw new UsernameAlreadyTaken();
+            if(disconnectedPlayers.containsKey(client)) {
+                playerReconnection(client,view);
+                return playerToGame.get(client);
+            }else if (waitingLobbies()) {//if there are waiting lobbies, add the client to the longest waiting lobby
+                    try {
+                        //return the game number
+                        return addClient(client);
+                    } catch (LobbyNotExists e) {
+                        return -1;
+                    }
+                    //if there aren't any, return -1
+                } else return -1;
+            }else throw new UsernameAlreadyTaken();
     }
 
 
@@ -126,6 +138,7 @@ public class Lobby {
             players.put(s,p);
             playerList.add(p);
             virtualViews.add(views.get(s));
+            playerToGame.put(s,index);
         }
 
         games.get(index).setVirtualViews(virtualViews);
@@ -148,6 +161,7 @@ public class Lobby {
 
         for(String s : games.get(gameID).getPlayers().stream().map(Player::getUsername).toList()){
             players.remove(s);
+            disconnectedPlayers.remove(s);
         }
 
         //Remove the model
@@ -156,9 +170,25 @@ public class Lobby {
     }
     public void playerDisconnection(String username){
         //Forever player disconnection
+        views.get(username).setDisconnected(true);
+        Integer gameID=playerToGame.get(username);
+        if(gameID!=null){
+            games.get(gameID).disconnectPlayer(players.get(username));
+        }
+        disconnectedPlayers.put(username,players.get(username));
         views.remove(username);
         players.remove(username);
         usernames.remove(username);
+
+    }
+
+    public void playerReconnection(String username,VirtualView view){
+        Player player = disconnectedPlayers.get(username);
+        players.put(username,player);
+        disconnectedPlayers.remove(username);
+        int index = playerToGame.get(username);
+        games.get(index).playerReconnection(player,view);
+
 
     }
 
@@ -174,5 +204,10 @@ public class Lobby {
     public HashMap<String, VirtualView> getViews() {
         return views;
     }
+
+    public HashMap<String, Integer> getPlayerToGame() {
+        return playerToGame;
+    }
+
 
 }

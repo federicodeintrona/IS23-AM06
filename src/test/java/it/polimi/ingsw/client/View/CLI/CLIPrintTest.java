@@ -19,7 +19,6 @@ import java.util.HashMap;
 
 class CLIPrintTest {
 
-
     @DisplayName("Print Board")
     @Test
     public void printBoard(){

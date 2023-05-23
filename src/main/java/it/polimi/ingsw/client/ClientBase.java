@@ -11,7 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -21,22 +22,17 @@ public class ClientBase extends Application{
 private static GUIController contr;
     public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
-        String decision = null;
-
+        String decision ;
         System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
         decision = scanner.nextLine();
         decision=decision.toUpperCase();
         Object lock = new Object();
-        ClientState state;
-        try {
-            state = new ClientState(lock);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-        Networker networker = switch (decision) {
-            case "RMI" -> new NetworkerRmi(state);
-            case "TCP" -> new NetworkerTcp();
+        ClientState state = new ClientState(lock);
+        System.out.println("Which host do you use?");
+        String host = scanner.nextLine();
+        Networker client = switch (decision.toUpperCase()) {
+            case "RMI" -> new NetworkerRmi(state,host);
+            case "TCP" -> new NetworkerTcp(state,host);
             default -> null;
         };
 

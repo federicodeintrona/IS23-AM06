@@ -19,15 +19,16 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private int gameID;
     private Player player;
     private Socket socket;
+    private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private Message messageOut;
-    boolean disconnected = false;
+    private Object lock = new Object();
 
+    private boolean disconnected = false;
     //Timer
     private ScheduledExecutorService e;
     private final Timer timer = new Timer();
     private static final int initialDelay = 50;
-    private static final int delta = 1000;
+    private static final int delta = 700;
     private int time = 0;
 
 
@@ -35,18 +36,22 @@ public class ServerClientHandler implements Runnable, TimerInterface {
         this.socket = socket;
         this.controller=controller;
     }
+    public ServerClientHandler(Controller controller) {
+        this.controller=controller;
+    }
 
     public void run() {
         try {
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
-            pingPong();
+           pingPong();
 
             while (!disconnected) {
 
                 if(!socket.isConnected()){
                     disconnected=false;
+                    disconnect();
                 }
 
                 Message messageIn = (Message) ois.readObject();
@@ -66,14 +71,17 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     }
 
     private void processMessage(Message incomingMsg) throws IOException {
+        Message messageOut=null;
         if(incomingMsg != null) {
 
-            System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
+            if(!incomingMsg.getType().equals(MessageTypes.PONG))System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
 
             switch (incomingMsg.getType()) {
                 case USERNAME -> {
+                    //Check if there are waiting rooms or the client has to start another game
+
                     messageOut = controller.handleNewClient(incomingMsg.getUsername(),
-                            new TCPVirtualView(incomingMsg.getUsername(),this.socket,oos));
+                            new TCPVirtualView(incomingMsg.getUsername(),this));
 
                     if(!messageOut.getType().equals(MessageTypes.ERROR)){
                         this.gameID = ((IntMessage) messageOut).getNum();
@@ -88,10 +96,10 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     messageOut = controller.removeTiles(this.gameID,this.username, ((PointsMessage) incomingMsg).getTiles());
                 }
                 case SWITCH_PLACE -> {
-                    controller.swapOrder(((IntArrayMessage) incomingMsg).getIntegers(),gameID,username);
+                    messageOut = controller.swapOrder(((IntArrayMessage) incomingMsg).getIntegers(),gameID,username);
                 }
                 case ADD_TO_BOOKSHELF -> {
-                    controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
+                    messageOut = controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
                 }
                 case DISCONNECT -> {
                     disconnect();
@@ -100,26 +108,35 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     this.time=0;
                 }
                 default -> {
-                    System.out.println("Server received: "+incomingMsg.getType() +" from " + username);
+                    System.out.println("Server received: " + incomingMsg);
                 }
             }
-            this.oos.writeObject(messageOut);
+            if(messageOut!=null) {
+                sendMessage(messageOut);
+            }
         }
     }
 
+    public synchronized void sendMessage(Message message){
+        synchronized (lock) {
+            try {
+                oos.writeUnshared(message);
+                oos.flush();
+                oos.reset();
+            } catch (IOException ex) {
+                if (!disconnected)
+                    System.out.println(username + " is not responding...");
+                throw new RuntimeException(ex);
+            }
+        }
+    }
 
     private void pingPong(){
-
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
              Message msg = new Message();
              msg.setType(MessageTypes.PING);
-            try {
-                oos.writeObject(msg);
-            } catch (IOException ex) {
-                if(!disconnected)
-                    System.out.println(username + " is not responding...");
-            }
+             sendMessage(msg);
         },10,500, TimeUnit.MILLISECONDS);
 
         timer.schedule(new TimerCounter(this), initialDelay, delta);
@@ -133,8 +150,8 @@ public class ServerClientHandler implements Runnable, TimerInterface {
 
         if(username!=null){
             controller.playerDisconnection(username);
-        }
-        System.out.println(username + " has disconnected");
+        }else System.out.println("A client has disconnected before having successfully logged in");
+
         this.disconnected=true;
     }
 

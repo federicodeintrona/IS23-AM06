@@ -6,16 +6,21 @@ import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Define;
+import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-public class Model  {
+public class Model implements TimerInterface {
     private int gameID;
     private Board board;
     private ArrayList<Player> players;
@@ -29,6 +34,13 @@ public class Model  {
     private Player winner;
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
     private boolean isFinished = false;
+    private int connectedPlayers;
+
+    //Timer
+    private int time = 0;
+    private final Timer timer = new Timer();
+    private static final int initialDelay = 50;
+    private static final int delta = 2000;
 
     //Utility objects
     private final CheckManager checks = new CheckManager(selectedTiles);
@@ -42,14 +54,10 @@ public class Model  {
       cause any problem and I wanted to use the PropertyChangeSupport object*/
 
 
-
     //Probably temporary, just used for notification
     //Array of the old points values to see if they have changed
     private final ArrayList<Integer> privatePoints = new ArrayList<>();
     private final ArrayList<Integer> publicPoints = new ArrayList<>();
-
-    //Constant value
-    private static final int numberOfCommonObjectives=2;
 
     //Constructors
 
@@ -104,7 +112,7 @@ public class Model  {
 
         Random random = new Random();
         int index = random.nextInt(players.size());
-        currPlayer = players.get(0) ;
+        currPlayer = players.get(index) ;
         selectNext();
 
 
@@ -112,6 +120,8 @@ public class Model  {
         for(Player p : players){
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
+
+            if(!p.isDisconnected()) connectedPlayers++;
 
             //Notify personal objective
             notifier.firePropertyChange(new PropertyChangeEvent(
@@ -135,7 +145,7 @@ public class Model  {
 
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
-                board.getGamesBoard(), "all", "0","board" ));
+                new Matrix(board.getGamesBoard()), "all", "0","board" ));
 
         //Notify PlayerNames
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -163,267 +173,12 @@ public class Model  {
 
     }
 
-
-    /**
-     * Removes an array of tiles from the board if the move is legitimate.
-     * Also notifies the views of changes
-     * @param points  The position of the tiles
-     * @throws MoveNotPossible if the game is not in the right state
-     * @throws NotCurrentPlayer if the player is not the current player
-     * @throws IllegalArgumentException if the array points is null
-     * @throws TooManySelected if the array points is too long
-     * @throws TilesNotAdjacent if the tiles are not adjacent
-     * @throws OutOfDomain if at least one of the points is outside the board
-     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
-     */
-    public synchronized void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
-
-        //Checks move legitimacy
-        updateCheckManager(state,currPlayer);
-        checks.checkRemoveLegit(points,player,board);
-
-        //Change game state
-        state = GameState.CHOOSING_ORDER;
-
-        //Notify the views and add the removed tiles to the selectedTiles array
-        for (Point point : points) {
-
-            //Adding the removed tiles to selectedTiles array
-            selectedTiles.add(board.getGamesBoard().getTile(point));
-
-
-        }
-
-        //Remove the selected tiles
-        board.remove(points);
-
-
-        //Notify Selected Tiles
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                selectedTiles, "all", "0","selectedTiles" ));
-
-        //Notify Board
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                board.getGamesBoard(), "all", "0","board" ));
-
-
-    }
-
-
-    /**
-     * Adds the selected tiles in the player's bookshelf.
-     * Since adding tiles to your bookshelf is the last action you can do on your turn,
-     * it also calls the nextTurn function
-     * @param player  The player who owns the Bookshelf
-     * @param column   The column where you want to add the tiles
-     * @throws OutOfDomain if requested column does not exists
-     * @throws ColumnIsFull if the requested column is full
-     * @throws MoveNotPossible if game is not in the right state
-     * @throws NotCurrentPlayer if the player requesting the move is not the current player
-     */
-    public synchronized void addToBookShelf(Player player,  int column) throws MoveNotPossible{
-
-
-        //Check for move legitimacy
-        updateCheckManager(state,currPlayer);
-        checks.checkAddLegit(player,column,selectedTiles.size());
-
-        //Change game state
-        state = GameState.CHOOSING_TILES;
-
-
-        //Add to bookshelf
-        player.getBookshelf().addTile(selectedTiles, column);
-
-        //Notify Bookshelf
-        notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
-                            "all", player.getUsername(), "bookshelf"));
-
-
-        //Checks if player filled his bookshelf
-        if(!isFinished && player.getBookshelf().checkEndGame()){
-            isFinished=true;
-            player.setWinnerPoint(1);
-            player.setPublicPoint();
-
-            notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), "all",
-                    player.getUsername(), "publicPoints"));
-
-        }
-
-
-        //Empties the selected tile array
-        selectedTiles.clear();
-
-        //Advances turn
-        nextTurn();
-
-
-    }
-
-
-    /**
-     *  Swap the order of the array of selected tiles to the order describes in the array ints.
-     *       ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
-     * @param ints  The new order of the array
-     * @param player  The player requesting the move
-     * @throws MoveNotPossible The game is not in the right state
-     * @throws NotCurrentPlayer The player is not the current player
-     * @throws IllegalArgumentException The ints array is not of appropriate content
-     * @throws TooManySelected if the array is not of appropriate size
-     */
-    public synchronized void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
-
-        //Check the legitimacy of the move
-        updateCheckManager(state,currPlayer);
-        checks.swapCheck(ints,player);
-
-        //Swaps the array around
-        ArrayList<Tiles> array = new ArrayList<>();
-        array.addAll(selectedTiles);
-
-        for (int i = 0; i < ints.size(); i++) {
-            selectedTiles.set(i, array.get(ints.get(i)-1));
-        }
-
-        //Notify Selected Tiles
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                selectedTiles, "all", "0","selectedTiles" ));
-
-
-
-        //Change game state
-        state = GameState.CHOOSING_COLUMN;
-
-
-    }
-
-
-
-    //PRIVATE METHODS : UTILITY
-
-
-
-    /**
-     * Updates and sets the current player's :
-     * -Vicinity points
-     * -Common objective points
-     * -Personal objective points
-     */
-    private void updatePoints(){
-
-        //Update points array
-        publicPoints.set(players.indexOf(currPlayer),currPlayer.getPublicPoint());
-        privatePoints.set(players.indexOf(currPlayer), currPlayer.getPrivatePoint());
-
-        //Updates vicinity, common objective and personal objective points
-        currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
-        currPlayer.setPersonalObjectivePoint(currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer));
-
-        for(CommonObjective o : commonObj){
-             o.commonObjPointsCalculator(currPlayer,players.size());
-        }
-
-        currPlayer.setPrivatePoint();
-        currPlayer.setPublicPoint();
-
-        //Notify publicPoints
-        if(currPlayer.getPublicPoint()!=publicPoints.get(players.indexOf(currPlayer))) {
-
-            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPublicPoint(), "all",
-                    currPlayer.getUsername(), "publicPoints"));
-
-        }
-
-        //Notify privatePoints
-        if(currPlayer.getPrivatePoint()!=privatePoints.get(players.indexOf(currPlayer))) {
-
-            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), currPlayer.getUsername(),
-                    currPlayer.getUsername(), "privatePoints"));
-
-        }
-    }
-
-
-
-
-
-    /**
-     * Update the points of the current player,
-     * select the next player and calls the endGame function if the last turn has been played.
-     * Also resets the board when needed
-     */
-    private void nextTurn(){
-
-        //Update the points
-        updatePoints();
-
-
-        //Update current player
-        currPlayer=nextPlayer;
-        selectNext();
-
-
-        //checks if the board needs to reset
-        if(board.checkBoardReset()) board.boardResetENG();
-
-        //checks if someone completed all their bookshelf
-        if(isFinished && currPlayer.equals(players.get(0))) endGame();
-
-
-        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
-                currPlayer.getUsername(), "currPlayer"));
-        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
-                currPlayer.getUsername(), "nextPlayer"));
-
-    }
-
-
-
-    /**
-     * Select the winner of the game and ends it
-     */
-    private void endGame(){
-        state = GameState.ENDING;
-        selectWInner();
-        //Notify game Start
-        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","start" ));
-    }
-
-
-    /**
-     * Select the player who won the game
-     */
-    private void selectWInner(){
-        int winnerpos=0;
-        for( int i = 0; i< players.size(); i++){
-            if(players.get(i).getPrivatePoint() >players.get(winnerpos).getPrivatePoint()) winnerpos=i;
-        }
-
-        winner = players.get(winnerpos);
-
-        notifier.firePropertyChange(new PropertyChangeEvent(winner.getUsername(),"all","0","winner"));
-
-    }
-
-    private void selectNext() {
-        if(currPlayer==players.get(players.size()-1)){ nextPlayer = players.get(0);}
-        else nextPlayer = players.get(players.indexOf(currPlayer)+1);
-    }
-
-    private void updateCheckManager(GameState state,Player current){
-        checks.setState(state);
-        checks.setCurrPlayer(current);
-    }
-
-
     /**
      * Initializes common objectives
      */
     private void commonobjInit() {
-        commonObj = CommonObjective.randomSubclass(numberOfCommonObjectives);
+        commonObj = CommonObjective.randomSubclass(Define.NUMBEROFCOMMONOBJECTIVE.getI());
     }
-
 
     /**
      * Initializes private objectives
@@ -450,10 +205,436 @@ public class Model  {
 
 
 
+    /**
+     * Removes an array of tiles from the board if the move is legitimate.
+     * Also notifies the views of changes
+     * @param points  The position of the tiles
+     * @throws MoveNotPossible if the game is not in the right state
+     * @throws NotCurrentPlayer if the player is not the current player
+     * @throws IllegalArgumentException if the array points is null
+     * @throws TooManySelected if the array points is too long
+     * @throws TilesNotAdjacent if the tiles are not adjacent
+     * @throws OutOfDomain if at least one of the points is outside the board
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
+     */
+    public synchronized void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
+
+        //Checks move legitimacy
+        updateCheckManager(state,currPlayer);
+        checks.checkRemoveLegit(points,player,board);
+
+        //Change game state
+        state = GameState.CHOOSING_ORDER;
+
+        //Notify the views and add the removed tiles to the selectedTiles array
+        for (Point point : points) {
+            //Adding the removed tiles to selectedTiles array
+            selectedTiles.add(board.getGamesBoard().getTile(point));
+        }
+
+        //Remove the selected tiles
+        board.remove(points);
+
+        //Notify Selected Tiles
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                selectedTiles, "all", "0","selectedTiles" ));
+
+        //Notify Board
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                new Matrix(board.getGamesBoard()), "all", "0","board" ));
+
+    }
 
 
-  //  ScheduledExecutorService e1 = Executors.newScheduledThreadPool();
- //
+    /**
+     * Adds the selected tiles in the player's bookshelf.
+     * Since adding tiles to your bookshelf is the last action you can do on your turn,
+     * it also calls the nextTurn function
+     * @param player  The player who owns the Bookshelf
+     * @param column   The column where you want to add the tiles
+     * @throws OutOfDomain if requested column does not exists
+     * @throws ColumnIsFull if the requested column is full
+     * @throws MoveNotPossible if game is not in the right state
+     * @throws NotCurrentPlayer if the player requesting the move is not the current player
+     */
+    public synchronized void addToBookShelf(Player player,  int column) throws MoveNotPossible{
+
+        //Check for move legitimacy
+        updateCheckManager(state,currPlayer);
+        checks.checkAddLegit(player,column,selectedTiles.size());
+
+        //Change game state
+        state = GameState.CHOOSING_TILES;
+
+        //Add to bookshelf
+        player.getBookshelf().addTile(selectedTiles, column);
+
+        //Notify Bookshelf
+        notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
+                            "all", player.getUsername(), "bookshelf"));
+
+
+        //Checks if player filled his bookshelf
+        if(!isFinished && player.getBookshelf().checkEndGame()){
+            isFinished=true;
+            player.setWinnerPoint(1);
+            player.setPublicPoint();
+
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), "all",
+                    player.getUsername(), "publicPoints"));
+
+        }
+
+        //Empties the selected tile array
+        selectedTiles.clear();
+
+        //Advances turn
+        nextTurn();
+
+    }
+
+
+    /**
+     *  Swap the order of the array of selected tiles to the order describes in the array ints.
+     *       ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
+     * @param ints  The new order of the array
+     * @param player  The player requesting the move
+     * @throws MoveNotPossible The game is not in the right state
+     * @throws NotCurrentPlayer The player is not the current player
+     * @throws IllegalArgumentException The ints array is not of appropriate content
+     * @throws TooManySelected if the array is not of appropriate size
+     */
+    public synchronized void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
+
+        //Check the legitimacy of the move
+        updateCheckManager(state,currPlayer);
+        checks.swapCheck(ints,player);
+
+        //Swaps the array around
+        ArrayList<Tiles> array = new ArrayList<>(selectedTiles);
+
+        for (int i = 0; i < ints.size(); i++) {
+            selectedTiles.set(i, array.get(ints.get(i)-1));
+        }
+
+        //Notify Selected Tiles
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                selectedTiles, "all", "0","selectedTiles" ));
+
+        //Change game state
+        state = GameState.CHOOSING_ORDER;
+    }
+
+
+
+    //PRIVATE METHODS : UTILITY
+
+    /**
+     * Updates and sets the current player's points :
+     * -Vicinity points
+     * -Common objective points
+     * -Personal objective points
+     */
+    private void updatePoints(){
+
+        //Update points array
+        publicPoints.set(players.indexOf(currPlayer),currPlayer.getPublicPoint());
+        privatePoints.set(players.indexOf(currPlayer), currPlayer.getPrivatePoint());
+
+        //Updates vicinity, common objective and personal objective points
+        currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
+        currPlayer.setPersonalObjectivePoint(currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer));
+
+        for(CommonObjective o : commonObj){
+             o.commonObjPointsCalculator(currPlayer,players.size());
+        }
+
+        currPlayer.updatePoints();
+
+        //Notify publicPoints
+        if(currPlayer.getPublicPoint()!=publicPoints.get(players.indexOf(currPlayer))) {
+
+            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPublicPoint(), "all",
+                    currPlayer.getUsername(), "publicPoints"));
+
+        }
+
+        //Notify privatePoints
+        if(currPlayer.getPrivatePoint()!=privatePoints.get(players.indexOf(currPlayer))) {
+
+            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), currPlayer.getUsername(),
+                    currPlayer.getUsername(), "privatePoints"));
+
+        }
+    }
+
+
+    /**
+     * Updates the CheckManager state with the current game state and the current player.
+     * @param state The current game state.
+     * @param current The current player.
+     */
+    private void updateCheckManager(GameState state,Player current){
+        checks.setState(state);
+        checks.setCurrPlayer(current);
+    }
+
+
+    /** Advances the turn:
+     * Update the points of the current player,
+     * select the next player and calls the endGame function if the last turn of the game has been played.
+     * Also resets the board when needed.
+     */
+    private void nextTurn(){
+        //Update the points
+        updatePoints();
+
+        //Update current player
+        currPlayer=nextPlayer;
+        selectNext();
+
+        //Change game state
+        state = GameState.CHOOSING_TILES;
+
+        //checks if the board needs to reset
+            if(board.checkBoardReset()){
+
+                board.boardResetENG();
+
+                //Notify Board
+                notifier.firePropertyChange(new PropertyChangeEvent(
+                        new Matrix(board.getGamesBoard()), "all", "0","board" ));
+            }
+
+        //checks if someone completed all their bookshelf
+        if(isFinished && currPlayer.equals(players.get(0))) endGame();
+
+        //Notifies the new current and next players
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "currPlayer"));
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
+
+    }
+
+
+    /**
+     * Selects the next player in line to play the game.
+     * Skips disconnected player.
+     * If there is only one connected player, stops the game and starts the end timer
+     * (the next player is set to the successive player in line even if it is disconnected
+     *  to make sure that if a player reconnects in time the game will select the next player properly)
+     */
+    private void selectNext() {
+
+        Player player=(currPlayer==players.get(players.size()-1))?
+                        selectNextNotDisconnected(0):
+                        selectNextNotDisconnected(players.indexOf(currPlayer)+1);
+
+        if(player!=null){
+            nextPlayer = player;
+        }else {
+            state=GameState.STOPPED;
+            nextPlayer=selectNextPlayer();
+            startEndTimer();
+        }
+    }
+
+    /**
+     * Returns the next player in line even if it is disconnected.
+     * @return The next player.
+     */
+    private Player selectNextPlayer(){
+        return currPlayer==players.get(players.size()-1)
+                ?players.get(0)
+                :players.get(players.indexOf(currPlayer)+1);
+    }
+
+    /**
+     * Returns the next connected player in line.
+     * @param start The index of the player after the current player.
+     * @return The next connected player.
+     */
+    private Player selectNextNotDisconnected(int start){
+        Player player;
+        int index = start;
+        int count=0;
+
+        do{
+            player=players.get(index);
+            if(!player.isDisconnected()){
+                return player;
+            } else if (players.indexOf(player)==players.size()-1) {
+                index=0;
+                count++;
+            }else{
+                index++;
+                count++;
+            }
+        }while(count!=players.size()-1);
+
+        return null;
+    }
+
+    /**
+     * Disconnects the selected player:
+     * starts the end timer if there is only one player left.
+     * @param player The player to disconnect.
+     */
+    public synchronized void disconnectPlayer(Player player){
+       System.out.println(player.getUsername() + " has disconnected");
+       //Disconnect the player
+       player.setDisconnected(true);
+       connectedPlayers--;
+       if(connectedPlayers<=1) startEndTimer();
+       if(player.equals(currPlayer)) nextTurn();
+    }
+
+    /**
+     * Reconnects the selected player.
+     * If the game was stopped due to and insufficient number of players,
+     * checks if there are enough players and if so makes the game continue.
+     * @param player The player to reconnect.
+     */
+    public synchronized void playerReconnection(Player player,VirtualView view){
+        System.out.println(player.getUsername() + " has reconnected");
+
+        virtualViews.add(view);
+        notifier.addPropertyChangeListener("all",view);
+        notifier.addPropertyChangeListener(view.getUsername(),view);
+        player.setDisconnected(false);
+        connectedPlayers++;
+        if(connectedPlayers==2) {
+            timer.cancel();
+            nextTurn();
+        }
+        updatePlayer(player);
+    }
+
+    /**
+     * Updates the selected player client state using his virtual view.
+     * @param p The player to update
+     */
+    private void updatePlayer(Player p){
+        //Notify Board
+        notifier.firePropertyChange(new PropertyChangeEvent(new Matrix(board.getGamesBoard()), p.getUsername(), "0","board" ));
+
+        //Notify PlayerNames
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                players.stream().map(Player::getUsername).toList(), p.getUsername(), "0","playerNames" ));
+
+        //Notify commonObjectives
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getNum).toList(), p.getUsername(), "0","commonObj" ));
+
+        //Notify personal objective
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
+
+        //Notify currPlayer and nextPlayer
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
+                currPlayer.getUsername(), "currPlayer"));
+
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
+
+        //Notify privatePoints
+        notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
+                p.getUsername(), "privatePoints"));
+
+
+        for(Player player : players){
+
+            //Notify Bookshelf
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
+                    p.getUsername(), player.getUsername(), "bookshelf"));
+
+            //Notify publicPoints
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), p.getUsername(),
+                    player.getUsername(), "publicPoints"));
+        }
+
+
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                true, "all", "0","start" ));
+
+
+    }
+
+    private void startEndTimer(){
+        System.out.println("start timer");
+        TimerTask task = new TimerCounter(this);
+        timer.schedule(task, initialDelay, delta);
+    }
+
+    //Game ending methods
+
+    /**
+     * Select the winner of the game and ends it
+     */
+    private synchronized void endGame(){
+        state = GameState.ENDING;
+        selectWInner();
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","end" ));
+    }
+
+
+    /**
+     * Select the player who won the game
+     */
+    private void selectWInner(){
+
+        winner = connectedPlayers==1?disconnectionWinner():playerWithMostPoints();
+        notifier.firePropertyChange(new PropertyChangeEvent(winner.getUsername(),"all","0","winner"));
+
+    }
+
+    private Player disconnectionWinner(){
+        Player player;
+        int index=0;
+
+        while(index!=players.size()) {
+            player = players.get(index);
+            if (!player.isDisconnected()) {
+                return player;
+            }
+            index++;
+        }
+        return playerWithMostPoints();
+
+    }
+
+    private Player playerWithMostPoints(){
+        int winnerpos=0;
+
+        for( int i = 0; i< players.size(); i++){
+            if(players.get(i).getPrivatePoint() >= players.get(winnerpos).getPrivatePoint())
+                winnerpos=i;
+        }
+
+        return players.get(winnerpos);
+    }
+
+    //TimerInterface Methods
+
+    @Override
+    public void disconnect() {
+        endGame();
+    }
+
+    @Override
+    public int updateTime() {
+        time++;
+        return time;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "There is only one player left. Ending game number: " +gameID;
+    }
+
 
 
 
@@ -547,60 +728,6 @@ public class Model  {
 
     public void setGameID(int gameID) {
         this.gameID = gameID;
-    }
-
-    /**
-     * @return ArrayList of all the personal objectives of all players in the game
-     */
-   private ArrayList<PersonalObjective> getPersObj(){
-        ArrayList<PersonalObjective> persobj = new ArrayList<>();
-        for( Player p : players){
-            persobj.add(p.getPersonalObjective());
-        }
-        return persobj;
-    }
-
-
-    private void updatePlayer(Player p){
-
-
-        //Notify Board
-        notifier.firePropertyChange(new PropertyChangeEvent(board.getGamesBoard(), p.getUsername(), "0","board" ));
-
-        //Notify PlayerNames
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                players.stream().map(Player::getUsername).toList(), p.getUsername(), "0","playerNames" ));
-
-        //Notify commonObjectives
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                commonObj.stream().map(CommonObjective::getNum).toList(), p.getUsername(), "0","commonObj" ));
-
-        //Notify personal objective
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
-
-        //Notify currPlayer
-        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
-                currPlayer.getUsername(), "currPlayer"));
-
-        //Notify privatePoints
-        notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
-                p.getUsername(), "privatePoints"));
-
-
-        for(Player player : players){
-
-            //Notify Bookshelf
-            notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
-                    p.getUsername(), player.getUsername(), "bookshelf"));
-
-            //Notify publicPoints
-            notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), p.getUsername(),
-                    player.getUsername(), "publicPoints"));
-        }
-
-
-
     }
 
 }

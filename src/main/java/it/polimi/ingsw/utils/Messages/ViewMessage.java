@@ -2,7 +2,7 @@ package it.polimi.ingsw.utils.Messages;
 
 public class ViewMessage extends Message {
 
-    private String objectName;
+    private String objName;
     private Object content;
 
     public Object getContent() {
@@ -13,11 +13,11 @@ public class ViewMessage extends Message {
         this.content = content;
     }
 
-    public String getObjectName() {
-        return objectName;
+    public String getObjName() {
+        return objName;
     }
 
-    public void setObjectName(String objectName) {
-        this.objectName = objectName;
+    public void setObjName(String objName) {
+        this.objName = objName;
     }
 }

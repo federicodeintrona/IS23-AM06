@@ -1,30 +1,25 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Exceptions.*;
-import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Messages.IntMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
-
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Controller implements PropertyChangeListener {
     private Lobby lobby;
-    private final HashMap<Integer, Model> games;
-    private final HashMap<String, Player> players;
-    private HashMap<String, VirtualView> views;
+    private  HashMap<String, Player> players;
+    private  HashMap<Integer,Model> games;
+    private  HashMap<String ,Integer> playerToGame;
+    private  HashMap<String, VirtualView> views;
+
 
 
     /**
@@ -33,12 +28,11 @@ public class Controller implements PropertyChangeListener {
      */
     public Controller(Lobby mainLobby) {
         lobby = mainLobby;
-        games = lobby.getGames();
-        views = lobby.getViews() ;
-        players = lobby.getPlayers();
+        this.playerToGame=lobby.getPlayerToGame();
     }
 
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
+        lobby=new Lobby(models,playerMap);
         games = models;
         players = playerMap;
     }
@@ -49,7 +43,7 @@ public class Controller implements PropertyChangeListener {
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
-        games.get(ID).initialization();
+        lobby.getGames().get(ID).initialization();
     }
 
 
@@ -61,11 +55,11 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message addToBookshelf(int gameID, String playerID, int col ){
-        System.out.println("Controller: add to game " + gameID + " by " + playerID + " in " + col);
+        System.out.println("Controller: add to game " + gameID + " by " + playerID + " in column number " + col);
         Message reply = new Message();
 
         try {
-            games.get(gameID).addToBookShelf(players.get(playerID),col);
+            lobby.getGames().get(gameID).addToBookShelf(lobby.getPlayers().get(playerID),col);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful add to bookshelf");
 
@@ -106,7 +100,7 @@ public class Controller implements PropertyChangeListener {
         Message reply = new Message();
 
         try {
-            games.get(gameID).swapOrder(ints,players.get(playerID));
+            lobby.getGames().get(gameID).swapOrder(ints,lobby.getPlayers().get(playerID));
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful swap order");
         } catch (NotCurrentPlayer e) {
@@ -144,7 +138,7 @@ public class Controller implements PropertyChangeListener {
 
 
         try {
-            games.get(gameID).removeTileArray(players.get(playerID),points);
+            lobby.getGames().get(gameID).removeTileArray(lobby.getPlayers().get(playerID),points);
             reply.setType(MessageTypes.OK);
             reply.setContent("Move successful remove tiles");
 
@@ -228,18 +222,20 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void addView(VirtualView view){
-        views.put(view.getUsername(),view);
+        lobby.getViews().put(view.getUsername(),view);
     }
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");
         lobby.playerDisconnection(username);
+
     }
+
+
 
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
         lobby.closeGame(((Model)evt.getSource()).getGameID());
-
     }
 }
