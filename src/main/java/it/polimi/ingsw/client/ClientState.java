@@ -1,40 +1,42 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
 
-public class ClientState implements ClientStateRemoteInterface{
-
-    private Lock viewLock; //TODO da fare final
-
-    private Networker net; //TODO controlla se ci va o meno non ricordo
-
+public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
+    private Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;
-    private HashMap<Point, Tiles> myPersonalObjective;
-    private ArrayList<Integer> gameCommonObjective;
+    private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
+    private ArrayList<Integer> gameCommonObjective ;
     private Matrix board;
     private Matrix myBookshelf;
-    private HashMap<String, Matrix> allBookshelf;
+    private HashMap<String, Matrix> allBookshelf = new HashMap<>();
     private Integer myPoints;
-    private HashMap<String, Integer> allPublicPoints;
-    private ArrayList<Point> selectedTiles;
+    private HashMap<String, Integer> allPublicPoints= new HashMap<>();
+    private ArrayList<Tiles> selectedTiles;
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
-    private boolean gameIsEnded;
+    private boolean gameHasStarted=false;
+    private boolean gameIsEnded=false;
+    private boolean waiting=false;
+    private String chair;
 
-//    public ClientState(Lock viewLock) {
-//        this.viewLock = viewLock;
-//    }
-
-
-    public ClientState() {
+    public ClientState(Object viewLock) throws RemoteException {
+        super();
+        this.viewLock = viewLock;
+    }
+    public ClientState(String s, Object o) throws RemoteException {
+        super();
+        myUsername=s;
+        viewLock=o;
     }
 
     public String getMyUsername() {
@@ -93,6 +95,7 @@ public class ClientState implements ClientStateRemoteInterface{
 
     public void setBoard(Matrix board) {
         synchronized (viewLock){
+            System.out.println("board in state");
             this.board = board;
         }
     }
@@ -160,13 +163,13 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
-    public ArrayList<Point> getSelectedTiles() {
+    public ArrayList<Tiles> getSelectedTiles() {
         synchronized (viewLock) {
             return selectedTiles;
         }
     }
 
-    public void setSelectedTiles(ArrayList<Point> selectedTiles) {
+    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
         synchronized (viewLock) {
             this.selectedTiles = selectedTiles;
         }
@@ -220,10 +223,38 @@ public class ClientState implements ClientStateRemoteInterface{
         }
     }
 
+    public boolean gameHasStarted () {
+        synchronized (viewLock){ return gameHasStarted; }
+    }
 
+    public void setGameHasStarted (boolean gameHasStarted) {
+        synchronized (viewLock) {
+            this.gameHasStarted = gameHasStarted;
+        }
+    }
 
+    @Override
+    public boolean pingPong() throws RemoteException {
+        return true;
+    }
 
+    public String getChair() {
+        synchronized (viewLock) {
+            return chair;
+        }
+    }
 
+    public void setChair(String chair) {
+        synchronized (viewLock){
+            this.chair = chair;
+        }
+    }
 
+    public boolean isWaiting() {
+        return waiting;
+    }
 
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
 }

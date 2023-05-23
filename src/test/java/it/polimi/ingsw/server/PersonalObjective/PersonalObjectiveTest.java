@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.PersonalObjective;
 
 import it.polimi.ingsw.server.Model.Bookshelf;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +14,7 @@ class PersonalObjectiveTest {
     void personalObjectivePoint11(){
         Bookshelf bookshelf=new Bookshelf();
         PersonalObjective po=new PersonalObjective(1);
+        PersonalObjective po1=new PersonalObjective(2);
 
         //controllo con bookshelf vuota
         assertEquals(0, po.personalObjectivePoint(bookshelf));

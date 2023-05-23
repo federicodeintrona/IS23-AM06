@@ -1,41 +1,42 @@
 package it.polimi.ingsw.server.CommonObjective;
 
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommonObjective12Test {
 
     /**
-     * Testing all method's branches for success using a
-     * bookshelf that has only the boxes under the first
-     * diagonal full of no same colored tiles next to each other
+     * Testing case of ascending stairs that starts with a step of zero tiles
      */
     @Test
     void checkConditionSuccess1() {
         Player player = new Player( "Jhon", true);
-        Tiles tiles = Tiles.EMPTY;
         Tiles[] values = Tiles.values();
-        int x = 0;
-        int buffer = 1;
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 0;
         int j;
 
         // Initializing the bookshelf
-        for (int i = 0; i < 6; i++) {
-            for (j = 0; j < 5; j++) {
-                player.getBookshelf().getTiles().setTile(tiles, i, j);
-            }
-        }
-
-        for (int i=1; i<6; i++){
+        for (int i=0; i<5; i++){
             j = 0;
             while (j < buffer){
-                player.getBookshelf().getTiles().setTile(values[x], i, j);
-                x++;
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player.getBookshelf().addTile(tile, i);
+
                 j++;
-                if (x == 6) x = 0;
+                tile.clear();
             }
             buffer++;
         }
@@ -48,31 +49,182 @@ class CommonObjective12Test {
     }
 
     /**
-     * Testing the case of full bookshelf with the first
-     * diagonal programmed to have same colored tiles
+     * Testing case of ascending stairs that starts with a step of one tile
      */
     @Test
     void checkConditionSuccess2() {
         Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
         int buffer = 1;
         int j;
 
         // Initializing the bookshelf
-        for (int i=1; i<6; i++){
+        for (int i=0; i<5; i++){
             j = 0;
             while (j < buffer){
-                player.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player.getBookshelf().addTile(tile, i);
+
                 j++;
+                tile.clear();
             }
             buffer++;
         }
 
-        // Manually programming the diagonal
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 0);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 1, 1);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 2, 2);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 3, 3);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 4, 4);
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Checking that the checkCondition method returns false
+        assertTrue(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing case of ascending stairs that starts with a step of two tiles
+     */
+    @Test
+    void checkConditionSuccess3() {
+        Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 2;
+        int j;
+
+        // Initializing the bookshelf
+        for (int i=0; i<5; i++){
+            j = 0;
+            while (j < buffer){
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player.getBookshelf().addTile(tile, i);
+
+                j++;
+                tile.clear();
+            }
+            buffer++;
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Checking that the checkCondition method returns false
+        assertTrue(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing case of descending stairs that starts with a step of zero tiles
+     */
+    @Test
+    void checkConditionSuccess4() {
+        Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 0;
+        int j;
+
+        // Initializing the bookshelf
+        for (int i=4; i>=0; i--){
+            j = 0;
+            while (j < buffer){
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player.getBookshelf().addTile(tile, i);
+
+                j++;
+                tile.clear();
+            }
+            buffer++;
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Checking that the checkCondition method returns false
+        assertTrue(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing case of descending stairs that starts with a step of one tile
+     */
+    @Test
+    void checkConditionSuccess5() {
+        Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 1;
+        int j;
+
+        // Initializing the bookshelf
+        for (int i=4; i>=0; i--){
+            j = 0;
+            while (j < buffer){
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player.getBookshelf().addTile(tile, i);
+
+                j++;
+                tile.clear();
+            }
+            buffer++;
+        }
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Checking that the checkCondition method returns false
+        assertTrue(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing case of descending stairs that starts with a step of two tiles
+     */
+    @Test
+    void checkConditionSuccess6() {
+        Player player = new Player( "Jhon", true);
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 2;
+        int j;
+
+        // Initializing the bookshelf
+        for (int i=4; i>=0; i--){
+            j = 0;
+            while (j < buffer){
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player.getBookshelf().addTile(tile, i);
+
+                j++;
+                tile.clear();
+            }
+            buffer++;
+        }
 
         // Creation of an instance for CommonObjective12
         CommonObjective12 obj = new CommonObjective12();
@@ -120,6 +272,38 @@ class CommonObjective12Test {
             }
         }
 
+        // Manually setting the number of tiles within the bookshelf
+        player.getBookshelf().setNum_of_tiles(30);
+
+        // Creation of an instance for CommonObjective12
+        CommonObjective12 obj = new CommonObjective12();
+
+        // Checking that the checkCondition method returns true
+        assertFalse(obj.checkCondition(player));
+    }
+
+    /**
+     * Testing for failure first if statement with a bookshelf
+     * completely empty but two tiles in the middle
+     */
+    @Test
+    void checkConditionFailure3() {
+        Player player = new Player( "Jhon", true);
+        Tiles tiles = Tiles.EMPTY;
+
+        // Initializing the bookshelf
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                player.getBookshelf().getTiles().setTile(tiles, i, j);
+            }
+        }
+
+        // Manually setting the only 2 tiles within the bookshelf
+        ArrayList<Tiles> tile = new ArrayList<>();
+        tile.add(Tiles.GREEN);
+        tile.add(Tiles.WHITE);
+        player.getBookshelf().addTile(tile, 3);
+
         // Creation of an instance for CommonObjective12
         CommonObjective12 obj = new CommonObjective12();
 
@@ -135,28 +319,30 @@ class CommonObjective12Test {
     void commonObjPointsCalculatorTwoPlayers() {
         Player player1 = new Player( "Jhon", true);
         Player player2 = new Player( "Obi", false);
-        Tiles tiles = Tiles.EMPTY;
-        int buffer = 1;
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 0;
         int j;
 
         // Initializing the bookshelf
-        for (int i = 0; i < 6; i++) {
-            for (j = 0; j < 5; j++) {
-                player1.getBookshelf().getTiles().setTile(tiles, i, j);
-                player2.getBookshelf().getTiles().setTile(tiles, i, j);
-            }
-        }
-
-        for (int i=1; i<6; i++){
+        for (int i=0; i<5; i++){
             j = 0;
             while (j < buffer){
-                player1.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player2.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player1.getBookshelf().addTile(tile, i);
+                player2.getBookshelf().addTile(tile, i);
+
                 j++;
+                tile.clear();
             }
             buffer++;
         }
-
         // Creation of an instance for CommonObjective12
         CommonObjective12 obj = new CommonObjective12();
 
@@ -181,18 +367,29 @@ class CommonObjective12Test {
         Player player2 = new Player( "Obi", false);
         Player player3 = new Player( "Pablo", false);
         Player player4 = new Player( "Felipe", false);
-        int buffer = 1;
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 0;
         int j;
 
         // Initializing the bookshelf
-        for (int i=1; i<6; i++){
+        for (int i=0; i<5; i++){
             j = 0;
             while (j < buffer){
-                player1.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player2.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player3.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
-                player4.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player1.getBookshelf().addTile(tile, i);
+                player2.getBookshelf().addTile(tile, i);
+                player3.getBookshelf().addTile(tile, i);
+                player4.getBookshelf().addTile(tile, i);
+
                 j++;
+                tile.clear();
             }
             buffer++;
         }
@@ -253,15 +450,26 @@ class CommonObjective12Test {
     @Test
     void commonObjPointsCalculatorFailure2() {
         Player player = new Player( "Jhon", true);
-        int buffer = 1;
+        Tiles[] values = Tiles.values();
+        Random random = new Random();
+        ArrayList<Tiles> tile = new ArrayList<>();
+        int buffer = 0;
         int j;
 
         // Initializing the bookshelf
-        for (int i=1; i<6; i++){
+        for (int i=0; i<5; i++){
             j = 0;
             while (j < buffer){
-                player.getBookshelf().getTiles().setTile(Tiles.GREEN, i, j);
+
+                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
+                int index = random.nextInt(6);
+                tile.add(values[index]);
+
+                // Adding the tile to the bookshelf
+                player.getBookshelf().addTile(tile, i);
+
                 j++;
+                tile.clear();
             }
             buffer++;
         }

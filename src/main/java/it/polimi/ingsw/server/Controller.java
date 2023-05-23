@@ -1,27 +1,25 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ClientStateRemoteInterface;
 import it.polimi.ingsw.server.Exceptions.*;
-import it.polimi.ingsw.server.Messages.IntMessage;
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.Messages.MessageTypes;
-import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
-
+import it.polimi.ingsw.utils.Messages.IntMessage;
+import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
 import java.awt.*;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Controller implements ControllerInterface{
-
+public class Controller implements PropertyChangeListener {
     private Lobby lobby;
-    private HashMap<Integer, Model> games;
-    private HashMap<String, Player> players;
-    private HashMap<String, VirtualView> views;
+    private  HashMap<String, Player> players;
+    private  HashMap<Integer,Model> games;
+    private  HashMap<String ,Integer> playerToGame;
+    private  HashMap<String, VirtualView> views;
+
 
 
     /**
@@ -30,13 +28,11 @@ public class Controller implements ControllerInterface{
      */
     public Controller(Lobby mainLobby) {
         lobby = mainLobby;
-        games = lobby.getGames();
-        views = lobby.getViews() ;
-        players = lobby.getPlayers();
+        this.playerToGame=lobby.getPlayerToGame();
     }
 
-
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
+        lobby=new Lobby(models,playerMap);
         games = models;
         players = playerMap;
     }
@@ -47,8 +43,7 @@ public class Controller implements ControllerInterface{
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
-
-        games.get(ID).initialization();
+        lobby.getGames().get(ID).initialization();
     }
 
 
@@ -59,13 +54,14 @@ public class Controller implements ControllerInterface{
      * @param col The column where you want to add the tiles
      * @return The reply to be sent to the client
      */
-    public Message addToBookshelf(int gameID, String playerID,  int col ){
+    public Message addToBookshelf(int gameID, String playerID, int col ){
+        System.out.println("Controller: add to game " + gameID + " by " + playerID + " in column number " + col);
         Message reply = new Message();
 
         try {
-            games.get(gameID).addToBookShelf(players.get(playerID),col);
+            lobby.getGames().get(gameID).addToBookShelf(lobby.getPlayers().get(playerID),col);
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful");
+            reply.setContent("Move successful add to bookshelf");
 
         } catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
@@ -99,12 +95,14 @@ public class Controller implements ControllerInterface{
      * @return The reply to be sent to the client
      */
     public Message swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
+
+        System.out.println("Controller: swap in game: " + gameID + " by " + playerID);
         Message reply = new Message();
 
         try {
-            games.get(gameID).swapOrder(ints,players.get(playerID));
+            lobby.getGames().get(gameID).swapOrder(ints,lobby.getPlayers().get(playerID));
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful");
+            reply.setContent("Move successful swap order");
         } catch (NotCurrentPlayer e) {
             reply.setType(MessageTypes.ERROR);
             reply.setContent("You are not the current player");
@@ -135,13 +133,14 @@ public class Controller implements ControllerInterface{
      * @return The reply to be sent to the client
      */
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points){
+        System.out.println("Controller: remove from game: " + gameID + " by " + playerID + " in " + points);
         Message reply = new Message();
 
 
         try {
-            games.get(gameID).removeTileArray(players.get(playerID),points);
+            lobby.getGames().get(gameID).removeTileArray(lobby.getPlayers().get(playerID),points);
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful");
+            reply.setContent("Move successful remove tiles");
 
         }catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
@@ -167,6 +166,10 @@ public class Controller implements ControllerInterface{
             reply.setType(MessageTypes.ERROR);
             reply.setContent("It's not your turn");
 
+        }catch (SameElement e) {
+            reply.setType(MessageTypes.ERROR);
+            reply.setContent("Tou cannot choose the same tile multiple times");
+
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
             reply.setContent("You can't do that now");
@@ -181,7 +184,7 @@ public class Controller implements ControllerInterface{
     //Lobby methods
 
 
-    public Message newLobby(String client,int players){
+    public IntMessage newLobby(String client, int players){
         IntMessage msg = new IntMessage();
         int gameNum =  lobby.newLobby(client,players);
         msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
@@ -192,14 +195,14 @@ public class Controller implements ControllerInterface{
 
 
 
-    public synchronized Message handleNewClient(String client) {
+    public IntMessage handleNewClient(String client,VirtualView view) {
 
         try {
 
-            int response = lobby.handleClient(client);
+            int response = lobby.handleClient(client,view);
 
             if (response == -1) {
-                Message reply = new Message();
+                IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.NEW_LOBBY);
                 reply.setContent("Select the number of players (2 to 4)");
                 return reply;
@@ -211,7 +214,7 @@ public class Controller implements ControllerInterface{
                 return reply;
             }
         } catch (UsernameAlreadyTaken e) {
-            Message reply = new Message();
+            IntMessage reply = new IntMessage();
             reply.setType(MessageTypes.ERROR);
             reply.setContent("Username already taken");
             return reply;
@@ -219,27 +222,20 @@ public class Controller implements ControllerInterface{
     }
 
     public void addView(VirtualView view){
-        views.put(view.getUsername(),view);
+        lobby.getViews().put(view.getUsername(),view);
     }
+    public void playerDisconnection(String username){
+        System.out.println(username+ " was disconnected by the controller");
+        lobby.playerDisconnection(username);
 
-    /**
-     * Gets the instance of clientState from a specific Client given his ip address and port
-     *
-     * @param ipAddress     the client ip address
-     * @param port      the port used by the client to share the instance of clientState
-     */
-    public void acceptRmiConnection (String username, String ipAddress, int port) {
-        try {
-            // Getting the registry
-            Registry registry = LocateRegistry.getRegistry(ipAddress, port);
-            // Looking up the registry for the remote object
-            ClientStateRemoteInterface clientState = (ClientStateRemoteInterface) registry.lookup("ClientState");
-
-        } catch (Exception e) {
-            System.err.println("Client exception: " + e);
-            e.printStackTrace();
-        }
     }
 
 
+
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
+        lobby.closeGame(((Model)evt.getSource()).getGameID());
+    }
 }

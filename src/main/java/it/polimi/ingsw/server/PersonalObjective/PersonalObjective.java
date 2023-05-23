@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.PersonalObjective;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.server.Model.Tiles;
+import it.polimi.ingsw.utils.Tiles;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,15 +11,13 @@ import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Random;
 
 public class PersonalObjective {
     private static final int numberOfPersonalObjective=12;
 
-    private static final HashMap<Point, Tiles> card=new HashMap<>();
+    private HashMap<Point, Tiles> card=new HashMap<>();
 
 
 

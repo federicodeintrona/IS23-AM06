@@ -1,118 +1,123 @@
 package it.polimi.ingsw.client;
 
 
-import it.polimi.ingsw.server.Messages.Message;
-import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
+import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.utils.JsonReader;
+import it.polimi.ingsw.utils.Messages.Message;
 import org.json.simple.parser.ParseException;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 
-public class NetworkerTcp implements Networker{
+
+public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
+    private static String host;
     Socket socket ;
-    private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    private ObjectInputStream ois;
+    private final ClientState clientState;
+    private CLIMain cliMain;
 
-    public NetworkerTcp()  {
+    public NetworkerTcp(ClientState clientState) {
         JsonReader config;
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
             config=new JsonReader(is);
-//            config = new JsonReader("src/main/resources/NetworkerTcp.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+        this.clientState = clientState;
+        port=config.getInt("port");
+        port=9876;
+    }
+    public NetworkerTcp(ClientState clientState,String host) {
+        JsonReader config;
+        try {
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("NetworkerTcp.json");
+            config=new JsonReader(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        this.clientState = clientState;
+        this.host=host;
         port=config.getInt("port");
     }
 
     public void initializeConnection() {
+        Reader reader;
         try {
-            socket = new Socket("127.0.0.1", port);
-            ois = new ObjectInputStream(socket.getInputStream());
+            socket = new Socket(host, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
+            reader=new Reader(socket,oos,this, clientState);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Created TCP connection with Server");
+        reader.start();
     }
 
-    public Message firstConnection (Message username){
+    public void setUserInterface(CLIMain cliMain) {
+        this.cliMain= cliMain;
+    }
+
+    public void firstConnection (Message username){
         try {
             oos.writeObject(username);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        try {
-            return (Message) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    };
-    public Message numberOfPlayersSelection(Message numberOfPlayers){
+    }
+    public void numberOfPlayersSelection(Message numberOfPlayers){
         try {
             oos.writeObject(numberOfPlayers);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            return (Message) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    };
-    public Message removeTilesFromBoard(Message tiles){
+
+    }
+    public void removeTilesFromBoard(Message tiles){
         try {
             oos.writeObject(tiles);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            return (Message) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    };
-    public Message switchTilesOrder(Message ints){
+    }
+    public void switchTilesOrder(Message ints){
         try {
             oos.writeObject(ints);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            return (Message) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    };
+    }
 
-    public Message addTilesToBookshelf (Message column){
+    public void addTilesToBookshelf (Message column){
         try {
             oos.writeObject(column);
+            oos.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            return (Message) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    };
+    }
+
+    @Override
+    public void setCli(CLIMain cli) {
+        this.cliMain=cli;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        cliMain.receivedMessage((Message) evt.getNewValue());
+
+    }
 }

@@ -1,16 +1,14 @@
 package it.polimi.ingsw.server.Model;
 
-import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.utils.JsonReader;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tiles;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Queue;
 
 public class Bookshelf {
@@ -53,10 +51,11 @@ public class Bookshelf {
         * Returns the matrix of tiles
         * @return The matrix of tiles
          **/
-
         public Matrix getTiles(){
             return tiles;
         }
+
+    public int getNum_of_tiles () { return num_of_tiles; }
 
     /**
      * Checks if th column given is full of tiles
@@ -118,6 +117,8 @@ public class Bookshelf {
                 num_of_tiles=num_of_tiles+3;
             }
         }
+
+    public void setNum_of_tiles (int num) { num_of_tiles = num; }
 
     /**
      * Finds the first free position of the matrix in the given column

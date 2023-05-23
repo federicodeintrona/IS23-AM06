@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
-import it.polimi.ingsw.server.Messages.*;
+import it.polimi.ingsw.utils.Messages.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,18 +62,22 @@ public class ReadShell extends Thread{
 
         System.out.print("Enter your nickname: ");
         String nickname = readLine();
+        cliMain.getClientState().setMyUsername(nickname);
         message.setUsername(nickname);
         message.setType(MessageTypes.USERNAME);
-        //io non setto niente ci penserà il Networker
-        //todo
         sendMessage(message);
     }
 
     //legge messaggi, li crea, li invia a chi di dovere
     public void readCommand(){
+
         String st=readLine();
+        st=st+' ';
+        st=st.toLowerCase();
         ArrayList<Integer> number=readNumber(st);
-        switch (st) {
+        int n=st.indexOf(" ");
+        String substring=st.substring(0, n);
+        switch (substring) {
             case "#remove" -> {
                 if (number.size()!=2 && number.size()!=4 && number.size()!=6){
                     System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
@@ -101,18 +105,20 @@ public class ReadShell extends Thread{
             case "#help", "#h" -> cliMain.getCliPrint().help();
             case "#printpersonal" -> cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPersonalObjective());
             case "#printboard" -> cliMain.getCliPrint().printBoard(cliMain.getClientState().getBoard());
-            case "#printyourbookshelf" -> {
+            case "#printmybookshelf" -> {
                 //todo QUALE STAMPO???
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getMyBookshelf());
-                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
+//                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
             }
             case "#printbookshelf" -> {
-                int i=st.indexOf("@");
-                if (i==-1){
+                int indice=st.indexOf("@");
+                System.out.println(indice);
+                if (indice==-1){
                     System.out.println(st+": Type of command correct but you do NOT inserted the username of player \nIf you need help put #help or #h");
                     break;
                 }
-                String sub=st.substring(i+1);
+                String sub=st.substring(indice+1, st.length()-1);
+                System.out.println(sub);
 
                 //posizione dell'username desiderato
                 int position=cliMain.getClientState().getAllUsername().indexOf(sub);
@@ -120,9 +126,12 @@ public class ReadShell extends Thread{
                     System.out.println(st+": Type of command correct but you do NOT inserted the username of a player in this game \nIf you need help put #help or #h");
                     break;
                 }
-                cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(position));
+                cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(sub));
             }
             case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective());
+            case "#printpoints" -> cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
+            case "#printmypoint" -> cliMain.getCliPrint().printMyPoints(cliMain.getClientState().getMyPoints());
+            case "#printchair" -> cliMain.getCliPrint().printChair();
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
 
@@ -208,7 +217,7 @@ public class ReadShell extends Thread{
     public void askNumberOfPlayerMessage(){
         IntMessage message=new IntMessage();
 
-        System.out.print("Enter number of palyer: ");
+        System.out.print("Enter number of player: ");
         String num = readLine();
 
         //setta il messaggio
@@ -220,21 +229,6 @@ public class ReadShell extends Thread{
         sendMessage(message);
     }
 
-    //richieste iniziali
-    public void initialRequests(){
-        //richiesta username
-        askUsername();
-
-        //richiesta numero di giocatori - solo se serve
-        //TODO capire come fare - secondo me... boh non mi convince
-        if (askForNumberOfPlayer()){
-            askNumberOfPlayerMessage();
-        }
-    }
-
-    public boolean askForNumberOfPlayer(){
-        return true;
-    }
 
 
     @Override

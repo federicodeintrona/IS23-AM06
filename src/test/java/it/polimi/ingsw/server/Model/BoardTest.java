@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -658,6 +661,14 @@ class BoardTest {
         board.placeTiles(Tiles.EMPTY, 3,8);
         board.placeTiles(Tiles.EMPTY, 4,8);
     }
+    @Test
+    public void checkBoardReset7(){
+        Board board=new Board(2, new Sachet());
+        board.placeTiles(Tiles.GREEN, 4, 4);
+        board.placeTiles(Tiles.BLUE, 5, 5);
+
+        assertTrue(board.checkBoardReset());
+    }
 
     //TEST boardResetENG()
     @DisplayName("Board is reset according to the English rules - 2 players")
@@ -1184,7 +1195,7 @@ class BoardTest {
     }
 
     //TEST adjacentTiles(Point)
-    @DisplayName("Tiles adjacent to that date")
+    @DisplayName("Tiles adjacent to that date - NOT in any edge")
     @Test
     void adjacentTiles1() {
         //arrange - setup our test objects
@@ -1230,6 +1241,89 @@ class BoardTest {
         assertEquals(2, result.size());
         assertTrue(result.contains(new Point(8, 5)));
         assertTrue(result.contains(new Point(7, 4)));
+    }
+    @DisplayName("Tiles adjacent to that date - left edge")
+    @Test
+    void adjacentTiles4() {
+        //arrange - setup our test objects
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        ArrayList<Point> result;
+        //act - do the actual calc or method run
+        board.BoardInitialization();
+        result=board.adjacentTiles(new Point(4,0));
+        //assert - check if actual val is equal to expected val
+        assertEquals(2, result.size());
+        assertTrue(result.contains(new Point(5,0)));
+        assertTrue(result.contains(new Point(4,1)));
+
+    }
+    @DisplayName("Tiles adjacent to that date - right edge")
+    @Test
+    void adjacentTiles5() {
+        //arrange - setup our test objects
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        ArrayList<Point> result;
+        //act - do the actual calc or method run
+        board.BoardInitialization();
+        result=board.adjacentTiles(new Point(4,8));
+        //assert - check if actual val is equal to expected val
+        assertEquals(2, result.size());
+        assertTrue(result.contains(new Point(4, 7)));
+        assertTrue(result.contains(new Point(3, 8)));
+    }
+    @DisplayName("Tiles adjacent to that date - upper left corner")
+    @Test
+    void adjacentTiles6() {
+        //arrange - setup our test objects
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        ArrayList<Point> result;
+        //act - do the actual calc or method run
+        board.BoardInitialization();
+        result=board.adjacentTiles(new Point(0,0));
+        //assert - check if actual val is equal to expected val
+        assertEquals(0, result.size());
+    }
+    @DisplayName("Tiles adjacent to that date - upper right corner")
+    @Test
+    void adjacentTiles7() {
+        //arrange - setup our test objects
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        ArrayList<Point> result;
+        //act - do the actual calc or method run
+        board.BoardInitialization();
+        result=board.adjacentTiles(new Point(0, 8));
+        //assert - check if actual val is equal to expected val
+        assertEquals(0, result.size());
+    }
+    @DisplayName("Tiles adjacent to that date - bottom left corner")
+    @Test
+    void adjacentTiles8() {
+        //arrange - setup our test objects
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        ArrayList<Point> result;
+        //act - do the actual calc or method run
+        board.BoardInitialization();
+        result=board.adjacentTiles(new Point(8, 0));
+        //assert - check if actual val is equal to expected val
+        assertEquals(0, result.size());
+    }
+    @DisplayName("Tiles adjacent to that date - bottom right corner")
+    @Test
+    void adjacentTiles9() {
+        //arrange - setup our test objects
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        ArrayList<Point> result;
+        //act - do the actual calc or method run
+        board.BoardInitialization();
+        result=board.adjacentTiles(new Point(8,8));
+        //assert - check if actual val is equal to expected val
+        assertEquals(0, result.size());
     }
 
     //TEST checkSameColumn(List<Point)
@@ -1299,6 +1393,37 @@ class BoardTest {
         board.addTile(Tiles.GREEN, 3,3);
         assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
     }
+
+    @DisplayName("Tiles Not Pickable")
+    @Test
+    void tilesNotPickable(){
+        Board board=new Board(2, new Sachet());
+        board.BoardInitialization();
+
+        ArrayList<Point> arrayList=new ArrayList<>();
+
+        //tiles not free
+        arrayList.add(new Point(3,3));
+        assertFalse(board.tilesArePickable(arrayList));
+
+        //tiles not adjacent
+        arrayList.add(new Point(5,5));
+        assertFalse(board.tilesArePickable(arrayList));
+
+        //selected Empty tiles
+        board.remove(new Point(3,3));
+        ArrayList<Point> arrayList1=new ArrayList<>();
+        arrayList1.add(new Point(3,3));
+        assertFalse(board.tilesArePickable(arrayList1));
+
+        //selected NotAllowed tiles
+        ArrayList<Point> arrayList2=new ArrayList<>();
+        arrayList2.add(new Point(0,0));
+        assertFalse(board.tilesArePickable(arrayList2));
+
+
+    }
+
 }
 
 

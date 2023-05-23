@@ -1,29 +1,22 @@
 {
   "CO1" : {
-    "QUANTITY": 2,
-    "TYPE": "equals",
+    "TYPE": "Six groups each containing at least\n2 tiles of the same type (not necessarily\nin the depicted shape).\nThe tiles of one group can be different\nfrom those of another group.",
     "POSITION" : [
       [2,2],
-      [2,3],
-      [3,2],
-      [3,3]
+      [3,2]
     ]
   },
   "CO2" : {
-    "QUANTITY": 2,
-    "TYPE": "different",
+    "TYPE": "Four tiles of the same type in the four\ncorners of the bookshelf.",
     "POSITION" : [
-      [0,2],
-      [1,2],
-      [2,2],
-      [3,2],
-      [4,2],
-      [5,2]
+      [0,0],
+      [5,0],
+      [0,4],
+      [5,4]
     ]
   },
   "CO3" : {
-    "QUANTITY": 4,
-    "TYPE": "equals",
+    "TYPE": "Four groups each containing at least\n4 tiles of the same type (not necessarily\nin the depicted shape).\nThe tiles of one group can be different\nfrom those of another group.",
     "POSITION" : [
       [1,2],
       [2,2],
@@ -32,16 +25,16 @@
     ]
   },
   "CO4" : {
-    "QUANTITY": 6,
-    "TYPE": "equals",
+    "TYPE": "Two groups each containing 4 tiles of\nthe same type in a 2x2 square. The tiles\nof one square can be different from\nthose of the other square.",
     "POSITION" : [
       [2,2],
-      [3,2]
+      [2,3],
+      [3,2],
+      [3,3]
     ]
   },
   "CO5" : {
-    "QUANTITY": 3,
-    "TYPE": "max3",
+    "TYPE": "Three columns each formed by 6 tiles\nof maximum three different types. One\ncolumn can show the same or a different\ncombination of another column.",
     "POSITION" : [
       [0,2],
       [1,2],
@@ -52,40 +45,7 @@
     ]
   },
   "CO6" : {
-    "QUANTITY": 2,
-    "TYPE": "different",
-    "POSITION" : [
-      [2,0],
-      [2,1],
-      [2,2],
-      [2,3],
-      [2,4]
-    ]
-  },
-  "CO7" : {
-    "QUANTITY": 4,
-    "TYPE": "max3",
-    "POSITION" : [
-      [2,0],
-      [2,1],
-      [2,2],
-      [2,3],
-      [2,4]
-    ]
-  },
-  "CO8" : {
-    "QUANTITY": 1,
-    "TYPE": "equals",
-    "POSITION" : [
-      [0,0],
-      [5,0],
-      [0,4],
-      [5,4]
-    ]
-  },
-  "CO9" : {
-    "QUANTITY": 1,
-    "TYPE": "equals",
+    "TYPE": "Eight tiles of the same type. There’s no\nrestriction about the position of these\ntiles.",
     "POSITION" : [
       [5,0],
       [5,2],
@@ -97,20 +57,8 @@
       [1,3]
     ]
   },
-  "CO10" : {
-    "QUANTITY": 1,
-    "TYPE": "equals",
-    "POSITION" : [
-      [2,1],
-      [2,3],
-      [3,2],
-      [4,1],
-      [4,3]
-    ]
-  },
-  "CO11" : {
-    "QUANTITY": 1,
-    "TYPE": "equals",
+  "CO7" : {
+    "TYPE": "Five tiles of the same type forming a\ndiagonal.",
     "POSITION" : [
       [0,0],
       [1,1],
@@ -119,9 +67,50 @@
       [4,4]
     ]
   },
+  "CO8" : {
+    "TYPE": "Four lines each formed by 5 tiles of\nmaximum three different types. One\nline can show the same or a different\ncombination of another line.",
+    "POSITION" : [
+      [2,0],
+      [2,1],
+      [2,2],
+      [2,3],
+      [2,4]
+    ]
+  },
+  "CO9" : {
+    "TYPE": "Two columns each formed by 6\ndifferent types of tiles.",
+    "POSITION" : [
+      [0,2],
+      [1,2],
+      [2,2],
+      [3,2],
+      [4,2],
+      [5,2]
+    ]
+  },
+  "CO10" : {
+    "TYPE": "Two lines each formed by 5 different\ntypes of tiles. One line can show the\nsame or a different combination of the\nother line.",
+    "POSITION" : [
+      [2,0],
+      [2,1],
+      [2,2],
+      [2,3],
+      [2,4]
+    ]
+  },
+  "CO11" : {
+    "TYPE": "Five tiles of the same type forming an X.",
+    "POSITION" : [
+      [2,1],
+      [2,3],
+      [3,2],
+      [4,1],
+      [4,3]
+    ]
+  },
   "CO12" : {
     "QUANTITY": 1,
-    "TYPE": "notimportant",
+    "TYPE": "Five columns of increasing or decreasing\nheight. Starting from the first column on\nthe left or on the right, each next column\nmust be made of exactly one more tile.\nTiles can be of any type.",
     "POSITION" : [
       [1,0],
       [2,0],

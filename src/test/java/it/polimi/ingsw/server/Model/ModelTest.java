@@ -1,14 +1,18 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,11 +30,24 @@ class ModelTest {
         players.add(p0);
         players.add(p1);
         players.add(p2);
-        views.add(new RMIVirtualView("p0"));
-        views.add(new RMIVirtualView("p1"));
-        views.add(new RMIVirtualView("p2"));
+        try {
+            views.add(new RMIVirtualView("p0", new ClientState("p0",new ReentrantLock())));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            views.add(new RMIVirtualView("p1", new ClientState("p1",new ReentrantLock())));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            views.add(new RMIVirtualView("p2", new ClientState("p2",new ReentrantLock())));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         m = new Model(players,views);
         m.initialization();
+        m.setCurrPlayer(players.get(0));
 
     }
 
@@ -43,6 +60,7 @@ class ModelTest {
             assertEquals(0,p.getPersonalObjective().personalObjectivePoint(p));
         }
         assertEquals(8,m.getCommonObj().get(0).getPoints());
+
     }
 
     @Test
@@ -54,7 +72,7 @@ class ModelTest {
         try {
             //La casella 0,4 è NOT_ALLOWED con solo 3 giocatori
             assertThrows(MoveNotPossible.class,()-> m.removeTileArray(players.get(0),array));
-
+            m.setCurrPlayer(players.get(0));
             array.set(1,new Point(1,3));
             m.removeTileArray(players.get(0),array);
 
@@ -114,9 +132,9 @@ class ModelTest {
         Tiles[] array = {Tiles.WHITE,Tiles.GREEN,Tiles.BLUE};
 
         ArrayList<Integer> ints = new ArrayList<>();
-        ints.add(1);
         ints.add(2);
-        ints.add(0);
+        ints.add(3);
+        ints.add(1);
 
         m.setState(GameState.CHOOSING_ORDER);
 
@@ -155,6 +173,7 @@ class ModelTest {
             assertThrows(MoveNotPossible.class ,()-> m.addToBookShelf(players.get(0), 0));
             assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(0), remove));
             assertThrows(MoveNotPossible.class ,()-> m.removeTileArray(players.get(1), remove));
+            m.setCurrPlayer(players.get(1));
             assertThrows(IllegalArgumentException.class ,()-> m.removeTileArray(players.get(1), null));
             assertThrows(MoveNotPossible.class ,()-> m.swapOrder(new ArrayList<>(),players.get(1)));
 

@@ -1,25 +1,19 @@
 package it.polimi.ingsw.server.VirtualView;
 
-import it.polimi.ingsw.client.View.View;
-import it.polimi.ingsw.server.Messages.*;
-import it.polimi.ingsw.server.Model.Board;
-import it.polimi.ingsw.server.Model.Bookshelf;
+import it.polimi.ingsw.server.ServerClientHandler;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
+import it.polimi.ingsw.utils.Messages.ViewMessage;
 
 import java.beans.PropertyChangeEvent;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
 
 public class TCPVirtualView extends VirtualView{
 
-    private Socket socket;
-    private ObjectOutputStream oos;
+    private final ServerClientHandler client;
 
-    public TCPVirtualView(String username,Socket socket) throws IOException {
-        this.socket = socket;
-        oos = new ObjectOutputStream(socket.getOutputStream());
-        this.setUsername(username);
+
+    public TCPVirtualView(String username,ServerClientHandler handler) {
+        setUsername(username);
+        this.client = handler;
     }
 
     @Override
@@ -45,16 +39,12 @@ public class TCPVirtualView extends VirtualView{
         ViewMessage viewMsg = new ViewMessage();
         viewMsg.setType(MessageTypes.VIEW);
         viewMsg.setContent(evt.getSource());
-        viewMsg.setObjectName(evt.getPropertyName());
+        viewMsg.setObjName((String)evt.getNewValue());
         viewMsg.setUsername((String) evt.getOldValue());
 
-
-        try {
-            oos.writeObject(viewMsg);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(!isDisconnected()) {
+            client.sendMessage(viewMsg);
         }
-
     }
 
 }

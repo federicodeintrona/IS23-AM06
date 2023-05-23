@@ -1,20 +1,27 @@
 package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
+import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
-import org.javatuples.Pair;
+import it.polimi.ingsw.utils.Define;
+import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tiles;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-public class Model  {
-
+public class Model implements TimerInterface {
+    private int gameID;
     private Board board;
     private ArrayList<Player> players;
     private ArrayList<VirtualView> virtualViews;
@@ -27,6 +34,13 @@ public class Model  {
     private Player winner;
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
     private boolean isFinished = false;
+    private int connectedPlayers;
+
+    //Timer
+    private int time = 0;
+    private final Timer timer = new Timer();
+    private static final int initialDelay = 50;
+    private static final int delta = 2000;
 
     //Utility objects
     private final CheckManager checks = new CheckManager(selectedTiles);
@@ -40,20 +54,14 @@ public class Model  {
       cause any problem and I wanted to use the PropertyChangeSupport object*/
 
 
-
     //Probably temporary, just used for notification
     //Array of the old points values to see if they have changed
     private final ArrayList<Integer> privatePoints = new ArrayList<>();
     private final ArrayList<Integer> publicPoints = new ArrayList<>();
 
-    //Constant value
-    private static final int numberOfCommonObjectives=2;
-
     //Constructors
 
-    public Model(){
-
-    }
+    public Model(){}
     public Model(ArrayList<Player> players) {
         this.players = players;
     }
@@ -63,7 +71,17 @@ public class Model  {
         this.virtualViews = views;
     }
 
-
+    public Model(ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
+        this.players = players;
+        this.virtualViews = views;
+        notifier.addPropertyChangeListener("end", controller);
+    }
+    public Model(int iD, ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
+        this.gameID = iD;
+        this.players = players;
+        this.virtualViews = views;
+        notifier.addPropertyChangeListener("end", controller);
+    }
 
     //PUBLIC METHODS
 
@@ -72,7 +90,9 @@ public class Model  {
      * Create and initialize the board,initialize common and personal objectives,
      * add the views as change listeners,initialize the arrays of points.
      */
-    public void initialization()  {
+    public synchronized void  initialization()  {
+
+        System.out.println("Game number: "+gameID+" is starting...");
 
         //Create and initialize the board
         board = new Board(players.size(), new Sachet());
@@ -92,7 +112,7 @@ public class Model  {
 
         Random random = new Random();
         int index = random.nextInt(players.size());
-        currPlayer = players.get(0) ;
+        currPlayer = players.get(index) ;
         selectNext();
 
 
@@ -101,15 +121,31 @@ public class Model  {
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
 
+            if(!p.isDisconnected()) connectedPlayers++;
+
             //Notify personal objective
             notifier.firePropertyChange(new PropertyChangeEvent(
                     p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
+
+
+            //Notify Bookshelf
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getBookshelf().getTiles(),
+                    "all", p.getUsername(), "bookshelf"));
+
+            //Notify publicPoints
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getPublicPoint(), "all",
+                    p.getUsername(), "publicPoints"));
+
+
+            //Notify privatePoints
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
+                    p.getUsername(), "privatePoints"));
 
         }
 
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
-                board.getGamesBoard(), "all", "0","board" ));
+                new Matrix(board.getGamesBoard()), "all", "0","board" ));
 
         //Notify PlayerNames
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -119,7 +155,16 @@ public class Model  {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getNum).toList(), "all", "0","commonObj" ));
 
+        //Notify curr and next Player
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "currPlayer"));
 
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
+
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(
+               true, "all", "0","start" ));
 
 
 
@@ -127,6 +172,37 @@ public class Model  {
         state = GameState.CHOOSING_TILES;
 
     }
+
+    /**
+     * Initializes common objectives
+     */
+    private void commonobjInit() {
+        commonObj = CommonObjective.randomSubclass(Define.NUMBEROFCOMMONOBJECTIVE.getI());
+    }
+
+    /**
+     * Initializes private objectives
+     */
+    private void personalobjInit() {
+        ArrayList<PersonalObjective> tmp = new ArrayList<>();
+        ArrayList<Integer> numbers = new ArrayList<>();
+        Random rdm = new Random();
+        int num;
+
+        for (int i = 0; i < players.size(); i++) {
+            //check if there are NOT 2 equals PersonalObjective
+
+            do {
+                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI());
+            } while (numbers.contains(num));
+
+            numbers.add(num);
+            players.get(i).setPersonalObjective(new PersonalObjective(num));
+
+
+        }
+    }
+
 
 
     /**
@@ -141,7 +217,7 @@ public class Model  {
      * @throws OutOfDomain if at least one of the points is outside the board
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
      */
-    public void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
+    public synchronized void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
 
         //Checks move legitimacy
         updateCheckManager(state,currPlayer);
@@ -152,16 +228,12 @@ public class Model  {
 
         //Notify the views and add the removed tiles to the selectedTiles array
         for (Point point : points) {
-
             //Adding the removed tiles to selectedTiles array
             selectedTiles.add(board.getGamesBoard().getTile(point));
-
-
         }
 
         //Remove the selected tiles
         board.remove(points);
-
 
         //Notify Selected Tiles
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -169,8 +241,7 @@ public class Model  {
 
         //Notify Board
         notifier.firePropertyChange(new PropertyChangeEvent(
-                board.getGamesBoard(), "all", "0","board" ));
-
+                new Matrix(board.getGamesBoard()), "all", "0","board" ));
 
     }
 
@@ -186,8 +257,7 @@ public class Model  {
      * @throws MoveNotPossible if game is not in the right state
      * @throws NotCurrentPlayer if the player requesting the move is not the current player
      */
-    public void addToBookShelf(Player player,  int column) throws MoveNotPossible{
-
+    public synchronized void addToBookShelf(Player player,  int column) throws MoveNotPossible{
 
         //Check for move legitimacy
         updateCheckManager(state,currPlayer);
@@ -195,7 +265,6 @@ public class Model  {
 
         //Change game state
         state = GameState.CHOOSING_TILES;
-
 
         //Add to bookshelf
         player.getBookshelf().addTile(selectedTiles, column);
@@ -216,13 +285,11 @@ public class Model  {
 
         }
 
-
         //Empties the selected tile array
         selectedTiles.clear();
 
         //Advances turn
         nextTurn();
-
 
     }
 
@@ -237,39 +304,33 @@ public class Model  {
      * @throws IllegalArgumentException The ints array is not of appropriate content
      * @throws TooManySelected if the array is not of appropriate size
      */
-    public void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
+    public synchronized void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
 
         //Check the legitimacy of the move
         updateCheckManager(state,currPlayer);
         checks.swapCheck(ints,player);
 
         //Swaps the array around
-        ArrayList<Tiles> array = new ArrayList<>();
-        array.addAll(selectedTiles);
+        ArrayList<Tiles> array = new ArrayList<>(selectedTiles);
+
         for (int i = 0; i < ints.size(); i++) {
-            selectedTiles.set(i, array.get(ints.get(i)));
+            selectedTiles.set(i, array.get(ints.get(i)-1));
         }
 
         //Notify Selected Tiles
         notifier.firePropertyChange(new PropertyChangeEvent(
                 selectedTiles, "all", "0","selectedTiles" ));
 
-
-
         //Change game state
-        state = GameState.CHOOSING_COLUMN;
-
-
+        state = GameState.CHOOSING_ORDER;
     }
 
 
 
     //PRIVATE METHODS : UTILITY
 
-
-
     /**
-     * Updates and sets the current player's :
+     * Updates and sets the current player's points :
      * -Vicinity points
      * -Common objective points
      * -Personal objective points
@@ -282,14 +343,13 @@ public class Model  {
 
         //Updates vicinity, common objective and personal objective points
         currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
-        currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer);
+        currPlayer.setPersonalObjectivePoint(currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer));
 
         for(CommonObjective o : commonObj){
              o.commonObjPointsCalculator(currPlayer,players.size());
         }
 
-        currPlayer.setPrivatePoint();
-        currPlayer.setPublicPoint();
+        currPlayer.updatePoints();
 
         //Notify publicPoints
         if(currPlayer.getPublicPoint()!=publicPoints.get(players.indexOf(currPlayer))) {
@@ -302,52 +362,222 @@ public class Model  {
         //Notify privatePoints
         if(currPlayer.getPrivatePoint()!=privatePoints.get(players.indexOf(currPlayer))) {
 
-            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), "all",
+            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), currPlayer.getUsername(),
                     currPlayer.getUsername(), "privatePoints"));
 
         }
     }
 
 
-
-
-
     /**
+     * Updates the CheckManager state with the current game state and the current player.
+     * @param state The current game state.
+     * @param current The current player.
+     */
+    private void updateCheckManager(GameState state,Player current){
+        checks.setState(state);
+        checks.setCurrPlayer(current);
+    }
+
+
+    /** Advances the turn:
      * Update the points of the current player,
-     * select the next player and calls the endGame function if the last turn has been played.
-     * Also resets the board when needed
+     * select the next player and calls the endGame function if the last turn of the game has been played.
+     * Also resets the board when needed.
      */
     private void nextTurn(){
-
         //Update the points
         updatePoints();
-
 
         //Update current player
         currPlayer=nextPlayer;
         selectNext();
 
+        //Change game state
+        state = GameState.CHOOSING_TILES;
 
         //checks if the board needs to reset
-        if(board.checkBoardReset()) board.boardResetENG();
+            if(board.checkBoardReset()){
+
+                board.boardResetENG();
+
+                //Notify Board
+                notifier.firePropertyChange(new PropertyChangeEvent(
+                        new Matrix(board.getGamesBoard()), "all", "0","board" ));
+            }
 
         //checks if someone completed all their bookshelf
         if(isFinished && currPlayer.equals(players.get(0))) endGame();
 
-
+        //Notifies the new current and next players
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
                 currPlayer.getUsername(), "currPlayer"));
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
 
     }
 
 
+    /**
+     * Selects the next player in line to play the game.
+     * Skips disconnected player.
+     * If there is only one connected player, stops the game and starts the end timer
+     * (the next player is set to the successive player in line even if it is disconnected
+     *  to make sure that if a player reconnects in time the game will select the next player properly)
+     */
+    private void selectNext() {
+
+        Player player=(currPlayer==players.get(players.size()-1))?
+                        selectNextNotDisconnected(0):
+                        selectNextNotDisconnected(players.indexOf(currPlayer)+1);
+
+        if(player!=null){
+            nextPlayer = player;
+        }else {
+            state=GameState.STOPPED;
+            nextPlayer=selectNextPlayer();
+            startEndTimer();
+        }
+    }
+
+    /**
+     * Returns the next player in line even if it is disconnected.
+     * @return The next player.
+     */
+    private Player selectNextPlayer(){
+        return currPlayer==players.get(players.size()-1)
+                ?players.get(0)
+                :players.get(players.indexOf(currPlayer)+1);
+    }
+
+    /**
+     * Returns the next connected player in line.
+     * @param start The index of the player after the current player.
+     * @return The next connected player.
+     */
+    private Player selectNextNotDisconnected(int start){
+        Player player;
+        int index = start;
+        int count=0;
+
+        do{
+            player=players.get(index);
+            if(!player.isDisconnected()){
+                return player;
+            } else if (players.indexOf(player)==players.size()-1) {
+                index=0;
+                count++;
+            }else{
+                index++;
+                count++;
+            }
+        }while(count!=players.size()-1);
+
+        return null;
+    }
+
+    /**
+     * Disconnects the selected player:
+     * starts the end timer if there is only one player left.
+     * @param player The player to disconnect.
+     */
+    public synchronized void disconnectPlayer(Player player){
+       System.out.println(player.getUsername() + " has disconnected");
+       //Disconnect the player
+       player.setDisconnected(true);
+       connectedPlayers--;
+       if(connectedPlayers<=1) startEndTimer();
+       if(player.equals(currPlayer)) nextTurn();
+    }
+
+    /**
+     * Reconnects the selected player.
+     * If the game was stopped due to and insufficient number of players,
+     * checks if there are enough players and if so makes the game continue.
+     * @param player The player to reconnect.
+     */
+    public synchronized void playerReconnection(Player player,VirtualView view){
+        System.out.println(player.getUsername() + " has reconnected");
+
+        virtualViews.add(view);
+        notifier.addPropertyChangeListener("all",view);
+        notifier.addPropertyChangeListener(view.getUsername(),view);
+        player.setDisconnected(false);
+        connectedPlayers++;
+        if(connectedPlayers==2) {
+            timer.cancel();
+            nextTurn();
+        }
+        updatePlayer(player);
+    }
+
+    /**
+     * Updates the selected player client state using his virtual view.
+     * @param p The player to update
+     */
+    private void updatePlayer(Player p){
+        //Notify Board
+        notifier.firePropertyChange(new PropertyChangeEvent(new Matrix(board.getGamesBoard()), p.getUsername(), "0","board" ));
+
+        //Notify PlayerNames
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                players.stream().map(Player::getUsername).toList(), p.getUsername(), "0","playerNames" ));
+
+        //Notify commonObjectives
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getNum).toList(), p.getUsername(), "0","commonObj" ));
+
+        //Notify personal objective
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
+
+        //Notify currPlayer and nextPlayer
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
+                currPlayer.getUsername(), "currPlayer"));
+
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
+
+        //Notify privatePoints
+        notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), p.getUsername(),
+                p.getUsername(), "privatePoints"));
+
+
+        for(Player player : players){
+
+            //Notify Bookshelf
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
+                    p.getUsername(), player.getUsername(), "bookshelf"));
+
+            //Notify publicPoints
+            notifier.firePropertyChange(new PropertyChangeEvent(player.getPublicPoint(), p.getUsername(),
+                    player.getUsername(), "publicPoints"));
+        }
+
+
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                true, "all", "0","start" ));
+
+
+    }
+
+    private void startEndTimer(){
+        System.out.println("start timer");
+        TimerTask task = new TimerCounter(this);
+        timer.schedule(task, initialDelay, delta);
+    }
+
+    //Game ending methods
 
     /**
      * Select the winner of the game and ends it
      */
-    private void endGame(){
+    private synchronized void endGame(){
         state = GameState.ENDING;
         selectWInner();
+        //Notify game Start
+        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","end" ));
     }
 
 
@@ -355,59 +585,55 @@ public class Model  {
      * Select the player who won the game
      */
     private void selectWInner(){
+
+        winner = connectedPlayers==1?disconnectionWinner():playerWithMostPoints();
+        notifier.firePropertyChange(new PropertyChangeEvent(winner.getUsername(),"all","0","winner"));
+
+    }
+
+    private Player disconnectionWinner(){
+        Player player;
+        int index=0;
+
+        while(index!=players.size()) {
+            player = players.get(index);
+            if (!player.isDisconnected()) {
+                return player;
+            }
+            index++;
+        }
+        return playerWithMostPoints();
+
+    }
+
+    private Player playerWithMostPoints(){
         int winnerpos=0;
+
         for( int i = 0; i< players.size(); i++){
-            if(players.get(i).getPrivatePoint() >players.get(winnerpos).getPrivatePoint()) winnerpos=i;
+            if(players.get(i).getPrivatePoint() >= players.get(winnerpos).getPrivatePoint())
+                winnerpos=i;
         }
 
-        winner = players.get(winnerpos);
-
+        return players.get(winnerpos);
     }
 
-    private void selectNext() {
-        if(currPlayer==players.get(players.size()-1)){ nextPlayer = players.get(0);}
-        else nextPlayer = players.get(players.indexOf(currPlayer)+1);
+    //TimerInterface Methods
+
+    @Override
+    public void disconnect() {
+        endGame();
     }
 
-    private void updateCheckManager(GameState state,Player current){
-        checks.setState(state);
-        checks.setCurrPlayer(current);
+    @Override
+    public int updateTime() {
+        time++;
+        return time;
     }
 
-
-    /**
-     * Initializes common objectives
-     */
-    private void commonobjInit() {
-        commonObj = CommonObjective.randomSubclass(numberOfCommonObjectives);
+    @Override
+    public String getErrorMessage() {
+        return "There is only one player left. Ending game number: " +gameID;
     }
-
-
-    /**
-     * Initializes private objectives
-     */
-    private void personalobjInit() {
-        PersonalObjective po;
-        ArrayList<PersonalObjective> tmp=new ArrayList<>();
-
-        for (int i = 0; i < players.size(); i++) {
-            //check if there are NOT 2 equals PersonalObjective
-            do {
-                po =new PersonalObjective();
-            }while (tmp.contains(po));
-            tmp.add(po);
-        }
-
-
-        for(int i = 0;i<players.size();i++){
-            players.get(i).setPersonalObjective(tmp.get(i));
-        }
-
-    }
-
-
-
-
 
 
 
@@ -420,7 +646,7 @@ public class Model  {
      * Return the array of all players
      * @return  Array of all players
      */
-    public ArrayList<Player> getPlayers() {
+    public  ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -428,7 +654,7 @@ public class Model  {
      * Return the board
      * @return the board
      */
-    public Board getBoard() {
+    public  Board getBoard() {
         return board;
     }
 
@@ -436,7 +662,7 @@ public class Model  {
      *  Returns the current state of the game
      * @return The current state of the game
      */
-    public GameState getState() {
+    public  GameState getState() {
         return state;
     }
 
@@ -459,31 +685,13 @@ public class Model  {
      * Set the current player (Just for Testing purposes)
      * @param currPlayer The player to set as current player
      */
-    public void setCurrPlayer(Player currPlayer) {
+    public synchronized void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
     }
 
-    //TEST
-    public Player getCurrPlayer() {
-        return currPlayer;
+    public int getGameID() {
+        return gameID;
     }
-
-    public Player getNextPlayer() {
-        return nextPlayer;
-    }
-
-    public Player getWinner() {
-        return winner;
-    }
-
-    public ArrayList<Integer> getPrivatePoints() {
-        return privatePoints;
-    }
-
-    public ArrayList<Integer> getPublicPoints() {
-        return publicPoints;
-    }
-
 
     /**
      * Return true if the game is finished, false otherwise
@@ -497,7 +705,7 @@ public class Model  {
      * Sets the selectedTiles array
      * @param selectedTile Array you want to set selectedTiles as
      */
-    public void setSelectedTiles(ArrayList<Tiles> selectedTile) {
+    public synchronized void setSelectedTiles(ArrayList<Tiles> selectedTile) {
         this.selectedTiles = selectedTile;
     }
 
@@ -510,31 +718,16 @@ public class Model  {
         return selectedTiles;
     }
 
-    public void addPlayers(ArrayList<Player> players){
-        this.players.addAll(players);
-    }
-
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
-    }
-
-    public ArrayList<VirtualView> getVirtualViews() {
-        return virtualViews;
     }
 
     public void setVirtualViews(ArrayList<VirtualView> virtualViews) {
         this.virtualViews = virtualViews;
     }
 
-    /**
-     * @return ArrayList of all the personal objectives of all players in the game
-     */
-   private ArrayList<PersonalObjective> getPersObj(){
-        ArrayList<PersonalObjective> persobj = new ArrayList<>();
-        for( Player p : players){
-            persobj.add(p.getPersonalObjective());
-        }
-        return persobj;
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
     }
 
 }

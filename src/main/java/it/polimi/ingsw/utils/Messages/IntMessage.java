@@ -1,6 +1,8 @@
-package it.polimi.ingsw.server.Messages;
+package it.polimi.ingsw.utils.Messages;
 
-public class IntMessage extends Message{
+import java.io.Serializable;
+
+public class IntMessage extends Message implements Serializable {
 
     private int num;
 
