@@ -1,14 +1,20 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIMain;
+import it.polimi.ingsw.client.View.GUI.Scene.Login;
+import it.polimi.ingsw.client.View.GUI.Scene.LoginController;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class ClientBase {
+public class ClientBase extends Application {
 
     public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
@@ -25,7 +31,7 @@ public class ClientBase {
             throw new RuntimeException(e);
         }
 
-        Networker client = switch (decision) {
+        Networker networker = switch (decision) {
             case "RMI" -> new NetworkerRmi(state);
             case "TCP" -> new NetworkerTcp();
             default -> null;
@@ -36,20 +42,34 @@ public class ClientBase {
         decision=decision.toUpperCase();
         switch (decision){
             case "CLI" -> {
-                CLIMain cli = new CLIMain(lock, state, client);
-                client.setCli(cli);
-                client.initializeConnection();
-                try {
-                    cli.runCLI();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                CLIMain cli = new CLIMain(lock, state, networker);
+                networker.setCli(cli);
+                networker.initializeConnection();
+                cli.runUI();
             }
             case "GUI" -> {
-                GUIMain gui=new GUIMain(lock, state, client);
-                gui.runGUI();
+//                GUIMain gui=new GUIMain(lock, state, networker, new GUIController());
+//                gui.runUI();
+                launch();
             }
         }
 
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/loginGriglia.fxml"));
+//        LoginController loginController=new LoginController();
+
+        LoginController loginController=new LoginController();
+        fxmlLoader.setController(loginController);
+        Parent root=FXMLLoader.load(getClass().getResource("/fxml/loginGriglia.fxml"));
+        Scene scene=new Scene(root);
+
+
+        stage.setFullScreen(true);
+        stage.setTitle("Login Page");
+        stage.setScene(scene);
+        stage.show();
     }
 }

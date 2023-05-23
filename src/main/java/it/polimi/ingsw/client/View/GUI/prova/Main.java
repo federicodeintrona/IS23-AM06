@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.View.GUI.prova;
 
-import it.polimi.ingsw.client.View.GUI.Login;
+import it.polimi.ingsw.client.View.GUI.Scene.Login;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

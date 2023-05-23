@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.View.GUI;
+package it.polimi.ingsw.client.View.GUI.Scene;
 
 import it.polimi.ingsw.app.HelloApplication;
 import javafx.application.Application;
@@ -13,13 +13,15 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 
-public class Login extends Application {
+public class Login {
 
-    @Override
+
     public void start(Stage stage) throws Exception {
-//        FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/loginGriglia.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/loginGriglia.fxml"));
 //        LoginController loginController=new LoginController();
 
+        LoginController loginController=new LoginController();
+        fxmlLoader.setController(loginController);
         Parent root=FXMLLoader.load(getClass().getResource("/fxml/loginGriglia.fxml"));
         Scene scene=new Scene(root);
 
@@ -32,7 +34,5 @@ public class Login extends Application {
 
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
+
 }

@@ -2,9 +2,10 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.Message;
 
-public class CLIMain {
+public class CLIMain implements View {
 
 
 
@@ -51,6 +52,7 @@ public class CLIMain {
         this.IHaveToRequestTheUsername = IHaveToRequestTheUsername;
     }
 
+    @Override
     public void receivedMessage(Message message){
         switch (message.getType()){
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
@@ -77,7 +79,8 @@ public class CLIMain {
 
 
 
-    public void runCLI () throws InterruptedException {
+    @Override
+    public void runUI() {
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
 
@@ -88,13 +91,21 @@ public class CLIMain {
         th1.start();
 
         while (!clientState.gameHasStarted()){
-            Thread.sleep(1000);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
-        Thread.sleep(500);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         cliPrint.printChair();
         cliPrint.printCommonObjective(clientState.getGameCommonObjective());
@@ -105,7 +116,11 @@ public class CLIMain {
         while (!clientState.isGameIsEnded()){
             //stampa nuovo turno se il current è il next di prima
            if (clientState.getCurrentPlayer().equals(curr)){
-               Thread.sleep(1000);
+               try {
+                   Thread.sleep(1000);
+               } catch (InterruptedException e) {
+                   throw new RuntimeException(e);
+               }
                cliPrint.clearSheel();
                cliPrint.playerTurn();
                curr=clientState.getNextPlayer();
@@ -131,7 +146,6 @@ public class CLIMain {
 
             fine partita
          */
-
     }
 
 

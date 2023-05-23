@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client.View;
 
-import java.beans.PropertyChangeListener;
+import it.polimi.ingsw.utils.Messages.Message;
 
-public abstract class View {
+public interface View {
 
-
+    void receivedMessage(Message message);
+    void runUI();
 }

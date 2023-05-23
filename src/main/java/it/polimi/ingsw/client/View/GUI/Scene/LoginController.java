@@ -1,5 +1,6 @@
-package it.polimi.ingsw.client.View.GUI;
+package it.polimi.ingsw.client.View.GUI.Scene;
 
+import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.event.ActionEvent;
