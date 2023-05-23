@@ -66,10 +66,6 @@ private static GUIController contr;
 
     @Override
     public void start(Stage stage) throws Exception {
-        GUIController guiController= GUIFactory.getGuiController();
-        FXMLLoader fxmlLoader=new FXMLLoader();
-        LoginController contr = new LoginController();
-        fxmlLoader.setController(contr);
 
         Parent root;
 
@@ -81,6 +77,7 @@ private static GUIController contr;
 
         Scene scene=new Scene(root);
 
+        GUIController guiController= GUIFactory.getGuiController();
         guiController.setStage(stage);
         guiController.setRoot(root);
         guiController.setScene(scene);

@@ -140,10 +140,12 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setAllBookshelf(String username, Matrix bookshelf){
         synchronized (viewLock) {
             allBookshelf.put(username, bookshelf);
-            if (myUsername.equals(username)) {
+            if (myUsername.equals(username)){
                 myBookshelf = bookshelf;
             }
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(bookshelf,"bookshelf",null,username));
     }
 
     public Integer getMyPoints() {
@@ -234,6 +236,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.gameIsEnded = gameIsEnded;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"end",null,true));
     }
 
     public boolean gameHasStarted () {
@@ -242,9 +246,10 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public void setGameHasStarted (boolean gameHasStarted) {
         synchronized (viewLock) {
-            notifier.firePropertyChange(new PropertyChangeEvent(this,"start",null,true));
             this.gameHasStarted = gameHasStarted;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"start",null,true));
     }
 
     @Override

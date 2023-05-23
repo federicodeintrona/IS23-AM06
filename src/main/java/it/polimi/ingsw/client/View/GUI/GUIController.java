@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.View.GUI;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.View.View;
+import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Tiles;
 import javafx.application.Platform;
@@ -47,13 +48,13 @@ public class GUIController implements View {
     //Qui arrivano le notifiche dal client state
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        switch ((String)evt.getSource()){
+        switch (evt.getPropertyName()){
             case "start" ->{
                 moveToGameScene();
             }
             //Bisogna fare tutti i casi
             case "bookshelf" ->{
-                updateBookshelf();
+                updateBookshelf((String)evt.getNewValue(),(Matrix) evt.getSource());
 
             }
             case "end" -> {
@@ -62,7 +63,7 @@ public class GUIController implements View {
         }
     }
 
-    private void updateBookshelf() {
+    private void updateBookshelf(String username,Matrix matrix) {
     }
 
     private void moveToEndScene() {
@@ -114,22 +115,13 @@ public class GUIController implements View {
     private void goToNumberOfPlayerPage() {
 
         Platform.runLater(()->{
-
-            FXMLLoader fxmlLoader=new FXMLLoader();
-            numberOfPlayerController controller=new numberOfPlayerController();
-            fxmlLoader.setController(controller);
             try {
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/numberOfPlayer.fxml")));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-            Scene scene=new Scene(root);
-
-            stage.setFullScreen(true);
+            scene.setRoot(root);
             stage.setTitle("Player Number Page");
-            stage.setScene(scene);
-            stage.show();
 
         });
 
