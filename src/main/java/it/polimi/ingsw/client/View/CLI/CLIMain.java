@@ -7,8 +7,6 @@ import it.polimi.ingsw.utils.Messages.Message;
 
 public class CLIMain implements View {
 
-
-
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
     private final Networker net; //a chi mandare messaggi
@@ -79,7 +77,6 @@ public class CLIMain implements View {
 
 
 
-    @Override
     public void runUI() {
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);

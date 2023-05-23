@@ -7,7 +7,7 @@ public class GUIFactory {
         return guiController;
     }
 
-    public void setGuiController(GUIController guiController) {
+    public static void setGuiController(GUIController guiController) {
         GUIFactory.guiController = guiController;
     }
 }

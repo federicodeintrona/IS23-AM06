@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.Messages.*;
 
@@ -23,7 +24,7 @@ public class NetworkerRmi implements Networker {
     private Message message;
     private static RMIHandlerInterface rmiHandler;
     private ClientState clientState;
-    private CLIMain cli;
+    private View view;
 
 
     /**
@@ -92,7 +93,7 @@ public class NetworkerRmi implements Networker {
             gameID =  message1.getNum();
         }
 
-        cli.receivedMessage(message1);
+        view.receivedMessage(message1);
     }
 
 
@@ -110,7 +111,7 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
         this.gameID = message1.getNum();
-        cli.receivedMessage(message1);
+        view.receivedMessage(message1);
     }
 
     /**
@@ -126,7 +127,7 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        cli.receivedMessage(message);
+        view.receivedMessage(message);
     }
 
     /**
@@ -141,7 +142,7 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        cli.receivedMessage(message);
+        view.receivedMessage(message);
     }
 
     /**
@@ -156,7 +157,12 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        cli.receivedMessage(message);
+        view.receivedMessage(message);
+    }
+
+    @Override
+    public void setView(View view) {
+        this.view=view;
     }
 
     private String getClientIP() throws UnknownHostException {
@@ -186,7 +192,4 @@ public class NetworkerRmi implements Networker {
     }
 
 
-    public void setCli(CLIMain cli) {
-        this.cli = cli;
-    }
 }

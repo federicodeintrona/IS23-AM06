@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.*;
 
 public interface Networker {
@@ -10,5 +11,5 @@ public interface Networker {
     public void removeTilesFromBoard(Message tiles);
     public void switchTilesOrder(Message ints);
     public void addTilesToBookshelf (Message column);
-    public void setCli(CLIMain cli);
+    public void setView(View view);
 }

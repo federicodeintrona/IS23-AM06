@@ -20,8 +20,7 @@ public class Login {
         FXMLLoader fxmlLoader=new FXMLLoader(Login.class.getResource("/fxml/loginGriglia.fxml"));
 //        LoginController loginController=new LoginController();
 
-        LoginController loginController=new LoginController();
-        fxmlLoader.setController(loginController);
+
         Parent root=FXMLLoader.load(getClass().getResource("/fxml/loginGriglia.fxml"));
         Scene scene=new Scene(root);
 

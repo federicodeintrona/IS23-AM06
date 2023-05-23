@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.JsonReader;
 import org.json.simple.parser.ParseException;
@@ -15,7 +16,7 @@ public class NetworkerTcp implements Networker{
     Socket socket ;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private CLIMain cli;
+    private View view;
 
     public NetworkerTcp()  {
         JsonReader config;
@@ -50,7 +51,7 @@ public class NetworkerTcp implements Networker{
         }
 
         try {
-            cli.receivedMessage( (Message) ois.readObject());
+            view.receivedMessage( (Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -64,7 +65,7 @@ public class NetworkerTcp implements Networker{
             throw new RuntimeException(e);
         }
         try {
-            cli.receivedMessage( (Message) ois.readObject());
+            view.receivedMessage( (Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -78,7 +79,7 @@ public class NetworkerTcp implements Networker{
             throw new RuntimeException(e);
         }
         try {
-            cli.receivedMessage( (Message) ois.readObject());
+            view.receivedMessage( (Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -92,7 +93,7 @@ public class NetworkerTcp implements Networker{
             throw new RuntimeException(e);
         }
         try {
-            cli.receivedMessage( (Message) ois.readObject());
+            view.receivedMessage( (Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -107,7 +108,7 @@ public class NetworkerTcp implements Networker{
             throw new RuntimeException(e);
         }
         try {
-            cli.receivedMessage( (Message) ois.readObject());
+            view.receivedMessage( (Message) ois.readObject());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -115,7 +116,9 @@ public class NetworkerTcp implements Networker{
         }
     }
 
-    public void setCli(CLIMain cli) {
-        this.cli = cli;
+    @Override
+    public void setView(View view) {
+        this.view=view;
     }
+
 }
