@@ -46,10 +46,10 @@ public class GameController implements Initializable {
 
     private ImageView setTiles(Tiles tiles, int i, int j){
         Image image;
-
-        double cellWidth = boardGrid.getColumnConstraints().get(j).getPercentWidth() / 100.0 * boardGrid.getWidth();
-        double cellHeight = boardGrid.getRowConstraints().get(i).getPercentHeight() / 100.0 * boardGrid.getHeight();
-        System.out.println(cellHeight+ cellWidth);
+//
+//        double cellWidth = boardGrid.getColumnConstraints().get(j).getPercentWidth() / 100.0 * boardGrid.getWidth();
+//        double cellHeight = boardGrid.getRowConstraints().get(i).getPercentHeight() / 100.0 * boardGrid.getHeight();
+//        System.out.println(cellHeight+ cellWidth);
 
         switch (tiles) {
             case GREEN -> {
