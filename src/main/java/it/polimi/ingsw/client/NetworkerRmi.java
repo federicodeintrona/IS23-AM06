@@ -6,6 +6,8 @@ import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.JsonReader;
 import it.polimi.ingsw.utils.Messages.*;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -15,8 +17,13 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class NetworkerRmi implements Networker {
+public class NetworkerRmi implements Networker, TimerInterface {
     private static int port;
     private  String serverIP;
     private String username;
@@ -25,6 +32,14 @@ public class NetworkerRmi implements Networker {
     private static RMIHandlerInterface rmiHandler;
     private ClientState clientState;
     private View view;
+
+    //Timer
+
+    private  Timer timer;
+    private int time = 0;
+    private static final int initialDelay = 50;
+    private static final int delta = 2000;
+    private boolean disconnected=false;
 
 
     /**
@@ -97,6 +112,7 @@ public class NetworkerRmi implements Networker {
         // Calling the completeRmiConnection() method to complete the client-server connection
         if (!message1.getType().equals(MessageTypes.ERROR)){
            this.username = username.getUsername();
+           pingPong();
         }
         if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS)){
             gameID =  message1.getNum();
@@ -201,4 +217,42 @@ public class NetworkerRmi implements Networker {
     }
 
 
+    private void pingPong(){
+        ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+        e.scheduleAtFixedRate(()->{
+            Message msg = new Message();
+            msg.setType(MessageTypes.PONG);
+            try {
+                if(rmiHandler.pingPong()){
+                    this.time=0;
+                }
+            } catch (RemoteException ex) {
+                if(!disconnected)
+                    System.out.println(username + " is not responding...");
+            }
+
+        },10,1000, TimeUnit.MILLISECONDS);
+
+        timer = new Timer();
+        TimerTask task = new TimerCounter(this);
+        timer.schedule(task,initialDelay,delta);
+    }
+
+    @Override
+    public void disconnect() {
+
+        disconnected=true;
+
+    }
+
+    @Override
+    public int updateTime() {
+        time++;
+        return time;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "Server is not responding. Retry later.";
+    }
 }
