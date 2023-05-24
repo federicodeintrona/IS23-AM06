@@ -6,12 +6,16 @@ import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController {
+
+public class LoginController implements SceneController, Initializable {
     private final GUIController guiController = GUIControllerStatic.getGuiController();
     @FXML
     private TextField usernameField;
@@ -19,15 +23,6 @@ public class LoginController {
     private Button loginButton;
     @FXML
     private Label usernameStatus;
-
-
-
-    @FXML
-    private void initialize() {
-        // Add an action for the "Open Layout2" button
-        loginButton.setOnAction(this::loginClick);
-
-    }
 
 
 
@@ -49,5 +44,21 @@ public class LoginController {
 
     public void errorUsername(){
         usernameStatus.setText("Username Sbagliato");
+    }
+
+    @Override
+    public void update(String property) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        guiController.setSceneController(this);
+
     }
 }

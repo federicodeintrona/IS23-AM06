@@ -29,12 +29,13 @@ public class GameController implements Initializable {
         initializeBoardGrid();
     }
 
+    //la metrice è 11x11 ==> getTile -1
     public void initializeBoardGrid(){
         Matrix matrix=clientState.getBoard();
-        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
-            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
-                if (!matrix.getTile(i,j).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i,j).equals(Tiles.EMPTY)) {
-                    boardGrid.add(setTiles(matrix.getTile(i, j)), j, i); //lavora colonna - riga
+        for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
+            for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
+                if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
+                    boardGrid.add(setTiles(matrix.getTile(i-1, j-1)), j, i); //lavora colonna - riga
                 }
             }
         }
@@ -52,9 +53,9 @@ public class GameController implements Initializable {
         String title = titles==null?null:titles[rand.nextInt(Define.NUMBEROFTILEIMAGES.getI())];
         Image image = new Image(title);
         ImageView imageView = new ImageView(image);
+
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(50);
-        imageView.setFitHeight(50);
         return imageView;
     }
 }

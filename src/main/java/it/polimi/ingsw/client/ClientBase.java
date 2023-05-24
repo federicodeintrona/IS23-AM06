@@ -70,6 +70,7 @@ private static GUIController contr;
     public void start(Stage stage) throws Exception {
 
         Parent root;
+        FXMLLoader loader = new FXMLLoader();
 
         try {
             root = FXMLLoader.load(getClass().getResource(Scenes.Login.getName()));
@@ -83,7 +84,6 @@ private static GUIController contr;
         guiController.setStage(stage);
         guiController.setRoot(root);
         guiController.setScene(scene);
-
         stage.setFullScreen(true);
         stage.setTitle(Scenes.Login.getTitle());
         stage.setScene(scene);

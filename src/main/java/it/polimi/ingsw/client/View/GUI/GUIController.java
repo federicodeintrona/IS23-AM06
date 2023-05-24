@@ -1,17 +1,21 @@
 package it.polimi.ingsw.client.View.GUI;
 
+import it.polimi.ingsw.client.ClientBase;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.View.GUI.Scene.LoginController;
+import it.polimi.ingsw.client.View.GUI.Scene.SceneController;
 import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Tiles;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
@@ -25,6 +29,7 @@ public class GUIController implements View {
     private  Parent root;
     private  final Networker networker;
     private final ClientState state;
+    private SceneController sceneController;
 
     public ClientState getState() {
         return state;
@@ -92,11 +97,8 @@ public class GUIController implements View {
             }
             case ERROR -> {
 
-                showError(message.getUsername());
+                sceneController.showError(message.getUsername());
 
-                if (message.getUsername().equals("Username already taken")){
-                   showErrorLoginPage();
-                }
             }
             case OK -> {
                 /*
@@ -112,19 +114,19 @@ public class GUIController implements View {
     }
 
     private void showErrorLoginPage() {
-        try {
-            FXMLLoader fxmlLoader=FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scene.toString())));
-            ((LoginController)fxmlLoader.getController()).errorUsername();
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/loginGriglia.fxml"));
+        LoginController loginController=loader.getController();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        loginController.errorUsername();
+
+
     }
 
 
 
 
     public void changeScene(Scenes scenes){
+
 
         Platform.runLater(()->{
             try {
@@ -134,10 +136,12 @@ public class GUIController implements View {
             }
             this.scene.setRoot(root);
             stage.setTitle(scenes.getTitle());
-
         });
     }
 
+    public void setSceneController(SceneController sceneController) {
+        this.sceneController = sceneController;
+    }
 
     public void setStage(Stage stage) {
         this.stage = stage;

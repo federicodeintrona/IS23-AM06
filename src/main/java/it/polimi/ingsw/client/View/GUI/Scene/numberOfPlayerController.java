@@ -15,7 +15,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class numberOfPlayerController implements Initializable {
+public class numberOfPlayerController implements Initializable,SceneController {
 
     private GUIController guiController = GUIControllerStatic.getGuiController();
     @FXML
@@ -45,4 +45,14 @@ public class numberOfPlayerController implements Initializable {
         guiController.sendMessage(message);
     }
 
+    @Override
+    public void update(String property) {
+        switch (property){
+        }
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
 }
