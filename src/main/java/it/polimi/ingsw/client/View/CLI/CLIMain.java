@@ -102,7 +102,7 @@ public class CLIMain {
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         cliPrint.printChair();
         cliPrint.printCommonObjective(clientState.getGameCommonObjective());

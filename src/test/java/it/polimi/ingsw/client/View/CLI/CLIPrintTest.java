@@ -19,6 +19,25 @@ import java.util.HashMap;
 
 class CLIPrintTest {
 
+    @DisplayName("Print Title")
+    @Test
+    public void printTitle(){
+        Object obj=new Object();
+        ClientState clientState= null;
+        try {
+            clientState = new ClientState(obj);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        Networker networker=new NetworkerRmi();
+        CLIMain cliMain=new CLIMain(obj, clientState, networker);
+        CLIPrint cliPrint=new CLIPrint(cliMain);
+
+        cliPrint.printTitle();
+    }
+
+
+
     @DisplayName("Print Board")
     @Test
     public void printBoard(){
