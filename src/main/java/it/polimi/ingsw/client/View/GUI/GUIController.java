@@ -86,7 +86,9 @@ public class GUIController implements View {
     public void receivedMessage(Message message) {
         switch (message.getType()){
             case NEW_LOBBY ->  changeScene(Scenes.NumOfPlayers);
-            case WAITING_FOR_PLAYERS -> changeScene(Scenes.Waiting);
+            case WAITING_FOR_PLAYERS -> {
+                if(!state.gameHasStarted()) changeScene(Scenes.Waiting);
+            }
             case ERROR -> {
 
                 showError(message.getUsername());
