@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client.View.CLI;
 
-import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tiles;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,7 +11,9 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -421,5 +423,9 @@ public class CLIPrint implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public void printMessage (String username, String message) {
+        System.out.println(username + ": " + message);
     }
 }

@@ -106,4 +106,14 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         cliMain.receivedMessage((Message) evt.getNewValue());
 
     }
+
+    @Override
+    public void chat(Message message) {
+
+    }
+
+    @Override
+    public void privateChat(Message message) {
+
+    }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Messages.IntMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
+
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -36,7 +37,6 @@ public class Controller implements PropertyChangeListener {
         games = models;
         players = playerMap;
     }
-
 
     /**
      * Start the selected game.
@@ -237,5 +237,17 @@ public class Controller implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
         lobby.closeGame(((Model)evt.getSource()).getGameID());
+    }
+
+    public Message sendMessage (int gameId, String playerForwarding, Message message) {
+
+        System.out.println("model chiamato");
+        lobby.getGames().get(gameId).sendMessage(playerForwarding, message);
+
+        Message messageOut = new Message();
+        messageOut.setUsername(playerForwarding);
+        messageOut.setType(MessageTypes.CHAT);
+
+        return messageOut;
     }
 }

@@ -16,4 +16,5 @@ public interface RMIHandlerInterface extends Remote {
     IntMessage newLobby(String client, int players) throws RemoteException;
     IntMessage acceptRmiConnection (String username, ClientStateRemoteInterface state) throws RemoteException;
     boolean pingPong() throws RemoteException;
+    Message sendMessage (int gameId, String playerForwarding, Message message) throws RemoteException;
 }

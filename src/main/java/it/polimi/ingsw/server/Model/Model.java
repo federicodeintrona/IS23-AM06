@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
@@ -15,6 +16,7 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -615,6 +617,19 @@ public class Model implements TimerInterface {
         }
 
         return players.get(winnerpos);
+    }
+
+    public synchronized void sendMessage (String playerForwarding, Message message) {
+        List<String> usernames = players.stream()
+                                        .map(x -> x.getUsername())
+                                        .filter(x -> !x.equals(playerForwarding))
+                                        .toList();
+
+        for (String x: usernames){
+            System.out.println("x = " + x);
+            System.out.println(" model: message è = " + message.getUsername());
+            notifier.firePropertyChange(new PropertyChangeEvent(message.getUsername(), x, null, "message"));
+        }
     }
 
     //TimerInterface Methods

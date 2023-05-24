@@ -11,4 +11,6 @@ public interface Networker {
     void switchTilesOrder(Message ints);
     void addTilesToBookshelf (Message column);
     void setCli(CLIMain cli);
+    void chat (Message message);
+    void privateChat (Message message);
 }

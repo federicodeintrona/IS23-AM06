@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.rmi.Remote;
@@ -40,4 +40,6 @@ public interface ClientStateRemoteInterface extends Remote {
     void setCurrentPlayer(String source) throws RemoteException;
 
     boolean pingPong() throws RemoteException;
+
+    void printMessage (String message) throws RemoteException;
 }

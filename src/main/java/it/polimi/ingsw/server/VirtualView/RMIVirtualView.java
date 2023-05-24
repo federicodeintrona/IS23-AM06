@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
-import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -70,6 +70,10 @@ public class RMIVirtualView extends VirtualView{
                     }
                     case ("end") -> {
                         clientState.setGameIsEnded((boolean) evt.getSource());
+                    }
+                    case ("message") -> {
+                        System.out.printf("metodo chiamato");
+                        clientState.printMessage((String) evt.getSource());
                     }
                 }
             } catch (RemoteException e) {

@@ -69,6 +69,7 @@ public class CLIMain {
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
             }
+            case CHAT -> cliPrint.printMessage(message.getUsername(), clientState.getMessage());
             default -> {
                 break;
             }

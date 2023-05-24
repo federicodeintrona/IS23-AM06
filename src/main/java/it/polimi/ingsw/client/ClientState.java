@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.rmi.RemoteException;
@@ -28,6 +28,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private boolean gameIsEnded=false;
     private boolean waiting=false;
     private String chair;
+    private String message;
 
     public ClientState(Object viewLock) throws RemoteException {
         super();
@@ -257,4 +258,12 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
     }
+
+    @Override
+    public void printMessage(String message) {
+        System.out.println("message.getUsername() = " + message);
+        this.message = message;
+    }
+
+    public String getMessage () {return message;}
 }
