@@ -4,7 +4,7 @@ public enum Scenes {
     Login("/fxml/loginGriglia.fxml","Login Page"),
     NumOfPlayers("/fxml/numberOfPlayer.fxml","New Game"),
     Waiting("/fxml/waiting.fxml","Waiting Page"),
-    Game("/fxml/game2.fxml","Game"),
+    Game("/fxml/game2.fxml","MyShelfie"),
     Endgame("","");
 
     private String name;
