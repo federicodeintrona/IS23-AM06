@@ -18,7 +18,9 @@ import java.util.concurrent.Executors;
 
 public class Server extends UnicastRemoteObject {
     private JsonReader config;
-    private static Integer port;     // Da sistemare
+    private static int tcpPort;
+    private static int rmiPort;
+
     private final static ArrayList <ServerClientHandler> clientList = new ArrayList<>();
     private final Lobby lobby = new Lobby();
     private final Controller controller= new Controller(lobby);
@@ -26,10 +28,11 @@ public class Server extends UnicastRemoteObject {
 
     protected Server() throws IOException, ParseException{
         super();
-        InputStream is=this.getClass().getClassLoader().getResourceAsStream("Server.json");
-        config=new JsonReader(is);
-//        config = new JsonReader("src/main/resources/Server.json");
-        port=config.getInt("port");
+        InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
+        config = new JsonReader(is);
+
+        tcpPort = config.getInt("tcpPort");
+        rmiPort = config.getInt("rmiPort");
     }
 
     public static void main( String[] args ) throws RemoteException {
@@ -58,7 +61,7 @@ public class Server extends UnicastRemoteObject {
         lobby.setController(controller);
 
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(tcpPort);
         } catch (IOException e) {
             System.err.println(e.getMessage()); // Porta non disponibile
             return;
@@ -76,7 +79,7 @@ public class Server extends UnicastRemoteObject {
         // Bind the remote object's stub in the registry
         Registry registry = null;
         try {
-            registry = LocateRegistry.createRegistry(1099);
+            registry = LocateRegistry.createRegistry(rmiPort);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
