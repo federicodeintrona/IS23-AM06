@@ -4,6 +4,8 @@ import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.utils.Messages.Message;
 
+import java.beans.PropertyChangeEvent;
+
 public class CLIMain {
 
 
@@ -143,7 +145,20 @@ public class CLIMain {
 
     }
 
-
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()){
+            case "start" ->{
+                // moveToGameScene();
+            }
+            case "nextTurn"->{
+                //  printTurn();
+            }
+            case "end" -> {
+                // moveToEndScene();
+            }
+        }
+    }
 
 
 }
