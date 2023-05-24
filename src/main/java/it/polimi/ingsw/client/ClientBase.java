@@ -39,7 +39,7 @@ private static GUIController contr;
             case "TCP" -> new NetworkerTcp(state,host);
             default -> new NetworkerTcp(state,host);
         };
-
+        networker.initializeConnection();
         System.out.print("Which User Interface do you choose? (CLI/GUI): ");
         decision = scanner.nextLine();
         switch (decision.toUpperCase()){
@@ -51,7 +51,6 @@ private static GUIController contr;
             case "GUI" -> {
                 GUIControllerStatic.setGuiController(new GUIController(networker,state));
                 networker.setView(GUIControllerStatic.getGuiController());
-                networker.initializeConnection();
                 launch();
             }
             default -> {

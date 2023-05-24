@@ -165,7 +165,7 @@ public class CLIMain implements View {
     //Volendo possiamo far printare le varie cose quando viene notificata dallo state
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        switch ((String)evt.getSource()){
+        switch (evt.getPropertyName()){
             case "start" ->{
                // moveToGameScene();
             }
