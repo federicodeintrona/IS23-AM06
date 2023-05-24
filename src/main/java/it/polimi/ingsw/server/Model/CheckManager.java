@@ -6,7 +6,6 @@ import it.polimi.ingsw.utils.Tiles;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 public class CheckManager {
     private static final int maxNumberOfSelectedTiles=3;
@@ -107,7 +106,7 @@ public class CheckManager {
         //Check if the point is inside the board
         checkPointBoardDomain(p);
         //Check if there is a tile there
-        if(board.getGamesBoard().getTile(p).equals(Tiles.NOTALLOWED) ||
+        if(board.getGamesBoard().getTile(p).equals(Tiles.NOT_ALLOWED) ||
                 board.getGamesBoard().getTile(p).equals(Tiles.EMPTY)){
             throw new TilesCannotBeSelected();}
     }

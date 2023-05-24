@@ -16,11 +16,10 @@ public class Matrix implements Serializable {
         numRows=rows;
         board = new ArrayList<>();
         for( int i=0; i<columns;i++){
-            board.add(new ArrayList<Tiles>());
+            board.add(new ArrayList<>());
             for( int j=0; j<rows;j++){
                 board.get(i).add(Tiles.EMPTY);
             }
-
         }
     }
 
@@ -82,12 +81,12 @@ public class Matrix implements Serializable {
     //imposta cella a NotAllowed
     public void setNotAllowed(int row, int col){
 
-        board.get(col).set(row,Tiles.NOTALLOWED);
+        board.get(col).set(row,Tiles.NOT_ALLOWED);
 
     }
     public void setNotAllowed(Point pos){
 
-        board.get(pos.y).set(pos.x,Tiles.NOTALLOWED);
+        board.get(pos.y).set(pos.x,Tiles.NOT_ALLOWED);
 
     }
     public void setEmpty(int row, int col){

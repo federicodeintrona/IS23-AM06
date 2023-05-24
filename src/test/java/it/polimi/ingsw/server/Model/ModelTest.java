@@ -54,7 +54,7 @@ class ModelTest {
     @Test
     void initialization() {
         assertNotEquals(Tiles.EMPTY,m.getBoard().getGamesBoard().getTile(4,4));
-        assertEquals(Tiles.NOTALLOWED,m.getBoard().getGamesBoard().getTile(5,7));
+        assertEquals(Tiles.NOT_ALLOWED,m.getBoard().getGamesBoard().getTile(5,7));
         for (Player p : m.getPlayers()) {
             assertEquals(Tiles.EMPTY, p.getBookshelf().getTiles().getTile(getRandomPointInBookshelf()));
             assertEquals(0,p.getPersonalObjective().personalObjectivePoint(p));
