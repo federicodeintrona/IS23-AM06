@@ -10,7 +10,7 @@
 
 .board{
     -fx-background-image: url("images/boards/livingroom.png");
-    -fx-background-size: contain;
+    -fx-background-size: cover;
     /*TODO capire background-size*/
 }
 
