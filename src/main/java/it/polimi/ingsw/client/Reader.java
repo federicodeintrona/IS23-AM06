@@ -109,6 +109,7 @@ public class Reader extends Thread{
                         case ("end") -> {
                             Boolean end = (Boolean) message.getContent();
                             clientState.setGameIsEnded(end);
+                            disconnected=true;
                         }
                     }
                 } else {
