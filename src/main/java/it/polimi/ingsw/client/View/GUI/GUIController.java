@@ -25,6 +25,10 @@ public class GUIController implements View {
     private  final Networker networker;
     private final ClientState state;
 
+    public ClientState getState() {
+        return state;
+    }
+
     public GUIController(Networker networker, ClientState state) {
         this.networker = networker;
         this.state=state;

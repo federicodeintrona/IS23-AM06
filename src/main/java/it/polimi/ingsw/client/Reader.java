@@ -42,7 +42,7 @@ public class Reader extends Thread{
 
     public void run() {
         notifier.addPropertyChangeListener(networkerTcp);
-        pingPong();
+//        pingPong();
         Message newMessage;
         Message oldMessage = null;
         try {

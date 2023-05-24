@@ -4,13 +4,14 @@
 }
 
 .waiting{
-    -fx-background-image: url("images/Publisher_material/Display_5.jpg");
+    -fx-background-image: url("images/misc/sfondo_parquet.jpg");
     -fx-background-size: cover;
 }
 
 .board{
     -fx-background-image: url("images/boards/livingroom.png");
-    -fx-background-size: cover;
+    -fx-background-size: contain;
+    /*TODO capire background-size*/
 }
 
 .tiles{

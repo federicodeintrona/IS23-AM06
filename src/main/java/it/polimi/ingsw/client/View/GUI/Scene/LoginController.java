@@ -39,6 +39,7 @@ public class LoginController {
             usernameStatus.setText("Inserire username");
         }
         else {
+            guiController.getState().setMyUsername(username);
             Message message=new Message();
             message.setUsername(username);
             message.setType(MessageTypes.USERNAME);

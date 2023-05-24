@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.View.GUI.Scene;
 public enum Scenes {
     Login("/fxml/loginGriglia.fxml","Login Page"),
     NumOfPlayers("/fxml/numberOfPlayer.fxml","New Game"),
-    Waiting("",""),
+    Waiting("/fxml/waiting.fxml","Waiting Page"),
     Game("",""),
     Endgame("","");
 
