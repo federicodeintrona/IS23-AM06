@@ -14,11 +14,7 @@
     /*TODO capire background-size*/
 }
 
-.tiles{
-    -fx-max-width: USE_COMPUTED_SIZE;
-    -fx-max-height: USE_COMPUTED_SIZE;
-    -fx-min-width: USE_COMPUTED_SIZE;
-    -fx-min-height: USE_COMPUTED_SIZE;
-    -fx-pref-width: USE_COMPUTED_SIZE;
-    -fx-pref-height: USE_COMPUTED_SIZE;
+.game{
+    -fx-background-image: url("images/misc/sfondo_parquet.jpg");
+    -fx-background-size: cover;
 }

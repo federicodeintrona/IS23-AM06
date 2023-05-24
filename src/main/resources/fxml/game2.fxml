@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="666.0" maxWidth="1000.0" minHeight="666.0" minWidth="1000.0" prefHeight="666.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameController">
+<GridPane maxHeight="666.0" maxWidth="1000.0" minHeight="666.0" minWidth="1000.0" prefHeight="666.0" prefWidth="1000.0" styleClass="game" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
@@ -50,5 +55,88 @@
             <Insets />
          </GridPane.margin>
       </GridPane>
+      <AnchorPane maxHeight="500.0" maxWidth="350.0" minHeight="500.0" minWidth="350.0" prefHeight="500.0" prefWidth="350.0" GridPane.columnIndex="1">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="24.0" prefHeight="36.0" prefWidth="350.0" text="My Bookshelf" textAlignment="CENTER" textFill="RED" AnchorPane.bottomAnchor="440.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="24.0">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="myPointsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="73.0" prefHeight="36.0" prefWidth="350.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <GridPane fx:id="myBookshelfGrid" layoutX="37.0" layoutY="149.0" prefHeight="287.0" prefWidth="281.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="57.0" minHeight="53.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="62.33332824707031" minHeight="45.666656494140625" prefHeight="49.666656494140625" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="60.333343505859375" minHeight="47.666656494140625" prefHeight="49.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="63.66668701171875" minHeight="46.33331298828125" prefHeight="47.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="63.66668701171875" minHeight="47.0" prefHeight="47.666656494140625" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="63.666656494140625" minHeight="53.0" prefHeight="58.333343505859375" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <ImageView fitHeight="404.0" fitWidth="350.0" layoutX="2.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../css/images/boards/bookshelf.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label fx:id="otherPlayerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="6.0" prefHeight="17.0" prefWidth="350.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <GridPane fx:id="otherPlayerBookshelfGrid" layoutX="31.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0">
+              <rowConstraints>
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <columnConstraints>
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+            </GridPane>
+            <ImageView fitHeight="136.0" fitWidth="200.0" layoutX="17.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../css/images/boards/bookshelf.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="otherPlayerPointsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="142.0" layoutY="42.0" prefHeight="17.0" prefWidth="208.0" />
+            <ImageView fitHeight="88.0" fitWidth="60.0" layoutX="161.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../css/images/personal_goal_cards/back.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <GridPane fx:id="commonGrid" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <ImageView fx:id="personalObjectiveImageView" fitHeight="229.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
    </children>
 </GridPane>
