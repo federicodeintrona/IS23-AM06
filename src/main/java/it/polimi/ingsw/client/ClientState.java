@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.server.Model.ChatController;
+import it.polimi.ingsw.server.Model.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
@@ -27,8 +29,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private boolean gameHasStarted=false;
     private boolean gameIsEnded=false;
     private boolean waiting=false;
+    private boolean ChatIsEnable = false;
     private String chair;
-    private String message;
+    private ChatController publicChat = new ChatController();
 
     public ClientState(Object viewLock) throws RemoteException {
         super();
@@ -260,10 +263,29 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     @Override
-    public void printMessage(String message) {
-        System.out.println("message.getUsername() = " + message);
-        this.message = message;
+    public void newMessage(ChatMessage message) {
+        if (ChatIsEnable) {
+            if (!message.getUsername().equals(myUsername)) System.out.println(message.getUsername() + ": " + message.getMessage());
+        }
+        else {
+            publicChat.updateUnReadMessages();
+            if (publicChat.getUnReadMessages() == 1) System.out.println("*Hai un nuovo messaggio*");
+            else System.out.println("*Hai " + publicChat.getUnReadMessages() + " nuovi messaggi*");
+        }
+
+        publicChat.addMessage(message);
+
     }
 
-    public String getMessage () {return message;}
+    public ChatController getPublicChat() {
+        return publicChat;
+    }
+
+    public boolean isChatEnable() {
+        return ChatIsEnable;
+    }
+
+    public void setChatIsEnable (boolean chatEnable) {
+        this.ChatIsEnable = chatEnable;
+    }
 }

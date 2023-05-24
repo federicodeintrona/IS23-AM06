@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
+import it.polimi.ingsw.server.Model.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
@@ -72,8 +73,7 @@ public class RMIVirtualView extends VirtualView{
                         clientState.setGameIsEnded((boolean) evt.getSource());
                     }
                     case ("message") -> {
-                        System.out.printf("metodo chiamato");
-                        clientState.printMessage((String) evt.getSource());
+                        clientState.newMessage((ChatMessage) evt.getSource());
                     }
                 }
             } catch (RemoteException e) {

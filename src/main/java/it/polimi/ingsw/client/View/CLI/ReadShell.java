@@ -132,7 +132,13 @@ public class ReadShell extends Thread{
             case "#printpoints" -> cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
             case "#printmypoint" -> cliMain.getCliPrint().printMyPoints(cliMain.getClientState().getMyPoints());
             case "#printchair" -> cliMain.getCliPrint().printChair();
-            case "#chat" -> createChatMessage(readLine());
+            case "#chat" -> {
+                // Printing publicChat's history
+                cliMain.getCliPrint().printChat();
+
+                cliMain.setChatIsEnable(true);
+                chat();
+            }
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
 
@@ -203,7 +209,6 @@ public class ReadShell extends Thread{
     private void createChatMessage (String string){
         Message message = new Message();
 
-        System.out.println("il messaggio è:" + string);
         // Setting the message
         message.setUsername(string);
         message.setType(MessageTypes.CHAT);
@@ -249,6 +254,17 @@ public class ReadShell extends Thread{
     public void run() {
         while(!cliMain.getClientState().isGameIsEnded()){
             readCommand();
+        }
+    }
+
+    private void chat () {
+        String str = null;
+
+        while (cliMain.ChatIsEnable()) {
+            str = readLine();
+
+            if (!str.equals("#exit")) createChatMessage(str);
+            else cliMain.setChatIsEnable(false);
         }
     }
 }

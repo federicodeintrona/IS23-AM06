@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
+import it.polimi.ingsw.server.Model.ChatController;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
@@ -216,7 +217,7 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println("#switch 3, 2, 1 ................. Switch the order of the selected tiles");
             System.out.println("#add 0 .......................... Add the tiles in the column of the bookshelf");
 //            System.out.println("#rollback ....................... Return to the previous move");
-//            System.out.println("#chat -hello- ................... Chatting with all players");
+            System.out.println("#chat -hello- ................... Chatting with all players");
 //            System.out.println("#whisper @username -hello- ...... Chatting with username player");
             System.out.println("#printpersonal .................. Print your personal objective");
             System.out.println("#printcommon .................... Print the common objective for this game");
@@ -418,6 +419,23 @@ public class CLIPrint implements PropertyChangeListener {
         System.out.print(ColorCLI.CLEAR);
         System.out.flush();
 
+    }
+
+    public void printChat () {
+        ChatController chat = cliMain.getClientState().getPublicChat();
+        cliMain.getClientState().getPublicChat().resetUnReadMessages();
+
+        if (chat.getChatMessages().isEmpty()) {
+            System.out.println("There are no previous messages :(");
+            return;
+        }
+
+        for (int i = chat.getOldestMessage(); i>=0; i--){
+            if (chat.getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
+                System.out.println("your message: " + chat.getChatMessages().get(i).getMessage());
+            }
+            else System.out.println(chat.getChatMessages().get(i).getUsername()+ ": " + chat.getChatMessages().get(i).getMessage());
+        }
     }
 
     @Override

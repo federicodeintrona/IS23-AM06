@@ -241,7 +241,6 @@ public class Controller implements PropertyChangeListener {
 
     public Message sendMessage (int gameId, String playerForwarding, Message message) {
 
-        System.out.println("model chiamato");
         lobby.getGames().get(gameId).sendMessage(playerForwarding, message);
 
         Message messageOut = new Message();

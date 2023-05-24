@@ -37,6 +37,7 @@ public class Model implements TimerInterface {
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
     private boolean isFinished = false;
     private int connectedPlayers;
+    private ChatController publicChat = new ChatController();
 
     //Timer
     private int time = 0;
@@ -619,16 +620,23 @@ public class Model implements TimerInterface {
         return players.get(winnerpos);
     }
 
+    /**
+     * Method that forwards a message coming
+     * from the chat to all the players
+     *
+     * @param playerForwarding      the player that sent the message
+     * @param message       the message to forward
+     */
     public synchronized void sendMessage (String playerForwarding, Message message) {
+        // Adding message to public chat's history
+        publicChat.addMessage(playerForwarding, message.getUsername());
+
         List<String> usernames = players.stream()
                                         .map(x -> x.getUsername())
-                                        .filter(x -> !x.equals(playerForwarding))
                                         .toList();
 
         for (String x: usernames){
-            System.out.println("x = " + x);
-            System.out.println(" model: message è = " + message.getUsername());
-            notifier.firePropertyChange(new PropertyChangeEvent(message.getUsername(), x, null, "message"));
+            notifier.firePropertyChange(new PropertyChangeEvent(publicChat.getChatMessages().get(0), x, null, "message"));
         }
     }
 

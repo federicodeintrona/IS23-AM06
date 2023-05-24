@@ -2,18 +2,19 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.Message;
 
 import java.beans.PropertyChangeEvent;
 
-public class CLIMain {
+public class CLIMain implements View {
 
 
 
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
     private final Networker net; //a chi mandare messaggi
-
+    private boolean chatIsEnable = false;
     private static CLIPrint cliPrint;
     private static ReadShell readShell;
     private boolean IHaveToRequestTheUsername=true;
@@ -71,7 +72,7 @@ public class CLIMain {
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
             }
-            case CHAT -> cliPrint.printMessage(message.getUsername(), clientState.getMessage());
+            //case CHAT -> cliPrint.printMessage(message.getUsername(), clientState.getMessage());
             default -> {
                 break;
             }
@@ -143,6 +144,15 @@ public class CLIMain {
             fine partita
          */
 
+    }
+
+    public void setChatIsEnable(boolean chatIsEnable) {
+        this.chatIsEnable = chatIsEnable;
+        getClientState().setChatIsEnable(chatIsEnable);
+    }
+
+    public boolean ChatIsEnable() {
+        return chatIsEnable;
     }
 
     @Override

@@ -74,8 +74,6 @@ public class RMIHandler implements RMIHandlerInterface{
 
     @Override
     public Message sendMessage(int gameId, String playerForwarding, Message message) throws RemoteException {
-        System.out.println("inviato a controller il messaggio: " + message.getUsername());
-
         return controller.sendMessage(gameId, playerForwarding, message);
     }
 }
