@@ -233,7 +233,7 @@ public class Board {
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 //for all tiles that !=NOTALLOWED && !=EMPTY
-                if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(i, j).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)){
                     //if a tile has at leat 1 tile adjacent return false
 
@@ -242,22 +242,22 @@ public class Board {
                             (j!=0 && j!=Define.NUMBEROFCOLUMNS_BOARD.getI()-1)){
                         //adjacency:
                         //sx
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //dx
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //upper
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //bottom
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
@@ -267,12 +267,12 @@ public class Board {
                         //we are on upper - left corner
                         if(j==0){
                             //bottom
-                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                                 return false;
                             }
@@ -280,12 +280,12 @@ public class Board {
                         //we are on upper - right corner
                         else if (j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1) {
                             //bottom
-                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                                 return false;
                             }
@@ -293,17 +293,17 @@ public class Board {
                         //we are in the middle
                         else{
                             //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //bottom
-                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                                 return false;
                             }
@@ -314,12 +314,12 @@ public class Board {
                         //we are bottom - left corner
                         if (j==0){
                             //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //upper
-                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                                 return false;
                             }
@@ -327,12 +327,12 @@ public class Board {
                         //we are bottom - right corner
                         else if (j == Define.NUMBEROFCOLUMNS_BOARD.getI() - 1) {
                             //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //upper
-                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                                 return false;
                             }
@@ -340,17 +340,17 @@ public class Board {
                         //we are in the middle
                         else{
                             //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                                 return false;
                             }
                             //upper
-                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
                                     !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                                 return false;
                             }
@@ -359,17 +359,17 @@ public class Board {
                     //we are on left edge
                     else if (j==0){
                         //dx
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //upper
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //bottom
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
@@ -378,17 +378,17 @@ public class Board {
                     //if (j==numberOfColumn-1)
                     else {
                         //sx
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //upper
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
                         //bottom
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOTALLOWED) &&
+                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
                                 !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
                             return false;
                         }
@@ -412,7 +412,7 @@ public class Board {
         //search tiles!=EMPTY && !=NOTALLOWED
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
-                if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(i, j).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)) {
                     //tile's color is added in sachet --> addTiles(Tiles)
                     boardSachet.addTiles(gamesBoard.getTile(i, j));
@@ -506,7 +506,7 @@ public class Board {
         ArrayList<Point> result=new ArrayList<>();
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
-                if (!gamesBoard.getTile(i, j).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(i, j).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &
                                 checkFreeTiles(new Point(i, j))){
                     result.add(new Point(i, j));
@@ -627,28 +627,28 @@ public class Board {
             //upper
             p.x=x-1;
             p.y=y;
-            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+            if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                 result.add(new Point(x-1, y));
             }
             //bottom
             p.x=x+1;
             p.y=y;
-            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+            if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                 result.add(new Point(x+1, y));
             }
             //sx
             p.x=x;
             p.y=y-1;
-            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+            if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                 result.add(new Point(x, y-1));
             }
             //dx
             p.x=x;
             p.y=y+1;
-            if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+            if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                     !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                 result.add(new Point(x, y+1));
             }
@@ -662,14 +662,14 @@ public class Board {
                     //bottom
                     p.x=x+1;
                     p.y=y;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x+1, y));
                     }
                     //dx
                     p.x=x;
                     p.y=y+1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x, y+1));
                     }
@@ -679,14 +679,14 @@ public class Board {
                     //bottom
                     p.x=x+1;
                     p.y=y;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x+1, y));
                     }
                     //sx
                     p.x=x;
                     p.y=y-1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x,y-1));
                     }
@@ -696,21 +696,21 @@ public class Board {
                     //bottom
                     p.x=x+1;
                     p.y=y;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x+1, y));
                     }
                     //sx
                     p.x=x;
                     p.y=y-1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x,y-1));
                     }
                     //dx
                     p.x=x;
                     p.y=y+1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x, y+1));
                     }
@@ -723,14 +723,14 @@ public class Board {
                     //upper
                     p.x=x-1;
                     p.y=y;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x-1, y));
                     }
                     //dx
                     p.x=x;
                     p.y=y+1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x, y+1));
                     }
@@ -740,14 +740,14 @@ public class Board {
                     //upper
                     p.x=x-1;
                     p.y=y;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x-1, y));
                     }
                     //sx
                     p.x=x;
                     p.y=y-1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x, y-1));
                     }
@@ -757,21 +757,21 @@ public class Board {
                     //upper
                     p.x=x-1;
                     p.y=y;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x-1, y));
                     }
                     //sx
                     p.x=x;
                     p.y=y-1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x, y-1));
                     }
                     //dx
                     p.x=x;
                     p.y=y+1;
-                    if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                    if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                             !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                         result.add(new Point(x, y+1));
                     }
@@ -782,21 +782,21 @@ public class Board {
                 //upper
                 p.x=x-1;
                 p.y=y;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x-1, y));
                 }
                 //bottom
                 p.x=x+1;
                 p.y=y;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x+1, y));
                 }
                 //dx
                 p.x=x;
                 p.y=y+1;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x, y+1));
                 }
@@ -807,21 +807,21 @@ public class Board {
                 //upper
                 p.x=x-1;
                 p.y=y;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x-1, y));
                 }
                 //bottom
                 p.x=x+1;
                 p.y=y;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x+1, y));
                 }
                 //sx
                 p.x=x;
                 p.y=y-1;
-                if (!gamesBoard.getTile(p).equals(Tiles.NOTALLOWED) &&
+                if (!gamesBoard.getTile(p).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(p).equals(Tiles.EMPTY)){
                     result.add(new Point(x, y-1));
                 }
@@ -882,7 +882,7 @@ public class Board {
      * @return boolean  is a NotAllowed point?
      */
     private boolean checkNotAllowed(Point point){
-        return gamesBoard.getTile(point).equals(Tiles.NOTALLOWED);
+        return gamesBoard.getTile(point).equals(Tiles.NOT_ALLOWED);
     }
 
 

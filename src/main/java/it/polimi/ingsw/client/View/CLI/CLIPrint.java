@@ -36,7 +36,7 @@ public class CLIPrint implements PropertyChangeListener {
                 case WHITE -> ColorCLI.WHITE1;
                 case PINK -> ColorCLI.PINK1;
                 case LIGHT_BLUE -> ColorCLI.LIGHT_BLUE1;
-                case NOTALLOWED -> ColorCLI.NOTALLOWED;
+                case NOT_ALLOWED -> ColorCLI.NOTALLOWED;
                 case EMPTY -> ColorCLI.EMPTY1;
                 case POSITION -> ColorCLI.POSITION;
             };
@@ -53,7 +53,7 @@ public class CLIPrint implements PropertyChangeListener {
                 case WHITE -> ColorCLI.WHITEBG1;
                 case PINK -> ColorCLI.PINKBG1;
                 case LIGHT_BLUE -> ColorCLI.LIGHT_BLUEBG1;
-                case NOTALLOWED -> ColorCLI.NOTALLOWEDBG;
+                case NOT_ALLOWED -> ColorCLI.NOTALLOWEDBG;
                 case EMPTY -> ColorCLI.EMPTYBG1;
                 case POSITION -> ColorCLI.POSITIONBG;
             };

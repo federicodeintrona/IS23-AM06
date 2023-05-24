@@ -7,8 +7,9 @@ public enum Scenes {
     Game("/fxml/game2.fxml","MyShelfie"),
     Endgame("","");
 
-    private String name;
-    private String title;
+    private final String name;
+    private final String title;
+
     Scenes(String name,String title){
         this.name=name;
         this.title=title;

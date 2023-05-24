@@ -5,6 +5,8 @@ import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -14,8 +16,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.out;
 
-public class Reader extends Thread{
+public class Reader extends Thread implements TimerInterface {
     private Socket socket;
     private final ObjectInputStream client;
     private final ObjectOutputStream oos;
@@ -31,6 +32,13 @@ public class Reader extends Thread{
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private final ClientState clientState;
     private boolean disconnected = false;
+
+    //Timer
+
+    private  Timer timer;
+    private int time = 0;
+    private static final int initialDelay = 50;
+    private static final int delta = 2000;
 
     public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
         this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));;
@@ -149,5 +157,30 @@ public class Reader extends Thread{
             }
         },10,1000, TimeUnit.MILLISECONDS);
 
+        timer = new Timer();
+        TimerTask task = new TimerCounter(this);
+        timer.schedule(task,initialDelay,delta);
+    }
+
+    @Override
+    public void disconnect() {
+        try {
+            socket.close();
+            oos.close();
+            client.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int updateTime() {
+        time++;
+        return time;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "Server is not responding. Retry later";
     }
 }

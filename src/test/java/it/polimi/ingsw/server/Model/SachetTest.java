@@ -17,7 +17,7 @@ class SachetTest {
         Sachet sachet=new Sachet();
         Tiles tiles=sachet.draw();
         assertNotEquals(tiles, Tiles.EMPTY);
-        assertNotEquals(tiles, Tiles.NOTALLOWED);
+        assertNotEquals(tiles, Tiles.NOT_ALLOWED);
     }
     @DisplayName("Return Tiles.EMPTY if there are NO tiles in sachet")
     @Test
@@ -27,7 +27,7 @@ class SachetTest {
         for (int i = 0; i < 132; i++) {
             tiles=sachet.draw();
             assertNotEquals(tiles, Tiles.EMPTY);
-            assertNotEquals(tiles, Tiles.NOTALLOWED);
+            assertNotEquals(tiles, Tiles.NOT_ALLOWED);
         }
         assertEquals(sachet.draw(), Tiles.EMPTY);
     }
