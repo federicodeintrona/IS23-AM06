@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.View.GUI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.View.GUI.Scene.LoginController;
 import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Matrix;
@@ -111,6 +112,13 @@ public class GUIController implements View {
     }
 
     private void showErrorLoginPage() {
+        try {
+            FXMLLoader fxmlLoader=FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scene.toString())));
+            ((LoginController)fxmlLoader.getController()).errorUsername();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -46,4 +46,8 @@ public class LoginController {
             guiController.sendMessage(message);
         }
     }
+
+    public void errorUsername(){
+        usernameStatus.setText("Username Sbagliato");
+    }
 }
