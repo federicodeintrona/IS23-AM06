@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
+import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.server.Model.Board;
@@ -19,19 +20,18 @@ import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
     private GUIController guiController = GUIControllerStatic.getGuiController();
+    ClientState clientState;
     @FXML
     private GridPane boardGrid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        clientState = guiController.getState();
         initializeBoardGrid();
     }
 
     public void initializeBoardGrid(){
-        Board board=new Board(2, new Sachet());
-        board.BoardInitialization();
-        Matrix matrix=board.getGamesBoard();
+        Matrix matrix=clientState.getBoard();
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                 if (!matrix.getTile(i,j).equals(Tiles.NOTALLOWED) && !matrix.getTile(i,j).equals(Tiles.EMPTY)) {
