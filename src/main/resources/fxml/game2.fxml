@@ -21,7 +21,7 @@
     <RowConstraints maxHeight="166.0" minHeight="166.0" prefHeight="166.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../css/style.css">
+      <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../css/style.css">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="17.0" prefWidth="20.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="45.0" prefWidth="49.0" />

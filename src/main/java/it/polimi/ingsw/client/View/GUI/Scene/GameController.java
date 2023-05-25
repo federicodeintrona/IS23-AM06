@@ -5,12 +5,17 @@ import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
+import it.polimi.ingsw.utils.Messages.PointsMessage;
 import it.polimi.ingsw.utils.Tiles;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.awt.*;
@@ -52,11 +57,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         clientState.addListener(this);
         guiController.setSceneController(this);
         initializeBoardGrid();
-        initializeCommonGrid();
+//        initializeCommonGrid();
         initializeotherPlayerLabel();
         initializeMyPointsLabel();
         initializeOtherPlayerPointsLabel();
-        initializePersonalObjectiveImageView();
+//        initializePersonalObjectiveImageView();
     }
 
     @Override
@@ -195,5 +200,22 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //TODO click on boardGrid
 
+    //rimuove solo 1 tile per volta
+    @FXML
+    public void removeTilesClick(MouseEvent event){
+        Node click=event.getPickResult().getIntersectedNode();
+        Integer colmnIndex=GridPane.getColumnIndex(click);
+        Integer rowIndex=GridPane.getRowIndex(click);
+
+        ArrayList<Point> arrayList=new ArrayList<>();
+        arrayList.add(new Point(rowIndex-1, colmnIndex-1));
+        PointsMessage pointsMessage=new PointsMessage();
+
+        pointsMessage.setUsername(clientState.getMyUsername());
+        pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
+        pointsMessage.setTiles(arrayList);
+
+        guiController.sendMessage(pointsMessage);
+    }
 
 }
