@@ -16,8 +16,7 @@ import java.net.Socket;
 public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
     private static String host;
-    Socket socket ;
-    private ObjectInputStream ois;
+    private Socket socket ;
     private ObjectOutputStream oos;
     private View view;
     private final ClientState clientState;
@@ -27,15 +26,19 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config=new JsonReader(is);
-//            config = new JsonReader("src/main/resources/NetworkerTcp.json");
+//          config = new JsonReader("src/main/resources/NetworkerTcp.json");
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         } catch (ParseException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
+
         this.clientState = clientState;
-        this.host=host;
+        NetworkerTcp.host =host;
         port=config.getInt("tcpPort");
+
     }
 
     public void initializeConnection() {
@@ -44,18 +47,33 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             socket = new Socket(host, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
             reader=new Reader(socket,oos,this, clientState);
+            reader.start();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
+            close();
         }
-        reader.start();
+
+
     }
 
+    private void close(){
+        try {
+            socket.close();
+            oos.close();
+        } catch (IOException e) {
+            System.out.println( "Error: unable to close the socket...");
+            e.printStackTrace();
+        }
+
+    }
 
     public void firstConnection (Message username){
         try {
             oos.writeObject(username);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
     }
@@ -64,7 +82,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(numberOfPlayers);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
     }
@@ -73,7 +92,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(tiles);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
     }
     public void switchTilesOrder(Message ints){
@@ -81,7 +101,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(ints);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
     }
 
@@ -90,7 +111,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(column);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
     }
 

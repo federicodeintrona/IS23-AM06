@@ -111,6 +111,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock){
             this.board = board;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"board",null,this.board));
     }
 
     public Matrix getMyBookshelf() {
@@ -145,7 +147,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             }
         }
         notifier.firePropertyChange(
-                new PropertyChangeEvent(bookshelf,"bookshelf",null,username));
+                new PropertyChangeEvent(this,"bookshelf",username,bookshelf));
     }
 
     public Integer getMyPoints() {
@@ -158,6 +160,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.myPoints = myPoints;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"privatePoints",username,myPoints));
     }
 
     public HashMap<String, Integer> getAllPublicPoints() {
@@ -176,6 +180,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             allPublicPoints.put(username, point);
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"publicPoints",username,point));
     }
 
     public ArrayList<Tiles> getSelectedTiles() {
@@ -188,18 +194,23 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.selectedTiles = selectedTiles;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"selectedTiles", null,selectedTiles));
     }
 
     public String getCurrentPlayer() {
         synchronized (viewLock) {
             return currentPlayer;
         }
+
     }
 
     public void setCurrentPlayer(String currentPlayer) {
         synchronized (viewLock) {
             this.currentPlayer = currentPlayer;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"currPlayer",null,currentPlayer));
     }
 
     public String getNextPlayer() {
@@ -260,6 +271,12 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void addListener(PropertyChangeListener listener){
         notifier.addPropertyChangeListener(listener);
     }
+
+    public void addListener(PropertyChangeListener listener,String property){
+        notifier.addPropertyChangeListener(property,listener);
+    }
+
+
     public String getChair() {
         synchronized (viewLock) {
             return chair;
