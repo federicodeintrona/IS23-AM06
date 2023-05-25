@@ -55,7 +55,7 @@ public class GUIController implements View {
             case WAITING_FOR_PLAYERS -> {
                 if(!state.gameHasStarted()) changeScene(Scenes.Waiting);
             }
-            case ERROR -> sceneController.showError(message.getUsername());
+            case ERROR -> showError(message);
         }
     }
 
@@ -64,6 +64,11 @@ public class GUIController implements View {
         //TODO chiudere la GUI
     }
 
+    private void showError(Message message){
+        Platform.runLater(()->{
+            sceneController.showError(message.getUsername());
+        });
+    }
 
     //Qui arrivano le notifiche dal client state
     @Override

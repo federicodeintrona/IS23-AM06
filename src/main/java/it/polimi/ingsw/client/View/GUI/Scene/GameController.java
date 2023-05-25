@@ -16,6 +16,11 @@ import javafx.scene.layout.GridPane;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -130,6 +135,22 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //TODO inizializza il personal objective
     public void initializePersonalObjectiveImageView(){
+
+
+        try {
+
+            Image image = new Image(new FileInputStream("17_MyShelfie_BGA/common goal cards/1.jpg"));
+            personalObjectiveImageView.setImage(image);
+            personalObjectiveImageView.setPreserveRatio(true);
+            personalObjectiveImageView.setFitWidth(50);
+
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
     }
 
     //inizializza i tuoi punti

@@ -123,7 +123,7 @@
             <Label fx:id="otherPlayerPointsLabel" contentDisplay="CENTER" layoutX="150.0" layoutY="42.0" prefHeight="17.0" prefWidth="200.0" />
             <ImageView fitHeight="88.0" fitWidth="60.0" layoutX="161.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                  <Image url="@../css/images/personalGoalCards/back.jpg" />
                </image>
             </ImageView>
          </children>
