@@ -59,9 +59,13 @@ public class ReadShell extends Thread{
     //richista nickname
     public void askUsername() {
         Message message=new Message();
+        String nickname;
 
-        System.out.print("Enter your username: ");
-        String nickname = readLine();
+        do {
+            System.out.print("Enter your username: ");
+            nickname = readLine();
+        }while (nickname.isEmpty());
+
         cliMain.getClientState().setMyUsername(nickname);
         message.setUsername(nickname);
         message.setType(MessageTypes.USERNAME);

@@ -48,6 +48,10 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         guiController.setSceneController(this);
         initializeBoardGrid();
         initializeCommonGrid();
+        initializeotherPlayerLabel();
+        initializeMyPointsLabel();
+        initializeOtherPlayerPointsLabel();
+        initializePersonalObjectiveImageView();
     }
 
     @Override
@@ -108,20 +112,40 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     }
 
-    //TODO inizializza il nome dell'altro giocatore
+    //ritorna il nome dell'altro giocatore in partita
+    private String catchOtherPlayerName(){
+        for (int i = 0; i < clientState.getAllUsername().size(); i++) {
+            if (!clientState.getAllUsername().get(i).equals(clientState.getMyUsername())){
+                return clientState.getAllUsername().get(i);
+            }
+        }
+        return null;
+    }
+
+    //inizializza il nome dell'altro giocatore
     public void initializeotherPlayerLabel(){
+        otherPlayerLabel.setText(catchOtherPlayerName());
+
     }
 
     //TODO inizializza il personal objective
-    public void initializePersonalObjectiveImageView(){}
-
-    //TODO inizializza i tuoi punti
-    public void initializeMyPointsLabel(){
-        //my points are: ...
+    public void initializePersonalObjectiveImageView(){
     }
 
-    //TODO inizializza i punti dell'altro giocatore
-    public void initializeOtherPlayerPointsLabel(){}
+    //inizializza i tuoi punti
+    public void initializeMyPointsLabel(){
+        String myPoints="My Points are: "+clientState.getMyPoints();
+
+        myPointsLabel.setText(myPoints);
+    }
+
+    //inizializza i punti dell'altro giocatore
+    public void initializeOtherPlayerPointsLabel(){
+        String otherPlayer=catchOtherPlayerName();
+        int points=clientState.getAllPublicPoints().get(otherPlayer);
+
+        otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
+    }
 
 
 
