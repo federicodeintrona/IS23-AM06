@@ -9,9 +9,11 @@ import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.PointsMessage;
 import it.polimi.ingsw.utils.Tiles;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +36,7 @@ import java.util.List;
 public class GameController implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
+    private ArrayList<Point> removeTiles=new ArrayList<>();
     @FXML
     private GridPane boardGrid;
     @FXML
@@ -50,12 +53,15 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private Label myPointsLabel;
     @FXML
     private Label otherPlayerPointsLabel;
+    @FXML
+    private Button confirmationButtons=new Button(); //TODO capire come disabilitare & rendere invisibile il bottone fino a che non lo dico io
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientState = guiController.getState();
         clientState.addListener(this);
         guiController.setSceneController(this);
+//        confirmationButtons.setOpacity(0);
         initializeBoardGrid();
 //        initializeCommonGrid();
         initializeotherPlayerLabel();
@@ -200,22 +206,36 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //TODO click on boardGrid
 
+
+
     //rimuove solo 1 tile per volta
     @FXML
     public void removeTilesClick(MouseEvent event){
         Node click=event.getPickResult().getIntersectedNode();
         Integer colmnIndex=GridPane.getColumnIndex(click);
         Integer rowIndex=GridPane.getRowIndex(click);
+//
+//        ArrayList<Point> arrayList=new ArrayList<>();
+//        arrayList.add(new Point(rowIndex-1, colmnIndex-1));
+//
+        removeTiles.add(new Point(rowIndex-1, colmnIndex-1));
+        //TODO abilitare il bottone
+//        confirmationButtons.setVisible(true);
+    }
 
-        ArrayList<Point> arrayList=new ArrayList<>();
-        arrayList.add(new Point(rowIndex-1, colmnIndex-1));
+    //conferma le tessere selezionate
+    @FXML
+    public void confirmClick(ActionEvent actionEvent){
         PointsMessage pointsMessage=new PointsMessage();
 
         pointsMessage.setUsername(clientState.getMyUsername());
         pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
-        pointsMessage.setTiles(arrayList);
-
+        pointsMessage.setTiles(removeTiles);
         guiController.sendMessage(pointsMessage);
+
+        removeTiles=new ArrayList<>();
+        //TODO disabilitare bottone
+//        confirmationButtons.setVisible(false);
     }
 
 }
