@@ -7,5 +7,6 @@ import java.beans.PropertyChangeListener;
 public interface View extends PropertyChangeListener {
 
     void receivedMessage(Message message);
+    void close();
 
 }

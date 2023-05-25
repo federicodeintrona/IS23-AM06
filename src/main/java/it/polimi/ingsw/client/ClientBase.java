@@ -16,14 +16,9 @@ import java.util.Scanner;
 
 public class ClientBase extends Application{
 
-
-private static GUIController contr;
     public static void main( String[] args ) {
         Scanner scanner = new Scanner(System.in);
         String decision ;
-        System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
-        decision = scanner.nextLine();
-        decision=decision.toUpperCase();
         Object lock = new Object();
         ClientState state;
 
@@ -32,14 +27,22 @@ private static GUIController contr;
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+
+
+        System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
+        decision = scanner.nextLine();
+        decision=decision.toUpperCase();
+
         System.out.println("Which host do you use?");
         String host = scanner.nextLine();
+
         Networker networker = switch (decision.toUpperCase()) {
             case "RMI" -> new NetworkerRmi(state,host);
             case "TCP" -> new NetworkerTcp(state,host);
             default -> new NetworkerTcp(state,host);
         };
         networker.initializeConnection();
+
         System.out.print("Which User Interface do you choose? (CLI/GUI): ");
         decision = scanner.nextLine();
         switch (decision.toUpperCase()){
@@ -56,21 +59,15 @@ private static GUIController contr;
             default -> {
                 CLIMain cli = new CLIMain(lock, state, networker);
                 networker.setView(cli);
-                networker.initializeConnection();
                 cli.runUI();
             }
         }
-
-
-
     }
 
 
     @Override
     public void start(Stage stage) throws Exception {
-
         Parent root;
-        FXMLLoader loader = new FXMLLoader();
 
         try {
             root = FXMLLoader.load(getClass().getResource(Scenes.Login.getName()));
@@ -84,6 +81,7 @@ private static GUIController contr;
         guiController.setStage(stage);
         guiController.setRoot(root);
         guiController.setScene(scene);
+
         stage.setFullScreen(true);
         stage.setTitle(Scenes.Login.getTitle());
         stage.setScene(scene);
