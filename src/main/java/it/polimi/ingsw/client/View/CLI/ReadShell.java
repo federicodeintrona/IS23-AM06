@@ -257,13 +257,19 @@ public class ReadShell extends Thread{
     }
 
     private void chat () {
+        Scanner scanner=new Scanner(System.in);
         String str = null;
 
         while (cliMain.ChatIsEnable()) {
-            str = readLine();
+
+
+            str = scanner.nextLine();
 
             if (!str.equals("#exit")) createChatMessage(str);
-            else cliMain.setChatIsEnable(false);
+            else {
+                cliMain.setChatIsEnable(false);
+                clearCLI();
+            }
         }
     }
 }

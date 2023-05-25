@@ -432,7 +432,7 @@ public class CLIPrint implements PropertyChangeListener {
 
         for (int i = chat.getOldestMessage(); i>=0; i--){
             if (chat.getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
-                System.out.println("your message: " + chat.getChatMessages().get(i).getMessage());
+                System.out.println("me: " + chat.getChatMessages().get(i).getMessage());
             }
             else System.out.println(chat.getChatMessages().get(i).getUsername()+ ": " + chat.getChatMessages().get(i).getMessage());
         }
