@@ -17,74 +17,62 @@ import java.util.Scanner;
 public class ClientBase extends Application{
 
     public static void main( String[] args ) {
-        Scanner scanner = new Scanner(System.in);
-        String decision ;
-        Object lock = new Object();
-        ClientState state;
-
         try {
-            state = new ClientState(lock);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+            Scanner scanner = new Scanner(System.in);
+            Object lock = new Object();
+            ClientState state = new ClientState(lock);
 
+            System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
+            String decision = scanner.nextLine();
+            decision=decision.toUpperCase();
 
-        System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
-        decision = scanner.nextLine();
-        decision=decision.toUpperCase();
+            System.out.println("Which host do you use?");
+            String host = scanner.nextLine();
 
-        System.out.println("Which host do you use?");
-        String host = scanner.nextLine();
+            Networker networker;
 
-        Networker networker = switch (decision.toUpperCase()) {
-            case "RMI" -> new NetworkerRmi(state,host);
-            case "TCP" -> new NetworkerTcp(state,host);
-            default -> new NetworkerTcp(state,host);
-        };
-        networker.initializeConnection();
+            if (decision.equalsIgnoreCase("RMI")) {
+                  networker = new NetworkerRmi(state,host);
+            }else networker = new NetworkerTcp(state,host);
 
-        System.out.print("Which User Interface do you choose? (CLI/GUI): ");
-        decision = scanner.nextLine();
-        switch (decision.toUpperCase()){
-            case "CLI" -> {
-                CLIMain cli = new CLIMain(lock, state, networker);
-                networker.setView(cli);
-                cli.runUI();
-            }
-            case "GUI" -> {
-                GUIControllerStatic.setGuiController(new GUIController(networker,state));
+            networker.initializeConnection();
+
+            System.out.print("Which User Interface do you choose? (CLI/GUI): ");
+            decision = scanner.nextLine();
+
+            if (decision.equalsIgnoreCase("GUI")) {
+                GUIControllerStatic.setGuiController(new GUIController(networker, state));
                 networker.setView(GUIControllerStatic.getGuiController());
                 launch();
-            }
-            default -> {
+            } else {
                 CLIMain cli = new CLIMain(lock, state, networker);
                 networker.setView(cli);
                 cli.runUI();
             }
+        } catch (RemoteException e) {
+                e.printStackTrace();
         }
     }
 
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root;
-
         try {
-            root = FXMLLoader.load(getClass().getResource(Scenes.Login.getName()));
+            Parent root = FXMLLoader.load(getClass().getResource(Scenes.Login.getName()));
+            Scene scene=new Scene(root);
+
+            GUIController guiController= GUIControllerStatic.getGuiController();
+            guiController.setStage(stage);
+            guiController.setRoot(root);
+            guiController.setScene(scene);
+
+            stage.setFullScreen(true);
+            stage.setTitle(Scenes.Login.getTitle());
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("GUI failed to launch...");
+            e.printStackTrace();
         }
-
-        Scene scene=new Scene(root);
-
-        GUIController guiController= GUIControllerStatic.getGuiController();
-        guiController.setStage(stage);
-        guiController.setRoot(root);
-        guiController.setScene(scene);
-
-        stage.setFullScreen(true);
-        stage.setTitle(Scenes.Login.getTitle());
-        stage.setScene(scene);
-        stage.show();
     }
 }

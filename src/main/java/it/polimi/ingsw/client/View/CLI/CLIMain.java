@@ -96,14 +96,14 @@ public class CLIMain implements View {
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
             else {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -117,7 +117,7 @@ public class CLIMain implements View {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         cliPrint.printChair();
@@ -132,7 +132,7 @@ public class CLIMain implements View {
                try {
                    Thread.sleep(1000);
                } catch (InterruptedException e) {
-                   throw new RuntimeException(e);
+                   e.printStackTrace();
                }
                cliPrint.clearSheel();
                cliPrint.playerTurn();
@@ -197,7 +197,7 @@ public class CLIMain implements View {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+           e.printStackTrace();
         }
 
         cliPrint.printChair();
