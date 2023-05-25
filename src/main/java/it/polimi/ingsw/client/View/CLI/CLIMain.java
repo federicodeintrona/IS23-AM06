@@ -12,11 +12,10 @@ public class CLIMain implements View {
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
     private final Networker net; //a chi mandare messaggi
-
     private static CLIPrint cliPrint;
     private static ReadShell readShell;
     private boolean IHaveToRequestTheUsername=true;
-
+    private Thread th1;
     public CLIMain(Object lock, ClientState clientState, Networker net) {
         this.lock = lock;
         this.clientState = clientState;
@@ -72,12 +71,14 @@ public class CLIMain implements View {
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
             }
-            default -> {
-                break;
-            }
         }
     }
 
+
+    @Override
+    public void close() {
+        th1.interrupt();
+    }
 
 
     public void runUI() {
@@ -108,7 +109,7 @@ public class CLIMain implements View {
         }
 
         clientState.setChair(clientState.getCurrentPlayer());
-        Thread th1=new Thread(readShell);
+        th1=new Thread(readShell);
         th1.start();
         //inizia la partita
         cliPrint.clearSheel();

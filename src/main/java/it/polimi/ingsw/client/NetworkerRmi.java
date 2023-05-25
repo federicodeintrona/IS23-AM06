@@ -105,20 +105,21 @@ public class NetworkerRmi implements Networker, TimerInterface {
         IntMessage message1;
         try {
              message1 = rmiHandler.acceptRmiConnection(username.getUsername(),clientState);
+            if (!message1.getType().equals(MessageTypes.ERROR)){
+                this.username = username.getUsername();
+                pingPong();
+            }
+            if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS)){
+                gameID =  message1.getNum();
+            }
+
+            view.receivedMessage(message1);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
-        // Calling the completeRmiConnection() method to complete the client-server connection
-        if (!message1.getType().equals(MessageTypes.ERROR)){
-           this.username = username.getUsername();
-           pingPong();
-        }
-        if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS)){
-            gameID =  message1.getNum();
-        }
 
-        view.receivedMessage(message1);
     }
 
 
@@ -132,11 +133,13 @@ public class NetworkerRmi implements Networker, TimerInterface {
         IntMessage message1;
         try {
             message1 = rmiHandler.newLobby(this.username, tempMessage.getNum());
+            this.gameID = message1.getNum();
+            view.receivedMessage(message1);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
-        this.gameID = message1.getNum();
-        view.receivedMessage(message1);
+
     }
 
     /**
@@ -148,11 +151,12 @@ public class NetworkerRmi implements Networker, TimerInterface {
         PointsMessage tempMessage = (PointsMessage) tiles;
         try {
             message = rmiHandler.removeTiles(gameID, username, tempMessage.getTiles());
+            view.receivedMessage(message);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
-        view.receivedMessage(message);
     }
 
     /**
@@ -163,11 +167,11 @@ public class NetworkerRmi implements Networker, TimerInterface {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
         try {
             message = rmiHandler.swapOrder(tempMessage.getIntegers(), gameID, username);
+            view.receivedMessage(message);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
-
-        view.receivedMessage(message);
     }
 
     /**
@@ -178,11 +182,13 @@ public class NetworkerRmi implements Networker, TimerInterface {
         IntMessage tempMessage = (IntMessage) column;
         try {
             message = rmiHandler.addToBookshelf(gameID, username, tempMessage.getNum());
+            view.receivedMessage(message);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
-        view.receivedMessage(message);
+
     }
 
     @Override

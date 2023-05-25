@@ -46,14 +46,10 @@ public class LoginController implements SceneController, Initializable {
         usernameStatus.setText("Username Sbagliato");
     }
 
-    @Override
-    public void update(String property) {
-
-    }
 
     @Override
     public void showError(String error) {
-
+        usernameStatus.setText(error);
     }
 
     @Override

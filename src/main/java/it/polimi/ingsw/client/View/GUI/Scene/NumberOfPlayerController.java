@@ -11,11 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class numberOfPlayerController implements Initializable,SceneController {
+public class NumberOfPlayerController implements Initializable,SceneController {
 
     private GUIController guiController = GUIControllerStatic.getGuiController();
     @FXML
@@ -29,6 +28,7 @@ public class numberOfPlayerController implements Initializable,SceneController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String username=guiController.getState().getMyUsername();
+        guiController.setSceneController(this);
         firstUsernameLabel.setText(username+", you must to create a lobby");
         Integer[] choice={2, 3, 4};
         numberOfPlayerBox.getItems().addAll(choice);
@@ -45,11 +45,6 @@ public class numberOfPlayerController implements Initializable,SceneController {
         guiController.sendMessage(message);
     }
 
-    @Override
-    public void update(String property) {
-        switch (property){
-        }
-    }
 
     @Override
     public void showError(String error) {

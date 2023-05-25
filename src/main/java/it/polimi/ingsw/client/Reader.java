@@ -32,6 +32,7 @@ public class Reader extends Thread implements TimerInterface {
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private final ClientState clientState;
     private boolean disconnected = false;
+    private ScheduledExecutorService e;
 
     //Timer
 
@@ -120,10 +121,11 @@ public class Reader extends Thread implements TimerInterface {
                         }
                     }
                 } else {
-                    if (!newMessage.getType().equals(MessageTypes.PING)) // out.println(newMessage.getType());
+                  //  if (!newMessage.getType().equals(MessageTypes.PING)) out.println(newMessage.getType());
 
                     notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
                             newMessage.getType().toString(), oldMessage, newMessage));
+
                     oldMessage = newMessage;
 
                 }
@@ -134,9 +136,11 @@ public class Reader extends Thread implements TimerInterface {
             client.close();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Unable to identify the received object...");
+            e.printStackTrace();
         }
 
     }
@@ -144,14 +148,14 @@ public class Reader extends Thread implements TimerInterface {
 
 
     private void pingPong(){
-        ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+        e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
             Message msg = new Message();
             msg.setType(MessageTypes.PONG);
             try {
                 oos.writeObject(msg);
                 oos.flush();
-            } catch (IOException ex) {
+            } catch (IOException e) {
                 if(!disconnected)
                     System.out.println( "Server is not responding...");
             }
@@ -164,13 +168,9 @@ public class Reader extends Thread implements TimerInterface {
 
     @Override
     public void disconnect() {
-        try {
-            socket.close();
-            oos.close();
-            client.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        e.shutdown();
+        timer.cancel();
+        disconnected=true;
     }
 
     @Override

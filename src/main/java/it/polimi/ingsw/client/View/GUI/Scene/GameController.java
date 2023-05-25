@@ -14,12 +14,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.List;
 
 
-public class GameController implements Initializable {
+public class GameController implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     @FXML
@@ -42,6 +44,8 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientState = guiController.getState();
+        clientState.addListener(this);
+        guiController.setSceneController(this);
         initializeBoardGrid();
         initializeCommonGrid();
         initializeotherPlayerLabel();
@@ -50,17 +54,38 @@ public class GameController implements Initializable {
         initializePersonalObjectiveImageView();
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+        switch ((String) evt.getNewValue()) {
+            case ("board") -> {
+                updateBoard();
+            }
+            case ("selectedTiles") -> {
+                updateSelectedTiles();
+            }
+            case ("bookshelf") -> {
+                updateBookshelf();
+            }
+            case ("publicPoints") -> {
+                updatePublicPoints();
+            }
+            case ("privatePoints") -> {
+                updatePrivatePoints();
+            }
+            case ("currPlayer") -> {
+                updateCurrPlayer();
+            }
+        }
+
+    }
+
     //setta le tessere - dal colore all'immagine
     private ImageView setTiles(Tiles tile){
-
-//
-//        double cellWidth = boardGrid.getColumnConstraints().get(j).getPercentWidth() / 100.0 * boardGrid.getWidth();
-//        double cellHeight = boardGrid.getRowConstraints().get(i).getPercentHeight() / 100.0 * boardGrid.getHeight();
-//        System.out.println(cellHeight+ cellWidth);
-
         Random rand = new Random();
         String[] titles = tile.getImage();
         String title = titles==null?null:titles[rand.nextInt(Define.NUMBEROFTILEIMAGES.getI())];
+
         Image image = new Image(title);
         ImageView imageView = new ImageView(image);
 
@@ -120,6 +145,31 @@ public class GameController implements Initializable {
         int points=clientState.getAllPublicPoints().get(otherPlayer);
 
         otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
+    }
+
+
+
+    private void updateBoard() {
+    }
+
+    private void updateSelectedTiles() {
+    }
+
+    private void updateBookshelf() {
+    }
+
+    private void updatePublicPoints() {
+    }
+
+    private void updateCurrPlayer() {
+    }
+
+    private void updatePrivatePoints() {
+    }
+
+    @Override
+    public void showError(String error) {
+
     }
 
     //TODO update board, mybookshelf, otherplayerbookshelf, mypoints, otherplayerpoints
