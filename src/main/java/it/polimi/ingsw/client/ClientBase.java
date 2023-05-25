@@ -40,14 +40,15 @@ public class ClientBase extends Application{
             System.out.print("Which User Interface do you choose? (CLI/GUI): ");
             decision = scanner.nextLine();
 
-            if (decision.equalsIgnoreCase("GUI")) {
-                GUIControllerStatic.setGuiController(new GUIController(networker, state));
-                networker.setView(GUIControllerStatic.getGuiController());
-                launch();
-            } else {
+            if (decision.equalsIgnoreCase("TCP")) {
                 CLIMain cli = new CLIMain(lock, state, networker);
                 networker.setView(cli);
                 cli.runUI();
+            } else {
+                GUIControllerStatic.setGuiController(new GUIController(networker, state));
+                networker.setView(GUIControllerStatic.getGuiController());
+                launch();
+
             }
         } catch (RemoteException e) {
                 e.printStackTrace();

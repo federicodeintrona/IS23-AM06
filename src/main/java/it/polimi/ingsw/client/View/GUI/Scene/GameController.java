@@ -136,7 +136,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     //TODO inizializza il personal objective
     public void initializePersonalObjectiveImageView(){
 
-
         try {
 
             Image image = new Image(new FileInputStream("17_MyShelfie_BGA/common goal cards/1.jpg"));
@@ -146,10 +145,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
 
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-
 
     }
 
