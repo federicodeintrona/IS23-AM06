@@ -16,6 +16,8 @@ import javafx.scene.layout.GridPane;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -48,6 +50,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         guiController.setSceneController(this);
         initializeBoardGrid();
         initializeCommonGrid();
+        try {
+            initializePersonalObjectiveImageView();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -89,6 +96,15 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         imageView.setFitWidth(50);
         return imageView;
     }
+    private Image getImage(String path){
+        try {
+            FileInputStream fileInputStream= new FileInputStream(path);
+            Image image = new Image(fileInputStream);
+            return image;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     //la metrice è 11x11 ==> getTile -1
@@ -104,8 +120,14 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     }
 
     //TODO inizializza i common objective
-    public void initializeCommonGrid(){
-
+    public void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
+        for(int i=0; i<2;i++){
+            String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
+            ImageView imageview=new ImageView(getImage(path));
+            imageview.setFitHeight(100);
+            imageview.setFitWidth(250);
+            commonGrid.add(imageview,i,0);
+        }
     }
 
     //TODO inizializza il nome dell'altro giocatore
@@ -113,7 +135,13 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     }
 
     //TODO inizializza il personal objective
-    public void initializePersonalObjectiveImageView(){}
+    public void initializePersonalObjectiveImageView() throws FileNotFoundException {
+        String path="css/images/personal_goal_cards/Personal_Goals1.png";
+        personalObjectiveImageView.setImage(getImage(path));
+        personalObjectiveImageView.setPreserveRatio(true);
+        personalObjectiveImageView.setFitWidth(152);
+        personalObjectiveImageView.setFitHeight(229);
+    }
 
     //TODO inizializza i tuoi punti
     public void initializeMyPointsLabel(){
