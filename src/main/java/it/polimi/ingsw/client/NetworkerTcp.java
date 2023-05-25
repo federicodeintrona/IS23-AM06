@@ -109,7 +109,12 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
 
     @Override
     public void chat(Message message) {
-
+        try {
+            oos.writeObject(message);
+            oos.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

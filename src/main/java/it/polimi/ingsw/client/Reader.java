@@ -1,10 +1,11 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
 import it.polimi.ingsw.utils.Tiles;
-import it.polimi.ingsw.utils.Matrix;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -20,8 +21,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import static java.lang.System.out;
 
 public class Reader extends Thread{
     private Socket socket;
@@ -105,6 +104,9 @@ public class Reader extends Thread{
                         case ("start") -> {
                             Boolean start = (Boolean) message.getContent();
                             clientState.setGameHasStarted(start);
+                        }
+                        case ("message") -> {
+                            clientState.newMessage((ChatMessage) message.getContent());
                         }
                         case ("end") -> {
                             Boolean end = (Boolean) message.getContent();

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
-import it.polimi.ingsw.server.Model.ChatMessage;
+import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.utils.Messages.ChatMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 

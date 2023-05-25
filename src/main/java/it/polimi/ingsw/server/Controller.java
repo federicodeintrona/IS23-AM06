@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.IntMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
@@ -239,12 +240,11 @@ public class Controller implements PropertyChangeListener {
         lobby.closeGame(((Model)evt.getSource()).getGameID());
     }
 
-    public Message sendMessage (int gameId, String playerForwarding, Message message) {
+    public ChatMessage sendMessage (int gameId, String playerForwarding, String message) {
 
         lobby.getGames().get(gameId).sendMessage(playerForwarding, message);
 
-        Message messageOut = new Message();
-        messageOut.setUsername(playerForwarding);
+        ChatMessage messageOut = new ChatMessage(playerForwarding, message);
         messageOut.setType(MessageTypes.CHAT);
 
         return messageOut;

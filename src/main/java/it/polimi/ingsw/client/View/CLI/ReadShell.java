@@ -207,10 +207,9 @@ public class ReadShell extends Thread{
     }
 
     private void createChatMessage (String string){
-        Message message = new Message();
 
         // Setting the message
-        message.setUsername(string);
+        ChatMessage message = new ChatMessage(cliMain.getClientState().getMyUsername(), string);
         message.setType(MessageTypes.CHAT);
 
         // Sending the message

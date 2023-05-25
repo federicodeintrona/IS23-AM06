@@ -73,7 +73,7 @@ public class RMIHandler implements RMIHandlerInterface{
     }
 
     @Override
-    public Message sendMessage(int gameId, String playerForwarding, Message message) throws RemoteException {
+    public Message sendMessage(int gameId, String playerForwarding, String message) throws RemoteException {
         return controller.sendMessage(gameId, playerForwarding, message);
     }
 }

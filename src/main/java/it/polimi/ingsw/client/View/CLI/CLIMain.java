@@ -72,7 +72,7 @@ public class CLIMain implements View {
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
             }
-            //case CHAT -> cliPrint.printMessage(message.getUsername(), clientState.getMessage());
+            //case CHAT -> cliPrint.printMessage(message.getUsername(), clientState.getPublicChat().getChatMessages().get(0).getMessage());
             default -> {
                 break;
             }

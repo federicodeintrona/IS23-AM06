@@ -104,6 +104,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                 case PONG -> {
                     this.time=0;
                 }
+                case CHAT -> messageOut = controller.sendMessage(gameID, username, ((ChatMessage)incomingMsg).getMessage());
                 default -> {
                     System.out.println("Server received: " + incomingMsg);
                 }
