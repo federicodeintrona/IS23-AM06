@@ -226,16 +226,29 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     //conferma le tessere selezionate
     @FXML
     public void confirmClick(ActionEvent actionEvent){
-        PointsMessage pointsMessage=new PointsMessage();
+        if (removeTiles.isEmpty()){
+            //TODO inviare errore devi selezionare almeno una tile
+        }
+        else{
+            if (removeTiles.size()>3){
+                //TODO inviare errore hai selezionato N tiles, puoi selezionare solo 1,2,3 tiles
+                // riseleziona
+                removeTiles=new ArrayList<>();
+            }
+            else {
+                PointsMessage pointsMessage=new PointsMessage();
 
-        pointsMessage.setUsername(clientState.getMyUsername());
-        pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
-        pointsMessage.setTiles(removeTiles);
-        guiController.sendMessage(pointsMessage);
+                pointsMessage.setUsername(clientState.getMyUsername());
+                pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
+                pointsMessage.setTiles(removeTiles);
+                guiController.sendMessage(pointsMessage);
 
-        removeTiles=new ArrayList<>();
-        //TODO disabilitare bottone
-//        confirmationButtons.setVisible(false);
+                removeTiles=new ArrayList<>();
+                //TODO disabilitare bottone
+//              confirmationButtons.setVisible(false);
+            }
+        }
+
     }
 
 }
