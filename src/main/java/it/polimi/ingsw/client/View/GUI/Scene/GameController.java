@@ -23,6 +23,8 @@ import javafx.scene.layout.GridPane;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -63,11 +65,15 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         guiController.setSceneController(this);
 //        confirmationButtons.setOpacity(0);
         initializeBoardGrid();
-//        initializeCommonGrid();
+        initializeCommonGrid();
+        try {
+            initializePersonalObjectiveImageView();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         initializeotherPlayerLabel();
         initializeMyPointsLabel();
         initializeOtherPlayerPointsLabel();
-//        initializePersonalObjectiveImageView();
     }
 
     @Override
@@ -109,6 +115,15 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         imageView.setFitWidth(50);
         return imageView;
     }
+    private Image getImage(String path){
+        try {
+            FileInputStream fileInputStream= new FileInputStream(path);
+            Image image = new Image(fileInputStream);
+            return image;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     //la metrice è 11x11 ==> getTile -1
@@ -123,9 +138,15 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-    //TODO inizializza i common objective
-    public void initializeCommonGrid(){
-
+    //inizializza i common objective
+    public void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
+        for(int i=0; i<2;i++){
+            String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
+            ImageView imageview=new ImageView(getImage(path));
+            imageview.setFitHeight(100);
+            imageview.setFitWidth(250);
+            commonGrid.add(imageview,i,0);
+        }
     }
 
     //ritorna il nome dell'altro giocatore in partita
@@ -144,25 +165,16 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     }
 
-    //TODO inizializza il personal objective
-    public void initializePersonalObjectiveImageView(){
-
-        try {
-
-            Image image = new Image(new FileInputStream("17_MyShelfie_BGA/common goal cards/1.jpg"));
-            personalObjectiveImageView.setImage(image);
-            personalObjectiveImageView.setPreserveRatio(true);
-            personalObjectiveImageView.setFitWidth(50);
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
+    //inizializza il personal objective
+    public void initializePersonalObjectiveImageView() throws FileNotFoundException {
+        String path="css/images/personal_goal_cards/Personal_Goals1.png";
+        personalObjectiveImageView.setImage(getImage(path));
+        personalObjectiveImageView.setPreserveRatio(true);
+        personalObjectiveImageView.setFitWidth(152);
+        personalObjectiveImageView.setFitHeight(229);
     }
 
-    //inizializza i tuoi punti
+    //TODO inizializza i tuoi punti
     public void initializeMyPointsLabel(){
         String myPoints="My Points are: "+clientState.getMyPoints();
 
