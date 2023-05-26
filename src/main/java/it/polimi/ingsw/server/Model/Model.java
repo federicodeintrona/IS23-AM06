@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.client.ChatController;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;

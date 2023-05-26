@@ -1,15 +1,27 @@
-package it.polimi.ingsw.server.Model;
+package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatController {
-    private ArrayList<ChatMessage> chatMessages = new ArrayList<>();        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
+public class Chat {
+    private ArrayList<ChatMessage> chatMessages;        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
     private int oldestMessage;
-    private final int maxNumberOfMessages = 20;
-    private int unReadMessages = 0;
+    private int maxNumberOfMessages;
+    private int unReadMessages;
+
+    public Chat () {
+        chatMessages = new ArrayList<>();
+        maxNumberOfMessages = 20;
+        unReadMessages = 0;
+    }
+
+    public Chat(int maxNumberOfMessages) {
+        chatMessages = new ArrayList<>();
+        this.maxNumberOfMessages = maxNumberOfMessages;
+        unReadMessages = 0;
+    }
 
     public synchronized void addMessage(ChatMessage message) {
         if (chatMessages.isEmpty()) {
