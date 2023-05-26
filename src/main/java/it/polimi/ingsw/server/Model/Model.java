@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.client.ChatController;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Chat;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
@@ -35,6 +37,8 @@ public class Model implements TimerInterface {
     private boolean isFinished = false;
     private int connectedPlayers;
     private Chat publicChat = new Chat();
+    private HashMap<String, ChatController> allPlayersChats = new HashMap<>();
+
 
     //Timer
     private int time = 0;
@@ -61,26 +65,72 @@ public class Model implements TimerInterface {
 
     //Constructors
 
-    public Model(){}
+    public Model(){
+
+    }
     public Model(ArrayList<Player> players) {
         this.players = players;
+
+        // Initializing for each player a particular version of ChatController specifically designed for Server
+        List<String> allUsernames = players.stream()
+                .map(x -> x.getUsername())
+                .toList();
+        for (String player: allUsernames) {
+            allPlayersChats.put(player, new ChatController(true));
+
+            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
+            allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
+        }
     }
 
     public Model(ArrayList<Player> players, ArrayList<VirtualView> views) {
         this.players = players;
         this.virtualViews = views;
+
+        // Initializing for each player a particular version of ChatController specifically designed for Server
+        List<String> allUsernames = players.stream()
+                .map(x -> x.getUsername())
+                .toList();
+        for (String player: allUsernames) {
+            allPlayersChats.put(player, new ChatController(true));
+
+            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
+                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
+        }
     }
 
     public Model(ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
         this.players = players;
         this.virtualViews = views;
         notifier.addPropertyChangeListener("end", controller);
+
+        // Initializing for each player a particular version of ChatController specifically designed for Server
+        List<String> allUsernames = players.stream()
+                .map(x -> x.getUsername())
+                .toList();
+        for (String player: allUsernames) {
+            allPlayersChats.put(player, new ChatController(true));
+
+            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
+                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
+        }
     }
     public Model(int iD, ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
         this.gameID = iD;
         this.players = players;
         this.virtualViews = views;
         notifier.addPropertyChangeListener("end", controller);
+
+        // Initializing for each player a particular version of ChatController specifically designed for Server
+        List<String> allUsernames = players.stream()
+                                        .map(x -> x.getUsername())
+                                        .toList();
+        for (String player: allUsernames) {
+            allPlayersChats.put(player, new ChatController(true));
+
+            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
+                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
+        }
     }
 
     //PUBLIC METHODS
@@ -634,6 +684,28 @@ public class Model implements TimerInterface {
 
         for (String x: usernames){
             notifier.firePropertyChange(new PropertyChangeEvent(publicChat.getChatMessages().get(0), x, null, "message"));
+        }
+    }
+
+    public synchronized void sendMessage (String forwardingPlayer, String message, String receivingPlayer) {
+        ChatMessage conversation = new ChatMessage(forwardingPlayer, message, receivingPlayer);
+        conversation.getConversation();/*
+        // Adding the conversation to both private chats' history
+        allPlayersChats.get(forwardingPlayer).getPrivateChat(receivingPlayer).addMessage(conversation);
+        System.out.printf("1");
+        allPlayersChats.get(receivingPlayer).getPrivateChat(forwardingPlayer).addMessage(conversation);
+        System.out.printf("2");
+        */
+
+        List<String> usernames = players.stream()
+                                        .map(x -> x.getUsername())
+                                        .filter(x -> (x.equals(forwardingPlayer) || x.equals(receivingPlayer)))
+                                        .toList();
+
+        System.out.printf("3");
+        for (String x: usernames){
+            System.out.printf("rep");
+            notifier.firePropertyChange(new PropertyChangeEvent(conversation, x, null, "message"));
         }
     }
 

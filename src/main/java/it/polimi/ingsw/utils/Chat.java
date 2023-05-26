@@ -52,6 +52,19 @@ public class Chat {
         oldestMessage++;
     }
 
+    public synchronized void addMessage(String forwardingPlayer, String message, String receivingPlayer) {
+        if (chatMessages.isEmpty()) {
+            chatMessages.add(0, new ChatMessage(forwardingPlayer, message, receivingPlayer));
+            oldestMessage = 0;
+            return;
+        }
+
+        if (oldestMessage == (maxNumberOfMessages -1)) chatRefresh();
+
+        chatMessages.add(0, new ChatMessage(forwardingPlayer, message, receivingPlayer));
+        oldestMessage++;
+    }
+
     private void chatRefresh () {
         chatMessages.remove(oldestMessage);
         oldestMessage--;

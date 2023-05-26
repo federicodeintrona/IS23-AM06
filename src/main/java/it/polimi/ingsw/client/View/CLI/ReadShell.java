@@ -140,10 +140,13 @@ public class ReadShell extends Thread{
                 chat();
             }
             case "#privatechat" -> {
-
+                String username = privateChatHandler();
 
                 // Printing publicChat's history
-                cliMain.getCliPrint().printChat();
+                cliMain.getCliPrint().printChat(username);
+
+                cliMain.getClientState().getChatController().getPrivateChat(username).setChatIsEnable(true);
+                chat(username);
             }
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
@@ -222,6 +225,18 @@ public class ReadShell extends Thread{
         sendMessage(message);
     }
 
+    private void createChatMessage (String string, String receivingPlayer){
+
+        // Setting the message
+        ChatMessage message = new ChatMessage(cliMain.getClientState().getMyUsername(), string, receivingPlayer);
+        message.setType(MessageTypes.CHAT);
+
+        message.getConversation();
+
+        // Sending the message
+        sendMessage(message);
+    }
+
 
     //invia messaggi a Networker
     private void sendMessage(Message message){
@@ -280,5 +295,35 @@ public class ReadShell extends Thread{
                 default -> createChatMessage(str);
             }
         }
+    }
+
+    private void chat (String username) {
+        Scanner scanner=new Scanner(System.in);
+        String str = null;
+
+        while (cliMain.getClientState().getChatController().getPrivateChat(username).ChatIsEnable()) {
+
+
+            str = scanner.nextLine();
+
+            switch (str) {
+                case "#exit" -> {
+                    cliMain.getClientState().getChatController().getPrivateChat(username).setChatIsEnable(false);
+                    clearCLI();
+                }
+                case "#help", "#h" -> cliMain.getCliPrint().helpForChat();
+                default -> createChatMessage(str, username);
+            }
+        }
+    }
+
+    private String privateChatHandler () {
+        Scanner scanner=new Scanner(System.in);
+        String str = null;
+
+        System.out.println("Who do you want to chat with?");
+        str = scanner.nextLine();
+
+        return str;
     }
 }

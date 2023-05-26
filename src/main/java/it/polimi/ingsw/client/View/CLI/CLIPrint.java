@@ -431,7 +431,7 @@ public class CLIPrint implements PropertyChangeListener {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPublicChat().resetUnReadMessages();
 
-        System.out.println("PUBLIC CHAT: ___________________________________");
+        System.out.println("PUBLIC CHAT: ______________________________________");
         System.out.println("use the command #help or #h to display chat's commands");
 
         if (chat.getPublicChat().getChatMessages().isEmpty()) {
@@ -444,6 +444,26 @@ public class CLIPrint implements PropertyChangeListener {
                 System.out.println("me: " + chat.getPublicChat().getChatMessages().get(i).getMessage());
             }
             else System.out.println(chat.getPublicChat().getChatMessages().get(i).getUsername()+ ": " + chat.getPublicChat().getChatMessages().get(i).getMessage());
+        }
+    }
+
+    public void printChat (String username) {
+        ChatController chat = cliMain.getClientState().getChatController();
+        chat.getPrivateChat(username).resetUnReadMessages();
+
+        System.out.println("PRIVATE CHAT with " + username + ": ________________________________");
+        System.out.println("use the command #help or #h to display chat's commands");
+
+        if (chat.getPrivateChat(username).getChatMessages().isEmpty()) {
+            System.out.println("There are no previous messages :(");
+            return;
+        }
+
+        for (int i = chat.getPrivateChat(username).getOldestMessage(); i>=0; i--){
+            if (chat.getPrivateChat(username).getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
+                System.out.println("me: " + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
+            }
+            else System.out.println(chat.getPrivateChat(username).getChatMessages().get(i).getUsername()+ ": " + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
         }
     }
 

@@ -23,4 +23,8 @@ public class ChatMessage extends Message implements Serializable {
     }
 
     public String getReceivingUsername() {return receivingUsername;}
+
+    public void getConversation () {
+        System.out.println(getUsername() + " :" + message + " TO " + receivingUsername);
+    }
 }

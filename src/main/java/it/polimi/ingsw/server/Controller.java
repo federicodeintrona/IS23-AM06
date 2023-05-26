@@ -249,4 +249,18 @@ public class Controller implements PropertyChangeListener {
 
         return messageOut;
     }
+
+    public ChatMessage sendMessage (int gameId, String playerForwarding, String message, String receivingPlayer) {
+
+        System.out.println("playerForwarding = " + playerForwarding);
+        System.out.println("message = " + message);
+        System.out.println("playerReceiving = " + receivingPlayer);
+
+        lobby.getGames().get(gameId).sendMessage(playerForwarding, message, receivingPlayer);
+
+        ChatMessage messageOut = new ChatMessage(playerForwarding, message ,receivingPlayer);
+        messageOut.setType(MessageTypes.CHAT);
+
+        return messageOut;
+    }
 }

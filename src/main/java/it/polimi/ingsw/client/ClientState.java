@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.utils.Chat;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
@@ -9,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
     private Object viewLock;
@@ -35,6 +37,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         super();
         this.viewLock = viewLock;
     }
+
     public ClientState(String s, Object o) throws RemoteException {
         super();
         myUsername=s;
@@ -62,6 +65,14 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setAllUsername(ArrayList<String> allUsername) {
         synchronized (viewLock){
             this.allUsername = allUsername;
+        }
+
+        // Initializing for each player a particular version of ChatController specifically designed for Server
+        List<String> allOtherUsernames = allUsername.stream()
+                .filter(x -> !x.equals(myUsername))
+                .toList();
+        for (String player: allOtherUsernames) {
+            chatController.getPrivateChats().put(player, new Chat());
         }
     }
 
@@ -263,6 +274,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     @Override
     public void newMessageHandler (ChatMessage message) {
         if (message.getReceivingUsername() == null) newPublicMessage(message);
+        else newPrivateMessage(message);
     }
 
     public void newPublicMessage(ChatMessage message) {
@@ -280,16 +292,23 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     public void newPrivateMessage(ChatMessage message) {
-        if (chatController.getPublicChat().ChatIsEnable()) {
-            if (!message.getUsername().equals(myUsername)) System.out.println(message.getUsername() + ": " + message.getMessage());
+        String forwardingPlayer = message.getUsername();
+        String conversation = message.getMessage();
+        String receivingPlayer = message.getReceivingUsername();
+
+        if (forwardingPlayer.equals(myUsername)) {
+            chatController.getPrivateChat(receivingPlayer).addMessage(message);
         }
         else {
-            chatController.getPublicChat().updateUnReadMessages();
-            if (chatController.getPublicChat().getUnReadMessages() == 1) System.out.println("*One new message from the PUBLIC CHAT*");
-            else System.out.println("*" + chatController.getPublicChat().getUnReadMessages() + " new messages from the PUBLIC CHAT*");
+            if (chatController.getPrivateChat(forwardingPlayer).ChatIsEnable()) System.out.println(forwardingPlayer + ": " + conversation);
+            else {
+                if (chatController.getPrivateChat(forwardingPlayer).getUnReadMessages() == 1)
+                    System.out.println("*One new message from the PRIVATE CHAT with " + forwardingPlayer + "*");
+                else
+                    System.out.println("*" + chatController.getPrivateChat(forwardingPlayer).getUnReadMessages() + " new messages from the PRIVATE CHAT with " + forwardingPlayer + "*");
+            }
+            chatController.getPrivateChat(forwardingPlayer).addMessage(message);
         }
-
-        chatController.getPublicChat().addMessage(message);
 
     }
 

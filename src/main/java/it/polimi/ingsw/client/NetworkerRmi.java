@@ -197,10 +197,21 @@ public class NetworkerRmi implements Networker {
     public void chat (Message message) {
         ChatMessage tempMessage = (ChatMessage) message;
 
-        try {
-            this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage());
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+        if (tempMessage.getReceivingUsername() == null) {
+            try {
+                this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            try {
+                tempMessage.getConversation();
+
+                this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage(), tempMessage.getReceivingUsername());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         cli.receivedMessage(this.message);

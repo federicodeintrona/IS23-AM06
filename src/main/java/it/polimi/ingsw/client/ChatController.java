@@ -5,8 +5,17 @@ import it.polimi.ingsw.utils.Chat;
 import java.util.HashMap;
 
 public class ChatController {
-    private Chat publicChat = new Chat();
-    private HashMap<String, Chat> privateChats = new HashMap<>();
+    private Chat publicChat;
+    private HashMap<String, Chat> privateChats;
+
+    public ChatController() {
+        publicChat = new Chat();
+        privateChats = new HashMap<>();
+    }
+
+    public ChatController (boolean forServer){
+        privateChats = new HashMap<>();
+    }
 
     public Chat getPublicChat() {
         return publicChat;
