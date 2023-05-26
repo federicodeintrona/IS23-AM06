@@ -30,7 +30,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private boolean waiting=false;
     private boolean ChatIsEnable = false;
     private String chair;
-    private ChatController publicChat = new ChatController();
+    private ChatController chatController = new ChatController();
 
     public ClientState(Object viewLock) throws RemoteException {
         super();
@@ -262,22 +262,26 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     @Override
+    public void newMessageHandler (ChatMessage message) {
+        if (message.getReceivingUsername() == null) newMessage(message);
+    }
+
     public void newMessage(ChatMessage message) {
         if (ChatIsEnable) {
             if (!message.getUsername().equals(myUsername)) System.out.println(message.getUsername() + ": " + message.getMessage());
         }
         else {
-            publicChat.updateUnReadMessages();
-            if (publicChat.getUnReadMessages() == 1) System.out.println("*Hai un nuovo messaggio*");
-            else System.out.println("*Hai " + publicChat.getUnReadMessages() + " nuovi messaggi*");
+            chatController.getPublicChat().updateUnReadMessages();
+            if (chatController.getPublicChat().getUnReadMessages() == 1) System.out.println("*Hai un nuovo messaggio*");
+            else System.out.println("*Hai " + chatController.getPublicChat().getUnReadMessages() + " nuovi messaggi*");
         }
 
-        publicChat.addMessage(message);
+        chatController.getPublicChat().addMessage(message);
 
     }
 
-    public ChatController getPublicChat() {
-        return publicChat;
+    public ChatController getChatController() {
+        return chatController;
     }
 
     public boolean isChatEnable() {

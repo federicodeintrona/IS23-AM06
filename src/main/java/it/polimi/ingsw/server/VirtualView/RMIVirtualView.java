@@ -73,7 +73,7 @@ public class RMIVirtualView extends VirtualView{
                         clientState.setGameIsEnded((boolean) evt.getSource());
                     }
                     case ("message") -> {
-                        clientState.newMessage((ChatMessage) evt.getSource());
+                        clientState.newMessageHandler((ChatMessage) evt.getSource());
                     }
                 }
             } catch (RemoteException e) {

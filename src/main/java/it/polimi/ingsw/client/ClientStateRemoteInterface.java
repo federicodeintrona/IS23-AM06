@@ -42,5 +42,5 @@ public interface ClientStateRemoteInterface extends Remote {
 
     boolean pingPong() throws RemoteException;
 
-    void newMessage (ChatMessage message) throws RemoteException;
+    void newMessageHandler (ChatMessage message) throws RemoteException;
 }

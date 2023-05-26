@@ -422,19 +422,19 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
     public void printChat () {
-        ChatController chat = cliMain.getClientState().getPublicChat();
-        cliMain.getClientState().getPublicChat().resetUnReadMessages();
+        ChatController chat = cliMain.getClientState().getChatController();
+        chat.getPublicChat().resetUnReadMessages();
 
-        if (chat.getChatMessages().isEmpty()) {
+        if (chat.getPublicChat().getChatMessages().isEmpty()) {
             System.out.println("There are no previous messages :(");
             return;
         }
 
-        for (int i = chat.getOldestMessage(); i>=0; i--){
-            if (chat.getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
-                System.out.println("me: " + chat.getChatMessages().get(i).getMessage());
+        for (int i = chat.getPublicChat().getOldestMessage(); i>=0; i--){
+            if (chat.getPublicChat().getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
+                System.out.println("me: " + chat.getPublicChat().getChatMessages().get(i).getMessage());
             }
-            else System.out.println(chat.getChatMessages().get(i).getUsername()+ ": " + chat.getChatMessages().get(i).getMessage());
+            else System.out.println(chat.getPublicChat().getChatMessages().get(i).getUsername()+ ": " + chat.getPublicChat().getChatMessages().get(i).getMessage());
         }
     }
 

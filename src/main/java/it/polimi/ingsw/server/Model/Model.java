@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server.Model;
 
-import it.polimi.ingsw.client.ChatController;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Chat;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
@@ -34,7 +34,7 @@ public class Model implements TimerInterface {
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
     private boolean isFinished = false;
     private int connectedPlayers;
-    private ChatController publicChat = new ChatController();
+    private Chat publicChat = new Chat();
 
     //Timer
     private int time = 0;
