@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Chat {
     private ArrayList<ChatMessage> chatMessages;        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
+    private boolean chatIsEnable;
     private int oldestMessage;
     private int maxNumberOfMessages;
     private int unReadMessages;
@@ -15,12 +16,14 @@ public class Chat {
         chatMessages = new ArrayList<>();
         maxNumberOfMessages = 20;
         unReadMessages = 0;
+        chatIsEnable = false;
     }
 
     public Chat(int maxNumberOfMessages) {
         chatMessages = new ArrayList<>();
         this.maxNumberOfMessages = maxNumberOfMessages;
         unReadMessages = 0;
+        chatIsEnable = false;
     }
 
     public synchronized void addMessage(ChatMessage message) {
@@ -65,4 +68,12 @@ public class Chat {
     public synchronized void resetUnReadMessages () {unReadMessages = 0;}
 
     public int getUnReadMessages() {return unReadMessages;}
+
+    public boolean ChatIsEnable() {
+        return chatIsEnable;
+    }
+
+    public void setChatIsEnable(boolean chatIsEnable) {
+        this.chatIsEnable = chatIsEnable;
+    }
 }

@@ -106,7 +106,7 @@ public class Reader extends Thread{
                             clientState.setGameHasStarted(start);
                         }
                         case ("message") -> {
-                            clientState.newMessage((ChatMessage) message.getContent());
+                            clientState.newMessageHandler((ChatMessage) message.getContent());
                         }
                         case ("end") -> {
                             Boolean end = (Boolean) message.getContent();

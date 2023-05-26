@@ -231,6 +231,12 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
+    public void helpForChat () {
+        System.out.println("All command, WITH EXAMPLE, are:");
+        System.out.println("#exit ........................... To leave the chat and return to the game");
+        System.out.println("\n");
+    }
+
     //legge da JSON il Common Objective d'interesse
     private void readJSONCO(Integer commonObjective){
         synchronized (cliMain.getLock()) {
@@ -424,6 +430,9 @@ public class CLIPrint implements PropertyChangeListener {
     public void printChat () {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPublicChat().resetUnReadMessages();
+
+        System.out.println("PUBLIC CHAT: ___________________________________");
+        System.out.println("use the command #help or #h to display chat's commands");
 
         if (chat.getPublicChat().getChatMessages().isEmpty()) {
             System.out.println("There are no previous messages :(");

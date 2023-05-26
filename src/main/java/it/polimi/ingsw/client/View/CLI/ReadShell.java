@@ -136,8 +136,14 @@ public class ReadShell extends Thread{
                 // Printing publicChat's history
                 cliMain.getCliPrint().printChat();
 
-                cliMain.setChatIsEnable(true);
+                cliMain.getClientState().getChatController().getPublicChat().setChatIsEnable(true);
                 chat();
+            }
+            case "#privatechat" -> {
+
+
+                // Printing publicChat's history
+                cliMain.getCliPrint().printChat();
             }
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
@@ -260,15 +266,18 @@ public class ReadShell extends Thread{
         Scanner scanner=new Scanner(System.in);
         String str = null;
 
-        while (cliMain.ChatIsEnable()) {
+        while (cliMain.getClientState().getChatController().getPublicChat().ChatIsEnable()) {
 
 
             str = scanner.nextLine();
 
-            if (!str.equals("#exit")) createChatMessage(str);
-            else {
-                cliMain.setChatIsEnable(false);
-                clearCLI();
+            switch (str) {
+                case "#exit" -> {
+                    cliMain.getClientState().getChatController().getPublicChat().setChatIsEnable(false);
+                    clearCLI();
+                }
+                case "#help", "#h" -> cliMain.getCliPrint().helpForChat();
+                default -> createChatMessage(str);
             }
         }
     }

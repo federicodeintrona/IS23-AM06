@@ -28,7 +28,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private boolean gameHasStarted=false;
     private boolean gameIsEnded=false;
     private boolean waiting=false;
-    private boolean ChatIsEnable = false;
     private String chair;
     private ChatController chatController = new ChatController();
 
@@ -263,17 +262,31 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     @Override
     public void newMessageHandler (ChatMessage message) {
-        if (message.getReceivingUsername() == null) newMessage(message);
+        if (message.getReceivingUsername() == null) newPublicMessage(message);
     }
 
-    public void newMessage(ChatMessage message) {
-        if (ChatIsEnable) {
+    public void newPublicMessage(ChatMessage message) {
+        if (chatController.getPublicChat().ChatIsEnable()) {
             if (!message.getUsername().equals(myUsername)) System.out.println(message.getUsername() + ": " + message.getMessage());
         }
         else {
             chatController.getPublicChat().updateUnReadMessages();
-            if (chatController.getPublicChat().getUnReadMessages() == 1) System.out.println("*Hai un nuovo messaggio*");
-            else System.out.println("*Hai " + chatController.getPublicChat().getUnReadMessages() + " nuovi messaggi*");
+            if (chatController.getPublicChat().getUnReadMessages() == 1) System.out.println("*One new message from the PUBLIC CHAT*");
+            else System.out.println("*" + chatController.getPublicChat().getUnReadMessages() + " new messages from the PUBLIC CHAT*");
+        }
+
+        chatController.getPublicChat().addMessage(message);
+
+    }
+
+    public void newPrivateMessage(ChatMessage message) {
+        if (chatController.getPublicChat().ChatIsEnable()) {
+            if (!message.getUsername().equals(myUsername)) System.out.println(message.getUsername() + ": " + message.getMessage());
+        }
+        else {
+            chatController.getPublicChat().updateUnReadMessages();
+            if (chatController.getPublicChat().getUnReadMessages() == 1) System.out.println("*One new message from the PUBLIC CHAT*");
+            else System.out.println("*" + chatController.getPublicChat().getUnReadMessages() + " new messages from the PUBLIC CHAT*");
         }
 
         chatController.getPublicChat().addMessage(message);
@@ -284,11 +297,4 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         return chatController;
     }
 
-    public boolean isChatEnable() {
-        return ChatIsEnable;
-    }
-
-    public void setChatIsEnable (boolean chatEnable) {
-        this.ChatIsEnable = chatEnable;
-    }
 }

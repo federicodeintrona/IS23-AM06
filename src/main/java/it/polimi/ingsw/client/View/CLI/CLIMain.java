@@ -146,11 +146,6 @@ public class CLIMain implements View {
 
     }
 
-    public void setChatIsEnable(boolean chatIsEnable) {
-        this.chatIsEnable = chatIsEnable;
-        getClientState().setChatIsEnable(chatIsEnable);
-    }
-
     public boolean ChatIsEnable() {
         return chatIsEnable;
     }
