@@ -5,9 +5,7 @@ import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
-import it.polimi.ingsw.utils.Messages.Message;
-import it.polimi.ingsw.utils.Messages.MessageTypes;
-import it.polimi.ingsw.utils.Messages.PointsMessage;
+import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.Tiles;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -16,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,6 +40,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
+    private ArrayList<Integer> orderTiles=new ArrayList<>();
     @FXML
     private GridPane boardGrid;
     @FXML
@@ -61,6 +61,30 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
     @FXML
     private Button confirmationButton;
+    @FXML
+    private ImageView selectedTiles1;
+    @FXML
+    private ImageView selectedTiles2;
+    @FXML
+    private ImageView selectedTiles3;
+    @FXML
+    private Button confirmSelected;
+    @FXML
+    private DialogPane selectedTilesDialog;
+    @FXML
+    private Button endSwitch;
+    @FXML
+    private Button column1;
+    @FXML
+    private Button column2;
+    @FXML
+    private Button column3;
+    @FXML
+    private Button column4;
+    @FXML
+    private Button column5;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,8 +99,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
             throw new RuntimeException(e);
         }
         initializeotherPlayerLabel();
-        initializeMyPointsLabel();
-        initializeOtherPlayerPointsLabel();
+        updateMyPointsLabel();
+        updateOtherPlayerPointsLabel();
         updateCurrPlayer();
     }
 
@@ -88,16 +112,16 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 Platform.runLater(this::updateBoard);
             }
             case ("selectedTiles") -> {
-                updateSelectedTiles();
+                Platform.runLater(this::updateSelectedTiles);
             }
             case ("bookshelf") -> {
                 updateBookshelf();
             }
             case ("publicPoints") -> {
-                updatePublicPoints();
+                Platform.runLater(this::updateAllPlayerPoints);
             }
             case ("privatePoints") -> {
-                updatePrivatePoints();
+                Platform.runLater(this::updateMyPointsLabel);
             }
             case ("currPlayer") -> {
                 Platform.runLater(this::updateCurrPlayer);
@@ -119,6 +143,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         imageView.setFitWidth(50);
         return imageView;
     }
+
     private Image getImage(String path){
         try {
             FileInputStream fileInputStream= new FileInputStream(path);
@@ -166,7 +191,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     //inizializza il nome dell'altro giocatore
     public void initializeotherPlayerLabel(){
         otherPlayerLabel.setText(catchOtherPlayerName());
-
     }
 
     //inizializza il personal objective
@@ -178,21 +202,29 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         personalObjectiveImageView.setFitHeight(229);
     }
 
-    //inizializza i tuoi punti
-    public void initializeMyPointsLabel(){
+    //aggiorna i tuoi punti
+    public void updateMyPointsLabel(){
         String myPoints="My Points are: "+clientState.getMyPoints();
 
         myPointsLabel.setText(myPoints);
     }
 
-    //inizializza i punti dell'altro giocatore
-    public void initializeOtherPlayerPointsLabel(){
+    //aggiorna i punti dell'altro giocatore
+    private void updateOtherPlayerPointsLabel(){
         String otherPlayer=catchOtherPlayerName();
         int points=clientState.getAllPublicPoints().get(otherPlayer);
 
         otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
     }
 
+    //aggiorna i punti di tutti i giocatori
+    public void updateAllPlayerPoints(){
+        for (String player : clientState.getAllPublicPoints().keySet()){
+            if (!player.equals(clientState.getMyUsername())){
+                updateOtherPlayerPointsLabel();
+            }
+        }
+    }
 
 
     private void updateBoard() {
@@ -209,12 +241,32 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     }
 
     private void updateSelectedTiles() {
+        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())) {
+            selectedTilesDialog.setVisible(true);
+            selectedTilesDialog.setDisable(false);
+
+            switch (clientState.getSelectedTiles().size()) {
+                case 1 -> {
+                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
+                    selectedTiles1.setDisable(true);
+                    selectedTiles1.setVisible(false);
+                }
+                case 2 -> {
+                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
+                    selectedTiles2.setImage(new Image(clientState.getSelectedTiles().get(1).getImage()[0]));
+                    selectedTiles3.setDisable(true);
+                    selectedTiles3.setVisible(false);
+                }
+                case 3 -> {
+                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
+                    selectedTiles2.setImage(new Image(clientState.getSelectedTiles().get(1).getImage()[0]));
+                    selectedTiles3.setImage(new Image(clientState.getSelectedTiles().get(2).getImage()[0]));
+                }
+            }
+        }
     }
 
     private void updateBookshelf() {
-    }
-
-    private void updatePublicPoints() {
     }
 
     private void updateCurrPlayer() {
@@ -228,11 +280,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-    private void updatePrivatePoints() {
-    }
 
 
-    //TODO update mybookshelf, otherplayerbookshelf, mypoints, otherplayerpoints
+    //TODO update mybookshelf, otherplayerbookshelf
 
 
 
@@ -279,5 +329,222 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 boardGrid.setDisable(true);
 
         }
+    }
+
+    //conferma l'ordine dello switch
+    @FXML
+    public void confirmsSelectedClick(ActionEvent actionEvent){
+        confirmSelected.setVisible(false);
+        confirmSelected.setDisable(true);
+
+        selectedTilesDialog.setVisible(false);
+        selectedTilesDialog.setDisable(true);
+
+        IntArrayMessage intArrayMessage=new IntArrayMessage();
+
+        //setto il messaggio
+        intArrayMessage.setUsername(clientState.getMyUsername());
+        intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
+        intArrayMessage.setIntegers(orderTiles);
+
+        //invia il messaggio
+        guiController.sendMessage(intArrayMessage);
+        orderTiles=new ArrayList<>();
+
+        endSwitch.setVisible(true);
+        endSwitch.setDisable(false);
+    }
+    //conferma la fine di tutti gli switch
+    @FXML
+    public void endSwitchClick(ActionEvent actionEvent){
+        endSwitch.setVisible(false);
+        endSwitch.setDisable(true);
+
+        selectedTilesDialog.setVisible(false);
+        selectedTilesDialog.setDisable(true);
+
+        column1.setVisible(true);
+        column1.setDisable(false);
+
+        column2.setVisible(true);
+        column2.setDisable(false);
+
+        column3.setVisible(true);
+        column3.setDisable(false);
+
+        column4.setVisible(true);
+        column4.setDisable(false);
+
+        column5.setVisible(true);
+        column5.setDisable(false);
+    }
+
+    //aggiungo tile nell'ordine corretto
+    @FXML
+    public void selectTile1(MouseEvent event){
+        orderTiles.add(1);
+        if (orderTiles.size()==clientState.getSelectedTiles().size()){
+            confirmSelected.setVisible(true);
+            confirmSelected.setDisable(false);
+        }
+    }
+    //aggiungo tile nell'ordine corretto
+    @FXML
+    public void selectTile2(MouseEvent event){
+        orderTiles.add(2);
+        if (orderTiles.size()==clientState.getSelectedTiles().size()){
+            confirmSelected.setVisible(true);
+            confirmSelected.setDisable(false);
+        }
+    }
+    //aggiungo tile nell'ordine corretto
+    @FXML
+    public void selectTile3(MouseEvent event){
+        orderTiles.add(3);
+        if (orderTiles.size()==clientState.getSelectedTiles().size()){
+            confirmSelected.setVisible(true);
+            confirmSelected.setDisable(false);
+        }
+    }
+
+    //aggiungo le tiles nella colonna corretta
+    @FXML
+    public void addToColumn1(ActionEvent actionEvent){
+        column1.setVisible(false);
+        column1.setDisable(true);
+
+        column2.setVisible(false);
+        column2.setDisable(true);
+
+        column3.setVisible(false);
+        column3.setDisable(true);
+
+        column4.setVisible(false);
+        column4.setDisable(true);
+
+        column5.setVisible(false);
+        column5.setDisable(true);
+
+        IntMessage intMessage=new IntMessage();
+
+        //setta il messaggio
+        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
+        intMessage.setNum(0);
+
+        //invia il messaggio
+        guiController.sendMessage(intMessage);
+    }
+    //aggiungo le tiles nella colonna corretta
+    @FXML
+    public void addToColumn2(ActionEvent actionEvent){
+        column1.setVisible(false);
+        column1.setDisable(true);
+
+        column2.setVisible(false);
+        column2.setDisable(true);
+
+        column3.setVisible(false);
+        column3.setDisable(true);
+
+        column4.setVisible(false);
+        column4.setDisable(true);
+
+        column5.setVisible(false);
+        column5.setDisable(true);
+
+        IntMessage intMessage=new IntMessage();
+
+        //setta il messaggio
+        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
+        intMessage.setNum(1);
+
+        //invia il messaggio
+        guiController.sendMessage(intMessage);
+    }
+    //aggiungo le tiles nella colonna corretta
+    @FXML
+    public void addToColumn3(ActionEvent actionEvent){
+        column1.setVisible(false);
+        column1.setDisable(true);
+
+        column2.setVisible(false);
+        column2.setDisable(true);
+
+        column3.setVisible(false);
+        column3.setDisable(true);
+
+        column4.setVisible(false);
+        column4.setDisable(true);
+
+        column5.setVisible(false);
+        column5.setDisable(true);
+
+        IntMessage intMessage=new IntMessage();
+
+        //setta il messaggio
+        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
+        intMessage.setNum(2);
+
+        //invia il messaggio
+        guiController.sendMessage(intMessage);
+    }
+    //aggiungo le tiles nella colonna corretta
+    @FXML
+    public void addToColumn4(ActionEvent actionEvent){
+        column1.setVisible(false);
+        column1.setDisable(true);
+
+        column2.setVisible(false);
+        column2.setDisable(true);
+
+        column3.setVisible(false);
+        column3.setDisable(true);
+
+        column4.setVisible(false);
+        column4.setDisable(true);
+
+        column5.setVisible(false);
+        column5.setDisable(true);
+
+        IntMessage intMessage=new IntMessage();
+
+        //setta il messaggio
+        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
+        intMessage.setNum(3);
+
+        //invia il messaggio
+        guiController.sendMessage(intMessage);
+    }
+    //aggiungo le tiles nella colonna corretta
+    @FXML
+    public void addToColumn5(ActionEvent actionEvent){
+        column1.setVisible(false);
+        column1.setDisable(true);
+
+        column2.setVisible(false);
+        column2.setDisable(true);
+
+        column3.setVisible(false);
+        column3.setDisable(true);
+
+        column4.setVisible(false);
+        column4.setDisable(true);
+
+        column5.setVisible(false);
+        column5.setDisable(true);
+
+        IntMessage intMessage=new IntMessage();
+
+        //setta il messaggio
+        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
+        intMessage.setNum(4);
+
+        //invia il messaggio
+        guiController.sendMessage(intMessage);
     }
 }
