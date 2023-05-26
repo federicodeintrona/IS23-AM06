@@ -119,7 +119,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-    //TODO inizializza i common objective
+    //inizializza i common objective
     public void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
         for(int i=0; i<2;i++){
             String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
@@ -134,7 +134,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     public void initializeotherPlayerLabel(){
     }
 
-    //TODO inizializza il personal objective
+    //inizializza il personal objective
     public void initializePersonalObjectiveImageView() throws FileNotFoundException {
         String path="css/images/personal_goal_cards/Personal_Goals1.png";
         personalObjectiveImageView.setImage(getImage(path));
