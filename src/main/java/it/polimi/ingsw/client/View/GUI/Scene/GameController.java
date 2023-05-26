@@ -9,6 +9,7 @@ import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.PointsMessage;
 import it.polimi.ingsw.utils.Tiles;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,6 +57,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     private Label otherPlayerPointsLabel;
     @FXML
+    private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
+    @FXML
     private Button confirmationButtons=new Button(); //TODO capire come disabilitare & rendere invisibile il bottone fino a che non lo dico io
 
     @Override
@@ -74,14 +77,15 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         initializeotherPlayerLabel();
         initializeMyPointsLabel();
         initializeOtherPlayerPointsLabel();
+        updateCurrPlayer();
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        switch ((String) evt.getNewValue()) {
+        switch ((String) evt.getPropertyName()) {
             case ("board") -> {
-                updateBoard();
+                Platform.runLater(this::updateBoard);
             }
             case ("selectedTiles") -> {
                 updateSelectedTiles();
@@ -96,7 +100,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 updatePrivatePoints();
             }
             case ("currPlayer") -> {
-                updateCurrPlayer();
+                Platform.runLater(this::updateCurrPlayer);
             }
         }
 
@@ -174,7 +178,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         personalObjectiveImageView.setFitHeight(229);
     }
 
-    //TODO inizializza i tuoi punti
+    //inizializza i tuoi punti
     public void initializeMyPointsLabel(){
         String myPoints="My Points are: "+clientState.getMyPoints();
 
@@ -192,6 +196,16 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
 
     private void updateBoard() {
+        Matrix matrix=clientState.getBoard();
+        for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
+            for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
+                if (matrix.getTile(i-1, j-1).equals(Tiles.EMPTY)){
+                    int finalJ = j;
+                    int finalI = i;
+                    boardGrid.getChildren().removeIf(node -> GridPane.getColumnIndex(node)== finalJ && GridPane.getRowIndex(node)== finalI);
+                }
+            }
+        }
     }
 
     private void updateSelectedTiles() {
@@ -204,6 +218,14 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     }
 
     private void updateCurrPlayer() {
+        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+            String string="It is YOUR turn";
+            turnLabel.setText(string);
+        }
+        else {
+            String string="It is "+clientState.getCurrentPlayer()+" turn";
+            turnLabel.setText(string);
+        }
     }
 
     private void updatePrivatePoints() {
