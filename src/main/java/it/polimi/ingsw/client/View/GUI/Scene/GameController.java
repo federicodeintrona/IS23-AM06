@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -39,7 +40,7 @@ import java.util.List;
 public class GameController implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
-    private ArrayList<Point> removeTiles=new ArrayList<>();
+    private ArrayList<Point> removeTiles = new ArrayList<>();
     @FXML
     private GridPane boardGrid;
     @FXML
@@ -59,14 +60,13 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
     @FXML
-    private Button confirmationButtons=new Button(); //TODO capire come disabilitare & rendere invisibile il bottone fino a che non lo dico io
+    private Button confirmationButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientState = guiController.getState();
         clientState.addListener(this);
         guiController.setSceneController(this);
-//        confirmationButtons.setOpacity(0);
         initializeBoardGrid();
         initializeCommonGrid();
         try {
@@ -231,14 +231,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private void updatePrivatePoints() {
     }
 
-    @Override
-    public void showError(String error) {
 
-    }
+    //TODO update mybookshelf, otherplayerbookshelf, mypoints, otherplayerpoints
 
-    //TODO update board, mybookshelf, otherplayerbookshelf, mypoints, otherplayerpoints
-
-    //TODO click on boardGrid
 
 
 
@@ -252,24 +247,24 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 //        ArrayList<Point> arrayList=new ArrayList<>();
 //        arrayList.add(new Point(rowIndex-1, colmnIndex-1));
 //
-        removeTiles.add(new Point(rowIndex-1, colmnIndex-1));
-        //TODO abilitare il bottone
-//        confirmationButtons.setVisible(true);
+        if(colmnIndex!=null&&rowIndex!=null) {
+            if(clientState.getCurrentPlayer().equals(clientState.getMyUsername())||removeTiles.size()>3) {
+                removeTiles.add(new Point(rowIndex - 1, colmnIndex - 1));
+                confirmationButton.setVisible(true);
+                confirmationButton.setDisable(false);
+            }
+        }
+
     }
 
     //conferma le tessere selezionate
     @FXML
     public void confirmClick(ActionEvent actionEvent){
         if (removeTiles.isEmpty()){
-            //TODO inviare errore devi selezionare almeno una tile
+           showError("Select at least 1 tile",guiController.getStage());
         }
         else{
-            if (removeTiles.size()>3){
-                //TODO inviare errore hai selezionato N tiles, puoi selezionare solo 1,2,3 tiles
-                // riseleziona
-                removeTiles=new ArrayList<>();
-            }
-            else {
+
                 PointsMessage pointsMessage=new PointsMessage();
 
                 pointsMessage.setUsername(clientState.getMyUsername());
@@ -278,11 +273,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 guiController.sendMessage(pointsMessage);
 
                 removeTiles=new ArrayList<>();
-                //TODO disabilitare bottone
-//              confirmationButtons.setVisible(false);
-            }
+
+                confirmationButton.setVisible(false);
+                confirmationButton.setDisable(true);
+                boardGrid.setDisable(true);
+
         }
-
     }
-
 }

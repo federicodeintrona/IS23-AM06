@@ -46,8 +46,4 @@ public class NumberOfPlayerController implements Initializable,SceneController {
     }
 
 
-    @Override
-    public void showError(String error) {
-
-    }
 }

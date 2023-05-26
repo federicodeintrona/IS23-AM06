@@ -21,5 +21,7 @@ module it.polimi.ingsw {
     opens it.polimi.ingsw.utils.Messages to java.rmi;
     opens it.polimi.ingsw.server to java.rmi;
     exports it.polimi.ingsw.client.View.GUI.Scene;
+    exports it.polimi.ingsw.client;
+    exports it.polimi.ingsw.utils;
     opens it.polimi.ingsw.client.View.GUI.Scene to javafx.controls, javafx.fxml, javafx.graphics;
 }

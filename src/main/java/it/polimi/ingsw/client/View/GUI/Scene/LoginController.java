@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,7 +49,7 @@ public class LoginController implements SceneController, Initializable {
 
 
     @Override
-    public void showError(String error) {
+    public void showError(String error, Stage stage) {
         usernameStatus.setText(error);
     }
 

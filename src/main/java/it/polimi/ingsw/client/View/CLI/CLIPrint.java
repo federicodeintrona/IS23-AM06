@@ -400,7 +400,7 @@ public class CLIPrint implements PropertyChangeListener {
         printAllBookshelf(cliMain.getClientState().getAllBookshelf());
         printPoints(cliMain.getClientState().getAllPublicPoints());
     }
-    //TODO cosa è mio
+
     //è finito il gioco
     public void printEndGame(){
         System.out.println("The Game is ended");

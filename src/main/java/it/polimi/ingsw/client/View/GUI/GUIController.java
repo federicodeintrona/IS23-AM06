@@ -66,7 +66,7 @@ public class GUIController implements View {
 
     private void showError(Message message){
         Platform.runLater(()->{
-            sceneController.showError(message.getUsername());
+            sceneController.showError(message.getUsername(),stage);
         });
     }
 
@@ -116,5 +116,11 @@ public class GUIController implements View {
         this.root = root;
     }
 
+    public Stage getStage() {
+        return stage;
+    }
 
+    public Parent getRoot() {
+        return root;
+    }
 }
