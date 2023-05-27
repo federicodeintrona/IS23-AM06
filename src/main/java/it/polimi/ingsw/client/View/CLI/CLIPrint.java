@@ -443,6 +443,14 @@ public class CLIPrint implements PropertyChangeListener {
 
         if (chat.getPublicChat().getChatMessages().isEmpty()) {
             System.out.println(ColorCLI.REVERSED + "There are no previous messages :(" + ColorCLI.RESET);
+
+            if (!printAndChat) {
+                System.out.printf("_________________________________________________________");
+                System.out.println("\n");
+
+                System.out.println(ColorCLI.CLEAR);
+                System.out.flush();
+            }
             return;
         }
 
@@ -454,7 +462,7 @@ public class CLIPrint implements PropertyChangeListener {
         }
 
         if (!printAndChat) {
-            System.out.printf("___________________________________________________");
+            System.out.printf("_________________________________________________________");
             System.out.println("\n");
 
             System.out.println(ColorCLI.CLEAR);
@@ -474,6 +482,14 @@ public class CLIPrint implements PropertyChangeListener {
 
         if (chat.getPrivateChat(username).getChatMessages().isEmpty()) {
             System.out.println(ColorCLI.REVERSED + "There are no previous messages :(" + ColorCLI.RESET);
+
+            if (!printAndChat) {
+                System.out.printf("___________________________________________________");
+                System.out.println("\n");
+
+                System.out.println(ColorCLI.CLEAR);
+                System.out.flush();
+            }
             return;
         }
 

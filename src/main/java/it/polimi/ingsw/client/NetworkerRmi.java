@@ -215,11 +215,6 @@ public class NetworkerRmi implements Networker {
         cli.receivedMessage(this.message);
     }
 
-    @Override
-    public void privateChat(Message message) {
-
-    }
-
     public void setCli(CLIMain cli) {
         this.cli = cli;
     }

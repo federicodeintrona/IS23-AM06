@@ -116,9 +116,4 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             throw new RuntimeException(e);
         }
     }
-
-    @Override
-    public void privateChat(Message message) {
-
-    }
 }

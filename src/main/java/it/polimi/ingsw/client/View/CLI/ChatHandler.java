@@ -45,7 +45,7 @@ public class ChatHandler {
                     chatController.getPrivateChat(username).setChatIsEnable(true);
                     chat(username);
                 }
-                case "printPrivateChat" -> {
+                case "#printPrivateChat" -> {
                     String player = privateChatHandler();
                     cliPrint.printChat(player, false);
                 }
