@@ -9,23 +9,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class ReadShell extends Thread{
+public class ReadShell extends Thread {
 
 
     private final CLIMain cliMain;
 
 
     public ReadShell(CLIMain cliMain) {
-        this.cliMain=cliMain;
+        this.cliMain = cliMain;
     }
 
 
-
-
-
-
     //pulisce CLI
-    public void clearCLI(){
+    public void clearCLI() {
         System.out.println(ColorCLI.CLEAR);
         System.out.flush();
     }
@@ -33,23 +29,23 @@ public class ReadShell extends Thread{
     //leggere da stdIN
     private String readLine() {
         //istanzia scanner che legge da stdIN
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         //stringhe lette da stdIN
         String word;
         //aspetta emissione dati e li legge
-        word= String.valueOf(scanner.nextLine());
+        word = String.valueOf(scanner.nextLine());
         clearCLI();
         return word;
     }
 
     //legge solo i numeri presenti nella stringa
     //I NUMERI SONO DA 0-9
-    private ArrayList<Integer> readNumber(String s){
-        ArrayList<Integer> result=new ArrayList<>();
+    private ArrayList<Integer> readNumber(String s) {
+        ArrayList<Integer> result = new ArrayList<>();
 
         Pattern pattern = Pattern.compile("\\d");
-        Matcher matcher= pattern.matcher(s);
-        while(matcher.find()){
+        Matcher matcher = pattern.matcher(s);
+        while (matcher.find()) {
             result.add(Integer.valueOf(matcher.group()));
         }
 
@@ -58,7 +54,7 @@ public class ReadShell extends Thread{
 
     //richista nickname
     public void askUsername() {
-        Message message=new Message();
+        Message message = new Message();
 
         System.out.print("Enter your nickname: ");
         String nickname = readLine();
@@ -69,32 +65,32 @@ public class ReadShell extends Thread{
     }
 
     //legge messaggi, li crea, li invia a chi di dovere
-    public void readCommand(){
+    public void readCommand() {
 
-        String st=readLine();
-        st=st+' ';
-        st=st.toLowerCase();
-        ArrayList<Integer> number=readNumber(st);
-        int n=st.indexOf(" ");
-        String substring=st.substring(0, n);
+        String st = readLine();
+        st = st + ' ';
+        st = st.toLowerCase();
+        ArrayList<Integer> number = readNumber(st);
+        int n = st.indexOf(" ");
+        String substring = st.substring(0, n);
         switch (substring) {
             case "#remove" -> {
-                if (number.size()!=2 && number.size()!=4 && number.size()!=6){
+                if (number.size() != 2 && number.size() != 4 && number.size() != 6) {
                     System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
                     break;
                 }
                 createRemoveMessage(number);
             }
             case "#switch" -> {
-                if (number.size()<1 || number.size()>3){
-                    System.out.println(st+": Type of command correct but data entered wrong \nIf you need help put #help or #h");
+                if (number.size() < 1 || number.size() > 3) {
+                    System.out.println(st + ": Type of command correct but data entered wrong \nIf you need help put #help or #h");
                     break;
                 }
                 createSwitchMessage(number);
             }
             case "#add" -> {
-                if (number.size()!=1){
-                    System.out.println(st+": Type of command correct but data entered wrong \nIf you need help put #help or #h");
+                if (number.size() != 1) {
+                    System.out.println(st + ": Type of command correct but data entered wrong \nIf you need help put #help or #h");
                     break;
                 }
                 createAddMessage(number);
@@ -111,19 +107,19 @@ public class ReadShell extends Thread{
 //                cliMain.getCliPrint().printBookshelfPersonalObjective(cliMain.getClientState().getMyBookshelf(), cliMain.getClientState().getMyPersonalObjective());
             }
             case "#printbookshelf" -> {
-                int indice=st.indexOf("@");
+                int indice = st.indexOf("@");
                 System.out.println(indice);
-                if (indice==-1){
-                    System.out.println(st+": Type of command correct but you do NOT inserted the username of player \nIf you need help put #help or #h");
+                if (indice == -1) {
+                    System.out.println(st + ": Type of command correct but you do NOT inserted the username of player \nIf you need help put #help or #h");
                     break;
                 }
-                String sub=st.substring(indice+1, st.length()-1);
+                String sub = st.substring(indice + 1, st.length() - 1);
                 System.out.println(sub);
 
                 //posizione dell'username desiderato
-                int position=cliMain.getClientState().getAllUsername().indexOf(sub);
-                if (position==-1){
-                    System.out.println(st+": Type of command correct but you do NOT inserted the username of a player in this game \nIf you need help put #help or #h");
+                int position = cliMain.getClientState().getAllUsername().indexOf(sub);
+                if (position == -1) {
+                    System.out.println(st + ": Type of command correct but you do NOT inserted the username of a player in this game \nIf you need help put #help or #h");
                     break;
                 }
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(sub));
@@ -132,40 +128,26 @@ public class ReadShell extends Thread{
             case "#printpoints" -> cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
             case "#printmypoint" -> cliMain.getCliPrint().printMyPoints(cliMain.getClientState().getMyPoints());
             case "#printchair" -> cliMain.getCliPrint().printChair();
-            case "#chat" -> {
-                // Printing publicChat's history
-                cliMain.getCliPrint().printChat();
-
-                cliMain.getClientState().getChatController().getPublicChat().setChatIsEnable(true);
-                chat();
-            }
-            case "#privatechat" -> {
-                String username = privateChatHandler();
-
-                // Printing publicChat's history
-                cliMain.getCliPrint().printChat(username);
-
-                cliMain.getClientState().getChatController().getPrivateChat(username).setChatIsEnable(true);
-                chat(username);
-            }
+            case "#chat" -> cliMain.getChatHandler().settingForPublicChat();
+            case "#privatechat" -> cliMain.getChatHandler().settingForPrivateChat();
             default -> System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
         }
 
     }
 
     //crea il messaggio Remove Tiles dall board
-    private void createRemoveMessage(ArrayList<Integer> input){
-        PointsMessage pointsMessage=new PointsMessage();
-        ArrayList<Point> result=new ArrayList<>();
+    private void createRemoveMessage(ArrayList<Integer> input) {
+        PointsMessage pointsMessage = new PointsMessage();
+        ArrayList<Point> result = new ArrayList<>();
 
         //crea l'ArrayList di Point
-        int i=0;
-        while (i< input.size()){
-            int x=input.get(i);
-            i=i+1;
-            int y=input.get(i);
-            i=i+1;
-            result.add(new Point(x,y));
+        int i = 0;
+        while (i < input.size()) {
+            int x = input.get(i);
+            i = i + 1;
+            int y = input.get(i);
+            i = i + 1;
+            result.add(new Point(x, y));
         }
 
         //setta il messaggio
@@ -178,8 +160,8 @@ public class ReadShell extends Thread{
     }
 
     //crea il messaggio Switch Tiles
-    private void createSwitchMessage(ArrayList<Integer> input){
-        IntArrayMessage intArrayMessage=new IntArrayMessage();
+    private void createSwitchMessage(ArrayList<Integer> input) {
+        IntArrayMessage intArrayMessage = new IntArrayMessage();
 
         //setto il messaggio
         intArrayMessage.setUsername(cliMain.getClientState().getMyUsername());
@@ -191,8 +173,8 @@ public class ReadShell extends Thread{
     }
 
     //crea il messaggio Add to bookshelf
-    private void createAddMessage(ArrayList<Integer> input){
-        IntMessage intMessage=new IntMessage();
+    private void createAddMessage(ArrayList<Integer> input) {
+        IntMessage intMessage = new IntMessage();
 
         //setta il messaggio
         intMessage.setUsername(cliMain.getClientState().getMyUsername());
@@ -204,8 +186,8 @@ public class ReadShell extends Thread{
     }
 
     //crea il messaggio di Rollback
-    private void createRollbackMessage(){
-        Message message=new Message();
+    private void createRollbackMessage() {
+        Message message = new Message();
 
         //setta il messaggio
         message.setUsername(cliMain.getClientState().getMyUsername());
@@ -215,32 +197,10 @@ public class ReadShell extends Thread{
         sendMessage(message);
     }
 
-    private void createChatMessage (String string){
-
-        // Setting the message
-        ChatMessage message = new ChatMessage(cliMain.getClientState().getMyUsername(), string);
-        message.setType(MessageTypes.CHAT);
-
-        // Sending the message
-        sendMessage(message);
-    }
-
-    private void createChatMessage (String string, String receivingPlayer){
-
-        // Setting the message
-        ChatMessage message = new ChatMessage(cliMain.getClientState().getMyUsername(), string, receivingPlayer);
-        message.setType(MessageTypes.CHAT);
-
-        message.getConversation();
-
-        // Sending the message
-        sendMessage(message);
-    }
-
 
     //invia messaggi a Networker
-    private void sendMessage(Message message){
-        switch (message.getType()){
+    void sendMessage(Message message) {
+        switch (message.getType()) {
             case REMOVE_FROM_BOARD -> cliMain.getNet().removeTilesFromBoard(message);
             case SWITCH_PLACE -> cliMain.getNet().switchTilesOrder(message);
             case ADD_TO_BOOKSHELF -> cliMain.getNet().addTilesToBookshelf(message);
@@ -253,8 +213,8 @@ public class ReadShell extends Thread{
     }
 
     //richiede il numero di giocatori con cui giocare
-    public void askNumberOfPlayerMessage(){
-        IntMessage message=new IntMessage();
+    public void askNumberOfPlayerMessage() {
+        IntMessage message = new IntMessage();
 
         System.out.print("Enter number of player: ");
         String num = readLine();
@@ -269,61 +229,10 @@ public class ReadShell extends Thread{
     }
 
 
-
     @Override
     public void run() {
-        while(!cliMain.getClientState().isGameIsEnded()){
+        while (!cliMain.getClientState().isGameIsEnded()) {
             readCommand();
         }
-    }
-
-    private void chat () {
-        Scanner scanner=new Scanner(System.in);
-        String str = null;
-
-        while (cliMain.getClientState().getChatController().getPublicChat().ChatIsEnable()) {
-
-
-            str = scanner.nextLine();
-
-            switch (str) {
-                case "#exit" -> {
-                    cliMain.getClientState().getChatController().getPublicChat().setChatIsEnable(false);
-                    clearCLI();
-                }
-                case "#help", "#h" -> cliMain.getCliPrint().helpForChat();
-                default -> createChatMessage(str);
-            }
-        }
-    }
-
-    private void chat (String username) {
-        Scanner scanner=new Scanner(System.in);
-        String str = null;
-
-        while (cliMain.getClientState().getChatController().getPrivateChat(username).ChatIsEnable()) {
-
-
-            str = scanner.nextLine();
-
-            switch (str) {
-                case "#exit" -> {
-                    cliMain.getClientState().getChatController().getPrivateChat(username).setChatIsEnable(false);
-                    clearCLI();
-                }
-                case "#help", "#h" -> cliMain.getCliPrint().helpForChat();
-                default -> createChatMessage(str, username);
-            }
-        }
-    }
-
-    private String privateChatHandler () {
-        Scanner scanner=new Scanner(System.in);
-        String str = null;
-
-        System.out.println("Who do you want to chat with?");
-        str = scanner.nextLine();
-
-        return str;
     }
 }

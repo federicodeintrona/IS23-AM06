@@ -302,6 +302,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         else {
             if (chatController.getPrivateChat(forwardingPlayer).ChatIsEnable()) System.out.println(forwardingPlayer + ": " + conversation);
             else {
+                chatController.getPrivateChat(forwardingPlayer).updateUnReadMessages();
+
                 if (chatController.getPrivateChat(forwardingPlayer).getUnReadMessages() == 1)
                     System.out.println("*One new message from the PRIVATE CHAT with " + forwardingPlayer + "*");
                 else

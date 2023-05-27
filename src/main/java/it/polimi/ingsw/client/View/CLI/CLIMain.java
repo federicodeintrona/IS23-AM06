@@ -14,9 +14,9 @@ public class CLIMain implements View {
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
     private final Networker net; //a chi mandare messaggi
-    private boolean chatIsEnable = false;
     private static CLIPrint cliPrint;
     private static ReadShell readShell;
+    private static ChatHandler chatHandler;
     private boolean IHaveToRequestTheUsername=true;
 
     public CLIMain(Object lock, ClientState clientState, Networker net) {
@@ -33,6 +33,8 @@ public class CLIMain implements View {
     public ClientState getClientState() {
         return clientState;
     }
+
+    public ChatHandler getChatHandler () { return chatHandler; }
 
     public Networker getNet() {
         return net;
@@ -100,6 +102,9 @@ public class CLIMain implements View {
             }
         }
 
+        chatHandler = new ChatHandler(clientState.getChatController(), this, cliPrint);
+
+
         clientState.setChair(clientState.getCurrentPlayer());
         Thread th1=new Thread(readShell);
         th1.start();
@@ -144,10 +149,6 @@ public class CLIMain implements View {
             fine partita
          */
 
-    }
-
-    public boolean ChatIsEnable() {
-        return chatIsEnable;
     }
 
     @Override
