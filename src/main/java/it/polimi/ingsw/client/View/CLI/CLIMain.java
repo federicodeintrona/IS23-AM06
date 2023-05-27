@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.View.CLI;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.View.View;
+import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 
 import java.beans.PropertyChangeEvent;
@@ -163,6 +164,12 @@ public class CLIMain implements View {
             }
             case "end" -> {
                 // moveToEndScene();
+            }
+            case "publicChat" -> {
+                chatHandler.newPublicMessage((ChatMessage) evt.getNewValue());
+            }
+            case "privateChat" -> {
+                chatHandler.newPrivateMessage((ChatMessage) evt.getNewValue());
             }
         }
     }

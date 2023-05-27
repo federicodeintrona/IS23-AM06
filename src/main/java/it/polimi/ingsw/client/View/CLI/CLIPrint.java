@@ -234,8 +234,10 @@ public class CLIPrint implements PropertyChangeListener {
     public void helpForChat () {
         System.out.println("All command, WITH EXAMPLE, are:");
         System.out.println("#exit ........................... To leave the chat and return to the game");
-        System.out.println("#switchtopublic ................. To switch from a private chat to the public one");
-        System.out.println("#switchtoprivate ................ To switch from the public chat to a private one");
+        System.out.println("#switchToPublic ................. To switch from a private chat to the public one");
+        System.out.println("#switchToPrivate ................ To switch from the public chat to a private one");
+        System.out.println("#printPublicChat ................ Print the public chat (only view)");
+        System.out.println("#printPrivateChat ............... Print a private chat (only view)");
         System.out.println("\n");
     }
 
@@ -429,43 +431,65 @@ public class CLIPrint implements PropertyChangeListener {
 
     }
 
-    public void printChat () {
+    public void printChat (boolean printAndChat) {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPublicChat().resetUnReadMessages();
 
-        System.out.println("PUBLIC CHAT: ______________________________________");
-        System.out.println("use the command #help or #h to display chat's commands");
+        System.out.println(ColorCLI.BOLD + "PUBLIC CHAT" + ColorCLI.RESET + ": ____________________________________________");
+
+        if (printAndChat) {
+            System.out.println("use the command #help or #h to display chat's commands");
+        }
 
         if (chat.getPublicChat().getChatMessages().isEmpty()) {
-            System.out.println("There are no previous messages :(");
+            System.out.println(ColorCLI.REVERSED + "There are no previous messages :(" + ColorCLI.RESET);
             return;
         }
 
         for (int i = chat.getPublicChat().getOldestMessage(); i>=0; i--){
             if (chat.getPublicChat().getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
-                System.out.println("me: " + chat.getPublicChat().getChatMessages().get(i).getMessage());
+                System.out.println(ColorCLI.RED + "me: " + ColorCLI.RESET + chat.getPublicChat().getChatMessages().get(i).getMessage());
             }
-            else System.out.println(chat.getPublicChat().getChatMessages().get(i).getUsername()+ ": " + chat.getPublicChat().getChatMessages().get(i).getMessage());
+            else System.out.println(ColorCLI.UNDERLINE + chat.getPublicChat().getChatMessages().get(i).getUsername() + ColorCLI.RESET + ": " + chat.getPublicChat().getChatMessages().get(i).getMessage());
+        }
+
+        if (!printAndChat) {
+            System.out.printf("___________________________________________________");
+            System.out.println("\n");
+
+            System.out.println(ColorCLI.CLEAR);
+            System.out.flush();
         }
     }
 
-    public void printChat (String username) {
+    public void printChat (String username, boolean printAndChat) {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPrivateChat(username).resetUnReadMessages();
 
-        System.out.println("PRIVATE CHAT with " + username + ": ________________________________");
-        System.out.println("use the command #help or #h to display chat's commands");
+        System.out.println(ColorCLI.BOLD + "PRIVATE CHAT" + ColorCLI.RESET + " with " + ColorCLI.UNDERLINE + username + ColorCLI.RESET + ": ________________________________");
+
+        if (printAndChat) {
+            System.out.println("use the command #help or #h to display chat's commands");
+        }
 
         if (chat.getPrivateChat(username).getChatMessages().isEmpty()) {
-            System.out.println("There are no previous messages :(");
+            System.out.println(ColorCLI.REVERSED + "There are no previous messages :(" + ColorCLI.RESET);
             return;
         }
 
         for (int i = chat.getPrivateChat(username).getOldestMessage(); i>=0; i--){
             if (chat.getPrivateChat(username).getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
-                System.out.println("me: " + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
+                System.out.println(ColorCLI.RED + "me: " + ColorCLI.RESET + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
             }
-            else System.out.println(chat.getPrivateChat(username).getChatMessages().get(i).getUsername()+ ": " + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
+            else System.out.println(ColorCLI.UNDERLINE + chat.getPrivateChat(username).getChatMessages().get(i).getUsername() + ColorCLI.RESET + ": " + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
+        }
+
+        if (!printAndChat) {
+            System.out.printf("___________________________________________________");
+            System.out.println("\n");
+
+            System.out.println(ColorCLI.CLEAR);
+            System.out.flush();
         }
     }
 

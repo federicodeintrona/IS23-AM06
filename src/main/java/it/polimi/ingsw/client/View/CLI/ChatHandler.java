@@ -31,22 +31,23 @@ public class ChatHandler {
             str = scanner.nextLine();
 
             switch (str) {
-                case "#exit" -> {
-                    chatController.getPublicChat().setChatIsEnable(false);
-                    clearCLI();
-                }
+                case "#exit" -> endOfChat();
                 case "#help", "#h" -> cliPrint.helpForChat();
-                case "#switchtoprivate" -> {
+                case "#switchToPrivate" -> {
                     chatController.getPublicChat().setChatIsEnable(false);
 
                     String username = privateChatHandler();
                     clearCLI();
 
                     // Printing publicChat's history
-                    cliPrint.printChat(username);
+                    cliPrint.printChat(username, true);
 
                     chatController.getPrivateChat(username).setChatIsEnable(true);
                     chat(username);
+                }
+                case "printPrivateChat" -> {
+                    String player = privateChatHandler();
+                    cliPrint.printChat(player, false);
                 }
                 default -> createChatMessage(str);
             }
@@ -63,18 +64,20 @@ public class ChatHandler {
             str = scanner.nextLine();
 
             switch (str) {
-                case "#exit" -> {
-                    chatController.getPrivateChat(username).setChatIsEnable(false);
-                    clearCLI();
-                }
+                case "#exit" -> endOfChat(username);
                 case "#help", "#h" -> cliPrint.helpForChat();
-                case "#switchtopublic" -> {
+                case "#switchToPublic" -> {
                     chatController.getPrivateChat(username).setChatIsEnable(false);
                     clearCLI();
 
-                    cliPrint.printChat();
+                    cliPrint.printChat(true);
                     chatController.getPublicChat().setChatIsEnable(true);
                     chat();
+                }
+                case "#printPublicChat" -> cliPrint.printChat(false);
+                case "#printPrivateChat" -> {
+                    String player = privateChatHandler();
+                    cliPrint.printChat(player, false);
                 }
                 default -> createChatMessage(str, username);
             }
@@ -113,7 +116,7 @@ public class ChatHandler {
 
     public void settingForPublicChat () {
         // Printing publicChat's history
-        cliPrint.printChat();
+        cliPrint.printChat(true);
 
         chatController.getPublicChat().setChatIsEnable(true);
         chat();
@@ -124,10 +127,59 @@ public class ChatHandler {
         clearCLI();
 
         // Printing publicChat's history
-        cliPrint.printChat(username);
+        cliPrint.printChat(username, true);
 
         chatController.getPrivateChat(username).setChatIsEnable(true);
         chat(username);
+    }
+
+    public void newPublicMessage(ChatMessage message) {
+        if (chatController.getPublicChat().ChatIsEnable()) {
+            if (!message.getUsername().equals(cliMain.getClientState().getMyUsername())) System.out.println(ColorCLI.UNDERLINE + message.getUsername() + ColorCLI.RESET + ": " + message.getMessage());
+        }
+        else {
+            chatController.getPublicChat().updateUnReadMessages();
+            if (chatController.getPublicChat().getUnReadMessages() == 1) System.out.println("*One new message from the PUBLIC CHAT*");
+            else System.out.println("*" + chatController.getPublicChat().getUnReadMessages() + " new messages from the PUBLIC CHAT*");
+        }
+
+        chatController.getPublicChat().addMessage(message);
+
+    }
+
+    public void newPrivateMessage(ChatMessage message) {
+        String forwardingPlayer = message.getUsername();
+        String conversation = message.getMessage();
+        String receivingPlayer = message.getReceivingUsername();
+
+        if (forwardingPlayer.equals(cliMain.getClientState().getMyUsername())) {
+            chatController.getPrivateChat(receivingPlayer).addMessage(message);
+        }
+        else {
+            if (chatController.getPrivateChat(forwardingPlayer).ChatIsEnable()) System.out.println(ColorCLI.UNDERLINE + forwardingPlayer + ColorCLI.RESET + ": " + conversation);
+            else {
+                chatController.getPrivateChat(forwardingPlayer).updateUnReadMessages();
+
+                if (chatController.getPrivateChat(forwardingPlayer).getUnReadMessages() == 1)
+                    System.out.println("*One new message from the PRIVATE CHAT with " + ColorCLI.UNDERLINE + forwardingPlayer + ColorCLI.RESET + "*");
+                else
+                    System.out.println("*" + chatController.getPrivateChat(forwardingPlayer).getUnReadMessages() + " new messages from the PRIVATE CHAT with " + ColorCLI.UNDERLINE + forwardingPlayer + ColorCLI.RESET + "*");
+            }
+            chatController.getPrivateChat(forwardingPlayer).addMessage(message);
+        }
+
+    }
+
+    private void endOfChat () {
+        System.out.println("The PUBLIC CHAT is now closed ________________________________");
+        chatController.getPublicChat().setChatIsEnable(false);
+        clearCLI();
+    }
+
+    private void endOfChat (String username) {
+        System.out.println("The PRIVATE CHAT with " + username + "is now closed ______________");
+        chatController.getPrivateChat(username).setChatIsEnable(false);
+        clearCLI();
     }
 }
 

@@ -7,6 +7,7 @@ import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
@@ -285,45 +286,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     @Override
     public void newMessageHandler (ChatMessage message) {
-        if (message.getReceivingUsername() == null) newPublicMessage(message);
-        else newPrivateMessage(message);
-    }
+        if (message.getReceivingUsername() == null)
+            notifier.firePropertyChange(new PropertyChangeEvent(this,"publicChat",null, message));
 
-    public void newPublicMessage(ChatMessage message) {
-        if (chatController.getPublicChat().ChatIsEnable()) {
-            if (!message.getUsername().equals(myUsername)) System.out.println(message.getUsername() + ": " + message.getMessage());
-        }
-        else {
-            chatController.getPublicChat().updateUnReadMessages();
-            if (chatController.getPublicChat().getUnReadMessages() == 1) System.out.println("*One new message from the PUBLIC CHAT*");
-            else System.out.println("*" + chatController.getPublicChat().getUnReadMessages() + " new messages from the PUBLIC CHAT*");
-        }
-
-        chatController.getPublicChat().addMessage(message);
-
-    }
-
-    public void newPrivateMessage(ChatMessage message) {
-        String forwardingPlayer = message.getUsername();
-        String conversation = message.getMessage();
-        String receivingPlayer = message.getReceivingUsername();
-
-        if (forwardingPlayer.equals(myUsername)) {
-            chatController.getPrivateChat(receivingPlayer).addMessage(message);
-        }
-        else {
-            if (chatController.getPrivateChat(forwardingPlayer).ChatIsEnable()) System.out.println(forwardingPlayer + ": " + conversation);
-            else {
-                chatController.getPrivateChat(forwardingPlayer).updateUnReadMessages();
-
-                if (chatController.getPrivateChat(forwardingPlayer).getUnReadMessages() == 1)
-                    System.out.println("*One new message from the PRIVATE CHAT with " + forwardingPlayer + "*");
-                else
-                    System.out.println("*" + chatController.getPrivateChat(forwardingPlayer).getUnReadMessages() + " new messages from the PRIVATE CHAT with " + forwardingPlayer + "*");
-            }
-            chatController.getPrivateChat(forwardingPlayer).addMessage(message);
-        }
-
+        else
+            notifier.firePropertyChange(new PropertyChangeEvent(this,"privateChat",null, message));
     }
 
     public ChatController getChatController() {
