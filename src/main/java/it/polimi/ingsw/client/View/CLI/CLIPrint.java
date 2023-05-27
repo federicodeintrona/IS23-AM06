@@ -234,6 +234,8 @@ public class CLIPrint implements PropertyChangeListener {
     public void helpForChat () {
         System.out.println("All command, WITH EXAMPLE, are:");
         System.out.println("#exit ........................... To leave the chat and return to the game");
+        System.out.println("#switchtopublic ................. To switch from a private chat to the public one");
+        System.out.println("#switchtoprivate ................ To switch from the public chat to a private one");
         System.out.println("\n");
     }
 
