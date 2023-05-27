@@ -7,6 +7,7 @@ import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
+import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -250,6 +251,14 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     @Override
     public boolean pingPong() throws RemoteException {
         return true;
+    }
+
+    public void addListener(PropertyChangeListener listener){
+        notifier.addPropertyChangeListener(listener);
+    }
+
+    public void addListener(PropertyChangeListener listener,String property){
+        notifier.addPropertyChangeListener(property,listener);
     }
 
     public String getChair() {
