@@ -1,6 +1,4 @@
-package it.polimi.ingsw.client;
-
-import it.polimi.ingsw.utils.Chat;
+package it.polimi.ingsw.utils;
 
 import java.util.HashMap;
 
