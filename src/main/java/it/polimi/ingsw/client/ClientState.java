@@ -8,6 +8,7 @@ import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
+    private PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private Object viewLock;
     private String myUsername;
     private ArrayList<String> allUsername;
