@@ -206,8 +206,6 @@ public class NetworkerRmi implements Networker {
         }
         else {
             try {
-                tempMessage.getConversation();
-
                 this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage(), tempMessage.getReceivingUsername());
             } catch (RemoteException e) {
                 throw new RuntimeException(e);

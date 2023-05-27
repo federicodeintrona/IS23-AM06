@@ -16,6 +16,12 @@ public class ClientBase {
         ClientState state = new ClientState(lock);
         System.out.println("Which host do you use?");
         String host = scanner.nextLine();
+
+        if (host == null) {
+            System.out.printf("You selected the default host: localhost");
+            host = "localhost";
+        }
+
         Networker client = switch (decision.toUpperCase()) {
             case "RMI" -> new NetworkerRmi(state,host);
             case "TCP" -> new NetworkerTcp(state,host);

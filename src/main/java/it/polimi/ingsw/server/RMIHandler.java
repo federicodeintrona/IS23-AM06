@@ -78,10 +78,6 @@ public class RMIHandler implements RMIHandlerInterface{
     }
 
     public Message sendMessage(int gameId, String playerForwarding, String message, String playerReceiving) throws RemoteException {
-
-        System.out.println("playerForwarding = " + playerForwarding);
-        System.out.println("message = " + message);
-        System.out.println("playerReceiving = " + playerReceiving);
         return controller.sendMessage(gameId, playerForwarding, message, playerReceiving);
     }
 }

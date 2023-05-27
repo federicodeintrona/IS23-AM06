@@ -65,21 +65,21 @@ public class Model implements TimerInterface {
 
     //Constructors
 
-    public Model(){
+    public Model(){}
 
-    }
     public Model(ArrayList<Player> players) {
         this.players = players;
 
         // Initializing for each player a particular version of ChatController specifically designed for Server
         List<String> allUsernames = players.stream()
-                .map(x -> x.getUsername())
-                .toList();
+                                            .map(x -> x.getUsername())
+                                            .toList();
+
         for (String player: allUsernames) {
             allPlayersChats.put(player, new ChatController(true));
 
             for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
-            allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
+                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
         }
     }
 
@@ -89,8 +89,9 @@ public class Model implements TimerInterface {
 
         // Initializing for each player a particular version of ChatController specifically designed for Server
         List<String> allUsernames = players.stream()
-                .map(x -> x.getUsername())
-                .toList();
+                                            .map(x -> x.getUsername())
+                                            .toList();
+
         for (String player: allUsernames) {
             allPlayersChats.put(player, new ChatController(true));
 
@@ -106,8 +107,9 @@ public class Model implements TimerInterface {
 
         // Initializing for each player a particular version of ChatController specifically designed for Server
         List<String> allUsernames = players.stream()
-                .map(x -> x.getUsername())
-                .toList();
+                                            .map(x -> x.getUsername())
+                                            .toList();
+
         for (String player: allUsernames) {
             allPlayersChats.put(player, new ChatController(true));
 
@@ -123,8 +125,9 @@ public class Model implements TimerInterface {
 
         // Initializing for each player a particular version of ChatController specifically designed for Server
         List<String> allUsernames = players.stream()
-                                        .map(x -> x.getUsername())
-                                        .toList();
+                                            .map(x -> x.getUsername())
+                                            .toList();
+
         for (String player: allUsernames) {
             allPlayersChats.put(player, new ChatController(true));
 
@@ -689,22 +692,18 @@ public class Model implements TimerInterface {
 
     public synchronized void sendMessage (String forwardingPlayer, String message, String receivingPlayer) {
         ChatMessage conversation = new ChatMessage(forwardingPlayer, message, receivingPlayer);
-        conversation.getConversation();/*
+        conversation.getConversation();
+
         // Adding the conversation to both private chats' history
         allPlayersChats.get(forwardingPlayer).getPrivateChat(receivingPlayer).addMessage(conversation);
-        System.out.printf("1");
         allPlayersChats.get(receivingPlayer).getPrivateChat(forwardingPlayer).addMessage(conversation);
-        System.out.printf("2");
-        */
 
         List<String> usernames = players.stream()
                                         .map(x -> x.getUsername())
                                         .filter(x -> (x.equals(forwardingPlayer) || x.equals(receivingPlayer)))
                                         .toList();
 
-        System.out.printf("3");
         for (String x: usernames){
-            System.out.printf("rep");
             notifier.firePropertyChange(new PropertyChangeEvent(conversation, x, null, "message"));
         }
     }
@@ -812,6 +811,18 @@ public class Model implements TimerInterface {
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
+
+        // Initializing for each player a particular version of ChatController specifically designed for Server
+        List<String> allUsernames = players.stream()
+                .map(x -> x.getUsername())
+                .toList();
+        for (String player: allUsernames) {
+            allPlayersChats.put(player, new ChatController(true));
+
+
+            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
+                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
+        }
     }
 
     public void setVirtualViews(ArrayList<VirtualView> virtualViews) {
