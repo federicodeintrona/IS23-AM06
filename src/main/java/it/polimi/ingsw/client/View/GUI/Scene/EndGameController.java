@@ -13,6 +13,7 @@ import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EndGameController implements Initializable{
@@ -55,11 +56,31 @@ public class EndGameController implements Initializable{
     }
 
     private void sortPlayer(){
-        ArrayList<String> result=new ArrayList<>();
+        ArrayList<Integer> sortPoint=new ArrayList<>();
 
-        //TODO da fare l'ordinamento dei player in base a quanti punti hanno fatto alla fine
+        //creazione array dei punti
+        for (String st: clientState.getAllPublicPoints().keySet()){
+            sortPoint.add(clientState.getAllPublicPoints().get(st));
+        }
+        //ordinamento
+        sortPoint.sort(Integer::compareTo);
 
+        //crea l'ArrayList dei nomi ordinati
+        ArrayList<String> result=new ArrayList<>(sortPoint.size());
+
+        //TODO da fare più efficiente
+        for (Integer integer : sortPoint) {
+            for (String st : clientState.getAllPublicPoints().keySet()) {
+                if (Objects.equals(clientState.getAllPublicPoints().get(st), integer)) {
+                    result.add(st);
+                }
+            }
+        }
+
+        //salva l'ArrayList in orderPlayer
         orderPlayer=result;
+
+
     }
 
 }
