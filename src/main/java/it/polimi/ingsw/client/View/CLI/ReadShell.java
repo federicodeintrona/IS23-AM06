@@ -96,7 +96,6 @@ public class ReadShell extends Thread {
                 createAddMessage(number);
             }
 //            case "#rollback" -> createRollbackMessage();
-//            case "#chat" -> System.out.println("#chat -hello- ................... Chatting with all players");
 //            case "#whisper" -> System.out.println("#whisper @username -hello- ...... Chatting with username player");
             case "#help", "#h" -> cliMain.getCliPrint().help();
             case "#printpersonal" -> cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPersonalObjective());
