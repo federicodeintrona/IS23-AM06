@@ -692,7 +692,6 @@ public class Model implements TimerInterface {
 
     public synchronized void sendMessage (String forwardingPlayer, String message, String receivingPlayer) {
         ChatMessage conversation = new ChatMessage(forwardingPlayer, message, receivingPlayer);
-        conversation.getConversation();
 
         // Adding the conversation to both private chats' history
         allPlayersChats.get(forwardingPlayer).getPrivateChat(receivingPlayer).addMessage(conversation);

@@ -107,8 +107,6 @@ public class ChatHandler {
         ChatMessage message = new ChatMessage(cliMain.getClientState().getMyUsername(), string, receivingPlayer);
         message.setType(MessageTypes.CHAT);
 
-        message.getConversation();
-
         // Sending the message
         cliMain.getReadShell().sendMessage(message);
     }
