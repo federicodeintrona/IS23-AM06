@@ -68,6 +68,7 @@ public class ClientBase extends Application{
             guiController.setScene(scene);
 
             stage.setFullScreen(true);
+            stage.setFullScreenExitHint(""); //NON esce più la scritta per uscire fai exit
             stage.setTitle(Scenes.Login.getTitle());
             stage.setScene(scene);
             stage.show();

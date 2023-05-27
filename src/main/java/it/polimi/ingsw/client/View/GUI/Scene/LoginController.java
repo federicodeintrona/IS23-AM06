@@ -25,7 +25,11 @@ public class LoginController implements SceneController, Initializable {
     @FXML
     private Label usernameStatus;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        guiController.setSceneController(this);
 
+    }
 
     @FXML
     public void loginClick(ActionEvent actionEvent) {
@@ -53,9 +57,5 @@ public class LoginController implements SceneController, Initializable {
         usernameStatus.setText(error);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        guiController.setSceneController(this);
 
-    }
 }
