@@ -23,6 +23,7 @@ public class CLIMain implements View {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        clientState.addListener(this);
         //net.setUserInterface(this);
     }
 
