@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
@@ -43,4 +44,5 @@ public interface ClientStateRemoteInterface extends Remote {
     boolean pingPong() throws RemoteException;
 
     void newMessageHandler (ChatMessage message) throws RemoteException;
+    void reloadChats (ChatController backup) throws RemoteException;
 }

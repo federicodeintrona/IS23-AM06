@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
+import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
@@ -74,6 +75,9 @@ public class RMIVirtualView extends VirtualView{
                     }
                     case ("message") -> {
                         clientState.newMessageHandler((ChatMessage) evt.getSource());
+                    }
+                    case ("reloadChat") -> {
+                        clientState.reloadChats((ChatController) evt.getSource());
                     }
                 }
             } catch (RemoteException e) {

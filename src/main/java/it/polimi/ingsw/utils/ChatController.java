@@ -26,4 +26,9 @@ public class ChatController {
     public HashMap<String, Chat> getPrivateChats() {
         return privateChats;
     }
+
+    public void setPublicChat (Chat publicChat) { this.publicChat = publicChat; }
+
+    public void setPrivateChat (HashMap<String, Chat> privateChats) { this.privateChats = privateChats; }
+
 }

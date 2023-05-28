@@ -293,6 +293,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             notifier.firePropertyChange(new PropertyChangeEvent(this,"privateChat",null, message));
     }
 
+    public void reloadChats (ChatController backup) { this.chatController = backup; }
+
     public ChatController getChatController() {
         return chatController;
     }

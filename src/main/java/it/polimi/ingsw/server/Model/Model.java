@@ -607,6 +607,12 @@ public class Model implements TimerInterface {
                     player.getUsername(), "publicPoints"));
         }
 
+        // Reloading the chats to the player disconnected
+        ChatController backup = new ChatController();
+        backup.setPublicChat(publicChat);
+        backup.setPrivateChat(allPlayersChats.get(p).getPrivateChats());
+
+        notifier.firePropertyChange(new PropertyChangeEvent(backup, p.getUsername(), null, "reloadPublicChat"));
 
         //Notify game Start
         notifier.firePropertyChange(new PropertyChangeEvent(
