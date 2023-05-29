@@ -118,6 +118,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                         updateBoard();
                     }
                     else {
+                        updateBoard();
                         initializeBoardGrid();
                     }
                 });
