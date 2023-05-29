@@ -35,14 +35,15 @@ public class TCPVirtualView extends VirtualView{
         //w/name vuol dire che nel campo username del messaggio scrivo
         //lo username del proprietario
 
-
-        ViewMessage viewMsg = new ViewMessage();
-        viewMsg.setType(MessageTypes.VIEW);
-        viewMsg.setContent(evt.getSource());
-        viewMsg.setObjName((String)evt.getNewValue());
-        viewMsg.setUsername((String) evt.getOldValue());
-
         if(!isDisconnected()) {
+            System.out.println(getUsername()+" TCP virtual view is on: " + evt.getNewValue());
+
+            ViewMessage viewMsg = new ViewMessage();
+            viewMsg.setType(MessageTypes.VIEW);
+            viewMsg.setContent(evt.getSource());
+            viewMsg.setObjName((String)evt.getNewValue());
+            viewMsg.setUsername((String) evt.getOldValue());
+
             client.sendMessage(viewMsg);
         }
     }

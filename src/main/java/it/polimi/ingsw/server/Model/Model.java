@@ -14,10 +14,7 @@ import it.polimi.ingsw.utils.Timer.TimerInterface;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 public class Model implements TimerInterface {
@@ -39,6 +36,7 @@ public class Model implements TimerInterface {
     //Timer
     private int time = 0;
     private Timer timer;
+    private boolean timerIsOn=false;
     private static final int initialDelay = 50;
     private static final int delta = 5000;
 
@@ -289,7 +287,9 @@ public class Model implements TimerInterface {
         selectedTiles.clear();
 
         //Advances turn
-        nextTurn();
+        if(connectedPlayers>1) {
+            nextTurn();
+        }else state = GameState.STOPPED;
 
     }
 
@@ -386,15 +386,21 @@ public class Model implements TimerInterface {
      * Also resets the board when needed.
      */
     private void nextTurn(){
+
+        if(connectedPlayers<1){
+            endGame();
+            return;
+        }
+
         //Update the points
         updatePoints();
 
-        //Update current player
-        turnPlayerSelection();
-
-
         //Change game state
         state = GameState.CHOOSING_TILES;
+
+        //Update current player
+        playerSelection();
+
 
         //checks if the board needs to reset
             if(board.checkBoardReset()){
@@ -418,25 +424,22 @@ public class Model implements TimerInterface {
     }
 
 
-    private void turnPlayerSelection(){
-        if(connectedPlayers>=2){
+    private void playerSelection(){
+            selectCurr();
+            selectNext();
+    }
 
-            if(!nextPlayer.isDisconnected()) {
-                currPlayer = nextPlayer;
-            }else currPlayer = selectNextNotDisconnected(players.indexOf(currPlayer)+1);
+    private void selectCurr(){
+        if(!nextPlayer.isDisconnected()) {
+            currPlayer = nextPlayer;
+        }else {
 
-            if(currPlayer==null) stopGame();
+            Optional<Player> player = selectNextNotDisconnected(currPlayer);
+            currPlayer = player.orElseGet(this::selectNextPlayer);
 
         }
-            selectNext();
-
     }
 
-    private void stopGame(){
-        state=GameState.STOPPED;
-        System.out.println("The game has been stopped because too many players have disconnected");
-        startEndTimer();
-    }
 
     /**
      * Selects the next player in line to play the game.
@@ -446,18 +449,8 @@ public class Model implements TimerInterface {
      *  to make sure that if a player reconnects in time the game will select the next player properly)
      */
     private void selectNext() {
-
-        Player player=(currPlayer==players.get(players.size()-1))?
-                        selectNextNotDisconnected(0):
-                        selectNextNotDisconnected(players.indexOf(currPlayer)+1);
-
-
-        if(player!=null){
-            nextPlayer = player;
-        }else {
-            nextPlayer = selectNextPlayer();
-            stopGame();
-        }
+        Optional<Player> player=selectNextNotDisconnected(currPlayer);
+        nextPlayer = player.orElseGet(this::selectNextPlayer);
     }
 
     /**
@@ -465,35 +458,30 @@ public class Model implements TimerInterface {
      * @return The next player.
      */
     private Player selectNextPlayer(){
-        return currPlayer==players.get(players.size()-1)
-                ?players.get(0)
-                :players.get(players.indexOf(currPlayer)+1);
+        return currPlayer == players.get(players.size()-1)?
+                             players.get(0):
+                             players.get(players.indexOf(currPlayer)+1);
     }
 
     /**
      * Returns the next connected player in line.
-     * @param start The index of the player after the current player.
-     * @return The next connected player.
+     *
+     * @param current The player of whom you want to select the next
+     * @return The Optional of the next connected player.
+     * Or an Empty Optional if there is only 1 player connected.
      */
-    private Player selectNextNotDisconnected(int start){
+    private Optional<Player> selectNextNotDisconnected(Player current){
+
         Player player;
-        int index = start;
-        int count=0;
 
-        do{
-            player=players.get(index);
+        for(int i = 0; i<players.size()-1;i++){
+            player=selectNextPlayer();
             if(!player.isDisconnected()){
-                return player;
-            } else if (players.indexOf(player)==players.size()-1) {
-                index=0;
-                count++;
-            }else{
-                index++;
-                count++;
+                return Optional.of(player);
             }
-        }while(count!=players.size()-1);
+        }
 
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -501,14 +489,19 @@ public class Model implements TimerInterface {
      * starts the end timer if there is only one player left.
      * @param player The player to disconnect.
      */
-    public synchronized void disconnectPlayer(Player player){
-       System.out.println(player.getUsername() + " has disconnected");
+    public synchronized void disconnectPlayer(Player player,VirtualView view){
+        System.out.println(player.getUsername() + " has disconnected");
        //Disconnect the player
        player.setDisconnected(true);
+
+       virtualViews.remove(view);
+       notifier.removePropertyChangeListener(view);
+
        connectedPlayers--;
-       if(connectedPlayers<=1) startEndTimer();
+       if(connectedPlayers<=1&&!timerIsOn) startEndTimer();
        if(player.equals(currPlayer)) nextTurn();
     }
+
 
     /**
      * Reconnects the selected player.
@@ -522,21 +515,37 @@ public class Model implements TimerInterface {
         virtualViews.add(view);
         notifier.addPropertyChangeListener("all",view);
         notifier.addPropertyChangeListener(view.getUsername(),view);
+
         player.setDisconnected(false);
         connectedPlayers++;
-        if(connectedPlayers>=2) {
-            timer.cancel();
-            nextTurn();
-        }
+
+        checkRestart(player);
+
         updatePlayer(player);
     }
 
+    private void checkRestart(Player player){
+
+        if(connectedPlayers==2) {
+            timer.cancel();
+            timerIsOn=false;
+        }
+
+        if(currPlayer.isDisconnected()||state.equals(GameState.STOPPED)) nextTurn();
+
+    }
+
+    private void stopGame(){
+        System.out.println("The game has been stopped because too many players have disconnected");
+        if(!timerIsOn)startEndTimer();
+    }
 
     private void startEndTimer(){
         System.out.println("start timer");
+        timerIsOn=true;
         if(timer!=null) timer.cancel();
-        TimerTask task = new TimerCounter(this);
         timer = new Timer();
+        TimerTask task = new TimerCounter(this);
         timer.schedule(task, initialDelay, delta);
     }
 
@@ -549,7 +558,8 @@ public class Model implements TimerInterface {
         state = GameState.ENDING;
         selectWInner();
         //Notify game Start
-        notifier.firePropertyChange(new PropertyChangeEvent(true, "all", "0","end" ));
+        notifier.firePropertyChange
+                (new PropertyChangeEvent(true, "all", "0","end" ));
     }
 
 
@@ -559,7 +569,8 @@ public class Model implements TimerInterface {
     private void selectWInner(){
 
         winner = connectedPlayers==1?disconnectionWinner():playerWithMostPoints();
-        notifier.firePropertyChange(new PropertyChangeEvent(winner.getUsername(),"all","0","winner"));
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(winner.getUsername(),"all","0","winner"));
 
     }
 

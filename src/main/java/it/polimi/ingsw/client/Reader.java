@@ -166,7 +166,7 @@ public class Reader extends Thread implements TimerInterface {
 
         timer = new Timer();
         TimerTask task = new TimerCounter(this);
-        timer.schedule(task,initialDelay,delta);
+       // timer.schedule(task,initialDelay,delta);
     }
 
     @Override

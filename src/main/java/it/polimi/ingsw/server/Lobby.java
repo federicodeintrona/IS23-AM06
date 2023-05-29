@@ -1,13 +1,9 @@
 package it.polimi.ingsw.server;
-
 import it.polimi.ingsw.server.Exceptions.LobbyNotExists;
 import it.polimi.ingsw.server.Exceptions.UsernameAlreadyTaken;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
-
-import java.security.SecureRandom;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Lobby {
@@ -16,6 +12,7 @@ public class Lobby {
     private final HashMap<Integer,ArrayList<String>> lobbys = new HashMap<>();
     private final HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private final Queue<Integer> waitingLobbys = new LinkedList<>();
+    private final HashMap<String,Integer> playerToLobby = new HashMap<>();
     private final HashMap<Integer, Model> games;
     private int gameNumber = 0;
     private final HashMap<String,Integer> playerToGame = new HashMap<>();
@@ -75,12 +72,14 @@ public class Lobby {
 
         //add the new lobby to the lobby list
         lobbys.put(gameNumber,newLobby);
+        playerToLobby.put(client,gameNumber);
 
         //record the selected number of player
         gamePlayerNumber.put(gameNumber, numplayers);
 
         //add it to the waiting lobbies list
         waitingLobbys.add(gameNumber);
+
         //create the new game
         newGame(gameNumber);
         //return the game number
@@ -102,6 +101,7 @@ public class Lobby {
             System.out.println( client+ " added to lobby number: " + index);
             //Add the client to the lobby and set his lobbyID
             lobbys.get(index).add(client);
+            playerToLobby.put(client,index);
 
             checkStart(index);
 
@@ -125,7 +125,8 @@ public class Lobby {
         ArrayList<VirtualView> virtualViews = new ArrayList<>();
         ArrayList<String> myLobby = lobbys.get(index);
 
-        //for every client in the lobby, create his player and add it to the player map
+        //for every client in the lobby, create his player, add it to the playerToGame map
+        // and remove it from the playerToLobby map
         for (String s : myLobby) {
             Player p = new Player(s);
 
@@ -133,8 +134,13 @@ public class Lobby {
             playerList.add(p);
             virtualViews.add(views.get(s));
             playerToGame.put(s,index);
+            playerToLobby.remove(s);
         }
 
+        //Close the lobby
+        lobbys.remove(index);
+
+        //Add players and virtual views to the model
         games.get(index).setVirtualViews(virtualViews);
         games.get(index).setPlayers(playerList);
 
@@ -154,8 +160,11 @@ public class Lobby {
     public synchronized void closeGame(int gameID){
 
         for(String s : games.get(gameID).getPlayers().stream().map(Player::getUsername).toList()){
-            players.remove(s);
             disconnectedPlayers.remove(s);
+            players.remove(s);
+            playerToGame.remove(s);
+            views.remove(s);
+            views.get(s).setDisconnected(true);
         }
 
         //Remove the model
@@ -164,23 +173,39 @@ public class Lobby {
     }
     public synchronized void playerDisconnection(String username){
         views.get(username).setDisconnected(true);
+
+        //If in a lobby remove him
+        Integer lobbyID = playerToLobby.get(username);
+        if(lobbyID!=null){
+            lobbys.get(lobbyID).remove(username);
+        }
+
+        //If in a game disconnect him
         Integer gameID=playerToGame.get(username);
         if(gameID!=null){
-            games.get(gameID).disconnectPlayer(players.get(username));
+            games.get(gameID).disconnectPlayer(players.get(username), views.get(username));
+
         }
+
+        //Add him to the disconnected players
         disconnectedPlayers.put(username,players.get(username));
+
+        //Remove him from the necessary maps
         views.remove(username);
         players.remove(username);
         usernames.remove(username);
 
     }
 
+
     public synchronized int playerReconnection(String username,VirtualView view){
         Player player = disconnectedPlayers.get(username);
+        disconnectedPlayers.remove(username);
+
+        usernames.add(username);
         players.put(username,player);
         views.put(username,view);
-        disconnectedPlayers.remove(username);
-        usernames.add(username);
+
         int index = playerToGame.get(username);
         games.get(index).playerReconnection(player,view);
         return index;
