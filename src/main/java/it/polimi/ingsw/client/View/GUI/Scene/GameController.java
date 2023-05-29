@@ -115,7 +115,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 Platform.runLater(this::updateSelectedTiles);
             }
             case ("bookshelf") -> {
-                Platform.runLater(this::updateBookshelf);
+                Platform.runLater(()->{
+                    updateBookshelf((String) evt.getOldValue());
+                });
             }
             case ("publicPoints") -> {
                 Platform.runLater(this::updateAllPlayerPoints);
@@ -266,21 +268,19 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-    private void updateBookshelf() {
-        HashMap<String,Matrix> allBookshelf=clientState.getAllBookshelf();
-        for(String username: allBookshelf.keySet()) {
-            for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
-                for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
-                    if (!allBookshelf.get(username).getTile(i , j ).equals(Tiles.EMPTY)) {
-                        if (username.equals(clientState.getMyUsername())) {
-                            myBookshelfGrid.add(setTiles(allBookshelf.get(username).getTile(i, j)), j, i);
-                        }
-                        else{
-                            ImageView tile = setTiles(allBookshelf.get(username).getTile(i, j));
-                            tile.setFitWidth(20);
-                            tile.setFitHeight(20);
-                            otherPlayerBookshelfGrid.add(tile, j, i);
-                        }
+    private void updateBookshelf(String username) {
+        Matrix bookshelf=clientState.getAllBookshelf().get(username);
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
+                if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
+                    if (username.equals(clientState.getMyUsername())) {
+                        myBookshelfGrid.add(setTiles(bookshelf.getTile(i, j)), j, i);
+                    }
+                    else{
+                        ImageView tile = setTiles(bookshelf.getTile(i, j));
+                        tile.setFitWidth(20);
+                        tile.setFitHeight(20);
+                        otherPlayerBookshelfGrid.add(tile, j, i);
                     }
                 }
             }

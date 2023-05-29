@@ -126,6 +126,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             this.myBookshelf = myBookshelf;
         }
     }
+    public Matrix setBookshelf(String username){
+        synchronized (viewLock){
+            return allBookshelf.get(username);
+        }
+    }
 
     public HashMap<String, Matrix> getAllBookshelf() {
         synchronized (viewLock){
