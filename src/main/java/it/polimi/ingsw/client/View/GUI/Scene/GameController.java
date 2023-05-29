@@ -187,6 +187,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 //disabilitiamo il bottone di conferma
                 confirmationButton.setVisible(false);
                 confirmationButton.setDisable(true);
+                //togliamo l'opacità a tutte le tessere selezionate
+                boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
                 //setto lo stato a remove
                 state=State.REMOVE;
             }
@@ -402,7 +404,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                     removeTiles.add(new Point(rowIndex - 1, colmnIndex - 1));
                     confirmationButton.setVisible(true);
                     confirmationButton.setDisable(false);
-
+                    ImageView imageView=(ImageView) event.getTarget();
+                    imageView.setStyle("-fx-opacity: 0.5");
                 }
             }
         }

@@ -67,10 +67,10 @@ public class ClientBase extends Application{
             guiController.setRoot(root);
             guiController.setScene(scene);
 
-            stage.setFullScreen(true);
-            stage.setFullScreenExitHint(""); //NON esce più la scritta per uscire fai exit
             stage.setTitle(Scenes.Login.getTitle());
             stage.setScene(scene);
+            stage.setFullScreen(true);
+            stage.setFullScreenExitHint(""); //TODO NON esce più la scritta per uscire fai exit - NON funziona più :(
             stage.show();
         } catch (IOException e) {
             System.out.println("GUI failed to launch...");
