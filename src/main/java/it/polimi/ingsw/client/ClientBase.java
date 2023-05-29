@@ -39,8 +39,8 @@ public class ClientBase extends Application{
 
             System.out.print("Which User Interface do you choose? (CLI/GUI): ");
             decision = scanner.nextLine();
-
-            if (decision.equalsIgnoreCase("TCP")) {
+            decision=decision.toUpperCase();
+            if (decision.equalsIgnoreCase("CLI")) {
                 CLIMain cli = new CLIMain(lock, state, networker);
                 networker.setView(cli);
                 cli.runUI();
