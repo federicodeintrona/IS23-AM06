@@ -119,7 +119,7 @@ public class Lobby {
         }
     }
 
-    public void startGame(int index) {
+    private void startGame(int index) {
         //create the model and the array that will contain alla players
         ArrayList<Player> playerList = new ArrayList<>();
         ArrayList<VirtualView> virtualViews = new ArrayList<>();
@@ -143,7 +143,7 @@ public class Lobby {
     }
 
 
-    public void newGame(int num){
+    private void newGame(int num){
         Model m = new Model();
         games.put(num, m);
         m.setGameID(num);
@@ -151,7 +151,7 @@ public class Lobby {
     }
 
 
-    public void closeGame(int gameID){
+    public synchronized void closeGame(int gameID){
 
         for(String s : games.get(gameID).getPlayers().stream().map(Player::getUsername).toList()){
             players.remove(s);
@@ -162,8 +162,7 @@ public class Lobby {
         games.remove(gameID);
 
     }
-    public void playerDisconnection(String username){
-        //Forever player disconnection
+    public synchronized void playerDisconnection(String username){
         views.get(username).setDisconnected(true);
         Integer gameID=playerToGame.get(username);
         if(gameID!=null){
@@ -176,10 +175,12 @@ public class Lobby {
 
     }
 
-    public int playerReconnection(String username,VirtualView view){
+    public synchronized int playerReconnection(String username,VirtualView view){
         Player player = disconnectedPlayers.get(username);
         players.put(username,player);
+        views.put(username,view);
         disconnectedPlayers.remove(username);
+        usernames.add(username);
         int index = playerToGame.get(username);
         games.get(index).playerReconnection(player,view);
         return index;
