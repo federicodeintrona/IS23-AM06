@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
@@ -107,6 +108,9 @@ public class Reader extends Thread{
                         }
                         case ("message") -> {
                             clientState.newMessageHandler((ChatMessage) message.getContent());
+                        }
+                        case ("reloadChats") -> {
+                            clientState.reloadChats((ChatController) message.getContent());
                         }
                         case ("end") -> {
                             Boolean end = (Boolean) message.getContent();

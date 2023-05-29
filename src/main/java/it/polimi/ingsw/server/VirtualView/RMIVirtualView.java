@@ -76,7 +76,7 @@ public class RMIVirtualView extends VirtualView{
                     case ("message") -> {
                         clientState.newMessageHandler((ChatMessage) evt.getSource());
                     }
-                    case ("reloadChat") -> {
+                    case ("reloadChats") -> {
                         clientState.reloadChats((ChatController) evt.getSource());
                     }
                 }

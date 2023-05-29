@@ -9,11 +9,9 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Enumeration;
 
 public class NetworkerRmi implements Networker {
     private static int port;
@@ -84,6 +82,8 @@ public class NetworkerRmi implements Networker {
     /**
      * Asks the client to enter a valid username. Once he has
      * done the client gets added to the lobby
+     *
+     * @param username  Message from the View containing the username
      */
     public void firstConnection (Message username) {
         IntMessage message1;
@@ -93,22 +93,29 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
-        // Calling the completeRmiConnection() method to complete the client-server connection
+        // Saving the username after assuring that is ok
         if (!message1.getType().equals(MessageTypes.ERROR)){
            this.username = username.getUsername();
         }
+
+        // Saving the gameID once the new game has been created
         if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS)){
             gameID =  message1.getNum();
         }
 
+        // Forwarding the Server's response message to the View
         cli.receivedMessage(message1);
     }
 
 
 
     /**
+     * Method used to select the number of players in a game.
+     * Casts the message coming from the View to an IntMessage and calls
+     * the controller method passing it the required arguments.
+     * After saving the server's response it sends it back to the View.
      *
-     * @param numberOfPlayers
+     * @param numberOfPlayers   Message to cast from the View
      */
     public void numberOfPlayersSelection(Message numberOfPlayers) {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
@@ -119,13 +126,18 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
         this.gameID = message1.getNum();
+
+        // Forwarding the Server's response message to the View
         cli.receivedMessage(message1);
     }
 
     /**
-     * Removes a maximum of 3 tiles from the board send by coordinates
+     * Method used to remove a maximum of 3 tiles from the board send by coordinates.
+     * Casts the message coming from the View to a PointsMessage and calls
+     * the controller method passing it the required arguments.
+     * After saving the server's response it sends it back to the View.
      *
-     * @param tiles     ArrayList containing the coordinates of the tiles to remove
+     * @param tiles     Message to cast from the View
      */
     public void removeTilesFromBoard(Message tiles) {
         PointsMessage tempMessage = (PointsMessage) tiles;
@@ -135,12 +147,17 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
+        // Forwarding the Server's response message to the View
         cli.receivedMessage(message);
     }
 
     /**
+     * Method used to select the new order for the chosen tiles and switch them.
+     * Casts the message coming from the View to a IntArrayMessage and calls
+     * the controller method passing it the required arguments.
+     * After saving the server's response it sends it back to the View.
      *
-     * @param ints
+     * @param ints  Message to cast from the View
      */
     public void switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
@@ -150,12 +167,17 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
+        // Forwarding the Server's response message to the View
         cli.receivedMessage(message);
     }
 
     /**
+     * Method used to select the column to add the chosen tiles.
+     * Casts the message coming from the View to a IntArrayMessage and calls
+     * the controller method passing it the required arguments.
+     * After saving the server's response it sends it back to the View.
      *
-     * @param column
+     * @param column    Message to cast from the View
      */
     public void addTilesToBookshelf (Message column) {
         IntMessage tempMessage = (IntMessage) column;
@@ -165,38 +187,23 @@ public class NetworkerRmi implements Networker {
             throw new RuntimeException(e);
         }
 
+        // Forwarding the Server's response message to the View
         cli.receivedMessage(message);
     }
 
-    private String getClientIP() throws UnknownHostException {
-        InetAddress addr = InetAddress.getLocalHost();
-        return addr.getHostAddress();
-    }
-
-    public static String getLocalIPAddress() throws SocketException {
-        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-        while (interfaces.hasMoreElements()) {
-            NetworkInterface current = interfaces.nextElement();
-            if (!current.isUp() || current.isLoopback() || current.isVirtual()) {
-                continue;
-            }
-            Enumeration<InetAddress> addresses = current.getInetAddresses();
-            while (addresses.hasMoreElements()) {
-                InetAddress currentAddr = addresses.nextElement();
-                if (currentAddr.isLoopbackAddress()) {
-                    continue;
-                }
-                if (currentAddr instanceof Inet4Address) {
-                    return currentAddr.getHostAddress();
-                }
-            }
-        }
-        return null;
-    }
-
+    /**
+     * Method used to send private or public messages to the other players via server.
+     * Casts the message coming from the View to a ChatMessage and calls one of
+     * the 2 controller methods, depending on that the message is for a private or
+     * public chat, passing it the required arguments.
+     * After saving the server's response it sends it back to the View.
+     *
+     * @param message   Message to cast from the View
+     */
     public void chat (Message message) {
         ChatMessage tempMessage = (ChatMessage) message;
 
+        // The message is intended for a public chat due to having the receivingUsername equals to null
         if (tempMessage.getReceivingUsername() == null) {
             try {
                 this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage());
@@ -204,6 +211,8 @@ public class NetworkerRmi implements Networker {
                 throw new RuntimeException(e);
             }
         }
+
+        // The message is intended for a private chat
         else {
             try {
                 this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage(), tempMessage.getReceivingUsername());
@@ -212,6 +221,7 @@ public class NetworkerRmi implements Networker {
             }
         }
 
+        // Forwarding the Server's response message to the View
         cli.receivedMessage(this.message);
     }
 

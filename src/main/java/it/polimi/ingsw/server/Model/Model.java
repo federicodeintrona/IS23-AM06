@@ -612,7 +612,7 @@ public class Model implements TimerInterface {
         backup.setPublicChat(publicChat);
         backup.setPrivateChat(allPlayersChats.get(p).getPrivateChats());
 
-        notifier.firePropertyChange(new PropertyChangeEvent(backup, p.getUsername(), null, "reloadPublicChat"));
+        notifier.firePropertyChange(new PropertyChangeEvent(backup, p.getUsername(), null, "reloadChats"));
 
         //Notify game Start
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -688,6 +688,7 @@ public class Model implements TimerInterface {
         publicChat.addMessage(playerForwarding, message);
 
         List<String> usernames = players.stream()
+                                        .filter(x -> !x.isDisconnected())
                                         .map(x -> x.getUsername())
                                         .toList();
 
@@ -704,6 +705,7 @@ public class Model implements TimerInterface {
         allPlayersChats.get(receivingPlayer).getPrivateChat(forwardingPlayer).addMessage(conversation);
 
         List<String> usernames = players.stream()
+                                        .filter(x -> !x.isDisconnected())
                                         .map(x -> x.getUsername())
                                         .filter(x -> (x.equals(forwardingPlayer) || x.equals(receivingPlayer)))
                                         .toList();
