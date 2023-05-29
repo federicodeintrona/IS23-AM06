@@ -12,14 +12,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -37,7 +37,7 @@ import java.util.*;
 import java.util.List;
 
 
-public class GameController implements Initializable, PropertyChangeListener,SceneController {
+public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
@@ -87,6 +87,12 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private Button column4;
     @FXML
     private Button column5;
+    @FXML
+    private VBox chatBox;
+    @FXML
+    private Label sendMessage;
+    @FXML
+    private MenuButton selectSendMessage;
 
     private State state = State.REMOVE;
 
@@ -107,7 +113,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         updateOtherPlayerPointsLabel();
         updateCurrPlayer();
     }
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -425,29 +430,29 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     private void confirmClick(ActionEvent actionEvent){
         if (removeTiles.isEmpty()){
-           showError("Select at least 1 tile",guiController.getStage());
+            showError("Select at least 1 tile",guiController.getStage());
         }
         else{
-                PointsMessage pointsMessage=new PointsMessage();
+            PointsMessage pointsMessage=new PointsMessage();
 
-                pointsMessage.setUsername(clientState.getMyUsername());
-                pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
-                pointsMessage.setTiles(removeTiles);
-                guiController.sendMessage(pointsMessage);
+            pointsMessage.setUsername(clientState.getMyUsername());
+            pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
+            pointsMessage.setTiles(removeTiles);
+            guiController.sendMessage(pointsMessage);
 
-                //mi salvo una posizione che so essere vuota
-                checkResetPoint=removeTiles.get(0);
+            //mi salvo una posizione che so essere vuota
+            checkResetPoint=removeTiles.get(0);
 
-                removeTiles=new ArrayList<>();
+            removeTiles=new ArrayList<>();
 
-                //disabilita il bottone di conferma
-                confirmationButton.setVisible(false);
-                confirmationButton.setDisable(true);
-                //disabilita il bottone di annullamento
-                rollbackButton.setVisible(false);
-                rollbackButton.setDisable(true);
-                boardGrid.setDisable(true);
-                state = State.SWITCH;
+            //disabilita il bottone di conferma
+            confirmationButton.setVisible(false);
+            confirmationButton.setDisable(true);
+            //disabilita il bottone di annullamento
+            rollbackButton.setVisible(false);
+            rollbackButton.setDisable(true);
+            boardGrid.setDisable(true);
+            state = State.SWITCH;
 
         }
     }
@@ -664,5 +669,17 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         column5.setDisable(true);
 
         state = State.REMOVE;
+    }
+
+    //TODO invia i messaggi che legge da chattBox
+    @FXML
+    private void sendMessageTo(ActionEvent actionEvent){
+
+    }
+    //TODO mostra chat
+    private void updateChat(){
+        /*
+            in chatBox aggiungi un label sotto a tutti gli altri
+         */
     }
 }

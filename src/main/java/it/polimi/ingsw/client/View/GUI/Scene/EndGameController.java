@@ -40,7 +40,7 @@ public class EndGameController implements Initializable{
     public void printEndGame(){
         sortPlayer();
         firstPlayer.setText("1. "+orderPlayer.get(0)+" POINTS: "+clientState.getAllPublicPoints().get(orderPlayer.get(0)));
-        secondPlayer.setText("2. "+orderPlayer.get(1)+ "POINTS: "+clientState.getAllPublicPoints().get(orderPlayer.get(1)));
+        secondPlayer.setText("2. "+orderPlayer.get(1)+" POINTS: "+clientState.getAllPublicPoints().get(orderPlayer.get(1)));
 
         switch (orderPlayer.size()){
             case 3 -> {
