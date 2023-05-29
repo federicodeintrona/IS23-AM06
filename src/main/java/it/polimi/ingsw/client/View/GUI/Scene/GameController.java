@@ -124,7 +124,14 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 Platform.runLater(this::updateMyPointsLabel);
             }
             case ("currPlayer") -> {
-                Platform.runLater(this::updateCurrPlayer);
+//                Platform.runLater(this::updateCurrPlayer);
+                Platform.runLater(() -> {
+                    updateCurrPlayer();
+                    if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+                        boardGrid.setDisable(false);
+                    }
+                });
+
             }
         }
 
@@ -242,14 +249,26 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     private void updateSelectedTiles() {
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())) {
+            //mostra il pane di dialogo dove viene mostrato le tiles selezionate
             selectedTilesDialog.setVisible(true);
             selectedTilesDialog.setDisable(false);
-
+            //rendi visibile il bottone per finire lo switch e andare nella selezione della colonna
+            endSwitch.setVisible(true);
+            endSwitch.setDisable(false);
+            //rendi visibili tutte le tile
+            selectedTiles1.setDisable(false);
+            selectedTiles1.setVisible(true);
+            selectedTiles2.setDisable(false);
+            selectedTiles2.setVisible(true);
+            selectedTiles3.setDisable(false);
+            selectedTiles3.setVisible(true);
             switch (clientState.getSelectedTiles().size()) {
                 case 1 -> {
                     selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
-                    selectedTiles1.setDisable(true);
-                    selectedTiles1.setVisible(false);
+                    selectedTiles2.setDisable(true);
+                    selectedTiles2.setVisible(false);
+                    selectedTiles3.setDisable(true);
+                    selectedTiles3.setVisible(false);
                 }
                 case 2 -> {
                     selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
@@ -314,7 +333,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
            showError("Select at least 1 tile",guiController.getStage());
         }
         else{
-
                 PointsMessage pointsMessage=new PointsMessage();
 
                 pointsMessage.setUsername(clientState.getMyUsername());
@@ -327,13 +345,21 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 confirmationButton.setVisible(false);
                 confirmationButton.setDisable(true);
                 boardGrid.setDisable(true);
-
         }
     }
 
     //conferma l'ordine dello switch
     @FXML
     public void confirmsSelectedClick(ActionEvent actionEvent){
+        //riabilitiamo le tessere per essere invertite
+        selectedTiles1.setDisable(false);
+        selectedTiles1.setVisible(true);
+        selectedTiles2.setDisable(false);
+        selectedTiles2.setVisible(true);
+        selectedTiles3.setDisable(false);
+        selectedTiles3.setVisible(true);
+
+        //nascondiamo il bottone di conferma della selezione
         confirmSelected.setVisible(false);
         confirmSelected.setDisable(true);
 
@@ -351,6 +377,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         guiController.sendMessage(intArrayMessage);
         orderTiles=new ArrayList<>();
 
+        //rendi visibile il bottone per finire lo switch e andare nella selezione della colonna
         endSwitch.setVisible(true);
         endSwitch.setDisable(false);
     }
@@ -383,6 +410,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     public void selectTile1(MouseEvent event){
         orderTiles.add(1);
+        //disabilita la selezione di questa tessera
+        selectedTiles1.setDisable(true);
+        //disabilita la fine dello switch perchè hai selezionato un'altra tile
+        endSwitch.setVisible(false);
+        endSwitch.setDisable(true);
         if (orderTiles.size()==clientState.getSelectedTiles().size()){
             confirmSelected.setVisible(true);
             confirmSelected.setDisable(false);
@@ -392,6 +424,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     public void selectTile2(MouseEvent event){
         orderTiles.add(2);
+        //disabilita la selezione di questa tessera
+        selectedTiles2.setDisable(true);
+        //disabilita la fine dello switch perchè hai selezionato un'altra tile
+        endSwitch.setVisible(false);
+        endSwitch.setDisable(true);
         if (orderTiles.size()==clientState.getSelectedTiles().size()){
             confirmSelected.setVisible(true);
             confirmSelected.setDisable(false);
@@ -401,6 +438,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     public void selectTile3(MouseEvent event){
         orderTiles.add(3);
+        //disabilita la selezione di questa tessera
+        selectedTiles3.setDisable(true);
+        //disabilita la fine dello switch perchè hai selezionato un'altra tile
+        endSwitch.setVisible(false);
+        endSwitch.setDisable(true);
         if (orderTiles.size()==clientState.getSelectedTiles().size()){
             confirmSelected.setVisible(true);
             confirmSelected.setDisable(false);
