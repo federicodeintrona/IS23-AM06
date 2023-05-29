@@ -42,6 +42,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
     private ArrayList<Integer> orderTiles=new ArrayList<>();
+    private Point checkResetPoint=null;
     @FXML
     private GridPane boardGrid;
     @FXML
@@ -110,7 +111,14 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         switch (evt.getPropertyName()) {
             case ("board") -> {
-                Platform.runLater(this::updateBoard);
+                Platform.runLater(() -> {
+                    if (checkResetPoint!=null && clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
+                        updateBoard();
+                    }
+                    else {
+                        initializeBoardGrid();
+                    }
+                });
             }
             case ("selectedTiles") -> {
                 Platform.runLater(this::updateSelectedTiles);
@@ -151,18 +159,40 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         switch (state){
             case REMOVE -> {
-                boardGrid.setDisable(false);
-
+                //riabilitiamo tutti i bottoni di selezione delle colonne
+                column1.setVisible(true);
+                column1.setDisable(false);
+                column2.setVisible(true);
+                column2.setDisable(false);
+                column3.setVisible(true);
+                column3.setDisable(false);
+                column4.setVisible(true);
+                column4.setDisable(false);
+                column5.setVisible(true);
+                column5.setDisable(false);
+                //setto lo stato ad add
+                state=State.ADD;
             }
 
             case SWITCH -> {
-
-
+                //puliamo le tessere selezionate
+                removeTiles=new ArrayList<>();
+                //riabilitiamo la board
+                boardGrid.setDisable(false);
+                //disabilitiamo il bottone di conferma
+                confirmationButton.setVisible(false);
+                confirmationButton.setDisable(true);
+                //setto lo stato a remove
+                state=State.REMOVE;
             }
             case ADD -> {
-
-
-
+                //puliamo lo switch selezionato
+                orderTiles=new ArrayList<>();
+                //riabilito la finestra di switch delle tile
+                selectedTilesDialog.setVisible(true);
+                selectedTilesDialog.setDisable(false);
+                //setto lo stato a switch
+                state=State.SWITCH;
             }
         }
 
@@ -372,6 +402,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
                 pointsMessage.setTiles(removeTiles);
                 guiController.sendMessage(pointsMessage);
+
+                //mi salvo una posizione che so essere vuota
+                checkResetPoint=removeTiles.get(0);
 
                 removeTiles=new ArrayList<>();
 
