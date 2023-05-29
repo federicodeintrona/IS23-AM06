@@ -44,6 +44,7 @@ public class PersonalObjective {
     public PersonalObjective(int n) {
         //mapping the card position
         readJSON(n);
+        personalObjectiveNum=n;
     }
 
     /**

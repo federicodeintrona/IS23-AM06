@@ -12,9 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class EndGameController implements Initializable{
 
@@ -63,12 +61,11 @@ public class EndGameController implements Initializable{
             sortPoint.add(clientState.getAllPublicPoints().get(st));
         }
         //ordinamento
-        sortPoint.sort(Integer::compareTo);
+        sortPoint.sort(Comparator.reverseOrder());
 
         //crea l'ArrayList dei nomi ordinati
         ArrayList<String> result=new ArrayList<>(sortPoint.size());
 
-        //TODO da fare più efficiente
         for (Integer integer : sortPoint) {
             for (String st : clientState.getAllPublicPoints().keySet()) {
                 if (Objects.equals(clientState.getAllPublicPoints().get(st), integer)) {
