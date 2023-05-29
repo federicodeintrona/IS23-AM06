@@ -248,8 +248,10 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         for(int i=0; i<2;i++){
             String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
             ImageView imageview=new ImageView(getImage(path));
-            imageview.setFitHeight(100);
-            imageview.setFitWidth(250);
+            imageview.setPreserveRatio(true);
+            imageview.setFitWidth(248);
+//            imageview.setFitHeight(100);
+//            imageview.setFitWidth(250);
             commonGrid.add(imageview,i,0);
         }
     }
@@ -402,7 +404,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 //
         if(colmnIndex!=null&&rowIndex!=null) {
             if(clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
-                if(removeTiles.size()<=3){
+                if(removeTiles.size()<3){
                     removeTiles.add(new Point(rowIndex - 1, colmnIndex - 1));
                     //abilita il bottone della conferma
                     confirmationButton.setVisible(true);
