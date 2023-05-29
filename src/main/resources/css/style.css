@@ -18,3 +18,7 @@
     -fx-background-image: url("images/misc/sfondo_parquet.jpg");
     -fx-background-size: cover;
 }
+
+.selectedTiles{
+    -fx-background-color: #a5552a;
+}

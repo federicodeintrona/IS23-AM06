@@ -100,7 +100,7 @@
                   <Font name="System Bold Italic" size="15.0" />
                </font>
             </Label>
-            <DialogPane fx:id="selectedTilesDialog" disable="true" layoutX="-5.0" layoutY="80.0" prefHeight="195.0" prefWidth="350.0" visible="false">
+            <DialogPane fx:id="selectedTilesDialog" disable="true" layoutX="-433.0" layoutY="133.0" prefHeight="0.0" prefWidth="352.0" styleClass="selectedTiles" visible="false">
                <header>
                   <Label alignment="CENTER" prefHeight="28.0" prefWidth="360.0" text="Order of selected tiles" textAlignment="CENTER">
                      <font>
@@ -152,6 +152,7 @@
             <Button fx:id="column3" disable="true" layoutX="157.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn3" prefHeight="25.0" prefWidth="42.0" text="3" visible="false" />
             <Button fx:id="column4" disable="true" layoutX="214.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn4" prefHeight="25.0" prefWidth="42.0" text="4" visible="false" />
             <Button fx:id="column5" disable="true" layoutX="270.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn5" prefHeight="25.0" prefWidth="42.0" text="5" visible="false" />
+            <Button fx:id="rollbackButton" disable="true" layoutX="-6.0" layoutY="83.0" mnemonicParsing="false" onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">

@@ -64,6 +64,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     private Button confirmationButton;
     @FXML
+    private Button rollbackButton;
+    @FXML
     private ImageView selectedTiles1;
     @FXML
     private ImageView selectedTiles2;
@@ -402,8 +404,12 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
             if(clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
                 if(removeTiles.size()<=3){
                     removeTiles.add(new Point(rowIndex - 1, colmnIndex - 1));
+                    //abilita il bottone della conferma
                     confirmationButton.setVisible(true);
                     confirmationButton.setDisable(false);
+                    //abilita il bottone dell'annullamento
+                    rollbackButton.setVisible(true);
+                    rollbackButton.setDisable(false);
                     ImageView imageView=(ImageView) event.getTarget();
                     imageView.setStyle("-fx-opacity: 0.5");
                 }
@@ -431,12 +437,23 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
                 removeTiles=new ArrayList<>();
 
+                //disabilita il bottone di conferma
                 confirmationButton.setVisible(false);
                 confirmationButton.setDisable(true);
+                //disabilita il bottone di annullamento
+                rollbackButton.setVisible(false);
+                rollbackButton.setDisable(true);
                 boardGrid.setDisable(true);
                 state = State.SWITCH;
 
         }
+    }
+
+    //annulla la selezione delle tessere selezionate
+    @FXML
+    private void rollbackClick(ActionEvent actionEvent){
+        removeTiles=new ArrayList<>();
+        boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
     }
 
     //conferma l'ordine dello switch
@@ -445,10 +462,13 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         //riabilitiamo le tessere per essere invertite
         selectedTiles1.setDisable(false);
         selectedTiles1.setVisible(true);
+        selectedTiles1.setStyle("-fx-opacity: 1");
         selectedTiles2.setDisable(false);
         selectedTiles2.setVisible(true);
+        selectedTiles2.setStyle("-fx-opacity: 1");
         selectedTiles3.setDisable(false);
         selectedTiles3.setVisible(true);
+        selectedTiles3.setStyle("-fx-opacity: 1");
 
         //nascondiamo il bottone di conferma della selezione
         confirmSelected.setVisible(false);
@@ -505,6 +525,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         orderTiles.add(1);
         //disabilita la selezione di questa tessera
         selectedTiles1.setDisable(true);
+        selectedTiles1.setStyle("-fx-opacity: 0.5");
         //disabilita la fine dello switch perchè hai selezionato un'altra tile
         endSwitch.setVisible(false);
         endSwitch.setDisable(true);
@@ -519,6 +540,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         orderTiles.add(2);
         //disabilita la selezione di questa tessera
         selectedTiles2.setDisable(true);
+        selectedTiles2.setStyle("-fx-opacity: 0.5");
         //disabilita la fine dello switch perchè hai selezionato un'altra tile
         endSwitch.setVisible(false);
         endSwitch.setDisable(true);
@@ -533,6 +555,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         orderTiles.add(3);
         //disabilita la selezione di questa tessera
         selectedTiles3.setDisable(true);
+        selectedTiles3.setStyle("-fx-opacity: 0.5");
         //disabilita la fine dello switch perchè hai selezionato un'altra tile
         endSwitch.setVisible(false);
         endSwitch.setDisable(true);
