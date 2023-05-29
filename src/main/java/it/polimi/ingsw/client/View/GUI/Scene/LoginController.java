@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -31,8 +32,7 @@ public class LoginController implements SceneController, Initializable {
 
     }
 
-    @FXML
-    public void loginClick(ActionEvent actionEvent) {
+    private void login(){
         String username=usernameField.getText();
 
         if (username.isEmpty()){
@@ -46,11 +46,14 @@ public class LoginController implements SceneController, Initializable {
             guiController.sendMessage(message);
         }
     }
-
-    public void errorUsername(){
-        usernameStatus.setText("Username Sbagliato");
+    @FXML
+    private void loginClick(ActionEvent actionEvent) {
+        login();
     }
-
+    @FXML
+    private void loginEnter(KeyEvent event){
+        login();
+    }
 
     @Override
     public void showError(String error, Stage stage) {
