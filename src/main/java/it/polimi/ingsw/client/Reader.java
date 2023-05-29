@@ -51,7 +51,7 @@ public class Reader extends Thread implements TimerInterface {
 
     public void run() {
         notifier.addPropertyChangeListener(networkerTcp);
-//        pingPong();
+        pingPong();
         Message newMessage;
         Message oldMessage = null;
         try {
