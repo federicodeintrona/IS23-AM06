@@ -435,7 +435,9 @@ public class CLIPrint implements PropertyChangeListener {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPublicChat().resetUnReadMessages();
 
-        System.out.println(ColorCLI.BOLD + "PUBLIC CHAT" + ColorCLI.RESET + ": ____________________________________________");
+        if (!printAndChat) System.out.println("\n");
+
+        System.out.println(ColorCLI.BOLD + "PUBLIC CHAT" + ColorCLI.RESET + ": _________________________________________________");
 
         if (printAndChat) {
             System.out.println("use the command #help or #h to display chat's commands");
@@ -462,7 +464,7 @@ public class CLIPrint implements PropertyChangeListener {
         }
 
         if (!printAndChat) {
-            System.out.printf("_________________________________________________________");
+            System.out.printf("______________________________________________________________");
             System.out.println("\n");
 
             System.out.println(ColorCLI.CLEAR);
@@ -474,7 +476,9 @@ public class CLIPrint implements PropertyChangeListener {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPrivateChat(username).resetUnReadMessages();
 
-        System.out.println(ColorCLI.BOLD + "PRIVATE CHAT" + ColorCLI.RESET + " with " + ColorCLI.UNDERLINE + username + ColorCLI.RESET + ": ________________________________");
+        if (!printAndChat) System.out.println("\n");
+
+        System.out.println(ColorCLI.BOLD + "PRIVATE CHAT" + ColorCLI.RESET + " with " + ColorCLI.UNDERLINE + username + ColorCLI.RESET + ": _________________________________________");
 
         if (printAndChat) {
             System.out.println("use the command #help or #h to display chat's commands");
@@ -484,7 +488,7 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println(ColorCLI.REVERSED + "There are no previous messages :(" + ColorCLI.RESET);
 
             if (!printAndChat) {
-                System.out.printf("___________________________________________________");
+                System.out.printf("_______________________________________________________");
                 System.out.println("\n");
 
                 System.out.println(ColorCLI.CLEAR);

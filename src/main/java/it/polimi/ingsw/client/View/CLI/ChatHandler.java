@@ -177,7 +177,7 @@ public class ChatHandler {
     }
 
     private void endOfChat (String username) {
-        System.out.println("The PRIVATE CHAT with " + username + "is now closed ______________");
+        System.out.println("The PRIVATE CHAT with " + username + "is now closed _________________________");
         chatController.getPrivateChat(username).setChatIsEnable(false);
         clearCLI();
     }
