@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -84,7 +85,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     private Button column5;
 
-
+    private State state = State.REMOVE;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -107,7 +108,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        switch ((String) evt.getPropertyName()) {
+        switch (evt.getPropertyName()) {
             case ("board") -> {
                 Platform.runLater(this::updateBoard);
             }
@@ -115,7 +116,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 Platform.runLater(this::updateSelectedTiles);
             }
             case ("bookshelf") -> {
-                updateBookshelf();
+                Platform.runLater(this::updateBookshelf);
             }
             case ("publicPoints") -> {
                 Platform.runLater(this::updateAllPlayerPoints);
@@ -127,9 +128,38 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 Platform.runLater(this::updateCurrPlayer);
             }
         }
-
     }
 
+    @Override
+    public void showError(String error, Stage stage){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(error);
+        alert.initOwner(stage);
+        alert.showAndWait();
+
+        revert();
+    }
+
+    private void revert(){
+
+        switch (state){
+            case REMOVE -> {
+                boardGrid.setDisable(false);
+
+            }
+
+            case SWITCH -> {
+
+
+            }
+            case ADD -> {
+
+
+
+            }
+        }
+
+    }
     //setta le tessere - dal colore all'immagine
     private ImageView setTiles(Tiles tile){
         Random rand = new Random();
@@ -298,10 +328,13 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 //        arrayList.add(new Point(rowIndex-1, colmnIndex-1));
 //
         if(colmnIndex!=null&&rowIndex!=null) {
-            if(clientState.getCurrentPlayer().equals(clientState.getMyUsername())||removeTiles.size()>3) {
-                removeTiles.add(new Point(rowIndex - 1, colmnIndex - 1));
-                confirmationButton.setVisible(true);
-                confirmationButton.setDisable(false);
+            if(clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+                if(removeTiles.size()<=3){
+                    removeTiles.add(new Point(rowIndex - 1, colmnIndex - 1));
+                    confirmationButton.setVisible(true);
+                    confirmationButton.setDisable(false);
+
+                }
             }
         }
 
@@ -327,6 +360,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 confirmationButton.setVisible(false);
                 confirmationButton.setDisable(true);
                 boardGrid.setDisable(true);
+                state = State.SWITCH;
 
         }
     }
@@ -353,6 +387,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         endSwitch.setVisible(true);
         endSwitch.setDisable(false);
+
+
     }
     //conferma la fine di tutti gli switch
     @FXML
@@ -377,6 +413,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         column5.setVisible(true);
         column5.setDisable(false);
+
+        state = State.ADD;
     }
 
     //aggiungo tile nell'ordine corretto
@@ -410,20 +448,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     //aggiungo le tiles nella colonna corretta
     @FXML
     public void addToColumn1(ActionEvent actionEvent){
-        column1.setVisible(false);
-        column1.setDisable(true);
-
-        column2.setVisible(false);
-        column2.setDisable(true);
-
-        column3.setVisible(false);
-        column3.setDisable(true);
-
-        column4.setVisible(false);
-        column4.setDisable(true);
-
-        column5.setVisible(false);
-        column5.setDisable(true);
+        addToColumn();
 
         IntMessage intMessage=new IntMessage();
 
@@ -434,24 +459,13 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         //invia il messaggio
         guiController.sendMessage(intMessage);
+
+
     }
     //aggiungo le tiles nella colonna corretta
     @FXML
     public void addToColumn2(ActionEvent actionEvent){
-        column1.setVisible(false);
-        column1.setDisable(true);
-
-        column2.setVisible(false);
-        column2.setDisable(true);
-
-        column3.setVisible(false);
-        column3.setDisable(true);
-
-        column4.setVisible(false);
-        column4.setDisable(true);
-
-        column5.setVisible(false);
-        column5.setDisable(true);
+        addToColumn();
 
         IntMessage intMessage=new IntMessage();
 
@@ -462,24 +476,12 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         //invia il messaggio
         guiController.sendMessage(intMessage);
+
     }
     //aggiungo le tiles nella colonna corretta
     @FXML
     public void addToColumn3(ActionEvent actionEvent){
-        column1.setVisible(false);
-        column1.setDisable(true);
-
-        column2.setVisible(false);
-        column2.setDisable(true);
-
-        column3.setVisible(false);
-        column3.setDisable(true);
-
-        column4.setVisible(false);
-        column4.setDisable(true);
-
-        column5.setVisible(false);
-        column5.setDisable(true);
+        addToColumn();
 
         IntMessage intMessage=new IntMessage();
 
@@ -490,24 +492,12 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         //invia il messaggio
         guiController.sendMessage(intMessage);
+
     }
     //aggiungo le tiles nella colonna corretta
     @FXML
     public void addToColumn4(ActionEvent actionEvent){
-        column1.setVisible(false);
-        column1.setDisable(true);
-
-        column2.setVisible(false);
-        column2.setDisable(true);
-
-        column3.setVisible(false);
-        column3.setDisable(true);
-
-        column4.setVisible(false);
-        column4.setDisable(true);
-
-        column5.setVisible(false);
-        column5.setDisable(true);
+        addToColumn();
 
         IntMessage intMessage=new IntMessage();
 
@@ -518,10 +508,28 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
         //invia il messaggio
         guiController.sendMessage(intMessage);
+
     }
     //aggiungo le tiles nella colonna corretta
     @FXML
     public void addToColumn5(ActionEvent actionEvent){
+
+        addToColumn();
+
+        IntMessage intMessage=new IntMessage();
+
+        //setta il messaggio
+        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
+        intMessage.setNum(4);
+
+        //invia il messaggio
+        guiController.sendMessage(intMessage);
+
+    }
+
+
+    private void addToColumn(){
         column1.setVisible(false);
         column1.setDisable(true);
 
@@ -537,14 +545,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         column5.setVisible(false);
         column5.setDisable(true);
 
-        IntMessage intMessage=new IntMessage();
-
-        //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
-        intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
-        intMessage.setNum(4);
-
-        //invia il messaggio
-        guiController.sendMessage(intMessage);
+        state = State.REMOVE;
     }
 }
