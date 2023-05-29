@@ -28,7 +28,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private ScheduledExecutorService e;
     private final Timer timer = new Timer();
     private static final int initialDelay = 50;
-    private static final int delta = 700;
+    private static final int delta = 500;
     private int time = 0;
 
 
@@ -106,6 +106,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                 }
                 case PONG -> {
                     this.time=0;
+                    //System.out.println("pong by " + username);
                 }
                 default -> {
                     System.out.println("Server received: " + incomingMsg);

@@ -36,7 +36,6 @@ public class ClientBase extends Application{
             }else networker = new NetworkerTcp(state,host);
 
 
-
             System.out.print("Which User Interface do you choose? (CLI/GUI): ");
             decision = scanner.nextLine();
             decision=decision.toUpperCase();

@@ -121,7 +121,10 @@ public class Reader extends Thread implements TimerInterface {
                         }
                     }
                 } else {
-                  //  if (!newMessage.getType().equals(MessageTypes.PING)) out.println(newMessage.getType());
+                    if (newMessage.getType().equals(MessageTypes.PING)) {
+                       // out.println(newMessage.getType());
+                        time=0;
+                    }
 
                     notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
                             newMessage.getType().toString(), oldMessage, newMessage));
@@ -159,7 +162,7 @@ public class Reader extends Thread implements TimerInterface {
                 if(!disconnected)
                     System.out.println( "Server is not responding...");
             }
-        },10,1000, TimeUnit.MILLISECONDS);
+        },10,500, TimeUnit.MILLISECONDS);
 
         timer = new Timer();
         TimerTask task = new TimerCounter(this);
