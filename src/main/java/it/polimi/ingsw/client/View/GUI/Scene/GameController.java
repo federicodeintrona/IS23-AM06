@@ -112,7 +112,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         switch (evt.getPropertyName()) {
             case ("board") -> {
                 Platform.runLater(() -> {
-                    if (checkResetPoint!=null && clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
+                    if (checkResetPoint==null ){
+                        updateBoard();
+                    }else if(clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
                         updateBoard();
                     }
                     else {
