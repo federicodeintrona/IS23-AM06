@@ -18,6 +18,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
+    private int myPersonalObjectiveInt;
     private ArrayList<Integer> gameCommonObjective ;
     private Matrix board;
     private Matrix myBookshelf;
@@ -124,6 +125,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setMyBookshelf(Matrix myBookshelf) {
         synchronized (viewLock){
             this.myBookshelf = myBookshelf;
+        }
+    }
+    public Matrix setBookshelf(String username){
+        synchronized (viewLock){
+            return allBookshelf.get(username);
         }
     }
 
@@ -295,5 +301,17 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
+    }
+
+    public int getMyPersonalObjectiveInt() {
+        synchronized (viewLock){
+            return myPersonalObjectiveInt;
+        }
+    }
+
+    public void setMyPersonalObjectiveInt(int myPersonalObjectiveInt) {
+        synchronized (viewLock){
+            this.myPersonalObjectiveInt = myPersonalObjectiveInt;
+        }
     }
 }

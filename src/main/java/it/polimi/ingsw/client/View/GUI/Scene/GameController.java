@@ -119,6 +119,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                         updateBoard();
                     }
                     else {
+                        updateBoard();
                         initializeBoardGrid();
                     }
                 });
@@ -127,7 +128,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 Platform.runLater(this::updateSelectedTiles);
             }
             case ("bookshelf") -> {
-                Platform.runLater(this::updateBookshelf);
+                Platform.runLater(()->{
+                    updateBookshelf((String) evt.getOldValue());
+                });
             }
             case ("publicPoints") -> {
                 Platform.runLater(this::updateAllPlayerPoints);
@@ -312,7 +315,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     private void updateSelectedTiles() {
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())) {
-            //mostra il pane di dialogo dove viene mostrato le tiles selezionate
             selectedTilesDialog.setVisible(true);
             selectedTilesDialog.setDisable(false);
             //rendi visibile il bottone per finire lo switch e andare nella selezione della colonna
@@ -348,7 +350,23 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-    private void updateBookshelf() {
+    private void updateBookshelf(String username) {
+        Matrix bookshelf=clientState.getAllBookshelf().get(username);
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
+                if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
+                    if (username.equals(clientState.getMyUsername())) {
+                        myBookshelfGrid.add(setTiles(bookshelf.getTile(i, j)), j, i);
+                    }
+                    else{
+                        ImageView tile = setTiles(bookshelf.getTile(i, j));
+                        tile.setFitWidth(20);
+                        tile.setFitHeight(20);
+                        otherPlayerBookshelfGrid.add(tile, j, i);
+                    }
+                }
+            }
+        }
     }
 
     private void updateCurrPlayer() {
