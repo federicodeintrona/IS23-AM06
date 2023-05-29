@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -52,7 +53,9 @@ public class LoginController implements SceneController, Initializable {
     }
     @FXML
     private void loginEnter(KeyEvent event){
-        login();
+        if (event.getCode()== KeyCode.ENTER) {
+            login();
+        }
     }
 
     @Override
