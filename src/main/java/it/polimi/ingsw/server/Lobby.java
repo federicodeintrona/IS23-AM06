@@ -8,10 +8,7 @@ import it.polimi.ingsw.server.VirtualView.VirtualView;
 
 import java.security.SecureRandom;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Lobby {
     private Controller controller;
@@ -42,7 +39,7 @@ public class Lobby {
         return !waitingLobbys.isEmpty();
     }
 
-    public synchronized int handleClient(String client,VirtualView view) throws UsernameAlreadyTaken {
+    public synchronized Optional<Integer> handleClient(String client,VirtualView view) throws UsernameAlreadyTaken {
 
         if(!usernames.contains(client.toLowerCase())) {
 
@@ -54,12 +51,12 @@ public class Lobby {
             if (waitingLobbies()) {//if there are waiting lobbies, add the client to the longest waiting lobby
                     try {
                         //return the game number
-                        return addClient(client);
+                        return Optional.of(addClient(client));
                     } catch (LobbyNotExists e) {
-                        return -1;
+                        return Optional.empty();
                     }
                     //if there aren't any, return -1
-                } else return -1;
+                } else return Optional.empty();
             }else throw new UsernameAlreadyTaken();
     }
 

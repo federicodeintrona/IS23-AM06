@@ -12,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Controller implements PropertyChangeListener {
     private Lobby lobby;
@@ -208,9 +209,9 @@ public class Controller implements PropertyChangeListener {
                 return reply;
             }
 
-            int response = lobby.handleClient(client,view);
+            Optional<Integer> response = lobby.handleClient(client,view);
 
-            if (response == -1) {
+            if (response.isEmpty()) {
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.NEW_LOBBY);
                 reply.setContent("Select the number of players (2 to 4)");
@@ -219,7 +220,7 @@ public class Controller implements PropertyChangeListener {
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
                 reply.setContent("Added to a game. Waiting for other player...");
-                reply.setNum(response);
+                reply.setNum(response.get());
                 return reply;
             }
         } catch (UsernameAlreadyTaken e) {

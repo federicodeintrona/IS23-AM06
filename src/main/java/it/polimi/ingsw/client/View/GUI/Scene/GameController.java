@@ -106,6 +106,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         updateCurrPlayer();
     }
 
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
