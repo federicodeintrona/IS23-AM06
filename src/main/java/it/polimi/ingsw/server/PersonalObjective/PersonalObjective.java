@@ -24,6 +24,7 @@ public class PersonalObjective {
         return personalObjectiveNum;
     }
 
+
     /**
      * Constuctor --> create the card
      */

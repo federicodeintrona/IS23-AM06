@@ -123,6 +123,8 @@ public class Model implements TimerInterface {
             notifier.firePropertyChange(new PropertyChangeEvent(
                     p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
+            notifier.firePropertyChange(new PropertyChangeEvent(
+                    p.getPersonalObjective().getPersonalObjectiveNum(), p.getUsername(),  p.getUsername(),"personalObjNum" ));
 
             //Notify Bookshelf
             notifier.firePropertyChange(new PropertyChangeEvent(p.getBookshelf().getTiles(),
@@ -639,6 +641,9 @@ public class Model implements TimerInterface {
         //Notify personal objective
         notifier.firePropertyChange(new PropertyChangeEvent(
                 p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
+
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                p.getPersonalObjective().getPersonalObjectiveNum(), p.getUsername(),  p.getUsername(),"personalObjNum" ));
 
         //Notify currPlayer and nextPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),

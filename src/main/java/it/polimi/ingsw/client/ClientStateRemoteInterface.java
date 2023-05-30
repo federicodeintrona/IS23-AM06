@@ -39,5 +39,7 @@ public interface ClientStateRemoteInterface extends Remote {
 
     void setCurrentPlayer(String source) throws RemoteException;
 
+    void setMyPersonalObjectiveInt(int myPersonalObjectiveInt) throws RemoteException;
+
     boolean pingPong() throws RemoteException;
 }
