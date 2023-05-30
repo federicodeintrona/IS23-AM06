@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
+import it.polimi.ingsw.client.View.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

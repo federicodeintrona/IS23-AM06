@@ -11,6 +11,6 @@ public interface Networker {
     void removeTilesFromBoard(Message tiles);
     void switchTilesOrder(Message ints);
     void addTilesToBookshelf (Message column);
-    void setCli(CLIMain cli);
+    void setView(View view);
     void chat (Message message);
 }
