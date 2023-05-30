@@ -49,16 +49,37 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private GridPane commonGrid;
     @FXML
     private GridPane myBookshelfGrid;
+
     @FXML
-    private Label otherPlayerLabel;
+    private Label otherPlayerLabel1;
     @FXML
-    private GridPane otherPlayerBookshelfGrid;
+    private GridPane otherPlayerBookshelfGrid1;
+    @FXML
+    private Label otherPlayerPointsLabel1;
+    @FXML
+    private ImageView otherPlayerImage1;
+    @FXML
+    private Label otherPlayerLabel2;
+    @FXML
+    private GridPane otherPlayerBookshelfGrid2;
+    @FXML
+    private Label otherPlayerPointsLabel2;
+    @FXML
+    private ImageView otherPlayerImage2;
+    @FXML
+    private Label otherPlayerLabel3;
+    @FXML
+    private GridPane otherPlayerBookshelfGrid3;
+    @FXML
+    private Label otherPlayerPointsLabel3;
+    @FXML
+    private ImageView otherPlayerImage3;
+
+
     @FXML
     private ImageView personalObjectiveImageView;
     @FXML
     private Label myPointsLabel;
-    @FXML
-    private Label otherPlayerPointsLabel;
     @FXML
     private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
     @FXML
@@ -274,7 +295,19 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     //inizializza il nome dell'altro giocatore
     private void initializeotherPlayerLabel(){
-        otherPlayerLabel.setText(catchOtherPlayerName());
+        otherPlayerLabel1.setVisible(true);
+        otherPlayerPointsLabel1.setVisible(true);
+        otherPlayerBookshelfGrid1.setVisible(true);
+//TODO
+        switch (clientState.getAllUsername().size()-1){
+            case 2 -> {
+
+            }
+            case 3 -> {
+
+            }
+        }
+        //TODO otherPlayerLabel.setText(catchOtherPlayerName());
     }
 
     //inizializza il personal objective
@@ -298,7 +331,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         String otherPlayer=catchOtherPlayerName();
         int points=clientState.getAllPublicPoints().get(otherPlayer);
 
-        otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
+        //TODO otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
     }
 
     //aggiorna i punti di tutti i giocatori
@@ -373,7 +406,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                         ImageView tile = setTiles(bookshelf.getTile(i, j));
                         tile.setFitWidth(20);
                         tile.setFitHeight(20);
-                        otherPlayerBookshelfGrid.add(tile, j, i);
+                        //TODO otherPlayerBookshelfGrid.add(tile, j, i);
                     }
                 }
             }
