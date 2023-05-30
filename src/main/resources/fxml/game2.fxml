@@ -94,7 +94,7 @@
                   <Image url="@../css/images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Button fx:id="confirmationButton" disable="true" layoutX="-6.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmClick" prefHeight="36.0" prefWidth="86.0" text="Confirms" visible="false" />
+            <Button fx:id="confirmationButton" disable="true" layoutX="-6.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmClick" prefHeight="36.0" prefWidth="86.0" text="Confirm" visible="false" />
             <Label fx:id="turnLabel" alignment="CENTER" layoutX="10.0" layoutY="4.0" prefHeight="19.0" prefWidth="338.0" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
@@ -130,7 +130,7 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <Button fx:id="confirmSelected" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#confirmsSelectedClick" prefHeight="25.0" prefWidth="112.0" text="Confirms" textAlignment="CENTER" visible="false">
+                        <Button fx:id="confirmSelected" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#confirmsSelectedClick" prefHeight="25.0" prefWidth="112.0" text="Confirm" textAlignment="CENTER" visible="false">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>

@@ -12,14 +12,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -37,7 +37,7 @@ import java.util.*;
 import java.util.List;
 
 
-public class GameController implements Initializable, PropertyChangeListener,SceneController {
+public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
@@ -49,16 +49,37 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private GridPane commonGrid;
     @FXML
     private GridPane myBookshelfGrid;
+
     @FXML
-    private Label otherPlayerLabel;
+    private Label otherPlayerLabel1;
     @FXML
-    private GridPane otherPlayerBookshelfGrid;
+    private GridPane otherPlayerBookshelfGrid1;
+    @FXML
+    private Label otherPlayerPointsLabel1;
+    @FXML
+    private ImageView otherPlayerImage1;
+    @FXML
+    private Label otherPlayerLabel2;
+    @FXML
+    private GridPane otherPlayerBookshelfGrid2;
+    @FXML
+    private Label otherPlayerPointsLabel2;
+    @FXML
+    private ImageView otherPlayerImage2;
+    @FXML
+    private Label otherPlayerLabel3;
+    @FXML
+    private GridPane otherPlayerBookshelfGrid3;
+    @FXML
+    private Label otherPlayerPointsLabel3;
+    @FXML
+    private ImageView otherPlayerImage3;
+
+
     @FXML
     private ImageView personalObjectiveImageView;
     @FXML
     private Label myPointsLabel;
-    @FXML
-    private Label otherPlayerPointsLabel;
     @FXML
     private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
     @FXML
@@ -87,6 +108,12 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private Button column4;
     @FXML
     private Button column5;
+    @FXML
+    private VBox chatBox;
+    @FXML
+    private Label sendMessage;
+    @FXML
+    private MenuButton selectSendMessage;
 
     private State state = State.REMOVE;
 
@@ -268,7 +295,19 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //inizializza il nome dell'altro giocatore
     private void initializeotherPlayerLabel(){
-        otherPlayerLabel.setText(catchOtherPlayerName());
+        otherPlayerLabel1.setVisible(true);
+        otherPlayerPointsLabel1.setVisible(true);
+        otherPlayerBookshelfGrid1.setVisible(true);
+//TODO
+        switch (clientState.getAllUsername().size()-1){
+            case 2 -> {
+
+            }
+            case 3 -> {
+
+            }
+        }
+        //TODO otherPlayerLabel.setText(catchOtherPlayerName());
     }
 
     //inizializza il personal objective
@@ -292,7 +331,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         String otherPlayer=catchOtherPlayerName();
         int points=clientState.getAllPublicPoints().get(otherPlayer);
 
-        otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
+        //TODO otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
     }
 
     //aggiorna i punti di tutti i giocatori
@@ -367,7 +406,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                         ImageView tile = setTiles(bookshelf.getTile(i, j));
                         tile.setFitWidth(20);
                         tile.setFitHeight(20);
-                        otherPlayerBookshelfGrid.add(tile, j, i);
+                        //TODO otherPlayerBookshelfGrid.add(tile, j, i);
                     }
                 }
             }
@@ -424,29 +463,29 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     private void confirmClick(ActionEvent actionEvent){
         if (removeTiles.isEmpty()){
-           showError("Select at least 1 tile",guiController.getStage());
+            showError("Select at least 1 tile",guiController.getStage());
         }
         else{
-                PointsMessage pointsMessage=new PointsMessage();
+            PointsMessage pointsMessage=new PointsMessage();
 
-                pointsMessage.setUsername(clientState.getMyUsername());
-                pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
-                pointsMessage.setTiles(removeTiles);
-                guiController.sendMessage(pointsMessage);
+            pointsMessage.setUsername(clientState.getMyUsername());
+            pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
+            pointsMessage.setTiles(removeTiles);
+            guiController.sendMessage(pointsMessage);
 
-                //mi salvo una posizione che so essere vuota
-                checkResetPoint=removeTiles.get(0);
+            //mi salvo una posizione che so essere vuota
+            checkResetPoint=removeTiles.get(0);
 
-                removeTiles=new ArrayList<>();
+            removeTiles=new ArrayList<>();
 
-                //disabilita il bottone di conferma
-                confirmationButton.setVisible(false);
-                confirmationButton.setDisable(true);
-                //disabilita il bottone di annullamento
-                rollbackButton.setVisible(false);
-                rollbackButton.setDisable(true);
-                boardGrid.setDisable(true);
-                state = State.SWITCH;
+            //disabilita il bottone di conferma
+            confirmationButton.setVisible(false);
+            confirmationButton.setDisable(true);
+            //disabilita il bottone di annullamento
+            rollbackButton.setVisible(false);
+            rollbackButton.setDisable(true);
+            boardGrid.setDisable(true);
+            state = State.SWITCH;
 
         }
     }
@@ -663,5 +702,17 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         column5.setDisable(true);
 
         state = State.REMOVE;
+    }
+
+    //TODO invia i messaggi che legge da chattBox
+    @FXML
+    private void sendMessageTo(ActionEvent actionEvent){
+
+    }
+    //TODO mostra chat
+    private void updateChat(){
+        /*
+            in chatBox aggiungi un label sotto a tutti gli altri
+         */
     }
 }
