@@ -128,7 +128,6 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                 }
             } catch (IOException ex) {
                 System.out.println(username + " is " + disconnected);
-                ex.printStackTrace();
                 if (!disconnected)
                     System.out.println(username + " is not responding...");
             }
