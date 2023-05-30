@@ -1,5 +1,4 @@
 package it.polimi.ingsw.server.Model;
-
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
@@ -10,7 +9,6 @@ import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
-
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
@@ -287,7 +285,7 @@ public class Model implements TimerInterface {
         selectedTiles.clear();
 
         //Advances turn
-        if(connectedPlayers>1) {
+        if(connectedPlayers>=1) {
             nextTurn();
         }else state = GameState.STOPPED;
 

@@ -75,8 +75,7 @@ public class RMIVirtualView extends VirtualView{
                 }
             } catch (RemoteException e) {
                 System.out.println(getUsername()+" is not responding...");
-                System.out.println(e.getMessage());
-                System.out.println(Arrays.toString(e.getStackTrace()));
+                e.printStackTrace();
             }
 
         }
