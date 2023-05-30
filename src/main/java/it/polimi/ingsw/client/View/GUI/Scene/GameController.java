@@ -106,6 +106,10 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         updateMyPointsLabel();
         updateOtherPlayerPointsLabel();
         updateCurrPlayer();
+        List<String> username = clientState.getAllUsername();
+        for(String x: username){
+            updateBookshelf(x);
+        }
     }
 
     @Override
