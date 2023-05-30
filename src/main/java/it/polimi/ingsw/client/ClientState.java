@@ -18,7 +18,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
-    private int personalObjNum;
     private int myPersonalObjectiveInt;
     private ArrayList<Integer> gameCommonObjective ;
     private Matrix board;
@@ -316,11 +315,4 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
     }
 
-    public int getPersonalObjNum() {
-        return personalObjNum;
-    }
-
-    public void setPersonalObjNum(int personalObjNum) {
-        this.personalObjNum = personalObjNum;
-    }
 }

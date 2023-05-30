@@ -278,7 +278,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //inizializza il personal objective
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path="css/images/personal_goal_cards/Personal_Goals1.png";
+        String path="css/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
         personalObjectiveImageView.setFitWidth(152);
