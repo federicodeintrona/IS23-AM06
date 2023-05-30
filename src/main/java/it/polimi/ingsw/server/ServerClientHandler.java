@@ -21,14 +21,14 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private Object lock = new Object();
+    private final Object lock = new Object();
 
     private boolean disconnected = false;
     //Timer
     private ScheduledExecutorService e;
     private final Timer timer = new Timer();
     private static final int initialDelay = 50;
-    private static final int delta = 700;
+    private static final int delta = 500;
     private int time = 0;
 
 
@@ -45,12 +45,12 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
-//           pingPong();
+            pingPong();
 
             while (!disconnected) {
 
                 if(!socket.isConnected()){
-                    disconnected=false;
+                    disconnected=true;
                     disconnect();
                 }
 
@@ -106,6 +106,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                 }
                 case PONG -> {
                     this.time=0;
+                    //System.out.println("pong by " + username);
                 }
                 default -> {
                     System.out.println("Server received: " + incomingMsg);
@@ -120,13 +121,15 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     public synchronized void sendMessage(Message message){
         synchronized (lock) {
             try {
-                oos.writeUnshared(message);
-                oos.flush();
-                oos.reset();
+                if(!disconnected) {
+                    oos.writeUnshared(message);
+                    oos.flush();
+                    oos.reset();
+                }
             } catch (IOException ex) {
+                System.out.println(username + " is " + disconnected);
                 if (!disconnected)
                     System.out.println(username + " is not responding...");
-                throw new RuntimeException(ex);
             }
         }
     }

@@ -112,6 +112,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 

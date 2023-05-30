@@ -35,7 +35,6 @@ public class ClientBase extends Application{
                   networker = new NetworkerRmi(state,host);
             }else networker = new NetworkerTcp(state,host);
 
-            networker.initializeConnection();
 
             System.out.print("Which User Interface do you choose? (CLI/GUI): ");
             decision = scanner.nextLine();
@@ -43,10 +42,12 @@ public class ClientBase extends Application{
             if (decision.equalsIgnoreCase("CLI")) {
                 CLIMain cli = new CLIMain(lock, state, networker);
                 networker.setView(cli);
+                networker.initializeConnection();
                 cli.runUI();
             } else {
                 GUIControllerStatic.setGuiController(new GUIController(networker, state));
                 networker.setView(GUIControllerStatic.getGuiController());
+                networker.initializeConnection();
                 launch();
 
             }

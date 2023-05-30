@@ -30,6 +30,7 @@ public class RMIVirtualView extends VirtualView{
 
         if(!isDisconnected()) {
 
+            System.out.println(getUsername()+" RMI virtual view is on: " + evt.getNewValue());
             try {
                 switch ((String) evt.getNewValue()) {
                     case ("playerNames") -> {
@@ -43,6 +44,9 @@ public class RMIVirtualView extends VirtualView{
                     }
                     case ("personalObj") -> {
                         clientState.setMyPersonalObjective((HashMap<Point, Tiles>) evt.getSource());
+                    }
+                    case ("personalObjNum")->{
+                        clientState.setMyPersonalObjectiveInt((int) evt.getSource());
                     }
                     case ("selectedTiles") -> {
                         clientState.setSelectedTiles((ArrayList<Tiles>) evt.getSource());
@@ -74,10 +78,6 @@ public class RMIVirtualView extends VirtualView{
                 }
             } catch (RemoteException e) {
                 System.out.println(getUsername()+" is not responding...");
-                System.out.println(e.getCause());
-                System.out.println(e.getMessage());
-                System.out.println(Arrays.toString(e.getStackTrace()));
-                throw new RuntimeException();
             }
 
         }

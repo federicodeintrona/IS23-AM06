@@ -22,12 +22,12 @@ public class RMITimer implements TimerInterface {
     private static final int initialDelay = 50;
     private static final int delta = 2000;
 
+
     public RMITimer(String username, RMIVirtualView view, Controller controller) {
         this.username = username;
         this.view = view;
         this.controller=controller;
     }
-
 
 
     @Override
