@@ -161,12 +161,12 @@
         </AnchorPane>
         <AnchorPane prefHeight="166.0" prefWidth="913.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <children>
-                <Label fx:id="otherPlayerLabel" contentDisplay="CENTER" layoutX="-3.0" layoutY="4.0" prefHeight="19.0" prefWidth="319.0">
+                <Label fx:id="otherPlayerLabel2" contentDisplay="CENTER" disable="true" layoutX="-3.0" layoutY="4.0" prefHeight="19.0" prefWidth="319.0" visible="false">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <GridPane fx:id="otherPlayerBookshelfGrid" layoutX="31.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0">
+                <GridPane fx:id="otherPlayerBookshelfGrid2" layoutX="17.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0">
                     <rowConstraints>
                         <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
@@ -183,29 +183,29 @@
                         <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                 </GridPane>
-                <ImageView fitHeight="136.0" fitWidth="200.0" layoutX="1.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="otherPlayerImage2" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="1.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../css/images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="otherPlayerPointsLabel" contentDisplay="CENTER" layoutX="134.0" layoutY="42.0" prefHeight="17.0" prefWidth="200.0" />
-                <ImageView fitHeight="88.0" fitWidth="60.0" layoutX="145.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" disable="true" layoutX="134.0" layoutY="42.0" prefHeight="17.0" prefWidth="200.0" visible="false" />
+                <ImageView disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="145.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../css/images/personal_goal_cards/back.jpg" />
                     </image>
                 </ImageView>
-            <Label fx:id="otherPlayerLabel1" contentDisplay="CENTER" layoutX="332.0" layoutY="1.0" prefHeight="19.0" prefWidth="319.0">
+            <Label fx:id="otherPlayerLabel1" contentDisplay="CENTER" disable="true" layoutX="332.0" layoutY="1.0" prefHeight="19.0" prefWidth="319.0" visible="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <GridPane fx:id="otherPlayerBookshelfGrid1" layoutX="332.0" layoutY="27.0" prefHeight="114.0" prefWidth="107.0">
+            <GridPane fx:id="otherPlayerBookshelfGrid1" layoutX="344.0" layoutY="31.0" prefHeight="114.0" prefWidth="107.0">
                <rowConstraints>
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="27.0" minHeight="20.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="27.0" minHeight="12.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="24.0" minHeight="12.0" prefHeight="17.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="23.0" minHeight="15.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="20.0" minHeight="13.0" prefHeight="17.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <columnConstraints>
@@ -216,33 +216,50 @@
                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
             </GridPane>
-            <ImageView fitHeight="136.0" fitWidth="200.0" layoutX="332.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="otherPlayerImage1" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="332.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../css/images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" layoutX="466.0" layoutY="46.0" prefHeight="17.0" prefWidth="200.0" />
-            <ImageView fitHeight="88.0" fitWidth="60.0" layoutX="474.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" disable="true" layoutX="466.0" layoutY="46.0" prefHeight="17.0" prefWidth="200.0" visible="false" />
+            <ImageView disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="474.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../css/images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerLabel11" contentDisplay="CENTER" layoutX="674.0" layoutY="5.0" prefHeight="19.0" prefWidth="319.0">
+            <Label fx:id="otherPlayerLabel3" contentDisplay="CENTER" disable="true" layoutX="674.0" layoutY="5.0" prefHeight="19.0" prefWidth="319.0" visible="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <ImageView fitHeight="136.0" fitWidth="200.0" layoutX="674.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="otherPlayerImage3" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="674.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../css/images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel11" contentDisplay="CENTER" layoutX="810.0" layoutY="27.0" prefHeight="17.0" prefWidth="200.0" />
-            <ImageView fitHeight="88.0" fitWidth="60.0" layoutX="812.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" disable="true" layoutX="810.0" layoutY="27.0" prefHeight="17.0" prefWidth="200.0" visible="false" />
+            <ImageView disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="812.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../css/images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
+            <GridPane fx:id="otherPlayerBookshelfGrid3" disable="true" layoutX="688.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0" visible="false">
+               <rowConstraints>
+                  <RowConstraints maxHeight="27.0" minHeight="20.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="27.0" minHeight="12.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="24.0" minHeight="12.0" prefHeight="17.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="23.0" minHeight="15.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="20.0" minHeight="13.0" prefHeight="17.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <columnConstraints>
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+            </GridPane>
             </children>
         </AnchorPane>
         <GridPane fx:id="commonGrid" GridPane.rowIndex="1">
