@@ -32,7 +32,7 @@ public class ChatHandler {
             // Creating the ChatMessage in case the str is not a command
             if (str.charAt(0) != '#') {
                 createChatMessage(str);
-                return;
+                continue;
             }
 
             str = str.toLowerCase();
@@ -71,7 +71,7 @@ public class ChatHandler {
             // Creating the ChatMessage in case the str is not a command
             if (str.charAt(0) != '#') {
                 createChatMessage(str, username);
-                return;
+                continue;
             }
 
             str = str.toLowerCase();
