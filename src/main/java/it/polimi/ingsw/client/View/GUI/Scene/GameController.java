@@ -278,7 +278,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //inizializza il personal objective
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path="css/images/personal_goal_cards/Personal_Goals1.png";
+        String path="css/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
         personalObjectiveImageView.setFitWidth(152);
@@ -327,6 +327,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())) {
             selectedTilesDialog.setVisible(true);
             selectedTilesDialog.setDisable(false);
+            selectedTilesDialog.setStyle("-fx-background-color: null");
             //rendi visibile il bottone per finire lo switch e andare nella selezione della colonna
             endSwitch.setVisible(true);
             endSwitch.setDisable(false);
@@ -337,6 +338,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
             selectedTiles2.setVisible(true);
             selectedTiles3.setDisable(false);
             selectedTiles3.setVisible(true);
+            //rendi invisibile la board
+            boardGrid.setDisable(true);
+            boardGrid.setVisible(false);
             switch (clientState.getSelectedTiles().size()) {
                 case 1 -> {
                     selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
@@ -461,6 +465,10 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     private void rollbackClick(ActionEvent actionEvent){
         removeTiles=new ArrayList<>();
         boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
+        rollbackButton.setVisible(false);
+        rollbackButton.setDisable(true);
+        confirmationButton.setVisible(false);
+        confirmationButton.setDisable(true);
     }
 
     //conferma l'ordine dello switch
@@ -523,6 +531,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         column5.setVisible(true);
         column5.setDisable(false);
 
+        boardGrid.setVisible(true);
         state = State.ADD;
     }
 

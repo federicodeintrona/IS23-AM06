@@ -42,6 +42,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
     private ArrayList<Integer> orderTiles=new ArrayList<>();
+    private HashMap<String, Integer> usernameInt=new HashMap<>();
+
     private Point checkResetPoint=null;
     @FXML
     private GridPane boardGrid;
@@ -59,6 +61,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private ImageView otherPlayerImage1;
     @FXML
+    private ImageView personal1;
+    @FXML
     private Label otherPlayerLabel2;
     @FXML
     private GridPane otherPlayerBookshelfGrid2;
@@ -67,6 +71,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private ImageView otherPlayerImage2;
     @FXML
+    private ImageView personal2;
+    @FXML
     private Label otherPlayerLabel3;
     @FXML
     private GridPane otherPlayerBookshelfGrid3;
@@ -74,6 +80,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private Label otherPlayerPointsLabel3;
     @FXML
     private ImageView otherPlayerImage3;
+    @FXML
+    private ImageView personal3;
 
 
     @FXML
@@ -133,6 +141,11 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateMyPointsLabel();
         updateOtherPlayerPointsLabel();
         updateCurrPlayer();
+
+    }
+
+    public void otherPlayerInitialize(){
+        //TODO
     }
 
     @Override
@@ -296,8 +309,13 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     //inizializza il nome dell'altro giocatore
     private void initializeotherPlayerLabel(){
         otherPlayerLabel1.setVisible(true);
+        otherPlayerLabel1.setDisable(false);
         otherPlayerPointsLabel1.setVisible(true);
+        otherPlayerPointsLabel1.setDisable(false);
         otherPlayerBookshelfGrid1.setVisible(true);
+        otherPlayerBookshelfGrid1.setDisable(false);
+        personal1.setVisible(true);
+        personal1.setDisable(false);
 //TODO
         switch (clientState.getAllUsername().size()-1){
             case 2 -> {
@@ -714,5 +732,45 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         /*
             in chatBox aggiungi un label sotto a tutti gli altri
          */
+    }
+}
+
+class OtherPlayer{
+    private String username;
+    private Label otherPlayerNameLabel;
+    private Label otherPlayerPointLabel;
+    private GridPane otherPlayerBookshelfGrid;
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Label getOtherPlayerNameLabel() {
+        return otherPlayerNameLabel;
+    }
+
+    public void setOtherPlayerNameLabel(Label otherPlayerNameLabel) {
+        this.otherPlayerNameLabel = otherPlayerNameLabel;
+    }
+
+    public Label getOtherPlayerPointLabel() {
+        return otherPlayerPointLabel;
+    }
+
+    public void setOtherPlayerPointLabel(Label otherPlayerPointLabel) {
+        this.otherPlayerPointLabel = otherPlayerPointLabel;
+    }
+
+    public GridPane getOtherPlayerBookshelfGrid() {
+        return otherPlayerBookshelfGrid;
+    }
+
+    public void setOtherPlayerBookshelfGrid(GridPane otherPlayerBookshelfGrid) {
+        this.otherPlayerBookshelfGrid = otherPlayerBookshelfGrid;
     }
 }
