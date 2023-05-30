@@ -27,13 +27,19 @@ public class ChatHandler {
 
         while (chatController.getPublicChat().ChatIsEnable()) {
 
-
             str = scanner.nextLine();
 
+            // Creating the ChatMessage in case the str is not a command
+            if (str.charAt(0) != '#') {
+                createChatMessage(str);
+                return;
+            }
+
+            str = str.toLowerCase();
             switch (str) {
                 case "#exit" -> endOfChat();
                 case "#help", "#h" -> cliPrint.helpForChat();
-                case "#switchToPrivate" -> {
+                case "#switchtoprivate" -> {
                     chatController.getPublicChat().setChatIsEnable(false);
 
                     String username = privateChatHandler();
@@ -45,11 +51,11 @@ public class ChatHandler {
                     chatController.getPrivateChat(username).setChatIsEnable(true);
                     chat(username);
                 }
-                case "#printPrivateChat" -> {
+                case "#printprivatechat" -> {
                     String player = privateChatHandler();
                     cliPrint.printChat(player, false);
                 }
-                default -> createChatMessage(str);
+                default -> System.out.println(str + " is NOT a valid command \nIf you need help put #help or #h");
             }
         }
     }
@@ -60,13 +66,19 @@ public class ChatHandler {
 
         while (chatController.getPrivateChat(username).ChatIsEnable()) {
 
-
             str = scanner.nextLine();
 
+            // Creating the ChatMessage in case the str is not a command
+            if (str.charAt(0) != '#') {
+                createChatMessage(str, username);
+                return;
+            }
+
+            str = str.toLowerCase();
             switch (str) {
                 case "#exit" -> endOfChat(username);
                 case "#help", "#h" -> cliPrint.helpForChat();
-                case "#switchToPublic" -> {
+                case "#switchtopublic" -> {
                     chatController.getPrivateChat(username).setChatIsEnable(false);
                     clearCLI();
 
@@ -74,12 +86,12 @@ public class ChatHandler {
                     chatController.getPublicChat().setChatIsEnable(true);
                     chat();
                 }
-                case "#printPublicChat" -> cliPrint.printChat(false);
-                case "#printPrivateChat" -> {
+                case "#printublicchat" -> cliPrint.printChat(false);
+                case "#printrivatechat" -> {
                     String player = privateChatHandler();
                     cliPrint.printChat(player, false);
                 }
-                default -> createChatMessage(str, username);
+                default -> System.out.println(str + " is NOT a valid command \nIf you need help put #help or #h");
             }
         }
     }
