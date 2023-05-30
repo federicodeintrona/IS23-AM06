@@ -145,6 +145,9 @@ public class CommonObjective12 extends CommonObjective{
                     if (!matrix.getTile(row, col).equals(Tiles.EMPTY)) {
                         areAllElementsEqual = false;
                         break;
+                    } else if ((row+1 < rowEnd) && matrix.getTile(row+1, col).equals(Tiles.EMPTY)) {
+                        areAllElementsEqual = false;
+                        break;
                     }
                     row++;
                     col--;
@@ -153,6 +156,9 @@ public class CommonObjective12 extends CommonObjective{
             else {
                 while (row <= rowEnd && col <= colEnd && !stop) {
                     if (!matrix.getTile(row, col).equals(Tiles.EMPTY)) {
+                        areAllElementsEqual = false;
+                        break;
+                    } else if ((row+1 < rowEnd) && matrix.getTile(row+1, col).equals(Tiles.EMPTY)) {
                         areAllElementsEqual = false;
                         break;
                     }
