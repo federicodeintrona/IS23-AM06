@@ -7,6 +7,9 @@ import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
 import it.polimi.ingsw.utils.Tiles;
+import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -16,14 +19,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Reader extends Thread{
+import static java.lang.System.out;
+
+public class Reader extends Thread implements TimerInterface {
     private Socket socket;
     private final ObjectInputStream client;
     private final ObjectOutputStream oos;
@@ -31,6 +35,14 @@ public class Reader extends Thread{
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private final ClientState clientState;
     private boolean disconnected = false;
+    private ScheduledExecutorService e;
+
+    //Timer
+
+    private  Timer timer;
+    private int time = 0;
+    private static final int initialDelay = 50;
+    private static final int delta = 2000;
 
     public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
         this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));;
@@ -90,6 +102,9 @@ public class Reader extends Thread{
                             HashMap<Point, Tiles> personalObj = (HashMap<Point, Tiles>) message.getContent();
                             clientState.setMyPersonalObjective(personalObj);
                         }
+                        case ("personalObjNum")->{
+                            clientState.setMyPersonalObjectiveInt((int) message.getContent());
+                        }
                         case ("privatePoints") -> {
                             int privatePoints = (int) message.getContent();
                             clientState.setMyPoints(privatePoints);
@@ -119,7 +134,10 @@ public class Reader extends Thread{
                         }
                     }
                 } else {
-                    if (!newMessage.getType().equals(MessageTypes.PING)) // out.println(newMessage.getType());
+                    if (newMessage.getType().equals(MessageTypes.PING)) {
+                       // out.println(newMessage.getType());
+                        time=0;
+                    }
 
                     notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
                             newMessage.getType().toString(), oldMessage, newMessage));
@@ -133,9 +151,11 @@ public class Reader extends Thread{
             client.close();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Unable to identify the received object...");
+            e.printStackTrace();
         }
 
     }
@@ -143,18 +163,39 @@ public class Reader extends Thread{
 
 
     private void pingPong(){
-        ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+        e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
             Message msg = new Message();
             msg.setType(MessageTypes.PONG);
             try {
                 oos.writeObject(msg);
                 oos.flush();
-            } catch (IOException ex) {
+            } catch (IOException e) {
                 if(!disconnected)
                     System.out.println( "Server is not responding...");
             }
-        },10,1000, TimeUnit.MILLISECONDS);
+        },10,500, TimeUnit.MILLISECONDS);
 
+        timer = new Timer();
+        TimerTask task = new TimerCounter(this);
+       // timer.schedule(task,initialDelay,delta);
+    }
+
+    @Override
+    public void disconnect() {
+        e.shutdown();
+        timer.cancel();
+        disconnected=true;
+    }
+
+    @Override
+    public int updateTime() {
+        time++;
+        return time;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "Server is not responding. Retry later";
     }
 }

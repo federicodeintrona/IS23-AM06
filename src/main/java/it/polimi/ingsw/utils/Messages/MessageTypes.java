@@ -10,6 +10,7 @@ public enum MessageTypes {
     ADD_TO_BOOKSHELF, //colonna in cui inserire tiles
     OK,
     CHAT,
+    RECONNECT,
     ROLLBACK, //torna all mossa precedente
     DISCONNECT,
     ERROR,

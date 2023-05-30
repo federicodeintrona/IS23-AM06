@@ -2,18 +2,28 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.JsonReader;
 import it.polimi.ingsw.utils.Messages.*;
+import it.polimi.ingsw.utils.Timer.TimerCounter;
+import it.polimi.ingsw.utils.Timer.TimerInterface;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class NetworkerRmi implements Networker {
+public class NetworkerRmi implements Networker, TimerInterface {
     private static int port;
     private  String serverIP;
     private String username;
@@ -21,7 +31,15 @@ public class NetworkerRmi implements Networker {
     private Message message;
     private static RMIHandlerInterface rmiHandler;
     private ClientState clientState;
-    private CLIMain cli;
+    private View view;
+
+    //Timer
+
+    private  Timer timer;
+    private int time = 0;
+    private static final int initialDelay = 50;
+    private static final int delta = 2000;
+    private boolean disconnected=false;
 
 
     /**
@@ -89,13 +107,11 @@ public class NetworkerRmi implements Networker {
         IntMessage message1;
         try {
              message1 = rmiHandler.acceptRmiConnection(username.getUsername(),clientState);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
 
         // Saving the username after assuring that is ok
         if (!message1.getType().equals(MessageTypes.ERROR)){
            this.username = username.getUsername();
+           pingPong();
         }
 
         // Saving the gameID once the new game has been created
@@ -103,8 +119,13 @@ public class NetworkerRmi implements Networker {
             gameID =  message1.getNum();
         }
 
-        // Forwarding the Server's response message to the View
-        cli.receivedMessage(message1);
+            view.receivedMessage(message1);
+        } catch (RemoteException e) {
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
+        }
+
+
     }
 
 
@@ -122,13 +143,13 @@ public class NetworkerRmi implements Networker {
         IntMessage message1;
         try {
             message1 = rmiHandler.newLobby(this.username, tempMessage.getNum());
+            this.gameID = message1.getNum();
+            view.receivedMessage(message1);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
-        this.gameID = message1.getNum();
 
-        // Forwarding the Server's response message to the View
-        cli.receivedMessage(message1);
     }
 
     /**
@@ -143,12 +164,11 @@ public class NetworkerRmi implements Networker {
         PointsMessage tempMessage = (PointsMessage) tiles;
         try {
             message = rmiHandler.removeTiles(gameID, username, tempMessage.getTiles());
+            view.receivedMessage(message);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
-
-        // Forwarding the Server's response message to the View
-        cli.receivedMessage(message);
     }
 
     /**
@@ -163,12 +183,11 @@ public class NetworkerRmi implements Networker {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
         try {
             message = rmiHandler.swapOrder(tempMessage.getIntegers(), gameID, username);
+            view.receivedMessage(message);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
-
-        // Forwarding the Server's response message to the View
-        cli.receivedMessage(message);
     }
 
     /**
@@ -183,12 +202,17 @@ public class NetworkerRmi implements Networker {
         IntMessage tempMessage = (IntMessage) column;
         try {
             message = rmiHandler.addToBookshelf(gameID, username, tempMessage.getNum());
+            view.receivedMessage(message);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
-        // Forwarding the Server's response message to the View
-        cli.receivedMessage(message);
+    }
+
+    @Override
+    public void setView(View view) {
+        this.view=view;
     }
 
     /**
@@ -220,12 +244,44 @@ public class NetworkerRmi implements Networker {
                 throw new RuntimeException(e);
             }
         }
-
-        // Forwarding the Server's response message to the View
-        cli.receivedMessage(this.message);
     }
 
-    public void setCli(CLIMain cli) {
-        this.cli = cli;
+    private void pingPong(){
+        ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+        e.scheduleAtFixedRate(()->{
+            Message msg = new Message();
+            msg.setType(MessageTypes.PONG);
+            try {
+                if(rmiHandler.pingPong()){
+                    this.time=0;
+                }
+            } catch (RemoteException ex) {
+                if(!disconnected)
+                    System.out.println(username + " is not responding...");
+            }
+
+        },10,1000, TimeUnit.MILLISECONDS);
+
+        timer = new Timer();
+        TimerTask task = new TimerCounter(this);
+        timer.schedule(task,initialDelay,delta);
+    }
+
+    @Override
+    public void disconnect() {
+
+        disconnected=true;
+
+    }
+
+    @Override
+    public int updateTime() {
+        time++;
+        return time;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "Server is not responding. Retry later.";
     }
 }

@@ -17,7 +17,7 @@ public class TimerCounter extends TimerTask {
         if (time > timeout) {
             System.out.println(client.getErrorMessage());
             client.disconnect();
-            this.cancel();
+            cancel();
         }
     }
 }

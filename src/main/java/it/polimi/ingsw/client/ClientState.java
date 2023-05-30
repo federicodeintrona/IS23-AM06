@@ -22,6 +22,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
+    private int myPersonalObjectiveInt;
     private ArrayList<Integer> gameCommonObjective ;
     private Matrix board;
     private Matrix myBookshelf;
@@ -37,6 +38,16 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private boolean waiting=false;
     private String chair;
     private ChatController chatController = new ChatController();
+
+    private boolean username=true;
+
+    public boolean isUsername() {
+        return username;
+    }
+
+    public void setUsername(boolean username) {
+        this.username = username;
+    }
 
     public ClientState(Object viewLock) throws RemoteException {
         super();
@@ -113,9 +124,10 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public void setBoard(Matrix board) {
         synchronized (viewLock){
-            System.out.println("board in state");
             this.board = board;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"board",null,this.board));
     }
 
     public Matrix getMyBookshelf() {
@@ -127,6 +139,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setMyBookshelf(Matrix myBookshelf) {
         synchronized (viewLock){
             this.myBookshelf = myBookshelf;
+        }
+    }
+    public Matrix setBookshelf(String username){
+        synchronized (viewLock){
+            return allBookshelf.get(username);
         }
     }
 
@@ -145,10 +162,12 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setAllBookshelf(String username, Matrix bookshelf){
         synchronized (viewLock) {
             allBookshelf.put(username, bookshelf);
-            if (myUsername.equals(username)) {
+            if (myUsername.equals(username)){
                 myBookshelf = bookshelf;
             }
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"bookshelf",username,bookshelf));
     }
 
     public Integer getMyPoints() {
@@ -161,6 +180,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.myPoints = myPoints;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"privatePoints",username,myPoints));
     }
 
     public HashMap<String, Integer> getAllPublicPoints() {
@@ -179,6 +200,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             allPublicPoints.put(username, point);
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"publicPoints",username,point));
     }
 
     public ArrayList<Tiles> getSelectedTiles() {
@@ -191,6 +214,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.selectedTiles = selectedTiles;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"selectedTiles", null,selectedTiles));
     }
 
     public String getCurrentPlayer() {
@@ -203,6 +228,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.currentPlayer = currentPlayer;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"currPlayer",null,currentPlayer));
     }
 
     public String getNextPlayer() {
@@ -239,6 +266,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.gameIsEnded = gameIsEnded;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"end",null,true));
     }
 
     public boolean gameHasStarted () {
@@ -249,6 +278,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             this.gameHasStarted = gameHasStarted;
         }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"start",null,true));
     }
 
     @Override
@@ -263,6 +294,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void addListener(PropertyChangeListener listener,String property){
         notifier.addPropertyChangeListener(property,listener);
     }
+
 
     public String getChair() {
         synchronized (viewLock) {
@@ -297,6 +329,19 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
     public ChatController getChatController() {
         return chatController;
+    }
+
+
+    public int getMyPersonalObjectiveInt() {
+        synchronized (viewLock){
+            return myPersonalObjectiveInt;
+        }
+    }
+
+    public void setMyPersonalObjectiveInt(int myPersonalObjectiveInt) {
+        synchronized (viewLock){
+            this.myPersonalObjectiveInt = myPersonalObjectiveInt;
+        }
     }
 
 }

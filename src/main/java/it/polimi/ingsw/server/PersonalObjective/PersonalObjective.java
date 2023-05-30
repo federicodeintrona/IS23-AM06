@@ -18,7 +18,11 @@ public class PersonalObjective {
     private static final int numberOfPersonalObjective=12;
 
     private HashMap<Point, Tiles> card=new HashMap<>();
+    private int personalObjectiveNum;
 
+    public int getPersonalObjectiveNum() {
+        return personalObjectiveNum;
+    }
 
 
     /**
@@ -30,6 +34,8 @@ public class PersonalObjective {
         int n=random.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI())+1;
         //mapping the card position
         readJSON(n);
+        //setting the number of Personal Objective
+        personalObjectiveNum=n;
     }
     /**
      * Constructor --> create the n-th card
@@ -39,6 +45,7 @@ public class PersonalObjective {
     public PersonalObjective(int n) {
         //mapping the card position
         readJSON(n);
+        personalObjectiveNum=n;
     }
 
     /**

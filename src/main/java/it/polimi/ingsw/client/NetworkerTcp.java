@@ -2,8 +2,9 @@ package it.polimi.ingsw.client;
 
 
 import it.polimi.ingsw.client.View.CLI.CLIMain;
+import it.polimi.ingsw.client.View.View;
+import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.utils.JsonReader;
-import it.polimi.ingsw.utils.Messages.Message;
 import org.json.simple.parser.ParseException;
 
 import java.beans.PropertyChangeEvent;
@@ -12,15 +13,13 @@ import java.io.*;
 import java.net.Socket;
 
 
-
 public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
     private static String host;
-    Socket socket ;
+    private Socket socket ;
     private ObjectOutputStream oos;
-    private ObjectInputStream ois;
+    private View view;
     private final ClientState clientState;
-    private CLIMain cliMain;
 
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;
@@ -28,12 +27,15 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config=new JsonReader(is);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         } catch (ParseException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
+
         this.clientState = clientState;
-        this.host=host;
+        NetworkerTcp.host =host;
         port=config.getInt("tcpPort");
     }
 
@@ -43,21 +45,33 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             socket = new Socket(host, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
             reader=new Reader(socket,oos,this, clientState);
+            reader.start();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
+            close();
         }
-        reader.start();
+
+
     }
 
-    public void setUserInterface(CLIMain cliMain) {
-        this.cliMain= cliMain;
+    private void close(){
+        try {
+            socket.close();
+            oos.close();
+        } catch (IOException e) {
+            System.out.println( "Error: unable to close the socket...");
+            e.printStackTrace();
+        }
+
     }
 
     public void firstConnection (Message username){
         try {
             oos.writeObject(username);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
     }
@@ -66,7 +80,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(numberOfPlayers);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
 
     }
@@ -75,7 +90,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(tiles);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
     }
     public void switchTilesOrder(Message ints){
@@ -83,7 +99,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(ints);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
     }
 
@@ -92,19 +109,19 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(column);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void setCli(CLIMain cli) {
-        this.cliMain=cli;
+    public void propertyChange(PropertyChangeEvent evt) {
+        view.receivedMessage((Message) evt.getNewValue());
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        cliMain.receivedMessage((Message) evt.getNewValue());
-
+    public void setView(View view) {
+        this.view=view;
     }
 
     @Override

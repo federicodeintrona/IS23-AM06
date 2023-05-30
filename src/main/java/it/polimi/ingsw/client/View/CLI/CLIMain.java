@@ -4,13 +4,13 @@ import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
+import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.Message;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeEvent;
 
 public class CLIMain implements View {
-
-
 
     private final Object lock; //su cosa lockare - comune con ClientState
     private final ClientState clientState; //da dove leggere cambiamenti view
@@ -19,6 +19,7 @@ public class CLIMain implements View {
     private static ReadShell readShell;
     private static ChatHandler chatHandler;
     private boolean IHaveToRequestTheUsername=true;
+    private Thread th1;
 
     public CLIMain(Object lock, ClientState clientState, Networker net) {
         this.lock = lock;
@@ -58,6 +59,7 @@ public class CLIMain implements View {
         this.IHaveToRequestTheUsername = IHaveToRequestTheUsername;
     }
 
+    @Override
     public void receivedMessage(Message message){
         switch (message.getType()){
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
@@ -76,16 +78,17 @@ public class CLIMain implements View {
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
             }
-            //case CHAT -> cliPrint.printMessage(message.getUsername(), clientState.getPublicChat().getChatMessages().get(0).getMessage());
-            default -> {
-                break;
-            }
         }
     }
 
 
+    @Override
+    public void close() {
+        th1.interrupt();
+    }
 
-    public void runCLI () throws InterruptedException {
+
+    public void runUI() {
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
 
@@ -97,10 +100,18 @@ public class CLIMain implements View {
         while (!clientState.gameHasStarted()){
             if (clientState.isWaiting()){
                 cliPrint.printWaiting();
-                Thread.sleep(3000);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             else {
-                Thread.sleep(1000);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -108,12 +119,16 @@ public class CLIMain implements View {
 
 
         clientState.setChair(clientState.getCurrentPlayer());
-        Thread th1=new Thread(readShell);
+        th1=new Thread(readShell);
         th1.start();
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
-        Thread.sleep(1000);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         cliPrint.printChair();
         cliPrint.printCommonObjective(clientState.getGameCommonObjective());
@@ -124,7 +139,11 @@ public class CLIMain implements View {
         while (!clientState.isGameIsEnded()){
             //stampa nuovo turno se il current è il next di prima
            if (clientState.getCurrentPlayer().equals(curr)){
-               Thread.sleep(1000);
+               try {
+                   Thread.sleep(1000);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
                cliPrint.clearSheel();
                cliPrint.playerTurn();
                curr=clientState.getNextPlayer();
@@ -174,5 +193,28 @@ public class CLIMain implements View {
         }
     }
 
+    private void moveToEndScene() {
+        cliPrint.clearSheel();
+        cliPrint.printEndGame();
+    }
+    //Per ora ho fatto copia e incolla da quello che c'era nel run
+    private void printTurn() {
+        cliPrint.clearSheel();
+        cliPrint.playerTurn();
+    }
 
+    private void moveToGameScene() {
+        cliPrint.clearSheel();
+        cliPrint.gameHasStarted();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+           e.printStackTrace();
+        }
+
+        cliPrint.printChair();
+        cliPrint.printCommonObjective(clientState.getGameCommonObjective());
+        cliPrint.playerTurn();
+    }
 }
