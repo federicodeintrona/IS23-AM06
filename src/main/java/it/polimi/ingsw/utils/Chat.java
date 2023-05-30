@@ -9,7 +9,7 @@ public class Chat {
     private ArrayList<ChatMessage> chatMessages;        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
     private boolean chatIsEnable;
     private int oldestMessage;
-    private int maxNumberOfMessages;
+    private final int maxNumberOfMessages;
     private int unReadMessages;
 
     public Chat () {
