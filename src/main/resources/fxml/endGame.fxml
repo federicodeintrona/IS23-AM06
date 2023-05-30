@@ -20,7 +20,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <VBox alignment="CENTER" prefHeight="182.0" prefWidth="261.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+    <VBox alignment="CENTER" prefHeight="133.0" prefWidth="444.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="448.0" text="Results: " textFill="WHITE">
             <font>
                 <Font name="System Bold Italic" size="20.0" />
@@ -29,22 +29,22 @@
                 <Insets left="20.0" right="20.0" />
             </VBox.margin>
         </Label>
-      <Label fx:id="firstPlayer" contentDisplay="CENTER" prefHeight="30.0" prefWidth="179.0" textFill="WHITE">
+      <Label fx:id="firstPlayer" contentDisplay="CENTER" prefHeight="26.0" prefWidth="494.0" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="secondPlayer" prefHeight="30.0" prefWidth="181.0" textFill="WHITE">
+      <Label fx:id="secondPlayer" prefHeight="26.0" prefWidth="496.0" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="thirdPlayer" prefHeight="30.0" prefWidth="183.0" textFill="WHITE">
+      <Label fx:id="thirdPlayer" prefHeight="28.0" prefWidth="497.0" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="fourthPlayer" prefHeight="30.0" prefWidth="182.0" textFill="WHITE">
+      <Label fx:id="fourthPlayer" prefHeight="29.0" prefWidth="496.0" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
