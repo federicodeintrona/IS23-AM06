@@ -170,7 +170,7 @@ public class Controller implements PropertyChangeListener {
 
         }catch (SameElement e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("Tou cannot choose the same tile multiple times");
+            reply.setContent("You cannot choose the same tile multiple times");
 
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
