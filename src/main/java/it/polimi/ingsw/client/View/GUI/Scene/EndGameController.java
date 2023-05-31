@@ -30,6 +30,8 @@ public class EndGameController implements Initializable, SceneController{
     private Label thirdPlayer;
     @FXML
     private Label fourthPlayer;
+    @FXML
+    private Label winnerPlayer;
 
     //inizializzazione
     @Override
@@ -54,11 +56,18 @@ public class EndGameController implements Initializable, SceneController{
                 fourthPlayer.setText("4. "+orderPlayer.get(3)+" POINTS: "+clientState.getAllPublicPoints().get(orderPlayer.get(3)));
             }
         }
+        printWinner("The winner is: "+orderPlayer.get(0));
+
+    }
+
+    //stampa il vincitore
+    public void printWinner(String player){
+        winnerPlayer.setText(player);
     }
 
     //ordina i giocatori in base a quanti punti hanno ottenuto durante il gioco
     private void sortPlayer(){
-        ArrayList<Integer> sortPoint=new ArrayList<>();
+        ArrayList<Integer> sortPoint=new ArrayList<>(clientState.getAllPublicPoints().size());
 
         //creazione array dei punti
         for (String st: clientState.getAllPublicPoints().keySet()){

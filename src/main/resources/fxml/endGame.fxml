@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -50,4 +51,13 @@
          </font>
       </Label>
     </VBox>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+      <children>
+         <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="59.0" prefHeight="16.0" prefWidth="494.0" textFill="WHITE">
+            <font>
+               <Font name="System Bold Italic" size="35.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
 </GridPane>

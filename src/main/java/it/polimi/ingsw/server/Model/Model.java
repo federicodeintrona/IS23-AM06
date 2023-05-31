@@ -223,7 +223,8 @@ public class Model implements TimerInterface {
             //check if there are NOT 2 equals PersonalObjective
 
             do {
-                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI());
+                //+1 because personal objective's number is between 1, 12
+                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI())+1;
             } while (numbers.contains(num));
 
             numbers.add(num);
