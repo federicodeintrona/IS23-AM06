@@ -151,6 +151,14 @@ class ModelTest {
 
     }
 
+    //TODO disconnecction testing
+    @Test
+    void playerDisconnectionAndReconnection(){
+
+
+
+    }
+
     @Test
     void gameTest(){
 

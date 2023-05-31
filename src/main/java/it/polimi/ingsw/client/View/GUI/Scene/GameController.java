@@ -161,6 +161,12 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     public void showError(String error, Stage stage){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(error);
+        alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
+                                        "-fx-font-size: 18px;" +
+                                        "-fx-font-style: italic;"+
+                                        "-fx-text-fill: #070707;"+
+                                        "-fx-background-color: #f70000;");
+
         alert.initOwner(stage);
         alert.showAndWait();
 

@@ -77,12 +77,13 @@ public class CheckManager {
         if(points!=null ){
             //check the length of the array
             if(points.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
-             //check if the tiles are adjacent
-            if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
 
             //check if the player is trying to pick the same tile more than one
             HashSet<Point> set = new HashSet<>(points);
             if(points.size()!=set.size()) throw new SameElement();
+
+             //check if the tiles are adjacent
+            if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
 
             //check if tiles are pickable
             if(!board.tilesArePickable(points)) throw  new TilesCannotBeSelected();
