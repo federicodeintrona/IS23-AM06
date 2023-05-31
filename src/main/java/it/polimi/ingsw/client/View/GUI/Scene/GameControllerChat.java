@@ -119,9 +119,15 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private VBox chatBox;
     @FXML
+    private MenuButton chatMenu;
+    @FXML
     private Label sendMessage;
     @FXML
-    private MenuButton selectSendMessage;
+    private Button enterChatButton;
+    @FXML
+    private MenuButton selectChat;
+    @FXML
+    private Label classification;
 
     private State state = State.REMOVE;
 
