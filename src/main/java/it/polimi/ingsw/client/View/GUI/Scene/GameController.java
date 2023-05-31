@@ -25,8 +25,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -240,13 +240,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //prendi le immagini dal path che viene passato
     private Image getImage(String path){
-        try {
-            FileInputStream fileInputStream= new FileInputStream(path);
-            Image image = new Image(fileInputStream);
-            return image;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        InputStream s = getClass().getResourceAsStream(path);
+        Image image = new Image(s);
+        return image;
     }
 
 
@@ -266,7 +262,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     //inizializza i common objective
     private void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
         for(int i=0; i<2;i++){
-            String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
+            String path = "/images/common_goal_cards/Common_Goal_png/Common_Goal_" +commonGoal.get(i)+".png";
             ImageView imageview=new ImageView(getImage(path));
             imageview.setPreserveRatio(true);
             imageview.setFitWidth(248);
@@ -293,7 +289,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //inizializza il personal objective
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path="css/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
+        String path= "/images/personal_goal_cards/Personal_Goals" +clientState.getMyPersonalObjectiveInt()+".png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
         personalObjectiveImageView.setFitWidth(152);
