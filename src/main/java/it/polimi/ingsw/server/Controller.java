@@ -235,13 +235,13 @@ public class Controller implements PropertyChangeListener {
     public void addView(VirtualView view){
         lobby.getViews().put(view.getUsername(),view);
     }
+
+
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");
         lobby.playerDisconnection(username);
 
     }
-
-
 
 
     @Override

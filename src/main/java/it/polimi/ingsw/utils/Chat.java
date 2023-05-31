@@ -2,10 +2,11 @@ package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chat {
+public class Chat implements Serializable {
     private ArrayList<ChatMessage> chatMessages;        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
     private boolean chatIsEnable;
     private int oldestMessage;
