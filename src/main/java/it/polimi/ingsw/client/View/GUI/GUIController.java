@@ -37,6 +37,8 @@ public class GUIController implements View {
     }
 
 
+    //invia i messaggi dal client al server
+    //client -> networker -> server
     public void sendMessage(Message message){
         switch (message.getType()){
             case REMOVE_FROM_BOARD -> networker.removeTilesFromBoard(message);
@@ -48,6 +50,8 @@ public class GUIController implements View {
     }
 
 
+    //riceve i messaggi dal server
+    //server -> networker -> client
     @Override
     public void receivedMessage(Message message) {
         switch (message.getType()){
@@ -64,6 +68,7 @@ public class GUIController implements View {
         //TODO chiudere la GUI
     }
 
+    //mostra gli errori che arrivano dal server
     private void showError(Message message){
         Platform.runLater(()->{
             sceneController.showError(message.getUsername(),stage);
@@ -84,6 +89,7 @@ public class GUIController implements View {
     }
 
 
+    //si occupa del cambiamento di scena
     public void changeScene(Scenes scenes){
         Platform.runLater(()->{
             try {
