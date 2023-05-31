@@ -14,7 +14,9 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.*;
 
-public class EndGameController implements Initializable{
+//controller della scena finale
+//mostra i risultati - username in ordine di punti ottenuti
+public class EndGameController implements Initializable, SceneController{
 
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
@@ -29,14 +31,15 @@ public class EndGameController implements Initializable{
     @FXML
     private Label fourthPlayer;
 
+    //inizializzazione
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientState = guiController.getState();
-//        clientState.addListener(this);
-//        guiController.setSceneController(this);
+        guiController.setSceneController(this);
         printEndGame();
     }
 
+    //stampa il podio dei giocatori con i relativi punteggi
     public void printEndGame(){
         sortPlayer();
         firstPlayer.setText("1. "+orderPlayer.get(0)+" POINTS: "+clientState.getAllPublicPoints().get(orderPlayer.get(0)));
@@ -53,6 +56,7 @@ public class EndGameController implements Initializable{
         }
     }
 
+    //ordina i giocatori in base a quanti punti hanno ottenuto durante il gioco
     private void sortPlayer(){
         ArrayList<Integer> sortPoint=new ArrayList<>();
 

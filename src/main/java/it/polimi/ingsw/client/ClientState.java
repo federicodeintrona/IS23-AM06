@@ -16,9 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//salva i dati che arrivano dal server per poi mostrarli al client
 public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
     private PropertyChangeSupport notifier = new PropertyChangeSupport(this);
-    private Object viewLock;
+    private Object viewLock; //TODO da fare final
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();

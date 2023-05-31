@@ -36,7 +36,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-
+//TODO da sistemare - NON completo
 public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
+//enumeration per gestire le scene del gioco
 public enum Scenes {
     Login("/fxml/loginGriglia.fxml","Login Page"),
     NumOfPlayers("/fxml/numberOfPlayer.fxml","New Game"),
