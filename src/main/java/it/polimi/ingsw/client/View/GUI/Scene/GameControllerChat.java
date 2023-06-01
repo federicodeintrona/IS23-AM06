@@ -27,6 +27,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
@@ -275,13 +276,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     private Image getImage(String path){
-        try {
-            FileInputStream fileInputStream= new FileInputStream(path);
-            Image image = new Image(fileInputStream);
-            return image;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        InputStream s = getClass().getResourceAsStream(path);
+        Image image = new Image(s);
+        return image;
+//        try {
+//            FileInputStream fileInputStream= new FileInputStream(path);
+//            Image image = new Image(fileInputStream);
+//            return image;
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
 
@@ -319,12 +323,11 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     //aggiorna i punti dei common objective
     public void updateCommonObjectivePoints(){
-        //TODO
-//        ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
-//        String path = "css/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
-//        commonObjectivePoint1.setImage(getImage(path));
-//        String path1 = "css/images/scoring_tokens/scoring_"+commonGoal.get(1)+".jpg";
-//        commonObjectivePoint2.setImage(getImage(path1));
+        ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
+        String path = "/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
+        commonObjectivePoint1.setImage(getImage(path));
+        String path1 = "/images/scoring_tokens/scoring_"+commonGoal.get(1)+".jpg";
+        commonObjectivePoint2.setImage(getImage(path1));
 
     }
 
