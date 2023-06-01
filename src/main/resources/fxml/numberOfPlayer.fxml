@@ -37,7 +37,7 @@
                 <Insets left="20.0" right="20.0" top="8.0" />
             </VBox.margin>
         </Label>
-      <ChoiceBox fx:id="numberOfPlayerBox" prefWidth="150.0">
+      <ChoiceBox fx:id="numberOfPlayerBox" onKeyPressed="#setNumberOfPlayerBoxEnter" prefWidth="150.0">
          <VBox.margin>
             <Insets top="8.0" />
          </VBox.margin></ChoiceBox>

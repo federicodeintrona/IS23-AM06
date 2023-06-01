@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -113,16 +115,25 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private Button column4;
     @FXML
     private Button column5;
+
     @FXML
-    private VBox chatBox;
+    private VBox publicChatBox;
     @FXML
-    private MenuButton chatMenu;
+    private VBox otherPlayerChatBox1;
+    @FXML
+    private VBox otherPlayerChatBox2;
+    @FXML
+    private VBox otherPlayerChatBox3;
+    @FXML
+    private ChoiceBox<String> chatMenu;
     @FXML
     private TextField sendMessage;
     @FXML
     private Button enterChatButton;
     @FXML
-    private MenuButton selectChat;
+    private ChoiceBox<String> selectChat;
+    @FXML
+    private Label newMessage;
     @FXML
     private Label classification;
 
@@ -155,6 +166,17 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateCurrPlayer();
         updateCommonObjectivePoints();
         updateClassification();
+        initializeChatChoice();
+    }
+
+    private void initializeChatChoice(){
+        ArrayList<String> otherPlayer=catchOtherPlayerName(clientState.getAllUsername());
+        otherPlayer.add("ALL");
+        chatMenu.setValue("ALL");
+        chatMenu.getItems().addAll(otherPlayer);
+
+        selectChat.setValue("ALL");
+        selectChat.getItems().addAll(otherPlayer);
     }
 
     private void updateClassification(){
@@ -650,6 +672,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     rollbackButton.setDisable(false);
                     ImageView imageView=(ImageView) event.getTarget();
                     imageView.setStyle("-fx-opacity: 0.5");
+                    click.setDisable(true);
                 }
             }
         }
@@ -681,6 +704,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             //disabilita il bottone di annullamento
             rollbackButton.setVisible(false);
             rollbackButton.setDisable(true);
+            //disabilita la board
+            boardGrid.getChildren().forEach(node -> {
+                node.setDisable(false);
+            });
             boardGrid.setDisable(true);
             state = State.SWITCH;
 
@@ -691,7 +718,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private void rollbackClick(ActionEvent actionEvent){
         removeTiles=new ArrayList<>();
-        boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
+        boardGrid.getChildren().forEach(node -> {
+            node.setStyle("-fx-opacity: 1");
+            node.setDisable(false);
+        });
         rollbackButton.setVisible(false);
         rollbackButton.setDisable(true);
         confirmationButton.setVisible(false);
@@ -888,6 +918,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
+    //TODO controllare se nella colonna ci posso mettere il numero di tessere che sono state selezionate
+    // altrimenti non abilitare il bottone
     private void addToColumn(){
         column1.setVisible(false);
         column1.setDisable(true);
@@ -907,15 +939,98 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         state = State.REMOVE;
     }
 
-    //TODO invia i messaggi che legge da chattBox
+    //invia i messaggi al server
     @FXML
-    private void sendMessageTo(ActionEvent actionEvent){
-
+    private void enterChatClick(ActionEvent actionEvent){
+        enterChat();
     }
-    //TODO mostra chat
-    private void updateChat(){
+    @FXML
+    private void enterChatEnter(KeyEvent event){
+        if (event.getCode()== KeyCode.ENTER) {
+            enterChat();
+        }
+    }
+    private void enterChat(){
+        //lettura messaggio e a chi inviarlo
+        String message=sendMessage.getText();
+        String receiver=chatMenu.getValue();
+
+        if (message.isEmpty()){
+            showError("Insert message", guiController.getStage());
+        }
+        else {
+            //TODO invia il chat message
+            if (receiver.equals("ALL")){
+                //chat a tutti
+                ChatMessage chatMessage=new ChatMessage(clientState.getMyUsername(), message);
+                chatMessage.setType(MessageTypes.CHAT);
+
+                guiController.sendMessage(chatMessage);
+            }
+            else {
+                //chat a username specifico
+                ChatMessage chatMessage=new ChatMessage(clientState.getMyUsername(), message, receiver);
+                chatMessage.setType(MessageTypes.CHAT);
+
+                guiController.sendMessage(chatMessage);
+            }
+        }
+    }
+
+    //quale chat mostrare
+    @FXML
+    private void selectWhichChatToShow(ActionEvent actionEvent){
+        String chatToShow=selectChat.getValue();
+        //nascondile tutte
+        publicChatBox.setVisible(false);
+        otherPlayerChatBox1.setVisible(false);
+        otherPlayerChatBox2.setVisible(false);
+        otherPlayerChatBox3.setVisible(false);
+        //fai vedere solo quella selezionata
+        if (chatToShow.equals("ALL")){
+            publicChatBox.setVisible(true);
+        }
+        else if (chatToShow.equals(otherPlayerLabel1.getText())){
+            otherPlayerChatBox1.setVisible(true);
+        }
+        else if (chatToShow.equals(otherPlayerLabel2.getText())){
+            otherPlayerChatBox2.setVisible(true);
+        }
+        else if (chatToShow.equals(otherPlayerLabel3.getText())){
+            otherPlayerChatBox3.setVisible(true);
+        }
+    }
+
+    private VBox chatVBox(String username){
+        if (username.equals("ALL")){
+            return publicChatBox;
+        }
+        else {
+            if (username.equals(otherPlayerLabel1.getText())){
+                return otherPlayerChatBox1;
+            }
+            else if (username.equals(otherPlayerLabel2.getText())){
+                return otherPlayerChatBox2;
+            }
+            else if (username.equals(otherPlayerLabel3.getText())){
+                return otherPlayerChatBox3;
+            }
+            else {
+                return null;
+            }
+        }
+    }
+
+    //TODO aggiorna chat
+    private void updateChat(String username){
+//        Label message=new Label();
+//        message.setText();
+//        chatVBox(username).getChildren().add(message);
+
         /*
             in chatBox aggiungi un label sotto a tutti gli altri
+
+            hai un nuovo messaggio in newMessage label o facciamo un popup
          */
     }
 }

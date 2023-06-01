@@ -40,7 +40,7 @@ public class LoginController implements SceneController, Initializable {
         String username=usernameField.getText();
 
         if (username.isEmpty()){
-            usernameStatus.setText("Inserire username");
+            showError("Insert username", guiController.getStage());
         }
         else {
             guiController.getState().setMyUsername(username);
