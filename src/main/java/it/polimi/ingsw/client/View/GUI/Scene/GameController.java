@@ -38,7 +38,7 @@ import java.util.List;
 
 
 public class GameController implements Initializable, PropertyChangeListener,SceneController {
-    private GUIController guiController = GUIControllerStatic.getGuiController();
+    private final GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
     private ArrayList<Integer> orderTiles=new ArrayList<>();
@@ -389,6 +389,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
+
+
     private void updateCurrPlayer() {
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
             String string="It is YOUR turn";
@@ -513,6 +515,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         endSwitch.setVisible(true);
         endSwitch.setDisable(false);
     }
+
+
     //conferma la fine di tutti gli switch
     @FXML
     private void endSwitchClick(ActionEvent actionEvent){

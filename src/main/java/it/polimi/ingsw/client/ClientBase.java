@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
 import it.polimi.ingsw.client.View.View;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -59,12 +60,15 @@ public class ClientBase extends Application{
         } catch (RemoteException e) {
                 e.printStackTrace();
         }
+
+
     }
 
 
     @Override
     public void start(Stage stage) throws Exception {
         try {
+
             Parent root = FXMLLoader.load(getClass().getResource(Scenes.Login.getName()));
             Scene scene=new Scene(root);
 
@@ -83,4 +87,7 @@ public class ClientBase extends Application{
             e.printStackTrace();
         }
     }
+
+
+
 }
