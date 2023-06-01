@@ -300,7 +300,7 @@
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
-            <Button fx:id="enterChatButton" layoutX="101.0" layoutY="505.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="52.0" text="Enter" />
+            <Button fx:id="enterChatButton" layoutX="98.0" layoutY="505.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="60.0" text="Enter" />
             <MenuButton fx:id="selectChat" layoutX="14.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" text="MenuButton">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
