@@ -608,6 +608,12 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
             string="It is YOUR turn";
             turnLabel.setText(string);
+            //pop up - è il tuo turno
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Update turn");
+            alert.setHeaderText("Current game turn");
+            alert.setContentText(string);
+            alert.show();
         }
         else {
             string="It is "+clientState.getCurrentPlayer()+" turn";
