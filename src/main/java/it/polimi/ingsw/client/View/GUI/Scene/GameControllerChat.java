@@ -975,6 +975,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 guiController.sendMessage(chatMessage);
             }
         }
+        sendMessage.clear();
     }
 
     //quale chat mostrare

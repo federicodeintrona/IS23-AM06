@@ -189,7 +189,7 @@
                         <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" disable="true" layoutX="128.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0" visible="false">
+                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" layoutX="128.0" layoutY="26.0" prefHeight="36.0" prefWidth="97.0">
                <font>
                   <Font size="15.0" />
                </font></Label>
@@ -225,7 +225,7 @@
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" disable="true" layoutX="377.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0" visible="false">
+            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" layoutX="377.0" layoutY="26.0" prefHeight="36.0" prefWidth="97.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -262,7 +262,7 @@
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" disable="true" layoutX="627.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0" visible="false">
+            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" layoutX="627.0" layoutY="23.0" prefHeight="42.0" prefWidth="97.0">
                <font>
                   <Font size="15.0" />
                </font>
