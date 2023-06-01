@@ -281,6 +281,20 @@
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="commonObjectiveImage1" fitHeight="150.0" fitWidth="250.0" layoutX="5.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="commonObjectivePoint1" fitHeight="70.0" fitWidth="70.0" layoutX="137.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" rotate="-9.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fx:id="commonObjectiveImage2" fitHeight="150.0" fitWidth="248.0" layoutX="17.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="commonObjectivePoint2" fitHeight="70.0" fitWidth="70.0" layoutX="149.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" rotate="-9.0" />
+               </children>
+            </AnchorPane>
+         </children>
         </GridPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
          <children>

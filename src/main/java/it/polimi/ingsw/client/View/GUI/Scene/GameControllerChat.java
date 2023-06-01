@@ -123,6 +123,15 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private Label classification;
 
+    @FXML
+    private ImageView commonObjectiveImage1;
+    @FXML
+    private ImageView commonObjectivePoint1;
+    @FXML
+    private ImageView commonObjectiveImage2;
+    @FXML
+    private ImageView commonObjectivePoint2;
+
     private State state = State.REMOVE;
 
     @Override
@@ -141,7 +150,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateMyPointsLabel();
         updateOtherPlayerPointsLabel();
         updateCurrPlayer();
-
+        updateCommonObjectivePoints();
     }
 
     public void otherPlayerInitialize(){
@@ -284,17 +293,37 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     //inizializza i common objective
-    private void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
-        for(int i=0; i<2;i++){
-            String path = "images/common_goal_cards/Common_Goal_png/Common_Goal_" +commonGoal.get(i)+".png";
-            ImageView imageview=new ImageView(getImage(path));
-            imageview.setPreserveRatio(true);
-            imageview.setFitWidth(248);
-//            imageview.setFitHeight(100);
-//            imageview.setFitWidth(250);
-            commonGrid.add(imageview,i,0);
-        }
+    private void initializeCommonGrid(){
+        ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
+        String path = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(0)+".png";
+        commonObjectiveImage1.setImage(getImage(path));
+        String path1 = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(1)+".png";
+        commonObjectiveImage2.setImage(getImage(path1));
+
+//        for(int i=0; i<2;i++){
+//            //TODO
+//            String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
+//            ImageView imageview=new ImageView(getImage(path));
+//            imageview.setPreserveRatio(true);
+//            imageview.setFitWidth(248);
+////            imageview.setFitHeight(100);
+////            imageview.setFitWidth(250);
+//            commonGrid.add(imageview,i,0);
+//        }
     }
+
+    //aggiorna i punti dei common objective
+    public void updateCommonObjectivePoints(){
+        //TODO
+//        ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
+//        String path = "css/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
+//        commonObjectivePoint1.setImage(getImage(path));
+//        String path1 = "css/images/scoring_tokens/scoring_"+commonGoal.get(1)+".jpg";
+//        commonObjectivePoint2.setImage(getImage(path1));
+
+    }
+
+
 
     //ritorna il nome dell'altro giocatore in partita
     private String catchOtherPlayerName(){
@@ -330,7 +359,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     //inizializza il personal objective
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path= "images/personal_goal_cards/Personal_Goals1.png";
+        String path= "/images/personal_goal_cards/Personal_Goals1.png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
         personalObjectiveImageView.setFitWidth(152);
