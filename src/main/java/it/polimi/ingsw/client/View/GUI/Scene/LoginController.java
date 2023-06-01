@@ -17,22 +17,25 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+//controller della scena di login
 public class LoginController implements SceneController, Initializable {
     private final GUIController guiController = GUIControllerStatic.getGuiController();
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Label usernameStatus;
 
+    @FXML
+    private TextField usernameField; //username inserito
+    @FXML
+    private Button loginButton; //bottone di login
+    @FXML
+    private Label usernameStatus; //stato dell'username - errore
+
+    //inizializzazione
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         guiController.setSceneController(this);
 
     }
 
+    //leggi l'username e invia il messaggio al server
     private void login(){
         String username=usernameField.getText();
 
@@ -47,10 +50,12 @@ public class LoginController implements SceneController, Initializable {
             guiController.sendMessage(message);
         }
     }
+    //al click del bottone login
     @FXML
     private void loginClick(ActionEvent actionEvent) {
         login();
     }
+    //quando premi invio invii l'username
     @FXML
     private void loginEnter(KeyEvent event){
         if (event.getCode()== KeyCode.ENTER) {
@@ -58,6 +63,7 @@ public class LoginController implements SceneController, Initializable {
         }
     }
 
+    //mostra gli errori - username già preso
     @Override
     public void showError(String error, Stage stage) {
         usernameStatus.setText(error);

@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
+//in che stato della partita ci troviamo
 public enum State {
-    REMOVE,
-    SWITCH,
-    ADD;
+    REMOVE, //rimozione tiles dalla board
+    SWITCH, //switch delle tiles selezionate dalla board
+    ADD; //aggiungi alla bookshelf
 
 }

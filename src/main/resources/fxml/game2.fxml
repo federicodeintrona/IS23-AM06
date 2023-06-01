@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="666.0" maxWidth="1000.0" minHeight="666.0" minWidth="1000.0" prefHeight="666.0" prefWidth="1000.0" styleClass="game" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameController">
+<GridPane maxHeight="666.0" maxWidth="1000.0" minHeight="666.0" minWidth="1000.0" prefHeight="666.0" prefWidth="1000.0" styleClass="game" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
@@ -26,7 +26,7 @@
     <RowConstraints maxHeight="166.0" minHeight="166.0" prefHeight="166.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../css/style.css">
+      <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../style.css">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="17.0" prefWidth="20.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="45.0" prefWidth="49.0" />
@@ -91,7 +91,7 @@
             </GridPane>
             <ImageView fitHeight="404.0" fitWidth="350.0" layoutX="2.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/boards/bookshelf.png" />
+                  <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
             <Button fx:id="confirmationButton" disable="true" layoutX="-6.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmClick" prefHeight="36.0" prefWidth="86.0" text="Confirm" visible="false" />
@@ -181,13 +181,13 @@
             </GridPane>
             <ImageView fitHeight="136.0" fitWidth="200.0" layoutX="17.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/boards/bookshelf.png" />
+                  <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
             <Label fx:id="otherPlayerPointsLabel" contentDisplay="CENTER" layoutX="150.0" layoutY="42.0" prefHeight="17.0" prefWidth="200.0" />
             <ImageView fitHeight="88.0" fitWidth="60.0" layoutX="161.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                  <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
          </children>

@@ -3,6 +3,8 @@ package it.polimi.ingsw.client.View.GUI.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+//interfaccia delle scene
+//mostra gli errori
 public interface SceneController {
     default void showError(String error, Stage stage){
         Alert alert = new Alert(Alert.AlertType.ERROR);

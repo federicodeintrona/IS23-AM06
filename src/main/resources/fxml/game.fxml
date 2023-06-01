@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="666.0" maxWidth="1000.0" minHeight="1000.0" minWidth="1800.0" prefHeight="666.0" prefWidth="1000.0" styleClass="game" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameControllerChat">
+<GridPane maxHeight="666.0" maxWidth="1000.0" minHeight="1000.0" minWidth="1800.0" prefHeight="666.0" prefWidth="1000.0" styleClass="game" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameControllerChat">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="652.0" minWidth="500.0" prefWidth="652.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1148.0" minWidth="350.0" prefWidth="1021.0" />
@@ -29,7 +29,7 @@
         <RowConstraints maxHeight="166.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../css/style.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../style.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="17.0" prefWidth="20.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="45.0" prefWidth="49.0" />
@@ -95,7 +95,7 @@
                 </GridPane>
                 <ImageView fitHeight="440.0" fitWidth="462.0" layoutX="24.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../css/images/boards/bookshelf.png" />
+                        <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
                 <Button fx:id="rollbackButton" disable="true" layoutX="-334.0" layoutY="83.0" mnemonicParsing="false" onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false" />
@@ -185,13 +185,13 @@
                 </GridPane>
                 <ImageView fx:id="otherPlayerImage2" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="1.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
-                        <Image url="@../css/images/boards/bookshelf.png" />
+                        <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
                 <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" disable="true" layoutX="134.0" layoutY="42.0" prefHeight="17.0" prefWidth="200.0" visible="false" />
                 <ImageView fx:id="personal2" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="145.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
-                        <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                        <Image url="@../images/personal_goal_cards/back.jpg" />
                     </image>
                 </ImageView>
             <Label fx:id="otherPlayerLabel1" contentDisplay="CENTER" disable="true" layoutX="332.0" layoutY="1.0" prefHeight="19.0" prefWidth="319.0" visible="false">
@@ -218,13 +218,13 @@
             </GridPane>
             <ImageView fx:id="otherPlayerImage1" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="332.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@../css/images/boards/bookshelf.png" />
+                  <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
             <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" disable="true" layoutX="466.0" layoutY="46.0" prefHeight="17.0" prefWidth="200.0" visible="false" />
             <ImageView fx:id="personal1" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="474.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                  <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
             <Label fx:id="otherPlayerLabel3" contentDisplay="CENTER" disable="true" layoutX="674.0" layoutY="5.0" prefHeight="19.0" prefWidth="319.0" visible="false">
@@ -234,13 +234,13 @@
             </Label>
             <ImageView fx:id="otherPlayerImage3" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="674.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@../css/images/boards/bookshelf.png" />
+                  <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
             <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" disable="true" layoutX="810.0" layoutY="27.0" prefHeight="17.0" prefWidth="200.0" visible="false" />
             <ImageView fx:id="personal3" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="812.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                  <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
             <GridPane fx:id="otherPlayerBookshelfGrid3" disable="true" layoutX="688.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0" visible="false">

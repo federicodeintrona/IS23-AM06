@@ -25,71 +25,68 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-
+//controller di gioco - per 2 giocatori
 public class GameController implements Initializable, PropertyChangeListener,SceneController {
-    private final GUIController guiController = GUIControllerStatic.getGuiController();
+    private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
     private ArrayList<Integer> orderTiles=new ArrayList<>();
     private Point checkResetPoint=null;
+
     @FXML
-    private GridPane boardGrid;
+    private GridPane boardGrid; //board
     @FXML
-    private GridPane commonGrid;
+    private GridPane commonGrid; //gridPane per i common objective
     @FXML
-    private GridPane myBookshelfGrid;
+    private GridPane myBookshelfGrid; //la mia bookshelf
     @FXML
-    private Label otherPlayerLabel;
+    private Label otherPlayerLabel; //il nome dell'altro giocatore
     @FXML
-    private GridPane otherPlayerBookshelfGrid;
+    private GridPane otherPlayerBookshelfGrid; //la libreria dell'altro giocatore
     @FXML
-    private ImageView personalObjectiveImageView;
+    private ImageView personalObjectiveImageView; //il mio personal objective
     @FXML
-    private Label myPointsLabel;
+    private Label myPointsLabel; //i miei punti
     @FXML
-    private Label otherPlayerPointsLabel;
+    private Label otherPlayerPointsLabel; //i punti degli altri giocatori
     @FXML
-    private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
+    private Label turnLabel; //mostra di chi è il turno
     @FXML
-    private Button confirmationButton;
+    private Button confirmationButton; //confermi le tessere selezionate - rimozione dalla board
     @FXML
-    private Button rollbackButton;
+    private Button rollbackButton; //annulli le tessere selezioante - rimozione dall board
     @FXML
-    private ImageView selectedTiles1;
+    private ImageView selectedTiles1; //tessera selezionata - per lo switch
     @FXML
-    private ImageView selectedTiles2;
+    private ImageView selectedTiles2; //tessera selezionata - per lo switch
     @FXML
-    private ImageView selectedTiles3;
+    private ImageView selectedTiles3; //tessera selezionata - per lo switch
     @FXML
-    private Button confirmSelected;
+    private Button confirmSelected; //confermi l'ordine della selezione - switch delle tiles
     @FXML
-    private DialogPane selectedTilesDialog;
+    private DialogPane selectedTilesDialog; //dialog pane per le tiles selezionate
     @FXML
-    private Button endSwitch;
+    private Button endSwitch; //confermi ufficialmente l'ordine delle tiles
     @FXML
-    private Button column1;
+    private Button column1; //aggiungi alla colonna - add to bookshelf
     @FXML
-    private Button column2;
+    private Button column2; //aggiungi alla colonna - add to bookshelf
     @FXML
-    private Button column3;
+    private Button column3; //aggiungi alla colonna - add to bookshelf
     @FXML
-    private Button column4;
+    private Button column4; //aggiungi alla colonna - add to bookshelf
     @FXML
-    private Button column5;
+    private Button column5; //aggiungi alla colonna - add to bookshelf
 
     private State state = State.REMOVE;
 
+    //inizializza la scena
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientState = guiController.getState();
@@ -113,6 +110,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     }
 
 
+    //in base alle notifiche che arrivano dal ClientState
+    //viene modificate la view
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
@@ -150,6 +149,10 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                     updateCurrPlayer();
                     if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
                         boardGrid.setDisable(false);
+                        boardGrid.getChildren().forEach(node -> {
+                            node.setStyle("-fx-opacity: 1");
+                            node.setDisable(false);
+                        });
                     }
                 });
 
@@ -157,6 +160,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
+    //mostra gli errori
     @Override
     public void showError(String error, Stage stage){
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -170,10 +174,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         alert.initOwner(stage);
         alert.showAndWait();
 
-        revert();
+        goBack();
     }
 
-    private void revert(){
+    //se c'è un errore torno allo "stato" precedente
+    private void goBack(){
 
         switch (state){
             case REMOVE -> {
@@ -218,9 +223,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     }
     //setta le tessere - dal colore all'immagine
+    //questa funziona prendendo le immagini dalle resources
     private ImageView setTiles(Tiles tile){
         Random rand = new Random();
         String[] titles = tile.getImage();
+        //Tiles è enumeration con i path delle immagini
         String title = titles==null?null:titles[rand.nextInt(Define.NUMBEROFTILEIMAGES.getI())];
 
         Image image = new Image(title);
@@ -231,17 +238,15 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         return imageView;
     }
 
+    //prendi le immagini dal path che viene passato
     private Image getImage(String path){
-        try {
-            FileInputStream fileInputStream= new FileInputStream(path);
-            Image image = new Image(fileInputStream);
-            return image;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        InputStream s = getClass().getResourceAsStream(path);
+        Image image = new Image(s);
+        return image;
     }
 
 
+    //inizializza la board
     //la metrice è 11x11 ==> getTile -1
     private void initializeBoardGrid(){
         Matrix matrix=clientState.getBoard();
@@ -257,7 +262,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     //inizializza i common objective
     private void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
         for(int i=0; i<2;i++){
-            String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
+            String path = "/images/common_goal_cards/Common_Goal_png/Common_Goal_" +commonGoal.get(i)+".png";
             ImageView imageview=new ImageView(getImage(path));
             imageview.setPreserveRatio(true);
             imageview.setFitWidth(248);
@@ -284,7 +289,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
     //inizializza il personal objective
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path="css/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
+        String path= "/images/personal_goal_cards/Personal_Goals" +clientState.getMyPersonalObjectiveInt()+".png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
         personalObjectiveImageView.setFitWidth(152);
@@ -316,6 +321,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     }
 
 
+    //aggiorna la board
     private void updateBoard() {
         Matrix matrix=clientState.getBoard();
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
@@ -329,8 +335,11 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
+    //aggiorna le tiles selezionate
+    //vengono mostrate le tiles selezionate e le puoi ordinare come vuoi
     private void updateSelectedTiles() {
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())) {
+            //nascondi lo sfondo del dialog pane
             selectedTilesDialog.setVisible(true);
             selectedTilesDialog.setDisable(false);
             selectedTilesDialog.setStyle("-fx-background-color: null");
@@ -370,6 +379,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
+    //aggiorna la bookshelf
     private void updateBookshelf(String username) {
         Matrix bookshelf=clientState.getAllBookshelf().get(username);
         for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
@@ -389,8 +399,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-
-
+    //aggiorna il giocatore corrente
     private void updateCurrPlayer() {
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
             String string="It is YOUR turn";
@@ -404,14 +413,13 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
 
 
 
-    //TODO update mybookshelf, otherplayerbookshelf
-
 
 
 
     //rimuove solo 1 tile per volta
     @FXML
     private void removeTilesClick(MouseEvent event){
+        //ottieni la cella in cui è avvenuto il click
         Node click=event.getPickResult().getIntersectedNode();
         Integer colmnIndex=GridPane.getColumnIndex(click);
         Integer rowIndex=GridPane.getRowIndex(click);
@@ -429,15 +437,17 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                     //abilita il bottone dell'annullamento
                     rollbackButton.setVisible(true);
                     rollbackButton.setDisable(false);
+                    //fai vedere quale tile hai selezionato
                     ImageView imageView=(ImageView) event.getTarget();
                     imageView.setStyle("-fx-opacity: 0.5");
+                    click.setDisable(true);
                 }
             }
         }
 
     }
 
-    //conferma le tessere selezionate
+    //conferma le tessere selezionate - remove tiles
     @FXML
     private void confirmClick(ActionEvent actionEvent){
         if (removeTiles.isEmpty()){
@@ -468,11 +478,14 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-    //annulla la selezione delle tessere selezionate
+    //annulla la selezione delle tessere selezionate - remove tiles
     @FXML
     private void rollbackClick(ActionEvent actionEvent){
         removeTiles=new ArrayList<>();
-        boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
+        boardGrid.getChildren().forEach(node -> {
+            node.setStyle("-fx-opacity: 1");
+            node.setDisable(false);
+        });
         rollbackButton.setVisible(false);
         rollbackButton.setDisable(true);
         confirmationButton.setVisible(false);
@@ -515,8 +528,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         endSwitch.setVisible(true);
         endSwitch.setDisable(false);
     }
-
-
     //conferma la fine di tutti gli switch
     @FXML
     private void endSwitchClick(ActionEvent actionEvent){
@@ -670,6 +681,8 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     }
 
 
+    //aggiunge alla colonna
+    //disabilita i bottoni
     private void addToColumn(){
         column1.setVisible(false);
         column1.setDisable(true);
