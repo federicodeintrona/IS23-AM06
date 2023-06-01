@@ -27,14 +27,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
-import java.util.List;
 
 //TODO da sistemare - NON completo
 public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
@@ -292,7 +286,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     //inizializza i common objective
     private void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
         for(int i=0; i<2;i++){
-            String path = "css/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(i)+".png";
+            String path = "images/common_goal_cards/Common_Goal_png/Common_Goal_" +commonGoal.get(i)+".png";
             ImageView imageview=new ImageView(getImage(path));
             imageview.setPreserveRatio(true);
             imageview.setFitWidth(248);
@@ -336,7 +330,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     //inizializza il personal objective
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path="css/images/personal_goal_cards/Personal_Goals1.png";
+        String path= "images/personal_goal_cards/Personal_Goals1.png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
         personalObjectiveImageView.setFitWidth(152);

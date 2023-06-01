@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="700.0" maxWidth="1250.0" minHeight="700.0" minWidth="1250.0" prefHeight="700.0" prefWidth="1250.0" styleClass="game" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameControllerChat">
+<GridPane maxHeight="700.0" maxWidth="1250.0" minHeight="700.0" minWidth="1250.0" prefHeight="700.0" prefWidth="1250.0" styleClass="game" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameControllerChat">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="627.0" minWidth="350.0" prefWidth="497.0" />
@@ -29,7 +29,7 @@
         <RowConstraints maxHeight="169.0" minHeight="126.0" prefHeight="169.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../css/style.css" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+        <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../style.css" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="17.0" prefWidth="20.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="45.0" prefWidth="49.0" />
@@ -94,7 +94,7 @@
                 </GridPane>
                 <ImageView fitHeight="404.0" fitWidth="350.0" layoutX="2.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../css/images/boards/bookshelf.png" />
+                        <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
                 <Button fx:id="confirmationButton" disable="true" layoutX="-6.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmClick" prefHeight="36.0" prefWidth="86.0" text="Confirm" visible="false" />
@@ -185,7 +185,7 @@
                 </GridPane>
                 <ImageView fx:id="otherPlayerImage2" fitHeight="136.0" fitWidth="200.0" layoutX="-2.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../css/images/boards/bookshelf.png" />
+                        <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
                 <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" layoutX="128.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0">
@@ -194,7 +194,7 @@
                </font></Label>
                 <ImageView fx:id="personal2" fitHeight="88.0" fitWidth="60.0" layoutX="142.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                        <Image url="@../images/personal_goal_cards/back.jpg" />
                     </image>
                 </ImageView>
             <Label fx:id="otherPlayerLabel2" contentDisplay="CENTER" layoutX="6.0" layoutY="5.0" prefHeight="19.0" prefWidth="200.0">
@@ -221,7 +221,7 @@
             </GridPane>
             <ImageView fx:id="otherPlayerImage1" fitHeight="136.0" fitWidth="200.0" layoutX="247.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/boards/bookshelf.png" />
+                  <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
             <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" layoutX="377.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0">
@@ -231,7 +231,7 @@
             </Label>
             <ImageView fx:id="personal1" fitHeight="88.0" fitWidth="60.0" layoutX="391.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                  <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
             <Label fx:id="otherPlayerLabel3" contentDisplay="CENTER" layoutX="506.0" layoutY="7.0" prefHeight="19.0" prefWidth="200.0">
@@ -258,7 +258,7 @@
             </GridPane>
             <ImageView fx:id="otherPlayerImage3" fitHeight="136.0" fitWidth="200.0" layoutX="495.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/boards/bookshelf.png" />
+                  <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
             <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" layoutX="627.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0">
@@ -268,7 +268,7 @@
             </Label>
             <ImageView fx:id="personal3" fitHeight="88.0" fitWidth="60.0" layoutX="639.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../css/images/personal_goal_cards/back.jpg" />
+                  <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
             </children>
