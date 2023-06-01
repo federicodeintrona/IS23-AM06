@@ -154,13 +154,14 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateCommonObjectivePoints();
     }
 
+    //TODO aggiorna classifica & aggiorna altri giocatori(tutto) & collegare elementi al controller
+
     public void otherPlayerInitialize(){
         //TODO
     }
 
     private void updateClassification(){
         //TODO
-        classification.setText("ciao");
     }
 
     @Override
@@ -202,7 +203,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                         boardGrid.setDisable(false);
                     }
                 });
-
+            }
+            case ("commonObjPoints") -> {
+                Platform.runLater(this::updateCommonObjectivePoints);
             }
         }
     }
