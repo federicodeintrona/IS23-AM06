@@ -157,6 +157,11 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         //TODO
     }
 
+    private void updateClassification(){
+        //TODO
+        classification.setText("ciao");
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
