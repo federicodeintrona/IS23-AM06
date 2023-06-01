@@ -44,6 +44,9 @@ public class RMIVirtualView extends VirtualView{
                     case ("commonObj") -> {
                         clientState.setGameCommonObjective(new ArrayList<>((List<Integer>) evt.getSource()));
                     }
+                    case ("commonObjPoints") -> {
+                        clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) evt.getSource()));
+                    }
                     case ("personalObj") -> {
                         clientState.setMyPersonalObjective((HashMap<Point, Tiles>) evt.getSource());
                     }

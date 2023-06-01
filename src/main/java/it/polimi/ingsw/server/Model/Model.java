@@ -192,6 +192,30 @@ public class Model implements TimerInterface {
 
         }
 
+        //Notify Board
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                new Matrix(board.getGamesBoard()), "all", "0","board" ));
+
+        //Notify PlayerNames
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                        players.stream().map(Player::getUsername).toList(), "all", "0","playerNames" ));
+
+        //Notify commonObjectives
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getNum).toList(), "all", "0","commonObj" ));
+
+        //Notify commonObjectivesPoints
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getPoints).toList(), "all", "0","commonObjPoints" ));
+
+
+        //Notify curr and next Player
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "currPlayer"));
+
+        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
+                currPlayer.getUsername(), "nextPlayer"));
+
         //Notify game Start
         notifier.firePropertyChange(new PropertyChangeEvent(
                true, "all", "0","start" ));
@@ -302,6 +326,7 @@ public class Model implements TimerInterface {
         //Notify Bookshelf
         notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
                             "all", player.getUsername(), "bookshelf"));
+
 
         //Checks if player filled his bookshelf
         checkFirstToFillBookshelf(player);
@@ -517,8 +542,10 @@ public class Model implements TimerInterface {
                 players.get(0):
                 players.get(players.indexOf(player)+1);
     }
+
     /**
      * Returns the next connected player in line.
+     *
      * @param current The player of whom you want to select the next
      * @return The Optional of the next connected player.
      * Or an Empty Optional if there is only 1 player connected.

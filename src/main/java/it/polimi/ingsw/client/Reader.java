@@ -89,6 +89,9 @@ public class Reader extends Thread implements TimerInterface {
                             ArrayList cObj = new ArrayList<>(commonObj);
                             clientState.setGameCommonObjective(cObj);
                         }
+                        case ("commonObjPoints") -> {
+                            clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) message.getContent()));
+                        }
                         case ("publicPoints") -> {
                             int publicPoints = (int) message.getContent();
                             String username = message.getUsername();
