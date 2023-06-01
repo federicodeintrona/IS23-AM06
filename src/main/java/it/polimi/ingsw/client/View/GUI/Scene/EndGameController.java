@@ -81,7 +81,7 @@ public class EndGameController implements Initializable, SceneController{
 
         for (Integer integer : sortPoint) {
             for (String st : clientState.getAllPublicPoints().keySet()) {
-                if (Objects.equals(clientState.getAllPublicPoints().get(st), integer)) {
+                if (Objects.equals(clientState.getAllPublicPoints().get(st), integer) && !result.contains(st)) {
                     result.add(st);
                 }
             }

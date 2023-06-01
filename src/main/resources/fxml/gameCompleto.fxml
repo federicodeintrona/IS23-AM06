@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -98,7 +99,7 @@
                     </image>
                 </ImageView>
                 <Button fx:id="confirmationButton" disable="true" layoutX="-6.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmClick" prefHeight="36.0" prefWidth="86.0" text="Confirm" visible="false" />
-                <Label fx:id="turnLabel" alignment="CENTER" layoutX="-493.0" layoutY="-3.0" prefHeight="25.0" prefWidth="481.0" textFill="WHITE">
+                <Label fx:id="turnLabel" alignment="CENTER" layoutX="2.0" layoutY="-3.0" prefHeight="25.0" prefWidth="350.0" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="15.0" />
                     </font>
@@ -161,12 +162,12 @@
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <children>
-                <Label fx:id="otherPlayerLabel1" contentDisplay="CENTER" layoutX="255.0" layoutY="7.0" prefHeight="19.0" prefWidth="200.0">
+                <Label fx:id="otherPlayerLabel1" contentDisplay="CENTER" disable="true" layoutX="255.0" layoutY="7.0" prefHeight="19.0" prefWidth="200.0" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
                 </Label>
-                <GridPane fx:id="otherPlayerBookshelfGrid2" layoutX="12.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0">
+                <GridPane fx:id="otherPlayerBookshelfGrid2" disable="true" layoutX="12.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0" visible="false">
                     <rowConstraints>
                         <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
@@ -183,26 +184,26 @@
                         <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                 </GridPane>
-                <ImageView fx:id="otherPlayerImage2" fitHeight="136.0" fitWidth="200.0" layoutX="-2.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="otherPlayerImage2" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="-2.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" layoutX="128.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0">
+                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" disable="true" layoutX="128.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0" visible="false">
                <font>
                   <Font size="12.0" />
                </font></Label>
-                <ImageView fx:id="personal2" fitHeight="88.0" fitWidth="60.0" layoutX="142.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="personal2" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="142.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../images/personal_goal_cards/back.jpg" />
                     </image>
                 </ImageView>
-            <Label fx:id="otherPlayerLabel2" contentDisplay="CENTER" layoutX="6.0" layoutY="5.0" prefHeight="19.0" prefWidth="200.0">
+            <Label fx:id="otherPlayerLabel2" contentDisplay="CENTER" disable="true" layoutX="6.0" layoutY="5.0" prefHeight="19.0" prefWidth="200.0" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <GridPane fx:id="otherPlayerBookshelfGrid1" layoutX="261.0" layoutY="34.0" prefHeight="114.0" prefWidth="107.0">
+            <GridPane fx:id="otherPlayerBookshelfGrid1" disable="true" layoutX="261.0" layoutY="34.0" prefHeight="114.0" prefWidth="107.0" visible="false">
                <rowConstraints>
                   <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
@@ -219,27 +220,27 @@
                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
             </GridPane>
-            <ImageView fx:id="otherPlayerImage1" fitHeight="136.0" fitWidth="200.0" layoutX="247.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="otherPlayerImage1" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="247.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" layoutX="377.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0">
+            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" disable="true" layoutX="377.0" layoutY="31.0" prefHeight="36.0" prefWidth="97.0" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <ImageView fx:id="personal1" fitHeight="88.0" fitWidth="60.0" layoutX="391.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="personal1" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="391.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerLabel3" contentDisplay="CENTER" layoutX="506.0" layoutY="7.0" prefHeight="19.0" prefWidth="200.0">
+            <Label fx:id="otherPlayerLabel3" contentDisplay="CENTER" disable="true" layoutX="506.0" layoutY="7.0" prefHeight="19.0" prefWidth="200.0" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <GridPane fx:id="otherPlayerBookshelfGrid3" layoutX="509.0" layoutY="34.0" prefHeight="114.0" prefWidth="107.0">
+            <GridPane fx:id="otherPlayerBookshelfGrid3" disable="true" layoutX="509.0" layoutY="34.0" prefHeight="114.0" prefWidth="107.0" visible="false">
                <rowConstraints>
                   <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
@@ -256,17 +257,17 @@
                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
             </GridPane>
-            <ImageView fx:id="otherPlayerImage3" fitHeight="136.0" fitWidth="200.0" layoutX="495.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="otherPlayerImage3" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="495.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" layoutX="627.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0">
+            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" disable="true" layoutX="627.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <ImageView fx:id="personal3" fitHeight="88.0" fitWidth="60.0" layoutX="639.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="personal3" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="639.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
@@ -298,34 +299,30 @@
         </GridPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
          <children>
-            <ScrollPane layoutX="14.0" layoutY="125.0" prefHeight="294.0" prefWidth="225.0">
+            <ScrollPane layoutX="15.0" layoutY="137.0" prefHeight="294.0" prefWidth="225.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="222.0">
                      <children>
-                        <VBox fx:id="chatBox" layoutX="1.0" layoutY="-1.0" prefHeight="374.0" prefWidth="225.0" />
+                        <VBox fx:id="chatBox" layoutX="-1.0" layoutY="-1.0" prefHeight="374.0" prefWidth="225.0" />
                      </children>
                   </AnchorPane>
               </content>
             </ScrollPane>
-            <Label fx:id="sendMessage" layoutX="15.0" layoutY="427.0" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: white;" text="Label" />
-            <MenuButton fx:id="chatMenu" layoutX="15.0" layoutY="471.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" text="MenuButton">
+            <MenuButton fx:id="chatMenu" layoutX="7.0" layoutY="484.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="241.0" text="MenuButton">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
-            <Button fx:id="enterChatButton" layoutX="98.0" layoutY="505.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="60.0" text="Enter" />
-            <MenuButton fx:id="selectChat" layoutX="14.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" text="MenuButton">
+            <Button fx:id="enterChatButton" layoutX="98.0" layoutY="511.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="60.0" text="Enter" />
+            <MenuButton fx:id="selectChat" layoutX="14.0" layoutY="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" text="MenuButton">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
-            <Label fx:id="classification" layoutX="1.0" layoutY="3.0" prefHeight="80.0" prefWidth="248.0" textFill="WHITE">
-               <font>
-                  <Font name="System Bold Italic" size="13.0" />
-               </font>
-            </Label>
+            <Label fx:id="classification" layoutX="4.0" layoutY="5.0" prefHeight="99.0" prefWidth="248.0" textFill="WHITE" />
+            <TextField fx:id="sendMessage" layoutX="7.0" layoutY="434.0" prefHeight="48.0" prefWidth="241.0" promptText="text" style="-fx-background-color: white;" />
          </children>
       </AnchorPane>
     </children>

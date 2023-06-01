@@ -192,29 +192,6 @@ public class Model implements TimerInterface {
 
         }
 
-        //Notify Board
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                new Matrix(board.getGamesBoard()), "all", "0","board" ));
-
-        //Notify PlayerNames
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                        players.stream().map(Player::getUsername).toList(), "all", "0","playerNames" ));
-
-        //Notify commonObjectives
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                commonObj.stream().map(CommonObjective::getNum).toList(), "all", "0","commonObj" ));
-
-        //Notify commonObjectivesPoints
-        notifier.firePropertyChange(new PropertyChangeEvent(
-                commonObj.stream().map(CommonObjective::getPoints).toList(), "all", "0","commonObjPoints" ));
-
-
-        //Notify curr and next Player
-        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
-                currPlayer.getUsername(), "currPlayer"));
-
-        notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
-                currPlayer.getUsername(), "nextPlayer"));
 
         //Notify game Start
         notifier.firePropertyChange(new PropertyChangeEvent(
@@ -834,6 +811,9 @@ public class Model implements TimerInterface {
         //Notify commonObjectives
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getNum).toList(), p.getUsername(), "0","commonObj" ));
+        //Notify commonObjectivesPoints
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getPoints).toList(), p.getUsername(), "0","commonObjPoints" ));
 
         //Notify currPlayer and nextPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
@@ -855,6 +835,10 @@ public class Model implements TimerInterface {
         //Notify commonObjectives
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getNum).toList(),"all", "0","commonObj" ));
+
+        //Notify commonObjectivesPoints
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getPoints).toList(), "all", "0","commonObjPoints" ));
 
         //Notify currPlayer and nextPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(),"all",
