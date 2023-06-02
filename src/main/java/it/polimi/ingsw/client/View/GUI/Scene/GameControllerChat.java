@@ -690,6 +690,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             alert.setTitle("Update turn");
             alert.setHeaderText("Current game turn");
             alert.setContentText(string);
+            alert.initOwner(guiController.getStage());
             alert.showAndWait();
         }
         else {
@@ -1116,6 +1117,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             alert.setTitle("New message");
             alert.setHeaderText("New Message");
             alert.setContentText("You have a new Public Message");
+            alert.initOwner(guiController.getStage());
             alert.showAndWait();
         }
 
@@ -1156,6 +1158,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 alert.setTitle("New message");
                 alert.setHeaderText("New Message");
                 alert.setContentText("You have a new Public Message");
+                alert.initOwner(guiController.getStage());
                 alert.showAndWait();
             }
         }
