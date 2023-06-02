@@ -317,6 +317,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 //riabilito la finestra di switch delle tile
                 selectedTilesDialog.setVisible(true);
                 selectedTilesDialog.setDisable(false);
+                selectedTilesDialog.setStyle("-fx-background-color: null");
                 //setto lo stato a switch
                 state=State.SWITCH;
             }
@@ -329,6 +330,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         String[] titles = tile.getImage();
         String title = titles==null?null:titles[rand.nextInt(Define.NUMBEROFTILEIMAGES.getI())];
 
+        assert title != null;
         Image image = new Image(title);
         ImageView imageView = new ImageView(image);
 
@@ -955,10 +957,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         String message=sendMessage.getText();
         String receiver=chatMenu.getValue();
 
-        if (message.isEmpty()){
-            showError("Insert message", guiController.getStage());
-        }
-        else {
+
+        if (!message.isEmpty()){
             //TODO invia il chat message
             if (receiver.equals("ALL")){
                 //chat a tutti
