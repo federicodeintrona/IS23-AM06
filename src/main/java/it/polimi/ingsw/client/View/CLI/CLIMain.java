@@ -131,7 +131,7 @@ public class CLIMain implements View {
         }
 
         cliPrint.printChair();
-        cliPrint.printCommonObjective(clientState.getGameCommonObjective(), clientState.getCommonObjectivePoints());
+        cliPrint.printCommonObjective(clientState.getGameCommonObjective());
         cliPrint.playerTurn();
         //ho già stampato il primo turno di gioco
         String curr=clientState.getNextPlayer();
@@ -214,7 +214,7 @@ public class CLIMain implements View {
         }
 
         cliPrint.printChair();
-        cliPrint.printCommonObjective(clientState.getGameCommonObjective(), clientState.getCommonObjectivePoints());
+        cliPrint.printCommonObjective(clientState.getGameCommonObjective());
         cliPrint.playerTurn();
     }
 }

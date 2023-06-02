@@ -126,7 +126,7 @@ public class ReadShell extends Thread {
                 }
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(sub));
             }
-            case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective(), cliMain.getClientState().getCommonObjectivePoints());
+            case "#printcommon" -> cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective());
             case "#printpoints" -> cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
             case "#printmypoint" -> cliMain.getCliPrint().printMyPoints(cliMain.getClientState().getMyPoints());
             case "#printchair" -> cliMain.getCliPrint().printChair();

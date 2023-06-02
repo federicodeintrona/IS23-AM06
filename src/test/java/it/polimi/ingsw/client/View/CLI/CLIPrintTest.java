@@ -167,40 +167,37 @@ class CLIPrintTest {
         CLIMain cliMain=new CLIMain(obj, clientState, networker);
         CLIPrint cliPrint=new CLIPrint(cliMain);
 
-        ArrayList<Integer> list=new ArrayList<>();
-        list.add(8);
-        list.add(8);
 
         ArrayList<Integer> arrayList=new ArrayList<>();
         arrayList.add(1);
         arrayList.add(2);
 
-        cliPrint.printCommonObjective(arrayList, list);
+        cliPrint.printCommonObjective(arrayList);
 
         ArrayList<Integer> arrayList1=new ArrayList<>();
         arrayList1.add(3);
         arrayList1.add(4);
-        cliPrint.printCommonObjective(arrayList1, list);
+        cliPrint.printCommonObjective(arrayList1);
 
         ArrayList<Integer> arrayList2=new ArrayList<>();
         arrayList2.add(5);
         arrayList2.add(6);
-        cliPrint.printCommonObjective(arrayList2, list);
+        cliPrint.printCommonObjective(arrayList2);
 
         ArrayList<Integer> arrayList3=new ArrayList<>();
         arrayList3.add(7);
         arrayList3.add(8);
-        cliPrint.printCommonObjective(arrayList3, list);
+        cliPrint.printCommonObjective(arrayList3);
 
         ArrayList<Integer> arrayList4=new ArrayList<>();
         arrayList4.add(9);
         arrayList4.add(10);
-        cliPrint.printCommonObjective(arrayList4, list);
+        cliPrint.printCommonObjective(arrayList4);
 
         ArrayList<Integer> arrayList5=new ArrayList<>();
         arrayList5.add(11);
         arrayList5.add(12);
-        cliPrint.printCommonObjective(arrayList5, list);
+        cliPrint.printCommonObjective(arrayList5);
 
 
 
