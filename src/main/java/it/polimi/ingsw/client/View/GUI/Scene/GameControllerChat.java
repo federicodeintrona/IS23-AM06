@@ -11,10 +11,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -88,7 +90,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private Label myPointsLabel;
     @FXML
-    private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
+    private Label turnLabel;
     @FXML
     private Button confirmationButton;
     @FXML
@@ -135,6 +137,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private Label newMessage;
     @FXML
+    private ScrollPane chatScroll;
+
+    @FXML
     private Label classification;
 
     @FXML
@@ -167,16 +172,39 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateCommonObjectivePoints();
         updateClassification();
         initializeChatChoice();
+        initializeChat();
     }
 
     private void initializeChatChoice(){
         ArrayList<String> otherPlayer=catchOtherPlayerName(clientState.getAllUsername());
-        otherPlayer.add("ALL");
-        chatMenu.setValue("ALL");
-        chatMenu.getItems().addAll(otherPlayer);
 
         selectChat.setValue("ALL");
+        selectChat.getItems().add("ALL");
         selectChat.getItems().addAll(otherPlayer);
+        selectChat.setOnAction(this::selectWhichChatToShow);
+
+        //lo Scroll Pane si adatta alla dimensione della VBox
+        chatScroll.setContent(publicChatBox);
+        chatScroll.setFitToWidth(true);
+    }
+
+    //TODO
+    private void initializeChat(){
+        //ci sono dei messaggi in chat pubblica
+        if (clientState.getChatController().getPublicChat().getChatMessages().size()!=0){
+            for (int i = clientState.getChatController().getPublicChat().getOldestMessage(); i>=0; i--){
+                updatePublicChat(clientState.getChatController().getPublicChat().getChatMessages().get(i));
+            }
+        }
+
+        //ci sono dei messaggi in qualsiasi chat privata
+        for (String st: clientState.getChatController().getPrivateChats().keySet()){
+            if (clientState.getChatController().getPrivateChat(st).getChatMessages().size()!=0) {
+                for (int i = clientState.getChatController().getPrivateChat(st).getOldestMessage(); i >= 0; i--) {
+                    updatePrivateChat(clientState.getChatController().getPrivateChat(st).getChatMessages().get(i));
+                }
+            }
+        }
     }
 
     private void updateClassification(){
@@ -265,6 +293,25 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
             case ("commonObjPoints") -> {
                 Platform.runLater(this::updateCommonObjectivePoints);
+            }
+            case ("publicChat") -> {
+                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
+                clientState.getChatController().getPublicChat().addMessage(chatMessage);
+                Platform.runLater(() -> {
+                    updatePublicChat(chatMessage);
+                });
+            }
+            case ("privateChat") -> {
+                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
+                if (chatMessage.getUsername().equals(clientState.getMyUsername())){
+                    clientState.getChatController().getPrivateChat(chatMessage.getReceivingUsername()).addMessage(chatMessage);
+                }
+                else {
+                    clientState.getChatController().getPrivateChat(chatMessage.getUsername()).addMessage(chatMessage);
+                }
+                Platform.runLater(() -> {
+                    updatePrivateChat(chatMessage);
+                });
             }
         }
     }
@@ -375,7 +422,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     //aggiorna i punti dei common objective
-    public void updateCommonObjectivePoints(){
+    private void updateCommonObjectivePoints(){
         ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
         String path = "/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
         commonObjectivePoint1.setImage(getImage(path));
@@ -628,16 +675,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     private void updateCurrPlayer() {
         String string;
-        //TODO popup
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
             string="It is YOUR turn";
             turnLabel.setText(string);
+
             //pop up - è il tuo turno
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Update turn");
             alert.setHeaderText("Current game turn");
             alert.setContentText(string);
-            alert.show();
+            alert.showAndWait();
         }
         else {
             string="It is "+clientState.getCurrentPlayer()+" turn";
@@ -955,11 +1002,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private void enterChat(){
         //lettura messaggio e a chi inviarlo
         String message=sendMessage.getText();
-        String receiver=chatMenu.getValue();
+        String receiver=selectChat.getValue();
 
 
         if (!message.isEmpty()){
-            //TODO invia il chat message
             if (receiver.equals("ALL")){
                 //chat a tutti
                 ChatMessage chatMessage=new ChatMessage(clientState.getMyUsername(), message);
@@ -987,23 +1033,32 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         otherPlayerChatBox1.setVisible(false);
         otherPlayerChatBox2.setVisible(false);
         otherPlayerChatBox3.setVisible(false);
+
         //fai vedere solo quella selezionata
         if (chatToShow.equals("ALL")){
             publicChatBox.setVisible(true);
+            chatScroll.setContent(publicChatBox);
+            chatScroll.setFitToWidth(true);
         }
         else if (chatToShow.equals(otherPlayerLabel1.getText())){
             otherPlayerChatBox1.setVisible(true);
+            chatScroll.setContent(otherPlayerChatBox1);
+            chatScroll.setFitToWidth(true);
         }
         else if (chatToShow.equals(otherPlayerLabel2.getText())){
             otherPlayerChatBox2.setVisible(true);
+            chatScroll.setContent(otherPlayerChatBox2);
+            chatScroll.setFitToWidth(true);
         }
         else if (chatToShow.equals(otherPlayerLabel3.getText())){
             otherPlayerChatBox3.setVisible(true);
+            chatScroll.setContent(otherPlayerChatBox3);
+            chatScroll.setFitToWidth(true);
         }
     }
 
     private VBox chatVBox(String username){
-        if (username.equals("ALL")){
+        if (username==null){
             return publicChatBox;
         }
         else {
@@ -1022,16 +1077,62 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
     }
 
-    //TODO aggiorna chat
-    private void updateChat(String username){
-//        Label message=new Label();
-//        message.setText();
-//        chatVBox(username).getChildren().add(message);
+    //aggiorna la chat pubblica
+    private void updatePublicChat(ChatMessage message){
+        Label messageLabel=new Label();
+        messageLabel.setPrefWidth(250);
+        //è il mio messaggio
+        if (message.getUsername().equals(clientState.getMyUsername())){
+            messageLabel.setText(message.getMessage());
 
-        /*
-            in chatBox aggiungi un label sotto a tutti gli altri
+            messageLabel.setAlignment(Pos.CENTER_RIGHT);
+            messageLabel.setStyle("-fx-background-color: #d7fad1");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+        }
+        else {
+            messageLabel.setText(message.getConversation());
 
-            hai un nuovo messaggio in newMessage label o facciamo un popup
-         */
+            messageLabel.setAlignment(Pos.CENTER_LEFT);
+            messageLabel.setStyle("-fx-background-color: #fdfdfd");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+        }
+        Objects.requireNonNull(chatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
+    }
+
+    //aggiorna la chat privata
+    private void updatePrivateChat(ChatMessage message){
+        Label messageLabel=new Label();
+        messageLabel.setPrefWidth(250);
+
+        if (message.getUsername().equals(clientState.getMyUsername())){
+            messageLabel.setText(message.getMessage());
+
+            messageLabel.setAlignment(Pos.CENTER_RIGHT);
+            messageLabel.setStyle("-fx-background-color: #d7fad1");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+
+            Objects.requireNonNull(chatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
+        }
+        else {
+            messageLabel.setText(message.getConversation());
+
+            messageLabel.setAlignment(Pos.CENTER_LEFT);
+            messageLabel.setStyle("-fx-background-color: #fdfdfd");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+
+            Objects.requireNonNull(chatVBox(message.getUsername())).getChildren().add(messageLabel);
+        }
     }
 }

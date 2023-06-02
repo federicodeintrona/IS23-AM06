@@ -157,7 +157,6 @@
                 <Button fx:id="column5" disable="true" layoutX="270.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn5" prefHeight="25.0" prefWidth="42.0" text="5" visible="false" />
                 <Button fx:id="rollbackButton" disable="true" layoutX="-6.0" layoutY="83.0" mnemonicParsing="false" onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false" />
               <ImageView fx:id="personalObjectiveImageView" fitHeight="229.0" fitWidth="152.0" layoutX="330.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="newMessage" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="323.0" layoutY="93.0" prefHeight="25.0" prefWidth="184.0" />
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -189,7 +188,7 @@
                         <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" layoutX="128.0" layoutY="26.0" prefHeight="36.0" prefWidth="97.0">
+                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" layoutX="128.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0">
                <font>
                   <Font size="15.0" />
                </font></Label>
@@ -225,7 +224,7 @@
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" layoutX="377.0" layoutY="26.0" prefHeight="36.0" prefWidth="97.0">
+            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" layoutX="377.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -262,7 +261,7 @@
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" layoutX="627.0" layoutY="23.0" prefHeight="42.0" prefWidth="97.0">
+            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" layoutX="627.0" layoutY="23.0" prefHeight="50.0" prefWidth="97.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -299,23 +298,22 @@
         </GridPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
          <children>
-            <ScrollPane layoutX="15.0" layoutY="137.0" prefHeight="294.0" prefWidth="225.0">
+            <ScrollPane fx:id="chatScroll" layoutX="15.0" layoutY="137.0" prefHeight="316.0" prefWidth="225.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="217.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="314.0" prefWidth="217.0">
                      <children>
-                        <VBox fx:id="publicChatBox" layoutX="-1.0" layoutY="-1.0" prefHeight="374.0" prefWidth="225.0" />
-                        <VBox fx:id="otherPlayerChatBox1" prefHeight="374.0" prefWidth="225.0" visible="false" />
-                        <VBox fx:id="otherPlayerChatBox2" prefHeight="374.0" prefWidth="225.0" visible="false" />
-                        <VBox fx:id="otherPlayerChatBox3" prefHeight="374.0" prefWidth="225.0" visible="false" />
+                        <VBox fx:id="publicChatBox" layoutX="5.0" layoutY="-3.0" prefHeight="313.0" prefWidth="200.0" />
+                        <VBox fx:id="otherPlayerChatBox2" layoutX="6.0" layoutY="-1.0" prefHeight="316.0" prefWidth="200.0" visible="false" />
+                        <VBox fx:id="otherPlayerChatBox3" layoutX="6.0" prefHeight="316.0" prefWidth="200.0" visible="false" />
+                        <VBox fx:id="otherPlayerChatBox1" layoutX="6.0" layoutY="1.0" prefHeight="316.0" prefWidth="200.0" visible="false" />
                      </children>
                   </AnchorPane>
               </content>
             </ScrollPane>
             <Button fx:id="enterChatButton" layoutX="98.0" layoutY="511.0" mnemonicParsing="false" onAction="#enterChatClick" prefHeight="24.0" prefWidth="60.0" text="Enter" />
             <Label fx:id="classification" layoutX="4.0" layoutY="5.0" prefHeight="99.0" prefWidth="248.0" textFill="WHITE" />
-            <TextField fx:id="sendMessage" layoutX="7.0" layoutY="434.0" onKeyPressed="#enterChatEnter" prefHeight="48.0" prefWidth="241.0" promptText="text" style="-fx-background-color: white;" />
+            <TextField fx:id="sendMessage" layoutX="7.0" layoutY="455.0" onKeyPressed="#enterChatEnter" prefHeight="48.0" prefWidth="241.0" promptText="text" style="-fx-background-color: white;" />
             <ChoiceBox fx:id="selectChat" layoutX="14.0" layoutY="104.0" prefHeight="25.0" prefWidth="225.0" />
-            <ChoiceBox fx:id="chatMenu" layoutX="7.0" layoutY="483.0" prefHeight="25.0" prefWidth="241.0" />
          </children>
       </AnchorPane>
     </children>

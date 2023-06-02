@@ -7,6 +7,7 @@ import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -66,7 +67,10 @@ public class LoginController implements SceneController, Initializable {
     //mostra gli errori - username già preso
     @Override
     public void showError(String error, Stage stage) {
-        usernameStatus.setText(error);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(error);
+        alert.initOwner(stage);
+        alert.showAndWait();
     }
 
 

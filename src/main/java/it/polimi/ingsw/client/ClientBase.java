@@ -82,7 +82,7 @@ public class ClientBase extends Application{
             stage.setWidth(1300);
             stage.setHeight(750);
             stage.setResizable(false);
-            stage.toFront();
+//            stage.toFront();
             stage.show();
 
             stage.setOnCloseRequest(event -> {
