@@ -320,13 +320,19 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     public void showError(String error, Stage stage){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(error);
+        alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
+                                        "-fx-font-size: 18px;" +
+                                        "-fx-font-style: italic;"+
+                                        "-fx-text-fill: #070707;"+
+                                        "-fx-background-color: #f70000;");
+
         alert.initOwner(stage);
         alert.showAndWait();
 
-        revert();
+        goBack();
     }
 
-    private void revert(){
+    private void goBack(){
 
         switch (state){
             case REMOVE -> {
@@ -1103,6 +1109,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
         Objects.requireNonNull(chatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
+
+        if (!selectChat.getValue().equals("ALL")){
+            //popup ti è arrivato un messaggio
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("New message");
+            alert.setHeaderText("New Message");
+            alert.setContentText("You have a new Public Message");
+            alert.showAndWait();
+        }
+
     }
 
     //aggiorna la chat privata
@@ -1133,6 +1149,18 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
 
             Objects.requireNonNull(chatVBox(message.getUsername())).getChildren().add(messageLabel);
+
+            if (!selectChat.getValue().equals(message.getUsername())){
+                //popup ti è arrivato un messaggio
+                Alert alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("New message");
+                alert.setHeaderText("New Message");
+                alert.setContentText("You have a new Public Message");
+                alert.showAndWait();
+            }
         }
     }
 }
+
+
+//TODO mostrare popup hai n nuovi messaggi

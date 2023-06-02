@@ -22,9 +22,9 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <VBox alignment="CENTER" prefHeight="182.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="448.0" text="Enter your username" textFill="WHITE">
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="223.0" styleClass="enterUsername" stylesheets="@../style.css" text="Enter your username" textFill="WHITE">
             <font>
-                <Font size="20.0" />
+                <Font name="System Bold" size="20.0" />
             </font>
             <VBox.margin>
                 <Insets left="20.0" right="20.0" />
@@ -35,17 +35,9 @@
             <Insets left="80.0" right="80.0" top="8.0" />
          </VBox.margin>
       </TextField>
-        <Label fx:id="usernameStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="449.0">
-            <VBox.margin>
-                <Insets bottom="5.0" top="10.0" />
-            </VBox.margin>
-         <font>
-            <Font size="17.0" />
-         </font>
-        </Label>
         <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#loginClick" prefHeight="24.0" prefWidth="82.0" text="Login">
          <VBox.margin>
-            <Insets top="5.0" />
+            <Insets top="26.0" />
          </VBox.margin></Button>
     </VBox>
 </GridPane>

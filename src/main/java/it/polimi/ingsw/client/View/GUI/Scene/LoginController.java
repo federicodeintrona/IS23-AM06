@@ -24,10 +24,6 @@ public class LoginController implements SceneController, Initializable {
 
     @FXML
     private TextField usernameField; //username inserito
-    @FXML
-    private Button loginButton; //bottone di login
-    @FXML
-    private Label usernameStatus; //stato dell'username - errore
 
     //inizializzazione
     @Override
@@ -39,6 +35,7 @@ public class LoginController implements SceneController, Initializable {
     //leggi l'username e invia il messaggio al server
     private void login(){
         String username=usernameField.getText();
+        usernameField.clear();
 
         if (username.isEmpty()){
             showError("Insert username", guiController.getStage());
@@ -69,6 +66,12 @@ public class LoginController implements SceneController, Initializable {
     public void showError(String error, Stage stage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(error);
+        alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
+                                        "-fx-font-size: 18px;" +
+                                        "-fx-font-style: italic;"+
+                                        "-fx-text-fill: #070707;"+
+                                        "-fx-background-color: #f70000;");
+
         alert.initOwner(stage);
         alert.showAndWait();
     }

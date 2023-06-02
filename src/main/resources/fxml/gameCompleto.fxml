@@ -311,9 +311,9 @@
               </content>
             </ScrollPane>
             <Button fx:id="enterChatButton" layoutX="98.0" layoutY="511.0" mnemonicParsing="false" onAction="#enterChatClick" prefHeight="24.0" prefWidth="60.0" text="Enter" />
-            <Label fx:id="classification" layoutX="4.0" layoutY="5.0" prefHeight="99.0" prefWidth="248.0" textFill="WHITE" />
+            <Label fx:id="classification" layoutX="4.0" layoutY="5.0" prefHeight="99.0" prefWidth="248.0" styleClass="classification" textFill="WHITE" />
             <TextField fx:id="sendMessage" layoutX="7.0" layoutY="455.0" onKeyPressed="#enterChatEnter" prefHeight="48.0" prefWidth="241.0" promptText="text" style="-fx-background-color: white;" />
-            <ChoiceBox fx:id="selectChat" layoutX="14.0" layoutY="104.0" prefHeight="25.0" prefWidth="225.0" />
+            <ChoiceBox fx:id="selectChat" layoutX="14.0" layoutY="108.0" prefHeight="25.0" prefWidth="225.0" />
          </children>
       </AnchorPane>
     </children>

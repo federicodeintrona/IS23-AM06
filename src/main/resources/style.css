@@ -22,3 +22,19 @@
 .selectedTiles{
     -fx-background-color: #a5552a;
 }
+
+.enterUsername{
+    -fx-background-image: url("images/misc/base_pagina2.jpg");
+}
+
+.enterNumOfPlayer{
+    -fx-background-image: url("images/misc/base_pagina2.jpg");
+}
+
+.endGameResult{
+    -fx-background-image: url("images/misc/base_pagina2.jpg");
+}
+
+.classification{
+    -fx-background-image: url("images/misc/base_pagina2.jpg");
+}

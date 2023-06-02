@@ -18,9 +18,9 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="391.0" text="Waiting for other player..." textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="391.0" text="Waiting for other players..." textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold Italic" size="30.0" />
          </font>
       </Label>
    </children>
