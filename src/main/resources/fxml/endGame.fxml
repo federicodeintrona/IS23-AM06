@@ -9,20 +9,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="loginBackground" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.EndGameController">
+<GridPane maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" styleClass="loginBackground" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.EndGameController">
     <columnConstraints>
         <ColumnConstraints />
-        <ColumnConstraints hgrow="SOMETIMES" />
-        <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="55.0" prefWidth="55.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="490.0" minWidth="490.0" prefWidth="490.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="55.0" prefWidth="55.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="133.0" minHeight="133.0" prefHeight="133.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="133.0" minHeight="133.0" prefHeight="133.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="133.0" minHeight="133.0" prefHeight="133.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <VBox alignment="CENTER" prefHeight="133.0" prefWidth="444.0" styleClass="endGameResult" GridPane.columnIndex="2" GridPane.rowIndex="1">
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="448.0" text="Results: " textFill="WHITE">
+    <VBox alignment="CENTER" maxHeight="133.0" maxWidth="444.0" minHeight="133.0" minWidth="444.0" prefHeight="133.0" prefWidth="444.0" styleClass="endGameResult" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="26.0" maxWidth="494.0" minHeight="26.0" minWidth="494.0" prefHeight="26.0" prefWidth="494.0" text="Results: " textFill="WHITE">
             <font>
                 <Font name="System Bold Italic" size="22.0" />
             </font>
@@ -30,34 +30,31 @@
                 <Insets left="20.0" right="20.0" />
             </VBox.margin>
         </Label>
-      <Label fx:id="firstPlayer" contentDisplay="CENTER" prefHeight="26.0" prefWidth="494.0" textFill="WHITE">
+      <Label fx:id="firstPlayer" contentDisplay="CENTER" maxHeight="26.0" maxWidth="494.0" minHeight="26.0" minWidth="494.0" prefHeight="26.0" prefWidth="494.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="secondPlayer" prefHeight="26.0" prefWidth="496.0" textFill="WHITE">
+      <Label fx:id="secondPlayer" maxHeight="26.0" maxWidth="494.0" minHeight="26.0" minWidth="494.0" prefHeight="26.0" prefWidth="494.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="thirdPlayer" prefHeight="28.0" prefWidth="497.0" textFill="WHITE">
+      <Label fx:id="thirdPlayer" maxHeight="26.0" maxWidth="494.0" minHeight="26.0" minWidth="494.0" prefHeight="26.0" prefWidth="494.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="fourthPlayer" prefHeight="29.0" prefWidth="496.0" textFill="WHITE">
+      <Label fx:id="fourthPlayer" maxHeight="26.0" maxWidth="494.0" minHeight="26.0" minWidth="494.0" prefHeight="26.0" prefWidth="494.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
     </VBox>
-   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
-      <children>
-         <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="39.0" prefHeight="78.0" prefWidth="494.0" textFill="WHITE">
-            <font>
-               <Font name="System Bold Italic" size="40.0" />
-            </font>
-         </Label>
-      </children>
-   </AnchorPane>
+   <AnchorPane maxHeight="200.0" maxWidth="200.0" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+   <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="470.0" minHeight="78.0" minWidth="470.0" prefHeight="78.0" prefWidth="470.0" textFill="WHITE" GridPane.columnIndex="2">
+      <font>
+         <Font name="System Bold Italic" size="40.0" />
+      </font>
+   </Label>
 </GridPane>
