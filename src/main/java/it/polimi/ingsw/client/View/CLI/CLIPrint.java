@@ -355,12 +355,14 @@ public class CLIPrint implements PropertyChangeListener {
     }
 
     //stampa i common objective
-    public void printCommonObjective(ArrayList<Integer> commonObjective){
+    public void printCommonObjective(ArrayList<Integer> commonObjective, ArrayList<Integer> commonObjectivePoint){
         synchronized (cliMain.getLock()) {
             System.out.println("\nCOMMON OBJECTIVE 1:");
             readJSONCO(commonObjective.get(0));
+            System.out.println("POINTS: "+commonObjectivePoint.get(0));
             System.out.println("\nCOMMON OBJECTIVE 2:");
             readJSONCO(commonObjective.get(1));
+            System.out.println("POINTS: "+commonObjectivePoint.get(1));
         }
     }
 
