@@ -4,14 +4,11 @@ import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
-import it.polimi.ingsw.client.View.View;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
