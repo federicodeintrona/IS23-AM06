@@ -155,24 +155,23 @@ public class Model implements TimerInterface {
         commonobjInit();
         personalobjInit();
 
-
         //Add the views as change listeners
         for (VirtualView v : virtualViews){
             notifier.addPropertyChangeListener("all",v);
             notifier.addPropertyChangeListener(v.getUsername(),v);
         }
 
-
+        //Randomize the first player
         Random random = new Random();
         int index = random.nextInt(players.size());
         chairPlayer = players.get(index);
         currPlayer = chairPlayer;
         selectNext();
 
-
+        //Notify data to the virtual views
         notifyCommonData();
 
-        //Initializes the arrays of points
+        //Initializes the arrays of points and notify data
         for(Player p : players){
             privatePoints.add(p.getPrivatePoint());
             publicPoints.add(p.getPublicPoint());
@@ -631,7 +630,7 @@ public class Model implements TimerInterface {
      */
     private void selectWInner(){
         Player winner = connectedPlayers == 1 ?
-                firstConnectedPlayer() :
+                disconnectionWinner() :
                 playerWithMostPoints();
 
         notifier.firePropertyChange(
@@ -643,10 +642,14 @@ public class Model implements TimerInterface {
      * Return the first connected player
      * @return the first connected player
      */
-    private Player firstConnectedPlayer(){
+    private Player disconnectionWinner(){
 
         for(Player p : players){
             if (!p.isDisconnected()) {
+
+                notifier.firePropertyChange(
+                        new PropertyChangeEvent(true,"all","0","disconnectionWinner"));
+
                 return p;
             }
         }

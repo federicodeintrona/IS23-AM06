@@ -117,6 +117,9 @@ public class Reader extends Thread implements TimerInterface {
                             String winner = (String) message.getContent();
                             clientState.setWinnerPlayer(winner);
                         }
+                        case ("disconnectionWinner") ->{
+                            clientState.setDisconnectionWinner(true);
+                        }
                         case ("start") -> {
                             Boolean start = (Boolean) message.getContent();
                             clientState.setGameHasStarted(start);
