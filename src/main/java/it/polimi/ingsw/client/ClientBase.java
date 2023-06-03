@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ClientBase extends Application{
@@ -18,39 +19,15 @@ public class ClientBase extends Application{
     public static void main( String[] args ) {
         try {
             Scanner scanner = new Scanner(System.in);
-            Object lock = new Object();
-            ClientState state = new ClientState(lock);
-
-            System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
-            String decision = scanner.nextLine();
-            decision=decision.toUpperCase();
-
-            System.out.println("Which host do you use?");
-            String host = scanner.nextLine();
-
-            if (host == null) {
-                System.out.printf("You selected the default host: localhost");
-                host = "localhost";
-            }
-            Networker networker;
-
-            if (decision.equalsIgnoreCase("RMI")) {
-                  networker = new NetworkerRmi(state,host);
-            }else networker = new NetworkerTcp(state,host);
 
 
             System.out.print("Which User Interface do you choose? (CLI/GUI): ");
-            decision = scanner.nextLine();
+            String decision = scanner.nextLine();
             decision=decision.toUpperCase();
             if (decision.equalsIgnoreCase("CLI")) {
-                CLIMain cli = new CLIMain(lock, state, networker);
-                networker.setView(cli);
-                networker.initializeConnection();
+                CLIMain cli = new CLIMain();
                 cli.runUI();
             } else {
-                GUIControllerStatic.setGuiController(new GUIController(networker, state));
-                networker.setView(GUIControllerStatic.getGuiController());
-                networker.initializeConnection();
                 launch();
 
             }
@@ -66,7 +43,11 @@ public class ClientBase extends Application{
     public void start(Stage stage) throws Exception {
         try {
 
-            Parent root = FXMLLoader.load(getClass().getResource(Scenes.Login.getName()));
+            ClientState clientState = new ClientState(new Object());
+            GUIControllerStatic.setGuiController(new GUIController(clientState));
+
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Scenes.Login.getName())));
             Scene scene=new Scene(root);
 
             GUIController guiController= GUIControllerStatic.getGuiController();

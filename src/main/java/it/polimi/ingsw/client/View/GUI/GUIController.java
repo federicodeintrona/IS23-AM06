@@ -20,7 +20,7 @@ public class GUIController implements View {
     private  Stage stage;
     private  Scene scene;
     private  Parent root;
-    private  final Networker networker;
+    private   Networker networker;
     private final ClientState state;
     private SceneController sceneController;
 
@@ -29,13 +29,12 @@ public class GUIController implements View {
         return state;
     }
 
-    public GUIController(Networker networker, ClientState state) {
-        this.networker = networker;
+
+    public GUIController( ClientState state) {
         this.state=state;
         state.addListener(this,"start");
         state.addListener(this,"end");
     }
-
 
     //invia i messaggi dal client al server
     //client -> networker -> server
@@ -128,5 +127,9 @@ public class GUIController implements View {
 
     public Parent getRoot() {
         return root;
+    }
+
+    public void setNetworker(Networker networker) {
+        this.networker = networker;
     }
 }

@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.NetworkerRmi;
+import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.client.View.View;
@@ -9,24 +11,28 @@ import it.polimi.ingsw.utils.Messages.Message;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
+import java.rmi.RemoteException;
+import java.util.Scanner;
 
 public class CLIMain implements View {
 
-    private final Object lock; //su cosa lockare - comune con ClientState
-    private final ClientState clientState; //da dove leggere cambiamenti view
-    private final Networker net; //a chi mandare messaggi
+    private final Object lock ; //su cosa lockare - comune con ClientState
+    private ClientState clientState ; //da dove leggere cambiamenti view
+    private  Networker net; //a chi mandare messaggi
     private static CLIPrint cliPrint;
     private static ReadShell readShell;
     private static ChatHandler chatHandler;
     private boolean IHaveToRequestTheUsername=true;
     private Thread th1;
 
+    public CLIMain() {
+        this.lock=new Object();
+    }
+
     public CLIMain(Object lock, ClientState clientState, Networker net) {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
-        clientState.addListener(this);
-        //net.setUserInterface(this);
     }
 
     public Object getLock() {
@@ -88,7 +94,32 @@ public class CLIMain implements View {
     }
 
 
-    public void runUI() {
+    public void runUI() throws RemoteException {
+        Scanner scanner = new Scanner(System.in);
+        clientState = new ClientState(this.lock);
+        clientState.addListener(this);
+
+        System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
+        String decision = scanner.nextLine();
+        decision=decision.toUpperCase();
+
+        System.out.println("Which host do you use?");
+        String host = scanner.nextLine();
+
+        if (host == null) {
+            System.out.printf("You selected the default host: localhost");
+            host = "localhost";
+        }
+
+        if (decision.equalsIgnoreCase("RMI")) {
+            net = new NetworkerRmi(clientState,host);
+        }else net = new NetworkerTcp(clientState,host);
+
+
+        net.setView(this);
+        net.initializeConnection();
+
+
         cliPrint=new CLIPrint(this);
         readShell=new ReadShell(this);
 
