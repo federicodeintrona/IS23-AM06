@@ -30,6 +30,9 @@ public class LoginController implements SceneController, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         guiController.setSceneController(this);
 
+        usernameField.setPromptText("username");
+        usernameField.setText("username");
+
     }
 
     //leggi l'username e invia il messaggio al server
@@ -61,20 +64,7 @@ public class LoginController implements SceneController, Initializable {
         }
     }
 
-    //mostra gli errori - username già preso
-    @Override
-    public void showError(String error, Stage stage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(error);
-        alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
-                                        "-fx-font-size: 18px;" +
-                                        "-fx-font-style: italic;"+
-                                        "-fx-text-fill: #070707;"+
-                                        "-fx-background-color: #f70000;");
 
-        alert.initOwner(stage);
-        alert.showAndWait();
-    }
 
 
 }
