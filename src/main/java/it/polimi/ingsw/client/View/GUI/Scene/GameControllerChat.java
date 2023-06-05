@@ -37,7 +37,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
-//TODO da sistemare - NON completo
 public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
@@ -188,7 +187,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         chatScroll.setFitToWidth(true);
     }
 
-    //TODO
     private void initializeChat(){
         //ci sono dei messaggi in chat pubblica
         if (clientState.getChatController().getPublicChat().getChatMessages().size()!=0){
@@ -257,7 +255,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                         updateBoard();
                     }
                     else {
-                        updateBoard();
+                        reinitializeBoard();
                         initializeBoardGrid();
                     }
                 });
@@ -292,7 +290,11 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 });
             }
             case ("commonObjPoints") -> {
-                Platform.runLater(this::updateCommonObjectivePoints);
+                Platform.runLater(() -> {
+                    commonObjectivePoint1.getImage().cancel();
+                    commonObjectivePoint2.getImage().cancel();
+                    updateCommonObjectivePoints();
+                });
             }
             case ("publicChat") -> {
                 ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
@@ -409,6 +411,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     //la metrice è 11x11 ==> getTile -1
     private void initializeBoardGrid(){
         Matrix matrix=clientState.getBoard();
+        //TODO
+
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
             for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
                 if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
@@ -573,6 +577,17 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
+    private void reinitializeBoard(){
+        for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
+            for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
+
+                int finalJ = j;
+                int finalI = i;
+                boardGrid.getChildren().removeIf(node -> GridPane.getColumnIndex(node)== finalJ && GridPane.getRowIndex(node)== finalI);
+
+            }
+        }
+    }
     private void updateBoard() {
         Matrix matrix=clientState.getBoard();
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
