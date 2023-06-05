@@ -150,6 +150,15 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private ImageView commonObjectivePoint2;
 
+    @FXML
+    private ImageView myChair;
+    @FXML
+    private ImageView otherChair1;
+    @FXML
+    private ImageView otherChair2;
+    @FXML
+    private ImageView otherChair3;
+
     private State state = State.REMOVE;
 
     @Override
@@ -172,6 +181,27 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateClassification();
         initializeChatChoice();
         initializeChat();
+//        initializeChair();
+    }
+
+    //TODO sistemare la sedia
+    private void initializeChair(){
+        if (clientState.getChair().equals(clientState.getMyUsername())){
+            myChair.setVisible(true);
+            myChair.setDisable(false);
+        }
+        else if (clientState.getChair().equals(otherPlayerLabel1.getText())){
+            otherChair1.setVisible(true);
+            otherChair1.setDisable(false);
+        }
+        else if (clientState.getChair().equals(otherPlayerLabel2.getText())){
+            otherChair2.setVisible(true);
+            otherChair2.setDisable(false);
+        }
+        else if (clientState.getChair().equals(otherPlayerLabel3.getText())){
+            otherChair3.setVisible(true);
+            otherChair3.setDisable(false);
+        }
     }
 
     private void initializeChatChoice(){

@@ -157,6 +157,11 @@
                 <Button fx:id="column5" disable="true" layoutX="270.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn5" prefHeight="25.0" prefWidth="42.0" text="5" visible="false" />
                 <Button fx:id="rollbackButton" disable="true" layoutX="-6.0" layoutY="83.0" mnemonicParsing="false" onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false" />
               <ImageView fx:id="personalObjectiveImageView" fitHeight="229.0" fitWidth="152.0" layoutX="330.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="myChair" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="267.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/misc/firstplayertoken.png" />
+               </image>
+            </ImageView>
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -269,6 +274,21 @@
             <ImageView fx:id="personal3" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="639.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/personal_goal_cards/back.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherChair2" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="201.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/misc/firstplayertoken.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherChair1" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="452.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/misc/firstplayertoken.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherChair3" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="702.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/misc/firstplayertoken.png" />
                </image>
             </ImageView>
             </children>
