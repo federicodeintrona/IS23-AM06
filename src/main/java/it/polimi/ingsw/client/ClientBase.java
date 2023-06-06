@@ -19,17 +19,13 @@ public class ClientBase extends Application{
     public static void main( String[] args ) {
         try {
             Scanner scanner = new Scanner(System.in);
-
-
             System.out.print("Which User Interface do you choose? (CLI/GUI): ");
             String decision = scanner.nextLine();
-            decision=decision.toUpperCase();
             if (decision.equalsIgnoreCase("CLI")) {
                 CLIMain cli = new CLIMain();
                 cli.runUI();
             } else {
                 launch();
-
             }
         } catch (RemoteException e) {
                 e.printStackTrace();
