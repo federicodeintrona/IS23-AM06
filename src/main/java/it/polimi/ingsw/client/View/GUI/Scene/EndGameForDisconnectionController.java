@@ -18,13 +18,11 @@ public class EndGameForDisconnectionController implements SceneController, Initi
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         guiController.setSceneController(this);
-
         winnerPlayer();
     }
 
     private void winnerPlayer(){
-        String winner = null; //TODO
-
-        winnerPlayer.setText("The winner is: "+winner);
+        String winner = guiController.getState().getWinnerPlayer();
+        winnerPlayer.setText(winner+" is the last player so...\nThe winner is: "+winner+"\nCOGLIONE :)");
     }
 }

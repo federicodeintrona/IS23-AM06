@@ -7,6 +7,7 @@ public enum Scenes {
     NumOfPlayers("/fxml/numberOfPlayer.fxml","New Game"),
     Waiting("/fxml/waiting.fxml","Waiting Page"),
     Game("/fxml/gameCompleto.fxml","MyShelfie"),
+    DisconnectionEnd("/fxml/EndGameForDisconnection.fxml","Winner Page"),
     Endgame("/fxml/endGame.fxml","Winner Page");
 
     private final String name;

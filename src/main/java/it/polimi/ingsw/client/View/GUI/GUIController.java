@@ -85,7 +85,10 @@ public class GUIController implements View {
                 changeScene(Scenes.Game);;
             }
             case "end" -> {
-                changeScene(Scenes.Endgame);
+                if(state.isDisconnectionWinner()){
+                    changeScene(Scenes.DisconnectionEnd);
+                } else changeScene(Scenes.Endgame);
+
             }
         }
     }
