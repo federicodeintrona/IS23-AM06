@@ -63,6 +63,7 @@ public class EndGameController implements Initializable, SceneController{
     //stampa il vincitore
     public void printWinner(String player){
         winnerPlayer.setText(player);
+        winnerPlayer.setWrapText(true);
     }
 
     //ordina i giocatori in base a quanti punti hanno ottenuto durante il gioco
@@ -81,7 +82,7 @@ public class EndGameController implements Initializable, SceneController{
 
         for (Integer integer : sortPoint) {
             for (String st : clientState.getAllPublicPoints().keySet()) {
-                if (Objects.equals(clientState.getAllPublicPoints().get(st), integer)) {
+                if (Objects.equals(clientState.getAllPublicPoints().get(st), integer) && !result.contains(st)) {
                     result.add(st);
                 }
             }

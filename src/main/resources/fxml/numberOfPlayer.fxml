@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -21,23 +22,21 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <VBox alignment="CENTER" prefHeight="182.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <Label fx:id="firstUsernameLabel" alignment="CENTER" layoutX="21.0" layoutY="89.0" prefHeight="17.0" prefWidth="353.0" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="8.0" />
-         </VBox.margin>
-      </Label>
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="448.0" text="Enter number of player " textFill="WHITE">
-            <font>
-                <Font size="20.0" />
-            </font>
-            <VBox.margin>
-                <Insets left="20.0" right="20.0" top="8.0" />
-            </VBox.margin>
-        </Label>
-      <ChoiceBox fx:id="numberOfPlayerBox" prefWidth="150.0">
+      <AnchorPane maxHeight="80.0" maxWidth="415.0" minHeight="80.0" minWidth="346.0" prefHeight="80.0" prefWidth="346.0" styleClass="enterNumOfPlayer">
+         <children>
+            <Label fx:id="firstUsernameLabel" alignment="CENTER" layoutX="31.0" layoutY="14.0" prefHeight="17.0" prefWidth="353.0" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="51.0" prefHeight="30.0" prefWidth="239.0" text="Enter number of player " textFill="WHITE">
+                  <font>
+                      <Font name="System Bold" size="20.0" />
+                  </font>
+              </Label>
+         </children>
+      </AnchorPane>
+      <ChoiceBox fx:id="numberOfPlayerBox" onKeyPressed="#setNumberOfPlayerBoxEnter" prefWidth="150.0">
          <VBox.margin>
             <Insets top="8.0" />
          </VBox.margin></ChoiceBox>

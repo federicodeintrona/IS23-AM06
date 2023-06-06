@@ -45,6 +45,7 @@ public class GUIController implements View {
             case ADD_TO_BOOKSHELF -> networker.addTilesToBookshelf(message);
             case USERNAME -> networker.firstConnection(message);
             case NUM_OF_PLAYERS -> networker.numberOfPlayersSelection(message);
+            case CHAT -> networker.chat(message);
         }
     }
 

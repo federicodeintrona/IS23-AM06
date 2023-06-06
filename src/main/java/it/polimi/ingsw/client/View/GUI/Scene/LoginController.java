@@ -7,6 +7,7 @@ import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,24 +24,24 @@ public class LoginController implements SceneController, Initializable {
 
     @FXML
     private TextField usernameField; //username inserito
-    @FXML
-    private Button loginButton; //bottone di login
-    @FXML
-    private Label usernameStatus; //stato dell'username - errore
 
     //inizializzazione
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         guiController.setSceneController(this);
 
+        usernameField.setPromptText("username");
+        usernameField.setText("username");
+
     }
 
     //leggi l'username e invia il messaggio al server
     private void login(){
         String username=usernameField.getText();
+        usernameField.clear();
 
         if (username.isEmpty()){
-            usernameStatus.setText("Inserire username");
+            showError("Insert username", guiController.getStage());
         }
         else {
             guiController.getState().setMyUsername(username);
@@ -63,11 +64,7 @@ public class LoginController implements SceneController, Initializable {
         }
     }
 
-    //mostra gli errori - username già preso
-    @Override
-    public void showError(String error, Stage stage) {
-        usernameStatus.setText(error);
-    }
+
 
 
 }

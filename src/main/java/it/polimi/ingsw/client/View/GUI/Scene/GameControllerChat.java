@@ -11,15 +11,21 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -27,10 +33,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
-//TODO da sistemare - NON completo
 public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
@@ -83,7 +89,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private Label myPointsLabel;
     @FXML
-    private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
+    private Label turnLabel;
     @FXML
     private Button confirmationButton;
     @FXML
@@ -110,12 +116,48 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private Button column4;
     @FXML
     private Button column5;
+
     @FXML
-    private VBox chatBox;
+    private VBox publicChatBox;
     @FXML
-    private Label sendMessage;
+    private VBox otherPlayerChatBox1;
     @FXML
-    private MenuButton selectSendMessage;
+    private VBox otherPlayerChatBox2;
+    @FXML
+    private VBox otherPlayerChatBox3;
+    @FXML
+    private ChoiceBox<String> chatMenu;
+    @FXML
+    private TextField sendMessage;
+    @FXML
+    private Button enterChatButton;
+    @FXML
+    private ChoiceBox<String> selectChat;
+    @FXML
+    private Label newMessage;
+    @FXML
+    private ScrollPane chatScroll;
+
+    @FXML
+    private Label classification;
+
+    @FXML
+    private ImageView commonObjectiveImage1;
+    @FXML
+    private ImageView commonObjectivePoint1;
+    @FXML
+    private ImageView commonObjectiveImage2;
+    @FXML
+    private ImageView commonObjectivePoint2;
+
+    @FXML
+    private ImageView myChair;
+    @FXML
+    private ImageView otherChair1;
+    @FXML
+    private ImageView otherChair2;
+    @FXML
+    private ImageView otherChair3;
 
     private State state = State.REMOVE;
 
@@ -133,13 +175,102 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
         initializeotherPlayerLabel();
         updateMyPointsLabel();
-        updateOtherPlayerPointsLabel();
+        updateAllPlayerPoints();
         updateCurrPlayer();
-
+        updateCommonObjectivePoints();
+        updateClassification();
+        initializeChatChoice();
+        initializeChat();
+        initializeChair();
     }
 
-    public void otherPlayerInitialize(){
-        //TODO
+    //TODO sistemare la sedia
+    private void initializeChair(){
+        if (clientState.getChair().equals(clientState.getMyUsername())){
+            myChair.setVisible(true);
+            myChair.setDisable(false);
+        }
+        else if (clientState.getChair().equals(otherPlayerLabel1.getText())){
+            otherChair1.setVisible(true);
+            otherChair1.setDisable(false);
+        }
+        else if (clientState.getChair().equals(otherPlayerLabel2.getText())){
+            otherChair2.setVisible(true);
+            otherChair2.setDisable(false);
+        }
+        else if (clientState.getChair().equals(otherPlayerLabel3.getText())){
+            otherChair3.setVisible(true);
+            otherChair3.setDisable(false);
+        }
+    }
+
+    private void initializeChatChoice(){
+        ArrayList<String> otherPlayer=catchOtherPlayerName(clientState.getAllUsername());
+
+        selectChat.setValue("ALL");
+        selectChat.getItems().add("ALL");
+        selectChat.getItems().addAll(otherPlayer);
+        selectChat.setOnAction(this::selectWhichChatToShow);
+
+        //lo Scroll Pane si adatta alla dimensione della VBox
+        chatScroll.setContent(publicChatBox);
+        chatScroll.setFitToWidth(true);
+    }
+
+    private void initializeChat(){
+        //ci sono dei messaggi in chat pubblica
+        if (clientState.getChatController().getPublicChat().getChatMessages().size()!=0){
+            for (int i = clientState.getChatController().getPublicChat().getOldestMessage(); i>=0; i--){
+                updatePublicChat(clientState.getChatController().getPublicChat().getChatMessages().get(i));
+            }
+        }
+
+        //ci sono dei messaggi in qualsiasi chat privata
+        for (String st: clientState.getChatController().getPrivateChats().keySet()){
+            if (clientState.getChatController().getPrivateChat(st).getChatMessages().size()!=0) {
+                for (int i = clientState.getChatController().getPrivateChat(st).getOldestMessage(); i >= 0; i--) {
+                    updatePrivateChat(clientState.getChatController().getPrivateChat(st).getChatMessages().get(i));
+                }
+            }
+        }
+    }
+
+    private void updateClassification(){
+        ArrayList<String> player=sortPlayer();
+
+        StringBuilder c= new StringBuilder("CLASSIFICATION:\n");
+
+        for (int i = 0; i < player.size(); i++) {
+            c.append(i+1).append(". ").append(player.get(i)).append(" POINTS ").append(clientState.getAllPublicPoints().get(player.get(i))).append("\n");
+        }
+
+        classification.setText(c.toString());
+    }
+
+    private ArrayList<String> sortPlayer(){
+        ArrayList<Integer> sortPoint=new ArrayList<>(clientState.getAllPublicPoints().size());
+
+        //creazione array dei punti
+        for (String st: clientState.getAllPublicPoints().keySet()){
+            sortPoint.add(clientState.getAllPublicPoints().get(st));
+        }
+        //ordinamento
+        sortPoint.sort(Comparator.reverseOrder());
+
+        //crea l'ArrayList dei nomi ordinati
+        ArrayList<String> result=new ArrayList<>(sortPoint.size());
+
+        for (Integer integer : sortPoint) {
+            for (String st : clientState.getAllPublicPoints().keySet()) {
+                if (Objects.equals(clientState.getAllPublicPoints().get(st), integer) && !result.contains(st)) {
+                    result.add(st);
+                }
+            }
+        }
+
+        //salva l'ArrayList in orderPlayer
+        return result;
+
     }
 
     @Override
@@ -154,7 +285,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                         updateBoard();
                     }
                     else {
-                        updateBoard();
+                        reinitializeBoard();
                         initializeBoardGrid();
                     }
                 });
@@ -168,10 +299,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 });
             }
             case ("publicPoints") -> {
-                Platform.runLater(this::updateAllPlayerPoints);
+                Platform.runLater(() -> {
+                    updateAllPlayerPoints();
+                    updateClassification();
+                });
             }
             case ("privatePoints") -> {
-                Platform.runLater(this::updateMyPointsLabel);
+                Platform.runLater(() -> {
+                    updateMyPointsLabel();
+                    updateClassification();
+                });
             }
             case ("currPlayer") -> {
 //                Platform.runLater(this::updateCurrPlayer);
@@ -181,7 +318,32 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                         boardGrid.setDisable(false);
                     }
                 });
-
+            }
+            case ("commonObjPoints") -> {
+                Platform.runLater(() -> {
+                    commonObjectivePoint1.getImage().cancel();
+                    commonObjectivePoint2.getImage().cancel();
+                    updateCommonObjectivePoints();
+                });
+            }
+            case ("publicChat") -> {
+                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
+                clientState.getChatController().getPublicChat().addMessage(chatMessage);
+                Platform.runLater(() -> {
+                    updatePublicChat(chatMessage);
+                });
+            }
+            case ("privateChat") -> {
+                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
+                if (chatMessage.getUsername().equals(clientState.getMyUsername())){
+                    clientState.getChatController().getPrivateChat(chatMessage.getReceivingUsername()).addMessage(chatMessage);
+                }
+                else {
+                    clientState.getChatController().getPrivateChat(chatMessage.getUsername()).addMessage(chatMessage);
+                }
+                Platform.runLater(() -> {
+                    updatePrivateChat(chatMessage);
+                });
             }
         }
     }
@@ -190,13 +352,19 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     public void showError(String error, Stage stage){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(error);
+        alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
+                                        "-fx-font-size: 18px;" +
+                                        "-fx-font-style: italic;"+
+                                        "-fx-text-fill: #070707;"+
+                                        "-fx-background-color: #f70000;");
+
         alert.initOwner(stage);
         alert.showAndWait();
 
-        revert();
+        goBack();
     }
 
-    private void revert(){
+    private void goBack(){
 
         switch (state){
             case REMOVE -> {
@@ -234,6 +402,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 //riabilito la finestra di switch delle tile
                 selectedTilesDialog.setVisible(true);
                 selectedTilesDialog.setDisable(false);
+                selectedTilesDialog.setStyle("-fx-background-color: null");
                 //setto lo stato a switch
                 state=State.SWITCH;
             }
@@ -246,6 +415,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         String[] titles = tile.getImage();
         String title = titles==null?null:titles[rand.nextInt(Define.NUMBEROFTILEIMAGES.getI())];
 
+        assert title != null;
         Image image = new Image(title);
         ImageView imageView = new ImageView(image);
 
@@ -255,19 +425,24 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     private Image getImage(String path){
-        try {
-            FileInputStream fileInputStream= new FileInputStream(path);
-            Image image = new Image(fileInputStream);
-            return image;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        InputStream s = getClass().getResourceAsStream(path);
+        Image image = new Image(s);
+        return image;
+//        try {
+//            FileInputStream fileInputStream= new FileInputStream(path);
+//            Image image = new Image(fileInputStream);
+//            return image;
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
 
     //la metrice è 11x11 ==> getTile -1
     private void initializeBoardGrid(){
         Matrix matrix=clientState.getBoard();
+        //TODO
+
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
             for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
                 if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
@@ -278,17 +453,24 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     //inizializza i common objective
-    private void initializeCommonGrid(){ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
-        for(int i=0; i<2;i++){
-            String path = "images/common_goal_cards/Common_Goal_png/Common_Goal_" +commonGoal.get(i)+".png";
-            ImageView imageview=new ImageView(getImage(path));
-            imageview.setPreserveRatio(true);
-            imageview.setFitWidth(248);
-//            imageview.setFitHeight(100);
-//            imageview.setFitWidth(250);
-            commonGrid.add(imageview,i,0);
-        }
+    private void initializeCommonGrid(){
+        ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
+        String path = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(0)+".png";
+        commonObjectiveImage1.setImage(getImage(path));
+        String path1 = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(1)+".png";
+        commonObjectiveImage2.setImage(getImage(path1));
     }
+
+    //aggiorna i punti dei common objective
+    private void updateCommonObjectivePoints(){
+        ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
+        String path = "/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
+        commonObjectivePoint1.setImage(getImage(path));
+        String path1 = "/images/scoring_tokens/scoring_"+commonGoal.get(1)+".jpg";
+        commonObjectivePoint2.setImage(getImage(path1));
+    }
+
+
 
     //ritorna il nome dell'altro giocatore in partita
     private String catchOtherPlayerName(){
@@ -300,31 +482,85 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         return null;
     }
 
+    //ritorna una lista con gli username degli altri giocatori
+    private ArrayList<String> catchOtherPlayerName(ArrayList<String> list){
+        int j=0;
+        ArrayList<String> result=new ArrayList<>();
+        for (String s : list) {
+            if (!s.equals(clientState.getMyUsername())) {
+                result.add(s);
+                j++;
+            }
+        }
+        return result;
+    }
+
     //inizializza il nome dell'altro giocatore
     private void initializeotherPlayerLabel(){
+        //lista con gli username degli altri giocatori
+        ArrayList<String> otherPlayerList=catchOtherPlayerName(clientState.getAllUsername());
+
         otherPlayerLabel1.setVisible(true);
         otherPlayerLabel1.setDisable(false);
         otherPlayerPointsLabel1.setVisible(true);
         otherPlayerPointsLabel1.setDisable(false);
         otherPlayerBookshelfGrid1.setVisible(true);
         otherPlayerBookshelfGrid1.setDisable(false);
+        otherPlayerImage1.setVisible(true);
+        otherPlayerImage1.setDisable(false);
         personal1.setVisible(true);
         personal1.setDisable(false);
-//TODO
-        switch (clientState.getAllUsername().size()-1){
-            case 2 -> {
 
-            }
+        otherPlayerLabel1.setText(otherPlayerList.get(0));
+
+        switch (clientState.getAllUsername().size()){
             case 3 -> {
+                otherPlayerLabel2.setVisible(true);
+                otherPlayerLabel2.setDisable(false);
+                otherPlayerPointsLabel2.setVisible(true);
+                otherPlayerPointsLabel2.setDisable(false);
+                otherPlayerBookshelfGrid2.setVisible(true);
+                otherPlayerBookshelfGrid2.setDisable(false);
+                otherPlayerImage2.setVisible(true);
+                otherPlayerImage2.setDisable(false);
+                personal2.setVisible(true);
+                personal2.setDisable(false);
 
+                otherPlayerLabel2.setText(otherPlayerList.get(1));
+            }
+            case 4 -> {
+                otherPlayerLabel2.setVisible(true);
+                otherPlayerLabel2.setDisable(false);
+                otherPlayerPointsLabel2.setVisible(true);
+                otherPlayerPointsLabel2.setDisable(false);
+                otherPlayerBookshelfGrid2.setVisible(true);
+                otherPlayerBookshelfGrid2.setDisable(false);
+                otherPlayerImage2.setVisible(true);
+                otherPlayerImage2.setDisable(false);
+                personal2.setVisible(true);
+                personal2.setDisable(false);
+
+                otherPlayerLabel2.setText(otherPlayerList.get(1));
+
+                otherPlayerLabel3.setVisible(true);
+                otherPlayerLabel3.setDisable(false);
+                otherPlayerPointsLabel3.setVisible(true);
+                otherPlayerPointsLabel3.setDisable(false);
+                otherPlayerBookshelfGrid3.setVisible(true);
+                otherPlayerBookshelfGrid3.setDisable(false);
+                otherPlayerImage3.setVisible(true);
+                otherPlayerImage3.setDisable(false);
+                personal3.setVisible(true);
+                personal3.setDisable(false);
+
+                otherPlayerLabel3.setText(otherPlayerList.get(2));
             }
         }
-        //TODO otherPlayerLabel.setText(catchOtherPlayerName());
     }
 
     //inizializza il personal objective
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path= "images/personal_goal_cards/Personal_Goals1.png";
+        String path= "/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
         personalObjectiveImageView.setFitWidth(152);
@@ -338,24 +574,50 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         myPointsLabel.setText(myPoints);
     }
 
-    //aggiorna i punti dell'altro giocatore
-    private void updateOtherPlayerPointsLabel(){
-        String otherPlayer=catchOtherPlayerName();
-        int points=clientState.getAllPublicPoints().get(otherPlayer);
+    //ritorna il Label otherPlayerPointsLabel corretto
+    private Label catchOtherPlayerPointsLabel(String username){
+        if (otherPlayerLabel1.getText().equals(username)){
+            return otherPlayerPointsLabel1;
+        }
+        else if (otherPlayerLabel2.getText().equals(username)){
+            return otherPlayerPointsLabel2;
+        }
+        else if (otherPlayerLabel3.getText().equals(username)){
+            return otherPlayerPointsLabel3;
+        }
+        else {
+            return null;
+        }
+    }
 
-        //TODO otherPlayerPointsLabel.setText(otherPlayer+" points are: "+points);
+    //aggiorna i punti dell'altro giocatore
+    private void updateOtherPlayerPointsLabel(String username){
+        int points=clientState.getAllPublicPoints().get(username);
+
+        Objects.requireNonNull(catchOtherPlayerPointsLabel(username)).setText(username+"\npoints are: "+points);
     }
 
     //aggiorna i punti di tutti i giocatori
     private void updateAllPlayerPoints(){
         for (String player : clientState.getAllPublicPoints().keySet()){
             if (!player.equals(clientState.getMyUsername())){
-                updateOtherPlayerPointsLabel();
+                updateOtherPlayerPointsLabel(player);
             }
         }
     }
 
 
+    private void reinitializeBoard(){
+        for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
+            for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
+
+                int finalJ = j;
+                int finalI = i;
+                boardGrid.getChildren().removeIf(node -> GridPane.getColumnIndex(node)== finalJ && GridPane.getRowIndex(node)== finalI);
+
+            }
+        }
+    }
     private void updateBoard() {
         Matrix matrix=clientState.getBoard();
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
@@ -373,6 +635,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())) {
             selectedTilesDialog.setVisible(true);
             selectedTilesDialog.setDisable(false);
+            selectedTilesDialog.setStyle("-fx-background-color: null");
             //rendi visibile il bottone per finire lo switch e andare nella selezione della colonna
             endSwitch.setVisible(true);
             endSwitch.setDisable(false);
@@ -383,6 +646,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             selectedTiles2.setVisible(true);
             selectedTiles3.setDisable(false);
             selectedTiles3.setVisible(true);
+            //rendi invisibile la board
+            boardGrid.setDisable(true);
+            boardGrid.setVisible(false);
             switch (clientState.getSelectedTiles().size()) {
                 case 1 -> {
                     selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
@@ -406,39 +672,81 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
     }
 
-    private void updateBookshelf(String username) {
+
+    //aggiorna tutte le bookshelf
+    private void updateBookshelf(String username){
+        if (clientState.getMyUsername().equals(username)){
+            updateMyBookshelf();
+        }
+        else {
+            updateOtherBookshelf(username);
+        }
+    }
+    private GridPane catchOtherPlayerBookshelfGrid(String username){
+        if (otherPlayerLabel1.getText().equals(username)){
+            return otherPlayerBookshelfGrid1;
+        }
+        else if (otherPlayerLabel2.getText().equals(username)){
+            return otherPlayerBookshelfGrid2;
+        }
+        else if (otherPlayerLabel3.getText().equals(username)){
+            return otherPlayerBookshelfGrid3;
+        }
+        else {
+            return null;
+        }
+    }
+    //aggiorna le bookshelf degli altri giocatori
+    private void updateOtherBookshelf(String username){
+        GridPane pane=catchOtherPlayerBookshelfGrid(username);
         Matrix bookshelf=clientState.getAllBookshelf().get(username);
         for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
-                    if (username.equals(clientState.getMyUsername())) {
-                        myBookshelfGrid.add(setTiles(bookshelf.getTile(i, j)), j, i);
-                    }
-                    else{
-                        ImageView tile = setTiles(bookshelf.getTile(i, j));
-                        tile.setFitWidth(20);
-                        tile.setFitHeight(20);
-                        //TODO otherPlayerBookshelfGrid.add(tile, j, i);
-                    }
+                    ImageView tile = setTiles(bookshelf.getTile(i, j));
+                    tile.setFitWidth(20);
+                    tile.setFitHeight(20);
+                    assert pane != null;
+                    pane.add(tile, j, i);
+                }
+            }
+        }
+    }
+    //aggiorna la mia bookshelf
+    private void updateMyBookshelf() {
+        Matrix bookshelf=clientState.getMyBookshelf();
+        for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
+                if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
+                    myBookshelfGrid.add(setTiles(bookshelf.getTile(i, j)), j, i);
                 }
             }
         }
     }
 
     private void updateCurrPlayer() {
+        String string;
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
-            String string="It is YOUR turn";
+            string="It is YOUR turn";
             turnLabel.setText(string);
+
+            //pop up - è il tuo turno
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Update turn");
+            alert.setHeaderText("Current game turn");
+            alert.setContentText(string);
+            alert.initOwner(guiController.getStage());
+            alert.showAndWait();
         }
         else {
-            String string="It is "+clientState.getCurrentPlayer()+" turn";
+            string="It is "+clientState.getCurrentPlayer()+" turn";
             turnLabel.setText(string);
         }
+
     }
 
 
 
-    //TODO update mybookshelf, otherplayerbookshelf
 
 
 
@@ -463,8 +771,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     //abilita il bottone dell'annullamento
                     rollbackButton.setVisible(true);
                     rollbackButton.setDisable(false);
-                    ImageView imageView=(ImageView) event.getTarget();
+                    ImageView imageView=(ImageView) click;
                     imageView.setStyle("-fx-opacity: 0.5");
+                    click.setDisable(true);
                 }
             }
         }
@@ -496,6 +805,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             //disabilita il bottone di annullamento
             rollbackButton.setVisible(false);
             rollbackButton.setDisable(true);
+            //disabilita la board
+            boardGrid.getChildren().forEach(node -> {
+                node.setDisable(false);
+            });
             boardGrid.setDisable(true);
             state = State.SWITCH;
 
@@ -506,7 +819,14 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private void rollbackClick(ActionEvent actionEvent){
         removeTiles=new ArrayList<>();
-        boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
+        boardGrid.getChildren().forEach(node -> {
+            node.setStyle("-fx-opacity: 1");
+            node.setDisable(false);
+        });
+        rollbackButton.setVisible(false);
+        rollbackButton.setDisable(true);
+        confirmationButton.setVisible(false);
+        confirmationButton.setDisable(true);
     }
 
     //conferma l'ordine dello switch
@@ -568,6 +888,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
         column5.setVisible(true);
         column5.setDisable(false);
+
+        boardGrid.setVisible(true);
 
         state = State.ADD;
     }
@@ -697,6 +1019,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
+    //TODO controllare se nella colonna ci posso mettere il numero di tessere che sono state selezionate
+    // altrimenti non abilitare il bottone
     private void addToColumn(){
         column1.setVisible(false);
         column1.setDisable(true);
@@ -716,55 +1040,175 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         state = State.REMOVE;
     }
 
-    //TODO invia i messaggi che legge da chattBox
+    //invia i messaggi al server
     @FXML
-    private void sendMessageTo(ActionEvent actionEvent){
+    private void enterChatClick(ActionEvent actionEvent){
+        enterChat();
+    }
+    @FXML
+    private void enterChatEnter(KeyEvent event){
+        if (event.getCode()== KeyCode.ENTER) {
+            enterChat();
+        }
+    }
+    private void enterChat(){
+        //lettura messaggio e a chi inviarlo
+        String message=sendMessage.getText();
+        String receiver=selectChat.getValue();
+
+
+        if (!message.isEmpty()){
+            if (receiver.equals("ALL")){
+                //chat a tutti
+                ChatMessage chatMessage=new ChatMessage(clientState.getMyUsername(), message);
+                chatMessage.setType(MessageTypes.CHAT);
+
+                guiController.sendMessage(chatMessage);
+            }
+            else {
+                //chat a username specifico
+                ChatMessage chatMessage=new ChatMessage(clientState.getMyUsername(), message, receiver);
+                chatMessage.setType(MessageTypes.CHAT);
+
+                guiController.sendMessage(chatMessage);
+            }
+        }
+        sendMessage.clear();
+    }
+
+    //quale chat mostrare
+    @FXML
+    private void selectWhichChatToShow(ActionEvent actionEvent){
+        String chatToShow=selectChat.getValue();
+        //nascondile tutte
+        publicChatBox.setVisible(false);
+        otherPlayerChatBox1.setVisible(false);
+        otherPlayerChatBox2.setVisible(false);
+        otherPlayerChatBox3.setVisible(false);
+
+        //fai vedere solo quella selezionata
+        if (chatToShow.equals("ALL")){
+            publicChatBox.setVisible(true);
+            chatScroll.setContent(publicChatBox);
+            chatScroll.setFitToWidth(true);
+        }
+        else if (chatToShow.equals(otherPlayerLabel1.getText())){
+            otherPlayerChatBox1.setVisible(true);
+            chatScroll.setContent(otherPlayerChatBox1);
+            chatScroll.setFitToWidth(true);
+        }
+        else if (chatToShow.equals(otherPlayerLabel2.getText())){
+            otherPlayerChatBox2.setVisible(true);
+            chatScroll.setContent(otherPlayerChatBox2);
+            chatScroll.setFitToWidth(true);
+        }
+        else if (chatToShow.equals(otherPlayerLabel3.getText())){
+            otherPlayerChatBox3.setVisible(true);
+            chatScroll.setContent(otherPlayerChatBox3);
+            chatScroll.setFitToWidth(true);
+        }
+    }
+
+    private VBox chatVBox(String username){
+        if (username==null){
+            return publicChatBox;
+        }
+        else {
+            if (username.equals(otherPlayerLabel1.getText())){
+                return otherPlayerChatBox1;
+            }
+            else if (username.equals(otherPlayerLabel2.getText())){
+                return otherPlayerChatBox2;
+            }
+            else if (username.equals(otherPlayerLabel3.getText())){
+                return otherPlayerChatBox3;
+            }
+            else {
+                return null;
+            }
+        }
+    }
+
+    //aggiorna la chat pubblica
+    private void updatePublicChat(ChatMessage message){
+        Label messageLabel=new Label();
+        messageLabel.setPrefWidth(250);
+        //è il mio messaggio
+        if (message.getUsername().equals(clientState.getMyUsername())){
+            messageLabel.setText(message.getMessage());
+
+            messageLabel.setAlignment(Pos.CENTER_RIGHT);
+            messageLabel.setStyle("-fx-background-color: #d7fad1");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+        }
+        else {
+            messageLabel.setText(message.getConversation());
+
+            messageLabel.setAlignment(Pos.CENTER_LEFT);
+            messageLabel.setStyle("-fx-background-color: #fdfdfd");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+        }
+        Objects.requireNonNull(chatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
+
+        if (!selectChat.getValue().equals("ALL")){
+            //popup ti è arrivato un messaggio
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("New message");
+            alert.setHeaderText("New Message");
+            alert.setContentText("You have a new Public Message");
+            alert.initOwner(guiController.getStage());
+            alert.showAndWait();
+        }
 
     }
-    //TODO mostra chat
-    private void updateChat(){
-        /*
-            in chatBox aggiungi un label sotto a tutti gli altri
-         */
+
+    //aggiorna la chat privata
+    private void updatePrivateChat(ChatMessage message){
+        Label messageLabel=new Label();
+        messageLabel.setPrefWidth(250);
+
+        if (message.getUsername().equals(clientState.getMyUsername())){
+            messageLabel.setText(message.getMessage());
+
+            messageLabel.setAlignment(Pos.CENTER_RIGHT);
+            messageLabel.setStyle("-fx-background-color: #d7fad1");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+
+            Objects.requireNonNull(chatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
+        }
+        else {
+            messageLabel.setText(message.getConversation());
+
+            messageLabel.setAlignment(Pos.CENTER_LEFT);
+            messageLabel.setStyle("-fx-background-color: #fdfdfd");
+            messageLabel.setWrapText(true);
+            if (messageLabel.getFont().getSize()*messageLabel.getText().length()>250){
+                messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
+            }
+
+            Objects.requireNonNull(chatVBox(message.getUsername())).getChildren().add(messageLabel);
+
+            if (!selectChat.getValue().equals(message.getUsername())){
+                //popup ti è arrivato un messaggio
+                Alert alert=new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("New message");
+                alert.setHeaderText("New Message");
+                alert.setContentText("You have a new Public Message");
+                alert.initOwner(guiController.getStage());
+                alert.showAndWait();
+            }
+        }
     }
 }
 
-class OtherPlayer{
-    private String username;
-    private Label otherPlayerNameLabel;
-    private Label otherPlayerPointLabel;
-    private GridPane otherPlayerBookshelfGrid;
 
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Label getOtherPlayerNameLabel() {
-        return otherPlayerNameLabel;
-    }
-
-    public void setOtherPlayerNameLabel(Label otherPlayerNameLabel) {
-        this.otherPlayerNameLabel = otherPlayerNameLabel;
-    }
-
-    public Label getOtherPlayerPointLabel() {
-        return otherPlayerPointLabel;
-    }
-
-    public void setOtherPlayerPointLabel(Label otherPlayerPointLabel) {
-        this.otherPlayerPointLabel = otherPlayerPointLabel;
-    }
-
-    public GridPane getOtherPlayerBookshelfGrid() {
-        return otherPlayerBookshelfGrid;
-    }
-
-    public void setOtherPlayerBookshelfGrid(GridPane otherPlayerBookshelfGrid) {
-        this.otherPlayerBookshelfGrid = otherPlayerBookshelfGrid;
-    }
-}
+//TODO mostrare popup hai n nuovi messaggi

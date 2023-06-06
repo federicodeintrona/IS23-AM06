@@ -21,7 +21,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <VBox alignment="CENTER" prefHeight="133.0" prefWidth="444.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+    <VBox alignment="CENTER" prefHeight="133.0" prefWidth="444.0" styleClass="endGameResult" GridPane.columnIndex="2" GridPane.rowIndex="1">
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="448.0" text="Results: " textFill="WHITE">
             <font>
                 <Font name="System Bold Italic" size="22.0" />
@@ -53,9 +53,9 @@
     </VBox>
    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
       <children>
-         <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="65.0" prefHeight="16.0" prefWidth="494.0" textFill="WHITE">
+         <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="39.0" prefHeight="78.0" prefWidth="494.0" textFill="WHITE">
             <font>
-               <Font name="System Bold Italic" size="35.0" />
+               <Font name="System Bold Italic" size="40.0" />
             </font>
          </Label>
       </children>
