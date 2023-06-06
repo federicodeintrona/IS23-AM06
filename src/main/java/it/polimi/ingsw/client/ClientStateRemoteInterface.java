@@ -43,6 +43,7 @@ public interface ClientStateRemoteInterface extends Remote {
 
     void setMyPersonalObjectiveInt(int myPersonalObjectiveInt) throws RemoteException;
     void setCommonObjectivePoints(ArrayList<Integer> commonObjectivePoints) throws RemoteException;
+    void setDisconnectionWinner(boolean disconnectionWinner) throws RemoteException;
 
     boolean pingPong() throws RemoteException;
 

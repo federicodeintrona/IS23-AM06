@@ -8,7 +8,6 @@ import java.util.*;
 
 public class Lobby {
     private Controller controller;
-
     private final HashMap<Integer,ArrayList<String>> lobbys = new HashMap<>();
     private final HashMap<Integer,Integer> gamePlayerNumber = new HashMap<>();
     private final Queue<Integer> waitingLobbys = new LinkedList<>();
@@ -21,6 +20,7 @@ public class Lobby {
     private final HashMap<String , Player> players;
     private final HashMap<String , Player> disconnectedPlayers = new HashMap<>();
     private final HashMap<String , VirtualView> views = new HashMap<>();
+
 
     public Lobby() {
         this.games = new HashMap<>();
@@ -52,7 +52,7 @@ public class Lobby {
                     } catch (LobbyNotExists e) {
                         return Optional.empty();
                     }
-                    //if there aren't any, return -1
+                    //if there aren't any, return empty Optional
                 } else return Optional.empty();
             }else throw new UsernameAlreadyTaken();
     }
@@ -61,7 +61,6 @@ public class Lobby {
 
 
     public synchronized int newLobby(String client,int numplayers){
-
         //Update the game number
         gameNumber+=1;
 

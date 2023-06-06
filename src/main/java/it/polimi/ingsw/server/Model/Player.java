@@ -12,9 +12,10 @@ public class Player {
     private int personalObjectivePoint;
     private int vicinityPoint;
     private int winnerPoint ;
-
     private int publicPoint;
     private boolean chair;
+
+
 
     public Player(String userName) {
         this.username = userName;
@@ -25,6 +26,7 @@ public class Player {
         vicinityPoint = 0;
         winnerPoint = 0;
     }
+
 
     public Player(String userName,boolean chair) {
         this.username = userName;

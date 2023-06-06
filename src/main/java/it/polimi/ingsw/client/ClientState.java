@@ -35,6 +35,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private String currentPlayer;
     private String nextPlayer;
     private String winnerPlayer;
+    private boolean disconnectionWinner;
     private boolean gameHasStarted=false;
     private boolean gameIsEnded=false;
     private boolean waiting=false;
@@ -358,5 +359,16 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
         notifier.firePropertyChange(
                 new PropertyChangeEvent(this.commonObjectivePoints,"commonObjPoints",null,this.commonObjectivePoints));
+    }
+    public boolean isDisconnectionWinner() {
+        synchronized (viewLock) {
+            return disconnectionWinner;
+        }
+    }
+
+    public void setDisconnectionWinner(boolean disconnectionWinner) {
+        synchronized (viewLock) {
+            this.disconnectionWinner = disconnectionWinner;
+        }
     }
 }

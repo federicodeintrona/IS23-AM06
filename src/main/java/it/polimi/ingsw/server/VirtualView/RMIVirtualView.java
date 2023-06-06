@@ -35,9 +35,7 @@ public class RMIVirtualView extends VirtualView{
             System.out.println(getUsername()+" RMI virtual view is on: " + evt.getNewValue());
             try {
                 switch ((String) evt.getNewValue()) {
-                    case ("playerNames") -> {
-                        clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));
-                    }
+                    case ("playerNames") -> clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));
                     case ("board") -> {
                         clientState.setBoard((Matrix) evt.getSource());
                     }
@@ -74,6 +72,9 @@ public class RMIVirtualView extends VirtualView{
                     case ("winner") -> {
                         clientState.setWinnerPlayer((String) evt.getSource());
                     }
+                    case ("disconnectionWinner") -> {
+                        clientState.setDisconnectionWinner((boolean) evt.getSource());
+                    }
                     case ("start") -> {
                         clientState.setGameHasStarted((boolean) evt.getSource());
                     }
@@ -88,7 +89,7 @@ public class RMIVirtualView extends VirtualView{
                     }
                 }
             } catch (RemoteException e) {
-                System.out.println(getUsername()+" is not responding...");
+                if(!isDisconnected()) System.out.println(getUsername()+" is not responding...");
             }
 
         }

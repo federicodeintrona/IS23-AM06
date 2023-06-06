@@ -11,7 +11,7 @@ public class CheckManager {
     private static final int maxNumberOfSelectedTiles=3;
     private static final int numberOfBoardRows=9;
     private static final int numberOfBoardColumns=9;
-    private static final int numberOfBookshelColumns=5;
+    private static final int numberOfBookshelfColumns =5;
 
     private Player currPlayer;
     private GameState state;
@@ -161,7 +161,7 @@ public class CheckManager {
      * @throws ColumnIsFull if the requested column is full
      */
     private void checkColumn(int col,int size) throws OutOfDomain, ColumnIsFull {
-        if(col<0||col>numberOfBookshelColumns-1) throw new OutOfDomain();
+        if(col<0||col> numberOfBookshelfColumns -1) throw new OutOfDomain();
         else if(!currPlayer.getBookshelf().checkColumns(size,col)) throw new ColumnIsFull();
     }
 
@@ -202,9 +202,6 @@ public class CheckManager {
         }
 
     }
-
-
-
 
 
 
