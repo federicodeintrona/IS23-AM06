@@ -152,6 +152,8 @@ public class CLIMain implements View {
         clientState.setChair(clientState.getCurrentPlayer());
         th1=new Thread(readShell);
         th1.start();
+
+
         //inizia la partita
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
@@ -235,6 +237,9 @@ public class CLIMain implements View {
     }
 
     private void moveToGameScene() {
+
+        chatHandler = new ChatHandler(clientState.getChatController(), this, cliPrint);
+
         cliPrint.clearSheel();
         cliPrint.gameHasStarted();
 
@@ -243,6 +248,7 @@ public class CLIMain implements View {
         } catch (InterruptedException e) {
            e.printStackTrace();
         }
+
 
         cliPrint.printChair();
         cliPrint.printCommonObjective(clientState.getGameCommonObjective());

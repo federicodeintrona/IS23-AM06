@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.View.GUI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.NetworkerRmi;
+import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.GUI.Scene.*;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Matrix;
@@ -100,6 +102,17 @@ public class GUIController implements View {
             this.scene.setRoot(root);
             stage.setTitle(scenes.getTitle());
         });
+    }
+
+    public void selectNetworker(String net, String host){
+        if(net.equals("RMI")){
+            networker = new NetworkerRmi(state,host);
+        }else{
+            networker = new NetworkerTcp(state,host);
+        }
+        networker.setView(this);
+        networker.initializeConnection();
+        changeScene(Scenes.Login);
     }
 
     public void setSceneController(SceneController sceneController) {

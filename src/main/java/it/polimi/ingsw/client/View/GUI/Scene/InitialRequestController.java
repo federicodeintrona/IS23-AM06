@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.application.Application;
@@ -20,6 +21,8 @@ import java.util.ResourceBundle;
 
 public class InitialRequestController implements SceneController, Initializable {
     private final GUIController guiController = GUIControllerStatic.getGuiController();
+
+    private String connectionType;
 
     @FXML
     private Button RMIButton;
@@ -38,16 +41,13 @@ public class InitialRequestController implements SceneController, Initializable 
 
         requestLabel.setText("Which connection protocol do you choose?");
         hostField.setPromptText("127.0.0.1");
-        hostField.setText("username");
+
 
     }
 
     @FXML
     private void RMIClick(ActionEvent event){
-        /*
-            TODO
-             è stato scelto RMI
-         */
+        connectionType="RMI";
         showHost();
     }
 
@@ -60,7 +60,6 @@ public class InitialRequestController implements SceneController, Initializable 
 
         hostField.setDisable(false);
         hostField.setVisible(true);
-        hostField.setText("Which host do you use?");
 
         hostButton.setDisable(false);
         hostButton.setVisible(true);
@@ -68,28 +67,26 @@ public class InitialRequestController implements SceneController, Initializable 
 
     @FXML
     private void TCPClick(ActionEvent event){
-        /*
-            TODO
-             è stato scelto TCP
-         */
+        connectionType="TCP";
+
         showHost();
     }
 
     private void chooseHost(){
         String host=hostField.getText();
+        if(host.isEmpty()) {
+            host = "localhost";
+        }
+
         hostField.clear();
 
-        if (host.isEmpty()){
-            showError("Insert host", guiController.getStage());
-        }
-        else {
-            //TODO manda l'host
-        }
-
+        guiController.selectNetworker(connectionType,host);
     }
     @FXML
     private void hostEnter(KeyEvent event){
-        chooseHost();
+        if (event.getCode()== KeyCode.ENTER) {
+            chooseHost();
+        }
     }
     @FXML
     private void hostClick(ActionEvent event){

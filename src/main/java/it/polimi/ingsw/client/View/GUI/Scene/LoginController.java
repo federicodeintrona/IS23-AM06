@@ -31,7 +31,6 @@ public class LoginController implements SceneController, Initializable {
         guiController.setSceneController(this);
 
         usernameField.setPromptText("username");
-        usernameField.setText("username");
 
     }
 

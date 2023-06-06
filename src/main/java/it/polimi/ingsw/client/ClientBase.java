@@ -45,7 +45,7 @@ public class ClientBase extends Application{
             GUIControllerStatic.setGuiController(new GUIController(clientState));
 
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Scenes.Login.getName())));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Scenes.InitialRequest.getName())));
             Scene scene=new Scene(root);
 
             GUIController guiController= GUIControllerStatic.getGuiController();
@@ -53,7 +53,7 @@ public class ClientBase extends Application{
             guiController.setRoot(root);
             guiController.setScene(scene);
 
-            stage.setTitle(Scenes.Login.getTitle());
+            stage.setTitle(Scenes.InitialRequest.getTitle());
             stage.setScene(scene);
 //            stage.setFullScreen(true);
 //            stage.setFullScreenExitHint(""); //TODO NON esce più la scritta per uscire fai exit - NON funziona più :(
