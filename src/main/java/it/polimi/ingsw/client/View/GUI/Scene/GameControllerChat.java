@@ -42,8 +42,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
     private ArrayList<Integer> orderTiles=new ArrayList<>();
-    private HashMap<String, Integer> usernameInt=new HashMap<>();
-
     private Point checkResetPoint=null;
     @FXML
     private GridPane boardGrid;
@@ -182,7 +180,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientState = guiController.getState();
         clientState.addListener(this);
+        clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
         guiController.setSceneController(this);
+
         initializeBoardGrid();
         initializeCommonGrid();
         try {
@@ -295,9 +295,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         switch (evt.getPropertyName()) {
             case ("board") -> {
                 Platform.runLater(() -> {
-                    if (checkResetPoint==null ){
-                        updateBoard();
-                    }else if(clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
+                    if(checkResetPoint==null || clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
                         updateBoard();
                     }
                     else {
@@ -340,7 +338,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     commonObjectivePoint1.getImage().cancel();
                     commonObjectivePoint2.getImage().cancel();
                     updateCommonObjectivePoints();
+                    //TODO aggiornare punti dei giocatori - immagine punti common
+                    updatePlayerCommonObjectivePointImage();
                 });
+                clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
             }
             case ("publicChat") -> {
                 ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
@@ -363,6 +364,59 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
     }
+
+    //TODO sistemare - funziona ma bisogna capire
+    //ritorna il numero dell'obiettivo comune completato
+    private int commonObjectivePointPlayerImage(){
+        if (!Objects.equals(clientState.getCommonObjectivePoints().get(0), clientState.getOldCommonObjectivePoints().get(0))){
+            return 0;
+        }
+        else {
+            return 1;
+        }
+    }
+    //TODO sistemare - funziona ma bisogna capire
+    private ImageView catchPlayerCommonObjectivePointImage(String username, int commonObjective){
+        if (commonObjective==0){
+            if (clientState.getMyUsername().equals(username)){
+                return myCommonPointImage1;
+            }
+            else if (otherPlayerLabel1.getText().equals(username)){
+                return otherPlayer1CommonPoint1;
+            }
+            else if (otherPlayerLabel2.getText().equals(username)){
+                return otherPlayer2CommonPoint1;
+            }
+            else if (otherPlayerLabel3.getText().equals(username)){
+                return otherPlayer3CommonPoint1;
+            }
+        }
+        else if (commonObjective==1){
+            if (clientState.getMyUsername().equals(username)){
+                return myCommonPointImage2;
+            }
+            else if (otherPlayerLabel1.getText().equals(username)){
+                return otherPlayer1CommonPoint2;
+            }
+            else if (otherPlayerLabel2.getText().equals(username)){
+                return otherPlayer2CommonPoint2;
+            }
+            else if (otherPlayerLabel3.getText().equals(username)){
+                return otherPlayer3CommonPoint2;
+            }
+        }
+        return null;
+    }
+
+    //TODO sistemare - funziona ma bisogna capire
+    private void updatePlayerCommonObjectivePointImage(){
+
+        int point=clientState.getOldCommonObjectivePoints().get(commonObjectivePointPlayerImage());
+        String path = "/images/scoring_tokens/scoring_"+point+".jpg";
+
+        catchPlayerCommonObjectivePointImage(clientState.getCurrentPlayer(), commonObjectivePointPlayerImage()).setImage(getImage(path));
+    }
+
 
     @Override
     public void showError(String error, Stage stage){
@@ -442,15 +496,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     private Image getImage(String path){
         InputStream s = getClass().getResourceAsStream(path);
-        Image image = new Image(s);
-        return image;
-//        try {
-//            FileInputStream fileInputStream= new FileInputStream(path);
-//            Image image = new Image(fileInputStream);
-//            return image;
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
+        return new Image(s);
     }
 
 

@@ -26,6 +26,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private int myPersonalObjectiveInt;
     private ArrayList<Integer> gameCommonObjective;
     private ArrayList<Integer> commonObjectivePoints;
+    private ArrayList<Integer> oldCommonObjectivePoints;
     private Matrix board;
     private Matrix myBookshelf;
     private HashMap<String, Matrix> allBookshelf = new HashMap<>();
@@ -369,6 +370,18 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setDisconnectionWinner(boolean disconnectionWinner) {
         synchronized (viewLock) {
             this.disconnectionWinner = disconnectionWinner;
+        }
+    }
+
+    public ArrayList<Integer> getOldCommonObjectivePoints() {
+        synchronized (viewLock) {
+            return oldCommonObjectivePoints;
+        }
+    }
+
+    public void setOldCommonObjectivePoints(ArrayList<Integer> oldCommonObjectivePoints) {
+        synchronized (viewLock) {
+            this.oldCommonObjectivePoints = oldCommonObjectivePoints;
         }
     }
 }
