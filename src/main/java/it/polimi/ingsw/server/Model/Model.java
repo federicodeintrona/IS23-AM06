@@ -386,7 +386,14 @@ public class Model implements TimerInterface {
         currPlayer.setPersonalObjectivePoint(currPlayer.getPersonalObjective().personalObjectivePoint(currPlayer));
 
         for(CommonObjective o : commonObj){
-             o.commonObjPointsCalculator(currPlayer,players.size());
+            if(o.commonObjPointsCalculator(currPlayer,players.size())){
+
+                //Notify commonObjectivesPoints
+                notifier.firePropertyChange(new PropertyChangeEvent(
+                        commonObj.stream().map(CommonObjective::getPoints).toList(), "all", "0","commonObjPoints" ));
+
+
+            }
         }
 
         currPlayer.updatePoints();
@@ -396,6 +403,7 @@ public class Model implements TimerInterface {
 
             notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPublicPoint(), "all",
                     currPlayer.getUsername(), "publicPoints"));
+
 
         }
 
@@ -446,7 +454,7 @@ public class Model implements TimerInterface {
         boardResetCheck();
 
         //checks if someone completed all their bookshelf
-        if(isFinished && currPlayer.equals(players.get(0))) endGame();
+        if(isFinished && currPlayer.equals(chairPlayer)) endGame();
 
         //Notifies the new current and next players
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), "all",
@@ -843,12 +851,15 @@ public class Model implements TimerInterface {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getPoints).toList(), "all", "0","commonObjPoints" ));
 
-        //Notify currPlayer and nextPlayer
+        //Notify currPlayer, nextPlayer and chair player
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(),"all",
                 currPlayer.getUsername(), "currPlayer"));
 
         notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
                 currPlayer.getUsername(), "nextPlayer"));
+
+        notifier.firePropertyChange(new PropertyChangeEvent(chairPlayer.getUsername(),"all",
+                chairPlayer.getUsername(), "chairPlayer"));
 
     }
     //GETTERS AND SETTERS

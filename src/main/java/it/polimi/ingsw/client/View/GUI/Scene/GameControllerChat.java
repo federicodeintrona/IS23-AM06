@@ -181,7 +181,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateClassification();
         initializeChatChoice();
         initializeChat();
-//        initializeChair();
+        initializeChair();
     }
 
     //TODO sistemare la sedia
@@ -771,7 +771,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     //abilita il bottone dell'annullamento
                     rollbackButton.setVisible(true);
                     rollbackButton.setDisable(false);
-                    ImageView imageView=(ImageView) event.getTarget();
+                    ImageView imageView=(ImageView) click;
                     imageView.setStyle("-fx-opacity: 0.5");
                     click.setDisable(true);
                 }

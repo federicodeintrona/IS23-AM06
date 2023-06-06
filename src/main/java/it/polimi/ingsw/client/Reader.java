@@ -116,6 +116,9 @@ public class Reader extends Thread implements TimerInterface {
                             String nextPlayer = (String) message.getContent();
                             clientState.setNextPlayer(nextPlayer);
                         }
+                        case ("chairPlayer")->{
+                            clientState.setChair((String) message.getContent());
+                        }
                         case ("winner") -> {
                             String winner = (String) message.getContent();
                             clientState.setWinnerPlayer(winner);

@@ -69,6 +69,9 @@ public class RMIVirtualView extends VirtualView{
                     case ("nextPlayer") -> {
                         clientState.setNextPlayer((String) evt.getSource());
                     }
+                    case ("chairPlayer")->{
+                        clientState.setChair((String) evt.getSource());
+                    }
                     case ("winner") -> {
                         clientState.setWinnerPlayer((String) evt.getSource());
                     }
