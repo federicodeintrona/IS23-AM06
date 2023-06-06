@@ -24,6 +24,8 @@ public class NumberOfPlayerController implements Initializable,SceneController {
     private Label firstUsernameLabel; //username dell'utente che deve creare la partita
     @FXML
     private ChoiceBox<Integer> numberOfPlayerBox; //box che mostra il numero dei giocatori
+    @FXML
+    private Button enterButton;
 
 
     //inizializzazione
@@ -43,11 +45,13 @@ public class NumberOfPlayerController implements Initializable,SceneController {
     public void setNumberOfPlayerBoxClick(ActionEvent actionEvent){
         setNumberOfPlayerBox();
     }
-
     public void setNumberOfPlayerBoxEnter(KeyEvent event){
         if (event.getCode()== KeyCode.ENTER){
             setNumberOfPlayerBox();
         }
+    }
+    public void setNumberOfPlayerEnterButtonClick(ActionEvent event){
+        setNumberOfPlayerBox();
     }
 
     private void setNumberOfPlayerBox(){

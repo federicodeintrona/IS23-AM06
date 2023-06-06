@@ -21,7 +21,7 @@
     </rowConstraints>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
         <children>
-            <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="39.0" prefHeight="78.0" prefWidth="494.0" textFill="WHITE">
+            <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="-4.0" prefHeight="179.0" prefWidth="494.0" textFill="WHITE">
                 <font>
                     <Font name="System Bold Italic" size="40.0" />
                 </font>

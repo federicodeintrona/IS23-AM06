@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
+import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.NetworkerRmi;
+import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import javafx.event.ActionEvent;
@@ -32,14 +35,11 @@ public class InitialRequestController implements SceneController, Initializable 
     private TextField hostField;
     @FXML
     private Button hostButton;
-    @FXML
-    private Label requestLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         guiController.setSceneController(this);
 
-        requestLabel.setText("Which connection protocol do you choose?");
         hostField.setPromptText("127.0.0.1");
 
 
@@ -48,6 +48,7 @@ public class InitialRequestController implements SceneController, Initializable 
     @FXML
     private void RMIClick(ActionEvent event){
         connectionType="RMI";
+
         showHost();
     }
 
@@ -80,8 +81,27 @@ public class InitialRequestController implements SceneController, Initializable 
 
         hostField.clear();
 
-        guiController.selectNetworker(connectionType,host);
+//        guiController.selectNetworker(connectionType,host);
+
+        Networker networker;
+        if(connectionType.equals("RMI")){
+            networker = new NetworkerRmi(guiController.getState(),host);
+        }else{
+            networker = new NetworkerTcp(guiController.getState(),host);
+        }
+
+        boolean connected=networker.initializeConnection();
+        if (!connected){
+            showError("Failed to connect with server\nTry again", guiController.getStage());
+        }
+        else {
+            networker.setView(guiController);
+            guiController.setNetworker(networker);
+            guiController.changeScene(Scenes.Login);
+        }
+
     }
+
     @FXML
     private void hostEnter(KeyEvent event){
         if (event.getCode()== KeyCode.ENTER) {

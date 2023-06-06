@@ -15,7 +15,7 @@ import java.net.Socket;
 
 public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
-    private static String host;
+    private String serverIP;
     private Socket socket ;
     private ObjectOutputStream oos;
     private View view;
@@ -35,23 +35,38 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         }
 
         this.clientState = clientState;
-        NetworkerTcp.host =host;
+        this.serverIP =host;
         port=config.getInt("tcpPort");
     }
-
-    public void initializeConnection() {
+    public NetworkerTcp(ClientState clientState) {
+        JsonReader config;
+        try {
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
+            config=new JsonReader(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        this.clientState = clientState;
+        port=config.getInt("tcpPort");
+    }
+    public boolean initializeConnection() {
         Reader reader;
         try {
-            socket = new Socket(host, port);
+            socket = new Socket(serverIP, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
             reader=new Reader(socket,oos,this, clientState);
             reader.start();
         } catch (IOException e) {
-            System.out.println( "Server is not responding...");
-            e.printStackTrace();
-            close();
+//            e.printStackTrace();
+            if (socket!=null){
+                System.out.println( "Server is not responding...");
+                close();
+            }
+            return false;
         }
-
+        return true;
 
     }
 
@@ -122,6 +137,15 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     @Override
     public void setView(View view) {
         this.view=view;
+    }
+
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    @Override
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
     }
 
     @Override

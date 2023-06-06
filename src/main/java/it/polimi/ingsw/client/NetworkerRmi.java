@@ -63,7 +63,20 @@ public class NetworkerRmi implements Networker, TimerInterface {
             throw new RuntimeException(e);
         }
     }
+    public NetworkerRmi(ClientState state)  {
+        JsonReader config;
+        try {
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
+            config = new JsonReader(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        port = config.getInt("rmiPort");
 
+        clientState = state;
+    }
     public NetworkerRmi(ClientState state,String serverIP)  {
         JsonReader config;
         try {
@@ -83,7 +96,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
     /**
      * Method to initialize an RMI connection
      */
-    public void initializeConnection () {
+    public boolean initializeConnection () {
         try {
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry(serverIP, port);
@@ -92,9 +105,11 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
             System.out.println("Created RMI connection with Server");
         } catch (Exception e) {
-            System.err.println("Client exception: " + e);
-            e.printStackTrace();
+//            System.err.println("Client exception: " + e);
+//            e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     /**
@@ -283,5 +298,13 @@ public class NetworkerRmi implements Networker, TimerInterface {
     @Override
     public String getErrorMessage() {
         return "Server is not responding. Retry later.";
+    }
+
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
     }
 }

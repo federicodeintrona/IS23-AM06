@@ -159,6 +159,23 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private ImageView otherChair3;
 
+    @FXML
+    private ImageView myCommonPointImage1;
+    @FXML
+    private ImageView myCommonPointImage2;
+    @FXML
+    private ImageView otherPlayer1CommonPoint1;
+    @FXML
+    private ImageView otherPlayer1CommonPoint2;
+    @FXML
+    private ImageView otherPlayer2CommonPoint1;
+    @FXML
+    private ImageView otherPlayer2CommonPoint2;
+    @FXML
+    private ImageView otherPlayer3CommonPoint1;
+    @FXML
+    private ImageView otherPlayer3CommonPoint2;
+
     private State state = State.REMOVE;
 
     @Override
@@ -184,7 +201,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         initializeChair();
     }
 
-    //TODO sistemare la sedia
     private void initializeChair(){
         if (clientState.getChair().equals(clientState.getMyUsername())){
             myChair.setVisible(true);
@@ -441,8 +457,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     //la metrice è 11x11 ==> getTile -1
     private void initializeBoardGrid(){
         Matrix matrix=clientState.getBoard();
-        //TODO
-
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
             for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
                 if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
@@ -510,6 +524,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         otherPlayerImage1.setDisable(false);
         personal1.setVisible(true);
         personal1.setDisable(false);
+        otherPlayer1CommonPoint1.setVisible(true);
+        otherPlayer1CommonPoint1.setDisable(false);
+        otherPlayer1CommonPoint2.setVisible(true);
+        otherPlayer1CommonPoint2.setDisable(false);
 
         otherPlayerLabel1.setText(otherPlayerList.get(0));
 
@@ -525,6 +543,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 otherPlayerImage2.setDisable(false);
                 personal2.setVisible(true);
                 personal2.setDisable(false);
+                otherPlayer2CommonPoint1.setVisible(true);
+                otherPlayer2CommonPoint1.setDisable(false);
+                otherPlayer2CommonPoint2.setVisible(true);
+                otherPlayer2CommonPoint2.setDisable(false);
 
                 otherPlayerLabel2.setText(otherPlayerList.get(1));
             }
@@ -539,6 +561,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 otherPlayerImage2.setDisable(false);
                 personal2.setVisible(true);
                 personal2.setDisable(false);
+                otherPlayer2CommonPoint1.setVisible(true);
+                otherPlayer2CommonPoint1.setDisable(false);
+                otherPlayer2CommonPoint2.setVisible(true);
+                otherPlayer2CommonPoint2.setDisable(false);
 
                 otherPlayerLabel2.setText(otherPlayerList.get(1));
 
@@ -552,6 +578,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 otherPlayerImage3.setDisable(false);
                 personal3.setVisible(true);
                 personal3.setDisable(false);
+                otherPlayer3CommonPoint1.setVisible(true);
+                otherPlayer3CommonPoint1.setDisable(false);
+                otherPlayer3CommonPoint2.setVisible(true);
+                otherPlayer3CommonPoint2.setDisable(false);
 
                 otherPlayerLabel3.setText(otherPlayerList.get(2));
             }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
 import java.net.URL;
@@ -23,6 +24,7 @@ public class EndGameForDisconnectionController implements SceneController, Initi
 
     private void winnerPlayer(){
         String winner = guiController.getState().getWinnerPlayer();
-        winnerPlayer.setText(winner+" is the last player so...\nThe winner is: "+winner+"\nCOGLIONE :)");
+        winnerPlayer.setText(winner+" is the last player so...\nThe winner is: "+winner);
+        winnerPlayer.setAlignment(Pos.CENTER);
     }
 }

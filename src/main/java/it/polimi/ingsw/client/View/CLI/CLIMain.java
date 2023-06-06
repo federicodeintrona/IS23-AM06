@@ -98,26 +98,37 @@ public class CLIMain implements View {
         Scanner scanner = new Scanner(System.in);
         clientState = new ClientState(this.lock);
         clientState.addListener(this);
+        String decision;
 
-        System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
-        String decision = scanner.nextLine();
-        decision=decision.toUpperCase();
-
-        System.out.println("Which host do you use?");
-        String host = scanner.nextLine();
-
-        if (host == null) {
-            System.out.printf("You selected the default host: localhost");
-            host = "localhost";
-        }
+        do {
+            System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
+             decision = scanner.nextLine();
+            decision=decision.toUpperCase();
+        }while (!decision.equals("RMI") && !decision.equals("TCP"));
 
         if (decision.equalsIgnoreCase("RMI")) {
-            net = new NetworkerRmi(clientState,host);
-        }else net = new NetworkerTcp(clientState,host);
+            net = new NetworkerRmi(clientState);
+        }else net = new NetworkerTcp(clientState);
+
+        boolean connected=false;
+        do {
+            System.out.print("Which host do you use? ");
+            String host = scanner.nextLine();
+            if (host.isEmpty()) {
+                System.out.println("You selected the default host: localhost");
+                host = "localhost";
+            }
+            net.setServerIP(host);
+            connected= net.initializeConnection();
+        }while (!connected);
+
+
+
+
+
 
 
         net.setView(this);
-        net.initializeConnection();
 
 
         cliPrint=new CLIPrint(this);

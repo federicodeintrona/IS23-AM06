@@ -18,11 +18,11 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GUIController implements View {
+public class GUIController implements View, SceneController {
     private  Stage stage;
     private  Scene scene;
     private  Parent root;
-    private   Networker networker;
+    private  Networker networker;
     private final ClientState state;
     private SceneController sceneController;
 
@@ -114,7 +114,14 @@ public class GUIController implements View {
             networker = new NetworkerTcp(state,host);
         }
         networker.setView(this);
-        networker.initializeConnection();
+        boolean connected=false;
+        do {
+            connected=networker.initializeConnection();
+            if (!connected){
+                showError("Try again", stage);
+            }
+        }while (!connected);
+
         changeScene(Scenes.Login);
     }
 

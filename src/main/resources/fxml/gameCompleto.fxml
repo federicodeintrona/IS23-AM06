@@ -29,7 +29,7 @@
         <RowConstraints maxHeight="169.0" minHeight="126.0" prefHeight="169.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane fx:id="boardGrid" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../style.css" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+        <GridPane fx:id="boardGrid" alignment="TOP_CENTER" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../style.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="17.0" prefWidth="20.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="45.0" prefWidth="49.0" />
@@ -70,7 +70,7 @@
                         <Font name="System Bold" size="25.0" />
                     </font>
                 </Label>
-                <Label fx:id="myPointsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="73.0" prefHeight="36.0" prefWidth="350.0">
+                <Label fx:id="myPointsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="91.0" prefHeight="36.0" prefWidth="350.0">
                     <font>
                         <Font size="17.0" />
                     </font>
@@ -157,9 +157,19 @@
                 <Button fx:id="column5" disable="true" layoutX="270.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn5" prefHeight="25.0" prefWidth="42.0" text="5" visible="false" />
                 <Button fx:id="rollbackButton" disable="true" layoutX="-6.0" layoutY="83.0" mnemonicParsing="false" onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false" />
               <ImageView fx:id="personalObjectiveImageView" fitHeight="229.0" fitWidth="152.0" layoutX="330.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="myChair" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="267.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="myChair" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="267.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/misc/firstplayertoken.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="myCommonPointImage1" fitHeight="80.0" fitWidth="33.0" layoutX="311.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="myCommonPointImage2" fitHeight="80.0" fitWidth="33.0" layoutX="311.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
                </image>
             </ImageView>
             </children>
@@ -193,7 +203,7 @@
                         <Image url="@../images/boards/bookshelf.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" layoutX="128.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0">
+                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" disable="true" layoutX="128.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0" visible="false">
                <font>
                   <Font size="15.0" />
                </font></Label>
@@ -229,7 +239,7 @@
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" layoutX="377.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0">
+            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" disable="true" layoutX="377.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0" visible="false">
                <font>
                   <Font size="15.0" />
                </font>
@@ -266,7 +276,7 @@
                   <Image url="@../images/boards/bookshelf.png" />
                </image>
             </ImageView>
-            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" layoutX="627.0" layoutY="23.0" prefHeight="50.0" prefWidth="97.0">
+            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" disable="true" layoutX="627.0" layoutY="23.0" prefHeight="50.0" prefWidth="97.0" visible="false">
                <font>
                   <Font size="15.0" />
                </font>
@@ -276,19 +286,49 @@
                   <Image url="@../images/personal_goal_cards/back.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="otherChair2" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="201.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="otherChair2" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="203.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/misc/firstplayertoken.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="otherChair1" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="452.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="otherChair1" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="453.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/misc/firstplayertoken.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="otherChair3" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="702.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="otherChair3" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="702.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/misc/firstplayertoken.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherPlayer2CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="204.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherPlayer2CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="204.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherPlayer1CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="453.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherPlayer1CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="453.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherPlayer3CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="702.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="otherPlayer3CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="702.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
                </image>
             </ImageView>
             </children>
