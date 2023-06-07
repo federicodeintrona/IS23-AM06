@@ -28,9 +28,9 @@
 ## Folder
 
 - [Deliverables](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables)
-  - [Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagram)
-    - [UML](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagram/UML)
-    - [Sequence Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagram/Sequence%20Diagram)
+  - [Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagrams)
+    - [UML](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagrams/UML)
+    - [Sequence Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagrams/Sequence%20Diagram)
   - [jar](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/jar)
   - [javadoc](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/javadoc)
   - [Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Peer%20Review)
