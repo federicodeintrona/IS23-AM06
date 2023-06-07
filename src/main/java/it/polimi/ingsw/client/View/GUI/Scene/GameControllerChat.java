@@ -36,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
     private GUIController guiController = GUIControllerStatic.getGuiController();
@@ -201,6 +202,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         initializeChatChoice();
         initializeChat();
         initializeChair();
+        List<String> username = clientState.getAllUsername();
+        for(String x: username){
+            updateBookshelf(x);
+        }
     }
 
     private void initializeChair(){
@@ -737,7 +742,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     //aggiorna tutte le bookshelf
     private void updateBookshelf(String username){
-        if (clientState.getMyUsername().equals(username)){
+        if (username.equals(clientState.getMyUsername())){
             updateMyBookshelf();
         }
         else {
