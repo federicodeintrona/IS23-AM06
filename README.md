@@ -26,10 +26,14 @@
 | Sequence Diagram Peer Review | :green_circle:  |         | We have revised the Sequence Diagram of AM15 group [Peer Review AM15](https://github.com/federicodeintrona/IS23-AM06/blob/main/Peer%20Review/Sequence%20Diagram%20Peer%20Review/S_D_Peer_Review_AM-15.pdf)<br/><br/>Our Sequence Diagram is revised by AM43 [Peer Review AM06](https://github.com/federicodeintrona/IS23-AM06/blob/main/Peer%20Review/Sequence%20Diagram%20Peer%20Review/S_D_Peer_Review_AM-06.pdf) |
 
 ## Folder
-- [Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Diagram)
-  - [UML](https://github.com/federicodeintrona/IS23-AM06/tree/main/Diagram/UML)
-  - [Sequence Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Diagram/Sequence%20Diagram)
-- [Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Peer%20Review)
-  - [UML Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Peer%20Review/UML%20Peer%20Review)
-  - [Sequence Diagram Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Peer%20Review/Sequence%20Diagram%20Peer%20Review)
 
+- [Deliverables](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables)
+  - [Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagram)
+    - [UML](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagram/UML)
+    - [Sequence Diagram](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Diagram/Sequence%20Diagram)
+  - [jar](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/jar)
+  - [javadoc](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/javadoc)
+  - [Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Peer%20Review)
+    - [UML Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Peer%20Review/UML%20Peer%20Review)
+    - [Sequence Diagram Peer Review](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Peer%20Review/Sequence%20Diagram%20Peer%20Review)
+  - [Test Coverage](https://github.com/federicodeintrona/IS23-AM06/tree/main/Deliverables/Test%20Coverage)
