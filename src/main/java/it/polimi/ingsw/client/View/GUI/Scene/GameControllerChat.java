@@ -182,7 +182,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientState = guiController.getState();
         clientState.addListener(this);
+        clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
         guiController.setSceneController(this);
+
         initializeBoardGrid();
         initializeCommonGrid();
         try {
@@ -295,9 +297,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         switch (evt.getPropertyName()) {
             case ("board") -> {
                 Platform.runLater(() -> {
-                    if (checkResetPoint==null ){
-                        updateBoard();
-                    }else if(clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
+                    if(checkResetPoint==null || clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
                         updateBoard();
                     }
                     else {
@@ -336,11 +336,15 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 });
             }
             case ("commonObjPoints") -> {
+                String player=clientState.getCurrentPlayer();
+                ArrayList<Integer> old=clientState.getOldCommonObjectivePoints();
                 Platform.runLater(() -> {
                     commonObjectivePoint1.getImage().cancel();
                     commonObjectivePoint2.getImage().cancel();
                     updateCommonObjectivePoints();
+                    updatePlayerCommonObjectivePointImage(player, old);
                 });
+                clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
             }
             case ("publicChat") -> {
                 ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
@@ -363,6 +367,57 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
     }
+
+    //ritorna il numero dell'obiettivo comune completato
+    private int commonObjectivePointPlayerImage(ArrayList<Integer> old){
+        if (!Objects.equals(clientState.getCommonObjectivePoints().get(0), old.get(0))){
+            return 0;
+        }
+        else {
+            return 1;
+        }
+    }
+    private ImageView catchPlayerCommonObjectivePointImage(String username, int commonObjective){
+        if (commonObjective==0){
+            if (clientState.getMyUsername().equals(username)){
+                return myCommonPointImage1;
+            }
+            else if (otherPlayerLabel1.getText().equals(username)){
+                return otherPlayer1CommonPoint1;
+            }
+            else if (otherPlayerLabel2.getText().equals(username)){
+                return otherPlayer2CommonPoint1;
+            }
+            else if (otherPlayerLabel3.getText().equals(username)){
+                return otherPlayer3CommonPoint1;
+            }
+        }
+        else if (commonObjective==1){
+            if (clientState.getMyUsername().equals(username)){
+                return myCommonPointImage2;
+            }
+            else if (otherPlayerLabel1.getText().equals(username)){
+                return otherPlayer1CommonPoint2;
+            }
+            else if (otherPlayerLabel2.getText().equals(username)){
+                return otherPlayer2CommonPoint2;
+            }
+            else if (otherPlayerLabel3.getText().equals(username)){
+                return otherPlayer3CommonPoint2;
+            }
+        }
+        return null;
+    }
+
+    private void updatePlayerCommonObjectivePointImage(String player, ArrayList<Integer> old){
+
+        int point=old.get(commonObjectivePointPlayerImage(old));
+        String path = "/images/scoring_tokens/scoring_"+point+".jpg";
+
+        catchPlayerCommonObjectivePointImage(player, commonObjectivePointPlayerImage(old)).setImage(getImage(path));
+    }
+
+
 
 
     private void goBack(){
@@ -427,15 +482,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     private Image getImage(String path){
         InputStream s = getClass().getResourceAsStream(path);
-        Image image = new Image(s);
-        return image;
-//        try {
-//            FileInputStream fileInputStream= new FileInputStream(path);
-//            Image image = new Image(fileInputStream);
-//            return image;
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
+        return new Image(s);
     }
 
 

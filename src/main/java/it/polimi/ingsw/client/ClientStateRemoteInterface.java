@@ -50,4 +50,5 @@ public interface ClientStateRemoteInterface extends Remote {
     void newMessageHandler (ChatMessage message) throws RemoteException;
     void reloadChats (ChatController backup) throws RemoteException;
      void setChair(String chair) throws RemoteException;
+     void setOldCommonObjectivePoints(ArrayList<Integer> oldCommonObjectivePoints) throws RemoteException;
 }
