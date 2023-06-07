@@ -160,7 +160,6 @@ public class CLIMain implements View {
         chatHandler = new ChatHandler(clientState.getChatController(), this, cliPrint);
 
 
-        clientState.setChair(clientState.getCurrentPlayer());
         th1=new Thread(readShell);
         th1.start();
 

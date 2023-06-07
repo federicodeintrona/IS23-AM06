@@ -157,7 +157,7 @@
                 <Button fx:id="column5" disable="true" layoutX="270.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn5" prefHeight="25.0" prefWidth="42.0" text="5" visible="false" />
                 <Button fx:id="rollbackButton" disable="true" layoutX="-6.0" layoutY="83.0" mnemonicParsing="false" onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false" />
               <ImageView fx:id="personalObjectiveImageView" fitHeight="229.0" fitWidth="152.0" layoutX="330.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="myChair" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="267.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="myChair" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="267.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/misc/firstplayertoken.png" />
                </image>

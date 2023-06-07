@@ -833,6 +833,9 @@ public class Model implements TimerInterface {
         notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
                 currPlayer.getUsername(), "nextPlayer"));
 
+        notifier.firePropertyChange(new PropertyChangeEvent(chairPlayer.getUsername(),"all",
+                chairPlayer.getUsername(), "chairPlayer"));
+
     }
 
     private void notifyCommonData(){
