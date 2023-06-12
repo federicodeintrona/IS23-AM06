@@ -943,4 +943,23 @@ public class Model implements TimerInterface {
         this.gameID = gameID;
     }
 
+    public Player getChairPlayer() {
+        return chairPlayer;
+    }
+
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public Player getNextPlayer() {
+        return nextPlayer;
+    }
+
+    public int getConnectedPlayers() {
+        return connectedPlayers;
+    }
+
+    public boolean isTimerIsOn() {
+        return timerIsOn;
+    }
 }
