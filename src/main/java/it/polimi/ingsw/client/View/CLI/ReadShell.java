@@ -12,37 +12,50 @@ import java.util.regex.Pattern;
 public class ReadShell extends Thread {
 
 
+    /**
+     * attribute used to retrieve CLI-side all the client information
+     */
     private final CLIMain cliMain;
 
 
+    /**
+     * Constructor --> assign climain
+     *
+     * @param cliMain
+     */
     public ReadShell(CLIMain cliMain) {
         this.cliMain = cliMain;
     }
 
 
-    //pulisce CLI
-    public void clearCLI() {
-        System.out.println(ColorCLI.CLEAR);
-        System.out.flush();
-    }
-
-    //leggere da stdIN
+    /**
+     * read on standard input
+     *
+     * @return String   input command
+     */
     private String readLine() {
-        //istanzia scanner che legge da stdIN
+        //instantiate Scanner that reads from standard input
         Scanner scanner = new Scanner(System.in);
-        //stringhe lette da stdIN
+        //string that read from standard input
         String word;
-        //aspetta emissione dati e li legge
+        //wait for data input and reads them
         word = String.valueOf(scanner.nextLine());
         clearCLI();
         return word;
     }
 
-    //legge solo i numeri presenti nella stringa
-    //I NUMERI SONO DA 0-9
+    //TODO sistemare inglese
+    /**
+     * read all the numbers in the input string
+     *
+     * ONLY READS THE FIGURES (for example, if in the input string there is 12, this method return 1 and 2 and NOT 12)
+     * @param s input string that we want to know which numbers it contains
+     * @return ArrayList    all the number in the string
+     */
     private ArrayList<Integer> readNumber(String s) {
         ArrayList<Integer> result = new ArrayList<>();
 
+        //read only the figures in the input string
         Pattern pattern = Pattern.compile("\\d");
         Matcher matcher = pattern.matcher(s);
         while (matcher.find()) {
@@ -51,6 +64,15 @@ public class ReadShell extends Thread {
 
         return result;
     }
+
+    /**
+     * clear the terminal
+     */
+    public void clearCLI() {
+        System.out.println(ColorCLI.CLEAR);
+        System.out.flush();
+    }
+
 
     //richista nickname
     public void askUsername() {
