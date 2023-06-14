@@ -24,7 +24,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
     private int myPersonalObjectiveInt;
-    private ArrayList<Integer> gameCommonObjective ;
+    private ArrayList<Integer> gameCommonObjective;
+    private ArrayList<Integer> commonObjectivePoints;
+    private ArrayList<Integer> oldCommonObjectivePoints;
     private Matrix board;
     private Matrix myBookshelf;
     private HashMap<String, Matrix> allBookshelf = new HashMap<>();
@@ -346,6 +348,19 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
     }
 
+    public ArrayList<Integer> getCommonObjectivePoints() {
+        synchronized (viewLock){
+        return commonObjectivePoints;
+        }
+    }
+
+    public void setCommonObjectivePoints(ArrayList<Integer> commonObjectivePoints) {
+        synchronized (viewLock) {
+            this.commonObjectivePoints = commonObjectivePoints;
+        }
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this.commonObjectivePoints,"commonObjPoints",null,this.commonObjectivePoints));
+    }
     public boolean isDisconnectionWinner() {
         synchronized (viewLock) {
             return disconnectionWinner;
@@ -355,6 +370,18 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setDisconnectionWinner(boolean disconnectionWinner) {
         synchronized (viewLock) {
             this.disconnectionWinner = disconnectionWinner;
+        }
+    }
+
+    public ArrayList<Integer> getOldCommonObjectivePoints() {
+        synchronized (viewLock) {
+            return oldCommonObjectivePoints;
+        }
+    }
+
+    public void setOldCommonObjectivePoints(ArrayList<Integer> oldCommonObjectivePoints) {
+        synchronized (viewLock) {
+            this.oldCommonObjectivePoints = oldCommonObjectivePoints;
         }
     }
 }

@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 public interface SceneController {
     default void showError(String error, Stage stage){
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error");
         alert.setContentText(error);
         alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
                                         "-fx-font-size: 18px;" +

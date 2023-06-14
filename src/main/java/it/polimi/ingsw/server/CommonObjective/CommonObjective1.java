@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CommonObjective1 extends CommonObjective{
+public class CommonObjective1 extends CommonObjective {
 
     public CommonObjective1() {
         this.setNum(1);
@@ -19,12 +19,12 @@ public class CommonObjective1 extends CommonObjective{
      * see if there are 6 separate groups, made by 2 tiles of the same
      * color each, inside it and, in case, returns true
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player player whose bookshelf gets analyze
+     * @return true if the bookshelf meets the criteria, else false
      */
     @Override
-    public boolean checkCondition(Player player){
-        System.out.println("common 1 check condition : "+player.getUsername());
+    public boolean checkCondition(Player player) {
+        System.out.println("common 1 check condition : " + player.getUsername());
 
         // creation of set to contain all tiles approved by the algorithm
         Set<Point> nodes = new HashSet<>();
@@ -48,9 +48,9 @@ public class CommonObjective1 extends CommonObjective{
             e.printStackTrace();
         }
 
-        System.out.println(nodes.size()/2);
+        System.out.println(nodes.size() / 2);
         // the division by 2 of the set's size will give us the number of pair found in the bookshelf
-        if (nodes.size()/2 > 5) return true;
+        if (nodes.size() / 2 > 5) return true;
 
         return false;
     }
@@ -61,29 +61,6 @@ public class CommonObjective1 extends CommonObjective{
      * @param player    player whose bookshelf gets analyze
      * @param numOfPlayers      number of player to assign points
      */
-    public void commonObjPointsCalculator(Player player, int numOfPlayers){
-
-        System.out.println("Common calculator 1 : "+ player.getUsername());
-        System.out.println(playersWhoCompletedComObj.contains(player));
-
-        if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
-
-            // adding the player to the set of players who already received the points
-            playersWhoCompletedComObj.add(player);
-
-            // for a 2 players game the first to complete a commonObj gets 8 points and the second to do so 4
-            if (numOfPlayers == 2) {
-                player.setCommonObjectivePoint(points);
-                points -= 4;
-            }
-
-            // in case there are more than 2 players each time a commonObj is completed its points decrease by 2
-            else {
-                player.setCommonObjectivePoint(points);
-                points -= 2;
-            }
-        }
-    }
 }
 
 /**

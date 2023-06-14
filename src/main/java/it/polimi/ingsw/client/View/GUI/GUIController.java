@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.View.GUI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
+import it.polimi.ingsw.client.NetworkerRmi;
+import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.GUI.Scene.*;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Matrix;
@@ -16,11 +18,11 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GUIController implements View {
+public class GUIController implements View, SceneController {
     private  Stage stage;
     private  Scene scene;
     private  Parent root;
-    private  final Networker networker;
+    private  Networker networker;
     private final ClientState state;
     private SceneController sceneController;
 
@@ -29,13 +31,12 @@ public class GUIController implements View {
         return state;
     }
 
-    public GUIController(Networker networker, ClientState state) {
-        this.networker = networker;
+
+    public GUIController( ClientState state) {
         this.state=state;
         state.addListener(this,"start");
         state.addListener(this,"end");
     }
-
 
     //invia i messaggi dal client al server
     //client -> networker -> server
@@ -46,6 +47,7 @@ public class GUIController implements View {
             case ADD_TO_BOOKSHELF -> networker.addTilesToBookshelf(message);
             case USERNAME -> networker.firstConnection(message);
             case NUM_OF_PLAYERS -> networker.numberOfPlayersSelection(message);
+            case CHAT -> networker.chat(message);
         }
     }
 
@@ -83,7 +85,10 @@ public class GUIController implements View {
                 changeScene(Scenes.Game);;
             }
             case "end" -> {
-                changeScene(Scenes.Endgame);
+                if(state.isDisconnectionWinner()){
+                    changeScene(Scenes.DisconnectionEnd);
+                } else changeScene(Scenes.Endgame);
+
             }
         }
     }
@@ -100,6 +105,24 @@ public class GUIController implements View {
             this.scene.setRoot(root);
             stage.setTitle(scenes.getTitle());
         });
+    }
+
+    public void selectNetworker(String net, String host){
+        if(net.equals("RMI")){
+            networker = new NetworkerRmi(state,host);
+        }else{
+            networker = new NetworkerTcp(state,host);
+        }
+        networker.setView(this);
+        boolean connected=false;
+        do {
+            connected=networker.initializeConnection();
+            if (!connected){
+                showError("Try again", stage);
+            }
+        }while (!connected);
+
+        changeScene(Scenes.Login);
     }
 
     public void setSceneController(SceneController sceneController) {
@@ -128,5 +151,9 @@ public class GUIController implements View {
 
     public Parent getRoot() {
         return root;
+    }
+
+    public void setNetworker(Networker networker) {
+        this.networker = networker;
     }
 }

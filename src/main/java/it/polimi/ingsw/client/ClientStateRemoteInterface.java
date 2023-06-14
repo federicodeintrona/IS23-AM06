@@ -42,10 +42,13 @@ public interface ClientStateRemoteInterface extends Remote {
     void setCurrentPlayer(String source) throws RemoteException;
 
     void setMyPersonalObjectiveInt(int myPersonalObjectiveInt) throws RemoteException;
+    void setCommonObjectivePoints(ArrayList<Integer> commonObjectivePoints) throws RemoteException;
     void setDisconnectionWinner(boolean disconnectionWinner) throws RemoteException;
 
     boolean pingPong() throws RemoteException;
 
     void newMessageHandler (ChatMessage message) throws RemoteException;
     void reloadChats (ChatController backup) throws RemoteException;
+     void setChair(String chair) throws RemoteException;
+     void setOldCommonObjectivePoints(ArrayList<Integer> oldCommonObjectivePoints) throws RemoteException;
 }

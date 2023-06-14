@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +24,8 @@ public class NumberOfPlayerController implements Initializable,SceneController {
     private Label firstUsernameLabel; //username dell'utente che deve creare la partita
     @FXML
     private ChoiceBox<Integer> numberOfPlayerBox; //box che mostra il numero dei giocatori
+    @FXML
+    private Button enterButton;
 
 
     //inizializzazione
@@ -32,12 +36,25 @@ public class NumberOfPlayerController implements Initializable,SceneController {
         firstUsernameLabel.setText(username+", you must to create a lobby");
         //box per il numero di giocatori
         Integer[] choice={2, 3, 4};
+        numberOfPlayerBox.setValue(choice[0]);
         numberOfPlayerBox.getItems().addAll(choice);
-        numberOfPlayerBox.setOnAction(this::setNumberOfPlayerBox);
+        numberOfPlayerBox.setOnAction(this::setNumberOfPlayerBoxClick);
     }
 
     //quando hai finito la selezione nel box invia il messaggio al server
-    public void setNumberOfPlayerBox(ActionEvent actionEvent){
+    public void setNumberOfPlayerBoxClick(ActionEvent actionEvent){
+        setNumberOfPlayerBox();
+    }
+    public void setNumberOfPlayerBoxEnter(KeyEvent event){
+        if (event.getCode()== KeyCode.ENTER){
+            setNumberOfPlayerBox();
+        }
+    }
+    public void setNumberOfPlayerEnterButtonClick(ActionEvent event){
+        setNumberOfPlayerBox();
+    }
+
+    private void setNumberOfPlayerBox(){
         Integer choice=numberOfPlayerBox.getValue();
 
         IntMessage message=new IntMessage();

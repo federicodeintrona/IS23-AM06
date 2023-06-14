@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="loginBackground" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.EndGameController">
+<GridPane maxHeight="700.0" maxWidth="1250.0" minHeight="700.0" minWidth="1250.0" prefHeight="700.0" prefWidth="1250.0" styleClass="loginBackground" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.EndGameController">
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -21,8 +21,8 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <VBox alignment="CENTER" prefHeight="133.0" prefWidth="444.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="448.0" text="Results: " textFill="WHITE">
+    <VBox alignment="CENTER" prefHeight="133.0" prefWidth="444.0" styleClass="endGameResult" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="714.0" text="Results: " textFill="WHITE">
             <font>
                 <Font name="System Bold Italic" size="22.0" />
             </font>
@@ -30,32 +30,32 @@
                 <Insets left="20.0" right="20.0" />
             </VBox.margin>
         </Label>
-      <Label fx:id="firstPlayer" contentDisplay="CENTER" prefHeight="26.0" prefWidth="494.0" textFill="WHITE">
+      <Label fx:id="firstPlayer" contentDisplay="CENTER" maxHeight="32.0" maxWidth="760.0" minHeight="32.0" minWidth="760.0" prefHeight="32.0" prefWidth="760.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="secondPlayer" prefHeight="26.0" prefWidth="496.0" textFill="WHITE">
+      <Label fx:id="secondPlayer" maxHeight="32.0" maxWidth="760.0" minHeight="32.0" minWidth="760.0" prefHeight="32.0" prefWidth="758.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="thirdPlayer" prefHeight="28.0" prefWidth="497.0" textFill="WHITE">
+      <Label fx:id="thirdPlayer" maxHeight="32.0" maxWidth="760.0" minHeight="32.0" minWidth="760.0" prefHeight="32.0" prefWidth="757.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="fourthPlayer" prefHeight="29.0" prefWidth="496.0" textFill="WHITE">
+      <Label fx:id="fourthPlayer" maxHeight="32.0" maxWidth="760.0" minHeight="32.0" minWidth="760.0" prefHeight="32.0" prefWidth="757.0" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
     </VBox>
-   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+   <AnchorPane maxHeight="200.0" maxWidth="200.0" minHeight="200.0" minWidth="171.0" prefHeight="200.0" prefWidth="171.0" GridPane.columnIndex="2">
       <children>
-         <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="65.0" prefHeight="16.0" prefWidth="494.0" textFill="WHITE">
+         <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutY="39.0" maxHeight="78.0" maxWidth="923.0" minHeight="78.0" minWidth="608.0" prefHeight="78.0" prefWidth="923.0" text="aaaa" textFill="WHITE">
             <font>
-               <Font name="System Bold Italic" size="35.0" />
+               <Font name="System Bold Italic" size="40.0" />
             </font>
          </Label>
       </children>

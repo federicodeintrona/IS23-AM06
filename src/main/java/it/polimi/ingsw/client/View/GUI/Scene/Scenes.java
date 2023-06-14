@@ -2,10 +2,12 @@ package it.polimi.ingsw.client.View.GUI.Scene;
 
 //enumeration per gestire le scene del gioco
 public enum Scenes {
+    InitialRequest("/fxml/InitialRequest.fxml", "Connection"),
     Login("/fxml/loginGriglia.fxml","Login Page"),
     NumOfPlayers("/fxml/numberOfPlayer.fxml","New Game"),
     Waiting("/fxml/waiting.fxml","Waiting Page"),
-    Game("/fxml/game2.fxml","MyShelfie"),
+    Game("/fxml/gameCompleto.fxml","MyShelfie"),
+    DisconnectionEnd("/fxml/EndGameForDisconnection.fxml","Winner Page"),
     Endgame("/fxml/endGame.fxml","Winner Page");
 
     private final String name;

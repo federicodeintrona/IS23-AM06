@@ -14,19 +14,18 @@ import java.net.Socket;
 
 public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
-    private static String host;
+    private String serverIP;
     private Socket socket ;
     private ObjectOutputStream oos;
     private View view;
-    private ClientState clientState;
+    private final ClientState clientState;
 
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config=new JsonReader(is);
-            this.clientState = clientState;
-            NetworkerTcp.host =host;
+            NetworkerTcp.serverIP =host;
             port=config.getInt("tcpPort");
         } catch (IOException e) {
             System.out.println("Input/Output problems. Try to close and reopen the program");
@@ -37,21 +36,24 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             e.printStackTrace();
             close();
         }
+        this.clientState = clientState;
     }
-
-    public void initializeConnection() {
+    public boolean initializeConnection() {
         Reader reader;
         try {
-            socket = new Socket(host, port);
+            socket = new Socket(serverIP, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
             reader=new Reader(socket,oos,this, clientState);
             reader.start();
         } catch (IOException e) {
-            System.out.println( "Server is not responding...");
-            e.printStackTrace();
-            close();
+//            e.printStackTrace();
+            if (socket!=null){
+                System.out.println( "Server is not responding...");
+                close();
+            }
+            return false;
         }
-
+        return true;
 
     }
 
@@ -154,6 +156,15 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     @Override
     public void setView(View view) {
         this.view=view;
+    }
+
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    @Override
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
     }
 
     /**
