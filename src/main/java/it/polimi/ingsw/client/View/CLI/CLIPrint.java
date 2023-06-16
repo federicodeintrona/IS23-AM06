@@ -20,16 +20,29 @@ import java.util.HashMap;
 
 public class CLIPrint implements PropertyChangeListener {
 
+    /**
+     * attribute used to retrieve CLI-side all the client information
+     */
     private final CLIMain cliMain;
 
 
+    /**
+     * Constuctor --> assign cliMain
+     *
+     * @param cliMain   used to retrieve CLI-side all the client information
+     */
     public CLIPrint(CLIMain cliMain) {
         this.cliMain=cliMain;
     }
 
 
 
-    //ritorna il colore della tile - lettera
+    /**
+     * method to return the color of the tile - character's color
+     *
+     * @param tiles the tile that you want to have the character's color
+     * @return ColorCli the character's color
+     */
     private ColorCLI tileColor(Tiles tiles){
         synchronized (cliMain.getLock()) {
             return switch (tiles) {
@@ -46,7 +59,12 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //ritorna il colore della tile - background
+    /**
+     * method to return the color of the tile - background's color
+     *
+     * @param tiles the tile that you want to have the background's color
+     * @return ColorCli the background's color
+     */
     private ColorCLI tileColorBG(Tiles tiles){
         synchronized (cliMain.getLock()) {
             return switch (tiles) {
@@ -63,8 +81,14 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
+
+
+    //TODO scegliere quale titolo mettere
+    /**
+     * method to print the title of the game
+     */
     public void printTitle(){
-        String st="\n" +
+        String st=
                 "███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████\n" +
                 "█░░░░░░██████████░░░░░░█░░░░░░░░██░░░░░░░░████░░░░░░░░░░░░░░█░░░░░░██░░░░░░█░░░░░░░░░░░░░░█░░░░░░█████████░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█\n" +
                 "█░░▄▀░░░░░░░░░░░░░░▄▀░░█░░▄▀▄▀░░██░░▄▀▄▀░░████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░█████████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█\n" +
@@ -80,7 +104,8 @@ public class CLIPrint implements PropertyChangeListener {
                 "███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████";
 
 
-        String st1=" ███▄ ▄███▓▓██   ██▓     ██████  ██░ ██ ▓█████  ██▓      █████▒██▓▓█████ \n" +
+        String st1=
+                "███▄ ▄███▓▓██   ██▓     ██████  ██░ ██ ▓█████  ██▓      █████▒██▓▓█████ \n" +
                 "▓██▒▀█▀ ██▒ ▒██  ██▒   ▒██    ▒ ▓██░ ██▒▓█   ▀ ▓██▒    ▓██   ▒▓██▒▓█   ▀ \n" +
                 "▓██    ▓██░  ▒██ ██░   ░ ▓██▄   ▒██▀▀██░▒███   ▒██░    ▒████ ░▒██▒▒███   \n" +
                 "▒██    ▒██   ░ ▐██▓░     ▒   ██▒░▓█ ░██ ▒▓█  ▄ ▒██░    ░▓█▒  ░░██░▒▓█  ▄ \n" +
@@ -92,7 +117,8 @@ public class CLIPrint implements PropertyChangeListener {
                 "            ░ ░                                                          ";
 
 
-        String st2="   ▄▄▄▄███▄▄▄▄   ▄██   ▄           ▄████████    ▄█    █▄       ▄████████  ▄█          ▄████████  ▄█     ▄████████ \n" +
+        String st2=
+                "   ▄▄▄▄███▄▄▄▄   ▄██   ▄           ▄████████    ▄█    █▄       ▄████████  ▄█          ▄████████  ▄█     ▄████████ \n" +
                 " ▄██▀▀▀███▀▀▀██▄ ███   ██▄        ███    ███   ███    ███     ███    ███ ███         ███    ███ ███    ███    ███ \n" +
                 " ███   ███   ███ ███▄▄▄███        ███    █▀    ███    ███     ███    █▀  ███         ███    █▀  ███▌   ███    █▀  \n" +
                 " ███   ███   ███ ▀▀▀▀▀▀███        ███         ▄███▄▄▄▄███▄▄  ▄███▄▄▄     ███        ▄███▄▄▄     ███▌  ▄███▄▄▄     \n" +
@@ -118,36 +144,52 @@ public class CLIPrint implements PropertyChangeListener {
         System.out.println(ColorCLI.RED+st2+"\n\n\n\n\n"+ColorCLI.RESET);
     }
 
-    //stampa la board
+    /**
+     * method to print the request's board
+     *
+     * @param board the request's board
+     */
     public void printBoard(Matrix board){
         synchronized (cliMain.getLock()) {
+            //print the number of the column - upper
             System.out.print("  ");
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
                 System.out.print(" " + i + " ");
             }
             System.out.println();
-            for (int i = 0; i < 9; i++) {
+
+            //print the tiles and the number of row at the beginning and at the end of row - right & left
+            for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
                 System.out.print(i + " ");
-                for (int j = 0; j < 9; j++) {
+                for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
                     System.out.print(tileColorBG(board.getTile(i, j)) + "   " + ColorCLI.RESET);
                 }
                 System.out.println(" " + i);
             }
+
+            //print the number of the column - bottom
             System.out.print("  ");
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOARD.getI(); i++) {
                 System.out.print(" " + i + " ");
             }
             System.out.println("\n");
         }
     }
 
-    //stampa la bookshelf
+    /**
+     * method to print the request's bookshelf
+     *
+      * @param bookshelf    the request's bookshelf
+     */
     public void printBookshelf(Matrix bookshelf){
         synchronized (cliMain.getLock()) {
+            //print the number of the column - upper
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
             }
+
+            //print the tiles
             System.out.println();
             for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
                 System.out.print("  ");
@@ -156,6 +198,8 @@ public class CLIPrint implements PropertyChangeListener {
                 }
                 System.out.println();
             }
+
+            //print the number of the column - bottom
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
@@ -164,17 +208,24 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa tutte le bookshelf
+    /**
+     * method to print all the players' bookshelf
+     *
+      * @param allMatrix    all the players' bookshelf and their username
+     */
     public void printAllBookshelf(HashMap<String, Matrix> allMatrix){
         synchronized (cliMain.getLock()){
+            //forall username
             for (String key: allMatrix.keySet()){
+                //if key==MyUsername
                 if (key.equals(cliMain.getClientState().getMyUsername())){
                     System.out.println(ColorCLI.RED + "My Bookshelf: " + ColorCLI.RESET);
-//                    printBookshelf(allMatrix.get(key));
+                    //print the bookshelf and the personal objective
                     printBookshelfPersonalObjective(allMatrix.get(key), cliMain.getClientState().getMyPersonalObjective());
                 }
                 else{
                     System.out.println("Bookshelf of: "+key);
+                    //print only the bookshelf
                     printBookshelf(allMatrix.get(key));
                 }
 
@@ -183,25 +234,41 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //recupera il Personal Objective
+    /**
+     * method to create the personal objective's matrix
+     *
+     * @param personalObjective personal objective to transform in Matrix
+     * @return Matrix   the personal objective matrix
+     */
     private Matrix personalObjectiveReturn(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
             Matrix bookshelf=new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(), Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
+            //forall points
             for (Point key : personalObjective.keySet()){
+                //add the color in correct position
                 bookshelf.setTile(personalObjective.get(key), key);
             }
             return bookshelf;
         }
     }
 
-    //stampa il personal Objective
+    /**
+     * method to print the personal objective
+     *
+     * @param personalObjective the request's personal objective
+     */
     public void printPersonalObjective(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
+            //Matrix of personal objective
             Matrix bookshelf = personalObjectiveReturn(personalObjective);
+
+            //print the number of the column - upper
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
             }
+
+            //print the color in the correct position
             System.out.println();
             for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
                 System.out.print("  ");
@@ -214,6 +281,7 @@ public class CLIPrint implements PropertyChangeListener {
                 }
                 System.out.println();
             }
+            //print the number of the column - bottom
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
@@ -222,39 +290,56 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa la Bookshelf insieme al Personal Objective
+    /**
+     * method to print the bookshelf and the personal objective together
+     *
+     * @param bookshelf the request's bookshelf
+     * @param personalObjective the request's personalobjective
+     */
     public void printBookshelfPersonalObjective(Matrix bookshelf, HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
+            //Matrix of personal objective
             Matrix bookshelfPO = personalObjectiveReturn(personalObjective);
+
+            //print the number of the column - upper
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
             }
+
+            //print bookshelf's tile and the personal objective position
             System.out.println();
             for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
                 System.out.print("  ");
                 for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
-                    //posizioni della PersonalObjective card
+                    //position of personal objective
                     if (personalObjective.containsKey(new Point(i, j))) {
-                        //posizione della Board == PersonalObjective
+                        //bookshelf's tile==personal objective's color
                         if (personalObjective.get(new Point(i, j))
                                 .equals(bookshelf.getTile(new Point(i, j)))) {
+                            //print the tile's color and the personal objective V - corrected point
                             System.out.print(tileColor(bookshelfPO.getTile(i, j)) +
                                     String.valueOf(tileColorBG(bookshelf.getTile(i, j))) +
                                     "\u001b[30m V " +
                                     ColorCLI.RESET);
-                        } else {
+                        }
+                        else {
+                            //print the tile's color and the personal objective color X - uncorrected point
                             System.out.print(tileColor(bookshelfPO.getTile(i, j)) +
                                     String.valueOf(tileColorBG(bookshelf.getTile(i, j))) +
                                     "\u001b[1m X " +
                                     ColorCLI.RESET);
                         }
-                    } else {
+                    }
+                    else {
+                        //print the tile's color
                         System.out.print(tileColorBG(bookshelf.getTile(i, j)) + "   " + ColorCLI.RESET);
                     }
                 }
                 System.out.println();
             }
+
+            //print the number of the column - bottom
             System.out.print("  ");
             for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
                 System.out.print(" " + i + " ");
@@ -263,16 +348,17 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa tutti i comandi che può fare il client  #help #h
+    /**
+     * method to print game's help
+     * print all the correct command structure
+      */
     public void help(){
         synchronized (cliMain.getLock()) {
             System.out.println("All command, WITH EXAMPLE, are:");
             System.out.println("#remove (0,0), (0,0), (0,0) ..... It is also possible not to fill all the relatives");
             System.out.println("#switch 3, 2, 1 ................. Switch the order of the selected tiles");
             System.out.println("#add 0 .......................... Add the tiles in the column of the bookshelf");
-//            System.out.println("#rollback ....................... Return to the previous move");
             System.out.println("#chat -hello- ................... Chatting with all players");
-//            System.out.println("#whisper @username -hello- ...... Chatting with username player");
             System.out.println("#printpersonal .................. Print your personal objective");
             System.out.println("#printcommon .................... Print the common objective for this game");
             System.out.println("#printboard ..................... Print the board");
@@ -285,6 +371,10 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
+    /**
+     * method to print chat's help
+     * print all the correct command structure
+     */
     public void helpForChat () {
         System.out.println("All command, WITH EXAMPLE, are:");
         System.out.println("#exit ........................... To leave the chat and return to the game");
@@ -295,20 +385,23 @@ public class CLIPrint implements PropertyChangeListener {
         System.out.println("\n");
     }
 
-    //legge da JSON il Common Objective d'interesse
+    /**
+     * method to read from JSON the interest's common objective and print it
+     *
+     * @param commonObjective   int of common objective
+     */
     private void readJSONCO(Integer commonObjective){
         synchronized (cliMain.getLock()) {
             Matrix bookshelf = new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(), Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
             JSONParser jsonParser = new JSONParser();
 
             try {
-//                FileReader reader = new FileReader("src/main/resources/CommonObjective.json");
                 InputStream is=this.getClass().getClassLoader().getResourceAsStream("CommonObjective.json");
                 Object obj = jsonParser.parse(new InputStreamReader(is));
                 JSONObject co = (JSONObject) obj;
                 JSONObject coDetails = new JSONObject();
 
-                //che common objective sei?
+                //which common objective are you?
                 switch (commonObjective){
                     case 1 -> coDetails = (JSONObject) co.get("CO1");
                     case 2 -> coDetails = (JSONObject) co.get("CO2");
@@ -325,13 +418,13 @@ public class CLIPrint implements PropertyChangeListener {
 
                 }
 
-                //salvataggio quantità e tipo
+                //save the description of common objective
                 String type = coDetails.get("TYPE").toString();
 
                 JSONArray coPosition = (JSONArray) coDetails.get("POSITION");
                 ArrayList<Point> points = new ArrayList<>();
 
-                //salvataggio posizioni da mostrare per far capire il common objective
+                //save the position to show of common objective
                 for (Object o : coPosition) {
                     JSONArray coPoint = (JSONArray) o;
                     int x = Integer.parseInt(coPoint.get(0).toString());
@@ -339,12 +432,12 @@ public class CLIPrint implements PropertyChangeListener {
                     points.add(new Point(x, y));
                 }
 
-                //inserimento posizioni nella bookshelf
+                //insert the position in Matrix
                 for (Point point : points) {
                     bookshelf.setTile(Tiles.POSITION, point);
                 }
 
-                //stampaggio
+                //print the common objective
                 System.out.println(type);
                 printBookshelf(bookshelf);
 
@@ -354,7 +447,11 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa i common objective
+    /**
+     * method to print all the common objective
+     *
+     * @param commonObjective   ArrayList of all common objective
+     */
     public void printCommonObjective(ArrayList<Integer> commonObjective){
         synchronized (cliMain.getLock()) {
             System.out.println("\nCOMMON OBJECTIVE 1:");
@@ -364,10 +461,17 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa i punti
+    /**
+     * method to print all public points
+     *
+     * @param publicPoints  all public points
+     */
     public void printPoints(HashMap<String, Integer> publicPoints){
         System.out.println("All Public Points: ");
+
+        //forall username
         for (String key: publicPoints.keySet()){
+            //if key==MyUsername
             if (key.equals(cliMain.getClientState().getMyUsername())){
                 System.out.println(ColorCLI.RED + "my points: "+publicPoints.get(key)+ ColorCLI.RESET);
             }
@@ -378,21 +482,24 @@ public class CLIPrint implements PropertyChangeListener {
         System.out.println("\n");
     }
 
-    //stampa i mie punti
+    /**
+     * method to print my points - public points + personal objective points
+     *
+     * @param point my points - public points + personal objective points
+     */
     public void printMyPoints(Integer point){
         System.out.println("My Points: "+point);
     }
 
-    //stampa chi ha la sedia
+    /**
+     * method to print the player that have the chair - who is the first player to start the game
+     */
     public void printChair(){
         synchronized (cliMain.getLock()){
             System.out.println("The first player, that have chair, is: " +
                                cliMain.getClientState().getChair());
-            try{
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+
+            //wait before you move on - only graphics idea
             try{
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -402,17 +509,26 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa l'oridne delle tiles selezionate
+    /**
+     * method to print the order of selected tiles
+     *
+     * @param order ArrayList of tiles - order of tiles to show
+     */
     public void printOrderTiles(ArrayList<Tiles> order){
         clearSheel();
         System.out.print("Selected tiles: ");
+        //print the order of tiles
         for (Tiles tiles : order) {
             System.out.print(tileColorBG(tiles) + "   " + ColorCLI.RESET + " ");
         }
         System.out.println("\n");
     }
 
-    //stampa l'errore - c'è un errore
+    /**
+     * method to print error - the server send an error message
+     *
+      * @param error    string to show received from server
+     */
     public void printError(String error){
         synchronized (cliMain.getLock()) {
             System.out.println(error);
@@ -420,28 +536,16 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //siamo in attesa di nuovi giocatori - singolo
+    /**
+     * method to print waiting other player
+     */
     public void printWaiting(){
-        //synchronized (cliMain.getLock()){
             System.out.println("Waiting for the other players...");
-        //}
     }
 
-//    //stampa che siamo in attesa di giocatori - fino a che
-//    public void printWaiting(){
-//        //while (!cliMain.getClientState().gameHasStarted()){
-//            printWaitingPrivate();
-//           /*
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }*/
-//
-//        //}
-//    }
-
-    //stampa che sta per iniziare la partita
+    /**
+     * method to print that the number of players has been reached
+     */
     public void gameHasStarted(){
         synchronized (cliMain.getLock()){
             System.out.println("The number of players has been reached \n\n\n");
@@ -449,9 +553,12 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa di chi è il turno
+    /**
+     * method to print the turn - which player's turn is it?
+     */
     private void printTurn(){
         synchronized (cliMain.getLock()){
+            //if is my turn
             if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername())){
                 System.out.println(ColorCLI.RED + String.valueOf(ColorCLI.BOLD) + "It is YOUR turn"+ ColorCLI.RESET);
             }
@@ -461,7 +568,14 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //stampa tutto quello che serve all'inizio di un turno
+    /**
+     * method to print the player's turn
+     * all the information:
+     * - which player's turn is it?
+     * - print board
+     * - print all bookshelf
+     * - print all points
+     */
     public void playerTurn(){
         printTurn();
         printBoard(cliMain.getClientState().getBoard());

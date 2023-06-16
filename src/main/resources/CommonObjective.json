@@ -109,7 +109,6 @@
     ]
   },
   "CO12" : {
-    "QUANTITY": 1,
     "TYPE": "Five columns of increasing or decreasing\nheight. Starting from the first column on\nthe left or on the right, each next column\nmust be made of exactly one more tile.\nTiles can be of any type.",
     "POSITION" : [
       [1,0],

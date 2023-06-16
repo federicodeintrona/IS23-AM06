@@ -21,7 +21,7 @@ public class ReadShell extends Thread {
     /**
      * Constructor --> assign climain
      *
-     * @param cliMain
+     * @param cliMain   used to retrieve CLI-side all the client information
      */
     public ReadShell(CLIMain cliMain) {
         this.cliMain = cliMain;
@@ -62,6 +62,7 @@ public class ReadShell extends Thread {
      * method to read all the numbers in the input string
      *
      * ONLY READS THE DIGIT (for example, if in the input string there is 12, this method return 1 and 2 and NOT 12)
+     *
      * @param s input string that we want to know which numbers it contains
      * @return ArrayList    all the number in the string
      */
@@ -260,6 +261,7 @@ public class ReadShell extends Thread {
 
     /**
      * method to create the remove tiles from board's message - remove tiles from board
+     *
      * @param input the list of int - then the method transforms it in Points
      */
     private void createRemoveMessage(ArrayList<Integer> input) {
@@ -288,6 +290,7 @@ public class ReadShell extends Thread {
 
     /**
      * method to create the switch tiles' message - switch selected tiles
+     *
      * @param input the list of int - order of switching tiles
      */
     private void createSwitchMessage(ArrayList<Integer> input) {
@@ -305,6 +308,7 @@ public class ReadShell extends Thread {
 
     /**
      * method to create the add to bookshelf's message - add to bookshelf's column
+     *
      * @param input the list of int, it contains only 1 int
      */
     private void createAddMessage(ArrayList<Integer> input) {
@@ -324,6 +328,7 @@ public class ReadShell extends Thread {
 
     /**
      * method to send all possible message to Networker, and then it sends them to Server
+     *
      * @param message   sending message
      */
     public void sendMessage(Message message) {
