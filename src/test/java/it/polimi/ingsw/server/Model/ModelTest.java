@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -151,13 +152,6 @@ class ModelTest {
 
     }
 
-    //TODO disconnecction testing
-    @Test
-    void playerDisconnectionAndReconnection(){
-
-
-
-    }
 
     @Test
     void gameTest(){
@@ -201,6 +195,80 @@ class ModelTest {
     }
 
 
+    @Test
+    void disconnectandreconnectPlayer(){
+        m.disconnectPlayer(players.get(0),views.get(0));
+        m.disconnectPlayer(players.get(1),views.get(1));
+        assertTrue(players.get(0).isDisconnected());
+
+        m.playerReconnection(players.get(0),views.get(0));
+
+        assertFalse(players.get(0).isDisconnected());
+
+    }
+
+    @Test
+    void endingDisconnect(){
+        m.disconnectPlayer(players.get(0),views.get(0));
+        m.disconnectPlayer(players.get(0),views.get(0));
+
+        assertTrue(m.isTimerIsOn());
+
+    }
+
+    @Test
+    void endGame(){
+        try {
+            Player curr = m.getCurrPlayer();
+            ArrayList<Point> remove = new ArrayList<>();
+            remove.add(new Point(0,3));
+            remove.add(new Point(1,3));
+            ArrayList<Tiles> add = new ArrayList<>();
+            add.add(Tiles.GREEN);
+            add.add(Tiles.GREEN);
+
+            m.setState(GameState.CHOOSING_COLUMN);
+
+            for(int j=0; j<Define.NUMBEROFROWS_BOOKSHELF.getI()/2;j++) {
+                for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
+                    m.getSelectedTiles().addAll(add);
+                    m.addToBookShelf(curr, i);
+                    m.setCurrPlayer(curr);
+                    m.setState(GameState.CHOOSING_COLUMN);
+                }
+            }
+
+
+            assertTrue(m.isFinished());
+
+        } catch (MoveNotPossible e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    @Test
+    void boardReset(){
+        ArrayList<Point> points = new ArrayList<>();
+        Player curr = m.getCurrPlayer();
+        for(int j=0; j<Define.NUMBEROFROWS_BOOKSHELF.getI()/2;j++) {
+            for (int i = 0; i < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); i++) {
+                points.removeAll(points);
+                points.add(new Point(i,j));
+                try {
+                    m.removeTileArray(curr,points);
+                    m.addToBookShelf(curr,i);
+
+                } catch (MoveNotPossible e) {
+
+                }
+                m.setCurrPlayer(curr);
+                m.setState(GameState.CHOOSING_TILES);
+
+            }
+        }
+    }
 
     public static Point getRandomPointInBoard() {
         Random rdm = new Random();
