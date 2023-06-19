@@ -8,11 +8,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Class to read all the strings that the user enters from the command line.
+ * It reads and interprets the input string, if it is a valid command creates the corresponding messages to send to the server and sends it
+ */
 public class ReadShell extends Thread {
 
     /**
-     * attribute used to retrieve CLI-side all the client information
+     * Attribute used to retrieve CLI-side all the client information
      */
     private final CLIMain cliMain;
 
@@ -30,7 +33,7 @@ public class ReadShell extends Thread {
 
 
     /**
-     * method to run the Readshell
+     * Method to run the Readshell
      */
     @Override
     public void run() {
@@ -43,7 +46,7 @@ public class ReadShell extends Thread {
 
 
     /**
-     * method to read on standard input
+     * Method to read on standard input
      *
      * @return String   input command
      */
@@ -54,12 +57,12 @@ public class ReadShell extends Thread {
         String word;
         //wait for data input and reads them
         word = String.valueOf(scanner.nextLine());
-        clearCLI();
+        cliMain.getCliPrint().clearShell();
         return word;
     }
 
     /**
-     * method to read all the numbers in the input string
+     * Method to read all the numbers in the input string
      *
      * ONLY READS THE DIGIT (for example, if in the input string there is 12, this method return 1 and 2 and NOT 12)
      *
@@ -80,15 +83,7 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * method to clear the terminal
-     */
-    private void clearCLI() {
-        System.out.println(ColorCLI.CLEAR);
-        System.out.flush();
-    }
-
-    /**
-     * method to read user command:
+     * Method to read user command:
      * - read command
      * - create the correct message
      * - send the message to server
@@ -135,25 +130,21 @@ public class ReadShell extends Thread {
                 createAddMessage(number);
             }
             //#help command
-            case "#help", "#h" -> {
+            case "#help", "#h" ->
                 //print help's method - print all the correct command structure
                 cliMain.getCliPrint().help();
-            }
             //#printpersonal command
-            case "#printpersonal" -> {
+            case "#printpersonal" ->
                 //print my personal objective
-                cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPersonalObjective());
-            }
+                    cliMain.getCliPrint().printPersonalObjective(cliMain.getClientState().getMyPersonalObjective());
             //#printboard command
-            case "#printboard" -> {
+            case "#printboard" ->
                 //print the game's board
                 cliMain.getCliPrint().printBoard(cliMain.getClientState().getBoard());
-            }
             //#printmybookshelf command
-            case "#printmybookshelf" -> {
+            case "#printmybookshelf" ->
                 //print my bookshelf
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getMyBookshelf());
-            }
             //#printbookshelf
             case "#printbookshelf" -> {
                 //find the player whose bookshelf you want to see
@@ -179,45 +170,38 @@ public class ReadShell extends Thread {
                 cliMain.getCliPrint().printBookshelf(cliMain.getClientState().getAllBookshelf().get(sub));
             }
             //#printcommon command
-            case "#printcommon" -> {
+            case "#printcommon" ->
                 //print all game's common objective
                 cliMain.getCliPrint().printCommonObjective(cliMain.getClientState().getGameCommonObjective());
-            }
             //#printpoints command
-            case "#printpoints" -> {
+            case "#printpoints" ->
                 //print all player points
                 cliMain.getCliPrint().printPoints(cliMain.getClientState().getAllPublicPoints());
-            }
             //#printmypoint command
-            case "#printmypoint" -> {
+            case "#printmypoint" ->
                 //print my private points - public points + personal objective's points
                 cliMain.getCliPrint().printMyPoints(cliMain.getClientState().getMyPoints());
-            }
             //#printchair command
-            case "#printchair" -> {
+            case "#printchair" ->
                 //print who is the first player to start the game
                 cliMain.getCliPrint().printChair();
-            }
             //#chat command
-            case "#chat" -> {
+            case "#chat" ->
                 //enter in public chat and print it
                 cliMain.getChatHandler().settingForPublicChat();
-            }
             //#privatechat command
-            case "#privatechat" -> {
+            case "#privatechat" ->
                 //enter in private chat and print it
                 cliMain.getChatHandler().settingForPrivateChat();
-            }
-            default -> {
+            default ->
                 //you do not insert a valid command
                 System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
-            }
         }
 
     }
 
     /**
-     * method to request the username at game beginning
+     * Method to request the username at game beginning
      */
     public void askUsername() {
         Message message = new Message();
@@ -240,7 +224,7 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * method to request the number of players - if and only if the server requires it
+     * Method to request the number of players - if and only if the server requires it
      */
     public void askNumberOfPlayerMessage() {
         IntMessage message = new IntMessage();
@@ -260,7 +244,7 @@ public class ReadShell extends Thread {
 
 
     /**
-     * method to create the remove tiles from board's message - remove tiles from board
+     * Method to create the remove tiles from board's message - remove tiles from board
      *
      * @param input the list of int - then the method transforms it in Points
      */
@@ -289,7 +273,7 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * method to create the switch tiles' message - switch selected tiles
+     * Method to create the switch tiles' message - switch selected tiles
      *
      * @param input the list of int - order of switching tiles
      */
@@ -307,7 +291,7 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * method to create the add to bookshelf's message - add to bookshelf's column
+     * Method to create the add to bookshelf's message - add to bookshelf's column
      *
      * @param input the list of int, it contains only 1 int
      */
@@ -327,7 +311,7 @@ public class ReadShell extends Thread {
 
 
     /**
-     * method to send all possible message to Networker, and then it sends them to Server
+     * Method to send all possible message to Networker, and then it sends them to Server
      *
      * @param message   sending message
      */

@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.View.CLI;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.NetworkerRmi;
-import it.polimi.ingsw.server.CommonObjective.*;
 import it.polimi.ingsw.server.Model.Board;
 import it.polimi.ingsw.server.Model.Bookshelf;
 import it.polimi.ingsw.server.Model.Sachet;
@@ -19,30 +18,11 @@ import java.util.HashMap;
 
 class CLIPrintTest {
 
-    @DisplayName("Print Title")
-    @Test
-    public void printTitle(){
-        Object obj=new Object();
-        ClientState clientState= null;
-        try {
-            clientState = new ClientState(obj);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        Networker networker=new NetworkerRmi();
-        CLIMain cliMain=new CLIMain(obj, clientState, networker);
-        CLIPrint cliPrint=new CLIPrint(cliMain);
-
-        cliPrint.printTitle();
-    }
-
-
-
     @DisplayName("Print Board")
     @Test
     public void printBoard(){
         Object obj=new Object();
-        ClientState clientState= null;
+        ClientState clientState;
         try {
             clientState = new ClientState(obj);
         } catch (RemoteException e) {
@@ -62,7 +42,7 @@ class CLIPrintTest {
     @Test
     public void printBookshelf(){
         Object obj=new Object();
-        ClientState clientState= null;
+        ClientState clientState;
         try {
             clientState = new ClientState(obj);
         } catch (RemoteException e) {
@@ -95,7 +75,7 @@ class CLIPrintTest {
     @Test
     public void printPersonalObjective(){
         Object obj=new Object();
-        ClientState clientState= null;
+        ClientState clientState;
         try {
             clientState = new ClientState(obj);
         } catch (RemoteException e) {
@@ -115,7 +95,7 @@ class CLIPrintTest {
     @Test
     public void printBookshelfPersonalObjective(){
         Object obj=new Object();
-        ClientState clientState= null;
+        ClientState clientState;
         try {
             clientState = new ClientState(obj);
         } catch (RemoteException e) {
@@ -140,7 +120,7 @@ class CLIPrintTest {
     @Test
     public void printHelp(){
         Object obj=new Object();
-        ClientState clientState= null;
+        ClientState clientState;
         try {
             clientState = new ClientState(obj);
         } catch (RemoteException e) {
@@ -157,7 +137,7 @@ class CLIPrintTest {
     @Test
     public void printCommonObjective(){
         Object obj=new Object();
-        ClientState clientState= null;
+        ClientState clientState;
         try {
             clientState = new ClientState(obj);
         } catch (RemoteException e) {
@@ -208,7 +188,7 @@ class CLIPrintTest {
     @Test
     public void printSelectedTiles(){
         Object obj=new Object();
-        ClientState clientState= null;
+        ClientState clientState;
         try {
             clientState = new ClientState(obj);
         } catch (RemoteException e) {
