@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.PersonalObjective;
 
 import it.polimi.ingsw.server.Model.Bookshelf;
-import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.Tiles;
 import org.json.simple.JSONArray;
@@ -12,31 +11,23 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
-import java.util.Random;
 
 public class PersonalObjective {
-    private static final int numberOfPersonalObjective=12;
 
-    private HashMap<Point, Tiles> card=new HashMap<>();
-    private int personalObjectiveNum;
+    private final HashMap<Point, Tiles>card=new HashMap<>();
+    private final int personalObjectiveNum;
 
+    /**
+     * Getter -> return the number of the personal objective
+     *
+     * @return int -> personalObjectiveNum
+     */
     public int getPersonalObjectiveNum() {
         return personalObjectiveNum;
     }
 
 
-    /**
-     * Constuctor --> create the card
-     */
-    public PersonalObjective() {
-        Random random=new Random(); //creat Random object
-        //randomization between 1 to numberOfPersonalObjective
-        int n=random.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI())+1;
-        //mapping the card position
-        readJSON(n);
-        //setting the number of Personal Objective
-        personalObjectiveNum=n;
-    }
+
     /**
      * Constructor --> create the n-th card
      *
@@ -67,6 +58,7 @@ public class PersonalObjective {
         JSONParser jsonParser=new JSONParser();
 
         try {
+            //TODO vedere per usare optional
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("PersonalObjective.json");
             //read all JSON file
             Object obj=jsonParser.parse(new InputStreamReader(is));
@@ -137,19 +129,8 @@ public class PersonalObjective {
         catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
-//        System.out.println(card);
     }
 
-    /**
-     * return the number of position that match with the PersonalObjective's card
-     *
-     * @param player    the player whose correct position number you want to calculate
-     * @return int  number of position that match with the PersonalObjective's card
-     */
-    private int checkCondition(Player player) {
-        return checkCondition(player.getBookshelf());
-    }
     /**
      * return the number of position that match with the PersonalObjective's card
      *
@@ -193,8 +174,4 @@ public class PersonalObjective {
             default -> 0;
         };
     }
-
-
-
-
 }
