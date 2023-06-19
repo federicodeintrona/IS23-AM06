@@ -8,7 +8,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to manage the game board
+ * - initialization of the game board based on the number of players
+ * - check if you need to reset the board
+ * - reset the board
+ * - add the tiles from the board and remove it from the sachet
+ * - remove the tiles from the board
+ * - define which tiles are free
+ * - define which tiles are adjacent with each other
+ */
 public class Board {
+
     /**
      * defining number of rows per board
      */
@@ -920,23 +931,4 @@ public class Board {
         return true; //tiles pickable
     }
 
-
-//TODO tilesArePickable
-
-
 }
-
-
-
-
-/*
-    i = riga
-    j = colonna
-    ==> alto i--
-    ==> basso i++
-
-
-
-
-
- */

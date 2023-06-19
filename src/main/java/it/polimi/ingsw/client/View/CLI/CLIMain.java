@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 
 /**
- * Class that managed the Command Line Interface
+ * Class to manage the Command Line Interface
  * - create the client lock - ClientState, CLIPrint, ReadShell
  * - initial request
  *   . Which connection protocol do you choose?
