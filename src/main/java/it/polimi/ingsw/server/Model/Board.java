@@ -487,7 +487,7 @@ public class Board {
     /**
      * tile in the position shown are removing
      *
-     * REQUIRE THAT position IS CORRECT --> tile!=EMPTY && !=NOTALLOWED
+     * REQUIRE THAT position IS CORRECT
      *
      * @param position  position where to remove tile
      */
@@ -498,7 +498,7 @@ public class Board {
     /**
      * return if tile are free --> tile has at least 1 free side
      *
-     * REQUIRES THAT position IS CORRECT --> tile!=EMPTY && !=NOTALLOWED
+     * REQUIRES THAT position IS CORRECT
      *
      * @param position  position of tile to check
      * @return boolean  are free tiles?
@@ -532,7 +532,7 @@ public class Board {
      * if List has List.size()==1 return FALSE
      *
      * REQUIRES THAT THERE IS NOT EQUALS position IN THE LIST
-     * REQUIRES THAT ALL POSITION IN THE List ARE CORRECT --> tile!=EMPTY && !=NOTALLOWED
+     * REQUIRES THAT ALL POSITION IN THE List ARE CORRECT
      *
      * @param position  the position to check
      * @return boolean  are the tiles adjacent?
@@ -622,7 +622,7 @@ public class Board {
     /**
      * return positions of tiles adjacent to the incoming one
      *
-     * REQUIRES THAT tile POSITION IS CORRECT --> tile!=EMPTY && !=NOTALLOWED
+     * REQUIRES THAT tile POSITION IS CORRECT
      *
      * @param tile  the position of which I want to know the adjacent tile
      * @return ArrayList    positions of tiles adjacent to the incoming one
@@ -900,7 +900,7 @@ public class Board {
     /**
      * return if Points are pickable
      *
-     * REQUIRES THAT tile POSITION IS CORRECT --> tile!=EMPTY && !=NOTALLOWED
+     * REQUIRES THAT tile POSITION IS CORRECT
      *
      * @param position  List of position to check
      * @return boolean  are the positions pickable?

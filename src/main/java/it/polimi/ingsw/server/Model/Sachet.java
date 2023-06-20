@@ -5,6 +5,9 @@ import it.polimi.ingsw.utils.Tiles;
 
 import java.util.*;
 
+/**
+ * Class used to manage the sachet
+ */
 public class Sachet {
 
     /**
