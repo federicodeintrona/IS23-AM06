@@ -14,14 +14,13 @@ module it.polimi.ingsw {
     exports it.polimi.ingsw.app;
 
     opens it.polimi.ingsw.client.View.GUI to javafx.fxml, javafx.controls, javafx.graphics;
-    exports it.polimi.ingsw.client.View.GUI;
 
     opens it.polimi.ingsw.server.CommonObjective to openpojo;
     opens it.polimi.ingsw.client to java.rmi, javafx.controls, javafx.fxml, javafx.graphics;
     opens it.polimi.ingsw.utils.Messages to java.rmi;
     opens it.polimi.ingsw.server to java.rmi;
-    exports it.polimi.ingsw.client.View.GUI.Scene;
     exports it.polimi.ingsw.client;
     exports it.polimi.ingsw.utils;
+    exports it.polimi.ingsw.server;
     opens it.polimi.ingsw.client.View.GUI.Scene to javafx.controls, javafx.fxml, javafx.graphics;
 }

@@ -3,8 +3,10 @@ package it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 /**
- *
+ * Class to save the information related to the player
+ * and to count points of the player
  */
+
 public class Player {
     private final String username;
     private boolean disconnected = false;
@@ -16,8 +18,6 @@ public class Player {
     private int vicinityPoint;
     private int winnerPoint ;
     private int publicPoint;
-    private boolean chair;
-
 
 
     public Player(String userName) {
@@ -39,7 +39,6 @@ public class Player {
         personalObjectivePoint = 0;
         vicinityPoint = 0;
         winnerPoint = 0;
-        this.chair = chair;
     }
 
     /**

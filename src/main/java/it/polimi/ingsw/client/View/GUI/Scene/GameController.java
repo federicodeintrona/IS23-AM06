@@ -56,7 +56,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
     @FXML
     private Label otherPlayerPointsLabel;
     @FXML
-    private Label turnLabel; //TODO se viene mostrato non funziona la removetiles - se funziona la remove non si legge
+    private Label turnLabel;
     @FXML
     private Button confirmationButton;
     @FXML
@@ -390,9 +390,6 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-
-
-    //TODO update mybookshelf, otherplayerbookshelf
 
 
 

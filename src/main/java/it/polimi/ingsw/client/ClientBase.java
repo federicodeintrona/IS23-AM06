@@ -57,16 +57,14 @@ public class ClientBase extends Application{
 
             //aggiunta icona
             InputStream s=getClass().getResourceAsStream("/images/Publisher_material/Icon 50x50px.png");
+            assert s != null;
             stage.getIcons().add(new Image(s));
 
             stage.setTitle(Scenes.InitialRequest.getTitle());
             stage.setScene(scene);
-//            stage.setFullScreen(true);
-//            stage.setFullScreenExitHint(""); //TODO NON esce più la scritta per uscire fai exit - NON funziona più :(
             stage.setWidth(1300);
             stage.setHeight(750);
             stage.setResizable(false);
-//            stage.toFront();
             stage.show();
 
             stage.setOnCloseRequest(event -> {

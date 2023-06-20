@@ -18,7 +18,11 @@ public class CheckManager {
 
     private final ArrayList<Tiles> selectedTiles;
 
-
+    /**
+     * <strong>Constructor </strong>-> assign selectedTile
+     *
+     * @param selectedTiles selected tiles
+     */
     public CheckManager(ArrayList<Tiles> selectedTiles) {
         this.selectedTiles = selectedTiles;
     }
@@ -32,14 +36,13 @@ public class CheckManager {
     }
 
 
-
     //Checks to see the legitimacy of moves
 
 
     //REMOVE CHECKS
 
     /**
-     * Checks if the player can remove the selected tiles from the board.
+     * Method to check if the player can remove the selected tiles from the board.
      * @param points The array of points you want to remove
      * @param player The player who wants to remove the tiles
      * @throws MoveNotPossible if the game is not in the right state
@@ -64,7 +67,7 @@ public class CheckManager {
 
 
     /**
-     * Checks if the selected tiles can actually be removed from the board
+     * Method to check if the selected tiles can actually be removed from the board
      * @param points Array of coordinates of the tiles
      * @throws IllegalArgumentException if the array points is null
      * @throws TilesNotAdjacent if the tiles are not adjacent
@@ -98,7 +101,7 @@ public class CheckManager {
 
 
     /**
-     * Checks if the tiles of coordinates p can be selected (it's in the board, is allowed and not empty)
+     * Method to check if the tiles of coordinates p can be selected (it's in the board, is allowed and not empty)
      * @param p the coordinates of the tiles
      * @throws OutOfDomain if at least one of the points is outside the board
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
@@ -115,7 +118,7 @@ public class CheckManager {
 
 
     /**
-     * Check if the point is inside the board
+     * Method to check if the point is inside the board
      * @param p Coordinates of the point
      * @throws OutOfDomain If the point is outside the board
      */
@@ -130,7 +133,7 @@ public class CheckManager {
 
 
     /**
-     *  Check if the player can add tiles to his bookshelf
+     * Method to check if the player can add tiles to his bookshelf
      * @param player The player trying to add tiles to his bookshelf
      * @param col    The column number where to add the tiles
      * @param size   The number of tiles you want to add
@@ -154,7 +157,7 @@ public class CheckManager {
 
 
     /**
-     * Check if the selected column exists and if there is enough empty space
+     * Method to check if the selected column exists and if there is enough empty space
      * @param col The column where you want to put the tiles
      * @param size The number of tiles you want to add
      * @throws OutOfDomain if requested column does not exists
@@ -167,7 +170,7 @@ public class CheckManager {
 
 
     /**
-     * Checks if the player can swap the selectedTiles array
+     * Method to check if the player can swap the selectedTiles array
      * @param ints Swap array
      * @param player Player
      * @throws MoveNotPossible The game is not in the right state
@@ -188,7 +191,7 @@ public class CheckManager {
 
 
     /**
-     * Checks if the array is of appropriate size and content
+     * Method to check if the array is of appropriate size and content
      * @param ints Swap array
      * @throws IllegalArgumentException if the array is not of appropriate content
      * @throws TooManySelected if the array is not of appropriate size

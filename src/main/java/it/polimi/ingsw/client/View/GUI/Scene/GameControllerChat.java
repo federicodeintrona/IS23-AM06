@@ -25,13 +25,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
@@ -39,17 +37,14 @@ import java.util.*;
 import java.util.List;
 
 public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
-    private GUIController guiController = GUIControllerStatic.getGuiController();
+    private final GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
     private ArrayList<Integer> orderTiles=new ArrayList<>();
-    private HashMap<String, Integer> usernameInt=new HashMap<>();
 
     private Point checkResetPoint=null;
     @FXML
     private GridPane boardGrid;
-    @FXML
-    private GridPane commonGrid;
     @FXML
     private GridPane myBookshelfGrid;
 
@@ -127,15 +122,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private VBox otherPlayerChatBox3;
     @FXML
-    private ChoiceBox<String> chatMenu;
-    @FXML
     private TextField sendMessage;
     @FXML
-    private Button enterChatButton;
-    @FXML
     private ChoiceBox<String> selectChat;
-    @FXML
-    private Label newMessage;
     @FXML
     private ScrollPane chatScroll;
 
@@ -881,6 +870,67 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
         }
     }
+    @Override
+    public void showError(String error, Stage stage){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error");
+        alert.setContentText(error);
+        alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
+                "-fx-font-size: 18px;" +
+                "-fx-font-style: italic;"+
+                "-fx-text-fill: #070707;"+
+                "-fx-background-color: #f70000;");
+        alert.initOwner(stage);
+        alert.showAndWait();
+
+        revert();
+    }
+
+    private void revert(){
+
+        switch (state){
+            case REMOVE -> {
+                //riabilitiamo tutti i bottoni di selezione delle colonne
+                column1.setVisible(true);
+                column1.setDisable(false);
+                column2.setVisible(true);
+                column2.setDisable(false);
+                column3.setVisible(true);
+                column3.setDisable(false);
+                column4.setVisible(true);
+                column4.setDisable(false);
+                column5.setVisible(true);
+                column5.setDisable(false);
+                //setto lo stato ad add
+                state=State.ADD;
+            }
+
+            case SWITCH -> {
+                //puliamo le tessere selezionate
+                removeTiles=new ArrayList<>();
+                //riabilitiamo la board
+                boardGrid.setDisable(false);
+                //disabilitiamo il bottone di conferma
+                confirmationButton.setVisible(false);
+                confirmationButton.setDisable(true);
+                //togliamo l'opacità a tutte le tessere selezionate
+                boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
+                //setto lo stato a remove
+                state=State.REMOVE;
+            }
+            case ADD -> {
+                //puliamo lo switch selezionato
+                orderTiles=new ArrayList<>();
+                //riabilito la finestra di switch delle tile
+                selectedTilesDialog.setVisible(true);
+                selectedTilesDialog.setDisable(false);
+                //setto lo stato a switch
+                state=State.SWITCH;
+            }
+        }
+
+    }
 
     //annulla la selezione delle tessere selezionate
     @FXML
@@ -1279,3 +1329,4 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
 
 //TODO mostrare popup hai n nuovi messaggi
+//TODO controllare private/public message

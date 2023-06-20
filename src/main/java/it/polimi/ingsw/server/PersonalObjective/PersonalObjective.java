@@ -61,6 +61,7 @@ public class PersonalObjective {
             //TODO vedere per usare optional
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("PersonalObjective.json");
             //read all JSON file
+            assert is != null;
             Object obj=jsonParser.parse(new InputStreamReader(is));
             JSONObject po=(JSONObject) obj;
             //read the specific Personal Objective

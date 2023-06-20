@@ -6,24 +6,11 @@ import it.polimi.ingsw.utils.Tiles;
 import java.util.*;
 
 public class Sachet {
-    /**
-     * defining number of tiles for each color
-     */
-    private static final int numberOfTilesPerColor=22;
-    /**
-     * defining number of different color
-     */
-    private static final int numberOfDifferentColor=6;
-    /**
-     * defining number of tiles in the sachet --> #Color * #TilesPerColor
-     */
-    private static final int maxmumNumberOfTiles= Define.NUMBEROFCOLOR_SACHET.getI()*Define.NUMBEROFTILEPERCOLOR_SACHET.getI();
 
     /**
      * attribute used as a real sachet
      */
-    private ArrayList<Tiles> sachet;
-
+    private final ArrayList<Tiles> sachet;
 
 
     /**
@@ -57,10 +44,8 @@ public class Sachet {
     /**
      * return a randomic tile,
      * if sachet is empty (sachet.size()==0) return tiles.EMPTY
-     *
-     * 1. choose tile --> randomic position in sachet (ArrayList<Tiles>)
-     * 2. remove tile --> remove tiles from sachet (ArrayList<Tiles>) --> removeTiles(position)
-     *
+     * 1. choose tile --> randomic position in sachet
+     * 2. remove tile --> remove tiles from sachet  --> removeTiles(position)
      * @return Tiles    randomic tile
      */
     public Tiles draw(){
@@ -105,11 +90,9 @@ public class Sachet {
 
     /**
      * add tiles in the sachet --> sachet.add(til)
-     *
-     * 1.0. check if til can add in sachet --> size()+1<=132
-     * 1.1. check if til can add in sachet --> remainingTilesPerColor(til)+1<=22
+     * 1.0. check if til can add in sachet --> 132 >= size()+1
+     * 1.1. check if til can add in sachet --> 22 >= remainingTilesPerColor(til)+1
      * 2. add tile --> add(til)
-     *
      * @param til   tile to add in sachet
      */
     public void addTiles(Tiles til){
