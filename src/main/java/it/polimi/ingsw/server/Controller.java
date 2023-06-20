@@ -269,4 +269,8 @@ public class Controller implements PropertyChangeListener {
 
         return messageOut;
     }
+
+    public Lobby getLobby () {
+        return lobby;
+    }
 }
