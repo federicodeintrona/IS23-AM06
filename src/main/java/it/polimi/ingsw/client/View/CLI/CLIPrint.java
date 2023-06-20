@@ -584,6 +584,7 @@ public class CLIPrint implements PropertyChangeListener {
 
     /**
      * Method to print the player's turn
+     * <p>
      * all information:
      * <ul>
      *     <li>which player's turn is it?</li>
