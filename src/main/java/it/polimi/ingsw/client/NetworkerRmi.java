@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client;
 
 
-import it.polimi.ingsw.client.View.CLI.CLIMain;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.server.RMIHandlerInterface;
 import it.polimi.ingsw.utils.JsonReader;
@@ -12,11 +11,9 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Enumeration;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
@@ -63,6 +60,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
             throw new RuntimeException(e);
         }
     }
+
     public NetworkerRmi(ClientState state)  {
         JsonReader config;
         try {
@@ -77,6 +75,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
         clientState = state;
     }
+
     public NetworkerRmi(ClientState state,String serverIP)  {
         JsonReader config;
         try {
