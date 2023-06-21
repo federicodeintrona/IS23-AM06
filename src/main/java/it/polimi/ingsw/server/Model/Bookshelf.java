@@ -14,7 +14,7 @@ import java.util.Queue;
 /**
  * Class used to manage matrix which contains the tiles selected by the player
  * <ul>
- *     <li>to update</li>,
+ *     <li>to update</li>
  *     <li>to calculate the vicinity points </li>
  *     <li>to check conditions</li>
  *  </ul>
@@ -36,12 +36,10 @@ public class Bookshelf {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("Bookshelf.json");
             config=new JsonReader(is);
 //                config = new JsonReader("src/main/resources/Bookshelf.json");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ParseException e) {
+            } catch (IOException | ParseException e) {
                 throw new RuntimeException(e);
             }
-            numberOfRows=config.getInt("numrows");
+        numberOfRows=config.getInt("numrows");
             numberOfColumns=config.getInt("numcol");
             maxNumberOfTiles=numberOfRows*numberOfColumns;
             tiles=new Matrix(numberOfRows,numberOfColumns);

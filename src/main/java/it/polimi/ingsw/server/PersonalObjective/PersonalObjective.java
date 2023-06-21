@@ -12,26 +12,30 @@ import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
 
+/**
+ * Class to manage the personal objective
+ * <ul>
+ *     <li>create the personal objective</li>
+ *     <li>personal objective score</li>
+ * </ul>
+ */
 public class PersonalObjective {
 
-    private final HashMap<Point, Tiles>card=new HashMap<>();
-    private final int personalObjectiveNum;
-
     /**
-     * Getter -> return the number of the personal objective
-     *
-     * @return int -> personalObjectiveNum
+     * Attribute used to save the personal objective color positions
      */
-    public int getPersonalObjectiveNum() {
-        return personalObjectiveNum;
-    }
+    private final HashMap<Point, Tiles>card=new HashMap<>();
+    /**
+     * Attribute used to save the personal objective number
+     */
+    private final int personalObjectiveNum;
 
 
 
     /**
      * Constructor --> create the n-th card
      *
-     * @param n is the ID of Personal Objective to create
+     * @param n &nbsp;&nbsp;&nbsp; is the ID of Personal Objective to create
      */
     public PersonalObjective(int n) {
         //mapping the card position
@@ -39,20 +43,32 @@ public class PersonalObjective {
         personalObjectiveNum=n;
     }
 
+
+
+    /**
+     * Getter -> return the number of the personal objective
+     *
+     * @return int &nbsp;&nbsp;&nbsp; personalObjectiveNum
+     */
+    public int getPersonalObjectiveNum() {
+        return personalObjectiveNum;
+    }
+
     /**
      * Getter --> return PersonalObjective card
      *
-     * @return HashMap  PersonalObjective card
+     * @return HashMap &nbsp;&nbsp;&nbsp; PersonalObjective card
      */
     public HashMap<Point, Tiles> getCard(){
         return card;
     }
 
 
+
     /**
-     * read the PersonalObjective.json file and create the HashMap card
+     * Method to read the PersonalObjective.json file and create the HashMap card
      *
-     * @param n is the ID of Personal Objective to read
+     * @param n &nbsp;&nbsp;&nbsp; is the ID of Personal Objective to read
      */
     private void readJSON(int n){
         JSONParser jsonParser=new JSONParser();
@@ -121,22 +137,16 @@ public class PersonalObjective {
 
 
         }
-        catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        catch (ParseException e) {
+        catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * return the number of position that match with the PersonalObjective's card
+     * Method to return the number of position that match with the PersonalObjective's card
      *
-     * @param bookshelf the bookshelf whose correct position number you want to calculate
-     * @return int  number of position that match with the PersonalObjective's card
+     * @param bookshelf &nbsp;&nbsp;&nbsp; the bookshelf whose correct position number you want to calculate
+     * @return int &nbsp;&nbsp;&nbsp; number of position that match with the PersonalObjective's card
      */
     private int checkCondition(Bookshelf bookshelf){
         int result=0;
@@ -149,20 +159,20 @@ public class PersonalObjective {
     }
 
     /**
-     * return the score of PersonalObjective's card
+     * Method to return the score of PersonalObjective's card
      *
-     * @param player    the player whose score you want to calculate
-     * @return int  score of PersonalObjective's card
+     * @param player &nbsp;&nbsp;&nbsp; the player whose score you want to calculate
+     * @return int &nbsp;&nbsp;&nbsp; score of PersonalObjective's card
      */
     public int personalObjectivePoint(Player player){
         return personalObjectivePoint(player.getBookshelf());
     }
 
     /**
-     * return the score of PersonalObjective's card
+     * Method to return the score of PersonalObjective's card
      *
-     * @param bookshelf the bookshelf whose score you want to calculate
-     * @return int  score of PersonalObjective's card
+     * @param bookshelf &nbsp;&nbsp;&nbsp; the bookshelf whose score you want to calculate
+     * @return int &nbsp;&nbsp;&nbsp; score of PersonalObjective's card
      */
     public int personalObjectivePoint(Bookshelf bookshelf){
         return switch (checkCondition(bookshelf)) {
