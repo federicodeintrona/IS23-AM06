@@ -25,9 +25,9 @@ class ModelTest {
     @BeforeEach
     void setUp(){
         try {
-            Player p0 = new Player("p0",true);
-            Player p1 = new Player("p1",false);
-            Player p2 = new Player("p2",false);
+            Player p0 = new Player("p0");
+            Player p1 = new Player("p1");
+            Player p2 = new Player("p2");
 
             players.add(p0);
             players.add(p1);
@@ -112,7 +112,7 @@ class ModelTest {
             assertEquals(Tiles.BLUE,m.getPlayers().get(0).getBookshelf().getTiles().getTile(4,j),"blue check");
             assertEquals(Tiles.EMPTY,m.getPlayers().get(1).getBookshelf().getTiles().getTile(2,j));
         }
-        assertEquals(true,m.isFinished());
+        assertTrue(m.isFinished());
 
     }
 
