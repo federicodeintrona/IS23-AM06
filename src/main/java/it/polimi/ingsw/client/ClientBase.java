@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.View.GUI.GUIController;
 import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.client.View.GUI.Scene.Scenes;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,10 +33,9 @@ public class ClientBase extends Application{
                 launch();
             }
         } catch (RemoteException e) {
-                e.printStackTrace();
+            System.out.println("The game has failed to start properly. Retry again.");
+            System.exit(1);
         }
-
-
     }
 
 
@@ -71,9 +71,14 @@ public class ClientBase extends Application{
                 event.consume();
                 logout(stage);
             });
-        } catch (IOException e) {
+        } catch (RemoteException e){
+            System.out.println("The game has failed to start properly. Retry again.");
+            System.exit(1);
+
+        }
+        catch (IOException e) {
             System.out.println("GUI failed to launch...");
-            e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -87,6 +92,10 @@ public class ClientBase extends Application{
         if (alert.showAndWait().get()== ButtonType.OK){
             System.out.println("You successfully logged out");
             stage.close();
+            Platform.exit();
+            GUIController guicntrl= GUIControllerStatic.getGuiController();
+            guicntrl.close();
         }
     }
+
 }

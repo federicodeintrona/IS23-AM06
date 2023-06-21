@@ -20,16 +20,18 @@ import java.util.HashMap;
 
 /**
  * Class to print all the game's information on the terminal
- * - help (related to game and to chat)
- * - error
- * - board
- * - bookshelf
- * - personal objective
- * - common objective
- * - player's points (public and private)
- * - chair (who is the first player)
- * - order tiles (order of selected tiles - before add to bookshelf)
- * - game status (waiting for other player, start of game, player turn, end game)
+ * <ul>
+ *     <li>help (related to game and to chat)</li>
+ *     <li>error</li>
+ *     <li>board</li>
+ *     <li>bookshelf</li>
+ *     <li>personal objective</li>
+ *     <li>common objective</li>
+ *     <li>player's points (public and private)</li>
+ *     <li>chair (who is the first player)</li>
+ *     <li>order tiles (order of selected tiles - before add to bookshelf)</li>
+ *     <li>game status (waiting for other player, start of game, player turn, end game)</li>
+ * </ul>
  */
 public class CLIPrint implements PropertyChangeListener {
 
@@ -42,7 +44,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Constructor --> assign cliMain
      *
-     * @param cliMain   used to retrieve CLI-side all the client information
+     * @param cliMain &nbsp;&nbsp;&nbsp; used to retrieve CLI-side all the client information
      */
     public CLIPrint(CLIMain cliMain) {
         this.cliMain=cliMain;
@@ -53,8 +55,8 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to return the color of the tile - character's color
      *
-     * @param tiles the tile that you want to have the character's color
-     * @return ColorCli the character's color
+     * @param tiles &nbsp;&nbsp;&nbsp; the tile that you want to have the character's color
+     * @return ColorCli &nbsp;&nbsp;&nbsp; the character's color
      */
     private ColorCLI tileColor(Tiles tiles){
         synchronized (cliMain.getLock()) {
@@ -75,8 +77,8 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to return the color of the tile - background's color
      *
-     * @param tiles the tile that you want to have the background's color
-     * @return ColorCli the background's color
+     * @param tiles &nbsp;&nbsp;&nbsp; the tile that you want to have the background's color
+     * @return ColorCli &nbsp;&nbsp;&nbsp; the background's color
      */
     private ColorCLI tileColorBG(Tiles tiles){
         synchronized (cliMain.getLock()) {
@@ -160,7 +162,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print the request's board
      *
-     * @param board the request's board
+     * @param board &nbsp;&nbsp;&nbsp; the request's board
      */
     public void printBoard(Matrix board){
         synchronized (cliMain.getLock()) {
@@ -192,7 +194,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print the request's bookshelf
      *
-      * @param bookshelf    the request's bookshelf
+      * @param bookshelf &nbsp;&nbsp;&nbsp; the request's bookshelf
      */
     public void printBookshelf(Matrix bookshelf){
         synchronized (cliMain.getLock()) {
@@ -224,7 +226,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print all the players' bookshelf
      *
-      * @param allMatrix    all the players' bookshelf and their username
+      * @param allMatrix &nbsp;&nbsp;&nbsp; all the players' bookshelf and their username
      */
     public void printAllBookshelf(HashMap<String, Matrix> allMatrix){
         synchronized (cliMain.getLock()){
@@ -250,8 +252,8 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to create the personal objective's matrix
      *
-     * @param personalObjective personal objective to transform in Matrix
-     * @return Matrix   the personal objective matrix
+     * @param personalObjective &nbsp;&nbsp;&nbsp; personal objective to transform in Matrix
+     * @return Matrix &nbsp;&nbsp;&nbsp; the personal objective matrix
      */
     private Matrix personalObjectiveReturn(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
@@ -268,7 +270,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print the personal objective
      *
-     * @param personalObjective the request's personal objective
+     * @param personalObjective &nbsp;&nbsp;&nbsp; the request's personal objective
      */
     public void printPersonalObjective(HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
@@ -306,8 +308,8 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print the bookshelf and the personal objective together
      *
-     * @param bookshelf the request's bookshelf
-     * @param personalObjective the request's personalobjective
+     * @param bookshelf &nbsp;&nbsp;&nbsp; the request's bookshelf
+     * @param personalObjective &nbsp;&nbsp;&nbsp; the request's personalobjective
      */
     public void printBookshelfPersonalObjective(Matrix bookshelf, HashMap<Point, Tiles> personalObjective){
         synchronized (cliMain.getLock()) {
@@ -399,7 +401,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to read from JSON the interest's common objective and print it
      *
-     * @param commonObjective   int of common objective
+     * @param commonObjective &nbsp;&nbsp;&nbsp; int of common objective
      */
     private void readJSONCO(Integer commonObjective){
         synchronized (cliMain.getLock()) {
@@ -462,7 +464,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print all the common objective
      *
-     * @param commonObjective   ArrayList of all common objective
+     * @param commonObjective &nbsp;&nbsp;&nbsp; ArrayList of all common objective
      */
     public void printCommonObjective(ArrayList<Integer> commonObjective){
         synchronized (cliMain.getLock()) {
@@ -476,7 +478,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print all public points
      *
-     * @param publicPoints  all public points
+     * @param publicPoints &nbsp;&nbsp;&nbsp; all public points
      */
     public void printPoints(HashMap<String, Integer> publicPoints){
         System.out.println("All Public Points: ");
@@ -497,7 +499,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print my points - public points + personal objective points
      *
-     * @param point my points - public points + personal objective points
+     * @param point &nbsp;&nbsp;&nbsp; my points (public points + personal objective points)
      */
     public void printMyPoints(Integer point){
         System.out.println("My Points: "+point);
@@ -524,7 +526,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print the order of selected tiles
      *
-     * @param order ArrayList of tiles - order of tiles to show
+     * @param order &nbsp;&nbsp;&nbsp; ArrayList of tiles - order of tiles to show
      */
     public void printOrderTiles(ArrayList<Tiles> order){
         clearShell();
@@ -539,7 +541,7 @@ public class CLIPrint implements PropertyChangeListener {
     /**
      * Method to print error - the server send an error message
      *
-      * @param error    string to show received from server
+      * @param error &nbsp;&nbsp;&nbsp; string to show received from server
      */
     public void printError(String error){
         synchronized (cliMain.getLock()) {
@@ -582,11 +584,14 @@ public class CLIPrint implements PropertyChangeListener {
 
     /**
      * Method to print the player's turn
+     * <p>
      * all information:
-     * - which player's turn is it?
-     * - print board
-     * - print all bookshelf
-     * - print all points
+     * <ul>
+     *     <li>which player's turn is it?</li>
+     *     <li>print board</li>
+     *     <li>print all bookshelf</li>
+     *     <li>print all points</li>
+     * </ul>
      */
     public void playerTurn(){
         printTurn();
@@ -597,9 +602,12 @@ public class CLIPrint implements PropertyChangeListener {
 
     /**
      * Method to print the end game
+     * <p>
      * all information:
-     * - winner player
-     * - all player points
+     * <ul>
+     *     <li>winner player</li>
+     *     <li>all player points</li>
+     * </ul>
      */
     public void printEndGame(){
         System.out.println("The Game is ended");

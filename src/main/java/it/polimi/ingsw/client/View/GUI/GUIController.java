@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.View.GUI.Scene.*;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -67,7 +68,9 @@ public class GUIController implements View, SceneController {
 
     @Override
     public void close() {
-        //TODO chiudere la GUI
+        Message msg = new Message();
+        msg.setType(MessageTypes.DISCONNECT);
+        networker.closeProgram(msg);
     }
 
     //mostra gli errori che arrivano dal server

@@ -113,7 +113,7 @@ public class Lobby {
     public void checkStart(int index){
         //If the lobby reached the max number of player, start the game.
         if (lobbys.get(index).size() == gamePlayerNumber.get(index)) {
-            waitingLobbys.remove();
+            waitingLobbys.remove(index);
             startGame(index);
         }
     }
@@ -176,7 +176,12 @@ public class Lobby {
         //If in a lobby remove him
         Integer lobbyID = playerToLobby.get(username);
         if(lobbyID!=null){
+
             lobbys.get(lobbyID).remove(username);
+
+            if(lobbys.get(lobbyID).size()==0){
+                waitingLobbys.remove(lobbyID);
+            }
         }
 
         //If in a game disconnect him

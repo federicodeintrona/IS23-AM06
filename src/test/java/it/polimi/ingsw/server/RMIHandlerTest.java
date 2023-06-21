@@ -5,17 +5,23 @@ import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
+import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Test class for RMIHandler
+ * <p>
+ * Used the @TestMethodOrder(MethodOrderer.OrderAnnotation.class) to decide
+ * the order of tests to simulate a real-like 4 players game
+ */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RMIHandlerTest {
     private static RMIHandler rmiHandler;
     private static Controller mockController;
@@ -57,7 +63,12 @@ class RMIHandlerTest {
         mockController.startGame(0);
     }
 
+    /**
+     * Testing rmiHandler's removeTiles method by removing 2
+     * tiles from the starting board of a 4 players game
+     */
     @Test
+    @Order(1)
     void removeTiles() {
         Message message;
         Message expectedMessage = new Message();
@@ -80,8 +91,13 @@ class RMIHandlerTest {
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
         Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
     }
-    /*
+
+    /**
+     * Testing rmiHandler's swapOrder method
+     * by swapping 2 tiles with each other
+     */
     @Test
+    @Order(2)
     void swapOrder() {
         Message message;
         Message expectedMessage = new Message();
@@ -92,7 +108,7 @@ class RMIHandlerTest {
         ints.add(1);
 
         expectedMessage.setType(MessageTypes.OK);
-        expectedMessage.setContent("Move successful add to bookshelf");
+        expectedMessage.setContent("Move successful swap order");
 
         try {
             message = rmiHandler.swapOrder(ints, 0, playerID);
@@ -100,14 +116,16 @@ class RMIHandlerTest {
             throw new RuntimeException(e);
         }
 
-        System.out.println(message.getType());
-        System.out.println("message = " + message.getUsername());
-
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
         Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
     }
-    */
+
+    /**
+     * Testing rmiHandler's addToBookshelf method by adding 2
+     * tiles in the first column of an empty bookshelf
+     */
     @Test
+    @Order(3)
     void addToBookshelf() {
         Message message;
         Message expectedMessage = new Message();
@@ -123,9 +141,6 @@ class RMIHandlerTest {
             throw new RuntimeException(e);
         }
 
-        System.out.println(message.getType());
-        System.out.println("message = " + message.getUsername());
-
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
         Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
     }
@@ -134,19 +149,97 @@ class RMIHandlerTest {
     void newLobby() {
     }
 
+    /*
     @Test
+    @Order(6)
     void acceptRmiConnection() {
+        IntMessage message;
+        IntMessage expectedMessage = new IntMessage();
+        String newPlayer = new String("#");
+
+        // Creating an instance for ClientState
+        ClientState clientState;
+        try {
+            clientState = new ClientState(new Object());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        expectedMessage.setType(MessageTypes.NEW_LOBBY);
+        expectedMessage.setContent("Select the number of players (2 to 4)");
+
+        // Calling the Controller method
+        try {
+            message = rmiHandler.acceptRmiConnection(newPlayer, clientState);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("message.getUsername() = " + message.getUsername());
+        System.out.println("message.getType() = " + message.getType());
+
+        Assertions.assertEquals(expectedMessage.getType(), message.getType());
+        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
     }
+     */
 
     @Test
     void pingPong() {
+        boolean reply;
+
+        try {
+            reply = rmiHandler.pingPong();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assertions.assertTrue(reply);
     }
 
+    /**
+     * Testing a ChatMessage forwarding destined to PublicChat
+     */
     @Test
-    void sendMessage() {
+    @Order(4)
+    void sendMessage1() {
+        ChatMessage message;
+        String playerID = mockController.getLobby().getGames().get(0).getCurrPlayer().getUsername();
+        String str = new String("test");
+        ChatMessage expectedMessage = new ChatMessage(playerID, str);
+        expectedMessage.setType(MessageTypes.CHAT);
+
+        try {
+            message = (ChatMessage) rmiHandler.sendMessage(0, playerID, str);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
+        Assertions.assertEquals(expectedMessage.getMessage(), message.getMessage());
+        Assertions.assertEquals(expectedMessage.getType(), message.getType());
     }
 
+    /**
+     * Testing a ChatMessage forwarding destined to PrivateChat
+     */
     @Test
-    void testSendMessage() {
+    @Order(5)
+    void sendMessage2() {
+        ChatMessage message;
+        String sendingUsername = mockController.getLobby().getGames().get(0).getCurrPlayer().getUsername();
+        String receivingUsername = mockController.getLobby().getGames().get(0).getNextPlayer().getUsername();
+        String str = new String("test");
+        ChatMessage expectedMessage = new ChatMessage(sendingUsername, str, receivingUsername);
+        expectedMessage.setType(MessageTypes.CHAT);
+
+        try {
+            message = (ChatMessage) rmiHandler.sendMessage(0, sendingUsername, str, receivingUsername);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
+        Assertions.assertEquals(expectedMessage.getMessage(), message.getMessage());
+        Assertions.assertEquals(expectedMessage.getReceivingUsername(), message.getReceivingUsername());
+        Assertions.assertEquals(expectedMessage.getType(), message.getType());
     }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
@@ -14,15 +15,23 @@ import java.util.Scanner;
 
 /**
  * Class to manage the Command Line Interface
- * - create the client lock - ClientState, CLIPrint, ReadShell
- * - initial request
- *   . Which connection protocol do you choose?
- *   . Which host do you use?
- * - create the instance of:
- *   . ClientState
- *   . CLIPrint
- *   . ReadShell
- *   . Networker (RMI or TCP)
+ * <ul>
+ *     <li>create the client lock - ClientState, CLIPrint, ReadShell</li>
+ *     <li>initial request
+ *          <ul>
+ *              <li>Which connection protocol do you choose?</li>
+ *              <li>Which host do you use?</li>
+ *          </ul>
+ *      </li>
+ *      <li>create the instance of:
+ *          <ul>
+ *              <li>ClientState</li>
+ *              <li>CLIPrint</li>
+ *              <li>ReadShell</li>
+ *              <li>Networker (RMI or TCP)</li>
+ *          </ul>
+ *      </li>
+ * </ul>
  */
 public class CLIMain implements View {
 
@@ -52,7 +61,6 @@ public class CLIMain implements View {
     private static ChatHandler chatHandler;
     /**
      * Thread to start the reader from the command line in parallel with printing on the terminal
-     * ReadShell // CLIPrint
      */
     private Thread th1;
 
@@ -74,7 +82,7 @@ public class CLIMain implements View {
     /**
      * Getter --> returns the lock Object
      *
-     * @return Object   lock on which to make the locks, must be common to CLIPrint, ReadShell and ClientState
+     * @return Object &nbsp;&nbsp;&nbsp; lock on which to make the locks, must be common to CLIPrint, ReadShell and ClientState
      */
     public Object getLock() {
         return lock;
@@ -83,7 +91,7 @@ public class CLIMain implements View {
     /**
      * Getter --> returns the ClientState
      *
-     * @return ClientState  correct instance of ClientState
+     * @return ClientState &nbsp;&nbsp;&nbsp; correct instance of ClientState
      */
     public ClientState getClientState() {
         return clientState;
@@ -92,7 +100,7 @@ public class CLIMain implements View {
     /**
      * Getter --> returns the CLIPrint
      *
-     * @return CLIPrint  correct instance of CLIPrint
+     * @return CLIPrint &nbsp;&nbsp;&nbsp; correct instance of CLIPrint
      */
     public CLIPrint getCliPrint() {
         return cliPrint;
@@ -101,7 +109,7 @@ public class CLIMain implements View {
     /**
      * Getter --> returns the ReadShell
      *
-     * @return ReadShell  correct instance of ReadShell
+     * @return ReadShell &nbsp;&nbsp;&nbsp; correct instance of ReadShell
      */
     public ReadShell getReadShell() {
         return readShell;
@@ -110,14 +118,14 @@ public class CLIMain implements View {
     /**
      * Getter --> returns the ChatHandler
      *
-     * @return ChatHandler  correct instance of ChatHandler
+     * @return ChatHandler &nbsp;&nbsp;&nbsp; correct instance of ChatHandler
      */
     public ChatHandler getChatHandler () { return chatHandler; }
 
     /**
      * Getter --> returns the Networker
      *
-     * @return Networker    correct instance of Networker, class to which the client should send commands to be sent to the server
+     * @return Networker &nbsp;&nbsp;&nbsp; correct instance of Networker, class to which the client should send commands to be sent to the server
      */
     public Networker getNet() {
         return net;
@@ -248,6 +256,11 @@ public class CLIMain implements View {
     @Override
     public void close() {
         th1.interrupt();
+
+        Message msg = new Message();
+        msg.setType(MessageTypes.DISCONNECT);
+        net.closeProgram(msg);
+
     }
 
 
@@ -255,7 +268,7 @@ public class CLIMain implements View {
     /**
      * Method to received all the message from server
      *
-     * @param message   the message that the server sent
+     * @param message &nbsp;&nbsp;&nbsp; the message that the server sent
      */
     @Override
     public void receivedMessage(Message message){

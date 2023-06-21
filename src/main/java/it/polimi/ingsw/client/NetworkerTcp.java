@@ -19,6 +19,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     private ObjectOutputStream oos;
     private View view;
     private final ClientState clientState;
+    private Reader reader;
 
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;
@@ -52,7 +53,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         port=config.getInt("tcpPort");
     }
     public boolean initializeConnection() {
-        Reader reader;
         try {
             socket = new Socket(serverIP, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
@@ -78,8 +78,20 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             System.out.println( "Error: unable to close the socket...");
             e.printStackTrace();
         }
-
     }
+
+    @Override
+    public void closeProgram(Message closing) {
+        try {
+            oos.writeObject(closing);
+            oos.flush();
+            reader.disconnect();
+        } catch (IOException e) {
+            System.out.println( "Server is not responding...");
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Sends to server the username selected by player
@@ -175,6 +187,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
     }
+
+
 
     /**
      * Send to the server the chat message written by the player
