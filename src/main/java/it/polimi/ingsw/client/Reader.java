@@ -7,7 +7,6 @@ import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
 import it.polimi.ingsw.utils.Tiles;
-import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
 
@@ -29,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.System.out;
 
 public class Reader extends Thread implements TimerInterface {
-    private Socket socket;
+    private final Socket socket;
     private final ObjectInputStream client;
     private final ObjectOutputStream oos;
     private final NetworkerTcp networkerTcp;
@@ -46,7 +45,7 @@ public class Reader extends Thread implements TimerInterface {
     private static final int delta = 2000;
 
     public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
-        this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));;
+        this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         this.oos = oos;
         this.socket=socket;
         this.networkerTcp = networkerTcp;
@@ -79,11 +78,10 @@ public class Reader extends Thread implements TimerInterface {
                     }
                 }
             }
-
         }
         catch(SocketException e){
             if(!disconnected) disconnect();
-            else out.println("The game is about to close! Have fun! :)");
+            else out.println("The game is about to close! Have fun! The game will go on without you:)");
 
         }
         catch (IOException e) {
