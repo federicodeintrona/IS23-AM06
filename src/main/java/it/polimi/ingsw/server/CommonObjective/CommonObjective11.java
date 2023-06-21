@@ -6,6 +6,9 @@ import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 
+/**
+ * Class that regulates the functioning of CommonObjective 11
+ */
 public class CommonObjective11 extends CommonObjective{
 
     public CommonObjective11() {

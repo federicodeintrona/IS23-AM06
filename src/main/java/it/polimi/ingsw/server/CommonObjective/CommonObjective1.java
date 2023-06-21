@@ -8,6 +8,9 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class that regulates the functioning of CommonObjective 1
+ */
 public class CommonObjective1 extends CommonObjective {
 
     public CommonObjective1() {

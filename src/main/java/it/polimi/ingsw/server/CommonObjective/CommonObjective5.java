@@ -5,6 +5,9 @@ import it.polimi.ingsw.utils.Tiles;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class that regulates the functioning of CommonObjective 5
+ */
 public class CommonObjective5 extends CommonObjective{
 
     public CommonObjective5() {

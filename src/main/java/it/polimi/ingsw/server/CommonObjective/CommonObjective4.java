@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that regulates the functioning of CommonObjective 4
+ */
 public class CommonObjective4 extends CommonObjective{
 
     public CommonObjective4() {

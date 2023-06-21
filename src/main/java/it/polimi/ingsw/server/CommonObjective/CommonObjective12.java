@@ -4,6 +4,9 @@ import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
+/**
+ * Class that regulates the functioning of CommonObjective 12
+ */
 public class CommonObjective12 extends CommonObjective{
 
     public CommonObjective12() {

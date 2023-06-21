@@ -3,8 +3,10 @@ package it.polimi.ingsw.server.CommonObjective;
 import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.Tiles;
 
+/**
+ * Class that regulates the functioning of CommonObjective 2
+ */
 public class CommonObjective2 extends CommonObjective {
-
 
     public CommonObjective2() {
         this.setNum(2);

@@ -6,6 +6,9 @@ import it.polimi.ingsw.utils.Tiles;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that regulates the functioning of CommonObjective 6
+ */
 public class CommonObjective6 extends CommonObjective{
 
     public CommonObjective6() {

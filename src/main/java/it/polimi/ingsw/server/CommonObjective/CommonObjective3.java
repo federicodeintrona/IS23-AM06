@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Class that regulates the functioning of CommonObjective 3
+ */
 public class CommonObjective3 extends CommonObjective{
-
 
     public CommonObjective3() {
         this.setNum(3);
