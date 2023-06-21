@@ -15,7 +15,7 @@ class CommonObjective8Test {
      */
     @Test
     void checkConditionSuccess1() {
-        Player player = new Player( "Jhon", true);
+        Player player = new Player( "Jhon");
         Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
@@ -38,7 +38,7 @@ class CommonObjective8Test {
      */
     @Test
     void checkConditionFailure1() {
-        Player player = new Player( "Jhon", true);
+        Player player = new Player( "Jhon");
         Tiles tiles = Tiles.EMPTY;
 
         // Initializing the bookshelf
@@ -63,7 +63,7 @@ class CommonObjective8Test {
      */
     @Test
     void checkConditionFailure2() {
-        Player player = new Player( "Jhon", true);
+        Player player = new Player( "Jhon");
         Tiles tiles = Tiles.EMPTY;
 
         // Initializing the bookshelf
@@ -104,8 +104,8 @@ class CommonObjective8Test {
      */
     @Test
     void commonObjPointsCalculatorTwoPlayers() {
-        Player player1 = new Player( "Jhon", true);
-        Player player2 = new Player( "Obi", false);
+        Player player1 = new Player( "Jhon");
+        Player player2 = new Player( "Obi");
         Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
@@ -136,10 +136,10 @@ class CommonObjective8Test {
      */
     @Test
     void commonObjPointsCalculatorFourPlayers() {
-        Player player1 = new Player( "Jhon", true);
-        Player player2 = new Player( "Obi", false);
-        Player player3 = new Player( "Pablo", false);
-        Player player4 = new Player( "Felipe", false);
+        Player player1 = new Player( "Jhon");
+        Player player2 = new Player( "Obi");
+        Player player3 = new Player( "Pablo");
+        Player player4 = new Player( "Felipe");
         Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf
@@ -182,7 +182,7 @@ class CommonObjective8Test {
      */
     @Test
     void commonObjPointsCalculatorFailure1() {
-        Player player = new Player( "Jhon", true);
+        Player player = new Player( "Jhon");
         Tiles tiles = Tiles.EMPTY;
 
         // Initializing the bookshelf
@@ -207,7 +207,7 @@ class CommonObjective8Test {
      */
     @Test
     void commonObjPointsCalculatorFailure2() {
-        Player player = new Player( "Jhon", true);
+        Player player = new Player( "Jhon");
         Tiles tiles = Tiles.GREEN;
 
         // Initializing the bookshelf

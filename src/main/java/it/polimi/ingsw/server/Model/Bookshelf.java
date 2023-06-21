@@ -12,8 +12,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Class used to update, to calculate the vicinity points and to check conditions
- * of the matrix which contains the tiles selected by the player
+ * Class used to manage matrix which contains the tiles selected by the player
+ * <ul>
+ *     <li>to update</li>,
+ *     <li>to calculate the vicinity points </li>
+ *     <li>to check conditions</li>
+ *  </ul>
  */
 public class Bookshelf {
     private JsonReader config;
