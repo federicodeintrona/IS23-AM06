@@ -7,9 +7,9 @@ import it.polimi.ingsw.utils.Messages.MessageTypes;
 import java.util.Scanner;
 
 public class ChatHandler {
-    private ChatController chatController;
-    private CLIMain cliMain;
-    private CLIPrint cliPrint;
+    private final ChatController chatController;
+    private final CLIMain cliMain;
+    private final CLIPrint cliPrint;
 
     public ChatHandler(ChatController chatController, CLIMain cliMain, CLIPrint cliPrint) {
         this.chatController = chatController;
@@ -23,7 +23,7 @@ public class ChatHandler {
     }
     private void chat () {
         Scanner scanner=new Scanner(System.in);
-        String str = null;
+        String str;
 
         while (chatController.getPublicChat().ChatIsEnable()) {
 
@@ -62,7 +62,7 @@ public class ChatHandler {
 
     private void chat (String username) {
         Scanner scanner=new Scanner(System.in);
-        String str = null;
+        String str;
 
         while (chatController.getPrivateChat(username).ChatIsEnable()) {
 
@@ -98,7 +98,7 @@ public class ChatHandler {
 
     private String privateChatHandler () {
         Scanner scanner=new Scanner(System.in);
-        String str = null;
+        String str;
 
         System.out.println("Who do you want to chat with?");
         str = scanner.nextLine();
@@ -185,12 +185,14 @@ public class ChatHandler {
     private void endOfChat () {
         System.out.println("The PUBLIC CHAT is now closed ________________________________");
         chatController.getPublicChat().setChatIsEnable(false);
+        cliMain.setOpenChat(false);
         clearCLI();
     }
 
     private void endOfChat (String username) {
         System.out.println("The PRIVATE CHAT with " + username + "is now closed _________________________");
         chatController.getPrivateChat(username).setChatIsEnable(false);
+        cliMain.setOpenChat(false);
         clearCLI();
     }
 }

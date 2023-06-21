@@ -64,12 +64,19 @@ public class CLIMain implements View {
      */
     private Thread th1;
 
+    /**
+     * Attribute used to know if chat is open
+     */
+    private boolean openChat;
+
+
 
     /**
      * Constructor --> create lock
      */
     public CLIMain() {
         this.lock=new Object();
+        openChat=false;
     }
 
     //TODO è solo nei test del cliprint - NON SERVE PIù - da capire se bisogna testare anche la UI
@@ -77,6 +84,7 @@ public class CLIMain implements View {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        openChat=false;
     }
 
     /**
@@ -131,6 +139,24 @@ public class CLIMain implements View {
         return net;
     }
 
+    /**
+     * Getter --> return if chat is open
+     *
+     * @return boolean &nbsp;&nbsp;&nbsp; is chat open?
+     */
+    public boolean isOpenChat() {
+        return openChat;
+    }
+
+
+    /**
+     * Setter --> setting if chat is opened
+     *
+     * @param openChat &nbsp;&nbsp;&nbsp; is chat open?
+     */
+    public void setOpenChat(boolean openChat) {
+        this.openChat = openChat;
+    }
 
 
     //TODO cosa scrivo per RemoteException
@@ -230,7 +256,7 @@ public class CLIMain implements View {
 
         while (!clientState.isGameIsEnded()){
             //print new turn if current is next from before
-            if (clientState.getCurrentPlayer().equals(curr)){
+            if (clientState.getCurrentPlayer().equals(curr) && !openChat){
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
