@@ -6,9 +6,17 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-
+/**
+ * <p>
+ *      Test class for ChatController
+ * </p>
+ */
 class ChatControllerTest {
 
+    /**
+     * Testing method that returns the
+     * history of the public chat
+     */
     @Test
     void getPublicChat() {
         ChatController chatController = new ChatController();
@@ -20,6 +28,10 @@ class ChatControllerTest {
         Assertions.assertEquals(chat.getChatMessages().get(0), chatController.getPublicChat().getChatMessages().get(0));
     }
 
+    /**
+     * Testing method that returns the
+     * history of the private chat
+     */
     @Test
     void getPrivateChat() {
         ChatController chatController = new ChatController();
@@ -33,6 +45,10 @@ class ChatControllerTest {
         Assertions.assertEquals(chat.getChatMessages().get(0), chatController.getPrivateChat(receivingUsername).getChatMessages().get(0));
     }
 
+    /**
+     * Testing method that returns the HashMap
+     * containing all the private chats
+     */
     @Test
     void getPrivateChats() {
         ChatController chatController = new ChatController();
@@ -55,6 +71,9 @@ class ChatControllerTest {
         Assertions.assertEquals(chats, chatController.getPrivateChats());
     }
 
+    /**
+     * Testing method that sets the public chat
+     */
     @Test
     void setPublicChat() {
         ChatController chatController = new ChatController();
@@ -68,9 +87,12 @@ class ChatControllerTest {
         Assertions.assertEquals(chat, chatController.getPublicChat());
     }
 
+    /**
+     * Testing method that sets all private chats
+     */
     @Test
     void setPrivateChats() {
-        ChatController chatController = new ChatController();
+        ChatController chatController = new ChatController(true);
         HashMap<String, Chat> chats = new HashMap<>();
         ChatMessage message = new ChatMessage("obi-wan", "test", "anakin");
 

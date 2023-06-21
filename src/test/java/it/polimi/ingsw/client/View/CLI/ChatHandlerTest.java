@@ -1,12 +1,21 @@
 package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.utils.Messages.ChatMessage;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.rmi.RemoteException;
 
 class ChatHandlerTest {
-    CLIMain cli = new CLIMain();
+    @BeforeAll
+    public static void setUp() {
+        CLIMain cli = new CLIMain();
+        try {
+            cli.runUI();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Test
     void settingForPublicChat() {
