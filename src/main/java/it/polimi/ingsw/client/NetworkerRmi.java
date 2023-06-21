@@ -39,7 +39,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
 
     /**
-     * Constructor
+     * Constructor that sets the rmiPort via Json
+     * and create an instance of ClientState
      */
     public NetworkerRmi()  {
         JsonReader config;
@@ -60,6 +61,12 @@ public class NetworkerRmi implements Networker, TimerInterface {
         }
     }
 
+    /**
+     * Constructor that sets the rmiPort via Json
+     * and sets the instance of ClientState
+     *
+     * @param state     instance of ClientState to set
+     */
     public NetworkerRmi(ClientState state)  {
         JsonReader config;
         try {
@@ -80,9 +87,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config = new JsonReader(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
         port = config.getInt("rmiPort");
@@ -309,5 +314,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
     @Override
     public void closeProgram(Message closing) {
 
+
+        System.out.println("Client disconnecting...");
+        System.exit(0);
     }
 }

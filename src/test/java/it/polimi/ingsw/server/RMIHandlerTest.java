@@ -16,10 +16,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Test class for RMIHandler
  * <p>
- * Used the @TestMethodOrder(MethodOrderer.OrderAnnotation.class) to decide
- * the order of tests to simulate a real-like 4 players game
+ *      Test class for RMIHandler
+ * </p>
+ * <p>
+ *      Used the @TestMethodOrder(MethodOrderer.OrderAnnotation.class) to decide
+ *      the order of tests to simulate a real-like 4 players game
+ * </p>
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RMIHandlerTest {
@@ -149,39 +152,10 @@ class RMIHandlerTest {
     void newLobby() {
     }
 
-    /*
-    @Test
-    @Order(6)
-    void acceptRmiConnection() {
-        IntMessage message;
-        IntMessage expectedMessage = new IntMessage();
-        String newPlayer = new String("#");
 
-        // Creating an instance for ClientState
-        ClientState clientState;
-        try {
-            clientState = new ClientState(new Object());
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-        expectedMessage.setType(MessageTypes.NEW_LOBBY);
-        expectedMessage.setContent("Select the number of players (2 to 4)");
-
-        // Calling the Controller method
-        try {
-            message = rmiHandler.acceptRmiConnection(newPlayer, clientState);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("message.getUsername() = " + message.getUsername());
-        System.out.println("message.getType() = " + message.getType());
-
-        Assertions.assertEquals(expectedMessage.getType(), message.getType());
-        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
-    }
+    /**
+     * Testing pingPong method
      */
-
     @Test
     void pingPong() {
         boolean reply;
@@ -203,7 +177,7 @@ class RMIHandlerTest {
     void sendMessage1() {
         ChatMessage message;
         String playerID = mockController.getLobby().getGames().get(0).getCurrPlayer().getUsername();
-        String str = new String("test");
+        String str = "test";
         ChatMessage expectedMessage = new ChatMessage(playerID, str);
         expectedMessage.setType(MessageTypes.CHAT);
 
@@ -227,7 +201,7 @@ class RMIHandlerTest {
         ChatMessage message;
         String sendingUsername = mockController.getLobby().getGames().get(0).getCurrPlayer().getUsername();
         String receivingUsername = mockController.getLobby().getGames().get(0).getNextPlayer().getUsername();
-        String str = new String("test");
+        String str = "test";
         ChatMessage expectedMessage = new ChatMessage(sendingUsername, str, receivingUsername);
         expectedMessage.setType(MessageTypes.CHAT);
 
