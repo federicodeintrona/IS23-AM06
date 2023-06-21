@@ -6,7 +6,6 @@ import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
-import it.polimi.ingsw.utils.Messages.IntMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import org.junit.jupiter.api.*;
@@ -178,7 +177,7 @@ class RMIHandlerTest {
     void sendMessage1() {
         ChatMessage message;
         String playerID = mockController.getLobby().getGames().get(0).getCurrPlayer().getUsername();
-        String str = new String("test");
+        String str = "test";
         ChatMessage expectedMessage = new ChatMessage(playerID, str);
         expectedMessage.setType(MessageTypes.CHAT);
 
@@ -202,7 +201,7 @@ class RMIHandlerTest {
         ChatMessage message;
         String sendingUsername = mockController.getLobby().getGames().get(0).getCurrPlayer().getUsername();
         String receivingUsername = mockController.getLobby().getGames().get(0).getNextPlayer().getUsername();
-        String str = new String("test");
+        String str = "test";
         ChatMessage expectedMessage = new ChatMessage(sendingUsername, str, receivingUsername);
         expectedMessage.setType(MessageTypes.CHAT);
 
