@@ -14,4 +14,5 @@ public interface Networker {
     void setView(View view);
     void chat (Message message);
     void setServerIP(String serverIP);
+    void closeProgram(Message closing);
 }

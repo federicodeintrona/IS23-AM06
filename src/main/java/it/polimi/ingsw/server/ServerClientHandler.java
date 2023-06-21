@@ -60,10 +60,8 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             ois.close();
             oos.close();
         }
-        catch (IOException e){
-            System.err.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        catch (IOException | ClassNotFoundException e){
+           disconnect();
         }
     }
 
@@ -103,7 +101,6 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                 }
                 case PONG -> {
                     this.time=0;
-                    //System.out.println("pong by " + username);
                 }
                 case CHAT -> {
                     if (((ChatMessage) incomingMsg).getReceivingUsername() == null)
@@ -130,7 +127,6 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     oos.reset();
                 }
             } catch (IOException ex) {
-                System.out.println(username + " is " + disconnected);
                 if (!disconnected)
                     System.out.println(username + " is not responding...");
             }
@@ -153,12 +149,13 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     public void disconnect() {
         e.shutdown();
         timer.cancel();
+        this.disconnected=true;
 
         if(username!=null){
             controller.playerDisconnection(username);
         }else System.out.println("A client has disconnected before having successfully logged in");
 
-        this.disconnected=true;
+
     }
 
     @Override

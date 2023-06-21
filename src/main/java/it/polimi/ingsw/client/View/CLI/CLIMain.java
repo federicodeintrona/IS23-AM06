@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.View;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
+import it.polimi.ingsw.utils.Messages.MessageTypes;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
@@ -255,6 +256,11 @@ public class CLIMain implements View {
     @Override
     public void close() {
         th1.interrupt();
+
+        Message msg = new Message();
+        msg.setType(MessageTypes.DISCONNECT);
+        net.closeProgram(msg);
+
     }
 
 

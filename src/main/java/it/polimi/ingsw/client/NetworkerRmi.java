@@ -27,11 +27,10 @@ public class NetworkerRmi implements Networker, TimerInterface {
     private int gameID;
     private Message message;
     private static RMIHandlerInterface rmiHandler;
-    private ClientState clientState;
+    private final ClientState clientState;
     private View view;
 
     //Timer
-
     private  Timer timer;
     private int time = 0;
     private static final int initialDelay = 50;
@@ -305,5 +304,10 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
+    }
+
+    @Override
+    public void closeProgram(Message closing) {
+
     }
 }
