@@ -11,23 +11,26 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Class used to update, to calculate the vicinity points and to check conditions
+ * of the matrix which contains the tiles selected by the player
+ */
 public class Bookshelf {
     private JsonReader config;
     private static int numberOfRows;
     private static int numberOfColumns;
     private static int maxNumberOfTiles;
-
-        Matrix tiles;
-        int num_of_tiles;
+    private final Matrix tiles;
+    private int num_of_tiles;
 
     /**
      * Initialize the bookshelf with the Matrix
      * and set every position to EMPTY
      */
-        public Bookshelf(){
-            try {
-                InputStream is=this.getClass().getClassLoader().getResourceAsStream("Bookshelf.json");
-                config=new JsonReader(is);
+    public Bookshelf(){
+        try {
+            InputStream is=this.getClass().getClassLoader().getResourceAsStream("Bookshelf.json");
+            config=new JsonReader(is);
 //                config = new JsonReader("src/main/resources/Bookshelf.json");
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -44,46 +47,50 @@ public class Bookshelf {
                     tiles.remove(i,j);
                 }
 
-            }
         }
+    }
 
-        /**
-        * Returns the matrix of tiles
-        * @return The matrix of tiles
-         **/
-        public Matrix getTiles(){
-            return tiles;
-        }
+    /**
+    * <strong>Getter</strong> -> Returns the matrix of tiles
+    * @return The matrix of tiles
+     **/
+    public Matrix getTiles(){
+        return tiles;
+    }
 
+    /**
+     * <strong>Getter</strong> -> Returns the number of tiles
+     * @return the number of tiles
+     */
     public int getNum_of_tiles () { return num_of_tiles; }
 
     /**
-     * Checks if th column given is full of tiles
+     * Method to check if the column given is full of tiles
      * @param choice number of tiles chosen
      * @param column index of the colum chosen
      * @return true if the column is full, false if it isn't
      */
-        public boolean checkColumns(int choice, int column){
-            return tiles.getTile(choice - 1, column).equals(Tiles.EMPTY);
-        }
+    public boolean checkColumns(int choice, int column){
+        return tiles.getTile(choice - 1, column).equals(Tiles.EMPTY);
+    }
 
     /**
-     * Check if the matrix is full
+     * Method to check if the matrix is full
      * @return true if the matrix is full, false if it isn't
      */
-        public boolean checkEndGame(){
-            return num_of_tiles == maxNumberOfTiles;
-        }
+    public boolean checkEndGame(){
+        return num_of_tiles == maxNumberOfTiles;
+    }
      /**
-     * Check if the matrix is empty
+     * Method to check if the matrix is empty
      * @return true if the matrix is empty, false if it isn't
      */
-        public boolean checkEmptyBoard(){
-            return num_of_tiles == 0;
-        }
+    public boolean checkEmptyBoard(){
+        return num_of_tiles == 0;
+    }
 
     /**
-     * Check if the matrix is empty
+     * Method to check if the matrix is empty
      * @return true if the matrix is empty, false if it isn't
      */
     public boolean isEmpty(){
@@ -94,7 +101,7 @@ public class Bookshelf {
     }
 
     /**
-     * Insert the array of tiles in the matrix
+     * Method to insert the array of tiles in the matrix
      * in the column chosen
      * @param tiles tiles to put in the matrix
      * @param column index of the column for tiles
@@ -118,22 +125,26 @@ public class Bookshelf {
             }
         }
 
+    /**
+     * <strong>Setter</strong> -> Sets the number of tiles
+     * @param num number of tiles
+     */
     public void setNum_of_tiles (int num) { num_of_tiles = num; }
 
     /**
-     * Finds the first free position of the matrix in the given column
+     * Method to find the first free position of the matrix in the given column
      * @param column index of the column
      * @return first free row of the matrix
      */
 
-        private int firstFree (int column){
-            for (int i=5;i>=0;i--){
-                if(tiles.getTile(i,column).equals(Tiles.EMPTY)){
-                    return i;
-                }
+    private int firstFree (int column){
+        for (int i=5;i>=0;i--){
+            if(tiles.getTile(i,column).equals(Tiles.EMPTY)){
+                return i;
             }
-            return -1;
         }
+        return -1;
+    }
 
 
     /**
@@ -144,7 +155,7 @@ public class Bookshelf {
      * @param point coordinates of the analyzed tile
      * @return ArrayList    position with adjacent color
      */
-        private static ArrayList<Point> getAdjacentSameColor(Matrix matrix, Point point) {
+    private static ArrayList<Point> getAdjacentSameColor(Matrix matrix, Point point) {
         ArrayList<Point> adjacent = new ArrayList<>();
         int x = point.x;
         int y = point.y;
@@ -165,10 +176,10 @@ public class Bookshelf {
         }
 
         return adjacent;
-        }
+    }
 
     /**
-     * Associate the number of adjacent tiles to the corresponding point
+     * Method to associate the number of adjacent tiles to the corresponding point
      * @param n number of adjacent tiles
      * @return corresponding point
      */
@@ -191,10 +202,10 @@ public class Bookshelf {
                 }
             }
         }
-        }
+    }
 
     /**
-     * Calculate vicinity points
+     * Method to calculate vicinity points
      * @return vicinity point
      */
     public int checkVicinityPoints(){

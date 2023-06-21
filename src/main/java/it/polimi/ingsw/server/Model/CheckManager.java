@@ -7,6 +7,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Class used to make checks based on the current player and the current state
+ */
 public class CheckManager {
     private static final int maxNumberOfSelectedTiles=3;
     private static final int numberOfBoardRows=9;
@@ -19,7 +22,7 @@ public class CheckManager {
     private final ArrayList<Tiles> selectedTiles;
 
     /**
-     * <strong>Constructor </strong>-> assign selectedTile
+     * Initialize the selected tiles
      *
      * @param selectedTiles selected tiles
      */
@@ -27,10 +30,20 @@ public class CheckManager {
         this.selectedTiles = selectedTiles;
     }
 
+    /**
+     * <strong>Setter</strong> -> Sets the current player
+     *
+     * @param currPlayer current player
+     */
     public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
     }
 
+    /**
+     * <strong>Setter</strong> -> Sets the current state
+     *
+     * @param state state
+     */
     public void setState(GameState state) {
         this.state = state;
     }
