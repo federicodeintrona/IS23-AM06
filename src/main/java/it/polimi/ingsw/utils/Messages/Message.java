@@ -19,7 +19,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * <strong>Getter</strong> -> Sets the content of the message
+     * <strong>Getter</strong> -> Returns the content of the message
      * @return text content of the message
      */
     public String getText() { return text; }
@@ -33,7 +33,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * <strong>Getter</strong> -> Sets the content of the message
+     * <strong>Getter</strong> -> Returns the content of the message
      * @return type of the message
      */
     public MessageTypes getType() {

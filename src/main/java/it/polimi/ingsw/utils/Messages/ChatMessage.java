@@ -1,7 +1,9 @@
 package it.polimi.ingsw.utils.Messages;
 
 import java.io.Serializable;
-
+/**
+ * <p> Class for message sent by client and server used for chat</p>
+ */
 public class ChatMessage extends Message implements Serializable {
     String message;
     String receivingUsername;
@@ -18,6 +20,10 @@ public class ChatMessage extends Message implements Serializable {
         this.receivingUsername = receivingUsername;
     }
 
+    /**
+     * <strong>Getter</strong> -> Returns the content contained in the chat message
+     * @return the content contained in the chat message
+     */
     public String getMessage() {
         return message;
     }
