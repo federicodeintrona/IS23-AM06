@@ -4,17 +4,12 @@ import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import it.polimi.ingsw.server.Model.Player;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * Abstract class
@@ -43,12 +38,11 @@ public abstract class CommonObjective {
             subclasses.add(pojoClass.getClazz());
         }
 
-        ArrayList<Class> temp = new ArrayList<>();
-        temp.addAll(subclasses);
+        ArrayList<Class> temp = new ArrayList<>(subclasses);
         Random rand = new Random();
 
 
-        ArrayList<CommonObjective> result = new ArrayList<CommonObjective>();
+        ArrayList<CommonObjective> result = new ArrayList<>();
 
 
         for(int i = 0; i<num; i++ ){
@@ -109,7 +103,7 @@ public abstract class CommonObjective {
             return true;
         } return false;
 
-    };
+    }
 
     /**
      * <Strong>Getter</Strong> -> Gets the points to assign
