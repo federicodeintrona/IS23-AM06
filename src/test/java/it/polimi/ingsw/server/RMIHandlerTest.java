@@ -116,9 +116,6 @@ class RMIHandlerTest {
             throw new RuntimeException(e);
         }
 
-        System.out.println(message.getType());
-        System.out.println("message = " + message.getUsername());
-
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
         Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
     }
@@ -143,9 +140,6 @@ class RMIHandlerTest {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println(message.getType());
-        System.out.println("message = " + message.getUsername());
 
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
         Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
