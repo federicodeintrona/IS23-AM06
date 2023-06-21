@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 /**
- * <p>An implementation of a matrix that contains Tiles.</p>
+ * <p>Class that implements a matrix which contains Tiles.</p>
  * <p>It is used as a basis for the board and the bookshelves.</p>
  */
 public class Matrix implements Serializable {
@@ -132,6 +132,10 @@ public class Matrix implements Serializable {
     }
 
 
+    /**
+     * <p><strong>Getter</strong> --> get the number of columns.</p>
+     * @return  The number of columns.
+     */
     protected int getNumCols() {
         return numCols;
     }
