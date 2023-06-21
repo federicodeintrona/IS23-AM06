@@ -30,6 +30,6 @@ public class ChatController implements Serializable {
 
     public void setPublicChat (Chat publicChat) { this.publicChat = publicChat; }
 
-    public void setPrivateChat (HashMap<String, Chat> privateChats) { this.privateChats = privateChats; }
+    public void setPrivateChats(HashMap<String, Chat> privateChats) { this.privateChats = privateChats; }
 
 }

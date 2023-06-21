@@ -4,17 +4,12 @@ import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import it.polimi.ingsw.server.Model.Player;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * Abstract class
@@ -25,6 +20,13 @@ public abstract class CommonObjective {
     private int num;
 
 
+    /**
+     * Method that selects randomly a number of CommonObjectives equals to the
+     * int num and instantiate only the selected ones among the 12 totals
+     *
+     * @param num      Number of CommonObjective to instantiate
+     * @return      ArrayList containing the instantiated CommonObjective
+     */
     public static ArrayList<CommonObjective> randomSubclass(int num) {
 
         ArrayList<Class> subclasses = new ArrayList();
@@ -36,12 +38,11 @@ public abstract class CommonObjective {
             subclasses.add(pojoClass.getClazz());
         }
 
-        ArrayList<Class> temp = new ArrayList<>();
-        temp.addAll(subclasses);
+        ArrayList<Class> temp = new ArrayList<>(subclasses);
         Random rand = new Random();
 
 
-        ArrayList<CommonObjective> result = new ArrayList<CommonObjective>();
+        ArrayList<CommonObjective> result = new ArrayList<>();
 
 
         for(int i = 0; i<num; i++ ){
@@ -66,6 +67,13 @@ public abstract class CommonObjective {
 
     }
 
+    /**
+     * Method to be implemented in each subclass that check if a
+     * player's bookshelf meets the criteria of the relative commonObjective
+     *
+     * @param player    Player whose bookshelf gets analyze
+     * @return      Boolean depending on the result of the analysis
+     */
     public abstract boolean checkCondition(Player player);
 
     /**
@@ -95,20 +103,40 @@ public abstract class CommonObjective {
             return true;
         } return false;
 
-    };
+    }
 
+    /**
+     * <Strong>Getter</Strong> -> Gets the points to assign
+     *
+     * @return      Points to assign
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * <Strong>Getter</Strong> -> Gets a set of players who completed the CommonObjective
+     *
+     * @return      HashSet containing the players who completed the CommonObjective
+     */
     public Set<Player> getPlayersWhoCompletedComObj() {
         return playersWhoCompletedComObj;
     }
 
+    /**
+     * <Strong>Getter</Strong> -> Gets the enumeration of the CommonObjective
+     *
+     * @return      The int num
+     */
     public int getNum() {
         return num;
     }
 
+    /**
+     * <Strong>Setter</Strong> -> Sets the enumeration for a CommonObjective
+     *
+     * @param num   The int num
+     */
     public void setNum(int num) {
         this.num = num;
     }

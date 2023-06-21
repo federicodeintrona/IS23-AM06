@@ -24,7 +24,7 @@ public class ReadShell extends Thread {
     /**
      * Constructor --> assign climain
      *
-     * @param cliMain   used to retrieve CLI-side all the client information
+     * @param cliMain &nbsp;&nbsp;&nbsp; used to retrieve CLI-side all the client information
      */
     public ReadShell(CLIMain cliMain) {
         this.cliMain = cliMain;
@@ -48,7 +48,7 @@ public class ReadShell extends Thread {
     /**
      * Method to read on standard input
      *
-     * @return String   input command
+     * @return String &nbsp;&nbsp;&nbsp; input command
      */
     private String readLine() {
         //instantiate Scanner that reads from standard input
@@ -63,11 +63,11 @@ public class ReadShell extends Thread {
 
     /**
      * Method to read all the numbers in the input string
-     *
+     * <p>
      * ONLY READS THE DIGIT (for example, if in the input string there is 12, this method return 1 and 2 and NOT 12)
      *
-     * @param s input string that we want to know which numbers it contains
-     * @return ArrayList    all the number in the string
+     * @param s &nbsp;&nbsp;&nbsp; input string that we want to know which numbers it contains
+     * @return ArrayList &nbsp;&nbsp;&nbsp; all the number in the string
      */
     private ArrayList<Integer> readNumber(String s) {
         ArrayList<Integer> result = new ArrayList<>();
@@ -84,9 +84,11 @@ public class ReadShell extends Thread {
 
     /**
      * Method to read user command:
-     * - read command
-     * - create the correct message
-     * - send the message to server
+     * <ul>
+     *     <li>read command</li>
+     *     <li>create the correct message</li>
+     *     <li>send the message to server</li>
+     * </ul>
      */
     public void readCommand() {
         //read the user command from standard input
@@ -246,7 +248,7 @@ public class ReadShell extends Thread {
     /**
      * Method to create the remove tiles from board's message - remove tiles from board
      *
-     * @param input the list of int - then the method transforms it in Points
+     * @param input &nbsp;&nbsp;&nbsp; the list of int - then the method transforms it in Points
      */
     private void createRemoveMessage(ArrayList<Integer> input) {
         PointsMessage pointsMessage = new PointsMessage();
@@ -275,7 +277,7 @@ public class ReadShell extends Thread {
     /**
      * Method to create the switch tiles' message - switch selected tiles
      *
-     * @param input the list of int - order of switching tiles
+     * @param input &nbsp;&nbsp;&nbsp; the list of int - order of switching tiles
      */
     private void createSwitchMessage(ArrayList<Integer> input) {
         IntArrayMessage intArrayMessage = new IntArrayMessage();
@@ -293,7 +295,7 @@ public class ReadShell extends Thread {
     /**
      * Method to create the add to bookshelf's message - add to bookshelf's column
      *
-     * @param input the list of int, it contains only 1 int
+     * @param input &nbsp;&nbsp;&nbsp; the list of int, it contains only 1 int
      */
     private void createAddMessage(ArrayList<Integer> input) {
         IntMessage intMessage = new IntMessage();
@@ -313,7 +315,7 @@ public class ReadShell extends Thread {
     /**
      * Method to send all possible message to Networker, and then it sends them to Server
      *
-     * @param message   sending message
+     * @param message &nbsp;&nbsp;&nbsp; sending message
      */
     public void sendMessage(Message message) {
         //call the correct Networker's method

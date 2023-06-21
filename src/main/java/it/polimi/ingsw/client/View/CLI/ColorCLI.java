@@ -1,14 +1,16 @@
 package it.polimi.ingsw.client.View.CLI;
 
 /**
- * Enumeration of ANSI escaped codes used for Command User Interface' color
- * - reset
- * - clear screen
- * - foreground color code
- * - background color code
- * - bold
- * - underline
- * - reversed
+ * Enumeration of ANSI escaped codes used for Command User Interface's color
+ * <ul>
+ *     <li>reset</li>
+ *     <li>clear screen</li>
+ *     <li>foreground color code</li>
+ *     <li>background color code</li>
+ *     <li>bold</li>
+ *     <li>underline</li>
+ *     <li>reversed</li>
+ * </ul>
  */
 public enum ColorCLI {
     //reset all style
@@ -28,7 +30,6 @@ public enum ColorCLI {
     WHITE1 ("\u001B[38;2;237;226;191m"), //237;226;191
     EMPTY1 ("\u001b[38;2;77;48;35m"), //77;48;35
     POSITION ("\u001b[31;1m"),
-
     RED ("\u001b[31m"),
 
 
@@ -50,31 +51,6 @@ public enum ColorCLI {
     BOLD ("\u001b[1m"),
     UNDERLINE ("\u001b[4m"),
     REVERSED ("\u001b[7m"),
-
-
-
-
-
-
-
-    GREEN ("\u001B[38;5;46m"),
-    YELLOW ("\u001B[38;5;220m"),
-    BLUE ("\u001B[38;5;21m"),
-    PINK ("\u001B[38;5;204m"),
-    LIGHT_BLUE ("\u001B[38;5;39m"),
-    WHITE ("\u001B[38;5;231m"),
-    EMPTY ("\u001b[38;5;94m"),
-
-
-    GREENBG ("\u001B[48;5;46m"), //145;165;65
-    YELLOWBG ("\u001B[48;5;220m"), //223;159;69
-    BLUEBG ("\u001B[48;5;21m"), //0;103;105
-    PINKBG ("\u001B[48;5;204m"), //204;77;124
-    LIGHT_BLUEBG ("\u001B[48;5;39m"), //106;183;183
-    WHITEBG ("\u001B[48;5;231m"), //237;226;191
-    EMPTYBG ("\u001b[48;5;94m"),
-    EMPTYBG2 ("\u001b[48;2;103;76;65m"), //103;76;65
-
     ;
 
 
