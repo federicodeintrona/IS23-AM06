@@ -76,7 +76,7 @@ public class GUIController implements View, SceneController {
     //mostra gli errori che arrivano dal server
     private void showError(Message message){
         Platform.runLater(()->{
-            sceneController.showError(message.getUsername(),stage);
+            sceneController.showError(message.getText(),stage);
         });
     }
 

@@ -654,10 +654,10 @@ public class CLIPrint implements PropertyChangeListener {
         }
 
         for (int i = chat.getPublicChat().getOldestMessage(); i>=0; i--){
-            if (chat.getPublicChat().getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
+            if (chat.getPublicChat().getChatMessages().get(i).getText().equals(cliMain.getClientState().getMyUsername())) {
                 System.out.println(ColorCLI.RED + "me: " + ColorCLI.RESET + chat.getPublicChat().getChatMessages().get(i).getMessage());
             }
-            else System.out.println(ColorCLI.UNDERLINE + chat.getPublicChat().getChatMessages().get(i).getUsername() + ColorCLI.RESET + ": " + chat.getPublicChat().getChatMessages().get(i).getMessage());
+            else System.out.println(ColorCLI.UNDERLINE + chat.getPublicChat().getChatMessages().get(i).getText() + ColorCLI.RESET + ": " + chat.getPublicChat().getChatMessages().get(i).getMessage());
         }
 
         if (!printAndChat) {
@@ -696,10 +696,10 @@ public class CLIPrint implements PropertyChangeListener {
         }
 
         for (int i = chat.getPrivateChat(username).getOldestMessage(); i>=0; i--){
-            if (chat.getPrivateChat(username).getChatMessages().get(i).getUsername().equals(cliMain.getClientState().getMyUsername())) {
+            if (chat.getPrivateChat(username).getChatMessages().get(i).getText().equals(cliMain.getClientState().getMyUsername())) {
                 System.out.println(ColorCLI.RED + "me: " + ColorCLI.RESET + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
             }
-            else System.out.println(ColorCLI.UNDERLINE + chat.getPrivateChat(username).getChatMessages().get(i).getUsername() + ColorCLI.RESET + ": " + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
+            else System.out.println(ColorCLI.UNDERLINE + chat.getPrivateChat(username).getChatMessages().get(i).getText() + ColorCLI.RESET + ": " + chat.getPrivateChat(username).getChatMessages().get(i).getMessage());
         }
 
         if (!printAndChat) {

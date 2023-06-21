@@ -80,7 +80,7 @@ class RMIHandlerTest {
         points.add(point2);
 
         expectedMessage.setType(MessageTypes.OK);
-        expectedMessage.setContent("Move successful remove tiles");
+        expectedMessage.setText("Move successful remove tiles");
 
         try {
             message = rmiHandler.removeTiles(0, playerID, points);
@@ -89,7 +89,7 @@ class RMIHandlerTest {
         }
 
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
-        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
+        Assertions.assertEquals(expectedMessage.getText(), message.getText());
     }
 
     /**
@@ -108,7 +108,7 @@ class RMIHandlerTest {
         ints.add(1);
 
         expectedMessage.setType(MessageTypes.OK);
-        expectedMessage.setContent("Move successful swap order");
+        expectedMessage.setText("Move successful swap order");
 
         try {
             message = rmiHandler.swapOrder(ints, 0, playerID);
@@ -117,7 +117,7 @@ class RMIHandlerTest {
         }
 
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
-        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
+        Assertions.assertEquals(expectedMessage.getText(), message.getText());
     }
 
     /**
@@ -133,7 +133,7 @@ class RMIHandlerTest {
         int column = 0;
 
         expectedMessage.setType(MessageTypes.OK);
-        expectedMessage.setContent("Move successful add to bookshelf");
+        expectedMessage.setText("Move successful add to bookshelf");
 
         try {
             message = rmiHandler.addToBookshelf(0, playerID, column);
@@ -142,7 +142,7 @@ class RMIHandlerTest {
         }
 
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
-        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
+        Assertions.assertEquals(expectedMessage.getText(), message.getText());
     }
 
     @Test
@@ -213,7 +213,7 @@ class RMIHandlerTest {
             throw new RuntimeException(e);
         }
 
-        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
+        Assertions.assertEquals(expectedMessage.getText(), message.getText());
         Assertions.assertEquals(expectedMessage.getMessage(), message.getMessage());
         Assertions.assertEquals(expectedMessage.getType(), message.getType());
     }
@@ -237,7 +237,7 @@ class RMIHandlerTest {
             throw new RuntimeException(e);
         }
 
-        Assertions.assertEquals(expectedMessage.getUsername(), message.getUsername());
+        Assertions.assertEquals(expectedMessage.getText(), message.getText());
         Assertions.assertEquals(expectedMessage.getMessage(), message.getMessage());
         Assertions.assertEquals(expectedMessage.getReceivingUsername(), message.getReceivingUsername());
         Assertions.assertEquals(expectedMessage.getType(), message.getType());

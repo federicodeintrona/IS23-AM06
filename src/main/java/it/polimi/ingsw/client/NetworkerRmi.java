@@ -119,11 +119,11 @@ public class NetworkerRmi implements Networker, TimerInterface {
     public void firstConnection (Message username) {
         IntMessage message1;
         try {
-             message1 = rmiHandler.acceptRmiConnection(username.getUsername(),clientState);
+             message1 = rmiHandler.acceptRmiConnection(username.getText(),clientState);
 
         // Saving the username after assuring that is ok
         if (!message1.getType().equals(MessageTypes.ERROR)){
-           this.username = username.getUsername();
+           this.username = username.getText();
            pingPong();
         }
 

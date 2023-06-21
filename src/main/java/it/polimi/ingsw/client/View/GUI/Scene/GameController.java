@@ -431,7 +431,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         else{
                 PointsMessage pointsMessage=new PointsMessage();
 
-                pointsMessage.setUsername(clientState.getMyUsername());
+                pointsMessage.setText(clientState.getMyUsername());
                 pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
                 pointsMessage.setTiles(removeTiles);
                 guiController.sendMessage(pointsMessage);
@@ -488,7 +488,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         IntArrayMessage intArrayMessage=new IntArrayMessage();
 
         //setto il messaggio
-        intArrayMessage.setUsername(clientState.getMyUsername());
+        intArrayMessage.setText(clientState.getMyUsername());
         intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
         intArrayMessage.setIntegers(orderTiles);
 
@@ -582,7 +582,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(0);
 
@@ -597,7 +597,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(1);
 
@@ -612,7 +612,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(2);
 
@@ -627,7 +627,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(3);
 
@@ -643,7 +643,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(4);
 

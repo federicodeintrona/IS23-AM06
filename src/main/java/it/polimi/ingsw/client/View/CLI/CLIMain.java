@@ -276,16 +276,16 @@ public class CLIMain implements View {
             case NEW_LOBBY -> readShell.askNumberOfPlayerMessage();
             case WAITING_FOR_PLAYERS -> clientState.setWaiting(true);
             case ERROR -> {
-                cliPrint.printError(message.getUsername());
-                if (message.getUsername().equals("Username already taken")){
+                cliPrint.printError(message.getText());
+                if (message.getText().equals("Username already taken")){
                     readShell.askUsername();
                 }
             }
             case OK -> {
-                if (message.getUsername().equals("Move successful remove tiles")){
+                if (message.getText().equals("Move successful remove tiles")){
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
-                else if (message.getUsername().equals("Move successful swap order")) {
+                else if (message.getText().equals("Move successful swap order")) {
                     cliPrint.printOrderTiles(clientState.getSelectedTiles());
                 }
             }

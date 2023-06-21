@@ -349,11 +349,11 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
             case ("privateChat") -> {
                 ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
-                if (chatMessage.getUsername().equals(clientState.getMyUsername())){
+                if (chatMessage.getText().equals(clientState.getMyUsername())){
                     clientState.getChatController().getPrivateChat(chatMessage.getReceivingUsername()).addMessage(chatMessage);
                 }
                 else {
-                    clientState.getChatController().getPrivateChat(chatMessage.getUsername()).addMessage(chatMessage);
+                    clientState.getChatController().getPrivateChat(chatMessage.getText()).addMessage(chatMessage);
                 }
                 Platform.runLater(() -> {
                     updatePrivateChat(chatMessage);
@@ -845,7 +845,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         else{
             PointsMessage pointsMessage=new PointsMessage();
 
-            pointsMessage.setUsername(clientState.getMyUsername());
+            pointsMessage.setText(clientState.getMyUsername());
             pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
             pointsMessage.setTiles(removeTiles);
             guiController.sendMessage(pointsMessage);
@@ -970,7 +970,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         IntArrayMessage intArrayMessage=new IntArrayMessage();
 
         //setto il messaggio
-        intArrayMessage.setUsername(clientState.getMyUsername());
+        intArrayMessage.setText(clientState.getMyUsername());
         intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
         intArrayMessage.setIntegers(orderTiles);
 
@@ -1065,7 +1065,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(0);
 
@@ -1080,7 +1080,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(1);
 
@@ -1095,7 +1095,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(2);
 
@@ -1110,7 +1110,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(3);
 
@@ -1126,7 +1126,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         IntMessage intMessage=new IntMessage();
 
         //setta il messaggio
-        intMessage.setUsername(clientState.getMyUsername());
+        intMessage.setText(clientState.getMyUsername());
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(4);
 
@@ -1251,7 +1251,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         Label messageLabel=new Label();
         messageLabel.setPrefWidth(250);
         //è il mio messaggio
-        if (message.getUsername().equals(clientState.getMyUsername())){
+        if (message.getText().equals(clientState.getMyUsername())){
             messageLabel.setText(message.getMessage());
 
             messageLabel.setAlignment(Pos.CENTER_RIGHT);
@@ -1290,7 +1290,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         Label messageLabel=new Label();
         messageLabel.setPrefWidth(250);
 
-        if (message.getUsername().equals(clientState.getMyUsername())){
+        if (message.getText().equals(clientState.getMyUsername())){
             messageLabel.setText(message.getMessage());
 
             messageLabel.setAlignment(Pos.CENTER_RIGHT);
@@ -1312,9 +1312,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 messageLabel.setPrefWidth(messageLabel.getFont().getSize()*messageLabel.getText().length());
             }
 
-            Objects.requireNonNull(chatVBox(message.getUsername())).getChildren().add(messageLabel);
+            Objects.requireNonNull(chatVBox(message.getText())).getChildren().add(messageLabel);
 
-            if (!selectChat.getValue().equals(message.getUsername())){
+            if (!selectChat.getValue().equals(message.getText())){
                 //popup ti è arrivato un messaggio
                 Alert alert=new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("New message");

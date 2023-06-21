@@ -1,5 +1,6 @@
 package it.polimi.ingsw.utils.Messages;
 
+
 public class ViewMessage extends Message {
 
     private String objName;

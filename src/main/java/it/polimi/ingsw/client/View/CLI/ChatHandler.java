@@ -147,7 +147,7 @@ public class ChatHandler {
 
     public void newPublicMessage(ChatMessage message) {
         if (chatController.getPublicChat().ChatIsEnable()) {
-            if (!message.getUsername().equals(cliMain.getClientState().getMyUsername())) System.out.println(ColorCLI.UNDERLINE + message.getUsername() + ColorCLI.RESET + ": " + message.getMessage());
+            if (!message.getText().equals(cliMain.getClientState().getMyUsername())) System.out.println(ColorCLI.UNDERLINE + message.getText() + ColorCLI.RESET + ": " + message.getMessage());
         }
         else {
             chatController.getPublicChat().updateUnReadMessages();
@@ -160,7 +160,7 @@ public class ChatHandler {
     }
 
     public void newPrivateMessage(ChatMessage message) {
-        String forwardingPlayer = message.getUsername();
+        String forwardingPlayer = message.getText();
         String conversation = message.getMessage();
         String receivingPlayer = message.getReceivingUsername();
 

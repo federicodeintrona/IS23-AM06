@@ -63,23 +63,23 @@ public class Controller implements PropertyChangeListener {
         try {
             lobby.getGames().get(gameID).addToBookShelf(lobby.getPlayers().get(playerID),col);
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful add to bookshelf");
+            reply.setText("Move successful add to bookshelf");
 
         } catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("The requested column does not exists");
+            reply.setText("The requested column does not exists");
 
         }catch (ColumnIsFull e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("The requested column is full");
+            reply.setText("The requested column is full");
 
         }catch (NotCurrentPlayer e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("It's not your turn");
+            reply.setText("It's not your turn");
 
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You can't do that now");
+            reply.setText("You can't do that now");
 
         }
 
@@ -104,22 +104,22 @@ public class Controller implements PropertyChangeListener {
         try {
             lobby.getGames().get(gameID).swapOrder(ints,lobby.getPlayers().get(playerID));
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful swap order");
+            reply.setText("Move successful swap order");
         } catch (NotCurrentPlayer e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You are not the current player");
+            reply.setText("You are not the current player");
 
         } catch (IllegalArgumentException e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You cannot choose these positions");
+            reply.setText("You cannot choose these positions");
 
         }catch (TooManySelected e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("Incorrect number of orders ");
+            reply.setText("Incorrect number of orders ");
 
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You can't do that now");
+            reply.setText("You can't do that now");
 
         }
 
@@ -142,39 +142,39 @@ public class Controller implements PropertyChangeListener {
         try {
             lobby.getGames().get(gameID).removeTileArray(lobby.getPlayers().get(playerID),points);
             reply.setType(MessageTypes.OK);
-            reply.setContent("Move successful remove tiles");
+            reply.setText("Move successful remove tiles");
 
         }catch (OutOfDomain e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You selected a point outside the board");
+            reply.setText("You selected a point outside the board");
 
         }catch (TilesCannotBeSelected e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("One of the tiles cannot be selected");
+            reply.setText("One of the tiles cannot be selected");
 
         }catch (TilesNotAdjacent e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("The tiles are not adjacent to each other");
+            reply.setText("The tiles are not adjacent to each other");
 
         }catch (IllegalArgumentException e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You selected 0 tiles");
+            reply.setText("You selected 0 tiles");
 
         }catch (TooManySelected e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You selected too many tiles");
+            reply.setText("You selected too many tiles");
 
         }catch (NotCurrentPlayer e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("It's not your turn");
+            reply.setText("It's not your turn");
 
         }catch (SameElement e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You cannot choose the same tile multiple times");
+            reply.setText("You cannot choose the same tile multiple times");
 
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("You can't do that now");
+            reply.setText("You can't do that now");
 
         }
 
@@ -190,7 +190,7 @@ public class Controller implements PropertyChangeListener {
         IntMessage msg = new IntMessage();
         int gameNum =  lobby.newLobby(client,players);
         msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
-        msg.setContent("Lobby created. Waiting for other players...");
+        msg.setText("Lobby created. Waiting for other players...");
         msg.setNum(gameNum);
         return msg;
     }
@@ -206,7 +206,7 @@ public class Controller implements PropertyChangeListener {
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.RECONNECT);
                 reply.setNum(idx);
-                reply.setContent("Reconnected to the game");
+                reply.setText("Reconnected to the game");
                 return reply;
             }
 
@@ -215,19 +215,19 @@ public class Controller implements PropertyChangeListener {
             if (response.isEmpty()) {
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.NEW_LOBBY);
-                reply.setContent("Select the number of players (2 to 4)");
+                reply.setText("Select the number of players (2 to 4)");
                 return reply;
             } else {
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.WAITING_FOR_PLAYERS);
-                reply.setContent("Added to a game. Waiting for other player...");
+                reply.setText("Added to a game. Waiting for other player...");
                 reply.setNum(response.get());
                 return reply;
             }
         } catch (UsernameAlreadyTaken e) {
             IntMessage reply = new IntMessage();
             reply.setType(MessageTypes.ERROR);
-            reply.setContent("Username already taken");
+            reply.setText("Username already taken");
             return reply;
         }
     }
