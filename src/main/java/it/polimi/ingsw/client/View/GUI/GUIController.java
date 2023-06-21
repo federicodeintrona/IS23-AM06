@@ -2,11 +2,8 @@ package it.polimi.ingsw.client.View.GUI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
-import it.polimi.ingsw.client.NetworkerRmi;
-import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.GUI.Scene.*;
 import it.polimi.ingsw.client.View.View;
-import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import javafx.application.Platform;
@@ -70,29 +67,27 @@ public class GUIController implements View, SceneController {
     public void close() {
         Message msg = new Message();
         msg.setType(MessageTypes.DISCONNECT);
-        networker.closeProgram(msg);
+        if(networker!=null) networker.closeProgram(msg);
+        else System.exit(0);
     }
 
     //mostra gli errori che arrivano dal server
     private void showError(Message message){
-        Platform.runLater(()->{
-            sceneController.showError(message.getUsername(),stage);
-        });
+        Platform.runLater(()-> sceneController.showError(message.getText(),stage));
     }
 
     //Qui arrivano le notifiche dal client state
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
-            case "start" ->{
-                changeScene(Scenes.Game);;
-            }
+            case "start" -> changeScene(Scenes.Game);
             case "end" -> {
                 if(state.isDisconnectionWinner()){
                     changeScene(Scenes.DisconnectionEnd);
                 } else changeScene(Scenes.Endgame);
 
             }
+            default -> throw new IllegalStateException("Unexpected value: " + evt.getPropertyName());
         }
     }
 
@@ -110,23 +105,7 @@ public class GUIController implements View, SceneController {
         });
     }
 
-    public void selectNetworker(String net, String host){
-        if(net.equals("RMI")){
-            networker = new NetworkerRmi(state,host);
-        }else{
-            networker = new NetworkerTcp(state,host);
-        }
-        networker.setView(this);
-        boolean connected=false;
-        do {
-            connected=networker.initializeConnection();
-            if (!connected){
-                showError("Try again", stage);
-            }
-        }while (!connected);
 
-        changeScene(Scenes.Login);
-    }
 
     public void setSceneController(SceneController sceneController) {
         this.sceneController = sceneController;
@@ -150,10 +129,6 @@ public class GUIController implements View, SceneController {
 
     public Stage getStage() {
         return stage;
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     public void setNetworker(Networker networker) {

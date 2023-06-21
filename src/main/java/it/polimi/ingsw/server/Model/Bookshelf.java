@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server.Model;
 
-import it.polimi.ingsw.utils.JsonReader;
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
-import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -14,15 +12,12 @@ import java.util.Queue;
 /**
  * Class used to manage matrix which contains the tiles selected by the player
  * <ul>
- *     <li>to update</li>,
+ *     <li>to update</li>
  *     <li>to calculate the vicinity points </li>
  *     <li>to check conditions</li>
- *  </ul>
+ * </ul>
  */
 public class Bookshelf {
-    private JsonReader config;
-    private static int numberOfRows;
-    private static int numberOfColumns;
     private static int maxNumberOfTiles;
     private final Matrix tiles;
     private int num_of_tiles;
@@ -32,24 +27,13 @@ public class Bookshelf {
      * and set every position to EMPTY
      */
     public Bookshelf(){
-        try {
-            InputStream is=this.getClass().getClassLoader().getResourceAsStream("Bookshelf.json");
-            config=new JsonReader(is);
-//                config = new JsonReader("src/main/resources/Bookshelf.json");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
+        maxNumberOfTiles=Define.NUMBEROFROWS_BOOKSHELF.getI()*Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();
+        tiles=new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(),Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
+        num_of_tiles=0;
+        for( int i=0; i<Define.NUMBEROFROWS_BOOKSHELF.getI();i++){
+            for( int j=0; j<Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();j++){
+                tiles.remove(i,j);
             }
-            numberOfRows=config.getInt("numrows");
-            numberOfColumns=config.getInt("numcol");
-            maxNumberOfTiles=numberOfRows*numberOfColumns;
-            tiles=new Matrix(numberOfRows,numberOfColumns);
-            num_of_tiles=0;
-            for( int i=0; i<numberOfRows;i++){
-                for( int j=0; j<numberOfColumns;j++){
-                    tiles.remove(i,j);
-                }
 
         }
     }
@@ -98,7 +82,7 @@ public class Bookshelf {
      * @return true if the matrix is empty, false if it isn't
      */
     public boolean isEmpty(){
-        for (int j=0; j<numberOfColumns; j++){
+        for (int j=0; j<Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++){
             if (!tiles.getTile(5, j).equals(Tiles.EMPTY)) return false;
         }
         return true;

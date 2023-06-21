@@ -7,13 +7,13 @@ public class ChatMessage extends Message implements Serializable {
     String receivingUsername;
 
     public ChatMessage(String username, String message) {
-        setUsername(username);
+        setText(username);
         this.message = message;
         receivingUsername = null;
     }
 
     public ChatMessage(String sendingUsername, String message, String receivingUsername) {
-        setUsername(sendingUsername);
+        setText(sendingUsername);
         this.message = message;
         this.receivingUsername = receivingUsername;
     }
@@ -25,11 +25,11 @@ public class ChatMessage extends Message implements Serializable {
     public String getReceivingUsername() {return receivingUsername;}
 
     public void getConversation (Boolean complete) {
-        System.out.println(getUsername() + " :" + message + " TO " + receivingUsername);
+        System.out.println(getText() + " :" + message + " TO " + receivingUsername);
     }
 
     public String getConversation () {
-        String conversation = getUsername() + ": " + message;
+        String conversation = getText() + ": " + message;
         return conversation;
     }
 

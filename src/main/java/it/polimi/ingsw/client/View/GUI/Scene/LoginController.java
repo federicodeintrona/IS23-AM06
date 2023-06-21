@@ -45,7 +45,7 @@ public class LoginController implements SceneController, Initializable {
         else {
             guiController.getState().setMyUsername(username);
             Message message=new Message();
-            message.setUsername(username);
+            message.setText(username);
             message.setType(MessageTypes.USERNAME);
             guiController.sendMessage(message);
         }

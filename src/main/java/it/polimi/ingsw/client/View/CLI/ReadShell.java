@@ -216,7 +216,7 @@ public class ReadShell extends Thread {
         //set the username in ClientState
         cliMain.getClientState().setMyUsername(nickname);
         //set the username's message
-        message.setUsername(nickname);
+        message.setText(nickname);
         message.setType(MessageTypes.USERNAME);
 
         //send message
@@ -233,7 +233,7 @@ public class ReadShell extends Thread {
         String num = readLine();
 
         //set the number of players' message
-        message.setUsername(cliMain.getClientState().getMyUsername());
+        message.setText(cliMain.getClientState().getMyUsername());
         message.setNum(Integer.parseInt(num));
         message.setType(MessageTypes.NUM_OF_PLAYERS);
 
@@ -263,7 +263,7 @@ public class ReadShell extends Thread {
         }
 
         //setting correct the message
-        pointsMessage.setUsername(cliMain.getClientState().getMyUsername());
+        pointsMessage.setText(cliMain.getClientState().getMyUsername());
         //message type=REMOVE_FROM_BOARD
         pointsMessage.setType(MessageTypes.REMOVE_FROM_BOARD);
         pointsMessage.setTiles(result);
@@ -281,7 +281,7 @@ public class ReadShell extends Thread {
         IntArrayMessage intArrayMessage = new IntArrayMessage();
 
         //setting the correct message
-        intArrayMessage.setUsername(cliMain.getClientState().getMyUsername());
+        intArrayMessage.setText(cliMain.getClientState().getMyUsername());
         //message type=SWITCH_PLACE
         intArrayMessage.setType(MessageTypes.SWITCH_PLACE);
         intArrayMessage.setIntegers(input);
@@ -299,7 +299,7 @@ public class ReadShell extends Thread {
         IntMessage intMessage = new IntMessage();
 
         //setting the correct message
-        intMessage.setUsername(cliMain.getClientState().getMyUsername());
+        intMessage.setText(cliMain.getClientState().getMyUsername());
         //message type=ADD_TO_BOOKSHELF
         intMessage.setType(MessageTypes.ADD_TO_BOOKSHELF);
         intMessage.setNum(input.get(0));

@@ -58,7 +58,7 @@ public class NumberOfPlayerController implements Initializable,SceneController {
         Integer choice=numberOfPlayerBox.getValue();
 
         IntMessage message=new IntMessage();
-        message.setUsername(guiController.getState().getMyUsername());
+        message.setText(guiController.getState().getMyUsername());
         message.setNum(choice);
         message.setType(MessageTypes.NUM_OF_PLAYERS);
         guiController.sendMessage(message);

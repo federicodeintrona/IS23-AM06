@@ -126,7 +126,7 @@ public class Reader extends Thread implements TimerInterface {
             }
             case ("bookshelf") -> {
                 Matrix bookshelf = (Matrix) message.getContent();
-                String Username = message.getUsername();
+                String Username = message.getText();
                 clientState.setAllBookshelf(Username, bookshelf);
             }
             case ("currPlayer") -> {
@@ -148,7 +148,7 @@ public class Reader extends Thread implements TimerInterface {
             }
             case ("publicPoints") -> {
                 int publicPoints = (int) message.getContent();
-                String username = message.getUsername();
+                String username = message.getText();
                 clientState.setAllPublicPoints(username, publicPoints);
             }
             case ("selectedTiles") -> {

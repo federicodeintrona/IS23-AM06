@@ -2,25 +2,41 @@ package it.polimi.ingsw.utils.Messages;
 
 import java.io.Serializable;
 
+/**
+ * <p> Class for the all the message sent by client and server </p>
+ */
 public class Message implements Serializable {
 
-    private String username;
+    private String text;
     private MessageTypes type;
 
-    public void setContent(String username) {
-        this.username = username;
+    /**
+     * <strong>Setter</strong> -> Sets the content of the message
+     * @param text text content of the message
+     */
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public MessageTypes getType() {
-        return type;
-    }
-    public String getUsername () { return username; }
+    /**
+     * <strong>Getter</strong> -> Sets the content of the message
+     * @return text content of the message
+     */
+    public String getText() { return text; }
 
+    /**
+     * <strong>Setter</strong> -> Sets the type of the message
+     * @param type type of the message
+     */
     public void setType(MessageTypes type) {
         this.type = type;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    /**
+     * <strong>Getter</strong> -> Sets the content of the message
+     * @return type of the message
+     */
+    public MessageTypes getType() {
+        return type;
     }
 }
