@@ -245,7 +245,6 @@ class ModelTest {
             throw new RuntimeException(e);
         }
 
-
     }
 
     @Test
