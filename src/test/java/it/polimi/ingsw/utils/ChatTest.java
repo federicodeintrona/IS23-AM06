@@ -37,10 +37,10 @@ class ChatTest {
     void addMessage2() {
         Chat chat = new Chat();
 
-        String username1 = new String("yoda");
-        String message1 = new String("may the force be with you");
-        String username2 = new String("Mace_windu");
-        String message2 = new String("purple");
+        String username1 = "yoda";
+        String message1 = "may the force be with you";
+        String username2 = "Mace_windu";
+        String message2 = "purple";
 
         chat.addMessage(username1, message1);
 
@@ -63,13 +63,12 @@ class ChatTest {
     void addMessage3() {
         Chat chat = new Chat();
 
-        String username1 = new String("yoda");
-        String message1 = new String("may the force be with you");
-        String receivingUsername1 = new String("obi-wan");
-        ChatMessage conversation = new ChatMessage(username1, message1, receivingUsername1);
-        String username2 = new String("Mace_windu");
-        String message2 = new String("purple");
-        String receivingUsername2 = new String("palpatine");
+        String username1 = "yoda";
+        String message1 = "may the force be with you";
+        String receivingUsername1 = "obi-wan";
+        String username2 = "Mace_windu";
+        String message2 = "purple";
+        String receivingUsername2 = "palpatine";
 
         chat.addMessage(username1, message1 ,receivingUsername1);
 
@@ -150,10 +149,44 @@ class ChatTest {
     }
 
     @Test
+    void getMaxNumberOfMessages() {
+        Chat chat = new Chat(10);
+
+        Assertions.assertEquals(10, chat.getMaxNumberOfMessages());
+    }
+
+    @Test
     void chatIsEnable() {
+        Chat chat = new Chat();
+
+        Assertions.assertFalse(chat.ChatIsEnable());
     }
 
     @Test
     void setChatIsEnable() {
+        Chat chat = new Chat();
+
+        chat.setChatIsEnable(true);
+        Assertions.assertTrue(chat.ChatIsEnable());
+
+    }
+
+    @Test
+    void chatRefresh() {
+        Chat chat = new Chat();
+        ChatMessage message = new ChatMessage("r2-d2", "test");
+        ChatMessage message1 = new ChatMessage("obi-wan", "test1");
+        ChatMessage message2 = new ChatMessage("yoda", "test2");
+
+        chat.addMessage(message);
+        Assertions.assertEquals(chat.getChatMessages().get(0), message);
+
+        for (int i=0; i< chat.getMaxNumberOfMessages(); i++) {
+            chat.addMessage(message1);
+        }
+
+        chat.addMessage(message2);
+        Assertions.assertEquals(chat.getChatMessages().get(chat.getOldestMessage()), message1);
+        Assertions.assertEquals(chat.getChatMessages().get(0), message2);
     }
 }
