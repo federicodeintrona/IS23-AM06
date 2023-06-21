@@ -20,6 +20,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Class that regulates the rmi_Client
+ */
 public class NetworkerRmi implements Networker, TimerInterface {
     private static int port;
     private  String serverIP;
@@ -30,8 +33,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
     private final ClientState clientState;
     private View view;
 
-    //Timer
-    private  Timer timer;
     private int time = 0;
     private static final int initialDelay = 50;
     private static final int delta = 2000;
@@ -47,9 +48,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config = new JsonReader(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
         port = config.getInt("rmiPort");
@@ -72,9 +71,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config = new JsonReader(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
         port = config.getInt("rmiPort");
@@ -82,6 +79,14 @@ public class NetworkerRmi implements Networker, TimerInterface {
         clientState = state;
     }
 
+    /**
+     * Constructor that sets the rmiPort via Json
+     * and sets the instance of ClientState and
+     * the string containing the serverIp
+     *
+     * @param state     Instance of ClientState to set
+     * @param serverIP      String containing the serverIp
+     */
     public NetworkerRmi(ClientState state,String serverIP)  {
         JsonReader config;
         try {
@@ -108,8 +113,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
             System.out.println("Created RMI connection with Server");
         } catch (Exception e) {
-//            System.err.println("Client exception: " + e);
-//            e.printStackTrace();
+            System.err.println("Client exception: " + e);
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -280,7 +285,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
         },10,1000, TimeUnit.MILLISECONDS);
 
-        timer = new Timer();
+        //Timer
+        Timer timer = new Timer();
         TimerTask task = new TimerCounter(this);
         timer.schedule(task,initialDelay,delta);
     }
@@ -303,17 +309,37 @@ public class NetworkerRmi implements Networker, TimerInterface {
         return "Server is not responding. Retry later.";
     }
 
+    /**
+     * <Strong>Getter</Strong> -> Get the serverIp
+     *
+     * @return      String containing the serverIp
+     */
     public String getServerIP() {
         return serverIP;
     }
 
+    /**
+     * <Strong>Setter</Strong> -> Set the serverIp
+     *
+     * @param serverIP      String containing the serverIp
+     */
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
     }
 
+    /**
+     * Method that regulates the proper closing
+     * of the program during logout
+     * @param closing       closing message
+     */
     @Override
     public void closeProgram(Message closing) {
 
+        try {
+            rmiHandler.disconnect(username);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         System.out.println("Client disconnecting...");
         System.exit(0);
