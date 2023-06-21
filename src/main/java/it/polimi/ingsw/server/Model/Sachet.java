@@ -7,17 +7,22 @@ import java.util.*;
 
 /**
  * Class used to manage the sachet
+ * <ul>
+ *     <li>draw a tile</li>
+ *     <li>number of tiles remaining</li>
+ *     <li>add a tile</li>
+ * </ul>
  */
 public class Sachet {
 
     /**
-     * attribute used as a real sachet
+     * Attribute used as a real sachet
      */
     private final ArrayList<Tiles> sachet;
 
 
     /**
-     * Constructor --> create sachet that contains 132 tiles, 22 for each of 6 different color
+     * Constructor --> create sachet that contains 132 tiles, 22 for each of different color
      */
     public  Sachet() {
         sachet=new ArrayList<>();
@@ -45,11 +50,12 @@ public class Sachet {
 
 
     /**
-     * return a randomic tile,
-     * if sachet is empty (sachet.size()==0) return tiles.EMPTY
-     * 1. choose tile --> randomic position in sachet
-     * 2. remove tile --> remove tiles from sachet  --> removeTiles(position)
-     * @return Tiles    randomic tile
+     * Method to return a random tile
+     * <p>
+     *     if sachet is empty return a EMPTY tile else choose a random tile and remove it
+     * </p>
+     *
+     * @return Tiles &nbsp;&nbsp;&nbsp; randomic tile
      */
     public Tiles draw(){
         if (sachet.size()==0){
@@ -67,19 +73,19 @@ public class Sachet {
    }
 
     /**
-     * return number of tiles in the sachet --> sachet.size()
+     * Method to return the number of tiles in the sachet
      *
-     * @return int  number of tiles in the sachet
+     * @return int &nbsp;&nbsp;&nbsp; number of tiles in the sachet
      */
     public int remainingTiles(){
         return sachet.size();
     }
 
     /**
-     * return number of tiles in the sachet for color
+     * Method to return the number of tiles in the sachet per color
      *
-     * @param tiles the color of interest
-     * @return int  number of tiles in the sachet for color
+     * @param tiles &nbsp;&nbsp;&nbsp; the color of interest
+     * @return int &nbsp;&nbsp;&nbsp; number of tiles in the sachet for color
      */
     public int remainingTilesPerColor(Tiles tiles){
         int result=0;
@@ -92,11 +98,14 @@ public class Sachet {
     }
 
     /**
-     * add tiles in the sachet --> sachet.add(til)
-     * 1.0. check if til can add in sachet --> 132 >= size()+1
-     * 1.1. check if til can add in sachet --> 22 >= remainingTilesPerColor(til)+1
-     * 2. add tile --> add(til)
-     * @param til   tile to add in sachet
+     * Method to add tile in the sachet
+     * <p>
+     *     First of all check that the number of tiles already in the sachet is not equal to the maximum number of tiles.
+     *     Then check that the number of tiles of that color, already in the sachet, is not equal to the maximum number of tiles for each color
+     *     If the two checks are successful, the tile is added to the sachet and the amount of tiles present are updated
+     * </p>
+     *
+     * @param til &nbsp;&nbsp;&nbsp; tile to add in sachet
      */
     public void addTiles(Tiles til){
         //check if til can add in sachet:
@@ -110,18 +119,18 @@ public class Sachet {
     }
 
     /**
-     * remove the tile in position i --> remove(i)
+     * Method to remove the tile in i position
      *
-     * @param i position of the tiles to remove
+     * @param i &nbsp;&nbsp;&nbsp; position of the tiles to remove
      */
     public void removeTiles(int i){
         sachet.remove(i);
     }
 
     /**
-     * remove the first tile of color til --> remove(til)
+     * Method to remove the first tile in the sachet of the selected color
      *
-     * @param til the color of tile to remove
+     * @param til &nbsp;&nbsp;&nbsp; the color of tile to remove
      */
     public void removeTiles(Tiles til){
         sachet.remove(til);

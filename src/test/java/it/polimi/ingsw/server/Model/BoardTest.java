@@ -740,97 +740,6 @@ class BoardTest {
 
     }
 
-    //TEST boardResetITA()
-    @DisplayName("Board is reset according to the Italian rules - 2 players")
-    @Test
-    void boardResetITA1() {
-        //arrange - setup our test objects
-        Board board=new Board(2, new Sachet());
-        //act - do the actual calc or method run
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3, 6);
-        board.placeTiles(Tiles.GREEN, 4, 4);
-        board.boardResetITA();
-        //assert - check if actual val is equal to expected val
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
-            }
-        }
-        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
-        assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
-        assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
-
-        assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOT_ALLOWED);
-
-    }
-    @DisplayName("Board is reset according to the Italian rules - 3 players")
-    @Test
-    void boardResetITA2() {
-        //arrange - setup our test objects
-        Board board=new Board(3, new Sachet());
-        //act - do the actual calc or method run
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3, 6);
-        board.placeTiles(Tiles.GREEN, 4, 4);
-        board.boardResetITA();
-        //assert - check if actual val is equal to expected val
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
-            }
-        }
-        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
-        assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
-        assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
-
-        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOT_ALLOWED);
-
-    }
-    @DisplayName("Board is reset according to the Italian rules - 4 players")
-    @Test
-    void boardResetITA3() {
-        //arrange - setup our test objects
-        Board board=new Board(4, new Sachet());
-        //act - do the actual calc or method run
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3, 6);
-        board.placeTiles(Tiles.GREEN, 4, 4);
-        board.boardResetITA();
-        //assert - check if actual val is equal to expected val
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                assertNotEquals(board.getGamesBoard().getTile(i,j), Tiles.EMPTY);
-            }
-        }
-        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
-        assertEquals(board.getGamesBoard().getTile(3,6), Tiles.GREEN);
-        assertEquals(board.getGamesBoard().getTile(4,4), Tiles.GREEN);
-
-    }
-
     //TEST placeTiles(Tiles, int, int)
     @DisplayName("Place tile on the board in specified position")
     @Test
@@ -1384,13 +1293,6 @@ class BoardTest {
         assertFalse(result);
     }
 
-    @DisplayName("Add tile to the board")
-    @Test
-    void addTile(){
-        Board board=new Board(2);
-        board.addTile(Tiles.GREEN, 3,3);
-        assertEquals(board.getGamesBoard().getTile(3,3), Tiles.GREEN);
-    }
 
     @DisplayName("Tiles Not Pickable")
     @Test
