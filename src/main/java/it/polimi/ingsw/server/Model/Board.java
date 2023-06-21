@@ -78,7 +78,7 @@ public class Board {
         //assign Tiles.EMPTY to all position of matrix gamesBoard
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
-                gamesBoard.setEmpty(i, j);
+                gamesBoard.remove(i, j);
             }
         }
         //positions where do NOT put tiles --> assign Tiles.NOTALLOWED
@@ -158,30 +158,30 @@ public class Board {
                 gamesBoard.setNotAllowed(8, 5);
             }
             case 3 -> {
-                gamesBoard.setEmpty(0, 3);
+                gamesBoard.remove(0, 3);
                 gamesBoard.setNotAllowed(0, 4);
 
                 gamesBoard.setNotAllowed(1, 5);
 
-                gamesBoard.setEmpty(2, 2);
-                gamesBoard.setEmpty(2, 6);
+                gamesBoard.remove(2, 2);
+                gamesBoard.remove(2, 6);
 
                 gamesBoard.setNotAllowed(3, 1);
-                gamesBoard.setEmpty(3, 8);
+                gamesBoard.remove(3, 8);
 
                 gamesBoard.setNotAllowed(4, 0);
                 gamesBoard.setNotAllowed(4, 8);
 
-                gamesBoard.setEmpty(5, 0);
+                gamesBoard.remove(5, 0);
                 gamesBoard.setNotAllowed(5, 7);
 
-                gamesBoard.setEmpty(6, 2);
-                gamesBoard.setEmpty(6, 6);
+                gamesBoard.remove(6, 2);
+                gamesBoard.remove(6, 6);
 
                 gamesBoard.setNotAllowed(7, 3);
 
                 gamesBoard.setNotAllowed(8, 4);
-                gamesBoard.setEmpty(8, 5);
+                gamesBoard.remove(8, 5);
             }
             default -> {}
         }

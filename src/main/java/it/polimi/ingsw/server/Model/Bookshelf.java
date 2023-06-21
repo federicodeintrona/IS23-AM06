@@ -41,7 +41,7 @@ public class Bookshelf {
             num_of_tiles=0;
             for( int i=0; i<numberOfRows;i++){
                 for( int j=0; j<numberOfColumns;j++){
-                    tiles.setEmpty(i,j);
+                    tiles.remove(i,j);
                 }
 
             }
