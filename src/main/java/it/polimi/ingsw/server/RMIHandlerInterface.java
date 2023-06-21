@@ -18,5 +18,5 @@ public interface RMIHandlerInterface extends Remote {
     boolean pingPong() throws RemoteException;
     Message sendMessage (int gameId, String playerForwarding, String message) throws RemoteException;
     Message sendMessage (int gameId, String playerForwarding, String message, String playerReceiving) throws RemoteException;
-
+    void disconnect(String username) throws RemoteException;
 }

@@ -309,5 +309,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
     @Override
     public void closeProgram(Message closing) {
 
+
+
     }
 }

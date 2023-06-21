@@ -80,4 +80,9 @@ public class RMIHandler implements RMIHandlerInterface{
     public Message sendMessage(int gameId, String playerForwarding, String message, String playerReceiving) throws RemoteException {
         return controller.sendMessage(gameId, playerForwarding, message, playerReceiving);
     }
+
+    @Override
+    public void disconnect(String username) throws RemoteException {
+        controller.playerDisconnection(username);
+    }
 }
