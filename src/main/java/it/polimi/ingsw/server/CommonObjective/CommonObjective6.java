@@ -6,8 +6,14 @@ import it.polimi.ingsw.utils.Tiles;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that regulates the functioning of CommonObjective 6
+ */
 public class CommonObjective6 extends CommonObjective{
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective6() {
         this.setNum(6);
     }
@@ -45,15 +51,6 @@ public class CommonObjective6 extends CommonObjective{
         }
 
         // returning true only if it appears 8 or more times
-        if(maxCount > 7) return true;
-
-        return false;
+        return maxCount > 7;
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }

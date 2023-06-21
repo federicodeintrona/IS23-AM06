@@ -11,9 +11,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Class that regulates the functioning of CommonObjective 3
+ */
 public class CommonObjective3 extends CommonObjective{
 
-
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective3() {
         this.setNum(3);
     }
@@ -40,7 +45,7 @@ public class CommonObjective3 extends CommonObjective{
                     continue;
                 }
 
-                // Performing BFS (algoritmo di ricerca in ampiezza) on this node
+                // Performing BFS on this node
                 Queue<Point> queue = new LinkedList<>();
                 queue.add(new Point(i, j));
                 visited[i][j] = true;
@@ -107,11 +112,4 @@ public class CommonObjective3 extends CommonObjective{
 
         return adjacent;
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }

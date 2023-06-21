@@ -5,8 +5,14 @@ import it.polimi.ingsw.utils.Tiles;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class that regulates the functioning of CommonObjective 5
+ */
 public class CommonObjective5 extends CommonObjective{
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective5() {
         this.setNum(5);
     }
@@ -46,14 +52,6 @@ public class CommonObjective5 extends CommonObjective{
             }
             i++;
         }
-        if (count == 3) return true;
-        else return false;
+        return count == 3;
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }

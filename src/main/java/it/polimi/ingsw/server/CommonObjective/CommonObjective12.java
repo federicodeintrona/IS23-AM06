@@ -4,8 +4,14 @@ import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
+/**
+ * Class that regulates the functioning of CommonObjective 12
+ */
 public class CommonObjective12 extends CommonObjective{
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective12() {
         this.setNum(12);
     }
@@ -55,16 +61,13 @@ public class CommonObjective12 extends CommonObjective{
     }
 
     /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
-
-    /**
-     * Thread class:
-     * regulates the work of 6 threads each one
-     * dedicated to analyze one out of 6 possible diagonals
+     * <p>
+     *     Thread class:
+     * </p>
+     * <p>
+     *     regulates the work of 6 threads each one
+     *     dedicated to analyze one out of 6 possible diagonals
+     * </p>
      */
     private static class DiagonalAnalyzerThread extends Thread {
         Matrix matrix;
@@ -98,7 +101,7 @@ public class CommonObjective12 extends CommonObjective{
         }
 
         /**
-         * Helping method that returns the boolean areAllElementsEqual
+         * Method that returns the boolean areAllElementsEqual
          *
          * @return  areAllElementsEqual
          */
@@ -107,14 +110,18 @@ public class CommonObjective12 extends CommonObjective{
         }
 
         /**
-         * Thread's code: analyzes each element of the respective diagonal.
          * <p>
-         * Through an if-else construct decides if the
-         * diagonal to analyze is an inverse or not
+         *     Thread's code: analyzes each element of the respective diagonal.
+         * </p>
          * <p>
-         * It sets the areAllElementsEqual boolean to false in case its
-         * diagonal does not meet the criteria, else it calls the
-         * helping method stopOtherThreads() to end the other threads
+         *     Through an if-else construct decides if the
+         *     diagonal to analyze is an inverse or not
+         * </p>
+         * <p>
+         *     It sets the areAllElementsEqual boolean to false in case its
+         *     diagonal does not meet the criteria, else it calls the
+         *     helping method stopOtherThreads() to end the other threads
+         * </p>
          */
         @Override
         public void run() {
@@ -152,7 +159,7 @@ public class CommonObjective12 extends CommonObjective{
         }
 
         /**
-         * Helping method used to end all the threads
+         * Method used to end all the threads
          * except for the one who calls it
          */
         private void stopOtherThreads() {

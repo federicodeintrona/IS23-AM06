@@ -8,8 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that regulates the functioning of CommonObjective 4
+ */
 public class CommonObjective4 extends CommonObjective{
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective4() {
         this.setNum(4);
     }
@@ -34,22 +40,22 @@ public class CommonObjective4 extends CommonObjective{
             for (int j=0; j<4; j++){
 
                 //checking if first box of checking matrix 2x2 is EMPTY or visited
-                if (!matrix.getTile(0 + i, 0 + j).equals(Tiles.EMPTY) && !visited[0 + i][0 + j]){
-                    colors.add(matrix.getTile(0 + i, 0 + j));
-                    colors.add(matrix.getTile(0 + i, 1 + j));
-                    colors.add(matrix.getTile(1 + i, 0 + j));
+                if (!matrix.getTile(i, j).equals(Tiles.EMPTY) && !visited[i][j]){
+                    colors.add(matrix.getTile(i, j));
+                    colors.add(matrix.getTile(i, 1 + j));
+                    colors.add(matrix.getTile(1 + i, j));
                     colors.add(matrix.getTile(1 + i, 1 + j));
 
                     //checking if the matrix 2x2 has all same colors
                     if (checkColorBox(colors)){
 
                         //updating visited matrix
-                        visited[0 + i][0 + j] = true;
-                        visited[0 + i][1 + j] = true;
-                        visited[1 + i][0 + j] = true;
+                        visited[i][j] = true;
+                        visited[i][1 + j] = true;
+                        visited[1 + i][j] = true;
                         visited[1 + i][1 + j] = true;
 
-                        groupsPerColor.merge(colors.get(0), 1, (oldValue, value) -> oldValue + value);
+                        groupsPerColor.merge(colors.get(0), 1, Integer::sum);
                     }
 
                     colors.clear();
@@ -79,11 +85,4 @@ public class CommonObjective4 extends CommonObjective{
 
         return true;
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }

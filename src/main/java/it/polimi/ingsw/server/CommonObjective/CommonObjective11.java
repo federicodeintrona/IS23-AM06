@@ -6,8 +6,14 @@ import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 
+/**
+ * Class that regulates the functioning of CommonObjective 11
+ */
 public class CommonObjective11 extends CommonObjective{
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective11() {
         this.setNum(11);
     }
@@ -40,7 +46,7 @@ public class CommonObjective11 extends CommonObjective{
     }
 
     /**
-     * Helping method that returns true if the given point can make an x-shape,
+     * Method that returns true if the given point can make an x-shape,
      * with it in the center, of same colored tiles in the given matrix
      *
      * @param coordinate    point that has to be in the center of the x-shape
@@ -52,16 +58,7 @@ public class CommonObjective11 extends CommonObjective{
         int y = coordinate.y;
 
         // checking the 4 corners adjacent to coordinate
-        if ((matrix.getTile(x-1, y-1).equals(matrix.getTile(x, y))) && (matrix.getTile(x-1, y+1).equals(matrix.getTile(x, y))) && (matrix.getTile(x+1, y+1).equals(matrix.getTile(x, y))) && (matrix.getTile(x+1, y-1).equals(matrix.getTile(x, y)))) return true;
-
-        return false;
+        return (matrix.getTile(x - 1, y - 1).equals(matrix.getTile(x, y))) && (matrix.getTile(x - 1, y + 1).equals(matrix.getTile(x, y))) && (matrix.getTile(x + 1, y + 1).equals(matrix.getTile(x, y))) && (matrix.getTile(x + 1, y - 1).equals(matrix.getTile(x, y)));
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }
 
