@@ -83,6 +83,8 @@ public class Chat implements Serializable {
 
     public int getUnReadMessages() {return unReadMessages;}
 
+    public int getMaxNumberOfMessages() {return maxNumberOfMessages;}
+
     public boolean ChatIsEnable() {
         return chatIsEnable;
     }
