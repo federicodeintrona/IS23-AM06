@@ -16,10 +16,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * Abstract class
+ */
 public abstract class CommonObjective {
     public int points = 8;
     public Set<Player> playersWhoCompletedComObj = new HashSet<>();
-
     private int num;
 
 
@@ -66,6 +68,12 @@ public abstract class CommonObjective {
 
     public abstract boolean checkCondition(Player player);
 
+    /**
+     * Method to calculate the commonObjective points
+     *
+     * @param player    player whose bookshelf gets analyze
+     * @param numOfPlayers      number of player to assign points
+     */
     public  boolean commonObjPointsCalculator(Player player, int numOfPlayers){
 
         if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {

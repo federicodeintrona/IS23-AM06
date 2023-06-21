@@ -11,6 +11,9 @@ import java.util.Set;
  */
 public class CommonObjective9 extends CommonObjective{
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective9() {
         this.setNum(9);
     }
@@ -57,14 +60,6 @@ public class CommonObjective9 extends CommonObjective{
         }
 
         // returning true if there are at least 2 columns that meet the requirements
-        if (count == 2) return true;
-        else return false;
+        return count == 2;
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }

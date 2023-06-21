@@ -11,6 +11,9 @@ import java.util.Set;
  */
 public class CommonObjective8 extends CommonObjective{
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective8() {
         this.setNum(8);
     }
@@ -49,14 +52,6 @@ public class CommonObjective8 extends CommonObjective{
             }
             i++;
         }
-        if (count == 4) return true;
-        else return false;
+        return count == 4;
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }

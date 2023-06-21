@@ -13,6 +13,9 @@ import java.util.Set;
  */
 public class CommonObjective1 extends CommonObjective {
 
+    /**
+     * Sets the num variable of the CommonObjective
+     */
     public CommonObjective1() {
         this.setNum(1);
     }
@@ -53,35 +56,41 @@ public class CommonObjective1 extends CommonObjective {
 
         System.out.println(nodes.size() / 2);
         // the division by 2 of the set's size will give us the number of pair found in the bookshelf
-        if (nodes.size() / 2 > 5) return true;
-
-        return false;
+        return nodes.size() / 2 > 5;
     }
-
-    /**
-     * Method to calculate the commonObjective points
-     *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
-     */
 }
 
 /**
- * Threads: one to analyze the columns and one for the rows
+ * <p>
+ *     Thread class:
+ * </p>
+ * <p>
+ *     one to analyze the columns and one for the rows
+ * </p>
  */
 class MyRunnable implements Runnable {
-    private String name;
+    private final String name;
     private final Matrix matrix;
-    Set<Point> buffer;
+    final Set<Point> buffer;
     Point point1;
     Point point2;
 
+    /**
+     * Initializer for each thread
+     *
+     * @param name      thread's name
+     * @param matrix        player's bookshelf
+     * @param buffer        HashSet of points found
+     */
     public MyRunnable(String name, Matrix matrix, Set<Point> buffer) {
         this.name = name;
         this.matrix = matrix;
         this.buffer = buffer;
     }
 
+    /**
+     * Runnable
+     */
     public void run() {
 
         System.out.println("my runnable");
