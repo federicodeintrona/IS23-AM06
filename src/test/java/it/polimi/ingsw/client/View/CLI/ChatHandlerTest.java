@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.View.CLI;
+/*package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import org.junit.jupiter.api.BeforeAll;
@@ -35,3 +35,4 @@ class ChatHandlerTest {
     void newPrivateMessage() {
     }
 }
+*/

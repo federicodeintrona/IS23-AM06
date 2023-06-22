@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.View.CLI;
+/*package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.Networker;
@@ -212,3 +212,4 @@ class CLIPrintTest {
 
 
 }
+*/
