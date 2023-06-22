@@ -242,6 +242,7 @@ public class ReadShell extends Thread {
         System.out.print("Enter number of player: ");
         String num = readLine();
 
+        //TODO sistemare se num NON è un numero
         //set the number of players' message
         message.setText(cliMain.getClientState().getMyUsername());
         message.setNum(Integer.parseInt(num));
