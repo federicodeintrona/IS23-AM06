@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
-import it.polimi.ingsw.utils.ChatController;
-import it.polimi.ingsw.utils.Define;
-import it.polimi.ingsw.utils.Matrix;
-import it.polimi.ingsw.utils.Tiles;
+import it.polimi.ingsw.utils.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,7 +30,7 @@ import java.util.HashMap;
  *     <li>game status (waiting for other player, start of game, player turn, end game)</li>
  * </ul>
  */
-public class CLIPrint implements PropertyChangeListener {
+public class CLIPrint implements PropertyChangeListener, CliPrintBackBone {
 
     /**
      * Attribute used to retrieve CLI-side all the client information
@@ -629,6 +626,11 @@ public class CLIPrint implements PropertyChangeListener {
             System.out.println(ColorCLI.CLEAR);
             System.out.flush();
         }
+    }
+
+    @Override
+    public boolean isWorking() {
+        return false;
     }
 
     //TODO javadoc FLA

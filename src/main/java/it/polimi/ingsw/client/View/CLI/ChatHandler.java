@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.utils.ChatController;
+import it.polimi.ingsw.utils.CliMainBackbone;
+import it.polimi.ingsw.utils.CliPrintBackBone;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 
@@ -8,10 +10,10 @@ import java.util.Scanner;
 
 public class ChatHandler {
     private final ChatController chatController;
-    private final CLIMain cliMain;
-    private final CLIPrint cliPrint;
+    private final CliMainBackbone cliMain;
+    private final CliPrintBackBone cliPrint;
 
-    public ChatHandler(ChatController chatController, CLIMain cliMain, CLIPrint cliPrint) {
+    public ChatHandler(ChatController chatController, CliMainBackbone cliMain, CliPrintBackBone cliPrint) {
         this.chatController = chatController;
         this.cliPrint = cliPrint;
         this.cliMain = cliMain;
