@@ -33,6 +33,7 @@ public class Model implements TimerInterface {
     private Player currPlayer;
     private Player nextPlayer;
     private ArrayList<Tiles> selectedTiles = new ArrayList<>();
+    private ArrayList<Point> removedTilesCoord;
     private boolean isFinished = false;
     private int connectedPlayers;
     private final Chat publicChat = new Chat();
@@ -218,16 +219,16 @@ public class Model implements TimerInterface {
         Random rdm = new Random();
         int num;
 
-        for (Player player : players) {
+        for (int i = 0; i < players.size(); i++) {
             //check if there are NOT 2 equals PersonalObjective
 
             do {
                 //+1 because personal objective's number is between 1, 12
-                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI()) + 1;
+                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI())+1;
             } while (numbers.contains(num));
 
             numbers.add(num);
-            player.setPersonalObjective(new PersonalObjective(num));
+            players.get(i).setPersonalObjective(new PersonalObjective(num));
 
 
         }
@@ -255,6 +256,9 @@ public class Model implements TimerInterface {
 
         //Change game state
         state = GameState.CHOOSING_ORDER;
+
+        //Save removedTiles
+        removedTilesCoord = points;
 
         //Notify the views and add the removed tiles to the selectedTiles array
         for (Point point : points) {
@@ -568,8 +572,27 @@ public class Model implements TimerInterface {
 
        connectedPlayers--;
        if(connectedPlayers<=1&&!timerIsOn) startEndTimer();
-       if(player.equals(currPlayer)) nextTurn();
+       if(player.equals(currPlayer)){
+
+           if(state.equals(GameState.CHOOSING_ORDER)||state.equals(GameState.CHOOSING_COLUMN)){
+               restoreTiles();
+           }
+           nextTurn();
+       }
     }
+
+
+    /**
+     *  <p>Method to put back picked tiles in the board
+     *      if a player disconnects in the middle of his turn</p>
+     */
+    private void restoreTiles(){
+        for(int i = 0; i<selectedTiles.size();i++){
+            board.getGamesBoard().setTile(selectedTiles.get(i), removedTilesCoord.get(i));
+        }
+    }
+
+
 
 
     /**
@@ -962,7 +985,6 @@ public class Model implements TimerInterface {
     public ArrayList<Tiles> getSelectedTiles() {
         return selectedTiles;
     }
-
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
