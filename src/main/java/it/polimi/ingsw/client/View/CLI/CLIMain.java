@@ -139,14 +139,6 @@ public class CLIMain implements View {
         return net;
     }
 
-    /**
-     * Getter --> return if chat is open
-     *
-     * @return boolean &nbsp;&nbsp;&nbsp; is chat open?
-     */
-    public boolean isOpenChat() {
-        return openChat;
-    }
 
 
     /**
@@ -299,7 +291,15 @@ public class CLIMain implements View {
         Message msg = new Message();
         msg.setType(MessageTypes.DISCONNECT);
         net.closeProgram(msg);
+    }
 
+    /**
+     * Method to close the Client before creation of CLI-thread
+     */
+    public void closeClient(){
+        Message msg = new Message();
+        msg.setType(MessageTypes.DISCONNECT);
+        net.closeProgram(msg);
     }
 
 
