@@ -172,7 +172,8 @@ public class Lobby {
 
     }
     public synchronized void playerDisconnection(String username){
-        views.get(username).setDisconnected(true);
+        VirtualView view = views.get(username);
+        if (view!=null)views.get(username).setDisconnected(true);
 
         //If in a lobby remove him
         Integer lobbyID = playerToLobby.get(username);

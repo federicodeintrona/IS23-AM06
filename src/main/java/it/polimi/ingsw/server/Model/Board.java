@@ -42,7 +42,7 @@ public class Board {
      * <p>
      * <strong>REQUIRES:</strong> numberOfPlayer to be a number between 2 and 4
      *
-     * @param numberOfPlayer &nbsp;&nbsp;&nbsp; number of player
+     * @param numberOfPlayer number of player
      */
     public Board(int numberOfPlayer) {
         this.numberOfPlayer = numberOfPlayer;
@@ -396,7 +396,7 @@ public class Board {
      *     First of all remove all the remaining tiles and put them back in sachet,
      *     then refill the board with tiles in sachet
      * </p>
-     * <strong>REQUIRES:</strong> THAT checkBoardReset() return true
+     * <strong>REQUIRES:</strong> checkBoardReset() return true
      */
     public void boardResetENG(){
         //search tiles!=EMPTY && !=NOTALLOWED
