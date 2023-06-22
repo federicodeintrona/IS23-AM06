@@ -1,5 +1,8 @@
 package it.polimi.ingsw.utils;
 
+/**
+ * Enumeration which contains all constant number used in the programme
+ */
 public enum Define {
     NUMBEROFROWS_BOOKSHELF (6),
     NUMBEROFCOLUMNS_BOOKSHELF (5),
@@ -16,10 +19,19 @@ public enum Define {
 
 
     private final int i;
+
+    /**
+     * Initialize the definied number with the right number
+     * @param i the number to define
+     */
     Define(int i) {
         this.i=i;
     }
 
+    /**
+     * <strong>Getter</strong> -> Returns the corresponding content
+     * @return Content of the defined number
+     */
     public int getI() {
         return i;
     }
