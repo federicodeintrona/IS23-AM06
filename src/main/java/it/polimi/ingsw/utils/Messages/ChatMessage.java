@@ -2,7 +2,7 @@ package it.polimi.ingsw.utils.Messages;
 
 import java.io.Serializable;
 /**
- * <p> Class for message sent by client and server used for chat</p>
+ * <p>Class for message sent by client and server used for chat</p>
  */
 public class ChatMessage extends Message implements Serializable {
     String message;
