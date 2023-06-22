@@ -34,7 +34,7 @@ class ModelTest {
             players.add(p2);
 
             views.add(new RMIVirtualView("p0", new ClientState("p0",new Object())));
-            views.add(new RMIVirtualView("p0", new ClientState("p1",new Object())));
+            views.add(new RMIVirtualView("p1", new ClientState("p1",new Object())));
             views.add(new RMIVirtualView("p2", new ClientState("p2",new Object())));
 
             m = new Model(players,views);
@@ -149,16 +149,16 @@ class ModelTest {
     @Test
     void gameTest(){
         try {
-        //player 0's turn
-        ArrayList<Point> remove = new ArrayList<>();
-        remove.add(new Point(0,3));
-        remove.add(new Point(1,3));
-        ArrayList<Tiles> add = new ArrayList<>();
-        for (Point point : remove) {
-            add.add(m.getBoard().getGamesBoard().getTile(point));
-        }
+            //player 0's turn
+            ArrayList<Point> remove = new ArrayList<>();
+            remove.add(new Point(0,3));
+            remove.add(new Point(1,3));
+            ArrayList<Tiles> add = new ArrayList<>();
+            for (Point point : remove) {
+                add.add(m.getBoard().getGamesBoard().getTile(point));
+            }
 
-        m.setSelectedTiles(add);
+            m.setSelectedTiles(add);
 
 
             m.removeTileArray(players.get(0), remove);
@@ -235,6 +235,29 @@ class ModelTest {
             System.out.println("End game test catch: non succederà mai spero...");
 
         }
+
+    }
+
+
+    @Test
+    void restoreTiles(){
+        try {
+
+            ArrayList<Point> remove = new ArrayList<>();
+            remove.add(new Point(5,0));
+            remove.add(new Point(5,1));
+
+            m.removeTileArray(m.getCurrPlayer(),remove);
+            assertEquals(Tiles.EMPTY,m.getBoard().getGamesBoard().getTile(5,0));
+            m.disconnectPlayer(m.getCurrPlayer(),views.get(0));
+            assertNotEquals(Tiles.EMPTY,m.getBoard().getGamesBoard().getTile(5,0));
+
+        } catch (MoveNotPossible e) {
+            System.out.println("ollare");
+        }
+
+
+
 
     }
 
