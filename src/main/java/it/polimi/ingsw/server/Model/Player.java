@@ -67,6 +67,7 @@ public class Player {
     }
     /**
      * <strong>Setter</strong> -> sets common objective points of the player
+     * @param commonObjectivePoint common objective points of the player
      */
 
     public void setCommonObjectivePoint(int commonObjectivePoint) {
@@ -84,6 +85,7 @@ public class Player {
 
     /**
      * <strong>Setter</strong> -> sets personal objective points of the player
+     * @param personalObjectivePoint personal objective points of the player
      */
     public void setPersonalObjectivePoint(int personalObjectivePoint) {
         this.personalObjectivePoint = personalObjectivePoint;
@@ -92,6 +94,7 @@ public class Player {
 
     /**
      * <strong>Setter</strong> -> sets vicinity points of the player
+     * @param vicinityPoint vicinity points of the player
      */
     public void setVicinityPoint(int vicinityPoint) {
         this.vicinityPoint = vicinityPoint;
@@ -108,6 +111,7 @@ public class Player {
     }
     /**
      * <strong>Setter</strong> -> sets personal objective of the player
+     * @param personalObjective personal objective of the player
      */
 
     public void setPersonalObjective(PersonalObjective personalObjective) {
@@ -116,6 +120,7 @@ public class Player {
 
     /**
      * <strong>Setter</strong> -> sets winner points of the player
+     * @param winnerPoint winner point
      */
 
     public void setWinnerPoint(int winnerPoint) {
@@ -151,6 +156,7 @@ public class Player {
     }
     /**
      * <strong>Setter</strong> -> sets the flag disconnected
+     * @param disconnected flag disconnected
      */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;

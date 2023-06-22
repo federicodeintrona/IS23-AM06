@@ -54,6 +54,7 @@ public class Bookshelf {
 
     /**
      * Method to check if the column given is full of tiles
+     * <p><strong>REQUIRES:</strong> choice between 1 and 6 AND column between 0 and 4</p>
      * @param choice number of tiles chosen
      * @param column index of the colum chosen
      * @return true if the column is full, false if it isn't

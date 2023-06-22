@@ -12,12 +12,13 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 public class Server extends UnicastRemoteObject {
-    private JsonReader config;
+
     private static int tcpPort;
     private static int rmiPort;
 
@@ -28,6 +29,7 @@ public class Server extends UnicastRemoteObject {
 
     protected Server() throws IOException, ParseException{
         super();
+        JsonReader config;
         InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
         config = new JsonReader(is);
 
@@ -36,9 +38,9 @@ public class Server extends UnicastRemoteObject {
     }
 
     public static void main( String[] args ) throws RemoteException {
-        Server EchoServer = null;
+        Server Server;
         try {
-            EchoServer = new Server();
+            Server = new Server();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
@@ -46,7 +48,7 @@ public class Server extends UnicastRemoteObject {
         }
 
         try {
-            EchoServer.startServer();
+            Server.startServer();
         }
         catch (IOException e){
             System.err.println(e.getMessage());
@@ -69,7 +71,7 @@ public class Server extends UnicastRemoteObject {
 
         // Preparing for the RMI connections
         System.out.println(getLocalIPAddress());
-        System.setProperty("java.rmi.server.hostname", getLocalIPAddress());
+        System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(getLocalIPAddress()));
         RMIHandlerInterface stub = null;
         try {
             stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
@@ -84,6 +86,7 @@ public class Server extends UnicastRemoteObject {
             e.printStackTrace();
         }
         try {
+            assert registry != null;
             registry.bind("RMIHandler", stub);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -102,13 +105,6 @@ public class Server extends UnicastRemoteObject {
             }
         }
         executor.shutdown();
-    }
-
-    public static ArrayList<ServerClientHandler> getClientList() {
-        return clientList;
-    }
-    public void removeClient(ServerClientHandler client){
-        clientList.remove(client);
     }
 
     public static String getLocalIPAddress() throws SocketException {
