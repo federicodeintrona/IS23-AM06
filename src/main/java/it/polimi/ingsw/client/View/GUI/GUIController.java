@@ -27,16 +27,36 @@ import java.util.Objects;
  * </ul>
  */
 public class GUIController implements View, SceneController {
+
+    /**
+     * Attribute that instance the stage
+     */
     private  Stage stage;
+    /**
+     * Attribute that instance the current scene
+     */
     private  Scene scene;
+    /**
+     * Attribute that instance the root
+     */
     private  Parent root;
+
+    /**
+     * Attribute that instantiates the correct Networker to send and receive messages from
+     */
     private  Networker networker;
+    /**
+     * Attribute that instance the correct ClientState
+     */
     private final ClientState state;
+    /**
+     * Attribute used to know which scene controller is currently instantiated
+     */
     private SceneController sceneController;
 
 
 
-    //TODO and... addListener FLA
+    //TODO and... addListener cosa fanno - FLA...
     /**
      * Initialize the ClientState and
      *
@@ -47,6 +67,7 @@ public class GUIController implements View, SceneController {
         state.addListener(this,"start");
         state.addListener(this,"end");
     }
+
 
 
     /**
@@ -66,6 +87,7 @@ public class GUIController implements View, SceneController {
     public Stage getStage() {
         return stage;
     }
+
 
 
     /**
@@ -115,9 +137,11 @@ public class GUIController implements View, SceneController {
 
 
 
-    //TODO finire javadoc
-    //invia i messaggi dal client al server
-    //client -> networker -> server
+    /**
+     * Method to send the message to the server
+     *
+     * @param message the message to send to the server
+     */
     public void sendMessage(Message message){
         switch (message.getType()){
             case REMOVE_FROM_BOARD -> networker.removeTilesFromBoard(message);
@@ -129,9 +153,11 @@ public class GUIController implements View, SceneController {
         }
     }
 
-
-    //riceve i messaggi dal server
-    //server -> networker -> client
+    /**
+     * Method to receive the message from the server
+     *
+     * @param message the message received from the server
+     */
     @Override
     public void receivedMessage(Message message) {
         switch (message.getType()){
@@ -143,6 +169,26 @@ public class GUIController implements View, SceneController {
         }
     }
 
+    /**
+     * Method for managing scene change
+     *
+     * @param scenes the scene to be shown now
+     */
+    public void changeScene(Scenes scenes){
+        Platform.runLater(()->{
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scenes.getName())));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            this.scene.setRoot(root);
+            stage.setTitle(scenes.getTitle());
+        });
+    }
+
+    /**
+     * Method to close the Graphic User Interface
+     */
     @Override
     public void close() {
         Message msg = new Message();
@@ -151,12 +197,23 @@ public class GUIController implements View, SceneController {
         else System.exit(0);
     }
 
-    //mostra gli errori che arrivano dal server
+    /**
+     * Method to show all the error received from server
+     *
+     * @param message the error message received from the server
+     */
     private void showError(Message message){
         Platform.runLater(()-> sceneController.showError(message.getText(),stage));
     }
 
-    //Qui arrivano le notifiche dal client state
+
+
+    //TODO cosa scrivo
+    /**
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
@@ -170,22 +227,5 @@ public class GUIController implements View, SceneController {
             default -> throw new IllegalStateException("Unexpected value: " + evt.getPropertyName());
         }
     }
-
-
-    //si occupa del cambiamento di scena
-    public void changeScene(Scenes scenes){
-        Platform.runLater(()->{
-            try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scenes.getName())));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            this.scene.setRoot(root);
-            stage.setTitle(scenes.getTitle());
-        });
-    }
-
-
-
 
 }
