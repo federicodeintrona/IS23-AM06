@@ -32,7 +32,6 @@ public class RMIVirtualView extends VirtualView{
 
         if(!isDisconnected()) {
 
-            System.out.println(getUsername()+" RMI virtual view is on: " + evt.getNewValue());
             try {
                 switch ((String) evt.getNewValue()) {
                     case ("playerNames") -> clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));

@@ -162,8 +162,9 @@ public class Lobby {
             disconnectedPlayers.remove(s);
             players.remove(s);
             playerToGame.remove(s);
-            views.remove(s);
             views.get(s).setDisconnected(true);
+            views.remove(s);
+
         }
 
         //Remove the model

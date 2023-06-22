@@ -20,8 +20,6 @@ public class Controller implements PropertyChangeListener {
     private Lobby lobby;
     private  HashMap<String, Player> players;
     private  HashMap<Integer,Model> games;
-    private  HashMap<String ,Integer> playerToGame;
-    private  HashMap<String, VirtualView> views;
 
 
 
@@ -31,11 +29,11 @@ public class Controller implements PropertyChangeListener {
      */
     public Controller(Lobby mainLobby) {
         lobby = mainLobby;
-        this.playerToGame=lobby.getPlayerToGame();
     }
 
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
         lobby=new Lobby(models,playerMap);
+        lobby.setController(this);
         games = models;
         players = playerMap;
     }
@@ -57,7 +55,6 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message addToBookshelf(int gameID, String playerID, int col ){
-        System.out.println("Controller: add to game " + gameID + " by " + playerID + " in column number " + col);
         Message reply = new Message();
 
         try {
@@ -98,7 +95,6 @@ public class Controller implements PropertyChangeListener {
      */
     public Message swapOrder(ArrayList<Integer> ints, int gameID, String playerID){
 
-        System.out.println("Controller: swap in game: " + gameID + " by " + playerID);
         Message reply = new Message();
 
         try {
@@ -115,7 +111,7 @@ public class Controller implements PropertyChangeListener {
 
         }catch (TooManySelected e) {
             reply.setType(MessageTypes.ERROR);
-            reply.setText("Incorrect number of orders ");
+            reply.setText("Incorrect number of orders");
 
         }catch (MoveNotPossible e) {
             reply.setType(MessageTypes.ERROR);
@@ -135,7 +131,6 @@ public class Controller implements PropertyChangeListener {
      * @return The reply to be sent to the client
      */
     public Message removeTiles(int gameID,String playerID, ArrayList<Point> points){
-        System.out.println("Controller: remove from game: " + gameID + " by " + playerID + " in " + points);
         Message reply = new Message();
 
 

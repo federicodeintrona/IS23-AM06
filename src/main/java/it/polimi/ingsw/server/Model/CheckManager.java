@@ -90,7 +90,8 @@ public class CheckManager {
      */
     private void checkPointArrayDomain(ArrayList<Point> points,Board board) throws MoveNotPossible, IllegalArgumentException {
         //check if the array is not null
-        if(points!=null ){
+        if(points!=null&&points.size()>=0 ){
+
             //check the length of the array
             if(points.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
 
@@ -101,13 +102,14 @@ public class CheckManager {
              //check if the tiles are adjacent
             if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
 
-            //check if tiles are pickable
-            if(!board.tilesArePickable(points)) throw  new TilesCannotBeSelected();
-
             //Check if the selected tiles are allowed and not empty
             for(Point p : points){
                 checkBoardDomain(p,board);
             }
+            //check if tiles are pickable
+            if(!board.tilesArePickable(points)) throw  new TilesCannotBeSelected();
+
+
         }
         else throw new IllegalArgumentException();
     }
@@ -211,7 +213,7 @@ public class CheckManager {
      */
     private void intsCheck(ArrayList<Integer> ints) throws IllegalArgumentException, TooManySelected {
         //Checks if the swap array is the same size as the selectedTiles array
-        if(ints.size()!=selectedTiles.size()) throw new TooManySelected();
+        if(ints.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
         //Checks that the integer is between 0 and the array size
         for(Integer i : ints){
             if( i<1 || i>ints.size()) throw new IllegalArgumentException();

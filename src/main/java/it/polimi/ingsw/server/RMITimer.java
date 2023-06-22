@@ -17,7 +17,7 @@ public class RMITimer implements TimerInterface {
     private String username;
     private final RMIVirtualView view;
     private final Controller controller;
-    private final Timer timer = new Timer();
+    private Timer timer;
     private int time = 0;
     private static final int initialDelay = 50;
     private static final int delta = 2000;
@@ -67,6 +67,7 @@ public class RMITimer implements TimerInterface {
         },50,1000, TimeUnit.MILLISECONDS);
 
         TimerTask task = new TimerCounter(this);
+        timer=new Timer();
         timer.schedule(task, initialDelay, delta);
 
     }
