@@ -195,6 +195,10 @@ public class ReadShell extends Thread {
             case "#privatechat" ->
                 //enter in private chat and print it
                 cliMain.getChatHandler().settingForPrivateChat();
+            //#quit command
+            case "#quit", "#q" ->
+                //close the client on CLI
+                cliMain.close();
             default ->
                 //you do not insert a valid command
                 System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
