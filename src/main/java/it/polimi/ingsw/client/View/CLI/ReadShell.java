@@ -188,13 +188,17 @@ public class ReadShell extends Thread {
                 //print who is the first player to start the game
                 cliMain.getCliPrint().printChair();
             //#chat command
-            case "#chat" ->
+            case "#chat" ->{
                 //enter in public chat and print it
+                cliMain.setOpenChat(true);
                 cliMain.getChatHandler().settingForPublicChat();
+            }
             //#privatechat command
-            case "#privatechat" ->
+            case "#privatechat" -> {
                 //enter in private chat and print it
+                cliMain.setOpenChat(true);
                 cliMain.getChatHandler().settingForPrivateChat();
+            }
             default ->
                 //you do not insert a valid command
                 System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
