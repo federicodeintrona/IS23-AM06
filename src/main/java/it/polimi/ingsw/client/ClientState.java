@@ -1,10 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.utils.Chat;
-import it.polimi.ingsw.utils.ChatController;
+import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
-import it.polimi.ingsw.utils.Matrix;
-import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -18,8 +15,8 @@ import java.util.List;
 
 //salva i dati che arrivano dal server per poi mostrarli al client
 public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
-    private PropertyChangeSupport notifier = new PropertyChangeSupport(this);
-    private Object viewLock; //TODO da fare final
+    private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
+    private final Object viewLock; //TODO da fare final
     private String myUsername;
     private ArrayList<String> allUsername;
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
@@ -140,26 +137,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
     }
 
-    public void setMyBookshelf(Matrix myBookshelf) {
-        synchronized (viewLock){
-            this.myBookshelf = myBookshelf;
-        }
-    }
-    public Matrix setBookshelf(String username){
-        synchronized (viewLock){
-            return allBookshelf.get(username);
-        }
-    }
-
     public HashMap<String, Matrix> getAllBookshelf() {
         synchronized (viewLock){
             return allBookshelf;
-        }
-    }
-
-    public void setAllBookshelf(HashMap<String, Matrix> allBookshelf) {
-        synchronized (viewLock){
-            this.allBookshelf = allBookshelf;
         }
     }
 
@@ -191,12 +171,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public HashMap<String, Integer> getAllPublicPoints() {
         synchronized (viewLock) {
             return allPublicPoints;
-        }
-    }
-
-    public void setAllPublicPoints(HashMap<String, Integer> allPublicPoints) {
-        synchronized (viewLock) {
-            this.allPublicPoints = allPublicPoints;
         }
     }
 
@@ -382,6 +356,17 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void setOldCommonObjectivePoints(ArrayList<Integer> oldCommonObjectivePoints) {
         synchronized (viewLock) {
             this.oldCommonObjectivePoints = oldCommonObjectivePoints;
+        }
+    }
+    public ArrayList<Integer> checkFreeColumn(int numTilesSelected){
+        synchronized (viewLock) {
+            ArrayList<Integer> list=null;
+            for (int i=0;i< Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();i++) {
+                if (myBookshelf.getTile(6 - numTilesSelected, i)==Tiles.EMPTY){
+                    list.add(i);
+                }
+            }
+            return list;
         }
     }
 }
