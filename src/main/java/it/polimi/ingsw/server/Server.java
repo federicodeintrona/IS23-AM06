@@ -16,7 +16,6 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 public class Server extends UnicastRemoteObject {
 
     private static int tcpPort;
