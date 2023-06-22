@@ -16,6 +16,16 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Class to manage the GUI
+ * <ul>
+ *     <li>start the GUI</li>
+ *     <li>close the GUI</li>
+ *     <li>change GUI's scene</li>
+ *     <li>send message to the server</li>
+ *     <li>received message from the server</li>
+ * </ul>
+ */
 public class GUIController implements View, SceneController {
     private  Stage stage;
     private  Scene scene;
@@ -25,17 +35,87 @@ public class GUIController implements View, SceneController {
     private SceneController sceneController;
 
 
-    public ClientState getState() {
-        return state;
-    }
 
-
-    public GUIController( ClientState state) {
+    //TODO and... addListener FLA
+    /**
+     * Initialize the ClientState and
+     *
+     * @param state the reference ClientState
+     */
+    public GUIController(ClientState state) {
         this.state=state;
         state.addListener(this,"start");
         state.addListener(this,"end");
     }
 
+
+    /**
+     * <strong>Getter</strong> -> Returns the ClientState
+     *
+     * @return the ClientState
+     */
+    public ClientState getState() {
+        return state;
+    }
+
+    /**
+     * <strong>Getter</strong> -> Returns the Stage
+     *
+     * @return the Stage
+     */
+    public Stage getStage() {
+        return stage;
+    }
+
+
+    /**
+     * <strong>Setter</strong> -> Sets the current SceneController
+     *
+     * @param sceneController the current SceneController
+     */
+    public void setSceneController(SceneController sceneController) {
+        this.sceneController = sceneController;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the Stage where to show the Scene
+     *
+     * @param stage the Stage
+     */
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the current Scene shown
+     *
+     * @param scene the current Scene shown
+     */
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the Root
+     *
+     * @param root the Root
+     */
+    public void setRoot(Parent root) {
+        this.root = root;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the Networker (RMI or TCP) to which to send messages and from which to receive server messages
+     *
+     * @param networker the correct Networker (RMI or TCP)
+     */
+    public void setNetworker(Networker networker) {
+        this.networker = networker;
+    }
+
+
+
+    //TODO finire javadoc
     //invia i messaggi dal client al server
     //client -> networker -> server
     public void sendMessage(Message message){
@@ -107,31 +187,5 @@ public class GUIController implements View, SceneController {
 
 
 
-    public void setSceneController(SceneController sceneController) {
-        this.sceneController = sceneController;
-    }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public void setNetworker(Networker networker) {
-        this.networker = networker;
-    }
 }
