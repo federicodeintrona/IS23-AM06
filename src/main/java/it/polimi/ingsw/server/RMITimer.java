@@ -14,17 +14,17 @@ import java.util.concurrent.TimeUnit;
 public class RMITimer implements TimerInterface {
     private boolean disconnected = false;
     private ScheduledExecutorService e;
-    private String username;
     private final RMIVirtualView view;
     private final Controller controller;
     private Timer timer;
+    private final TimerTask task = new TimerCounter(this);
     private int time = 0;
     private static final int initialDelay = 50;
-    private static final int delta = 2000;
+    private static final int delta = 500;
 
 
-    public RMITimer(String username, RMIVirtualView view, Controller controller) {
-        this.username = username;
+
+    public RMITimer( RMIVirtualView view, Controller controller) {
         this.view = view;
         this.controller=controller;
     }
@@ -35,8 +35,8 @@ public class RMITimer implements TimerInterface {
         e.shutdown();
         timer.cancel();
         disconnected=true;
-        if(username!=null){
-            controller.playerDisconnection(username);
+        if(view.getUsername()!=null){
+            controller.playerDisconnection(view.getUsername());
         }else System.out.println("A client has disconnected before having successfully logged in");
 
     }
@@ -61,23 +61,34 @@ public class RMITimer implements TimerInterface {
                 }
             } catch (RemoteException ex) {
                 if(!disconnected)
-                  System.out.println(username + " is not responding...");
+                  System.out.println(view.getUsername() + " is not responding...");
             }
 
-        },50,1000, TimeUnit.MILLISECONDS);
+        },50,500, TimeUnit.MILLISECONDS);
 
-        TimerTask task = new TimerCounter(this);
-        timer=new Timer();
-        timer.schedule(task, initialDelay, delta);
+        startTimer();
 
     }
+
+    public void stopTimer(){
+        timer.cancel();
+        e.shutdown();
+    }
+
+    public void startTimer(){
+        if(timer!=null)
+            timer.cancel();
+
+        timer = new Timer();
+        timer.schedule(task, initialDelay, delta);
+    }
+
+
 
 
     public String getErrorMessage() {
-        return username+" timed out";
+        return view.getUsername()+" timed out";
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
 }

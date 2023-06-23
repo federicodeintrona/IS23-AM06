@@ -85,10 +85,10 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         try {
             oos.writeObject(closing);
             oos.flush();
-            reader.disconnect();
+            reader.disconnection();
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
+            reader.disconnection();
         }
     }
 
@@ -132,7 +132,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.flush();
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
     }
 
@@ -171,7 +170,9 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        view.receivedMessage((Message) evt.getNewValue());
+        if(evt.getPropertyName().equals("disconnect")){
+            view.close();
+        }else view.receivedMessage((Message) evt.getNewValue());
     }
 
     /**

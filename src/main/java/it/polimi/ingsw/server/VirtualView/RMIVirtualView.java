@@ -1,22 +1,25 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
+import it.polimi.ingsw.server.RMITimer;
 import it.polimi.ingsw.utils.ChatController;
-import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Tiles;
-
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class RMIVirtualView extends VirtualView{
+public class RMIVirtualView implements VirtualView{
 
     private ClientStateRemoteInterface clientState;
+    private RMITimer timer;
+
+    private String username;
+    private boolean disconnected = false;
 
     public RMIVirtualView(String username, ClientStateRemoteInterface clientState) {
         this.setUsername(username);
@@ -26,6 +29,7 @@ public class RMIVirtualView extends VirtualView{
     public RMIVirtualView(String username) {
         this.setUsername(username);
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -100,5 +104,34 @@ public class RMIVirtualView extends VirtualView{
     public ClientStateRemoteInterface getClientState() {
         return clientState;
     }
+
+    public void setTimer(RMITimer timer) {
+        this.timer = timer;
+    }
+
+    public void stopTimer(){
+        if(timer!=null){
+            timer.stopTimer();
+        }
+    }
+
+
+    public boolean isDisconnected() {
+        return disconnected;
+    }
+
+    public void setDisconnected(boolean disconnected) {
+        this.disconnected = disconnected;
+        stopTimer();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
 }

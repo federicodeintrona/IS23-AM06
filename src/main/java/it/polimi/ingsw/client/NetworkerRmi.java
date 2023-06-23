@@ -33,9 +33,10 @@ public class NetworkerRmi implements Networker, TimerInterface {
     private final ClientState clientState;
     private View view;
 
+    private boolean ponging = true;
     private int time = 0;
     private static final int initialDelay = 50;
-    private static final int delta = 2000;
+    private static final int delta = 1000;
     private boolean disconnected=false;
 
 
@@ -190,7 +191,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
             view.receivedMessage(message);
         } catch (RemoteException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
     }
 
@@ -279,8 +279,10 @@ public class NetworkerRmi implements Networker, TimerInterface {
                     this.time=0;
                 }
             } catch (RemoteException ex) {
-                if(!disconnected)
-                    System.out.println(username + " is not responding...");
+                if(ponging&&!disconnected) {
+                    System.out.println("Server is not responding...");
+                    ponging=false;
+                }
             }
 
         },10,1000, TimeUnit.MILLISECONDS);
@@ -293,9 +295,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
     @Override
     public void disconnect() {
-
         disconnected=true;
-
+        view.close();
     }
 
     @Override
@@ -335,12 +336,14 @@ public class NetworkerRmi implements Networker, TimerInterface {
     @Override
     public void closeProgram(Message closing) {
 
-        try {
-            rmiHandler.disconnect(username);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        if(!disconnected) {
+            try {
+                rmiHandler.disconnect(username);
+            } catch (RemoteException e) {
+                System.out.println("Server is not responding...");
 
+            }
+        }
         System.out.println("Client disconnecting...");
         System.exit(0);
     }

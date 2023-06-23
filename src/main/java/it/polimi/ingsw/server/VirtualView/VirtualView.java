@@ -8,24 +8,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public abstract class VirtualView implements PropertyChangeListener {
+public interface VirtualView extends PropertyChangeListener {
 
-    private String username;
-    private boolean disconnected = false;
-
-    public boolean isDisconnected() {
-        return disconnected;
-    }
-
-    public void setDisconnected(boolean disconnected) {
-        this.disconnected = disconnected;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+     boolean isDisconnected();
+     void setDisconnected(boolean disconnected);
+    String getUsername();
+     void setUsername(String username);
 }

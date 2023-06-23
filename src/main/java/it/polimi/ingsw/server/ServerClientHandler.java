@@ -26,7 +26,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private boolean disconnected = false;
     //Timer
     private ScheduledExecutorService e;
-    private final Timer timer = new Timer();
+    private Timer timer;
     private static final int initialDelay = 50;
     private static final int delta = 500;
     private int time = 0;
@@ -141,6 +141,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
              sendMessage(msg);
         },10,500, TimeUnit.MILLISECONDS);
 
+        timer = new Timer();
         timer.schedule(new TimerCounter(this), initialDelay, delta);
 
     }

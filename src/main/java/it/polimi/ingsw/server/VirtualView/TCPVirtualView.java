@@ -6,10 +6,11 @@ import it.polimi.ingsw.utils.Messages.ViewMessage;
 
 import java.beans.PropertyChangeEvent;
 
-public class TCPVirtualView extends VirtualView{
+public class TCPVirtualView implements VirtualView{
 
     private final ServerClientHandler client;
-
+    private String username;
+    private boolean disconnected = false;
 
     public TCPVirtualView(String username,ServerClientHandler handler) {
         setUsername(username);
@@ -49,5 +50,23 @@ public class TCPVirtualView extends VirtualView{
             client.sendMessage(viewMsg);
         }
     }
+
+
+    public boolean isDisconnected() {
+        return disconnected;
+    }
+
+    public void setDisconnected(boolean disconnected) {
+        this.disconnected = disconnected;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
 }
