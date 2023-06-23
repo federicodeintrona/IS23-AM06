@@ -35,9 +35,13 @@ public class InitialRequestController implements SceneController, Initializable 
     private TextField hostField;
     @FXML
     private Button hostButton;
+    @FXML
+    private Label requestLabel1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        requestLabel1.setText("Which connection protocol do you choose?");
         guiController.setSceneController(this);
 
         hostField.setPromptText("127.0.0.1");
@@ -53,6 +57,7 @@ public class InitialRequestController implements SceneController, Initializable 
     }
 
     private void showHost(){
+        requestLabel1.setText("Which server IP do you use?");
         RMIButton.setDisable(true);
         RMIButton.setVisible(false);
 
@@ -69,6 +74,7 @@ public class InitialRequestController implements SceneController, Initializable 
     @FXML
     private void TCPClick(ActionEvent event){
         connectionType="TCP";
+
 
         showHost();
     }

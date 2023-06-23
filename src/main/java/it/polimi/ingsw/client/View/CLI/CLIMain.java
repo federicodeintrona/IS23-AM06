@@ -188,7 +188,7 @@ public class CLIMain implements View {
         //choice the host
         //prompt if the user has entered an incorrect host - can't reach the server
         do {
-            System.out.print("Which host do you use? ");
+            System.out.print("Which server IP do you use? ");
             String host = scanner.nextLine();
             host=host.toLowerCase();
             if(host.equals("#quit") || host.equals("#q")){
