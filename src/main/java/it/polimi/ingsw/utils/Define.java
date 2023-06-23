@@ -4,6 +4,7 @@ package it.polimi.ingsw.utils;
  * Enumeration which contains all constant number used in the programme
  */
 public enum Define {
+
     NUMBEROFROWS_BOOKSHELF (6),
     NUMBEROFCOLUMNS_BOOKSHELF (5),
     MAXNUMBEROFTILES_BOOKSHELF (NUMBEROFROWS_BOOKSHELF.i*NUMBEROFCOLUMNS_BOOKSHELF.i),
@@ -18,18 +19,28 @@ public enum Define {
     NUMBEROFTILEIMAGES(3);
 
 
-    private final int i;
 
     /**
-     * Initialize the definied number with the right number
+     * the constant number
+     */
+    private final int i;
+
+
+
+    /**
+     * Initialize the defined number with the right number
+     *
      * @param i the number to define
      */
     Define(int i) {
         this.i=i;
     }
 
+
+
     /**
      * <strong>Getter</strong> -> Returns the corresponding content
+     *
      * @return Content of the defined number
      */
     public int getI() {
@@ -37,4 +48,3 @@ public enum Define {
     }
 }
 
-//todo javadoc

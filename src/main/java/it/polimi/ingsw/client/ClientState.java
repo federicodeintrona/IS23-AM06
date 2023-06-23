@@ -13,42 +13,120 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//salva i dati che arrivano dal server per poi mostrarli al client
+/**
+ * Class to save all the reference client's information received from the server (one ClientState for each instance Client)
+ * <ul>
+ *     <li>all players' username</li>
+ *     <li>board</li>
+ *     <li>all players' bookshelf</li>
+ *     <li>client personal objective</li>
+ *     <li>game common objective</li>
+ *     <li>which player has the chair (which one is the first player)</li>
+ *     <li>all player's points</li>
+ *     <li>current and next player to play</li>
+ *     <li>winner player</li>
+ * </ul>
+ */
 public class ClientState extends UnicastRemoteObject implements ClientStateRemoteInterface{
+
+    /**
+     * Notify the Client of the change
+     */
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
-    private final Object viewLock; //TODO da fare final
+    /**
+     * The object to lock all the get and set update
+     */
+    private final Object viewLock;
+    /**
+     * Client's username
+     */
     private String myUsername;
+    /**
+     * All players' username - contains also my username
+     */
     private ArrayList<String> allUsername;
+    /**
+     * My personal objective - the card
+     */
     private HashMap<Point, Tiles> myPersonalObjective = new HashMap<>();
+    /**
+     * My personal objective - the number
+     */
     private int myPersonalObjectiveInt;
+    /**
+     * Game's common objective - the number of two common objective in the game
+     */
     private ArrayList<Integer> gameCommonObjective;
+    /**
+     * Actual common objective points - the first one is associated with the first one of gameCommonObjective and the second also
+     */
     private ArrayList<Integer> commonObjectivePoints;
+    /**
+     * Old common objective points - the points before the actual update
+     */
     private ArrayList<Integer> oldCommonObjectivePoints;
+    /**
+     * Board
+     */
     private Matrix board;
+    /**
+     * Client's bookshelf
+     */
     private Matrix myBookshelf;
+    /**
+     * All bookshelf - my bookshelf is not contains
+     */
     private final HashMap<String, Matrix> allBookshelf = new HashMap<>();
+    /**
+     * Client's points - common + private points
+     */
     private Integer myPoints;
+    /**
+     * All players' public points - my public points are contains
+     */
     private final HashMap<String, Integer> allPublicPoints= new HashMap<>();
+    /**
+     * The selected tiles
+     */
     private ArrayList<Tiles> selectedTiles;
+    /**
+     * The current player to play
+     */
     private String currentPlayer;
+    /**
+     * The next player to play
+     */
     private String nextPlayer;
+    /**
+     * The player who won
+     */
     private String winnerPlayer;
+    /**
+     * The player who won - he wins because all the other players disconnected
+     */
     private boolean disconnectionWinner;
+    /**
+     * The game has started
+     */
     private boolean gameHasStarted=false;
+    /**
+     * The game is ended
+     */
     private boolean gameIsEnded=false;
+    /**
+     * We are in waiting for the other player
+     */
     private boolean waiting=false;
+    /**
+     * Which player has the chair
+     */
     private String chair;
+    /**
+     * The chat controller
+     */
     private ChatController chatController = new ChatController();
 
-    private boolean username=true;
 
-    public boolean isUsername() {
-        return username;
-    }
-
-    public void setUsername(boolean username) {
-        this.username = username;
-    }
 
     public ClientState(Object viewLock) throws RemoteException {
         super();
@@ -84,7 +162,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             this.allUsername = allUsername;
         }
 
-        // Initializing for each player a particular version of ChatController specifically designed for Server
+        //Initializing for each player a particular version of ChatController specifically designed for Server
         List<String> allOtherUsernames = allUsername.stream()
                 .filter(x -> !x.equals(myUsername))
                 .toList();
@@ -165,7 +243,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             this.myPoints = myPoints;
         }
         notifier.firePropertyChange(
-                new PropertyChangeEvent(this,"privatePoints",username,myPoints));
+                new PropertyChangeEvent(this,"privatePoints",null,myPoints));
     }
 
     public HashMap<String, Integer> getAllPublicPoints() {
