@@ -360,7 +360,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
     public ArrayList<Integer> checkFreeColumn(int numTilesSelected){
         synchronized (viewLock) {
-            ArrayList<Integer> list=null;
+            ArrayList<Integer> list=new ArrayList<>();
             for (int i=0;i< Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();i++) {
                 if (myBookshelf.getTile(6 - numTilesSelected, i)==Tiles.EMPTY){
                     list.add(i);
