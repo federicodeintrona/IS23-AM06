@@ -74,7 +74,6 @@ public class PersonalObjective {
         JSONParser jsonParser=new JSONParser();
 
         try {
-            //TODO vedere per usare optional
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("PersonalObjective.json");
             //read all JSON file
             assert is != null;

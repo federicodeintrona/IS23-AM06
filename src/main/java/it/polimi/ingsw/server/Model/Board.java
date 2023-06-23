@@ -901,6 +901,3 @@ public class Board {
     }
 
 }
-
-//TODO capire come fare i REQUIRES
-// conviene fare try catch con IllegalArgumentException??
