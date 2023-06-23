@@ -68,38 +68,6 @@ public class Model implements TimerInterface {
 
     public Model(){}
 
-    public Model(ArrayList<Player> players) {
-        this.players = players;
-
-        // Initializing for each player a particular version of ChatController specifically designed for Server
-        List<String> allUsernames = players.stream()
-                                            .map(Player::getUsername)
-                                            .toList();
-
-        for (String player: allUsernames) {
-            allPlayersChats.put(player, new ChatController(true));
-
-            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
-                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
-        }
-    }
-
-    public Model(ArrayList<Player> players, ArrayList<VirtualView> views) {
-        this.players = players;
-        this.virtualViews = views;
-
-        // Initializing for each player a particular version of ChatController specifically designed for Server
-        List<String> allUsernames = players.stream()
-                                            .map(Player::getUsername)
-                                            .toList();
-
-        for (String player: allUsernames) {
-            allPlayersChats.put(player, new ChatController(true));
-
-            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
-                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
-        }
-    }
 
     public Model(ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
         this.players = players;
@@ -656,7 +624,10 @@ public class Model implements TimerInterface {
         //Notify game Start
         notifier.firePropertyChange
                 (new PropertyChangeEvent(true, "all", "0","end" ));
+        notifier.firePropertyChange
+                (new PropertyChangeEvent(this, "end", "0","end" ));
     }
+
 
 
     /**
@@ -1000,6 +971,11 @@ public class Model implements TimerInterface {
             for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
                 allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
         }
+    }
+
+
+    public void addChangeListener(Controller controller){
+        notifier.addPropertyChangeListener("end",controller);
     }
 
     /**
