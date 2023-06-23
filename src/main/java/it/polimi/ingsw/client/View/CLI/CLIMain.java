@@ -320,6 +320,13 @@ public class CLIMain implements View {
 
 
     //TODO alla fine la facciamo così la CLI??
+    //TODO cosa scrivo
+
+    /**
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
