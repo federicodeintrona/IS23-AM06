@@ -52,7 +52,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Initialize the networker with tho the given client state
+     * Initialize the networker with the given client state
      * @param clientState client state
      */
     public NetworkerTcp(ClientState clientState) {

@@ -27,6 +27,14 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.out;
 
+/**
+ * <p>Class used to read all the message sent from the controller and modify client state</p>
+ * If the message received is:
+ * <ul>
+ *     <il> a view message then the class changes client state</il>
+ *     <il> a ping message </il>
+ * </ul>
+ */
 public class Reader extends Thread implements TimerInterface {
     private final Socket socket;
     private final ObjectInputStream client;

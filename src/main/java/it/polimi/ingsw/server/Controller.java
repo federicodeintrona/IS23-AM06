@@ -124,7 +124,7 @@ public class Controller implements PropertyChangeListener {
 
 
     /**
-     * Removes the tiles of coordinates 'points'
+     * Method to remove tiles of coordinates 'points'
      * @param gameID The ID of the game
      * @param playerID  The username of the player requesting the move
      * @param points The coordinates of the tiles
