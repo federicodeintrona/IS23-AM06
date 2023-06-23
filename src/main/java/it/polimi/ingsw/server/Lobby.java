@@ -152,6 +152,7 @@ public class Lobby {
         Model m = new Model();
         games.put(num, m);
         m.setGameID(num);
+        m.addChangeListener(controller);
 
     }
 
@@ -162,7 +163,6 @@ public class Lobby {
             disconnectedPlayers.remove(s);
             players.remove(s);
             playerToGame.remove(s);
-            views.get(s).setDisconnected(true);
             views.remove(s);
 
         }

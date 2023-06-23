@@ -37,7 +37,9 @@ class ModelTest {
             views.add(new RMIVirtualView("p1", new ClientState("p1",new Object())));
             views.add(new RMIVirtualView("p2", new ClientState("p2",new Object())));
 
-            m = new Model(players,views);
+            m = new Model();
+            m.setPlayers(players);
+            m.setVirtualViews(views);
             m.initialization();
             m.setCurrPlayer(players.get(0));
 
