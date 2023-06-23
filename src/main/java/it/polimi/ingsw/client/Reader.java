@@ -32,7 +32,8 @@ import static java.lang.System.out;
  * If the message received is:
  * <ul>
  *     <il> a view message then the class changes client state</il>
- *     <il> a ping message </il>
+ *     <il> a ping message then sends back the pong message to server</il>
+ *     <il> in other case send to networker the message</il>
  * </ul>
  */
 public class Reader extends Thread implements TimerInterface {
@@ -129,76 +130,42 @@ public class Reader extends Thread implements TimerInterface {
 
         ViewMessage message = (ViewMessage) newMessage;
         switch (message.getObjName()) {
-            case ("board") -> {
-                Matrix board = (Matrix) message.getContent();
-                clientState.setBoard(board);
-            }
-            case ("bookshelf") -> {
-                Matrix bookshelf = (Matrix) message.getContent();
-                String Username = message.getText();
-                clientState.setAllBookshelf(Username, bookshelf);
-            }
-            case ("currPlayer") -> {
-                String currPlayer = (String) message.getContent();
-                clientState.setCurrentPlayer(currPlayer);
-            }
-            case ("playerNames") -> {
-                List<String> playerNames = (List<String>) message.getContent();
-                ArrayList pNames = new ArrayList<>(playerNames);
-                clientState.setAllUsername(pNames);
-            }
-            case ("commonObj") -> {
-                List<Integer> commonObj = (List<Integer>) message.getContent();
-                ArrayList cObj = new ArrayList<>(commonObj);
-                clientState.setGameCommonObjective(cObj);
-            }
-            case ("commonObjPoints") -> {
-                clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) message.getContent()));
-            }
-            case ("publicPoints") -> {
-                int publicPoints = (int) message.getContent();
-                String username = message.getText();
-                clientState.setAllPublicPoints(username, publicPoints);
-            }
-            case ("selectedTiles") -> {
-                ArrayList<Tiles> selectedTiles = (ArrayList<Tiles>) message.getContent();
-                clientState.setSelectedTiles(selectedTiles);
-            }
-            case ("personalObj") -> {
-                HashMap<Point, Tiles> personalObj = (HashMap<Point, Tiles>) message.getContent();
-                clientState.setMyPersonalObjective(personalObj);
-            }
-            case ("personalObjNum")->{
-                clientState.setMyPersonalObjectiveInt((int) message.getContent());
-            }
-            case ("privatePoints") -> {
-                int privatePoints = (int) message.getContent();
-                clientState.setMyPoints(privatePoints);
-            }
-            case ("nextPlayer") -> {
-                String nextPlayer = (String) message.getContent();
-                clientState.setNextPlayer(nextPlayer);
-            }
-            case ("chairPlayer")->{
-                clientState.setChair((String) message.getContent());
-            }
-            case ("winner") -> {
-                String winner = (String) message.getContent();
-                clientState.setWinnerPlayer(winner);
-            }
-            case ("disconnectionWinner") ->{
-                clientState.setDisconnectionWinner(true);
-            }
-            case ("start") -> {
-                Boolean start = (Boolean) message.getContent();
-                clientState.setGameHasStarted(start);
-            }
-            case ("message") -> {
-                clientState.newMessageHandler((ChatMessage) message.getContent());
-            }
-            case ("reloadChats") -> {
-                clientState.reloadChats((ChatController) message.getContent());
-            }
+            case ("board") ->
+                clientState.setBoard((Matrix) message.getContent());
+            case ("bookshelf") ->
+                clientState.setAllBookshelf(message.getText(), (Matrix) message.getContent());
+            case ("currPlayer") ->
+                    clientState.setCurrentPlayer((String) message.getContent());
+            case ("playerNames") ->
+                    clientState.setAllUsername(new ArrayList<>((List) message.getContent()));
+            case ("commonObj") ->
+                    clientState.setGameCommonObjective(new ArrayList<>((List) message.getContent()));
+            case ("commonObjPoints") ->
+                    clientState.setCommonObjectivePoints(new ArrayList<>((List) message.getContent()));
+            case ("publicPoints") ->
+                    clientState.setAllPublicPoints(message.getText(), (int) message.getContent());
+            case ("selectedTiles") ->
+                    clientState.setSelectedTiles((ArrayList<Tiles>) message.getContent());
+            case ("personalObj") ->
+                    clientState.setMyPersonalObjective((HashMap<Point, Tiles>) message.getContent());
+            case ("personalObjNum")->
+                    clientState.setMyPersonalObjectiveInt((int) message.getContent());
+            case ("privatePoints") ->
+                    clientState.setMyPoints((int) message.getContent());
+            case ("nextPlayer") ->
+                    clientState.setNextPlayer((String) message.getContent());
+            case ("chairPlayer")->
+                    clientState.setChair((String) message.getContent());
+            case ("winner") ->
+                    clientState.setWinnerPlayer((String) message.getContent());
+            case ("disconnectionWinner") ->
+                    clientState.setDisconnectionWinner(true);
+            case ("start") ->
+                    clientState.setGameHasStarted((Boolean) message.getContent());
+            case ("message") ->
+                    clientState.newMessageHandler((ChatMessage) message.getContent());
+            case ("reloadChats") ->
+                    clientState.reloadChats((ChatController) message.getContent());
             case ("end") -> {
                 Boolean end = (Boolean) message.getContent();
                 clientState.setGameIsEnded(end);
@@ -229,12 +196,20 @@ public class Reader extends Thread implements TimerInterface {
         }
     }
 
+    /**
+     * Method to update countdown for skipped ping message
+     * @return skipped ping message
+     */
     @Override
     public int updateTime() {
         time++;
         return time;
     }
 
+    /**
+     * <strong>Getter</strong> -> Returns the error message
+     * @return error message
+     */
     @Override
     public String getErrorMessage() {
         return "Server is not responding. Retry later";

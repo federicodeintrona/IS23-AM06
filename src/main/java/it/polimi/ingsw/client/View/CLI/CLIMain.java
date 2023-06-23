@@ -87,6 +87,8 @@ public class CLIMain implements View {
         openChat=false;
     }
 
+
+
     /**
      * Getter --> returns the lock Object
      *

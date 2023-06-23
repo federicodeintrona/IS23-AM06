@@ -114,7 +114,6 @@ public class Bookshelf {
      * @param column index of the column
      * @return first free row of the matrix
      */
-
     private int firstFree (int column){
         for (int i=5;i>=0;i--){
             if(tiles.getTile(i,column).equals(Tiles.EMPTY)){
@@ -225,6 +224,5 @@ public class Bookshelf {
 
         return adjPoint;
     }
-
 
 }

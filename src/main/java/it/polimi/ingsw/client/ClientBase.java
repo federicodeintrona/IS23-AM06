@@ -58,39 +58,55 @@ public class ClientBase extends Application{
     }
 
 
+
+    /**
+     * The main entry point for all JavaFX applications.
+     * The start method is called after the init method has returned, and after the system is ready for the application to begin running
+     *
+     * @param stage the stage for this application, onto which the application scene can be set
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         try {
-
+            //instance of ClientState and GUIControllerStatic
             ClientState clientState = new ClientState(new Object());
             GUIControllerStatic.setGuiController(new GUIController(clientState));
 
-
+            //show the InitialRequest's scene
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Scenes.InitialRequest.getName())));
             Scene scene=new Scene(root);
 
+            //set all the information in scene's controller
             GUIController guiController= GUIControllerStatic.getGuiController();
             guiController.setStage(stage);
             guiController.setRoot(root);
             guiController.setScene(scene);
 
-            //aggiunta icona
+            //set Icon
             InputStream s=getClass().getResourceAsStream("/images/Publisher_material/Icon 50x50px.png");
             assert s != null;
             stage.getIcons().add(new Image(s));
 
+            //set title
             stage.setTitle(Scenes.InitialRequest.getTitle());
+
+            //set scene's dimensione
             stage.setScene(scene);
             stage.setWidth(1300);
             stage.setHeight(750);
             stage.setResizable(false);
+
+            //show the setting scene
             stage.show();
 
+            //set logout action
             stage.setOnCloseRequest(event -> {
                 event.consume();
                 logout(stage);
             });
-        } catch (RemoteException e){
+        }
+        catch (RemoteException e){
             System.out.println("The game has failed to start properly. Retry again.");
             System.exit(1);
 
@@ -101,19 +117,26 @@ public class ClientBase extends Application{
         }
     }
 
+    /**
+     * Method to logged out from the Graphic User Interface
+     *
+     * @param stage the stage for this application
+     */
     public void logout(Stage stage){
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
+        //set alert information
         alert.setTitle("Logout");
         alert.setHeaderText("You are about to logout");
         alert.setContentText("Are you sure you want logout?");
 
+        //if you want to logged out
         if (alert.showAndWait().get()== ButtonType.OK){
             System.out.println("You successfully logged out");
             stage.close();
             Platform.exit();
-            GUIController guicntrl= GUIControllerStatic.getGuiController();
-            guicntrl.close();
+            GUIController guicontroller= GUIControllerStatic.getGuiController();
+            guicontroller.close();
         }
     }
 

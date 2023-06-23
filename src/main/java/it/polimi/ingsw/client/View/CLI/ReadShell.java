@@ -90,7 +90,6 @@ public class ReadShell extends Thread {
         }
 
         cliMain.getCliPrint().clearShell();
-        System.out.println(integer);
         return integer;
     }
 
@@ -184,7 +183,6 @@ public class ReadShell extends Thread {
             case "#printbookshelf" -> {
                 //find the player whose bookshelf you want to see
                 int indice = st.indexOf("@");
-                System.out.println(indice);
                 //if you do not insert the username - return error
                 if (indice == -1) {
                     System.out.println(st + ": Type of command correct but you do NOT inserted the username of player \nIf you need help put #help or #h");
@@ -192,7 +190,6 @@ public class ReadShell extends Thread {
                 }
                 //username of the player whose bookshelf you want to see
                 String sub = st.substring(indice + 1, st.length() - 1);
-                System.out.println(sub);
 
                 //find the position in AllUsername ArrayList
                 int position = cliMain.getClientState().getAllUsername().indexOf(sub);
