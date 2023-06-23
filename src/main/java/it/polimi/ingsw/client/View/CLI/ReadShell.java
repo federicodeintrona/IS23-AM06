@@ -48,7 +48,7 @@ public class ReadShell extends Thread {
     /**
      * Method to read on standard input
      *
-     * @return String &nbsp;&nbsp;&nbsp; input command
+     * @return the string that is on the standard input
      */
     private String readLine() {
         //instantiate Scanner that reads from standard input
@@ -59,6 +59,39 @@ public class ReadShell extends Thread {
         word = String.valueOf(scanner.nextLine());
         cliMain.getCliPrint().clearShell();
         return word;
+    }
+
+    /**
+     * Method to read the number on standard input
+     *
+     * @return the number that is on the standard input
+     */
+    private Integer readNumber(){
+        //instantiate Scanner that reads from standard input
+        Scanner scanner = new Scanner(System.in);
+        //the return value
+        int integer;
+        //string that read from standard input
+        String word;
+
+        //wait for data input and reads them
+        word=String.valueOf(scanner.nextLine());
+        //if is insert the quit command
+        if (word.equalsIgnoreCase("#quit") || word.equalsIgnoreCase("#q")){
+            cliMain.closeClient();
+        }
+
+        //parse to int
+        try{
+            integer=Integer.parseInt(word);
+        }
+        catch (NumberFormatException e){
+            return -1;
+        }
+
+        cliMain.getCliPrint().clearShell();
+        System.out.println(integer);
+        return integer;
     }
 
     /**
@@ -188,13 +221,21 @@ public class ReadShell extends Thread {
                 //print who is the first player to start the game
                 cliMain.getCliPrint().printChair();
             //#chat command
-            case "#chat" ->
+            case "#chat" ->{
                 //enter in public chat and print it
+                cliMain.setOpenChat(true);
                 cliMain.getChatHandler().settingForPublicChat();
+            }
             //#privatechat command
-            case "#privatechat" ->
+            case "#privatechat" -> {
                 //enter in private chat and print it
+                cliMain.setOpenChat(true);
                 cliMain.getChatHandler().settingForPrivateChat();
+            }
+            //#quit command
+            case "#quit", "#q" ->
+                //close the client on CLI
+                cliMain.close();
             default ->
                 //you do not insert a valid command
                 System.out.println(st + " is NOT a valid command \nIf you need help put #help or #h");
@@ -213,6 +254,10 @@ public class ReadShell extends Thread {
         do {
             System.out.print("Enter your username: ");
             nickname = readLine();
+            //TODO caccia tante eccezioni - RMI
+            if (nickname.equalsIgnoreCase("#quit") || nickname.equalsIgnoreCase("#q")){
+                cliMain.closeClient();
+            }
         }while (nickname.isEmpty());
 
         //set the username in ClientState
@@ -230,13 +275,16 @@ public class ReadShell extends Thread {
      */
     public void askNumberOfPlayerMessage() {
         IntMessage message = new IntMessage();
+        int num;
 
-        System.out.print("Enter number of player: ");
-        String num = readLine();
+        do{
+            System.out.print("Enter number of player: ");
+            num=readNumber();
+        }while(num==-1);
 
         //set the number of players' message
         message.setText(cliMain.getClientState().getMyUsername());
-        message.setNum(Integer.parseInt(num));
+        message.setNum(num);
         message.setType(MessageTypes.NUM_OF_PLAYERS);
 
         //send message

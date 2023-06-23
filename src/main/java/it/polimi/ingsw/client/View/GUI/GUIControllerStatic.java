@@ -1,13 +1,32 @@
 package it.polimi.ingsw.client.View.GUI;
 
-//serve per fare in modo che i controller di scena abbiano il riferimento al GUIController
-//in modo che riescano a inviare messaggi al server
-//e a ricevere messaggi da server
+/**
+ * Class that is used to make the scene controllers have the reference to the GUIController,
+ * it is used to make so that they can send messages to the server and receive messages from the server
+ */
 public class GUIControllerStatic {
+
+    /**
+     * The instance of GUIController
+     */
     private static GUIController guiController;
+
+
+    /**
+     * <strong>Getter</strong> -> Returns the GUIController
+     *
+     * @return the GUIController
+     */
     public static GUIController getGuiController() {
         return guiController;
     }
+
+
+    /**
+     * <strong>Setter</strong> -> Sets the GUIController
+     *
+     * @param guiController the GUIController to set
+     */
     public static void setGuiController(GUIController guiController) {
         GUIControllerStatic.guiController = guiController;
     }

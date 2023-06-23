@@ -289,46 +289,32 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     public void propertyChange(PropertyChangeEvent evt) {
 
         switch (evt.getPropertyName()) {
-            case ("board") -> {
-                Platform.runLater(() -> {
-                    if(checkResetPoint==null || clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
-                        updateBoard();
-                    }
-                    else {
-                        reinitializeBoard();
-                        initializeBoardGrid();
-                    }
-                });
-            }
-            case ("selectedTiles") -> {
-                Platform.runLater(this::updateSelectedTiles);
-            }
-            case ("bookshelf") -> {
-                Platform.runLater(()->{
-                    updateBookshelf((String) evt.getOldValue());
-                });
-            }
-            case ("publicPoints") -> {
-                Platform.runLater(() -> {
-                    updateAllPlayerPoints();
-                    updateClassification();
-                });
-            }
-            case ("privatePoints") -> {
-                Platform.runLater(() -> {
-                    updateMyPointsLabel();
-                    updateClassification();
-                });
-            }
-            case ("currPlayer") -> {
-//                Platform.runLater(this::updateCurrPlayer);
-                Platform.runLater(() -> {
-                    updateCurrPlayer();
-                    if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
-                        boardGrid.setDisable(false);
-                    }
-                });
-            }
+            case ("board") -> Platform.runLater(() -> {
+                if(checkResetPoint==null || clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
+                    updateBoard();
+                }
+                else {
+                    reinitializeBoard();
+                    initializeBoardGrid();
+                }
+            });
+            case ("selectedTiles") -> Platform.runLater(this::updateSelectedTiles);
+            case ("bookshelf") -> Platform.runLater(()-> updateBookshelf((String) evt.getOldValue()));
+            case ("publicPoints") -> Platform.runLater(() -> {
+                updateAllPlayerPoints();
+                updateClassification();
+            });
+            case ("privatePoints") -> Platform.runLater(() -> {
+                updateMyPointsLabel();
+                updateClassification();
+            });
+            case ("currPlayer") ->
+                    Platform.runLater(() -> {
+                        updateCurrPlayer();
+                        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+                            boardGrid.setDisable(false);
+                        }
+                    });
             case ("commonObjPoints") -> {
                 String player=clientState.getCurrentPlayer();
                 ArrayList<Integer> old=clientState.getOldCommonObjectivePoints();
@@ -343,9 +329,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             case ("publicChat") -> {
                 ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
                 clientState.getChatController().getPublicChat().addMessage(chatMessage);
-                Platform.runLater(() -> {
-                    updatePublicChat(chatMessage);
-                });
+                Platform.runLater(() -> updatePublicChat(chatMessage));
             }
             case ("privateChat") -> {
                 ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
@@ -355,9 +339,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 else {
                     clientState.getChatController().getPrivateChat(chatMessage.getText()).addMessage(chatMessage);
                 }
-                Platform.runLater(() -> {
-                    updatePrivateChat(chatMessage);
-                });
+                Platform.runLater(() -> updatePrivateChat(chatMessage));
             }
         }
     }
@@ -408,7 +390,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         int point=old.get(commonObjectivePointPlayerImage(old));
         String path = "/images/scoring_tokens/scoring_"+point+".jpg";
 
-        catchPlayerCommonObjectivePointImage(player, commonObjectivePointPlayerImage(old)).setImage(getImage(path));
+        Objects.requireNonNull(catchPlayerCommonObjectivePointImage(player, commonObjectivePointPlayerImage(old))).setImage(getImage(path));
     }
 
 
@@ -476,6 +458,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     private Image getImage(String path){
         InputStream s = getClass().getResourceAsStream(path);
+        assert s != null;
         return new Image(s);
     }
 
@@ -524,12 +507,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     //ritorna una lista con gli username degli altri giocatori
     private ArrayList<String> catchOtherPlayerName(ArrayList<String> list){
-        int j=0;
         ArrayList<String> result=new ArrayList<>();
         for (String s : list) {
             if (!s.equals(clientState.getMyUsername())) {
                 result.add(s);
-                j++;
             }
         }
         return result;
@@ -862,9 +843,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             rollbackButton.setVisible(false);
             rollbackButton.setDisable(true);
             //disabilita la board
-            boardGrid.getChildren().forEach(node -> {
-                node.setDisable(false);
-            });
+            boardGrid.getChildren().forEach(node -> node.setDisable(false));
             boardGrid.setDisable(true);
             state = State.SWITCH;
 
@@ -991,24 +970,38 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         selectedTilesDialog.setVisible(false);
         selectedTilesDialog.setDisable(true);
 
-        column1.setVisible(true);
-        column1.setDisable(false);
-
-        column2.setVisible(true);
-        column2.setDisable(false);
-
-        column3.setVisible(true);
-        column3.setDisable(false);
-
-        column4.setVisible(true);
-        column4.setDisable(false);
-
-        column5.setVisible(true);
-        column5.setDisable(false);
+        correctSelectColumn();
 
         boardGrid.setVisible(true);
 
         state = State.ADD;
+    }
+
+    private void correctSelectColumn(){
+        int i=clientState.getSelectedTiles().size();
+        ArrayList<Integer> column=clientState.checkFreeColumn(i);
+
+        //controllo se le colonne vanno bene
+        if (column.contains(0)){
+            column1.setVisible(true);
+            column1.setDisable(false);
+        }
+        if (column.contains(1)){
+            column2.setVisible(true);
+            column2.setDisable(false);
+        }
+        if (column.contains(2)){
+            column3.setVisible(true);
+            column3.setDisable(false);
+        }
+        if (column.contains(3)){
+            column4.setVisible(true);
+            column4.setDisable(false);
+        }
+        if (column.contains(4)){
+            column5.setVisible(true);
+            column5.setDisable(false);
+        }
     }
 
     //aggiungo tile nell'ordine corretto
@@ -1136,8 +1129,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
-    //TODO controllare se nella colonna ci posso mettere il numero di tessere che sono state selezionate
-    // altrimenti non abilitare il bottone
+
     private void addToColumn(){
         column1.setVisible(false);
         column1.setDisable(true);

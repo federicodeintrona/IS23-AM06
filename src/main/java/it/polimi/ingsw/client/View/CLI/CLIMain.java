@@ -64,12 +64,19 @@ public class CLIMain implements View {
      */
     private Thread th1;
 
+    /**
+     * Attribute used to know if chat is open
+     */
+    private boolean openChat;
+
+
 
     /**
      * Constructor --> create lock
      */
     public CLIMain() {
         this.lock=new Object();
+        openChat=false;
     }
 
     //TODO è solo nei test del cliprint - NON SERVE PIù - da capire se bisogna testare anche la UI
@@ -77,6 +84,7 @@ public class CLIMain implements View {
         this.lock = lock;
         this.clientState = clientState;
         this.net = net;
+        openChat=false;
     }
 
     /**
@@ -133,6 +141,16 @@ public class CLIMain implements View {
 
 
 
+    /**
+     * Setter --> setting if chat is opened
+     *
+     * @param openChat &nbsp;&nbsp;&nbsp; is chat open?
+     */
+    public void setOpenChat(boolean openChat) {
+        this.openChat = openChat;
+    }
+
+
     //TODO cosa scrivo per RemoteException
     /**
      * Method to run the Command Line Interface
@@ -151,6 +169,9 @@ public class CLIMain implements View {
             System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
             decision = scanner.nextLine();
             decision=decision.toUpperCase();
+            if(decision.equals("#QUIT") || decision.equals("#Q")){
+                System.exit(0);
+            }
         }while (!decision.equals("RMI") && !decision.equals("TCP"));
 
         //instance the correct connection protocol
@@ -167,8 +188,12 @@ public class CLIMain implements View {
         do {
             System.out.print("Which host do you use? ");
             String host = scanner.nextLine();
+            host=host.toLowerCase();
+            if(host.equals("#quit") || host.equals("#q")){
+                System.exit(0);
+            }
             //if you do not insert a host, you chose the localhost
-            if (host.isEmpty()) {
+            else if (host.isEmpty()) {
                 System.out.println("You selected the default host: localhost");
                 host = "localhost";
             }
@@ -186,6 +211,7 @@ public class CLIMain implements View {
 
         //username request
         readShell.askUsername();
+
 
         //waiting until game has started
         while (!clientState.gameHasStarted()){
@@ -230,7 +256,7 @@ public class CLIMain implements View {
 
         while (!clientState.isGameIsEnded()){
             //print new turn if current is next from before
-            if (clientState.getCurrentPlayer().equals(curr)){
+            if (clientState.getCurrentPlayer().equals(curr) && !openChat){
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -247,6 +273,11 @@ public class CLIMain implements View {
         cliPrint.clearShell();
         cliPrint.printEndGame();
         //close all thread
+        do {
+            decision=scanner.nextLine();
+            decision=decision.toLowerCase();
+
+        }while(!decision.equals("#quit") && !decision.equals("#q"));
         close();
     }
 
@@ -260,7 +291,15 @@ public class CLIMain implements View {
         Message msg = new Message();
         msg.setType(MessageTypes.DISCONNECT);
         net.closeProgram(msg);
+    }
 
+    /**
+     * Method to close the Client before creation of CLI-thread
+     */
+    public void closeClient(){
+        Message msg = new Message();
+        msg.setType(MessageTypes.DISCONNECT);
+        net.closeProgram(msg);
     }
 
 
@@ -294,6 +333,13 @@ public class CLIMain implements View {
 
 
     //TODO alla fine la facciamo così la CLI??
+    //TODO cosa scrivo
+
+    /**
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
@@ -342,3 +388,4 @@ public class CLIMain implements View {
         cliPrint.playerTurn();
     }
 }
+

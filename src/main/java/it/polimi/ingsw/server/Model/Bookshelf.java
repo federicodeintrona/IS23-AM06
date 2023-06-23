@@ -27,7 +27,7 @@ public class Bookshelf {
      * and set every position to EMPTY
      */
     public Bookshelf(){
-        maxNumberOfTiles=Define.NUMBEROFROWS_BOOKSHELF.getI()*Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();
+        maxNumberOfTiles=Define.MAXNUMBEROFTILES_BOOKSHELF.getI();
         tiles=new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(),Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
         num_of_tiles=0;
         for( int i=0; i<Define.NUMBEROFROWS_BOOKSHELF.getI();i++){
@@ -54,6 +54,7 @@ public class Bookshelf {
 
     /**
      * Method to check if the column given is full of tiles
+     * <p><strong>REQUIRES:</strong> choice between 1 and 6 AND column between 0 and 4</p>
      * @param choice number of tiles chosen
      * @param column index of the colum chosen
      * @return true if the column is full, false if it isn't
@@ -96,21 +97,10 @@ public class Bookshelf {
      */
     public void addTile(ArrayList<Tiles> tiles, int column){
             int pos=firstFree(column);
-            if (tiles.size() == 1) {
-                this.tiles.setTile(tiles.get(0), pos, column);
-                num_of_tiles++;
+            for(int i=0;i<tiles.size();i++){
+                this.tiles.setTile(tiles.get(i), pos-i, column);
             }
-            else if (tiles.size()==2) {
-                this.tiles.setTile(tiles.get(0), pos, column);
-                this.tiles.setTile(tiles.get(1), pos-1, column);
-                num_of_tiles=num_of_tiles+2;
-            }
-            else {
-                this.tiles.setTile(tiles.get(0), pos, column);
-                this.tiles.setTile(tiles.get(1), pos-1, column);
-                this.tiles.setTile(tiles.get(2), pos-2, column);
-                num_of_tiles=num_of_tiles+3;
-            }
+            num_of_tiles=num_of_tiles+tiles.size();
         }
 
     /**
