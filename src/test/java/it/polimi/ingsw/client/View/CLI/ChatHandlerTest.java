@@ -8,16 +8,13 @@ import org.junit.jupiter.api.Test;
 import java.rmi.RemoteException;
 
 class ChatHandlerTest {
-    private static MockCliMain cli;
+
+    @Mo
+    private MockCliMain cli;
 
     @BeforeAll
     public static void setUp() {
-        cli = new MockCliMain();
-        try {
-            cli.runUI();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
