@@ -19,8 +19,8 @@ import java.util.Objects;
 public class Chat implements Serializable {
     private final ArrayList<ChatMessage> chatMessages;        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
     private boolean chatIsEnable;
-    private int oldestMessage;
-    private final int maxNumberOfMessages;
+    private int oldestMessage;              // Position in the ArrayList of the oldestMessage
+    private final int maxNumberOfMessages;              // Maximum number of messages allowed in the chat
     private int unReadMessages;
 
     /**
@@ -61,12 +61,14 @@ public class Chat implements Serializable {
      * @param message       ChatMessage to add
      */
     public synchronized void addMessage(ChatMessage message) {
+        // Managing the spacial case of first message in Chat
         if (chatMessages.isEmpty()) {
             chatMessages.add(0, message);
             oldestMessage = 0;
             return;
         }
 
+        // Checking for Chat's refresh
         if (oldestMessage == (maxNumberOfMessages -1)) chatRefresh();
 
         chatMessages.add(0, message);
@@ -87,12 +89,14 @@ public class Chat implements Serializable {
      * @param message       Message sent
      */
     public synchronized void addMessage(String username, String message) {
+        // Managing the spacial case of first message in Chat
         if (chatMessages.isEmpty()) {
             chatMessages.add(0, new ChatMessage(username, message));
             oldestMessage = 0;
             return;
         }
 
+        // Checking for Chat's refresh
         if (oldestMessage == (maxNumberOfMessages -1)) chatRefresh();
 
         chatMessages.add(0, new ChatMessage(username, message));
@@ -115,12 +119,14 @@ public class Chat implements Serializable {
      * @param receivingPlayer       Player receiving the message
      */
     public synchronized void addMessage(String forwardingPlayer, String message, String receivingPlayer) {
+        // Managing the spacial case of first message in Chat
         if (chatMessages.isEmpty()) {
             chatMessages.add(0, new ChatMessage(forwardingPlayer, message, receivingPlayer));
             oldestMessage = 0;
             return;
         }
 
+        // Checking for Chat's refresh
         if (oldestMessage == (maxNumberOfMessages -1)) chatRefresh();
 
         chatMessages.add(0, new ChatMessage(forwardingPlayer, message, receivingPlayer));
