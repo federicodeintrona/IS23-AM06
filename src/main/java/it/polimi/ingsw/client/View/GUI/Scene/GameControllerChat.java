@@ -36,167 +36,404 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Class to manage the game scene.
+ * <ul>
+ *     <li>Set common objective;</li>
+ *     <li>set personal objective;</li>
+ *     <li>update board;</li>
+ *     <li>update all players' bookshelf;</li>
+ *     <li>update all players' points;</li>
+ *     <li>update public chat;</li>
+ *     <li>update private chat (chat between 2 players);</li>
+ *     <li>show error.</li>
+ * </ul>
+ */
 public class GameControllerChat implements Initializable, PropertyChangeListener,SceneController {
+
+    /**
+     * Attribute used to know the instance of GUIController.
+     */
     private final GUIController guiController = GUIControllerStatic.getGuiController();
+    /**
+     * Attribute that instance the correct ClientState.
+     */
     private ClientState clientState;
+    /**
+     * Attribute used to know the tiles remove from the board.
+     */
     private ArrayList<Point> removeTiles = new ArrayList<>();
+    /**
+     * Attribute used to know the order of the tiles remove from the board.
+     */
     private ArrayList<Integer> orderTiles=new ArrayList<>();
-
+    /**
+     * Attribute used to know whether the board should be reset or not.
+     */
     private Point checkResetPoint=null;
-    @FXML
-    private GridPane boardGrid;
-    @FXML
-    private GridPane myBookshelfGrid;
-
-    @FXML
-    private Label otherPlayerLabel1;
-    @FXML
-    private GridPane otherPlayerBookshelfGrid1;
-    @FXML
-    private Label otherPlayerPointsLabel1;
-    @FXML
-    private ImageView otherPlayerImage1;
-    @FXML
-    private ImageView personal1;
-    @FXML
-    private Label otherPlayerLabel2;
-    @FXML
-    private GridPane otherPlayerBookshelfGrid2;
-    @FXML
-    private Label otherPlayerPointsLabel2;
-    @FXML
-    private ImageView otherPlayerImage2;
-    @FXML
-    private ImageView personal2;
-    @FXML
-    private Label otherPlayerLabel3;
-    @FXML
-    private GridPane otherPlayerBookshelfGrid3;
-    @FXML
-    private Label otherPlayerPointsLabel3;
-    @FXML
-    private ImageView otherPlayerImage3;
-    @FXML
-    private ImageView personal3;
+    /**
+     * Attribute used to know what state I am in (Remove, Switch or Add).
+     * What move is the client making?
+     */
+    private State state = State.REMOVE;
 
 
-    @FXML
-    private ImageView personalObjectiveImageView;
-    @FXML
-    private Label myPointsLabel;
+    //graphic elements of the scene
+    /**
+     * Label use to show the name of the current player.
+     */
     @FXML
     private Label turnLabel;
-    @FXML
-    private Button confirmationButton;
-    @FXML
-    private Button rollbackButton;
-    @FXML
-    private ImageView selectedTiles1;
-    @FXML
-    private ImageView selectedTiles2;
-    @FXML
-    private ImageView selectedTiles3;
-    @FXML
-    private Button confirmSelected;
-    @FXML
-    private DialogPane selectedTilesDialog;
-    @FXML
-    private Button endSwitch;
-    @FXML
-    private Button column1;
-    @FXML
-    private Button column2;
-    @FXML
-    private Button column3;
-    @FXML
-    private Button column4;
-    @FXML
-    private Button column5;
-
-    @FXML
-    private VBox publicChatBox;
-    @FXML
-    private VBox otherPlayerChatBox1;
-    @FXML
-    private VBox otherPlayerChatBox2;
-    @FXML
-    private VBox otherPlayerChatBox3;
-    @FXML
-    private TextField sendMessage;
-    @FXML
-    private ChoiceBox<String> selectChat;
-    @FXML
-    private ScrollPane chatScroll;
-
+    /**
+     * Label used to show the current ranking - only the public points.
+     */
     @FXML
     private Label classification;
-
+    /**
+     * GridPane of the board.
+     */
+    @FXML
+    private GridPane boardGrid;
+    /**
+     * ImageView of the 1st common objective.
+     */
     @FXML
     private ImageView commonObjectiveImage1;
-    @FXML
-    private ImageView commonObjectivePoint1;
+    /**
+     * ImageView of the 2nd common objective.
+     */
     @FXML
     private ImageView commonObjectiveImage2;
+    /**
+     * ImageView of the points of the 1st common objective.
+     */
+    @FXML
+    private ImageView commonObjectivePoint1;
+    /**
+     * ImageView of the points of the 2nd common objective.
+     */
     @FXML
     private ImageView commonObjectivePoint2;
 
+    /**
+     * GridPane of my bookshelf.
+     */
+    @FXML
+    private GridPane myBookshelfGrid;
+    /**
+     * ImageView of my personal objective.
+     */
+    @FXML
+    private ImageView personalObjectiveImageView;
+    /**
+     * Label with my points (public + private points).
+     */
+    @FXML
+    private Label myPointsLabel;
+    /**
+     * ImageView used to show that I have the chair.
+     */
     @FXML
     private ImageView myChair;
+    /**
+     * ImageView used to show how many points I received from the 1st common objective.
+     */
+    @FXML
+    private ImageView myCommonPointImage1;
+    /**
+     * ImageView used to show how many points I received from the 2nd common objective.
+     */
+    @FXML
+    private ImageView myCommonPointImage2;
+
+    /**
+     * Label with the username of the other player.
+     */
+    @FXML
+    private Label otherPlayerLabel1;
+    /**
+     * Label with the username of the other player.
+     */
+    @FXML
+    private Label otherPlayerLabel2;
+    /**
+     * Label with the username of the other player.
+     */
+    @FXML
+    private Label otherPlayerLabel3;
+
+    /**
+     * GridPane of the other player bookshelf.
+     */
+    @FXML
+    private GridPane otherPlayerBookshelfGrid1;
+    /**
+     * GridPane of the other player bookshelf.
+     */
+    @FXML
+    private GridPane otherPlayerBookshelfGrid2;
+    /**
+     * GridPane of the other player bookshelf.
+     */
+    @FXML
+    private GridPane otherPlayerBookshelfGrid3;
+
+    /**
+     * Label with the points of the other player.
+     */
+    @FXML
+    private Label otherPlayerPointsLabel1;
+    /**
+     * Label with the points of the other player.
+     */
+    @FXML
+    private Label otherPlayerPointsLabel2;
+    /**
+     * Label with the points of the other player.
+     */
+    @FXML
+    private Label otherPlayerPointsLabel3;
+
+    /**
+     * ImageView of the other player's bookshelf.
+     */
+    @FXML
+    private ImageView otherPlayerImage1;
+    /**
+     * ImageView of the other player's bookshelf.
+     */
+    @FXML
+    private ImageView otherPlayerImage2;
+    /**
+     * ImageView of the other player's bookshelf.
+     */
+    @FXML
+    private ImageView otherPlayerImage3;
+
+    /**
+     * ImageView of the other player's personal objective.
+     */
+    @FXML
+    private ImageView personal1;
+    /**
+     * ImageView of the other player's personal objective.
+     */
+    @FXML
+    private ImageView personal2;
+    /**
+     * ImageView of the other player's personal objective.
+     */
+    @FXML
+    private ImageView personal3;
+
+    /**
+     * ImageView used to show that the other player has the chair.
+     */
     @FXML
     private ImageView otherChair1;
+    /**
+     * ImageView used to show that the other player has the chair.
+     */
     @FXML
     private ImageView otherChair2;
+    /**
+     * ImageView used to show that the other player has the chair.
+     */
     @FXML
     private ImageView otherChair3;
 
-    @FXML
-    private ImageView myCommonPointImage1;
-    @FXML
-    private ImageView myCommonPointImage2;
+    /**
+     * ImageView used to show how many points the other player received from the 1st common objective.
+     */
     @FXML
     private ImageView otherPlayer1CommonPoint1;
-    @FXML
-    private ImageView otherPlayer1CommonPoint2;
+    /**
+     * ImageView used to show how many points the other player received from the 1st common objective.
+     */
     @FXML
     private ImageView otherPlayer2CommonPoint1;
-    @FXML
-    private ImageView otherPlayer2CommonPoint2;
+    /**
+     * ImageView used to show how many points the other player received from the 1st common objective.
+     */
     @FXML
     private ImageView otherPlayer3CommonPoint1;
+
+    /**
+     * ImageView used to show how many points the other player received from the 2nd common objective.
+     */
+    @FXML
+    private ImageView otherPlayer1CommonPoint2;
+    /**
+     * ImageView used to show how many points the other player received from the 2nd common objective.
+     */
+    @FXML
+    private ImageView otherPlayer2CommonPoint2;
+    /**
+     * ImageView used to show how many points the other player received from the 2nd common objective.
+     */
     @FXML
     private ImageView otherPlayer3CommonPoint2;
 
-    private State state = State.REMOVE;
+    /**
+     * Button used to confirm the tiles selected from board.
+     */
+    @FXML
+    private Button confirmationButton;
+    /**
+     * Button used to roll back the tiles selected from board.
+     */
+    @FXML
+    private Button rollbackButton;
 
+    /**
+     * DialogPane where to show and switch the tiles removed from the board.
+     */
+    @FXML
+    private DialogPane selectedTilesDialog;
+    /**
+     * ImageView of the 1st selected tile.
+     */
+    @FXML
+    private ImageView selectedTiles1;
+    /**
+     * ImageView of the 2nd selected tile.
+     */
+    @FXML
+    private ImageView selectedTiles2;
+    /**
+     * ImageView of the 3rd selected tile.
+     */
+    @FXML
+    private ImageView selectedTiles3;
+    /**
+     * Button used to confirm the selected order of tiles.
+     */
+    @FXML
+    private Button confirmSelected;
+    /**
+     * Button used to confirm the end of switch.
+     */
+    @FXML
+    private Button endSwitch;
+
+    /**
+     * Button used to choose the 1st column of the bookshelf where put the  selected tiles ordered.
+     */
+    @FXML
+    private Button column1;
+    /**
+     * Button used to choose the 2nd column of the bookshelf where put the  selected tiles ordered.
+     */
+    @FXML
+    private Button column2;
+    /**
+     * Button used to choose the 3rd column of the bookshelf where put the  selected tiles ordered.
+     */
+    @FXML
+    private Button column3;
+    /**
+     * Button used to choose the 4th column of the bookshelf where put the  selected tiles ordered.
+     */
+    @FXML
+    private Button column4;
+    /**
+     * Button used to choose the 5th column of the bookshelf where put the  selected tiles ordered.
+     */
+    @FXML
+    private Button column5;
+
+    /**
+     * VBox used to show the public chat.
+     */
+    @FXML
+    private VBox publicChatBox;
+    /**
+     * VBox used to show the private chat.
+     */
+    @FXML
+    private VBox otherPlayerChatBox1;
+    /**
+     * VBox used to show the private chat.
+     */
+    @FXML
+    private VBox otherPlayerChatBox2;
+    /**
+     * VBox used to show the private chat.
+     */
+    @FXML
+    private VBox otherPlayerChatBox3;
+    /**
+     * TextField used to write the message to send in the shown chat.
+     */
+    @FXML
+    private TextField sendMessage;
+    /**
+     * ChoiceBox used to show the chat that want show.
+     */
+    @FXML
+    private ChoiceBox<String> selectChat;
+    /**
+     * ScrollPane used to scroll the shown chat.
+     */
+    @FXML
+    private ScrollPane chatScroll;
+
+
+
+    /**
+     * Method called to initialize the scene.
+     *
+     * @param url the URL used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //initialize the ClientState
         clientState = guiController.getState();
         clientState.addListener(this);
         clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
         guiController.setSceneController(this);
 
+        //initialize all graphics element
+        //board
         initializeBoardGrid();
+        //common objective
         initializeCommonGrid();
+        //common objective's points
+        updateCommonObjectivePoints();
+        //personal objective
         try {
             initializePersonalObjectiveImageView();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         }
+        catch (FileNotFoundException e) {
+            System.out.println("The image was not found");
+        }
+        //all players' username
         initializeotherPlayerLabel();
+        //my points
         updateMyPointsLabel();
+        //all players' points
         updateAllPlayerPoints();
+        //current player
         updateCurrPlayer();
-        updateCommonObjectivePoints();
-        updateClassification();
-        initializeChatChoice();
-        initializeChat();
+        //chair
         initializeChair();
+        //ranking
+        updateClassification();
+        //chat choice
+        initializeChatChoice();
+        //initialize all chat
+        initializeChat();
+        //bookshelf
         List<String> username = clientState.getAllUsername();
         for(String x: username){
             updateBookshelf(x);
         }
     }
 
+    /**
+     * Method to initialize the chair (username of the player who started the game).
+     */
     private void initializeChair(){
         if (clientState.getChair().equals(clientState.getMyUsername())){
             myChair.setVisible(true);
@@ -216,62 +453,90 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
     }
 
+    /**
+     * Method to initialize the chat choice.
+     * <p>
+     * ALL and with the other player.
+     */
     private void initializeChatChoice(){
+        //username of the other players
         ArrayList<String> otherPlayer=catchOtherPlayerName(clientState.getAllUsername());
 
+        //initialize the choice
         selectChat.setValue("ALL");
         selectChat.getItems().add("ALL");
         selectChat.getItems().addAll(otherPlayer);
         selectChat.setOnAction(this::selectWhichChatToShow);
 
-        //lo Scroll Pane si adatta alla dimensione della VBox
+        //initialize the chatScroll size - fits the size of VBox shown
         chatScroll.setContent(publicChatBox);
         chatScroll.setFitToWidth(true);
     }
 
+    /**
+     * Method to initialize the chat.
+     * <p>
+     * Checks for previous messages in the chats and inserts them.
+     */
     private void initializeChat(){
-        //ci sono dei messaggi in chat pubblica
+        //are there any messages in the public chat?
         if (clientState.getChatController().getPublicChat().getChatMessages().size()!=0){
             for (int i = clientState.getChatController().getPublicChat().getOldestMessage(); i>=0; i--){
+                //add the message
                 updatePublicChat(clientState.getChatController().getPublicChat().getChatMessages().get(i));
             }
         }
 
-        //ci sono dei messaggi in qualsiasi chat privata
+        //are there any messages in any private chat?
         for (String st: clientState.getChatController().getPrivateChats().keySet()){
             if (clientState.getChatController().getPrivateChat(st).getChatMessages().size()!=0) {
                 for (int i = clientState.getChatController().getPrivateChat(st).getOldestMessage(); i >= 0; i--) {
+                    //add the message
                     updatePrivateChat(clientState.getChatController().getPrivateChat(st).getChatMessages().get(i));
                 }
             }
         }
     }
 
+    /**
+     * Method to update the game's ranking.
+     */
     private void updateClassification(){
         ArrayList<String> player=sortPlayer();
 
+        //Classification string
+        //I used StringBuilder because it provides a mutable object
+        //that can be used to create, modify, and manipulate strings without creating new string instances with each operation
         StringBuilder c= new StringBuilder("CLASSIFICATION:\n");
 
+        //chaining of all players in the ranking
         for (int i = 0; i < player.size(); i++) {
             c.append(i+1).append(". ").append(player.get(i)).append(" POINTS ").append(clientState.getAllPublicPoints().get(player.get(i))).append("\n");
         }
 
+        //show the ranking
         classification.setText(c.toString());
     }
 
+    /**
+     * Method used to reorder players based on how many points they scored - increasing.
+     *
+     * @return the sorting in ascending order of the players.
+     */
     private ArrayList<String> sortPlayer(){
         ArrayList<Integer> sortPoint=new ArrayList<>(clientState.getAllPublicPoints().size());
 
-        //creazione array dei punti
+        //players' point ArrayList creation
         for (String st: clientState.getAllPublicPoints().keySet()){
             sortPoint.add(clientState.getAllPublicPoints().get(st));
         }
-        //ordinamento
+        //sorting of players' points
         sortPoint.sort(Comparator.reverseOrder());
 
-        //crea l'ArrayList dei nomi ordinati
+        //create ArrayList of sorted names
         ArrayList<String> result=new ArrayList<>(sortPoint.size());
 
+        //create the ranking
         for (Integer integer : sortPoint) {
             for (String st : clientState.getAllPublicPoints().keySet()) {
                 if (Objects.equals(clientState.getAllPublicPoints().get(st), integer) && !result.contains(st)) {
@@ -280,69 +545,11 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
 
-        //salva l'ArrayList in orderPlayer
+        //return the ranking's ArrayList
         return result;
 
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-        switch (evt.getPropertyName()) {
-            case ("board") -> Platform.runLater(() -> {
-                if(checkResetPoint==null || clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
-                    updateBoard();
-                }
-                else {
-                    reinitializeBoard();
-                    initializeBoardGrid();
-                }
-            });
-            case ("selectedTiles") -> Platform.runLater(this::updateSelectedTiles);
-            case ("bookshelf") -> Platform.runLater(()-> updateBookshelf((String) evt.getOldValue()));
-            case ("publicPoints") -> Platform.runLater(() -> {
-                updateAllPlayerPoints();
-                updateClassification();
-            });
-            case ("privatePoints") -> Platform.runLater(() -> {
-                updateMyPointsLabel();
-                updateClassification();
-            });
-            case ("currPlayer") ->
-                    Platform.runLater(() -> {
-                        updateCurrPlayer();
-                        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
-                            boardGrid.setDisable(false);
-                        }
-                    });
-            case ("commonObjPoints") -> {
-                String player=clientState.getCurrentPlayer();
-                ArrayList<Integer> old=clientState.getOldCommonObjectivePoints();
-                Platform.runLater(() -> {
-                    commonObjectivePoint1.getImage().cancel();
-                    commonObjectivePoint2.getImage().cancel();
-                    updateCommonObjectivePoints();
-                    updatePlayerCommonObjectivePointImage(player, old);
-                });
-                clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
-            }
-            case ("publicChat") -> {
-                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
-                clientState.getChatController().getPublicChat().addMessage(chatMessage);
-                Platform.runLater(() -> updatePublicChat(chatMessage));
-            }
-            case ("privateChat") -> {
-                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
-                if (chatMessage.getText().equals(clientState.getMyUsername())){
-                    clientState.getChatController().getPrivateChat(chatMessage.getReceivingUsername()).addMessage(chatMessage);
-                }
-                else {
-                    clientState.getChatController().getPrivateChat(chatMessage.getText()).addMessage(chatMessage);
-                }
-                Platform.runLater(() -> updatePrivateChat(chatMessage));
-            }
-        }
-    }
 
     //ritorna il numero dell'obiettivo comune completato
     private int commonObjectivePointPlayerImage(ArrayList<Integer> old){
@@ -1317,6 +1524,67 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
     }
+
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+        switch (evt.getPropertyName()) {
+            case ("board") -> Platform.runLater(() -> {
+                if(checkResetPoint==null || clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
+                    updateBoard();
+                }
+                else {
+                    reinitializeBoard();
+                    initializeBoardGrid();
+                }
+            });
+            case ("selectedTiles") -> Platform.runLater(this::updateSelectedTiles);
+            case ("bookshelf") -> Platform.runLater(()-> updateBookshelf((String) evt.getOldValue()));
+            case ("publicPoints") -> Platform.runLater(() -> {
+                updateAllPlayerPoints();
+                updateClassification();
+            });
+            case ("privatePoints") -> Platform.runLater(() -> {
+                updateMyPointsLabel();
+                updateClassification();
+            });
+            case ("currPlayer") ->
+                    Platform.runLater(() -> {
+                        updateCurrPlayer();
+                        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+                            boardGrid.setDisable(false);
+                        }
+                    });
+            case ("commonObjPoints") -> {
+                String player=clientState.getCurrentPlayer();
+                ArrayList<Integer> old=clientState.getOldCommonObjectivePoints();
+                Platform.runLater(() -> {
+                    commonObjectivePoint1.getImage().cancel();
+                    commonObjectivePoint2.getImage().cancel();
+                    updateCommonObjectivePoints();
+                    updatePlayerCommonObjectivePointImage(player, old);
+                });
+                clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
+            }
+            case ("publicChat") -> {
+                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
+                clientState.getChatController().getPublicChat().addMessage(chatMessage);
+                Platform.runLater(() -> updatePublicChat(chatMessage));
+            }
+            case ("privateChat") -> {
+                ChatMessage chatMessage=(ChatMessage) evt.getNewValue();
+                if (chatMessage.getText().equals(clientState.getMyUsername())){
+                    clientState.getChatController().getPrivateChat(chatMessage.getReceivingUsername()).addMessage(chatMessage);
+                }
+                else {
+                    clientState.getChatController().getPrivateChat(chatMessage.getText()).addMessage(chatMessage);
+                }
+                Platform.runLater(() -> updatePrivateChat(chatMessage));
+            }
+        }
+    }
+
 }
 
 
