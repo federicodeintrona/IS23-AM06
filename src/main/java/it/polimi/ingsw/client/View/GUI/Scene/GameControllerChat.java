@@ -432,6 +432,128 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     /**
+     * Method to initialize the board.
+     * <p>
+     * The BoardGrid has a size of 11x11, this was done in order to arrange the position of the tiles to be inserted on top of it.
+     * This implies that I had to do getTile -1.
+     */
+    private void initializeBoardGrid(){
+        Matrix matrix=clientState.getBoard();
+
+        //add tiles for each position different to EMPTY and NOT ALLOWED
+        for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
+            for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
+                if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
+                    boardGrid.add(setTiles(matrix.getTile(i-1, j-1)), j, i); //column, row
+                }
+            }
+        }
+    }
+
+    /**
+     * Method to initialize the common objective.
+     */
+    private void initializeCommonGrid(){
+        ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
+
+        //catch the path of the 1st common objective image and set it
+        String path = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(0)+".png";
+        commonObjectiveImage1.setImage(getImage(path));
+        //catch the path of the 2nd common objective image and set it
+        String path1 = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(1)+".png";
+        commonObjectiveImage2.setImage(getImage(path1));
+    }
+
+    //TODO finire javadoc
+    //inizializza il personal objective
+    private void initializePersonalObjectiveImageView() throws FileNotFoundException {
+        String path= "/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
+        personalObjectiveImageView.setImage(getImage(path));
+        personalObjectiveImageView.setPreserveRatio(true);
+        personalObjectiveImageView.setFitWidth(152);
+        personalObjectiveImageView.setFitHeight(229);
+    }
+
+    //inizializza il nome dell'altro giocatore
+    private void initializeotherPlayerLabel(){
+        //lista con gli username degli altri giocatori
+        ArrayList<String> otherPlayerList=catchOtherPlayerName(clientState.getAllUsername());
+
+        otherPlayerLabel1.setVisible(true);
+        otherPlayerLabel1.setDisable(false);
+        otherPlayerPointsLabel1.setVisible(true);
+        otherPlayerPointsLabel1.setDisable(false);
+        otherPlayerBookshelfGrid1.setVisible(true);
+        otherPlayerBookshelfGrid1.setDisable(false);
+        otherPlayerImage1.setVisible(true);
+        otherPlayerImage1.setDisable(false);
+        personal1.setVisible(true);
+        personal1.setDisable(false);
+        otherPlayer1CommonPoint1.setVisible(true);
+        otherPlayer1CommonPoint1.setDisable(false);
+        otherPlayer1CommonPoint2.setVisible(true);
+        otherPlayer1CommonPoint2.setDisable(false);
+
+        otherPlayerLabel1.setText(otherPlayerList.get(0));
+
+        switch (clientState.getAllUsername().size()){
+            case 3 -> {
+                otherPlayerLabel2.setVisible(true);
+                otherPlayerLabel2.setDisable(false);
+                otherPlayerPointsLabel2.setVisible(true);
+                otherPlayerPointsLabel2.setDisable(false);
+                otherPlayerBookshelfGrid2.setVisible(true);
+                otherPlayerBookshelfGrid2.setDisable(false);
+                otherPlayerImage2.setVisible(true);
+                otherPlayerImage2.setDisable(false);
+                personal2.setVisible(true);
+                personal2.setDisable(false);
+                otherPlayer2CommonPoint1.setVisible(true);
+                otherPlayer2CommonPoint1.setDisable(false);
+                otherPlayer2CommonPoint2.setVisible(true);
+                otherPlayer2CommonPoint2.setDisable(false);
+
+                otherPlayerLabel2.setText(otherPlayerList.get(1));
+            }
+            case 4 -> {
+                otherPlayerLabel2.setVisible(true);
+                otherPlayerLabel2.setDisable(false);
+                otherPlayerPointsLabel2.setVisible(true);
+                otherPlayerPointsLabel2.setDisable(false);
+                otherPlayerBookshelfGrid2.setVisible(true);
+                otherPlayerBookshelfGrid2.setDisable(false);
+                otherPlayerImage2.setVisible(true);
+                otherPlayerImage2.setDisable(false);
+                personal2.setVisible(true);
+                personal2.setDisable(false);
+                otherPlayer2CommonPoint1.setVisible(true);
+                otherPlayer2CommonPoint1.setDisable(false);
+                otherPlayer2CommonPoint2.setVisible(true);
+                otherPlayer2CommonPoint2.setDisable(false);
+
+                otherPlayerLabel2.setText(otherPlayerList.get(1));
+
+                otherPlayerLabel3.setVisible(true);
+                otherPlayerLabel3.setDisable(false);
+                otherPlayerPointsLabel3.setVisible(true);
+                otherPlayerPointsLabel3.setDisable(false);
+                otherPlayerBookshelfGrid3.setVisible(true);
+                otherPlayerBookshelfGrid3.setDisable(false);
+                otherPlayerImage3.setVisible(true);
+                otherPlayerImage3.setDisable(false);
+                personal3.setVisible(true);
+                personal3.setDisable(false);
+                otherPlayer3CommonPoint1.setVisible(true);
+                otherPlayer3CommonPoint1.setDisable(false);
+                otherPlayer3CommonPoint2.setVisible(true);
+                otherPlayer3CommonPoint2.setDisable(false);
+
+                otherPlayerLabel3.setText(otherPlayerList.get(2));
+            }
+        }
+    }
+
+    /**
      * Method to initialize the chair (username of the player who started the game).
      */
     private void initializeChair(){
@@ -498,6 +620,54 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
     }
 
+
+
+    //aggiorna i punti dei common objective
+    private void updateCommonObjectivePoints(){
+        ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
+        String path = "/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
+        commonObjectivePoint1.setImage(getImage(path));
+        String path1 = "/images/scoring_tokens/scoring_"+commonGoal.get(1)+".jpg";
+        commonObjectivePoint2.setImage(getImage(path1));
+    }
+
+    //aggiorna i tuoi punti
+    private void updateMyPointsLabel(){
+        String myPoints="My Points are: "+clientState.getMyPoints();
+
+        myPointsLabel.setText(myPoints);
+    }
+
+    //aggiorna i punti di tutti i giocatori
+    private void updateAllPlayerPoints(){
+        for (String player : clientState.getAllPublicPoints().keySet()){
+            if (!player.equals(clientState.getMyUsername())){
+                updateOtherPlayerPointsLabel(player);
+            }
+        }
+    }
+
+    private void updateCurrPlayer() {
+        String string;
+        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+            string="It is YOUR turn";
+            turnLabel.setText(string);
+
+            //pop up - è il tuo turno
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Update turn");
+            alert.setHeaderText("Current game turn");
+            alert.setContentText(string);
+            alert.initOwner(guiController.getStage());
+            alert.showAndWait();
+        }
+        else {
+            string="It is "+clientState.getCurrentPlayer()+" turn";
+            turnLabel.setText(string);
+        }
+
+    }
+
     /**
      * Method to update the game's ranking.
      */
@@ -517,6 +687,18 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         //show the ranking
         classification.setText(c.toString());
     }
+
+    //aggiorna tutte le bookshelf
+    private void updateBookshelf(String username){
+        if (username.equals(clientState.getMyUsername())){
+            updateMyBookshelf();
+        }
+        else {
+            updateOtherBookshelf(username);
+        }
+    }
+
+
 
     /**
      * Method used to reorder players based on how many points they scored - increasing.
@@ -670,35 +852,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
-    //la metrice è 11x11 ==> getTile -1
-    private void initializeBoardGrid(){
-        Matrix matrix=clientState.getBoard();
-        for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
-            for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
-                if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
-                    boardGrid.add(setTiles(matrix.getTile(i-1, j-1)), j, i); //lavora colonna - riga
-                }
-            }
-        }
-    }
 
-    //inizializza i common objective
-    private void initializeCommonGrid(){
-        ArrayList<Integer> commonGoal= clientState.getGameCommonObjective();
-        String path = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(0)+".png";
-        commonObjectiveImage1.setImage(getImage(path));
-        String path1 = "/images/common_goal_cards/Common_Goal_png/Common_Goal_"+commonGoal.get(1)+".png";
-        commonObjectiveImage2.setImage(getImage(path1));
-    }
 
-    //aggiorna i punti dei common objective
-    private void updateCommonObjectivePoints(){
-        ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
-        String path = "/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
-        commonObjectivePoint1.setImage(getImage(path));
-        String path1 = "/images/scoring_tokens/scoring_"+commonGoal.get(1)+".jpg";
-        commonObjectivePoint2.setImage(getImage(path1));
-    }
 
 
 
@@ -723,100 +878,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         return result;
     }
 
-    //inizializza il nome dell'altro giocatore
-    private void initializeotherPlayerLabel(){
-        //lista con gli username degli altri giocatori
-        ArrayList<String> otherPlayerList=catchOtherPlayerName(clientState.getAllUsername());
 
-        otherPlayerLabel1.setVisible(true);
-        otherPlayerLabel1.setDisable(false);
-        otherPlayerPointsLabel1.setVisible(true);
-        otherPlayerPointsLabel1.setDisable(false);
-        otherPlayerBookshelfGrid1.setVisible(true);
-        otherPlayerBookshelfGrid1.setDisable(false);
-        otherPlayerImage1.setVisible(true);
-        otherPlayerImage1.setDisable(false);
-        personal1.setVisible(true);
-        personal1.setDisable(false);
-        otherPlayer1CommonPoint1.setVisible(true);
-        otherPlayer1CommonPoint1.setDisable(false);
-        otherPlayer1CommonPoint2.setVisible(true);
-        otherPlayer1CommonPoint2.setDisable(false);
 
-        otherPlayerLabel1.setText(otherPlayerList.get(0));
 
-        switch (clientState.getAllUsername().size()){
-            case 3 -> {
-                otherPlayerLabel2.setVisible(true);
-                otherPlayerLabel2.setDisable(false);
-                otherPlayerPointsLabel2.setVisible(true);
-                otherPlayerPointsLabel2.setDisable(false);
-                otherPlayerBookshelfGrid2.setVisible(true);
-                otherPlayerBookshelfGrid2.setDisable(false);
-                otherPlayerImage2.setVisible(true);
-                otherPlayerImage2.setDisable(false);
-                personal2.setVisible(true);
-                personal2.setDisable(false);
-                otherPlayer2CommonPoint1.setVisible(true);
-                otherPlayer2CommonPoint1.setDisable(false);
-                otherPlayer2CommonPoint2.setVisible(true);
-                otherPlayer2CommonPoint2.setDisable(false);
-
-                otherPlayerLabel2.setText(otherPlayerList.get(1));
-            }
-            case 4 -> {
-                otherPlayerLabel2.setVisible(true);
-                otherPlayerLabel2.setDisable(false);
-                otherPlayerPointsLabel2.setVisible(true);
-                otherPlayerPointsLabel2.setDisable(false);
-                otherPlayerBookshelfGrid2.setVisible(true);
-                otherPlayerBookshelfGrid2.setDisable(false);
-                otherPlayerImage2.setVisible(true);
-                otherPlayerImage2.setDisable(false);
-                personal2.setVisible(true);
-                personal2.setDisable(false);
-                otherPlayer2CommonPoint1.setVisible(true);
-                otherPlayer2CommonPoint1.setDisable(false);
-                otherPlayer2CommonPoint2.setVisible(true);
-                otherPlayer2CommonPoint2.setDisable(false);
-
-                otherPlayerLabel2.setText(otherPlayerList.get(1));
-
-                otherPlayerLabel3.setVisible(true);
-                otherPlayerLabel3.setDisable(false);
-                otherPlayerPointsLabel3.setVisible(true);
-                otherPlayerPointsLabel3.setDisable(false);
-                otherPlayerBookshelfGrid3.setVisible(true);
-                otherPlayerBookshelfGrid3.setDisable(false);
-                otherPlayerImage3.setVisible(true);
-                otherPlayerImage3.setDisable(false);
-                personal3.setVisible(true);
-                personal3.setDisable(false);
-                otherPlayer3CommonPoint1.setVisible(true);
-                otherPlayer3CommonPoint1.setDisable(false);
-                otherPlayer3CommonPoint2.setVisible(true);
-                otherPlayer3CommonPoint2.setDisable(false);
-
-                otherPlayerLabel3.setText(otherPlayerList.get(2));
-            }
-        }
-    }
-
-    //inizializza il personal objective
-    private void initializePersonalObjectiveImageView() throws FileNotFoundException {
-        String path= "/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
-        personalObjectiveImageView.setImage(getImage(path));
-        personalObjectiveImageView.setPreserveRatio(true);
-        personalObjectiveImageView.setFitWidth(152);
-        personalObjectiveImageView.setFitHeight(229);
-    }
-
-    //aggiorna i tuoi punti
-    private void updateMyPointsLabel(){
-        String myPoints="My Points are: "+clientState.getMyPoints();
-
-        myPointsLabel.setText(myPoints);
-    }
 
     //ritorna il Label otherPlayerPointsLabel corretto
     private Label catchOtherPlayerPointsLabel(String username){
@@ -841,14 +905,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         Objects.requireNonNull(catchOtherPlayerPointsLabel(username)).setText(username+"\npoints are: "+points);
     }
 
-    //aggiorna i punti di tutti i giocatori
-    private void updateAllPlayerPoints(){
-        for (String player : clientState.getAllPublicPoints().keySet()){
-            if (!player.equals(clientState.getMyUsername())){
-                updateOtherPlayerPointsLabel(player);
-            }
-        }
-    }
+
 
 
     private void reinitializeBoard(){
@@ -917,15 +974,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
-    //aggiorna tutte le bookshelf
-    private void updateBookshelf(String username){
-        if (username.equals(clientState.getMyUsername())){
-            updateMyBookshelf();
-        }
-        else {
-            updateOtherBookshelf(username);
-        }
-    }
+
     private GridPane catchOtherPlayerBookshelfGrid(String username){
         if (otherPlayerLabel1.getText().equals(username)){
             return otherPlayerBookshelfGrid1;
@@ -968,26 +1017,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
     }
 
-    private void updateCurrPlayer() {
-        String string;
-        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
-            string="It is YOUR turn";
-            turnLabel.setText(string);
 
-            //pop up - è il tuo turno
-            Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Update turn");
-            alert.setHeaderText("Current game turn");
-            alert.setContentText(string);
-            alert.initOwner(guiController.getStage());
-            alert.showAndWait();
-        }
-        else {
-            string="It is "+clientState.getCurrentPlayer()+" turn";
-            turnLabel.setText(string);
-        }
-
-    }
 
 
 
