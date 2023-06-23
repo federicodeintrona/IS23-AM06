@@ -643,12 +643,23 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
 
 
-    //TODO javadoc FLA
+    /**
+     * Adds a `PropertyChangeListener` object to the list of listeners.
+     * The listener will be notified when property changes occur.
+     *
+     * @param listener the `PropertyChangeListener` to add
+     */
     public void addListener(PropertyChangeListener listener){
         notifier.addPropertyChangeListener(listener);
     }
 
-    //TODO javadoc FLA
+    /**
+     * Adds a `PropertyChangeListener` object to the list of listeners for the specified property.
+     * The listener will be notified when property changes occur.
+     *
+     * @param listener the `PropertyChangeListener` to add
+     * @param property the name of the property to listen for changes
+     */
     public void addListener(PropertyChangeListener listener,String property){
         notifier.addPropertyChangeListener(property,listener);
     }
@@ -666,7 +677,12 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         return true;
     }
 
-    //TODO javadoc FLA
+    /**
+     * Method that analyzes @message to see if is intended for the public
+     * or private chat and calls the proper method via notifier
+     *
+     * @param message       ChatMessage containing the conversation for a Chat
+     */
     @Override
     public void newMessageHandler (ChatMessage message) {
         if (message.getReceivingUsername() == null)
@@ -677,8 +693,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
 
-
-    //TODO javadoc FLA
+    /**
+     * Method to restore all chats via @backup
+     *
+     * @param backup        ChatController containing the Server's backup for the chats
+     */
     public void reloadChats (ChatController backup) { this.chatController = backup; }
 
 
