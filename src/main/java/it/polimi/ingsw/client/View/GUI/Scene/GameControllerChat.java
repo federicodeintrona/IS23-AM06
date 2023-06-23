@@ -970,24 +970,38 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         selectedTilesDialog.setVisible(false);
         selectedTilesDialog.setDisable(true);
 
-        column1.setVisible(true);
-        column1.setDisable(false);
-
-        column2.setVisible(true);
-        column2.setDisable(false);
-
-        column3.setVisible(true);
-        column3.setDisable(false);
-
-        column4.setVisible(true);
-        column4.setDisable(false);
-
-        column5.setVisible(true);
-        column5.setDisable(false);
+        correctSelectColumn();
 
         boardGrid.setVisible(true);
 
         state = State.ADD;
+    }
+
+    private void correctSelectColumn(){
+        int i=clientState.getSelectedTiles().size();
+        ArrayList<Integer> column=clientState.checkFreeColumn(i);
+
+        //controllo se le colonne vanno bene
+        if (column.contains(0)){
+            column1.setVisible(true);
+            column1.setDisable(false);
+        }
+        if (column.contains(1)){
+            column2.setVisible(true);
+            column2.setDisable(false);
+        }
+        if (column.contains(2)){
+            column3.setVisible(true);
+            column3.setDisable(false);
+        }
+        if (column.contains(3)){
+            column4.setVisible(true);
+            column4.setDisable(false);
+        }
+        if (column.contains(4)){
+            column5.setVisible(true);
+            column5.setDisable(false);
+        }
     }
 
     //aggiungo tile nell'ordine corretto
