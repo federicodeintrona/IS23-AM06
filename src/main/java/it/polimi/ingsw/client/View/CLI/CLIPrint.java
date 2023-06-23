@@ -98,7 +98,6 @@ public class CLIPrint implements PropertyChangeListener {
 
 
 
-    //TODO scegliere quale titolo mettere
     /**
      * Method to print the title of the game
      */
@@ -369,7 +368,6 @@ public class CLIPrint implements PropertyChangeListener {
             Matrix bookshelf = new Matrix(Define.NUMBEROFROWS_BOOKSHELF.getI(), Define.NUMBEROFCOLUMNS_BOOKSHELF.getI());
             JSONParser jsonParser = new JSONParser();
 
-            //TODO Optional FEDE???
             try {
                 InputStream is=this.getClass().getClassLoader().getResourceAsStream("CommonObjective.json");
                 assert is != null;

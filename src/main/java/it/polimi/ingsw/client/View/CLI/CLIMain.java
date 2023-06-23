@@ -139,14 +139,6 @@ public class CLIMain implements View {
         return net;
     }
 
-    /**
-     * Getter --> return if chat is open
-     *
-     * @return boolean &nbsp;&nbsp;&nbsp; is chat open?
-     */
-    public boolean isOpenChat() {
-        return openChat;
-    }
 
 
     /**
@@ -177,6 +169,9 @@ public class CLIMain implements View {
             System.out.print("Which connection protocol do you choose? (RMI/TCP): ");
             decision = scanner.nextLine();
             decision=decision.toUpperCase();
+            if(decision.equals("#QUIT") || decision.equals("#Q")){
+                System.exit(0);
+            }
         }while (!decision.equals("RMI") && !decision.equals("TCP"));
 
         //instance the correct connection protocol
@@ -193,8 +188,12 @@ public class CLIMain implements View {
         do {
             System.out.print("Which host do you use? ");
             String host = scanner.nextLine();
+            host=host.toLowerCase();
+            if(host.equals("#quit") || host.equals("#q")){
+                System.exit(0);
+            }
             //if you do not insert a host, you chose the localhost
-            if (host.isEmpty()) {
+            else if (host.isEmpty()) {
                 System.out.println("You selected the default host: localhost");
                 host = "localhost";
             }
@@ -212,6 +211,7 @@ public class CLIMain implements View {
 
         //username request
         readShell.askUsername();
+
 
         //waiting until game has started
         while (!clientState.gameHasStarted()){
@@ -273,6 +273,11 @@ public class CLIMain implements View {
         cliPrint.clearShell();
         cliPrint.printEndGame();
         //close all thread
+        do {
+            decision=scanner.nextLine();
+            decision=decision.toLowerCase();
+
+        }while(!decision.equals("#quit") && !decision.equals("#q"));
         close();
     }
 
@@ -286,7 +291,15 @@ public class CLIMain implements View {
         Message msg = new Message();
         msg.setType(MessageTypes.DISCONNECT);
         net.closeProgram(msg);
+    }
 
+    /**
+     * Method to close the Client before creation of CLI-thread
+     */
+    public void closeClient(){
+        Message msg = new Message();
+        msg.setType(MessageTypes.DISCONNECT);
+        net.closeProgram(msg);
     }
 
 
@@ -375,3 +388,4 @@ public class CLIMain implements View {
         cliPrint.playerTurn();
     }
 }
+

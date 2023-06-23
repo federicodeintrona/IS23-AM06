@@ -80,4 +80,3 @@ public enum ColorCLI {
     }
 }
 
-//todo scegliere colore
