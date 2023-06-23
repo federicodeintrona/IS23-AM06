@@ -5,8 +5,8 @@ import java.io.Serializable;
  * <p>Class for message sent by client and server used for chat</p>
  */
 public class ChatMessage extends Message implements Serializable {
-    String message;
-    String receivingUsername;
+    private final String message;
+    private final String receivingUsername;
 
     /**
      * Initialize the chat message with the username of the sending client and the content of the message

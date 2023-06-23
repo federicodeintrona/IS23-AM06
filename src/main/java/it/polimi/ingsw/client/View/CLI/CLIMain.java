@@ -153,7 +153,7 @@ public class CLIMain implements View {
     }
 
 
-    //TODO cosa scrivo per RemoteException
+
     /**
      * Method to run the Command Line Interface
      *
@@ -222,16 +222,18 @@ public class CLIMain implements View {
                 cliPrint.printWaiting();
                 try {
                     Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                }
+                catch (InterruptedException e) {
+                    System.out.println("Waiting failed");
                 }
             }
             //you are the latest player
             else {
                 try {
                     Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                }
+                catch (InterruptedException e) {
+                    System.out.println("Waiting failed");
                 }
             }
         }
@@ -274,13 +276,14 @@ public class CLIMain implements View {
         //the game is ended
         cliPrint.clearShell();
         cliPrint.printEndGame();
-        //close all thread
+        th1.interrupt();
+        //wait until the client quit
         do {
+            System.out.println("To exit close: #quit or #q");
             decision=scanner.nextLine();
             decision=decision.toLowerCase();
-
         }while(!decision.equals("#quit") && !decision.equals("#q"));
-        close();
+        closeClient();
     }
 
     /**
@@ -334,8 +337,6 @@ public class CLIMain implements View {
     }
 
 
-    //TODO alla fine la facciamo così la CLI??
-    //TODO cosa scrivo
 
     /**
      *
@@ -345,15 +346,6 @@ public class CLIMain implements View {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
-            case "start" ->{
-                // moveToGameScene();
-            }
-            case "nextTurn"->{
-                //  printTurn();
-            }
-            case "end" -> {
-                // moveToEndScene();
-            }
             case "publicChat" ->
                 chatHandler.newPublicMessage((ChatMessage) evt.getNewValue());
             case "privateChat" ->
@@ -361,33 +353,5 @@ public class CLIMain implements View {
         }
     }
 
-    private void moveToEndScene() {
-        cliPrint.clearShell();
-        cliPrint.printEndGame();
-    }
-    //Per ora ho fatto copia e incolla da quello che c'era nel run
-    private void printTurn() {
-        cliPrint.clearShell();
-        cliPrint.playerTurn();
-    }
-
-    private void moveToGameScene() {
-
-        chatHandler = new ChatHandler(clientState.getChatController(), this, cliPrint);
-
-        cliPrint.clearShell();
-        cliPrint.gameHasStarted();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-           e.printStackTrace();
-        }
-
-
-        cliPrint.printChair();
-        cliPrint.printCommonObjective(clientState.getGameCommonObjective());
-        cliPrint.playerTurn();
-    }
 }
 
