@@ -156,7 +156,7 @@ public class GUIController implements View, SceneController {
     /**
      * Method to receive the message from the server
      *
-     * @param message the message received from the server
+     * @param message that received from the server
      */
     @Override
     public void receivedMessage(Message message) {
@@ -172,17 +172,17 @@ public class GUIController implements View, SceneController {
     /**
      * Method for managing scene change
      *
-     * @param scenes the scene to be shown now
+     * @param scene to be shown now
      */
-    public void changeScene(Scenes scenes){
+    public void changeScene(Scenes scene){
         Platform.runLater(()->{
             try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scenes.getName())));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scene.getName())));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             this.scene.setRoot(root);
-            stage.setTitle(scenes.getTitle());
+            stage.setTitle(scene.getTitle());
         });
     }
 
