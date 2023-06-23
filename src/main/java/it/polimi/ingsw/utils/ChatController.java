@@ -57,20 +57,46 @@ public class ChatController implements Serializable {
         privateChats = new HashMap<>();
     }
 
+    /**
+     * <strong>Getter</strong> -> Gets the publicChat
+     *
+     * @return      PublicChat
+     */
     public Chat getPublicChat() {
         return publicChat;
     }
 
+    /**
+     * <strong>Getter</strong> -> Gets the privateChat the client has with @username
+     *
+     * @param username      The other player you want to chat with
+     * @return      PrivateChat
+     */
     public Chat getPrivateChat (String username) {
         return privateChats.get(username);
     }
 
+    /**
+     * <strong>Getter</strong> -> Gets all PrivateChats at once
+     *
+     * @return      HashMap containing all PrivateChats
+     */
     public HashMap<String, Chat> getPrivateChats() {
         return privateChats;
     }
 
+    /**
+     * <strong>Setter</strong> -> Sets the publicChat
+     *
+     * @param publicChat      PublicChat to set
+     */
     public void setPublicChat (Chat publicChat) { this.publicChat = publicChat; }
 
+    /**
+     * <strong>Setter</strong> -> Sets all PrivateChats at once
+     *
+     * @param privateChats      PrivateChat to set
+     */
     public void setPrivateChats(HashMap<String, Chat> privateChats) { this.privateChats = privateChats; }
 
 }
