@@ -19,20 +19,39 @@ import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Class to manage the Client
+ * <ul>
+ *     <li>choice of which User Interface you want to play in (CLI or GUI), if you do not choose which one you prefer the GUI starts automatically</li>
+ *     <li>logout from the User Interface</li>
+ * </ul>
+ */
 public class ClientBase extends Application{
 
+    /**
+     * Static method to launch the Client
+     *
+     * @param args the arguments that you insert on input
+     */
     public static void main( String[] args ) {
         try {
+            //choice of which UI you want to play in
             Scanner scanner = new Scanner(System.in);
             System.out.print("Which User Interface do you choose? (CLI/GUI): ");
             String decision = scanner.nextLine();
+
+            //if you choose CLI
             if (decision.equalsIgnoreCase("CLI")) {
                 CLIMain cli = new CLIMain();
                 cli.runUI();
-            } else {
+            }
+            //if you choose GUI or
+            //if you do not choose any UI
+            else {
                 launch();
             }
-        } catch (RemoteException e) {
+        }
+        catch (RemoteException e) {
             System.out.println("The game has failed to start properly. Retry again.");
             System.exit(1);
         }
