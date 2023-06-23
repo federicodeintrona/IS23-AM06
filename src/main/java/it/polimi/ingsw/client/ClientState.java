@@ -26,9 +26,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     private ArrayList<Integer> oldCommonObjectivePoints;
     private Matrix board;
     private Matrix myBookshelf;
-    private HashMap<String, Matrix> allBookshelf = new HashMap<>();
+    private final HashMap<String, Matrix> allBookshelf = new HashMap<>();
     private Integer myPoints;
-    private HashMap<String, Integer> allPublicPoints= new HashMap<>();
+    private final HashMap<String, Integer> allPublicPoints= new HashMap<>();
     private ArrayList<Tiles> selectedTiles;
     private String currentPlayer;
     private String nextPlayer;
@@ -362,7 +362,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         synchronized (viewLock) {
             ArrayList<Integer> list=new ArrayList<>();
             for (int i=0;i< Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();i++) {
-                if (myBookshelf.getTile(6 - numTilesSelected, i)==Tiles.EMPTY){
+                if (myBookshelf.getTile( numTilesSelected-1, i)==Tiles.EMPTY){
                     list.add(i);
                 }
             }
