@@ -587,7 +587,18 @@ public class CLIPrint implements PropertyChangeListener {
 
     }
 
-    //TODO javadoc FLA
+    /**
+     * <p>
+     *     Method that prints the history of the publicChat
+     * </p>
+     * <p>
+     *     Using the boolean @printAndChat it prints
+     *     different outputs depending if the method
+     *     gets called while the Chat is enable or not
+     * </p>
+     *
+     * @param printAndChat      Boolean used to activate different code's part via if-else
+     */
     public void printChat (boolean printAndChat) {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPublicChat().resetUnReadMessages();
@@ -629,8 +640,23 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //TODO javadoc FLA
-    public void printChat (String username, boolean printAndChat) {
+    /**
+     * <p>
+     *     Method that prints the history of a privateChat
+     * </p>
+     * <p>
+     *     Prints the history the chat's history that the player
+     *     who called the method has with @username
+     * </p>
+     * <p>
+     *     Using the boolean @printAndChat it prints
+     *     different outputs depending if the method
+     *     gets called while the Chat is enable or not
+     * </p>
+     *
+     * @param username      Player to chat with
+     * @param printAndChat      Boolean used to activate different code's part via if-else
+     */    public void printChat (String username, boolean printAndChat) {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPrivateChat(username).resetUnReadMessages();
 
