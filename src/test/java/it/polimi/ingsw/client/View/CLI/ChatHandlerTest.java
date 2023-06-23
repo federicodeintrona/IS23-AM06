@@ -5,7 +5,6 @@ import it.polimi.ingsw.utils.Chat;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -17,8 +16,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.rmi.RemoteException;
-import java.util.HashMap;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -56,6 +53,7 @@ class ChatHandlerTest {
         // Salva l'input attuale per poterlo ripristinare successivamente
         InputStream originalInputStream = System.in;
 
+        // Setting Mock's methods
         doNothing().when(cliPrint).printChat(true);
         when(chatController.getPublicChat()).thenReturn(publicChat);
         when(cli.getClientState()).thenReturn(clientState);
@@ -94,20 +92,20 @@ class ChatHandlerTest {
 
         publicChat.setChatIsEnable(true);
 
+        // Setting Mock's methods
         when(chatController.getPublicChat()).thenReturn(publicChat);
         when(cli.getClientState()).thenReturn(clientState);
         when(clientState.getMyUsername()).thenReturn(username2);
 
-        // Crea un oggetto ByteArrayOutputStream per intercettare l'output
+        // Creating a ByteArrayOutputStream object to intercept the output
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
         chatHandler.newPublicMessage(chatMessage);
 
-        // Ottieni l'output come stringa
+        // Getting the output as string
         String output = outputStream.toString();
 
-        // Effettua l'assertion sul contenuto dell'output
         Assertions.assertEquals(expectedOutput, output);
     }
 
@@ -122,21 +120,21 @@ class ChatHandlerTest {
 
         publicChat.setChatIsEnable(false);
 
+        // Setting Mock's methods
         when(chatController.getPublicChat()).thenReturn(publicChat);
         when(cli.getClientState()).thenReturn(clientState);
         when(clientState.getMyUsername()).thenReturn(username);
 
-        // Crea un oggetto ByteArrayOutputStream per intercettare l'output
+        // Creating a ByteArrayOutputStream object to intercept the output
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
         chatHandler.newPublicMessage(chatMessage);
         chatHandler.newPublicMessage(chatMessage);
 
-        // Ottieni l'output come stringa
+        // Getting the output as string
         String output = outputStream.toString();
 
-        // Effettua l'assertion sul contenuto dell'output
         Assertions.assertEquals(expectedOutput1, output);
     }
 
@@ -149,6 +147,7 @@ class ChatHandlerTest {
         String message = "may the force be with you";
         ChatMessage chatMessage = new ChatMessage(forwardingUsername, message, receivingUsername);
 
+        // Setting Mock's methods
         when(chatController.getPrivateChat(receivingUsername)).thenReturn(privateChat);
         when(cli.getClientState()).thenReturn(clientState);
         when(clientState.getMyUsername()).thenReturn(forwardingUsername);
@@ -170,17 +169,18 @@ class ChatHandlerTest {
 
         privateChat.setChatIsEnable(true);
 
+        // Setting Mock's methods
         when(chatController.getPrivateChat(forwardingUsername)).thenReturn(privateChat);
         when(cli.getClientState()).thenReturn(clientState);
         when(clientState.getMyUsername()).thenReturn(receivingUsername);
 
-        // Crea un oggetto ByteArrayOutputStream per intercettare l'output
+        // Creating a ByteArrayOutputStream object to intercept the output
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
         chatHandler.newPrivateMessage(chatMessage);
 
-        // Ottieni l'output come stringa
+        // Getting the output as string
         String output = outputStream.toString();
 
         Assertions.assertEquals(expectedOutput, output);
@@ -200,18 +200,19 @@ class ChatHandlerTest {
 
         privateChat.setChatIsEnable(false);
 
+        // Setting Mock's methods
         when(chatController.getPrivateChat(forwardingUsername)).thenReturn(privateChat);
         when(cli.getClientState()).thenReturn(clientState);
         when(clientState.getMyUsername()).thenReturn(receivingUsername);
 
-        // Crea un oggetto ByteArrayOutputStream per intercettare l'output
+        // Creating a ByteArrayOutputStream object to intercept the output
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
         chatHandler.newPrivateMessage(chatMessage);
         chatHandler.newPrivateMessage(chatMessage);
 
-        // Ottieni l'output come stringa
+        // Getting the output as string
         String output = outputStream.toString();
 
         Assertions.assertEquals(expectedOutput, output);
