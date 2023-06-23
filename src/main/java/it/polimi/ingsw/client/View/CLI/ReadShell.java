@@ -251,7 +251,6 @@ public class ReadShell extends Thread {
         do {
             System.out.print("Enter your username: ");
             nickname = readLine();
-            //TODO caccia tante eccezioni - RMI
             if (nickname.equalsIgnoreCase("#quit") || nickname.equalsIgnoreCase("#q")){
                 cliMain.closeClient();
             }

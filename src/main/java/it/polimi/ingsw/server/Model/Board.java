@@ -83,6 +83,7 @@ public class Board {
     }
 
 
+
     /**
      * Method to create the board based on number of players
      */
@@ -428,7 +429,6 @@ public class Board {
         boardSachet.removeTiles(tile);
     }
 
-    //TODO sti metodi sembra che non vengano mai chiamati - come rimuoviamo le tessere dalla board???
     /**
      * Method to remove the tiles in the positions shown
      * <p>
@@ -855,7 +855,6 @@ public class Board {
     private boolean checkNotAllowed(Point point){
         return gamesBoard.getTile(point).equals(Tiles.NOT_ALLOWED);
     }
-
 
     /**
      * Method to return if all element in the List are pickable

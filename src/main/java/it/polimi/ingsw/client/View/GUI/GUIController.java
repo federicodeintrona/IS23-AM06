@@ -56,7 +56,7 @@ public class GUIController implements View, SceneController {
 
 
 
-    //TODO and... addListener cosa fanno - FLA...
+    //TODO and... addListener cosa fanno - javadoc FLA
     /**
      * Initialize the ClientState and
      *
@@ -208,7 +208,7 @@ public class GUIController implements View, SceneController {
 
 
 
-    //TODO cosa scrivo
+    //TODO javadoc FEDE
     /**
      *
      * @param evt A PropertyChangeEvent object describing the event source
