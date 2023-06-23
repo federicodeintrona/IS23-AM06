@@ -43,15 +43,16 @@ public class Reader extends Thread implements TimerInterface {
     private final NetworkerTcp networkerTcp;
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private final ClientState clientState;
+
     private boolean disconnected = false;
     private ScheduledExecutorService e;
 
     //Timer
-
+    private boolean ponging = true;
     private  Timer timer;
     private int time = 0;
     private static final int initialDelay = 50;
-    private static final int delta = 2000;
+    private static final int delta = 1000;
 
     public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
         this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -89,9 +90,7 @@ public class Reader extends Thread implements TimerInterface {
             }
         }
         catch(SocketException e){
-            if(!disconnected) disconnect();
-            else out.println("The game is about to close! Have fun! The game will go on without you:)");
-
+            if(disconnected) out.println("The game is about to close! Have fun! The game will go on without you:)");
         }
         catch (IOException e) {
             System.out.println( "Server is not responding...");
@@ -114,8 +113,10 @@ public class Reader extends Thread implements TimerInterface {
                 oos.writeObject(msg);
                 oos.flush();
             } catch (IOException e) {
-                if(!disconnected)
-                    System.out.println( "Server is not responding...");
+                if(ponging&&!disconnected) {
+                    System.out.println("Server is not responding...");
+                    ponging=false;
+                }
             }
         },10,500, TimeUnit.MILLISECONDS);
 
@@ -166,14 +167,20 @@ public class Reader extends Thread implements TimerInterface {
             case ("reloadChats") ->
                     clientState.reloadChats((ChatController) message.getContent());
             case ("end") -> {
-                clientState.setGameIsEnded((Boolean) message.getContent());
-                disconnected=true;
+                Boolean end = (Boolean) message.getContent();
+                clientState.setGameIsEnded(end);
             }
         }
     }
 
     @Override
     public void disconnect() {
+        notifier.firePropertyChange(new PropertyChangeEvent(true,
+                "disconnect", null, null));;
+    }
+
+
+    public void disconnection() {
         disconnected=true;
         e.shutdown();
         timer.cancel();

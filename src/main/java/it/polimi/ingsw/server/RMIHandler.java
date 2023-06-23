@@ -50,13 +50,14 @@ public class RMIHandler implements RMIHandlerInterface{
         try {
 
             RMIVirtualView myView = new RMIVirtualView(username,state);
-            RMITimer myTimeout = new RMITimer(username,myView,controller);
-            myTimeout.pingPong();
+            RMITimer myTimer = new RMITimer(myView,controller);
+            myTimer.pingPong();
+            myView.setTimer(myTimer);
 
             message = controller.handleNewClient(username, myView);
 
-            if(!message.getType().equals(MessageTypes.ERROR)){
-                myTimeout.setUsername(username);
+            if(message.getType().equals(MessageTypes.ERROR)){
+                myView.stopTimer();
             }
 
 
