@@ -56,7 +56,7 @@ public class GUIController implements View, SceneController {
 
 
 
-    //TODO and... addListener cosa fanno - javadoc FLA
+    //TODO and... addListener cosa fanno - javadoc FEDE
     /**
      * Initialize the ClientState and
      *
