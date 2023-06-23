@@ -7,13 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * <p>
+ *     Class that implements an ArrayList of messages creating a chat
+ * </p>
+ * <p>
+ *     It manages the addition and removal of messages in the Chat
+ *     and it preserves them in an ArrayList that becomes the Chat's history
+ * </p>
+ */
 public class Chat implements Serializable {
-    private ArrayList<ChatMessage> chatMessages;        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
+    private final ArrayList<ChatMessage> chatMessages;        // List of previous messages from latest (index = 0) to oldest (index = oldestMessage)
     private boolean chatIsEnable;
     private int oldestMessage;
     private final int maxNumberOfMessages;
     private int unReadMessages;
 
+    /**
+     * Constructor standard that sets the maximum
+     * number of messages contained in a Chat
+     * automatically to 20
+     */
     public Chat () {
         chatMessages = new ArrayList<>();
         maxNumberOfMessages = 20;
@@ -21,6 +35,13 @@ public class Chat implements Serializable {
         chatIsEnable = false;
     }
 
+    /**
+     * Constructor that sets the maximum
+     * number of messages contained in a
+     * Chat to @maxNumberOfMessages
+     *
+     * @param maxNumberOfMessages       The maximum number of messages in the chat's history
+     */
     public Chat(int maxNumberOfMessages) {
         chatMessages = new ArrayList<>();
         this.maxNumberOfMessages = maxNumberOfMessages;
@@ -28,6 +49,17 @@ public class Chat implements Serializable {
         chatIsEnable = false;
     }
 
+    /**
+     * <p>
+     *    Method that adds a new ChatMessage into the Chat
+     * </p>
+     * <p>
+     *     In case the Chat is full it refreshes the
+     *     history of messages by deleting the oldest one
+     * </p>
+     *
+     * @param message       ChatMessage to add
+     */
     public synchronized void addMessage(ChatMessage message) {
         if (chatMessages.isEmpty()) {
             chatMessages.add(0, message);
@@ -41,6 +73,19 @@ public class Chat implements Serializable {
         oldestMessage++;
     }
 
+    /**
+     * <p>
+     *    Method that creates a new ChatMessage from the given
+     *    @username and @message and adds it into the Chat
+     * </p>
+     * <p>
+     *     In case the Chat is full it refreshes the
+     *     history of messages by deleting the oldest one
+     * </p>
+     *
+     * @param username      Player sending the message
+     * @param message       Message sent
+     */
     public synchronized void addMessage(String username, String message) {
         if (chatMessages.isEmpty()) {
             chatMessages.add(0, new ChatMessage(username, message));
@@ -54,6 +99,21 @@ public class Chat implements Serializable {
         oldestMessage++;
     }
 
+    /**
+     * <p>
+     *    Method that creates a new ChatMessage from the given
+     *    @forwardingPlayer, @message and @receivingPlayer
+     *    and adds it into the Chat
+     * </p>
+     * <p>
+     *     In case the Chat is full it refreshes the
+     *     history of messages by deleting the oldest one
+     * </p>
+     *
+     * @param forwardingPlayer      Player sending the message
+     * @param message       Message sent
+     * @param receivingPlayer       Player receiving the message
+     */
     public synchronized void addMessage(String forwardingPlayer, String message, String receivingPlayer) {
         if (chatMessages.isEmpty()) {
             chatMessages.add(0, new ChatMessage(forwardingPlayer, message, receivingPlayer));
@@ -67,29 +127,67 @@ public class Chat implements Serializable {
         oldestMessage++;
     }
 
+    /**
+     * Method that deletes the oldest message in the Chat
+     */
     private void chatRefresh () {
         chatMessages.remove(oldestMessage);
         oldestMessage--;
     }
 
+    /**
+     * <strong>Getter</strong> -> Gets all Chat's messages
+     *
+     * @return      Chat's history
+     */
     public List<ChatMessage> getChatMessages () {return chatMessages;}
 
-    public int getOldestMessage() {
-        return oldestMessage;
-    }
+    /**
+     * <strong>Getter</strong> -> Gets the position of the oldest message
+     *
+     * @return      Integer representing the position in the ArrayList of the oldest message
+     */
+    public int getOldestMessage() {return oldestMessage;}
 
+    /**
+     * Method that updates the number representing the un read message
+     */
     public synchronized void updateUnReadMessages () {unReadMessages++;}
 
+    /**
+     * Method that resets to zero the
+     * number representing the un read message
+     */
     public synchronized void resetUnReadMessages () {unReadMessages = 0;}
 
+    /**
+     * <strong>Getter</strong> -> Gets the number of unread messages
+     *
+     * @return      Number of unread messages
+     */
     public int getUnReadMessages() {return unReadMessages;}
 
+    /**
+     * <strong>Getter</strong> -> Gets the maximum number of messages allowed in the Chat's history
+     *
+     * @return      Maximum number of messages
+     */
     public int getMaxNumberOfMessages() {return maxNumberOfMessages;}
 
+    /**
+     * <strong>Getter</strong> -> Gets boolean used to check if the Chat is open on screen
+     *
+     * @return      Boolean used to check if the Chat is open on screen
+     */
     public boolean ChatIsEnable() {
         return chatIsEnable;
     }
 
+    /**
+     * <strong>Setter</strong> -> Sets the boolean ChatIsEnable to ChatIsEnable
+     *
+     * @param chatIsEnable      Boolean used to set chatIsEnable
+     */
     public void setChatIsEnable(boolean chatIsEnable) {
         this.chatIsEnable = chatIsEnable;
     }
