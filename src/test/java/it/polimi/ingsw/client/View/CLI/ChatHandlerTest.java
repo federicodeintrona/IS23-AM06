@@ -4,16 +4,18 @@ import it.polimi.ingsw.utils.Messages.ChatMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.rmi.RemoteException;
 
 class ChatHandlerTest {
 
-    @Mo
+    @Mock
     private MockCliMain cli;
 
     @BeforeAll
-    public static void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
