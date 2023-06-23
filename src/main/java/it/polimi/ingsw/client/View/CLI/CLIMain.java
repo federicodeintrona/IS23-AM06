@@ -382,7 +382,3 @@ public class CLIMain implements View {
     }
 }
 
-/*
-    TODO
-     quitta in richiesta username e num of player
- */
