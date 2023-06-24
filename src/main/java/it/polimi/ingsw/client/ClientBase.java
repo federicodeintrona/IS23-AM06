@@ -20,18 +20,18 @@ import java.util.Objects;
 import java.util.Scanner;
 
 /**
- * Class to manage the Client
+ * Class to manage the Client.
  * <ul>
- *     <li>choice of which User Interface you want to play in (CLI or GUI), if you do not choose which one you prefer the GUI starts automatically</li>
- *     <li>logout from the User Interface</li>
+ *     <li>Choice of which User Interface you want to play in (CLI or GUI), if you do not choose which one you prefer the GUI starts automatically;</li>
+ *     <li>logout from the User Interface.</li>
  * </ul>
  */
 public class ClientBase extends Application{
 
     /**
-     * Static method to launch the Client
+     * Static method to launch the Client.
      *
-     * @param args the arguments that you insert on input
+     * @param args the arguments that you insert on input.
      */
     public static void main( String[] args ) {
         try {
@@ -61,9 +61,9 @@ public class ClientBase extends Application{
 
     /**
      * The main entry point for all JavaFX applications.
-     * The start method is called after the init method has returned, and after the system is ready for the application to begin running
+     * The start method is called after the init method has returned, and after the system is ready for the application to begin running.
      *
-     * @param stage the stage for this application, onto which the application scene can be set
+     * @param stage the stage for this application, onto which the application scene can be set.
      * @throws Exception
      */
     @Override
@@ -118,9 +118,9 @@ public class ClientBase extends Application{
     }
 
     /**
-     * Method to logged out from the Graphic User Interface
+     * Method to logged out from the Graphic User Interface.
      *
-     * @param stage the stage for this application
+     * @param stage the stage for this application.
      */
     public void logout(Stage stage){
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);

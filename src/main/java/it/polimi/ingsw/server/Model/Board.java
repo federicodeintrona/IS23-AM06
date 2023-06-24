@@ -9,40 +9,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to manage the game board
+ * Class to manage the game board.
  * <ul>
- *     <li>initialization of the game board based on the number of players</li>
- *     <li>check if you need to reset the board</li>
- *     <li>reset the board</li>
- *     <li>add the tiles from the board and remove it from the sachet</li>
- *     <li>remove the tiles from the board</li>
- *     <li>define which tiles are free</li>
- *     <li>define which tiles are adjacent with each other</li>
+ *     <li>Initialization of the game board based on the number of players;</li>
+ *     <li>check if you need to reset the board;</li>
+ *     <li>reset the board;</li>
+ *     <li>add the tiles from the board and remove it from the sachet;</li>
+ *     <li>remove the tiles from the board;</li>
+ *     <li>define which tiles are free;</li>
+ *     <li>define which tiles are adjacent with each other;</li>
  * </ul>
  */
 public class Board {
 
     /**
-     * Attribute used as a real board
+     * Attribute used as a real board.
      */
     private final Matrix gamesBoard=new Matrix(Define.NUMBEROFROWS_BOARD.getI(), Define.NUMBEROFCOLUMNS_BOARD.getI());
     /**
-     * Attribute for saving the number of player that playing on the gamesBoard
+     * Attribute for saving the number of player that playing on the gamesBoard.
      */
     private final int numberOfPlayer;
     /**
-     * Attribute for associate the gamesBoard to its boardSachet
+     * Attribute for associate the gamesBoard to its boardSachet.
      */
     private Sachet boardSachet;
 
 
 
     /**
-     * Initialize numberOfPlayer and create Board based on number of player
+     * Initialize numberOfPlayer and create Board based on number of player.
      * <p>
-     * <strong>REQUIRES:</strong> numberOfPlayer to be a number between 2 and 4
+     * <strong>REQUIRES:</strong> numberOfPlayer to be a number between 2 and 4.
      *
-     * @param numberOfPlayer number of player
+     * @param numberOfPlayer the number of player.
      */
     public Board(int numberOfPlayer) {
         this.numberOfPlayer = numberOfPlayer;
@@ -50,12 +50,12 @@ public class Board {
 
     }
     /**
-     * Initialize numberOfPlayer, boardSachet and create Board based on number of player
+     * Initialize numberOfPlayer, boardSachet and create Board based on number of player.
      * <p>
-     * <strong>REQUIRES:</strong> numberOfPlayer is between 2 and 4
+     * <strong>REQUIRES:</strong> numberOfPlayer is between 2 and 4.
      *
-     * @param numberOfPlayer number of player
-     * @param boardSachet Sachet that will fill the Board
+     * @param numberOfPlayer the number of player.
+     * @param boardSachet the sachet that will fill the board.
      */
     public Board(int numberOfPlayer, Sachet boardSachet) {
         this.numberOfPlayer = numberOfPlayer;
@@ -66,17 +66,17 @@ public class Board {
 
 
     /**
-     * <strong>Getter</strong> -> Returns Matrix of gamesBoard
+     * <strong>Getter</strong> -> Returns Matrix of gamesBoard.
      *
-     * @return gamesBoard
+     * @return the gamesBoard.
      */
     public  Matrix getGamesBoard() {
         return gamesBoard;
     }
     /**
-     * <strong>Getter</strong> -> Returns numberOfPlayer
+     * <strong>Getter</strong> -> Returns numberOfPlayer.
      *
-     * @return number of player
+     * @return the number of player.
      */
     public int getNumberOfPlayer() {
         return numberOfPlayer;
@@ -85,7 +85,7 @@ public class Board {
 
 
     /**
-     * Method to create the board based on number of players
+     * Method to create the board based on number of players.
      */
     private void creationBoard() {
         //assign Tiles.EMPTY to all position of matrix gamesBoard
@@ -201,7 +201,7 @@ public class Board {
     }
 
     /**
-     * Method to initialize board
+     * Method to initialize board.
      */
     public void BoardInitialization(){
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
@@ -216,9 +216,9 @@ public class Board {
     }
 
     /**
-     * Method to return if the board needs to be reset (all remaining tiles have no adjacent ones)
+     * Method to return if the board needs to be reset (all remaining tiles have no adjacent ones).
      *
-     * @return board needs to be reset
+     * @return true if the board needs to be reset.
      */
     public boolean checkBoardReset(){
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
@@ -392,12 +392,12 @@ public class Board {
     }
 
     /**
-     * Method to reset the board according to ENGLISH rule
+     * Method to reset the board according to ENGLISH rule.
      * <p>
      *     First of all remove all the remaining tiles and put them back in sachet,
-     *     then refill the board with tiles in sachet
+     *     then refill the board with tiles in sachet.
      * </p>
-     * <strong>REQUIRES:</strong> checkBoardReset() return true
+     * <strong>REQUIRES:</strong> checkBoardReset() return true.
      */
     public void boardResetENG(){
         //search tiles!=EMPTY && !=NOTALLOWED
@@ -418,11 +418,11 @@ public class Board {
 
     //TODO solo per i test
     /**
-     * Method to place tile on the board and remove it from sachet
+     * Method to place tile on the board and remove it from sachet.
      *
-     * @param tile tile to add on the board
-     * @param row number of row
-     * @param col number of column
+     * @param tile the tile to add on the board.
+     * @param row the number of row.
+     * @param col the number of column.
      */
     public void placeTiles(Tiles tile, int row, int col){
         gamesBoard.setTile(tile, row, col);
@@ -430,11 +430,11 @@ public class Board {
     }
 
     /**
-     * Method to remove the tiles in the positions shown
+     * Method to remove the tiles in the positions shown.
      * <p>
-     * <strong>REQUIRES:</strong> position.size() is between 1 and 3
+     * <strong>REQUIRES:</strong> position.size() is between 1 and 3.
      *
-     * @param position positions where to remove tiles
+     * @param position the positions where to remove tiles.
      */
     public void remove(List<Point> position){
         //for each position shown remove tiles from the gamesBoard
@@ -443,23 +443,23 @@ public class Board {
         }
     }
     /**
-     * Method to remove tile in the position shown
+     * Method to remove tile in the position shown.
      * <p>
-     * <strong>REQUIRES:</strong> position is correct
+     * <strong>REQUIRES:</strong> position is correct.
      *
-     * @param position position where to remove tile
+     * @param position the position where to remove tile.
      */
     public void remove(Point position){
         gamesBoard.remove(position.x, position.y);
     }
 
     /**
-     * Method to return whether the tile at the given position is free (does the tile have at least 1 free side?)
+     * Method to return whether the tile at the given position is free (does the tile have at least 1 free side?).
      * <p>
-     * <strong>REQUIRES:</strong> that position is correct
+     * <strong>REQUIRES:</strong> that position is correct.
      *
-     * @param position position of tile to check
-     * @return true if the tiles are true, false if they aren't
+     * @param position the position of tile to check.
+     * @return true if the tiles are true, false if they aren't.
      */
     public boolean checkFreeTiles(Point position){
         ArrayList<Point> list=adjacentTiles(position);
@@ -467,9 +467,9 @@ public class Board {
     }
 
     /**
-     * Method to return all the position of free tiles (does the tile have at least 1 free side?)
+     * Method to return all the position of free tiles (does the tile have at least 1 free side?).
      *
-     * @return position of free tiles
+     * @return the ArrayList that contains the position of free tiles.
      */
     public ArrayList<Point> freeTiles(){
         ArrayList<Point> result=new ArrayList<>();
@@ -489,13 +489,13 @@ public class Board {
      * Method to return if the tiles in the List are adjacent.
      * <p>
      *     Tiles are adjacent if and only if they have one side in common.
-     *     if the size of the list is equal to 1 it returns FALSE because the tile is single.
+     *     If the size of the list is equal to 1 it returns FALSE because the tile is single.
      * </p>
-     * <p><strong>REQUIRES:</strong> there isn't any equal position in the list </p>
-     * <p><strong>REQUIRES:</strong> all position in the list are correct</p>
+     * <p><strong>REQUIRES:</strong> there isn't any equal position in the list. </p>
+     * <p><strong>REQUIRES:</strong> all position in the list are correct.</p>
      *
-     * @param position the position to check
-     * @return true if the tiles are the adjacent, false if they aren't
+     * @param position the position to check.
+     * @return true if the tiles are the adjacent, false if they aren't.
      */
     public static boolean checkAdjacentTiles(List<Point> position){
         if (position.size()==1){
@@ -580,12 +580,12 @@ public class Board {
     }
 
     /**
-     * Method to return the positions of adjacent tiles to the incoming one
+     * Method to return the positions of adjacent tiles to the incoming one.
      * <p>
-     * <strong>REQUIRES:</strong> tile position is correct
+     * <strong>REQUIRES:</strong> tile position is correct.
      *
-     * @param tile the position of which I want to know the adjacent tile
-     * @return positions of tiles adjacent to the incoming one
+     * @param tile the position of which I want to know the adjacent tile.
+     * @return the ArrayList that contains the positions of tiles adjacent to the incoming one.
      */
     public ArrayList<Point> adjacentTiles(Point tile){
         Point p=new Point();
@@ -803,10 +803,10 @@ public class Board {
     }
 
     /**
-     * Method to return if all element in the List are on the same row
+     * Method to return if all element in the List are on the same row.
      *
-     * @param position List of position to check
-     * @return true if the positions are on the same row, false in other cases
+     * @param position the List of position to check.
+     * @return true if the positions are on the same row, false in other cases.
      */
     public static boolean checkSameRow(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
@@ -820,10 +820,10 @@ public class Board {
     }
 
     /**
-     * Method to return if all element in the List are on the same column
+     * Method to return if all element in the List are on the same column.
      *
-     * @param position List of position to check
-     * @return true if the positions are on the same column, false in other cases
+     * @param position the List of position to check.
+     * @return true if the positions are on the same column, false in other cases.
      */
     public static boolean checkSameColumn(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
@@ -837,32 +837,32 @@ public class Board {
     }
 
     /**
-     * Method to return if the Point are EMPTY or not
+     * Method to return if the Point are EMPTY or not.
      *
-     * @param point position to check
-     * @return true if the point is empty, false in other cases
+     * @param point the position to check.
+     * @return true if the point is empty, false in other cases.
      */
     private boolean checkEmpty(Point point){
         return gamesBoard.getTile(point).equals(Tiles.EMPTY);
     }
 
     /**
-     * Method to return if the Point are NOTALLOWED or not
+     * Method to return true if the Point are NOTALLOWED or not.
      *
-     * @param point position to check
-     * @return true if point is NotAllowed, false in other cases
+     * @param point the position to check.
+     * @return true if point is NotAllowed, false in other cases.
      */
     private boolean checkNotAllowed(Point point){
         return gamesBoard.getTile(point).equals(Tiles.NOT_ALLOWED);
     }
 
     /**
-     * Method to return if all element in the List are pickable
+     * Method to return true if all element in the List are pickable.
      * <p>
-     * <strong>REQUIRES:</strong> tile position is correct
+     * <strong>REQUIRES:</strong> tile position is correct.
      *
-     * @param position List of position to check
-     * @return true if the positions are pickable, false in other cases
+     * @param position the List of position to check.
+     * @return true if the positions are pickable, false in other cases.
      */
     public boolean tilesArePickable(List<Point> position){
         //check that position are at most 3 Point
