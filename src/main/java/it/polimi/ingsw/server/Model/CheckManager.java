@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.server.Exceptions.*;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
@@ -19,14 +20,14 @@ public class CheckManager {
     private Player currPlayer;
     private GameState state;
 
-    private final ArrayList<Tiles> selectedTiles;
+    private final ArrayList<Tile> selectedTiles;
 
     /**
      * Initialize the selected tiles
      *
      * @param selectedTiles selected tiles
      */
-    public CheckManager(ArrayList<Tiles> selectedTiles) {
+    public CheckManager(ArrayList<Tile> selectedTiles) {
         this.selectedTiles = selectedTiles;
     }
 

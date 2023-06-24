@@ -80,14 +80,19 @@ public class Matrix implements Serializable {
 
     }
 
+    public void setFullTile(Tile tile, int row, int col){
+
+        board.get(col).set(row, tile);
+
+    }
+
     /**
      * <p>Set the selected tile to EMPTY.</p>
      * @param row   The number of the row where you want to set the tile
      * @param col   the number of the column where you want to set the tile
      */
-    public void remove(int row, int col){
+    public void remove(int row, int col) {
         board.get(col).get(row).setTiles(Tiles.EMPTY);
-
     }
 
     /**
@@ -96,6 +101,9 @@ public class Matrix implements Serializable {
      */
     public void remove(Point pos){
         board.get(pos.y).get(pos.x).setTiles(Tiles.EMPTY);
+    }
+    public void fullRemove(int row, int col){
+        board.get(col).set(row,new Tile(Tiles.EMPTY));
     }
 
     /**

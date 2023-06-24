@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
-import it.polimi.ingsw.utils.ChatController;
-import it.polimi.ingsw.utils.Define;
-import it.polimi.ingsw.utils.Matrix;
-import it.polimi.ingsw.utils.Tiles;
+import it.polimi.ingsw.utils.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -488,12 +485,12 @@ public class CLIPrint implements PropertyChangeListener {
      *
      * @param order &nbsp;&nbsp;&nbsp; ArrayList of tiles - order of tiles to show
      */
-    public void printOrderTiles(ArrayList<Tiles> order){
+    public void printOrderTiles(ArrayList<Tile> order){
         clearShell();
         System.out.print("Selected tiles: ");
         //print the order of tiles
-        for (Tiles tiles : order) {
-            System.out.print(tileColorBG(tiles) + "   " + ColorCLI.RESET + " ");
+        for (Tile tiles : order) {
+            System.out.print(tileColorBG(tiles.getTiles()) + "   " + ColorCLI.RESET + " ");
         }
         System.out.println("\n");
     }

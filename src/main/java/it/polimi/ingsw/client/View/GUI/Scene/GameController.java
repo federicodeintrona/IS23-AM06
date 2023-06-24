@@ -27,14 +27,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
 
 //controller di gioco - per 2 giocatori
 public class GameController implements Initializable, PropertyChangeListener,SceneController {
-    private GUIController guiController = GUIControllerStatic.getGuiController();
+    private final GUIController guiController = GUIControllerStatic.getGuiController();
     private ClientState clientState;
     private ArrayList<Point> removeTiles = new ArrayList<>();
     private ArrayList<Integer> orderTiles=new ArrayList<>();
@@ -126,9 +125,9 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                     }
                 });
             }
-            case ("selectedTiles") -> {
+            /*case ("selectedTiles") -> {
                 Platform.runLater(this::updateSelectedTiles);
-            }
+            }*/
             case ("bookshelf") -> {
                 Platform.runLater(()->{
                     updateBookshelf((String) evt.getOldValue());
@@ -319,7 +318,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
         }
     }
 
-    private void updateSelectedTiles() {
+    /*private void updateSelectedTiles() {
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())) {
             selectedTilesDialog.setVisible(true);
             selectedTilesDialog.setDisable(false);
@@ -358,7 +357,7 @@ public class GameController implements Initializable, PropertyChangeListener,Sce
                 }
             }
         }
-    }
+    }*/
 
     private void updateBookshelf(String username) {
         Matrix bookshelf=clientState.getAllBookshelf().get(username);

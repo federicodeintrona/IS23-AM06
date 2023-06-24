@@ -1,8 +1,9 @@
 package it.polimi.ingsw.utils;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Tile {
+public class Tile implements Serializable {
     private Tiles tiles;
     private int image;
 

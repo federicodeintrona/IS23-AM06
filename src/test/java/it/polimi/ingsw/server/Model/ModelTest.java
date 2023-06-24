@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.Exceptions.MoveNotPossible;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import it.polimi.ingsw.utils.Define;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -85,12 +86,12 @@ class ModelTest {
     @Test
     void addToBookShelf() {
 
-        ArrayList<Tiles> array = new ArrayList<>();
+        ArrayList<Tile> array = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            array.add(Tiles.BLUE);
+            array.add(new Tile(Tiles.BLUE));
         }
         m.getSelectedTiles().addAll(array);
-        assertEquals(Tiles.BLUE,array.get(2));
+        assertEquals(Tiles.BLUE,array.get(2).getTiles());
         for (int j =0;j<5;j++) {
 
 
@@ -122,9 +123,9 @@ class ModelTest {
     @Test
     void swapOrder() {
         try {
-            m.getSelectedTiles().add(Tiles.BLUE);
-            m.getSelectedTiles().add(Tiles.WHITE);
-            m.getSelectedTiles().add(Tiles.GREEN);
+            m.getSelectedTiles().add(new Tile(Tiles.BLUE));
+            m.getSelectedTiles().add(new Tile(Tiles.WHITE));
+            m.getSelectedTiles().add(new Tile(Tiles.GREEN));
 
 
             Tiles[] array = {Tiles.WHITE,Tiles.GREEN,Tiles.BLUE};
@@ -139,7 +140,13 @@ class ModelTest {
 
             m.swapOrder(ints,players.get(0));
 
-            assertArrayEquals(array,m.getSelectedTiles().toArray());
+            ArrayList<Tile> selectTiles= m.getSelectedTiles();
+
+            ArrayList<Tiles> check=new ArrayList<>();
+            for (Tile tile: selectTiles){
+                check.add(tile.getTiles());
+            }
+            assertArrayEquals(array,check.toArray());
 
         } catch (MoveNotPossible e) {
             System.out.println("Swap test catch: non succederà mai spero...");
@@ -155,9 +162,9 @@ class ModelTest {
             ArrayList<Point> remove = new ArrayList<>();
             remove.add(new Point(0,3));
             remove.add(new Point(1,3));
-            ArrayList<Tiles> add = new ArrayList<>();
+            ArrayList<Tile> add = new ArrayList<>();
             for (Point point : remove) {
-                add.add(m.getBoard().getGamesBoard().getTile(point));
+                add.add(m.getBoard().getGamesBoard().getFullTile(point));
             }
 
             m.setSelectedTiles(add);
@@ -216,9 +223,9 @@ class ModelTest {
             ArrayList<Point> remove = new ArrayList<>();
             remove.add(new Point(0,3));
             remove.add(new Point(1,3));
-            ArrayList<Tiles> add = new ArrayList<>();
-            add.add(Tiles.GREEN);
-            add.add(Tiles.GREEN);
+            ArrayList<Tile> add = new ArrayList<>();
+            add.add(new Tile(Tiles.GREEN));
+            add.add(new Tile(Tiles.GREEN));
 
             m.setState(GameState.CHOOSING_COLUMN);
 

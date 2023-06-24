@@ -450,7 +450,7 @@ public class Board {
      * @param position position where to remove tile
      */
     public void remove(Point position){
-        gamesBoard.remove(position.x, position.y);
+        gamesBoard.fullRemove(position.x, position.y);
     }
 
     /**

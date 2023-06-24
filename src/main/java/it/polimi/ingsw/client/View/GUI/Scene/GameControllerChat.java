@@ -448,7 +448,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         String title = titles[tile.getImage()];
 
         assert title != null;
-        Image image = new Image(title);
+        Image image = getImage(title);
         ImageView imageView = new ImageView(image);
 
         imageView.setPreserveRatio(true);
@@ -688,26 +688,31 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             boardGrid.setVisible(false);
             switch (clientState.getSelectedTiles().size()) {
                 case 1 -> {
-                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
+                    selectedTiles1.setImage(getImage(getTile(0)));
                     selectedTiles2.setDisable(true);
                     selectedTiles2.setVisible(false);
                     selectedTiles3.setDisable(true);
                     selectedTiles3.setVisible(false);
                 }
                 case 2 -> {
-                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
-                    selectedTiles2.setImage(new Image(clientState.getSelectedTiles().get(1).getImage()[0]));
+                    selectedTiles1.setImage(getImage(getTile(0)));
+                    selectedTiles2.setImage(getImage(getTile(1)));
                     selectedTiles3.setDisable(true);
                     selectedTiles3.setVisible(false);
                 }
                 case 3 -> {
-                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
-                    selectedTiles2.setImage(new Image(clientState.getSelectedTiles().get(1).getImage()[0]));
-                    selectedTiles3.setImage(new Image(clientState.getSelectedTiles().get(2).getImage()[0]));
+                    selectedTiles1.setImage(getImage(getTile(0)));
+                    selectedTiles2.setImage(getImage(getTile(1)));
+                    selectedTiles3.setImage(getImage(getTile(2)));
                 }
             }
         }
     }
+    public String getTile (int i){
+        return clientState.getSelectedTiles().get(i).getTiles().getImage()[
+                clientState.getSelectedTiles().get(i).getImage()];
+    }
+
 
 
     //aggiorna tutte le bookshelf

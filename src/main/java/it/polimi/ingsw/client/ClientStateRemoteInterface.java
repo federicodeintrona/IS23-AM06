@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
@@ -29,7 +30,7 @@ public interface ClientStateRemoteInterface extends Remote {
 
     void setAllPublicPoints(String username, Integer point) throws RemoteException;
 
-    void setSelectedTiles(ArrayList<Tiles> selectedTiles) throws RemoteException;
+    void setSelectedTiles(ArrayList<Tile> selectedTiles) throws RemoteException;
 
     void setNextPlayer(String nextPlayer) throws RemoteException;
 

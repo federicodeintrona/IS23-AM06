@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.RMITimer;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -55,7 +56,7 @@ public class RMIVirtualView implements VirtualView{
                         clientState.setMyPersonalObjectiveInt((int) evt.getSource());
                     }
                     case ("selectedTiles") -> {
-                        clientState.setSelectedTiles((ArrayList<Tiles>) evt.getSource());
+                        clientState.setSelectedTiles((ArrayList<Tile>) evt.getSource());
                     }
                     case ("bookshelf") -> {
                         clientState.setAllBookshelf((String) evt.getOldValue(), (Matrix) evt.getSource());
