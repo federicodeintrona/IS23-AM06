@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
 import it.polimi.ingsw.utils.ChatController;
-import it.polimi.ingsw.utils.CliMainBackbone;
-import it.polimi.ingsw.utils.CliPrintBackBone;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 
@@ -10,10 +8,10 @@ import java.util.Scanner;
 
 public class ChatHandler {
     private final ChatController chatController;
-    private final CliMainBackbone cliMain;
-    private final CliPrintBackBone cliPrint;
+    private final CLIMain cliMain;
+    private final CLIPrint cliPrint;
 
-    public ChatHandler(ChatController chatController, CliMainBackbone cliMain, CliPrintBackBone cliPrint) {
+    public ChatHandler(ChatController chatController, CLIMain cliMain, CLIPrint cliPrint) {
         this.chatController = chatController;
         this.cliPrint = cliPrint;
         this.cliMain = cliMain;
@@ -69,6 +67,7 @@ public class ChatHandler {
         while (chatController.getPrivateChat(username).ChatIsEnable()) {
 
             str = scanner.nextLine();
+            System.out.print(str);
 
             // Creating the ChatMessage in case the str is not a command
             if (str.charAt(0) != '#') {
@@ -104,6 +103,8 @@ public class ChatHandler {
 
         System.out.println("Who do you want to chat with?");
         str = scanner.nextLine();
+        System.out.print(str);
+
 
         return str;
     }

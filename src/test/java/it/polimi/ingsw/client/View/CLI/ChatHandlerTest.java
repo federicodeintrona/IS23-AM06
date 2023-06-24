@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 class ChatHandlerTest {
     @Mock
-    private MockCliMain cli;
+    private CLIMain cli;
     @Mock
     private ClientState clientState;
     @Mock
@@ -40,12 +40,12 @@ class ChatHandlerTest {
     }
 
     @Test
-    void settingForPublicChat() {
+    void settingForPublicChat1() {
         ChatHandler chatHandler = new ChatHandler(chatController, cli, cliPrint);
         Chat publicChat = new Chat();
         String username = "yoda";
-        String input = "Test message";
-        ChatMessage message = new ChatMessage(username, input);
+        String input = "Test message\n#exit";
+        ChatMessage message = new ChatMessage(username, "Test message");
 
         // Converte la stringa di input in un oggetto InputStream
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
@@ -77,7 +77,81 @@ class ChatHandlerTest {
     }
 
     @Test
+    void settingForPublicChat2() {
+        ChatHandler chatHandler = new ChatHandler(chatController, cli, cliPrint);
+        Chat publicChat = new Chat();
+        String username = "yoda";
+        String input = "#help";
+        String expectedOutput = "All command, WITH EXAMPLE, are:\n#exit ........................... To leave the chat and return to the game\n#quit or #q ..................... Quit the game\n#switchToPublic ................. To switch from a private chat to the public one\n#switchToPrivate ................ To switch from the public chat to a private one\n#printPublicChat ................ Print the public chat (only view)\n#printPrivateChat ............... Print a private chat (only view)\n";
+
+        // Converte la stringa di input in un oggetto InputStream
+        InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+
+        // Salva l'input attuale per poterlo ripristinare successivamente
+        InputStream originalInputStream = System.in;
+
+        // Setting Mock's methods
+        doNothing().when(cliPrint).printChat(true);
+        when(chatController.getPublicChat()).thenReturn(publicChat);
+        when(cli.getClientState()).thenReturn(clientState);
+        when(clientState.getMyUsername()).thenReturn(username);
+        doNothing().when(cliPrint).helpForChat();
+
+        // Creating a ByteArrayOutputStream object to intercept the output
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        try {
+            // Imposta l'input simulato come l'input di sistema
+            System.setIn(inputStream);
+
+            chatHandler.settingForPublicChat();
+        } finally {
+            // Ripristina l'input di sistema originale
+            System.setIn(originalInputStream);
+        }
+
+        // Getting the output as string
+        String output = outputStream.toString();
+
+        Assertions.assertEquals(expectedOutput, output);
+    }
+
+    @Test
     void settingForPrivateChat() {
+        ChatHandler chatHandler = new ChatHandler(chatController, cli, cliPrint);
+        Chat privateChat = new Chat();
+        String username = "yoda";
+        String input = "yoda\nTest message\n#exit";
+        ChatMessage message = new ChatMessage(username, "Test message");
+
+        // Converte la stringa di input in un oggetto InputStream
+        InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+
+        // Salva l'input attuale per poterlo ripristinare successivamente
+        InputStream originalInputStream = System.in;
+
+        // Setting Mock's methods
+        doNothing().when(cliPrint).printChat("yoda", true);
+        when(chatController.getPrivateChat("yoda")).thenReturn(privateChat);
+        when(cli.getClientState()).thenReturn(clientState);
+        when(clientState.getMyUsername()).thenReturn(username);
+        when(cli.getReadShell()).thenReturn(readShell);
+        doNothing().when(readShell).sendMessage(chatMessageCaptor.capture());
+
+        try {
+            // Imposta l'input simulato come l'input di sistema
+            System.setIn(inputStream);
+
+            chatHandler.settingForPrivateChat();
+        } finally {
+            // Ripristina l'input di sistema originale
+            System.setIn(originalInputStream);
+        }
+
+        ChatMessage capturedMessage = chatMessageCaptor.getValue();
+
+        Assertions.assertEquals(message, capturedMessage);
     }
 
     @Test

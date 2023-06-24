@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.Networker;
 import it.polimi.ingsw.client.NetworkerRmi;
 import it.polimi.ingsw.client.NetworkerTcp;
 import it.polimi.ingsw.client.View.View;
-import it.polimi.ingsw.utils.CliMainBackbone;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
@@ -34,7 +33,7 @@ import java.util.Scanner;
  *      </li>
  * </ul>
  */
-public class CLIMain implements View, CliMainBackbone {
+public class CLIMain implements View {
 
     /**
      * Attribute used to know what to lock on - it is in common with ClientState

@@ -30,7 +30,7 @@ import java.util.HashMap;
  *     <li>game status (waiting for other player, start of game, player turn, end game)</li>
  * </ul>
  */
-public class CLIPrint implements PropertyChangeListener, CliPrintBackBone {
+public class CLIPrint implements PropertyChangeListener {
 
     /**
      * Attribute used to retrieve CLI-side all the client information
@@ -626,11 +626,6 @@ public class CLIPrint implements PropertyChangeListener, CliPrintBackBone {
             System.out.println(ColorCLI.CLEAR);
             System.out.flush();
         }
-    }
-
-    @Override
-    public boolean isWorking() {
-        return false;
     }
 
     //TODO javadoc FLA
