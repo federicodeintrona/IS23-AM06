@@ -17,8 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ChatHandlerTest {
     @Mock
@@ -81,8 +80,7 @@ class ChatHandlerTest {
         ChatHandler chatHandler = new ChatHandler(chatController, cli, cliPrint);
         Chat publicChat = new Chat();
         String username = "yoda";
-        String input = "#help";
-        String expectedOutput = "All command, WITH EXAMPLE, are:\n#exit ........................... To leave the chat and return to the game\n#quit or #q ..................... Quit the game\n#switchToPublic ................. To switch from a private chat to the public one\n#switchToPrivate ................ To switch from the public chat to a private one\n#printPublicChat ................ Print the public chat (only view)\n#printPrivateChat ............... Print a private chat (only view)\n";
+        String input = "#help\n#exit";
 
         // Converte la stringa di input in un oggetto InputStream
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
@@ -97,10 +95,6 @@ class ChatHandlerTest {
         when(clientState.getMyUsername()).thenReturn(username);
         doNothing().when(cliPrint).helpForChat();
 
-        // Creating a ByteArrayOutputStream object to intercept the output
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
         try {
             // Imposta l'input simulato come l'input di sistema
             System.setIn(inputStream);
@@ -111,10 +105,8 @@ class ChatHandlerTest {
             System.setIn(originalInputStream);
         }
 
-        // Getting the output as string
-        String output = outputStream.toString();
-
-        Assertions.assertEquals(expectedOutput, output);
+        //Assertions.assertEquals(expectedOutput, output);
+        verify(cliPrint).helpForChat();
     }
 
     @Test

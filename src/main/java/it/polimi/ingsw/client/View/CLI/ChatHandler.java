@@ -28,6 +28,7 @@ public class ChatHandler {
         while (chatController.getPublicChat().ChatIsEnable()) {
 
             str = scanner.nextLine();
+            System.out.println(str);
 
             // Creating the ChatMessage in case the str is not a command
             if (str.charAt(0) != '#') {
