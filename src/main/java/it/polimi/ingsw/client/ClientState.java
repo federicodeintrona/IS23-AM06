@@ -304,7 +304,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      */
     public boolean isGameIsEnded() {
         synchronized (viewLock) {
-            return gameIsEnded;
+            return !gameIsEnded;
         }
     }
 
@@ -315,7 +315,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      */
     public boolean gameHasStarted () {
         synchronized (viewLock){
-            return gameHasStarted;
+            return !gameHasStarted;
         }
     }
 
@@ -681,7 +681,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      * Method that analyzes @message to see if is intended for the public
      * or private chat and calls the proper method via notifier
      *
-     * @param message       ChatMessage containing the conversation for a Chat
+     * @param message ChatMessage containing the conversation for a Chat
      */
     @Override
     public void newMessageHandler (ChatMessage message) {

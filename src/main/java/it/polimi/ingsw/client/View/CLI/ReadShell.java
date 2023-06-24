@@ -38,7 +38,7 @@ public class ReadShell extends Thread {
     @Override
     public void run() {
         //Readshell must continue reading ommand until the game is finished
-        while (!cliMain.getClientState().isGameIsEnded()) {
+        while (cliMain.getClientState().isGameIsEnded()) {
             readCommand();
         }
     }

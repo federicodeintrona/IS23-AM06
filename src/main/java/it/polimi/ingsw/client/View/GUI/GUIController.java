@@ -163,7 +163,7 @@ public class GUIController implements View, SceneController {
         switch (message.getType()){
             case NEW_LOBBY ->  changeScene(Scenes.NumOfPlayers);
             case WAITING_FOR_PLAYERS -> {
-                if(!state.gameHasStarted()) changeScene(Scenes.Waiting);
+                if(state.gameHasStarted()) changeScene(Scenes.Waiting);
             }
             case ERROR -> showError(message);
         }

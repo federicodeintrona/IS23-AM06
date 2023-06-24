@@ -216,7 +216,7 @@ public class CLIMain implements View {
 
 
         //waiting until game has started
-        while (!clientState.gameHasStarted()){
+        while (clientState.gameHasStarted()){
             //you are not the latest player
             if (clientState.isWaiting()){
                 cliPrint.printWaiting();
@@ -258,7 +258,7 @@ public class CLIMain implements View {
         //I have already printed the first round of the game
         String curr=clientState.getNextPlayer();
 
-        while (!clientState.isGameIsEnded()){
+        while (clientState.isGameIsEnded()){
             //print new turn if current is next from before
             if (clientState.getCurrentPlayer().equals(curr) && !openChat){
                 try {
