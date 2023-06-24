@@ -20,12 +20,11 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-        <children>
-            <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="27.0" prefHeight="179.0" prefWidth="1007.0" textFill="WHITE">
-                <font>
-                    <Font name="System Bold Italic" size="40.0" />
-                </font>
-            </Label>
-        </children>
+        <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="27.0"
+               prefHeight="179.0" prefWidth="1007.0" textFill="WHITE">
+            <font>
+                <Font name="System Bold Italic" size="40.0"/>
+            </font>
+        </Label>
     </AnchorPane>
 </GridPane>
