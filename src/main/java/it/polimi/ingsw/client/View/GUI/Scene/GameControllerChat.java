@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.*;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -442,10 +443,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     }
     //setta le tessere - dal colore all'immagine
-    private ImageView setTiles(Tiles tile){
-        Random rand = new Random();
-        String[] titles = tile.getImage();
-        String title = titles==null?null:titles[rand.nextInt(Define.NUMBEROFTILEIMAGES.getI())];
+    private ImageView setTiles(Tile tile){
+        String[] titles = tile.getTiles().getImage();
+        String title = titles[tile.getImage()];
 
         assert title != null;
         Image image = new Image(title);
@@ -469,7 +469,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
             for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
                 if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
-                    boardGrid.add(setTiles(matrix.getTile(i-1, j-1)), j, i); //lavora colonna - riga
+                    boardGrid.add(setTiles(matrix.getFullTile(i-1, j-1)), j, i); //lavora colonna - riga
                 }
             }
         }
@@ -740,7 +740,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
-                    ImageView tile = setTiles(bookshelf.getTile(i, j));
+                    ImageView tile = setTiles(bookshelf.getFullTile(i, j));
                     tile.setFitWidth(20);
                     tile.setFitHeight(20);
                     assert pane != null;
@@ -755,7 +755,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
-                    myBookshelfGrid.add(setTiles(bookshelf.getTile(i, j)), j, i);
+                    myBookshelfGrid.add(setTiles(bookshelf.getFullTile(i, j)), j, i);
                 }
             }
         }
