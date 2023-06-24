@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="700.0" maxWidth="1250.0" minHeight="700.0" minWidth="1250.0" prefHeight="700.0" prefWidth="1250.0" styleClass="loginBackground" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.InitialRequestController">
+<GridPane maxHeight="700.0" maxWidth="1250.0" minHeight="700.0" minWidth="1250.0" prefHeight="700.0" prefWidth="1250.0" styleClass="loginBackground" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.InitialRequestController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -27,7 +27,7 @@
       <center>
          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-               <Label fx:id="requestLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="549.0" styleClass="initialRequest" text="Which connection protocol do you choose?" textFill="WHITE">
+               <Label fx:id="requestLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="549.0" styleClass="initialRequest" textFill="WHITE">
                   <font>
                      <Font name="System Bold" size="20.0" />
                   </font>

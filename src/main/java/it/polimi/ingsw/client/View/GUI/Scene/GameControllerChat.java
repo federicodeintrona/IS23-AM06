@@ -408,8 +408,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         catch (FileNotFoundException e) {
             System.out.println("The image was not found");
         }
-        //all players' username
-        initializeotherPlayerLabel();
+        //all players' graphic content
+        initializeOtherPlayer();
         //my points
         updateMyPointsLabel();
         //all players' points
@@ -464,9 +464,13 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         commonObjectiveImage2.setImage(getImage(path1));
     }
 
-    //TODO finire javadoc
-    //inizializza il personal objective
+    /**
+     * Method to initialize the personal objective.
+     *
+     * @throws FileNotFoundException signals that an attempt to open the file denoted by a specified pathname has failed.
+     */
     private void initializePersonalObjectiveImageView() throws FileNotFoundException {
+        //cathc the path of the personal objective and set it
         String path= "/images/personal_goal_cards/Personal_Goals"+clientState.getMyPersonalObjectiveInt()+".png";
         personalObjectiveImageView.setImage(getImage(path));
         personalObjectiveImageView.setPreserveRatio(true);
@@ -474,11 +478,14 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         personalObjectiveImageView.setFitHeight(229);
     }
 
-    //inizializza il nome dell'altro giocatore
-    private void initializeotherPlayerLabel(){
+    /**
+     * Method to initialize all graphic content in the scene of other players.
+     */
+    private void initializeOtherPlayer(){
         //lista con gli username degli altri giocatori
         ArrayList<String> otherPlayerList=catchOtherPlayerName(clientState.getAllUsername());
 
+        //initialize the 1st other player - 2 players' game
         otherPlayerLabel1.setVisible(true);
         otherPlayerLabel1.setDisable(false);
         otherPlayerPointsLabel1.setVisible(true);
@@ -497,6 +504,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         otherPlayerLabel1.setText(otherPlayerList.get(0));
 
         switch (clientState.getAllUsername().size()){
+            //initialize 2nd other player - 3 players' game
             case 3 -> {
                 otherPlayerLabel2.setVisible(true);
                 otherPlayerLabel2.setDisable(false);
@@ -515,6 +523,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
                 otherPlayerLabel2.setText(otherPlayerList.get(1));
             }
+            //initialize 3rd other player - 4 players' game
             case 4 -> {
                 otherPlayerLabel2.setVisible(true);
                 otherPlayerLabel2.setDisable(false);
@@ -622,38 +631,56 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
 
 
-    //aggiorna i punti dei common objective
+    /**
+     * Method to update the common objective's token (points assignable from completed objective).
+     */
     private void updateCommonObjectivePoints(){
         ArrayList<Integer> commonGoal= clientState.getCommonObjectivePoints();
+
+        //catch the path of the 1st common objective's token and set it
         String path = "/images/scoring_tokens/scoring_"+commonGoal.get(0)+".jpg";
         commonObjectivePoint1.setImage(getImage(path));
+        //catch the path of the 2nd common objective's token and set it
         String path1 = "/images/scoring_tokens/scoring_"+commonGoal.get(1)+".jpg";
         commonObjectivePoint2.setImage(getImage(path1));
     }
 
-    //aggiorna i tuoi punti
+    /**
+     * Method to update the client's points (common + private points).
+      */
     private void updateMyPointsLabel(){
         String myPoints="My Points are: "+clientState.getMyPoints();
 
         myPointsLabel.setText(myPoints);
     }
 
-    //aggiorna i punti di tutti i giocatori
+    /**
+     * Method to update the other players' points (only the public points).
+      */
     private void updateAllPlayerPoints(){
         for (String player : clientState.getAllPublicPoints().keySet()){
             if (!player.equals(clientState.getMyUsername())){
+                //show the update the player's points
                 updateOtherPlayerPointsLabel(player);
             }
         }
     }
 
+    /**
+     * Method to show who is the current player.
+     * <ul>
+     *     <li>Show a pop up if is the client's turn;</li>
+     *     <li>update the label to show the username of the current player in the game scene.</li>
+     * </ul>
+     */
     private void updateCurrPlayer() {
         String string;
         if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+            //update label
             string="It is YOUR turn";
             turnLabel.setText(string);
 
-            //pop up - è il tuo turno
+            //pop up - it is your turn
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Update turn");
             alert.setHeaderText("Current game turn");
@@ -662,6 +689,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             alert.showAndWait();
         }
         else {
+            //update label
             string="It is "+clientState.getCurrentPlayer()+" turn";
             turnLabel.setText(string);
         }
@@ -688,20 +716,41 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         classification.setText(c.toString());
     }
 
-    //aggiorna tutte le bookshelf
+    /**
+     * Method to update all players' bookshelf
+     *
+      * @param username the username of the player interested.
+     */
     private void updateBookshelf(String username){
+        //update my bookshelf
         if (username.equals(clientState.getMyUsername())){
             updateMyBookshelf();
         }
+        //update other player's bookshelf
         else {
             updateOtherBookshelf(username);
         }
     }
 
+    /**
+     * Method to update all the players' common objective points, the token with the point.
+     *
+     * @param player the username of the player that completed the common objective
+     * @param old the old common objective's points
+     */
+    private void updatePlayerCommonObjectivePointImage(String player, ArrayList<Integer> old){
+        int point=old.get(commonObjectivePointPlayerImage(old));
+
+        //catch the path of the token to shown
+        String path = "/images/scoring_tokens/scoring_"+point+".jpg";
+
+        Objects.requireNonNull(catchPlayerCommonObjectivePointImage(player, commonObjectivePointPlayerImage(old))).setImage(getImage(path));
+    }
+
 
 
     /**
-     * Method used to reorder players based on how many points they scored - increasing.
+     * Method used to sorted players based on how many points they scored - increasing.
      *
      * @return the sorting in ascending order of the players.
      */
@@ -732,17 +781,32 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     }
 
-
-    //ritorna il numero dell'obiettivo comune completato
+    /**
+     * Method that return the number of the common objective completed.
+     *
+     * @param old the old common objective points.
+     * @return 0 if the common objective one has been completed 1 if the other one has been completed.
+     */
     private int commonObjectivePointPlayerImage(ArrayList<Integer> old){
         if (!Objects.equals(clientState.getCommonObjectivePoints().get(0), old.get(0))){
+            //the common objective one has been completed
             return 0;
         }
         else {
+            //the common objective two has been completed
             return 1;
         }
     }
+
+    /**
+     * Method that returns the image, related to the player, to which the points of the newly completed common goal must be added.
+     *
+     * @param username the username of the player that completed the common objective.
+     * @param commonObjective the common objective that the player has completed.
+     * @return the ImageView to update, of which you need to change the image shown.
+     */
     private ImageView catchPlayerCommonObjectivePointImage(String username, int commonObjective){
+        //return all image related to the 1st common objective
         if (commonObjective==0){
             if (clientState.getMyUsername().equals(username)){
                 return myCommonPointImage1;
@@ -757,6 +821,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 return otherPlayer3CommonPoint1;
             }
         }
+        //return all image related to the 2nd common objective
         else if (commonObjective==1){
             if (clientState.getMyUsername().equals(username)){
                 return myCommonPointImage2;
@@ -771,65 +836,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 return otherPlayer3CommonPoint2;
             }
         }
+        //error
         return null;
     }
 
-    private void updatePlayerCommonObjectivePointImage(String player, ArrayList<Integer> old){
-
-        int point=old.get(commonObjectivePointPlayerImage(old));
-        String path = "/images/scoring_tokens/scoring_"+point+".jpg";
-
-        Objects.requireNonNull(catchPlayerCommonObjectivePointImage(player, commonObjectivePointPlayerImage(old))).setImage(getImage(path));
-    }
 
 
 
 
-    private void goBack(){
+    //TODO javadoc
 
-        switch (state){
-            case REMOVE -> {
-                //riabilitiamo tutti i bottoni di selezione delle colonne
-                column1.setVisible(true);
-                column1.setDisable(false);
-                column2.setVisible(true);
-                column2.setDisable(false);
-                column3.setVisible(true);
-                column3.setDisable(false);
-                column4.setVisible(true);
-                column4.setDisable(false);
-                column5.setVisible(true);
-                column5.setDisable(false);
-                //setto lo stato ad add
-                state=State.ADD;
-            }
-
-            case SWITCH -> {
-                //puliamo le tessere selezionate
-                removeTiles=new ArrayList<>();
-                //riabilitiamo la board
-                boardGrid.setDisable(false);
-                //disabilitiamo il bottone di conferma
-                confirmationButton.setVisible(false);
-                confirmationButton.setDisable(true);
-                //togliamo l'opacità a tutte le tessere selezionate
-                boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
-                //setto lo stato a remove
-                state=State.REMOVE;
-            }
-            case ADD -> {
-                //puliamo lo switch selezionato
-                orderTiles=new ArrayList<>();
-                //riabilito la finestra di switch delle tile
-                selectedTilesDialog.setVisible(true);
-                selectedTilesDialog.setDisable(false);
-                selectedTilesDialog.setStyle("-fx-background-color: null");
-                //setto lo stato a switch
-                state=State.SWITCH;
-            }
-        }
-
-    }
     //setta le tessere - dal colore all'immagine
     private ImageView setTiles(Tiles tile){
         Random rand = new Random();
@@ -1022,6 +1038,51 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
 
 
+    private void goBack(){
+
+        switch (state){
+            case REMOVE -> {
+                //riabilitiamo tutti i bottoni di selezione delle colonne
+                column1.setVisible(true);
+                column1.setDisable(false);
+                column2.setVisible(true);
+                column2.setDisable(false);
+                column3.setVisible(true);
+                column3.setDisable(false);
+                column4.setVisible(true);
+                column4.setDisable(false);
+                column5.setVisible(true);
+                column5.setDisable(false);
+                //setto lo stato ad add
+                state=State.ADD;
+            }
+
+            case SWITCH -> {
+                //puliamo le tessere selezionate
+                removeTiles=new ArrayList<>();
+                //riabilitiamo la board
+                boardGrid.setDisable(false);
+                //disabilitiamo il bottone di conferma
+                confirmationButton.setVisible(false);
+                confirmationButton.setDisable(true);
+                //togliamo l'opacità a tutte le tessere selezionate
+                boardGrid.getChildren().forEach(node -> node.setStyle("-fx-opacity: 1"));
+                //setto lo stato a remove
+                state=State.REMOVE;
+            }
+            case ADD -> {
+                //puliamo lo switch selezionato
+                orderTiles=new ArrayList<>();
+                //riabilito la finestra di switch delle tile
+                selectedTilesDialog.setVisible(true);
+                selectedTilesDialog.setDisable(false);
+                selectedTilesDialog.setStyle("-fx-background-color: null");
+                //setto lo stato a switch
+                state=State.SWITCH;
+            }
+        }
+
+    }
 
 
 
