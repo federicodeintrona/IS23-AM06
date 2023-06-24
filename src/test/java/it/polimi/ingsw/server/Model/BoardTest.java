@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.Model;
 
+import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Tiles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -922,8 +923,52 @@ class BoardTest {
         arrayList2.add(new Point(0,0));
         assertFalse(board.tilesArePickable(arrayList2));
 
+        //selected a number over the max number of tiles  pickable
+        ArrayList<Point> arrayList3=new ArrayList<>();
+        arrayList3.add(new Point(0,0));
+        arrayList3.add(new Point(0,0));
+        arrayList3.add(new Point(0,0));
+        arrayList3.add(new Point(0,0));
+        arrayList3.add(new Point(0,0));
+        arrayList3.add(new Point(0,0));
+        arrayList3.add(new Point(0,0));
+        assertFalse(board.tilesArePickable(arrayList3));
 
     }
+
+
+//todo da fare in inglese
+    @DisplayName("casi limite di come è strutturata la nostra board")
+    @Test
+    void checkBoardResetLimitCaseNotMyShelfie() {
+        Sachet sachet=new Sachet();
+        Board board=new Board(4, sachet);
+        boolean result;
+
+        //corner
+        placeTiles(board, sachet, Tiles.GREEN, 0,0); //upper left
+        result=board.checkBoardReset();
+        assertTrue(result);
+
+        Sachet sachet1=new Sachet();
+        Board board1=new Board(4, sachet1);
+        placeTiles(board1, sachet1, Tiles.GREEN, 0, Define.NUMBEROFCOLUMNS_BOARD.getI()-1); //upper right
+        result=board.checkBoardReset();
+        assertTrue(result);
+
+        Sachet sachet2=new Sachet();
+        Board board2=new Board(4, sachet2);
+        placeTiles(board2, sachet2, Tiles.GREEN, Define.NUMBEROFROWS_BOARD.getI()-1,0); //bottom left
+        result=board.checkBoardReset();
+        assertTrue(result);
+
+        Sachet sachet3=new Sachet();
+        Board board3=new Board(4, sachet3);
+        placeTiles(board3, sachet3, Tiles.GREEN, Define.NUMBEROFROWS_BOARD.getI()-1, Define.NUMBEROFCOLUMNS_BOARD.getI()-1); //bottom right
+        result=board.checkBoardReset();
+        assertTrue(result);
+    }
+
 
 }
 
