@@ -74,7 +74,7 @@ public class ClientBase extends Application{
             GUIControllerStatic.setGuiController(new GUIController(clientState));
 
             //show the InitialRequest's scene
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Scenes.InitialRequest.getName())));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Scenes.InitialRequest.getPath())));
             Scene scene=new Scene(root);
 
             //set all the information in scene's controller

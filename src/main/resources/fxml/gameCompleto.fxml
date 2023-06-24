@@ -18,363 +18,374 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="700.0" maxWidth="1250.0" minHeight="700.0" minWidth="1250.0" prefHeight="700.0" prefWidth="1250.0" styleClass="game" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameControllerChat">
+<GridPane maxHeight="700.0" maxWidth="1250.0" minHeight="700.0" minWidth="1250.0" prefHeight="700.0" prefWidth="1250.0"
+          styleClass="game" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.View.GUI.Scene.GameControllerChat">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="627.0" minWidth="350.0" prefWidth="497.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="0.0" prefWidth="253.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="500.0" prefWidth="500.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="627.0" minWidth="350.0" prefWidth="497.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="0.0" prefWidth="253.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="546.0" minHeight="500.0" prefHeight="531.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="169.0" minHeight="126.0" prefHeight="169.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="546.0" minHeight="500.0" prefHeight="531.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="169.0" minHeight="126.0" prefHeight="169.0" vgrow="SOMETIMES"/>
     </rowConstraints>
-    <children>
-        <GridPane fx:id="boardGrid" alignment="TOP_CENTER" maxHeight="490.0" maxWidth="490.0" minHeight="490.0" minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0" styleClass="board" stylesheets="@../style.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+    <GridPane fx:id="boardGrid" alignment="TOP_CENTER" maxHeight="490.0" maxWidth="490.0" minHeight="490.0"
+              minWidth="490.0" onMouseClicked="#removeTilesClick" prefHeight="490.0" prefWidth="490.0"
+              styleClass="board" stylesheets="@../style.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="17.0" prefWidth="20.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="45.0" prefWidth="49.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="47.0" prefWidth="47.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="49.0" prefWidth="53.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="37.0" prefWidth="46.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.0" minWidth="45.0" prefWidth="49.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.0" minWidth="32.0" prefWidth="51.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.0" minWidth="44.0" prefWidth="49.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="40.0" prefWidth="50.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="61.0" minWidth="49.0" prefWidth="51.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="24.0" prefWidth="24.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="42.0" prefHeight="47.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="56.0" minHeight="49.0" prefHeight="51.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="49.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <GridPane.margin>
+            <Insets/>
+        </GridPane.margin>
+    </GridPane>
+    <AnchorPane maxHeight="500.0" maxWidth="350.0" minHeight="500.0" minWidth="350.0" prefHeight="500.0"
+                prefWidth="350.0" GridPane.columnIndex="1">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="29.0" prefHeight="36.0"
+               prefWidth="350.0" text="My Bookshelf" textAlignment="CENTER" textFill="RED"
+               AnchorPane.bottomAnchor="435.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0"
+               AnchorPane.topAnchor="29.0">
+            <font>
+                <Font name="System Bold" size="25.0"/>
+            </font>
+        </Label>
+        <Label fx:id="myPointsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="91.0"
+               prefHeight="36.0" prefWidth="350.0">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Label>
+        <GridPane fx:id="myBookshelfGrid" layoutX="37.0" layoutY="149.0" prefHeight="287.0" prefWidth="281.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="17.0" prefWidth="20.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="45.0" prefWidth="49.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="47.0" prefWidth="47.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="49.0" prefWidth="53.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="37.0" prefWidth="46.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.0" minWidth="45.0" prefWidth="49.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.0" minWidth="32.0" prefWidth="51.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.0" minWidth="44.0" prefWidth="49.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="40.0" prefWidth="50.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="61.0" minWidth="49.0" prefWidth="51.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="24.0" minWidth="24.0" prefWidth="24.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="42.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="56.0" minHeight="49.0" prefHeight="51.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.0" minHeight="49.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="57.0" minHeight="53.0" prefHeight="53.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="62.33332824707031" minHeight="45.666656494140625"
+                                prefHeight="49.666656494140625" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="60.333343505859375" minHeight="47.666656494140625" prefHeight="49.0"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="63.66668701171875" minHeight="46.33331298828125" prefHeight="47.0"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="63.66668701171875" minHeight="47.0" prefHeight="47.666656494140625"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="63.666656494140625" minHeight="53.0" prefHeight="58.333343505859375"
+                                vgrow="SOMETIMES"/>
             </rowConstraints>
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-            <GridPane.margin>
-                <Insets />
-            </GridPane.margin>
         </GridPane>
-        <AnchorPane maxHeight="500.0" maxWidth="350.0" minHeight="500.0" minWidth="350.0" prefHeight="500.0" prefWidth="350.0" GridPane.columnIndex="1">
-            <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="29.0" prefHeight="36.0" prefWidth="350.0" text="My Bookshelf" textAlignment="CENTER" textFill="RED" AnchorPane.bottomAnchor="435.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="29.0">
+        <ImageView fitHeight="404.0" fitWidth="350.0" layoutX="2.0" layoutY="131.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="@../images/boards/bookshelf.png"/>
+        </ImageView>
+        <Button fx:id="confirmationButton" disable="true" layoutX="-6.0" layoutY="36.0" mnemonicParsing="false"
+                onAction="#confirmClick" prefHeight="36.0" prefWidth="86.0" text="Confirm" visible="false"/>
+        <Label fx:id="turnLabel" alignment="CENTER" layoutX="2.0" layoutY="-3.0" prefHeight="25.0" prefWidth="350.0"
+               textFill="WHITE">
+            <font>
+                <Font name="System Bold Italic" size="15.0"/>
+            </font>
+        </Label>
+        <DialogPane fx:id="selectedTilesDialog" disable="true" layoutX="-433.0" layoutY="133.0" prefHeight="0.0"
+                    prefWidth="352.0" styleClass="selectedTiles" visible="false">
+            <header>
+                <Label alignment="CENTER" prefHeight="28.0" prefWidth="360.0" text="Order of selected tiles"
+                       textAlignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="25.0" />
+                        <Font name="System Bold Italic" size="20.0"/>
                     </font>
                 </Label>
-                <Label fx:id="myPointsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="91.0" prefHeight="36.0" prefWidth="350.0">
-                    <font>
-                        <Font size="17.0" />
-                    </font>
-                </Label>
-                <GridPane fx:id="myBookshelfGrid" layoutX="37.0" layoutY="149.0" prefHeight="287.0" prefWidth="281.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="57.0" minHeight="53.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="62.33332824707031" minHeight="45.666656494140625" prefHeight="49.666656494140625" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="60.333343505859375" minHeight="47.666656494140625" prefHeight="49.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="63.66668701171875" minHeight="46.33331298828125" prefHeight="47.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="63.66668701171875" minHeight="47.0" prefHeight="47.666656494140625" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="63.666656494140625" minHeight="53.0" prefHeight="58.333343505859375" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                </GridPane>
-                <ImageView fitHeight="404.0" fitWidth="350.0" layoutX="2.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/boards/bookshelf.png" />
-                    </image>
-                </ImageView>
-                <Button fx:id="confirmationButton" disable="true" layoutX="-6.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmClick" prefHeight="36.0" prefWidth="86.0" text="Confirm" visible="false" />
-                <Label fx:id="turnLabel" alignment="CENTER" layoutX="2.0" layoutY="-3.0" prefHeight="25.0" prefWidth="350.0" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold Italic" size="15.0" />
-                    </font>
-                </Label>
-                <DialogPane fx:id="selectedTilesDialog" disable="true" layoutX="-433.0" layoutY="133.0" prefHeight="0.0" prefWidth="352.0" styleClass="selectedTiles" visible="false">
-                    <header>
-                        <Label alignment="CENTER" prefHeight="28.0" prefWidth="360.0" text="Order of selected tiles" textAlignment="CENTER">
-                            <font>
-                                <Font name="System Bold Italic" size="20.0" />
-                            </font>
-                        </Label>
-                    </header>
-                    <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                            <children>
-                                <HBox prefHeight="0.0" prefWidth="340.0">
-                                    <children>
-                                        <ImageView fx:id="selectedTiles1" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#selectTile1" pickOnBounds="true" preserveRatio="true">
-                                            <HBox.margin>
-                                                <Insets right="10.0" />
-                                            </HBox.margin>
-                                        </ImageView>
-                                        <ImageView fx:id="selectedTiles2" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#selectTile2" pickOnBounds="true" preserveRatio="true">
-                                            <HBox.margin>
-                                                <Insets right="10.0" />
-                                            </HBox.margin>
-                                        </ImageView>
-                                        <ImageView fx:id="selectedTiles3" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#selectTile3" pickOnBounds="true" preserveRatio="true">
-                                            <HBox.margin>
-                                                <Insets right="10.0" />
-                                            </HBox.margin>
-                                        </ImageView>
-                                    </children>
-                                </HBox>
-                                <Button fx:id="confirmSelected" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#confirmsSelectedClick" prefHeight="25.0" prefWidth="112.0" text="Confirm" textAlignment="CENTER" visible="false">
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                    <effect>
-                                        <Blend />
-                                    </effect>
-                                </Button>
-                                <Button fx:id="endSwitch" disable="true" mnemonicParsing="false" onAction="#endSwitchClick" prefHeight="25.0" prefWidth="112.0" text="End" visible="false">
-                                    <VBox.margin>
-                                        <Insets top="5.0" />
-                                    </VBox.margin>
-                                </Button>
-                            </children>
-                        </VBox>
-                    </content>
-                </DialogPane>
-                <Button fx:id="column1" disable="true" layoutX="44.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn1" prefHeight="25.0" prefWidth="42.0" text="1" visible="false" />
-                <Button fx:id="column2" disable="true" layoutX="99.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn2" prefHeight="25.0" prefWidth="42.0" text="2" visible="false" />
-                <Button fx:id="column3" disable="true" layoutX="157.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn3" prefHeight="25.0" prefWidth="42.0" text="3" visible="false" />
-                <Button fx:id="column4" disable="true" layoutX="214.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn4" prefHeight="25.0" prefWidth="42.0" text="4" visible="false" />
-                <Button fx:id="column5" disable="true" layoutX="270.0" layoutY="131.0" mnemonicParsing="false" onAction="#addToColumn5" prefHeight="25.0" prefWidth="42.0" text="5" visible="false" />
-                <Button fx:id="rollbackButton" disable="true" layoutX="-6.0" layoutY="83.0" mnemonicParsing="false" onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false" />
-              <ImageView fx:id="personalObjectiveImageView" fitHeight="229.0" fitWidth="152.0" layoutX="330.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="myChair" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="267.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/misc/firstplayertoken.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="myCommonPointImage1" fitHeight="80.0" fitWidth="33.0" layoutX="311.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="myCommonPointImage2" fitHeight="80.0" fitWidth="33.0" layoutX="311.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            </children>
-        </AnchorPane>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <children>
-                <Label fx:id="otherPlayerLabel1" contentDisplay="CENTER" disable="true" layoutX="255.0" layoutY="7.0" prefHeight="19.0" prefWidth="200.0" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font>
-                </Label>
-                <GridPane fx:id="otherPlayerBookshelfGrid2" disable="true" layoutX="12.0" layoutY="33.0" prefHeight="114.0" prefWidth="107.0" visible="false">
-                    <rowConstraints>
-                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <columnConstraints>
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                </GridPane>
-                <ImageView fx:id="otherPlayerImage2" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="-2.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                    <image>
-                        <Image url="@../images/boards/bookshelf.png" />
-                    </image>
-                </ImageView>
-                <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" disable="true" layoutX="128.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font></Label>
-                <ImageView fx:id="personal2" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="142.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                    <image>
-                        <Image url="@../images/personal_goal_cards/back.jpg" />
-                    </image>
-                </ImageView>
-            <Label fx:id="otherPlayerLabel2" contentDisplay="CENTER" disable="true" layoutX="6.0" layoutY="5.0" prefHeight="19.0" prefWidth="200.0" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <GridPane fx:id="otherPlayerBookshelfGrid1" disable="true" layoutX="261.0" layoutY="34.0" prefHeight="114.0" prefWidth="107.0" visible="false">
-               <rowConstraints>
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <columnConstraints>
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-            </GridPane>
-            <ImageView fx:id="otherPlayerImage1" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="247.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/boards/bookshelf.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" disable="true" layoutX="377.0" layoutY="26.0" prefHeight="50.0" prefWidth="97.0" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="personal1" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="391.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/personal_goal_cards/back.jpg" />
-               </image>
-            </ImageView>
-            <Label fx:id="otherPlayerLabel3" contentDisplay="CENTER" disable="true" layoutX="506.0" layoutY="7.0" prefHeight="19.0" prefWidth="200.0" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <GridPane fx:id="otherPlayerBookshelfGrid3" disable="true" layoutX="509.0" layoutY="34.0" prefHeight="114.0" prefWidth="107.0" visible="false">
-               <rowConstraints>
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <columnConstraints>
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-            </GridPane>
-            <ImageView fx:id="otherPlayerImage3" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="495.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/boards/bookshelf.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" disable="true" layoutX="627.0" layoutY="23.0" prefHeight="50.0" prefWidth="97.0" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="personal3" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="639.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/personal_goal_cards/back.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherChair2" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="203.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/misc/firstplayertoken.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherChair1" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="453.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/misc/firstplayertoken.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherChair3" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="702.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/misc/firstplayertoken.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherPlayer2CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="204.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherPlayer2CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="204.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherPlayer1CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="453.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherPlayer1CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="453.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherPlayer3CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="702.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="otherPlayer3CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="702.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/scoring_tokens/scoring_0.jpg" />
-               </image>
-            </ImageView>
-            </children>
-        </AnchorPane>
-        <GridPane fx:id="commonGrid" GridPane.rowIndex="1">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
-            </columnConstraints>
+            </header>
+            <content>
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <HBox prefHeight="0.0" prefWidth="340.0">
+                        <ImageView fx:id="selectedTiles1" fitHeight="100.0" fitWidth="100.0"
+                                   onMouseClicked="#selectTile1" pickOnBounds="true" preserveRatio="true">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="selectedTiles2" fitHeight="100.0" fitWidth="100.0"
+                                   onMouseClicked="#selectTile2" pickOnBounds="true" preserveRatio="true">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="selectedTiles3" fitHeight="100.0" fitWidth="100.0"
+                                   onMouseClicked="#selectTile3" pickOnBounds="true" preserveRatio="true">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                    </HBox>
+                    <Button fx:id="confirmSelected" alignment="CENTER" contentDisplay="CENTER" disable="true"
+                            mnemonicParsing="false" onAction="#confirmsSelectedClick" prefHeight="25.0"
+                            prefWidth="112.0" text="Confirm" textAlignment="CENTER" visible="false">
+                        <VBox.margin>
+                            <Insets top="10.0"/>
+                        </VBox.margin>
+                        <effect>
+                            <Blend/>
+                        </effect>
+                    </Button>
+                    <Button fx:id="endSwitch" disable="true" mnemonicParsing="false" onAction="#endSwitchClick"
+                            prefHeight="25.0" prefWidth="112.0" text="End" visible="false">
+                        <VBox.margin>
+                            <Insets top="5.0"/>
+                        </VBox.margin>
+                    </Button>
+                </VBox>
+            </content>
+        </DialogPane>
+        <Button fx:id="column1" disable="true" layoutX="44.0" layoutY="131.0" mnemonicParsing="false"
+                onAction="#addToColumn1" prefHeight="25.0" prefWidth="42.0" text="1" visible="false"/>
+        <Button fx:id="column2" disable="true" layoutX="99.0" layoutY="131.0" mnemonicParsing="false"
+                onAction="#addToColumn2" prefHeight="25.0" prefWidth="42.0" text="2" visible="false"/>
+        <Button fx:id="column3" disable="true" layoutX="157.0" layoutY="131.0" mnemonicParsing="false"
+                onAction="#addToColumn3" prefHeight="25.0" prefWidth="42.0" text="3" visible="false"/>
+        <Button fx:id="column4" disable="true" layoutX="214.0" layoutY="131.0" mnemonicParsing="false"
+                onAction="#addToColumn4" prefHeight="25.0" prefWidth="42.0" text="4" visible="false"/>
+        <Button fx:id="column5" disable="true" layoutX="270.0" layoutY="131.0" mnemonicParsing="false"
+                onAction="#addToColumn5" prefHeight="25.0" prefWidth="42.0" text="5" visible="false"/>
+        <Button fx:id="rollbackButton" disable="true" layoutX="-6.0" layoutY="83.0" mnemonicParsing="false"
+                onAction="#rollbackClick" prefHeight="36.0" prefWidth="86.0" text="Rollback" visible="false"/>
+        <ImageView fx:id="personalObjectiveImageView" fitHeight="229.0" fitWidth="152.0" layoutX="330.0"
+                   layoutY="194.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="myChair" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="267.0" layoutY="34.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/misc/firstplayertoken.png"/>
+        </ImageView>
+        <ImageView fx:id="myCommonPointImage1" fitHeight="80.0" fitWidth="33.0" layoutX="311.0" layoutY="23.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+        <ImageView fx:id="myCommonPointImage2" fitHeight="80.0" fitWidth="33.0" layoutX="311.0" layoutY="58.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+    </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label fx:id="otherPlayerLabel1" contentDisplay="CENTER" disable="true" layoutX="255.0" layoutY="7.0"
+               prefHeight="19.0" prefWidth="200.0" visible="false">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <GridPane fx:id="otherPlayerBookshelfGrid2" disable="true" layoutX="12.0" layoutY="33.0" prefHeight="114.0"
+                  prefWidth="107.0" visible="false">
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <ImageView fx:id="commonObjectiveImage1" fitHeight="150.0" fitWidth="250.0" layoutX="5.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="commonObjectivePoint1" fitHeight="70.0" fitWidth="70.0" layoutX="137.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" rotate="-9.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                  <ImageView fx:id="commonObjectiveImage2" fitHeight="150.0" fitWidth="248.0" layoutX="17.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="commonObjectivePoint2" fitHeight="70.0" fitWidth="70.0" layoutX="149.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" rotate="-9.0" />
-               </children>
-            </AnchorPane>
-         </children>
+            <columnConstraints>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
         </GridPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
-         <children>
-            <ScrollPane fx:id="chatScroll" layoutX="15.0" layoutY="137.0" prefHeight="316.0" prefWidth="225.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="314.0" prefWidth="217.0">
-                     <children>
-                        <VBox fx:id="publicChatBox" layoutX="5.0" layoutY="-3.0" prefHeight="313.0" prefWidth="200.0" />
-                        <VBox fx:id="otherPlayerChatBox2" layoutX="6.0" layoutY="-1.0" prefHeight="316.0" prefWidth="200.0" visible="false" />
-                        <VBox fx:id="otherPlayerChatBox3" layoutX="6.0" prefHeight="316.0" prefWidth="200.0" visible="false" />
-                        <VBox fx:id="otherPlayerChatBox1" layoutX="6.0" layoutY="1.0" prefHeight="316.0" prefWidth="200.0" visible="false" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
-            <Button fx:id="enterChatButton" layoutX="98.0" layoutY="511.0" mnemonicParsing="false" onAction="#enterChatClick" prefHeight="24.0" prefWidth="60.0" text="Enter" />
-            <Label fx:id="classification" layoutX="4.0" layoutY="5.0" prefHeight="99.0" prefWidth="248.0" styleClass="classification" textFill="WHITE" />
-            <TextField fx:id="sendMessage" layoutX="7.0" layoutY="455.0" onKeyPressed="#enterChatEnter" prefHeight="48.0" prefWidth="241.0" promptText="text" style="-fx-background-color: white;" />
-            <ChoiceBox fx:id="selectChat" layoutX="14.0" layoutY="108.0" prefHeight="25.0" prefWidth="225.0" />
-         </children>
-      </AnchorPane>
-    </children>
+        <ImageView fx:id="otherPlayerImage2" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="-2.0"
+                   layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/boards/bookshelf.png"/>
+        </ImageView>
+        <Label fx:id="otherPlayerPointsLabel2" contentDisplay="CENTER" disable="true" layoutX="128.0" layoutY="26.0"
+               prefHeight="50.0" prefWidth="97.0" visible="false">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <ImageView fx:id="personal2" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="142.0" layoutY="75.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/personal_goal_cards/back.jpg"/>
+        </ImageView>
+        <Label fx:id="otherPlayerLabel2" contentDisplay="CENTER" disable="true" layoutX="6.0" layoutY="5.0"
+               prefHeight="19.0" prefWidth="200.0" visible="false">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <GridPane fx:id="otherPlayerBookshelfGrid1" disable="true" layoutX="261.0" layoutY="34.0" prefHeight="114.0"
+                  prefWidth="107.0" visible="false">
+            <rowConstraints>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <columnConstraints>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+        </GridPane>
+        <ImageView fx:id="otherPlayerImage1" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="247.0"
+                   layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/boards/bookshelf.png"/>
+        </ImageView>
+        <Label fx:id="otherPlayerPointsLabel1" contentDisplay="CENTER" disable="true" layoutX="377.0" layoutY="26.0"
+               prefHeight="50.0" prefWidth="97.0" visible="false">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <ImageView fx:id="personal1" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="391.0" layoutY="76.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/personal_goal_cards/back.jpg"/>
+        </ImageView>
+        <Label fx:id="otherPlayerLabel3" contentDisplay="CENTER" disable="true" layoutX="506.0" layoutY="7.0"
+               prefHeight="19.0" prefWidth="200.0" visible="false">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <GridPane fx:id="otherPlayerBookshelfGrid3" disable="true" layoutX="509.0" layoutY="34.0" prefHeight="114.0"
+                  prefWidth="107.0" visible="false">
+            <rowConstraints>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="27.0" minHeight="16.0" prefHeight="19.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="24.0" minHeight="13.0" prefHeight="19.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="15.0" prefHeight="15.5" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <columnConstraints>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+        </GridPane>
+        <ImageView fx:id="otherPlayerImage3" disable="true" fitHeight="136.0" fitWidth="200.0" layoutX="495.0"
+                   layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/boards/bookshelf.png"/>
+        </ImageView>
+        <Label fx:id="otherPlayerPointsLabel3" contentDisplay="CENTER" disable="true" layoutX="627.0" layoutY="23.0"
+               prefHeight="50.0" prefWidth="97.0" visible="false">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <ImageView fx:id="personal3" disable="true" fitHeight="88.0" fitWidth="60.0" layoutX="639.0" layoutY="76.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/personal_goal_cards/back.jpg"/>
+        </ImageView>
+        <ImageView fx:id="otherChair2" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="203.0"
+                   layoutY="64.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/misc/firstplayertoken.png"/>
+        </ImageView>
+        <ImageView fx:id="otherChair1" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="453.0"
+                   layoutY="66.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/misc/firstplayertoken.png"/>
+        </ImageView>
+        <ImageView fx:id="otherChair3" disable="true" fitHeight="36.0" fitWidth="26.0" layoutX="702.0"
+                   layoutY="63.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/misc/firstplayertoken.png"/>
+        </ImageView>
+        <ImageView fx:id="otherPlayer2CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="204.0"
+                   layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+        <ImageView fx:id="otherPlayer2CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="204.0"
+                   layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+        <ImageView fx:id="otherPlayer1CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="453.0"
+                   layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+        <ImageView fx:id="otherPlayer1CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="453.0"
+                   layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+        <ImageView fx:id="otherPlayer3CommonPoint1" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="702.0"
+                   layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+        <ImageView fx:id="otherPlayer3CommonPoint2" disable="true" fitHeight="80.0" fitWidth="33.0" layoutX="702.0"
+                   layoutY="132.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Image url="@../images/scoring_tokens/scoring_0.jpg"/>
+        </ImageView>
+    </AnchorPane>
+    <GridPane GridPane.rowIndex="1">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <ImageView fx:id="commonObjectiveImage1" fitHeight="150.0" fitWidth="250.0" layoutX="5.0"
+                       layoutY="10.0" pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="commonObjectivePoint1" fitHeight="70.0" fitWidth="70.0" layoutX="137.0"
+                       layoutY="44.0" pickOnBounds="true" preserveRatio="true" rotate="-9.0"/>
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <ImageView fx:id="commonObjectiveImage2" fitHeight="150.0" fitWidth="248.0" layoutX="17.0"
+                       layoutY="10.0" pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="commonObjectivePoint2" fitHeight="70.0" fitWidth="70.0" layoutX="149.0"
+                       layoutY="45.0" pickOnBounds="true" preserveRatio="true" rotate="-9.0"/>
+        </AnchorPane>
+    </GridPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+        <ScrollPane fx:id="chatScroll" layoutX="15.0" layoutY="137.0" prefHeight="316.0" prefWidth="225.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="314.0" prefWidth="217.0">
+                <VBox fx:id="publicChatBox" layoutX="5.0" layoutY="-3.0" prefHeight="313.0"
+                      prefWidth="200.0"/>
+                <VBox fx:id="otherPlayerChatBox2" layoutX="6.0" layoutY="-1.0" prefHeight="316.0"
+                      prefWidth="200.0" visible="false"/>
+                <VBox fx:id="otherPlayerChatBox3" layoutX="6.0" prefHeight="316.0" prefWidth="200.0"
+                      visible="false"/>
+                <VBox fx:id="otherPlayerChatBox1" layoutX="6.0" layoutY="1.0" prefHeight="316.0"
+                      prefWidth="200.0" visible="false"/>
+            </AnchorPane>
+        </ScrollPane>
+        <Button layoutX="98.0" layoutY="511.0" mnemonicParsing="false"
+                onAction="#enterChatClick" prefHeight="24.0" prefWidth="60.0" text="Enter"/>
+        <Label fx:id="classification" layoutX="4.0" layoutY="5.0" prefHeight="99.0" prefWidth="248.0"
+               styleClass="classification" textFill="WHITE"/>
+        <TextField fx:id="sendMessage" layoutX="7.0" layoutY="455.0" onKeyPressed="#enterChatEnter"
+                   prefHeight="48.0" prefWidth="241.0" promptText="text" style="-fx-background-color: white;"/>
+        <ChoiceBox fx:id="selectChat" layoutX="14.0" layoutY="108.0" prefHeight="25.0" prefWidth="225.0"/>
+    </AnchorPane>
 </GridPane>

@@ -51,13 +51,14 @@
          </font>
       </Label>
     </VBox>
-   <AnchorPane maxHeight="200.0" maxWidth="200.0" minHeight="200.0" minWidth="171.0" prefHeight="200.0" prefWidth="171.0" GridPane.columnIndex="2">
-      <children>
-         <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutY="39.0" maxHeight="78.0" maxWidth="923.0" minHeight="78.0" minWidth="608.0" prefHeight="78.0" prefWidth="923.0" text="aaaa" textFill="WHITE">
-            <font>
-               <Font name="System Bold Italic" size="40.0" />
-            </font>
-         </Label>
-      </children>
-   </AnchorPane>
+    <AnchorPane maxHeight="200.0" maxWidth="200.0" minHeight="200.0" minWidth="171.0" prefHeight="200.0"
+                prefWidth="171.0" GridPane.columnIndex="2">
+        <Label fx:id="winnerPlayer" alignment="CENTER" contentDisplay="CENTER" layoutY="39.0" maxHeight="78.0"
+               maxWidth="923.0" minHeight="78.0" minWidth="608.0" prefHeight="78.0" prefWidth="923.0" text="aaaa"
+               textFill="WHITE">
+           <font>
+               <Font name="System Bold Italic" size="40.0"/>
+           </font>
+        </Label>
+    </AnchorPane>
 </GridPane>

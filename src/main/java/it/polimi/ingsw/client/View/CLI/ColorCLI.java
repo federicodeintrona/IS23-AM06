@@ -1,15 +1,15 @@
 package it.polimi.ingsw.client.View.CLI;
 
 /**
- * Enumeration of ANSI escaped codes used for Command User Interface's color
+ * Enumeration of ANSI escaped codes used for Command User Interface's color.
  * <ul>
- *     <li>reset</li>
- *     <li>clear screen</li>
- *     <li>foreground color code</li>
- *     <li>background color code</li>
- *     <li>bold</li>
- *     <li>underline</li>
- *     <li>reversed</li>
+ *     <li>Reset;</li>
+ *     <li>clear screen;</li>
+ *     <li>foreground color code;</li>
+ *     <li>background color code;</li>
+ *     <li>bold;</li>
+ *     <li>underline;</li>
+ *     <li>reversed.</li>
  * </ul>
  */
 public enum ColorCLI {
@@ -61,7 +61,7 @@ public enum ColorCLI {
 
 
     /**
-     * Constructor --> assign the correct ANSI escape code
+     * Initialize the correct ANSI escape code
      *
      * @param code  ANSI escape code
      */
