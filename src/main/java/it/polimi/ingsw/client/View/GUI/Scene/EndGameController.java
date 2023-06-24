@@ -30,7 +30,8 @@ public class EndGameController implements Initializable, SceneController{
      */
     private ArrayList<String> orderPlayer;
 
-    //graphic elements of the scene
+
+//GRAPHIC ELEMENTS OF THE SCENE
     /**
      * Label of the 1st player on ranking.
      */

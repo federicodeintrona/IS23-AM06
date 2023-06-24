@@ -177,7 +177,7 @@ public class GUIController implements View, SceneController {
     public void changeScene(Scenes scene){
         Platform.runLater(()->{
             try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scene.getName())));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scene.getPath())));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -217,14 +217,17 @@ public class GUIController implements View, SceneController {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
-            case "start" -> changeScene(Scenes.Game);
+            case "start" ->
+                    changeScene(Scenes.Game);
             case "end" -> {
                 if(state.isDisconnectionWinner()){
                     changeScene(Scenes.DisconnectionEnd);
-                } else changeScene(Scenes.Endgame);
-
+                }
+                else
+                    changeScene(Scenes.Endgame);
             }
-            default -> throw new IllegalStateException("Unexpected value: " + evt.getPropertyName());
+            default ->
+                    throw new IllegalStateException("Unexpected value: " + evt.getPropertyName());
         }
     }
 

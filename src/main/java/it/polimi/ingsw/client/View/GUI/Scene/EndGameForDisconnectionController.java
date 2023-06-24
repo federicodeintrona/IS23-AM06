@@ -22,7 +22,8 @@ public class EndGameForDisconnectionController implements SceneController, Initi
      */
     private final GUIController guiController = GUIControllerStatic.getGuiController();
 
-    //graphic elements of the scene
+
+//GRAPHIC ELEMENTS OF THE SCENE
     /**
      * Label of the winner player.
      */

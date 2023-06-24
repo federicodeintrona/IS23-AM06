@@ -78,7 +78,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private State state = State.REMOVE;
 
 
-//graphic elements of the scene
+//GRAPHIC ELEMENTS OF THE SCENE
     /**
      * Label use to show the name of the current player.
      */
@@ -1439,7 +1439,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     /**
-     * Method to manages the confirmation of the tiles order.
+     * Method that manages the confirmation of the tiles order.
      */
     @FXML
     private void confirmsSelectedClick(){
@@ -1479,7 +1479,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     /**
-     * Method to manages the confirmation of the tiles order,
+     * Method that manages the confirmation of the tiles order,
      * the player is sure of the selected order and wants to place the tiles in the bookshelf.
      */
     @FXML
@@ -1611,7 +1611,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     /**
      * Method to send the chat message to the server.
      *
-     * @param event the event, enter key has been clicked.
+     * @param event the event, enter key has been pressed.
      */
     @FXML
     private void enterChatEnter(KeyEvent event){
@@ -1760,7 +1760,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
      * Method to show all the error.
      *
      * @param error the error message.
-     * @param stage the stage where to show it
+     * @param stage the stage where to show it.
      */
     @Override
     public void showError(String error, Stage stage){

@@ -35,7 +35,7 @@
             <Insets left="80.0" right="80.0" top="8.0" />
          </VBox.margin>
       </TextField>
-        <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#loginClick" prefHeight="24.0" prefWidth="82.0" text="Login">
+        <Button alignment="CENTER" mnemonicParsing="false" onAction="#loginClick" prefHeight="24.0" prefWidth="82.0" text="Login">
          <VBox.margin>
             <Insets top="26.0" />
          </VBox.margin></Button>
