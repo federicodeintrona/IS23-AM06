@@ -23,25 +23,26 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <VBox alignment="CENTER" prefHeight="182.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <AnchorPane maxHeight="80.0" maxWidth="546.0" minHeight="80.0" minWidth="346.0" prefHeight="80.0" prefWidth="546.0" styleClass="enterNumOfPlayer">
-         <children>
-            <Label fx:id="firstUsernameLabel" alignment="CENTER" layoutX="2.0" layoutY="14.0" prefHeight="30.0" prefWidth="546.0" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font>
+        <AnchorPane maxHeight="80.0" maxWidth="546.0" minHeight="80.0" minWidth="346.0" prefHeight="80.0"
+                    prefWidth="546.0" styleClass="enterNumOfPlayer">
+            <Label fx:id="firstUsernameLabel" alignment="CENTER" layoutX="2.0" layoutY="14.0" prefHeight="30.0"
+                   prefWidth="546.0" textFill="WHITE">
+                <font>
+                    <Font size="20.0"/>
+                </font>
             </Label>
-              <Label alignment="CENTER" contentDisplay="CENTER" layoutY="51.0" prefHeight="30.0" prefWidth="546.0" text="Enter number of player " textFill="WHITE">
-                  <font>
-                      <Font name="System Bold" size="20.0" />
-                  </font>
-              </Label>
-         </children>
-      </AnchorPane>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="51.0" prefHeight="30.0" prefWidth="546.0"
+                   text="Enter number of player " textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="20.0"/>
+                </font>
+            </Label>
+        </AnchorPane>
       <ChoiceBox fx:id="numberOfPlayerBox" onKeyPressed="#setNumberOfPlayerBoxEnter" prefWidth="150.0">
          <VBox.margin>
             <Insets top="8.0" />
          </VBox.margin></ChoiceBox>
-      <Button fx:id="enterButton" mnemonicParsing="false" onAction="#setNumberOfPlayerEnterButtonClick" text="Enter">
+      <Button mnemonicParsing="false" onAction="#setNumberOfPlayerEnterButtonClick" text="Enter">
          <VBox.margin>
             <Insets top="7.0" />
          </VBox.margin>

@@ -10,21 +10,21 @@ import java.util.regex.Pattern;
 
 /**
  * Class to read all the strings that the user enters from the command line.
- * It reads and interprets the input string, if it is a valid command creates the corresponding messages to send to the server and sends it
+ * It reads and interprets the input string, if it is a valid command creates the corresponding messages to send to the server and sends it.
  */
 public class ReadShell extends Thread {
 
     /**
-     * Attribute used to retrieve CLI-side all the client information
+     * Attribute used to retrieve CLI-side all the client information.
      */
     private final CLIMain cliMain;
 
 
 
     /**
-     * Constructor --> assign climain
+     * Initialize cliMain
      *
-     * @param cliMain &nbsp;&nbsp;&nbsp; used to retrieve CLI-side all the client information
+     * @param cliMain the cliMain instance that is used to retrieve CLI-side all the client information.
      */
     public ReadShell(CLIMain cliMain) {
         this.cliMain = cliMain;
@@ -33,12 +33,12 @@ public class ReadShell extends Thread {
 
 
     /**
-     * Method to run the Readshell
+     * Method to run the ReadShell.
      */
     @Override
     public void run() {
         //Readshell must continue reading ommand until the game is finished
-        while (!cliMain.getClientState().isGameIsEnded()) {
+        while (cliMain.getClientState().isGameIsEnded()) {
             readCommand();
         }
     }
@@ -46,9 +46,9 @@ public class ReadShell extends Thread {
 
 
     /**
-     * Method to read on standard input
+     * Method to read on standard input.
      *
-     * @return the string that is on the standard input
+     * @return the string that is on the standard input.
      */
     private String readLine() {
         //instantiate Scanner that reads from standard input
@@ -62,9 +62,9 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * Method to read the number on standard input
+     * Method to read the number on standard input.
      *
-     * @return the number that is on the standard input
+     * @return the number that is on the standard input.
      */
     private Integer readNumber(){
         //instantiate Scanner that reads from standard input
@@ -94,12 +94,12 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * Method to read all the numbers in the input string
+     * Method to read all the numbers in the input string.
      * <p>
-     * ONLY READS THE DIGIT (for example, if in the input string there is 12, this method return 1 and 2 and NOT 12)
+     * ONLY READS THE DIGIT (for example, if in the input string there is 12, this method return 1 and 2 and NOT 12).
      *
-     * @param s &nbsp;&nbsp;&nbsp; input string that we want to know which numbers it contains
-     * @return ArrayList &nbsp;&nbsp;&nbsp; all the number in the string
+     * @param s the input string that we want to know which numbers it contains.
+     * @return the ArrayList that contains all the number in the string
      */
     private ArrayList<Integer> readNumber(String s) {
         ArrayList<Integer> result = new ArrayList<>();
@@ -117,9 +117,9 @@ public class ReadShell extends Thread {
     /**
      * Method to read user command:
      * <ul>
-     *     <li>read command</li>
-     *     <li>create the correct message</li>
-     *     <li>send the message to server</li>
+     *     <li>read command;</li>
+     *     <li>create the correct message;</li>
+     *     <li>send the message to server.</li>
      * </ul>
      */
     public void readCommand() {
@@ -241,7 +241,7 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * Method to request the username at game beginning
+     * Method to request the username at game beginning.
      */
     public void askUsername() {
         Message message = new Message();
@@ -267,7 +267,9 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * Method to request the number of players - if and only if the server requires it
+     * Method to request the number of players.
+     * <p>
+     * If and only if the server requires it.
      */
     public void askNumberOfPlayerMessage() {
         IntMessage message = new IntMessage();
@@ -290,9 +292,9 @@ public class ReadShell extends Thread {
 
 
     /**
-     * Method to create the remove tiles from board's message - remove tiles from board
+     * Method to create the remove tiles from board's message - remove tiles from board.
      *
-     * @param input &nbsp;&nbsp;&nbsp; the list of int - then the method transforms it in Points
+     * @param input the list of int - then the method transforms it in Points.
      */
     private void createRemoveMessage(ArrayList<Integer> input) {
         PointsMessage pointsMessage = new PointsMessage();
@@ -319,9 +321,9 @@ public class ReadShell extends Thread {
     }
 
     /**
-     * Method to create the switch tiles' message - switch selected tiles
+     * Method to create the switch tiles' message - switch selected tiles.
      *
-     * @param input &nbsp;&nbsp;&nbsp; the list of int - order of switching tiles
+     * @param input the list of int - order of switching tiles.
      */
     private void createSwitchMessage(ArrayList<Integer> input) {
         IntArrayMessage intArrayMessage = new IntArrayMessage();
@@ -339,7 +341,7 @@ public class ReadShell extends Thread {
     /**
      * Method to create the add to bookshelf's message - add to bookshelf's column
      *
-     * @param input &nbsp;&nbsp;&nbsp; the list of int, it contains only 1 int
+     * @param input the list of int, it contains only 1 int.
      */
     private void createAddMessage(ArrayList<Integer> input) {
         IntMessage intMessage = new IntMessage();
@@ -357,9 +359,9 @@ public class ReadShell extends Thread {
 
 
     /**
-     * Method to send all possible message to Networker, and then it sends them to Server
+     * Method to send all possible message to Networker, and then it sends them to Server.
      *
-     * @param message &nbsp;&nbsp;&nbsp; sending message
+     * @param message the sending message.
      */
     public void sendMessage(Message message) {
         //call the correct Networker's method

@@ -14,10 +14,10 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 
 /**
- * Class to manage the Command Line Interface
+ * Class to manage the Command Line Interface.
  * <ul>
- *     <li>create the client lock - ClientState, CLIPrint, ReadShell</li>
- *     <li>initial request
+ *     <li>Create the client lock in common with ClientState, CLIPrint, ReadShell;</li>
+ *     <li>initial request:
  *          <ul>
  *              <li>Which connection protocol do you choose?</li>
  *              <li>Which host do you use?</li>
@@ -25,10 +25,10 @@ import java.util.Scanner;
  *      </li>
  *      <li>create the instance of:
  *          <ul>
- *              <li>ClientState</li>
- *              <li>CLIPrint</li>
- *              <li>ReadShell</li>
- *              <li>Networker (RMI or TCP)</li>
+ *              <li>ClientState;</li>
+ *              <li>CLIPrint;</li>
+ *              <li>ReadShell;</li>
+ *              <li>Networker (RMI or TCP).</li>
  *          </ul>
  *      </li>
  * </ul>
@@ -36,43 +36,43 @@ import java.util.Scanner;
 public class CLIMain implements View {
 
     /**
-     * Attribute used to know what to lock on - it is in common with ClientState
+     * Attribute used to know what to lock on - it is in common with ClientState.
      */
     private final Object lock ;
     /**
-     * Attribute used to read all the client changes to show
+     * Attribute used to read all the client changes to show.
      */
     private ClientState clientState ;
     /**
-     * Attribute used to know whom to send messages that the user writes from command line
+     * Attribute used to know whom to send messages that the user writes from command line.
      */
     private  Networker net;
     /**
-     * Attribute used to know which CLIPrint instance is correct
+     * Attribute used to know which CLIPrint instance is correct.
      */
     private static CLIPrint cliPrint;
     /**
-     * Attribute used to know which ReadShell instance is correct
+     * Attribute used to know which ReadShell instance is correct.
      */
     private static ReadShell readShell;
     /**
-     * Attribute used to know which ChatHandler instance is correct
+     * Attribute used to know which ChatHandler instance is correct.
      */
     private static ChatHandler chatHandler;
     /**
-     * Thread to start the reader from the command line in parallel with printing on the terminal
+     * Thread to start the reader from the command line in parallel with printing on the terminal.
      */
     private Thread th1;
 
     /**
-     * Attribute used to know if chat is open
+     * Attribute used to know if chat is open.
      */
     private boolean openChat;
 
 
 
     /**
-     * Initialize lock
+     * Initialize lock.
      */
     public CLIMain() {
         this.lock=new Object();
@@ -90,52 +90,52 @@ public class CLIMain implements View {
 
 
     /**
-     * <strong>Getter</strong> --> returns the lock Object
+     * <strong>Getter</strong> --> Returns the lock Object.
      *
-     * @return Object &nbsp;&nbsp;&nbsp; lock on which to make the locks, must be common to CLIPrint, ReadShell and ClientState
+     * @return the lock on which to make the locks, must be common to CLIPrint, ReadShell and ClientState.
      */
     public Object getLock() {
         return lock;
     }
 
     /**
-     * <strong>Getter</strong> --> returns the ClientState
+     * <strong>Getter</strong> --> Returns the ClientState.
      *
-     * @return ClientState &nbsp;&nbsp;&nbsp; correct instance of ClientState
+     * @return the ClientState.
      */
     public ClientState getClientState() {
         return clientState;
     }
 
     /**
-     * <strong>Getter</strong> --> returns the CLIPrint
+     * <strong>Getter</strong> --> Returns the CLIPrint.
      *
-     * @return CLIPrint &nbsp;&nbsp;&nbsp; correct instance of CLIPrint
+     * @return the CLIPrint.
      */
     public CLIPrint getCliPrint() {
         return cliPrint;
     }
 
     /**
-     * <strong>Getter</strong> --> returns the ReadShell
+     * <strong>Getter</strong> --> Returns the ReadShell.
      *
-     * @return correct instance of ReadShell
+     * @return the ReadShell
      */
     public ReadShell getReadShell() {
         return readShell;
     }
 
     /**
-     * <strong>Getter</strong> --> returns the ChatHandler
+     * <strong>Getter</strong> --> Returns the ChatHandler
      *
-     * @return correct instance of ChatHandler
+     * @return the ChatHandler.
      */
     public ChatHandler getChatHandler () { return chatHandler; }
 
     /**
-     * <strong>Getter</strong> --> returns the Networker
+     * <strong>Getter</strong> --> Returns the Networker.
      *
-     * @return correct instance of Networker, class to which the client should send commands to be sent to the server
+     * @return the Networker, class to which the client should send commands to be sent to the server.
      */
     public Networker getNet() {
         return net;
@@ -144,9 +144,9 @@ public class CLIMain implements View {
 
 
     /**
-     * <strong>Setter</strong> --> setting if chat is opened
+     * <strong>Setter</strong> --> Sets true if chat is opened.
      *
-     * @param openChat true if chat is open, false in other cases
+     * @param openChat sets true if chat is open, false in other cases.
      */
     public void setOpenChat(boolean openChat) {
         this.openChat = openChat;
@@ -155,9 +155,9 @@ public class CLIMain implements View {
 
 
     /**
-     * Method to run the Command Line Interface
+     * Method to run the Command Line Interface.
      *
-     * @throws RemoteException in case of problem with connection RMI
+     * @throws RemoteException in case of problem with connection RMI.
      */
     public void runUI() throws RemoteException {
         Scanner scanner = new Scanner(System.in);
@@ -216,7 +216,7 @@ public class CLIMain implements View {
 
 
         //waiting until game has started
-        while (!clientState.gameHasStarted()){
+        while (clientState.gameHasStarted()){
             //you are not the latest player
             if (clientState.isWaiting()){
                 cliPrint.printWaiting();
@@ -258,7 +258,7 @@ public class CLIMain implements View {
         //I have already printed the first round of the game
         String curr=clientState.getNextPlayer();
 
-        while (!clientState.isGameIsEnded()){
+        while (clientState.isGameIsEnded()){
             //print new turn if current is next from before
             if (clientState.getCurrentPlayer().equals(curr) && !openChat){
                 try {
@@ -287,7 +287,7 @@ public class CLIMain implements View {
     }
 
     /**
-     * Method to close all the thread managed by CLI
+     * Method to close all the thread managed by CLI.
      */
     @Override
     public void close() {
@@ -299,7 +299,7 @@ public class CLIMain implements View {
     }
 
     /**
-     * Method to close the Client before creation of CLI-thread
+     * Method to close the Client before creation of CLI-thread.
      */
     public void closeClient(){
         Message msg = new Message();
@@ -310,9 +310,9 @@ public class CLIMain implements View {
 
 
     /**
-     * Method to received all the message from server
+     * Method to received all the message from server.
      *
-     * @param message the message that the server sent
+     * @param message the message that the server sent.
      */
     @Override
     public void receivedMessage(Message message){
