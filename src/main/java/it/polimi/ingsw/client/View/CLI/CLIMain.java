@@ -72,7 +72,7 @@ public class CLIMain implements View {
 
 
     /**
-     * Constructor --> create lock
+     * Initialize lock
      */
     public CLIMain() {
         this.lock=new Object();
@@ -90,7 +90,7 @@ public class CLIMain implements View {
 
 
     /**
-     * Getter --> returns the lock Object
+     * <strong>Getter</strong> --> returns the lock Object
      *
      * @return Object &nbsp;&nbsp;&nbsp; lock on which to make the locks, must be common to CLIPrint, ReadShell and ClientState
      */
@@ -99,7 +99,7 @@ public class CLIMain implements View {
     }
 
     /**
-     * Getter --> returns the ClientState
+     * <strong>Getter</strong> --> returns the ClientState
      *
      * @return ClientState &nbsp;&nbsp;&nbsp; correct instance of ClientState
      */
@@ -108,7 +108,7 @@ public class CLIMain implements View {
     }
 
     /**
-     * Getter --> returns the CLIPrint
+     * <strong>Getter</strong> --> returns the CLIPrint
      *
      * @return CLIPrint &nbsp;&nbsp;&nbsp; correct instance of CLIPrint
      */
@@ -117,25 +117,25 @@ public class CLIMain implements View {
     }
 
     /**
-     * Getter --> returns the ReadShell
+     * <strong>Getter</strong> --> returns the ReadShell
      *
-     * @return ReadShell &nbsp;&nbsp;&nbsp; correct instance of ReadShell
+     * @return correct instance of ReadShell
      */
     public ReadShell getReadShell() {
         return readShell;
     }
 
     /**
-     * Getter --> returns the ChatHandler
+     * <strong>Getter</strong> --> returns the ChatHandler
      *
-     * @return ChatHandler &nbsp;&nbsp;&nbsp; correct instance of ChatHandler
+     * @return correct instance of ChatHandler
      */
     public ChatHandler getChatHandler () { return chatHandler; }
 
     /**
-     * Getter --> returns the Networker
+     * <strong>Getter</strong> --> returns the Networker
      *
-     * @return Networker &nbsp;&nbsp;&nbsp; correct instance of Networker, class to which the client should send commands to be sent to the server
+     * @return correct instance of Networker, class to which the client should send commands to be sent to the server
      */
     public Networker getNet() {
         return net;
@@ -144,9 +144,9 @@ public class CLIMain implements View {
 
 
     /**
-     * Setter --> setting if chat is opened
+     * <strong>Setter</strong> --> setting if chat is opened
      *
-     * @param openChat &nbsp;&nbsp;&nbsp; is chat open?
+     * @param openChat true if chat is open, false in other cases
      */
     public void setOpenChat(boolean openChat) {
         this.openChat = openChat;
@@ -157,7 +157,7 @@ public class CLIMain implements View {
     /**
      * Method to run the Command Line Interface
      *
-     * @throws RemoteException
+     * @throws RemoteException in case of problem with connection RMI
      */
     public void runUI() throws RemoteException {
         Scanner scanner = new Scanner(System.in);
@@ -312,7 +312,7 @@ public class CLIMain implements View {
     /**
      * Method to received all the message from server
      *
-     * @param message &nbsp;&nbsp;&nbsp; the message that the server sent
+     * @param message the message that the server sent
      */
     @Override
     public void receivedMessage(Message message){
@@ -336,8 +336,7 @@ public class CLIMain implements View {
         }
     }
 
-
-
+    //TODO javadoc Fla
     /**
      *
      * @param evt A PropertyChangeEvent object describing the event source

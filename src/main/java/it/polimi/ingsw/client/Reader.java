@@ -32,9 +32,11 @@ import static java.lang.System.out;
  * If the message received is:
  * <ul>
  *     <il> a view message then the class changes client state</il>
- *     <il> a ping message then sends back the pong message to server</il>
+ *     <il> a ping message then sends back the pong message to server and in case of
+ *     missing answer starts disconnection</il>
  *     <il> in other case send to networker the message</il>
  * </ul>
+ * It also close socket, object input stream and object output stream in case of disconnection
  */
 public class Reader extends Thread implements TimerInterface {
     private final Socket socket;
@@ -54,6 +56,14 @@ public class Reader extends Thread implements TimerInterface {
     private static final int initialDelay = 50;
     private static final int delta = 1000;
 
+    /**
+     * Initialize socket, object output stream, networker tcp and client state and creates a new object input stream
+     * @param socket server socket
+     * @param oos object output stream
+     * @param networkerTcp networker
+     * @param clientState client state to modify
+     * @throws IOException in case of problem with input and output
+     */
     public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
         this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         this.oos = oos;
@@ -166,20 +176,24 @@ public class Reader extends Thread implements TimerInterface {
                     clientState.newMessageHandler((ChatMessage) message.getContent());
             case ("reloadChats") ->
                     clientState.reloadChats((ChatController) message.getContent());
-            case ("end") -> {
-                Boolean end = (Boolean) message.getContent();
-                clientState.setGameIsEnded(end);
-            }
+            case ("end") ->
+                clientState.setGameIsEnded((Boolean) message.getContent());
         }
     }
 
+    /**
+     * Method used to notify networker to start disconnection process
+     */
     @Override
     public void disconnect() {
         notifier.firePropertyChange(new PropertyChangeEvent(true,
-                "disconnect", null, null));;
+                "disconnect", null, null));
     }
 
-
+    /**
+     * Method to close all active thread, socket, object output stream and object input stream
+     * and then close the system
+     */
     public void disconnection() {
         disconnected=true;
         e.shutdown();
