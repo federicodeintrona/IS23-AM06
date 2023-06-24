@@ -36,7 +36,7 @@ public class Board {
     private Sachet boardSachet;
 
 
-
+//TODO si può togliere
     /**
      * Initialize numberOfPlayer and create Board based on number of player.
      * <p>
@@ -49,6 +49,7 @@ public class Board {
         creationBoard();
 
     }
+
     /**
      * Initialize numberOfPlayer, boardSachet and create Board based on number of player.
      * <p>
@@ -70,9 +71,11 @@ public class Board {
      *
      * @return the gamesBoard.
      */
-    public  Matrix getGamesBoard() {
+    public Matrix getGamesBoard() {
         return gamesBoard;
     }
+
+    //TODO si può togliere
     /**
      * <strong>Getter</strong> -> Returns numberOfPlayer.
      *
@@ -226,169 +229,92 @@ public class Board {
                 //for all tiles that !=NOTALLOWED && !=EMPTY
                 if (!gamesBoard.getTile(i, j).equals(Tiles.NOT_ALLOWED) &&
                         !gamesBoard.getTile(i, j).equals(Tiles.EMPTY)){
-                    //if a tile has at leat 1 tile adjacent return false
 
-                    //if we are NOT on the edge of board
-                    if ((i!=0 && i!=Define.NUMBEROFROWS_BOARD.getI()-1) &&
-                            (j!=0 && j!=Define.NUMBEROFCOLUMNS_BOARD.getI()-1)){
-                        //adjacency:
-                        //sx
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //dx
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //upper
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //bottom
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
+                    //not on the edge board
+                    if (i!=0 && i!=Define.NUMBEROFROWS_BOARD.getI()-1 &&
+                            j!=0 && j!=Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
+                        return leftAdjacency(i, j) && rightAdjacency(i, j) && upperAdjacency(i, j) && bottomAdjacency(i, j);
                     }
-                    //we are on upper edge
-                    else if (i==0){
-                        //we are on upper - left corner
-                        if(j==0){
-                            //bottom
-                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                        }
-                        //we are on upper - right corner
-                        else if (j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1) {
-                            //bottom
-                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                        }
-                        //we are in the middle
-                        else{
-                            //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //bottom
-                            if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                        }
-                    }
-                    //we are on bottom edge
-                    else if (i==Define.NUMBEROFROWS_BOARD.getI()-1){
-                        //we are bottom - left corner
-                        if (j==0){
-                            //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //upper
-                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                        }
-                        //we are bottom - right corner
-                        else if (j == Define.NUMBEROFCOLUMNS_BOARD.getI() - 1) {
-                            //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //upper
-                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                        }
-                        //we are in the middle
-                        else{
-                            //sx
-                            if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //dx
-                            if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                            //upper
-                            if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
-                                    !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                                return false;
-                            }
-                        }
-                    }
-                    //we are on left edge
-                    else if (j==0){
-                        //dx
-                        if (!gamesBoard.getTile(i, j+1).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i, j+1).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //upper
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //bottom
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                    }
-                    //we are on right edge
-                    //if (j==numberOfColumn-1)
+                    //we are on one edge
                     else {
-                        //sx
-                        if (!gamesBoard.getTile(i, j-1).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i, j-1).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //upper
-                        if (!gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
-                        //bottom
-                        if (!gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
-                                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY)){
-                            return false;
-                        }
+                        //upper left corner
+                        if (i==0 && j==0)
+                            return rightAdjacency(i, j) && bottomAdjacency(i, j);
+                        //upper right corner
+                        else if (i==0 && j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1)
+                            return leftAdjacency(i, j) && bottomAdjacency(i, j);
+                        //bottom left corner
+                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1 && j==0)
+                            return rightAdjacency(i, j) && upperAdjacency(i, j);
+                        //bottom right corner
+                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1 && j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1)
+                            return leftAdjacency(i, j) && upperAdjacency(i, j);
+                        //upper edge
+                        else if (i==0)
+                            return leftAdjacency(i, j) && rightAdjacency(i, j) && bottomAdjacency(i, j);
+                        //bottom edge
+                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1)
+                            return leftAdjacency(i, j) && rightAdjacency(i, j) && upperAdjacency(i, j);
+                        //left edge
+                        else if (j==0)
+                            return rightAdjacency(i, j) && upperAdjacency(i, j) && bottomAdjacency(i, j);
+                        //right edge
+                        else if (j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1)
+                            return leftAdjacency(i, j) && upperAdjacency(i, j) && bottomAdjacency(i, j);
                     }
                 }
             }
         }
         //if we arrived in this line of code it means that we have to reset the board
         return true;
+    }
+
+    /**
+     * Method that verify the left adjacency.
+     *
+     * @param i the index of row.
+     * @param j the index of column.
+     * @return true if there is left adjacency
+     */
+    private boolean leftAdjacency(int i, int j){
+        return gamesBoard.getTile(i, j - 1).equals(Tiles.NOT_ALLOWED) ||
+                gamesBoard.getTile(i, j - 1).equals(Tiles.EMPTY);
+    }
+
+    /**
+     * Method that verify the right adjacency.
+     *
+     * @param i the index of row.
+     * @param j the index of column.
+     * @return true if there is right adjacency
+     */
+    private boolean rightAdjacency(int i, int j){
+        return gamesBoard.getTile(i, j + 1).equals(Tiles.NOT_ALLOWED) ||
+                gamesBoard.getTile(i, j + 1).equals(Tiles.EMPTY);
+    }
+
+    /**
+     * Method that verify the upper adjacency.
+     *
+     * @param i the index of row.
+     * @param j the index of column.
+     * @return true if there is upper adjacency
+     */
+    private boolean upperAdjacency(int i, int j){
+        return gamesBoard.getTile(i - 1, j).equals(Tiles.NOT_ALLOWED) ||
+                gamesBoard.getTile(i - 1, j).equals(Tiles.EMPTY);
+    }
+
+    /**
+     * Method that verify the bottom adjacency.
+     *
+     * @param i the index of row.
+     * @param j the index of column.
+     * @return true if there is bottom adjacency
+     */
+    private boolean bottomAdjacency(int i, int j){
+        return gamesBoard.getTile(i + 1, j).equals(Tiles.NOT_ALLOWED) ||
+                gamesBoard.getTile(i + 1, j).equals(Tiles.EMPTY);
     }
 
     /**
@@ -416,18 +342,6 @@ public class Board {
         BoardInitialization();
     }
 
-    //TODO solo per i test
-    /**
-     * Method to place tile on the board and remove it from sachet.
-     *
-     * @param tile the tile to add on the board.
-     * @param row the number of row.
-     * @param col the number of column.
-     */
-    public void placeTiles(Tiles tile, int row, int col){
-        gamesBoard.setTile(tile, row, col);
-        boardSachet.removeTiles(tile);
-    }
 
     /**
      * Method to remove the tiles in the positions shown.
@@ -442,6 +356,8 @@ public class Board {
             remove(point);
         }
     }
+
+    //TODO da fare private
     /**
      * Method to remove tile in the position shown.
      * <p>
@@ -453,36 +369,18 @@ public class Board {
         gamesBoard.remove(position.x, position.y);
     }
 
+    //TODO da fare private
     /**
      * Method to return whether the tile at the given position is free (does the tile have at least 1 free side?).
      * <p>
      * <strong>REQUIRES:</strong> that position is correct.
      *
      * @param position the position of tile to check.
-     * @return true if the tiles are true, false if they aren't.
+     * @return true if the tile is free, false if they aren't.
      */
     public boolean checkFreeTiles(Point position){
         ArrayList<Point> list=adjacentTiles(position);
         return list.size() != 4;
-    }
-
-    /**
-     * Method to return all the position of free tiles (does the tile have at least 1 free side?).
-     *
-     * @return the ArrayList that contains the position of free tiles.
-     */
-    public ArrayList<Point> freeTiles(){
-        ArrayList<Point> result=new ArrayList<>();
-        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
-            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
-                if (!gamesBoard.getTile(i, j).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &
-                                checkFreeTiles(new Point(i, j))){
-                    result.add(new Point(i, j));
-                }
-            }
-        }
-        return result;
     }
 
     /**
@@ -579,6 +477,7 @@ public class Board {
         return true;
     }
 
+    //TODO da fare private
     /**
      * Method to return the positions of adjacent tiles to the incoming one.
      * <p>
@@ -802,6 +701,7 @@ public class Board {
         return result;
     }
 
+    //TODO da fare private
     /**
      * Method to return if all element in the List are on the same row.
      *
@@ -819,6 +719,7 @@ public class Board {
         return true;
     }
 
+    //TODO da fare private
     /**
      * Method to return if all element in the List are on the same column.
      *
@@ -869,6 +770,7 @@ public class Board {
         if (position.size()>Define.MAXNUMBEROFTILESPICKABLE.getI()){
             return false;
         }
+
         //check that position are free / !=EMPTY / !=NOTALLOWED
         for (Point point : position) {
             if (!checkFreeTiles(point)) {
@@ -886,4 +788,37 @@ public class Board {
 
     }
 
+
+
+    //TODO solo per i test
+    /**
+     * Method to place tile on the board and remove it from sachet.
+     *
+     * @param tile the tile to add on the board.
+     * @param row the number of row.
+     * @param col the number of column.
+     */
+    public void placeTiles(Tiles tile, int row, int col){
+        gamesBoard.setTile(tile, row, col);
+        boardSachet.removeTiles(tile);
+    }
+    //TODO solo nei test
+    /**
+     * Method to return all the position of free tiles (does the tile have at least 1 free side?).
+     *
+     * @return the ArrayList that contains the position of free tiles.
+     */
+    public ArrayList<Point> freeTiles(){
+        ArrayList<Point> result=new ArrayList<>();
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+                if (!gamesBoard.getTile(i, j).equals(Tiles.NOT_ALLOWED) &&
+                        !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &
+                                checkFreeTiles(new Point(i, j))){
+                    result.add(new Point(i, j));
+                }
+            }
+        }
+        return result;
+    }
 }
