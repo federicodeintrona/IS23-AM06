@@ -5,165 +5,28 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.rmi.server.ServerNotActiveException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
+
+    private void placeTiles(Board gamesBoard, Sachet boardSachet, Tiles tile, int row, int col){
+        gamesBoard.getGamesBoard().setTile(tile, row, col);
+        boardSachet.removeTiles(tile);
+    }
+
     //TEST Constructor and Getter method
     @DisplayName("Testing the Constructor and Getter method")
     @Test
     void constructorTest(){
-        Board board=new Board(2);
-        assertEquals(board.getNumberOfPlayer(), 2);
-        Board board1=new Board(3);
-        assertEquals(board1.getNumberOfPlayer(), 3);
-        Board board2=new Board(4);
-        assertEquals(board2.getNumberOfPlayer(), 4);
 
         Board board4=new Board(2, new Sachet());
-        assertEquals(board4.getNumberOfPlayer(), 2);
         Board board5=new Board(3, new Sachet());
-        assertEquals(board5.getNumberOfPlayer(), 3);
         Board board6=new Board(4, new Sachet());
-        assertEquals(board6.getNumberOfPlayer(), 4);
 
         //check the NOTALLOWED position
-        assertEquals(board.getGamesBoard().getTile(0,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,3), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,4), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,5), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(0,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,5), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(1,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(2,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(3,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(3,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(3,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(4,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(4,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(5,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(5,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(5,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(6,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(7,8), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,0), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,1), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,2), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,3), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,6), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,7), Tiles.NOT_ALLOWED);
-        assertEquals(board.getGamesBoard().getTile(8,8), Tiles.NOT_ALLOWED);
-
-        assertEquals(board1.getGamesBoard().getTile(0,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(0,1), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(0,2), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(0,4), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(0,5), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(0,6), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(0,7), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(0,8), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(1,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(1,1), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(1,2), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(1,5), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(1,6), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(1,7), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(1,8), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(2,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(2,1), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(2,7), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(2,8), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(3,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(3,1), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(4,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(4,8), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(5,7), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(5,8), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(6,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(6,1), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(6,7), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(6,8), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(7,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(7,1), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(7,2), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(7,3), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(7,6), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(7,7), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(7,8), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,0), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,1), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,2), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,3), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,4), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,6), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,7), Tiles.NOT_ALLOWED);
-        assertEquals(board1.getGamesBoard().getTile(8,8), Tiles.NOT_ALLOWED);
-
-        assertEquals(board2.getGamesBoard().getTile(0,0), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(0,1), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(0,2), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(0,5), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(0,6), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(0,7), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(0,8), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(1,0), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(1,1), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(1,2), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(1,6), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(1,7), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(1,8), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(2,0), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(2,1), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(2,7), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(2,8), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(3,0), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(5,8), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(6,0), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(6,1), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(6,7), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(6,8), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(7,0), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(7,1), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(7,2), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(7,6), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(7,7), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(7,8), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(8,0), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(8,1), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(8,2), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(8,3), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(8,6), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(8,7), Tiles.NOT_ALLOWED);
-        assertEquals(board2.getGamesBoard().getTile(8,8), Tiles.NOT_ALLOWED);
-
         assertEquals(board4.getGamesBoard().getTile(0,0), Tiles.NOT_ALLOWED);
         assertEquals(board4.getGamesBoard().getTile(0,1), Tiles.NOT_ALLOWED);
         assertEquals(board4.getGamesBoard().getTile(0,2), Tiles.NOT_ALLOWED);
@@ -378,9 +241,9 @@ class BoardTest {
     void checkBoardReset1() {
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 4,4);
-        board.placeTiles(Tiles.GREEN, 3,6);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 4,4);
+        placeTiles(board, sachet, Tiles.GREEN, 3,6);
         boolean result=board.checkBoardReset();
         assertTrue(result);
 
@@ -390,9 +253,9 @@ class BoardTest {
     void checkBoardReset2() {
         Sachet sachet=new Sachet();
         Board board=new Board(3, sachet);
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 4,4);
-        board.placeTiles(Tiles.GREEN, 3,6);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 4,4);
+        placeTiles(board, sachet, Tiles.GREEN, 3,6);
         boolean result=board.checkBoardReset();
         assertTrue(result);
 
@@ -402,9 +265,9 @@ class BoardTest {
     void checkBoardReset3() {
         Sachet sachet=new Sachet();
         Board board=new Board(4, sachet);
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 4,4);
-        board.placeTiles(Tiles.GREEN, 3,6);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 4,4);
+        placeTiles(board, sachet, Tiles.GREEN, 3,6);
         boolean result=board.checkBoardReset();
         assertTrue(result);
 
@@ -416,36 +279,36 @@ class BoardTest {
         Sachet sachet=new Sachet();
         Board board=new Board(2, sachet);
         //we are NOT on the edge board --> left adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3,2);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,2);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 3,2);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,2);
 
         //we are NOT on the edge board --> right adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3,4);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,4);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 3,4);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,4);
 
         //we are NOT on the edge board --> upper adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 2,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 2,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 2,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 2,3);
 
         //we are NOT on the edge board --> bottom adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 4,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 4,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 4,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 4,3);
     }
     @DisplayName("Condition to board reset is NOT verified - 3 players' game")
     @Test
@@ -454,72 +317,72 @@ class BoardTest {
         Sachet sachet=new Sachet();
         Board board=new Board(3, sachet);
         //we are NOT on the edge board --> left adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3,2);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,2);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 3,2);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,2);
 
         //we are NOT on the edge board --> right adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3,4);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,4);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 3,4);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,4);
 
         //we are NOT on the edge board --> upper adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 2,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 2,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 2,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 2,3);
 
         //we are NOT on the edge board --> bottom adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 4,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 4,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 4,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 4,3);
 
 
         //we are on the upper edge --> bottom adjacency
-        board.placeTiles(Tiles.GREEN, 0,3);
-        board.placeTiles(Tiles.GREEN, 1,3);
+        placeTiles(board, sachet, Tiles.GREEN, 0,3);
+        placeTiles(board, sachet, Tiles.GREEN, 1,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 0,3);
-        board.placeTiles(Tiles.EMPTY, 1,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 0,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 1,3);
 
 
         //we are on the bottom edge --> up adjacency
-        board.placeTiles(Tiles.GREEN, 8,5);
-        board.placeTiles(Tiles.GREEN, 7,5);
+        placeTiles(board, sachet, Tiles.GREEN, 8,5);
+        placeTiles(board, sachet, Tiles.GREEN, 7,5);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 8,5);
-        board.placeTiles(Tiles.EMPTY, 7,5);
+        placeTiles(board, sachet, Tiles.EMPTY, 8,5);
+        placeTiles(board, sachet, Tiles.EMPTY, 7,5);
 
 
         //we are on the left edge --> right adjacency
-        board.placeTiles(Tiles.GREEN, 5,0);
-        board.placeTiles(Tiles.GREEN, 5,1);
+        placeTiles(board, sachet, Tiles.GREEN, 5,0);
+        placeTiles(board, sachet, Tiles.GREEN, 5,1);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 5,0);
-        board.placeTiles(Tiles.EMPTY, 5,1);
+        placeTiles(board, sachet, Tiles.EMPTY, 5,0);
+        placeTiles(board, sachet, Tiles.EMPTY, 5,1);
 
 
         //we are on the right edge --> left adjacency
-        board.placeTiles(Tiles.GREEN, 3,8);
-        board.placeTiles(Tiles.GREEN, 3,7);
+        placeTiles(board, sachet, Tiles.GREEN, 3,8);
+        placeTiles(board, sachet, Tiles.GREEN, 3,7);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,8);
-        board.placeTiles(Tiles.EMPTY, 3,7);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,8);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,7);
     }
     @DisplayName("Condition to board reset is NOT verified - 4 players' game")
     @Test
@@ -528,142 +391,143 @@ class BoardTest {
         Sachet sachet=new Sachet();
         Board board=new Board(4, sachet);
         //we are NOT on the edge board --> left adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3,2);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,2);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 3,2);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,2);
 
         //we are NOT on the edge board --> right adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 3,4);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,4);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 3,4);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,4);
 
         //we are NOT on the edge board --> upper adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 2,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 2,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 2,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 2,3);
 
         //we are NOT on the edge board --> bottom adjacency
-        board.placeTiles(Tiles.GREEN, 3,3);
-        board.placeTiles(Tiles.GREEN, 4,3);
+        placeTiles(board, sachet, Tiles.GREEN, 3,3);
+        placeTiles(board, sachet, Tiles.GREEN, 4,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,3);
-        board.placeTiles(Tiles.EMPTY, 4,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 4,3);
 
 
         //we are on the upper edge --> bottom adjacency
-        board.placeTiles(Tiles.GREEN, 0,3);
-        board.placeTiles(Tiles.GREEN, 1,3);
+        placeTiles(board, sachet, Tiles.GREEN, 0,3);
+        placeTiles(board, sachet, Tiles.GREEN, 1,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 0,3);
-        board.placeTiles(Tiles.EMPTY, 1,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 0,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 1,3);
 
         //we are on the upper edge --> right adjacency
-        board.placeTiles(Tiles.GREEN, 0,3);
-        board.placeTiles(Tiles.GREEN, 0,4);
+        placeTiles(board, sachet, Tiles.GREEN, 0,3);
+        placeTiles(board, sachet, Tiles.GREEN, 0,4);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 0,3);
-        board.placeTiles(Tiles.EMPTY, 0,4);
+        placeTiles(board, sachet, Tiles.EMPTY, 0,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 0,4);
 
         //we are on the upper edge --> left adjacency
-        board.placeTiles(Tiles.GREEN, 0,4);
-        board.placeTiles(Tiles.GREEN, 0,3);
+        placeTiles(board, sachet, Tiles.GREEN, 0,4);
+        placeTiles(board, sachet, Tiles.GREEN, 0,3);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 0,4);
-        board.placeTiles(Tiles.EMPTY, 0,3);
+        placeTiles(board, sachet, Tiles.EMPTY, 0,4);
+        placeTiles(board, sachet, Tiles.EMPTY, 0,3);
 
 
         //we are on the bottom edge --> up adjacency
-        board.placeTiles(Tiles.GREEN, 8,5);
-        board.placeTiles(Tiles.GREEN, 7,5);
+        placeTiles(board, sachet, Tiles.GREEN, 8,5);
+        placeTiles(board, sachet, Tiles.GREEN, 7,5);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 8,5);
-        board.placeTiles(Tiles.EMPTY, 7,5);
+        placeTiles(board, sachet, Tiles.EMPTY, 8,5);
+        placeTiles(board, sachet, Tiles.EMPTY, 7,5);
 
         //we are on the bottom edge --> left adjacency
-        board.placeTiles(Tiles.GREEN, 8,5);
-        board.placeTiles(Tiles.GREEN, 8,4);
+        placeTiles(board, sachet, Tiles.GREEN, 8,5);
+        placeTiles(board, sachet, Tiles.GREEN, 8,4);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 8,5);
-        board.placeTiles(Tiles.EMPTY, 8,4);
+        placeTiles(board, sachet, Tiles.EMPTY, 8,5);
+        placeTiles(board, sachet, Tiles.EMPTY, 8,4);
 
         //we are on the bottom edge --> right adjacency
-        board.placeTiles(Tiles.GREEN, 8,4);
-        board.placeTiles(Tiles.GREEN, 8,5);
+        placeTiles(board, sachet, Tiles.GREEN, 8,4);
+        placeTiles(board, sachet, Tiles.GREEN, 8,5);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 8,4);
-        board.placeTiles(Tiles.EMPTY, 8,5);
+        placeTiles(board, sachet, Tiles.EMPTY, 8,4);
+        placeTiles(board, sachet, Tiles.EMPTY, 8,5);
 
 
         //we are on the left edge --> right adjacency
-        board.placeTiles(Tiles.GREEN, 5,0);
-        board.placeTiles(Tiles.GREEN, 5,1);
+        placeTiles(board, sachet, Tiles.GREEN, 5,0);
+        placeTiles(board, sachet, Tiles.GREEN, 5,1);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 5,0);
-        board.placeTiles(Tiles.EMPTY, 5,1);
+        placeTiles(board, sachet, Tiles.EMPTY, 5,0);
+        placeTiles(board, sachet, Tiles.EMPTY, 5,1);
 
         //we are on the left edge --> upper adjacency
-        board.placeTiles(Tiles.GREEN, 5,0);
-        board.placeTiles(Tiles.GREEN, 4,0);
+        placeTiles(board, sachet, Tiles.GREEN, 5,0);
+        placeTiles(board, sachet, Tiles.GREEN, 4,0);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 5,0);
-        board.placeTiles(Tiles.EMPTY, 4,0);
+        placeTiles(board, sachet, Tiles.EMPTY, 5,0);
+        placeTiles(board, sachet, Tiles.EMPTY, 4,0);
 
         //we are on the left edge --> bottom adjacency
-        board.placeTiles(Tiles.GREEN, 4,0);
-        board.placeTiles(Tiles.GREEN, 5,0);
+        placeTiles(board, sachet, Tiles.GREEN, 4,0);
+        placeTiles(board, sachet, Tiles.GREEN, 5,0);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 4,0);
-        board.placeTiles(Tiles.EMPTY, 5,0);
+        placeTiles(board, sachet, Tiles.EMPTY, 4,0);
+        placeTiles(board, sachet, Tiles.EMPTY, 5,0);
 
 
         //we are on the right edge --> left adjacency
-        board.placeTiles(Tiles.GREEN, 3,8);
-        board.placeTiles(Tiles.GREEN, 3,7);
+        placeTiles(board, sachet, Tiles.GREEN, 3,8);
+        placeTiles(board, sachet, Tiles.GREEN, 3,7);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,8);
-        board.placeTiles(Tiles.EMPTY, 3,7);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,8);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,7);
 
         //we are on the right edge --> upper adjacency
-        board.placeTiles(Tiles.GREEN, 4,8);
-        board.placeTiles(Tiles.GREEN, 3,8);
+        placeTiles(board, sachet, Tiles.GREEN, 4,8);
+        placeTiles(board, sachet, Tiles.GREEN, 3,8);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 4,8);
-        board.placeTiles(Tiles.EMPTY, 3,8);
+        placeTiles(board, sachet, Tiles.EMPTY, 4,8);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,8);
 
         //we are on the right edge --> bottom adjacency
-        board.placeTiles(Tiles.GREEN, 3,8);
-        board.placeTiles(Tiles.GREEN, 4,8);
+        placeTiles(board, sachet, Tiles.GREEN, 3,8);
+        placeTiles(board, sachet, Tiles.GREEN, 4,8);
         result=board.checkBoardReset();
         assertFalse(result);
-        board.placeTiles(Tiles.EMPTY, 3,8);
-        board.placeTiles(Tiles.EMPTY, 4,8);
+        placeTiles(board, sachet, Tiles.EMPTY, 3,8);
+        placeTiles(board, sachet, Tiles.EMPTY, 4,8);
     }
     @Test
     public void checkBoardReset7(){
-        Board board=new Board(2, new Sachet());
-        board.placeTiles(Tiles.GREEN, 4, 4);
-        board.placeTiles(Tiles.BLUE, 5, 5);
+        Sachet sachet=new Sachet();
+        Board board=new Board(2, sachet);
+        placeTiles(board, sachet, Tiles.GREEN, 4, 4);
+        placeTiles(board, sachet, Tiles.BLUE, 5, 5);
 
         assertTrue(board.checkBoardReset());
     }
@@ -749,7 +613,7 @@ class BoardTest {
         Board board=new Board(2, sachet);
         Tiles tiles=sachet.draw();
         //act - do the actual calc or method run
-        board.placeTiles(tiles, 3,3);
+        placeTiles(board, sachet, tiles, 3,3);
 
         //assert - check if actual val is equal to expected val
         assertEquals(board.getGamesBoard().getTile(3,3), tiles);
@@ -775,87 +639,13 @@ class BoardTest {
         }
     }
 
-    //TEST checkFreeTiles(Point)
-    @DisplayName("Tile in specified position is NOT free")
-    @Test
-    void checkFreeTiles1() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(2, sachet);
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        //assert - check if actual val is equal to expected val
-        assertFalse(board.checkFreeTiles(new Point(3, 3)));
-    }
-    @DisplayName("Tile in specified position is free")
-    @Test
-    void checkFreeTiles2() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(2, sachet);
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        ArrayList<Point> points=new ArrayList<>();
-        points.add(new Point(2,3));
-        points.add(new Point(4,3));
-        points.add(new Point(3,2));
-        points.add(new Point(3,4));
-        board.remove(points);
-        //assert - check if actual val is equal to expected val
-        assertTrue(board.checkFreeTiles(new Point(3, 3)));
-    }
-    @DisplayName("Tile in specified position is free")
-    @Test
-    void checkFreeTiles3() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(2, sachet);
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        //assert - check if actual val is equal to expected val
-        assertTrue(board.checkFreeTiles(new Point(0, 3)));
-    }
-
-    //TEST freeTiles()
-    @DisplayName("Tiles that are free now")
-    @Test
-    void freeTiles() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        ArrayList<Point> result=board.freeTiles();
-        //assert - check if actual val is equal to expected val
-        assertEquals(20, result.size());
-        assertTrue(result.contains(new Point(0,3)));
-        assertTrue(result.contains(new Point(0,4)));
-        assertTrue(result.contains(new Point(1,3)));
-        assertTrue(result.contains(new Point(1,5)));
-        assertTrue(result.contains(new Point(2,2)));
-        assertTrue(result.contains(new Point(2,6)));
-        assertTrue(result.contains(new Point(3,1)));
-        assertTrue(result.contains(new Point(3,7)));
-        assertTrue(result.contains(new Point(3,8)));
-        assertTrue(result.contains(new Point(4,0)));
-        assertTrue(result.contains(new Point(4,8)));
-        assertTrue(result.contains(new Point(5,0)));
-        assertTrue(result.contains(new Point(5,1)));
-        assertTrue(result.contains(new Point(5,7)));
-        assertTrue(result.contains(new Point(6,2)));
-        assertTrue(result.contains(new Point(6,6)));
-        assertTrue(result.contains(new Point(7,3)));
-        assertTrue(result.contains(new Point(7,5)));
-        assertTrue(result.contains(new Point(8,4)));
-        assertTrue(result.contains(new Point(8,5)));
-    }
 
     //TEST checkAdjacentTiles(List<Point>)
     @DisplayName("Tiles are adjacent because in the same row - 2 players' game")
     @Test
     void checkAdjacentTiles1() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
+        Board board=new Board(2, new Sachet());
         arr.add(new Point(3, 2));
         arr.add(new Point(3, 3));
         arr.add(new Point(3, 4));
@@ -865,7 +655,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles2() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(3);
+        Board board=new Board(3, new Sachet());
         //x,y
         arr.add(new Point(3, 2));
         arr.add(new Point(3, 3));
@@ -888,7 +678,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles3() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(4);
+        Board board=new Board(4, new Sachet());
         //x,y
         arr.add(new Point(3, 2));
         arr.add(new Point(3, 3));
@@ -911,7 +701,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles4() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
+        Board board=new Board(2, new Sachet());
         //x,y
         arr.add(new Point(3, 3));
         arr.add(new Point(4, 3));
@@ -922,7 +712,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles5() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(3);
+        Board board=new Board(3, new Sachet());
         //x,y
         arr.add(new Point(3, 3));
         arr.add(new Point(4, 3));
@@ -945,7 +735,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles6() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(4);
+        Board board=new Board(4, new Sachet());
         //x,y
         arr.add(new Point(3, 3));
         arr.add(new Point(4, 3));
@@ -968,7 +758,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles7() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
+        Board board=new Board(2, new Sachet());
         //x,y
         arr.add(new Point(1, 3));
         arr.add(new Point(3, 3));
@@ -979,7 +769,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles8() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(3);
+        Board board=new Board(3, new Sachet());
         //x,y
         arr.add(new Point(1, 3));
         arr.add(new Point(3, 3));
@@ -1002,7 +792,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles9() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(4);
+        Board board=new Board(4, new Sachet());
         //x,y
         arr.add(new Point(1, 3));
         arr.add(new Point(3, 3));
@@ -1025,7 +815,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles10() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
+        Board board=new Board(2, new Sachet());
         //x,y
         arr.add(new Point(4, 1));
         arr.add(new Point(4, 3));
@@ -1036,7 +826,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles11() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(3);
+        Board board=new Board(3, new Sachet());
         //x,y
         arr.add(new Point(4, 1));
         arr.add(new Point(4, 3));
@@ -1059,7 +849,7 @@ class BoardTest {
     @Test
     void checkAdjacentTiles12() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(4);
+        Board board=new Board(4, new Sachet());
         //x,y
         arr.add(new Point(4, 1));
         arr.add(new Point(4, 3));
@@ -1083,7 +873,7 @@ class BoardTest {
     void checkAdjacentTiles13() {
         //arrange - setup our test objects
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
+        Board board=new Board(2, new Sachet());
         //act - do the actual calc or method run
         arr.add(new Point(3, 3));
         arr.add(new Point(4, 4));
@@ -1096,204 +886,15 @@ class BoardTest {
     @Test
     void checkAdjacentTiles14() {
         ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
+        Board board=new Board(2, new Sachet());
         arr.add(new Point(3, 3));
         assertFalse(board.checkAdjacentTiles(arr));
     }
 
-    //TEST adjacentTiles(Point)
-    @DisplayName("Tiles adjacent to that date - NOT in any edge")
-    @Test
-    void adjacentTiles1() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(2, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(3,3));
-        //assert - check if actual val is equal to expected val
-        assertEquals(4, result.size());
-        assertTrue(result.contains(new Point(2, 3)));
-        assertTrue(result.contains(new Point(4, 3)));
-        assertTrue(result.contains(new Point(3, 2)));
-        assertTrue(result.contains(new Point(3, 4)));
-    }
-    @DisplayName("Tiles adjacent to that date - upper edge")
-    @Test
-    void adjacentTiles2() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(0,3));
-        //assert - check if actual val is equal to expected val
-        assertEquals(2, result.size());
-        assertTrue(result.contains(new Point(1, 3)));
-        assertTrue(result.contains(new Point(0, 4)));
-    }
-    @DisplayName("Tiles adjacent to that date - bottom edge")
-    @Test
-    void adjacentTiles3() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(8,4));
-        //assert - check if actual val is equal to expected val
-        assertEquals(2, result.size());
-        assertTrue(result.contains(new Point(8, 5)));
-        assertTrue(result.contains(new Point(7, 4)));
-    }
-    @DisplayName("Tiles adjacent to that date - left edge")
-    @Test
-    void adjacentTiles4() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(4,0));
-        //assert - check if actual val is equal to expected val
-        assertEquals(2, result.size());
-        assertTrue(result.contains(new Point(5,0)));
-        assertTrue(result.contains(new Point(4,1)));
-
-    }
-    @DisplayName("Tiles adjacent to that date - right edge")
-    @Test
-    void adjacentTiles5() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(4,8));
-        //assert - check if actual val is equal to expected val
-        assertEquals(2, result.size());
-        assertTrue(result.contains(new Point(4, 7)));
-        assertTrue(result.contains(new Point(3, 8)));
-    }
-    @DisplayName("Tiles adjacent to that date - upper left corner")
-    @Test
-    void adjacentTiles6() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(0,0));
-        //assert - check if actual val is equal to expected val
-        assertEquals(0, result.size());
-    }
-    @DisplayName("Tiles adjacent to that date - upper right corner")
-    @Test
-    void adjacentTiles7() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(0, 8));
-        //assert - check if actual val is equal to expected val
-        assertEquals(0, result.size());
-    }
-    @DisplayName("Tiles adjacent to that date - bottom left corner")
-    @Test
-    void adjacentTiles8() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(8, 0));
-        //assert - check if actual val is equal to expected val
-        assertEquals(0, result.size());
-    }
-    @DisplayName("Tiles adjacent to that date - bottom right corner")
-    @Test
-    void adjacentTiles9() {
-        //arrange - setup our test objects
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        ArrayList<Point> result;
-        //act - do the actual calc or method run
-        board.BoardInitialization();
-        result=board.adjacentTiles(new Point(8,8));
-        //assert - check if actual val is equal to expected val
-        assertEquals(0, result.size());
-    }
-
-    //TEST checkSameColumn(List<Point)
-    @DisplayName("Point in the same row")
-    @Test
-    void checkSameRow1() {
-        //arrange - setup our test objects
-        ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
-        //act - do the actual calc or method run
-        arr.add(new Point(0, 0));
-        arr.add(new Point(0, 1));
-        arr.add(new Point(0, 5));
-        boolean result=board.checkSameRow(arr);
-        //assert - check if actual val is equal to expected val
-        assertTrue(result);
-    }
-    @DisplayName("Point NOT in the same row")
-    @Test
-    void checkSameRow2() {
-        //arrange - setup our test objects
-        ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
-        //act - do the actual calc or method run
-        arr.add(new Point(0, 0));
-        arr.add(new Point(2, 1));
-        arr.add(new Point(0, 5));
-        boolean result=board.checkSameRow(arr);
-        //assert - check if actual val is equal to expected val
-        assertFalse(result);
-    }
-
-    //TEST checkSameColumn(List<Point)
-    @DisplayName("Point in the same column")
-    @Test
-    void checkSameColumn1() {
-        //arrange - setup our test objects
-        ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
-        //act - do the actual calc or method run
-        arr.add(new Point(0, 0));
-        arr.add(new Point(1, 0));
-        arr.add(new Point(5, 0));
-        boolean result=board.checkSameColumn(arr);
-        //assert - check if actual val is equal to expected val
-        assertTrue(result);
-    }
-    @DisplayName("Point NOT in the same column")
-    @Test
-    void checkSameColumn2() {
-        //arrange - setup our test objects
-        ArrayList<Point> arr=new ArrayList<>();
-        Board board=new Board(2);
-        //act - do the actual calc or method run
-        arr.add(new Point(0, 0));
-        arr.add(new Point(1, 3));
-        arr.add(new Point(5, 0));
-        boolean result=board.checkSameColumn(arr);
-        //assert - check if actual val is equal to expected val
-        assertFalse(result);
-    }
 
 
+
+    //TEST tilesArePickable(ArrayList)
     @DisplayName("Tiles Not Pickable")
     @Test
     void tilesNotPickable(){
@@ -1311,7 +912,7 @@ class BoardTest {
         assertFalse(board.tilesArePickable(arrayList));
 
         //selected Empty tiles
-        board.remove(new Point(3,3));
+        board.getGamesBoard().remove(3, 3);
         ArrayList<Point> arrayList1=new ArrayList<>();
         arrayList1.add(new Point(3,3));
         assertFalse(board.tilesArePickable(arrayList1));
@@ -1326,31 +927,3 @@ class BoardTest {
 
 }
 
-
-
-
-
-
-/*
-    checkBoardReset():  il check a sx e sopra NON lo fa mai
-                        perchè return false prima --> a sx ritorna la posizione prima (dx prima)
-                                                  --> a up ritorna la posizione sotto (down prima)
-
-                    -->
-                   |
-                   |
-                   V
-                        xx    si chiede: dx è occupata? Sì
-                        x     si chiede: dw è occupata? Sì
-
-                        li lascio o li tolgo??????
- */
-
-
-
-
-//arrange - setup our test objects
-
-//act - do the actual calc or method run
-
-//assert - check if actual val is equal to expected val

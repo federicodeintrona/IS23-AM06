@@ -14,9 +14,9 @@ import java.net.Socket;
 /**
  * <p>Class used to manage the tcp connection</p>
  * <ul>
- *     <il>Creates socket, reader and the object output stream</il>
- *     <il>Sends message to server</il>
- *     <il>Starts disconnection</il>
+ *     <li>Creates socket, reader and the object output stream</li>
+ *     <li>Sends message to server</li>
+ *     <li>Starts disconnection</li>
  * </ul>
  */
 public class NetworkerTcp implements Networker, PropertyChangeListener {

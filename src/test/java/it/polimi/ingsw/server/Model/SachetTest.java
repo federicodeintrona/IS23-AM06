@@ -9,6 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class SachetTest {
 
+    private void placeTiles(Board gamesBoard, Sachet boardSachet, Tiles tile, int row, int col){
+        gamesBoard.getGamesBoard().setTile(tile, row, col);
+        boardSachet.removeTiles(tile);
+    }
+
+
 
     //TEST draw()
     @DisplayName("Return a randomic Tiles")
@@ -73,10 +79,10 @@ class SachetTest {
         assertEquals(22, sachet.remainingTilesPerColor(Tiles.YELLOW));
         assertEquals(22, sachet.remainingTilesPerColor(Tiles.GREEN));
         Board board=new Board(2, sachet);
-        board.placeTiles(Tiles.WHITE, 3,3);
-        board.placeTiles(Tiles.WHITE, 4,3);
+        placeTiles(board, sachet, Tiles.WHITE, 3,3);
+        placeTiles(board, sachet, Tiles.WHITE, 4,3);
         assertEquals(22-2, sachet.remainingTilesPerColor(Tiles.WHITE));
-        board.placeTiles(Tiles.YELLOW, 5,3);
+        placeTiles(board, sachet, Tiles.YELLOW, 5,3);
         assertEquals(22-1, sachet.remainingTilesPerColor(Tiles.YELLOW));
     }
     @DisplayName("Tiles that remaining per color in the sachet after the inizialization of 3 players' game")
@@ -90,10 +96,10 @@ class SachetTest {
         assertEquals(22, sachet.remainingTilesPerColor(Tiles.YELLOW));
         assertEquals(22, sachet.remainingTilesPerColor(Tiles.GREEN));
         Board board=new Board(3, sachet);
-        board.placeTiles(Tiles.WHITE, 3,3);
-        board.placeTiles(Tiles.WHITE, 4,3);
+        placeTiles(board, sachet, Tiles.WHITE, 3,3);
+        placeTiles(board, sachet, Tiles.WHITE, 4,3);
         assertEquals(22-2, sachet.remainingTilesPerColor(Tiles.WHITE));
-        board.placeTiles(Tiles.YELLOW, 5,3);
+        placeTiles(board, sachet, Tiles.YELLOW, 5,3);
         assertEquals(22-1, sachet.remainingTilesPerColor(Tiles.YELLOW));
     }
     @DisplayName("Tiles that remaining per color in the sachet after the inizialization of 4 players' game")
@@ -107,10 +113,10 @@ class SachetTest {
         assertEquals(22, sachet.remainingTilesPerColor(Tiles.YELLOW));
         assertEquals(22, sachet.remainingTilesPerColor(Tiles.GREEN));
         Board board=new Board(4, sachet);
-        board.placeTiles(Tiles.WHITE, 3,3);
-        board.placeTiles(Tiles.WHITE, 4,3);
+        placeTiles(board, sachet, Tiles.WHITE, 3,3);
+        placeTiles(board, sachet, Tiles.WHITE, 4,3);
         assertEquals(22-2, sachet.remainingTilesPerColor(Tiles.WHITE));
-        board.placeTiles(Tiles.YELLOW, 5,3);
+        placeTiles(board, sachet, Tiles.YELLOW, 5,3);
         assertEquals(22-1, sachet.remainingTilesPerColor(Tiles.YELLOW));
     }
 

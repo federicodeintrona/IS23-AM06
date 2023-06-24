@@ -33,22 +33,9 @@ public class Board {
     /**
      * Attribute for associate the gamesBoard to its boardSachet.
      */
-    private Sachet boardSachet;
+    private final Sachet boardSachet;
 
 
-//TODO si può togliere
-    /**
-     * Initialize numberOfPlayer and create Board based on number of player.
-     * <p>
-     * <strong>REQUIRES:</strong> numberOfPlayer to be a number between 2 and 4.
-     *
-     * @param numberOfPlayer the number of player.
-     */
-    public Board(int numberOfPlayer) {
-        this.numberOfPlayer = numberOfPlayer;
-        creationBoard();
-
-    }
 
     /**
      * Initialize numberOfPlayer, boardSachet and create Board based on number of player.
@@ -73,16 +60,6 @@ public class Board {
      */
     public Matrix getGamesBoard() {
         return gamesBoard;
-    }
-
-    //TODO si può togliere
-    /**
-     * <strong>Getter</strong> -> Returns numberOfPlayer.
-     *
-     * @return the number of player.
-     */
-    public int getNumberOfPlayer() {
-        return numberOfPlayer;
     }
 
 
@@ -356,7 +333,6 @@ public class Board {
         }
     }
 
-    //TODO da fare private
     /**
      * Method to remove tile in the position shown.
      * <p>
@@ -364,11 +340,10 @@ public class Board {
      *
      * @param position the position where to remove tile.
      */
-    public void remove(Point position){
+    private void remove(Point position){
         gamesBoard.remove(position.x, position.y);
     }
 
-    //TODO da fare private
     /**
      * Method to return whether the tile at the given position is free (does the tile have at least 1 free side?).
      * <p>
@@ -377,7 +352,7 @@ public class Board {
      * @param position the position of tile to check.
      * @return true if the tile is free, false if they aren't.
      */
-    public boolean checkFreeTiles(Point position){
+    private boolean checkFreeTiles(Point position){
         ArrayList<Point> list=adjacentTiles(position);
         return list.size() != 4;
     }
@@ -394,7 +369,7 @@ public class Board {
      * @param position the position to check.
      * @return true if the tiles are the adjacent, false if they aren't.
      */
-    public static boolean checkAdjacentTiles(List<Point> position){
+    public boolean checkAdjacentTiles(List<Point> position){
         //there is only one tile
         if (position.size()==1){
             return false;
@@ -454,7 +429,6 @@ public class Board {
         return true;
     }
 
-    //TODO da fare private
     /**
      * Method to return the positions of adjacent tiles to the incoming one.
      * <p>
@@ -463,7 +437,7 @@ public class Board {
      * @param tile the position of which I want to know the adjacent tile.
      * @return the ArrayList that contains the positions of tiles adjacent to the incoming one.
      */
-    public ArrayList<Point> adjacentTiles(Point tile){
+    private ArrayList<Point> adjacentTiles(Point tile){
         int x=tile.x;
         int y=tile.y;
         ArrayList<Point> result=new ArrayList<>();
@@ -624,14 +598,13 @@ public class Board {
         return result;
     }
 
-    //TODO da fare private
     /**
      * Method to return if all element in the List are on the same row.
      *
      * @param position the List of position to check.
      * @return true if the positions are on the same row, false in other cases.
      */
-    public static boolean checkSameRow(List<Point> position){
+    private boolean checkSameRow(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
             for (Point point : position) {
                 if (position.get(i).x != point.x) {
@@ -642,14 +615,13 @@ public class Board {
         return true;
     }
 
-    //TODO da fare private
     /**
      * Method to return if all element in the List are on the same column.
      *
      * @param position the List of position to check.
      * @return true if the positions are on the same column, false in other cases.
      */
-    public static boolean checkSameColumn(List<Point> position){
+    private boolean checkSameColumn(List<Point> position){
         for (int i = 0; i < position.size(); i++) {
             for (Point point : position) {
                 if (position.get(i).y != point.y) {
@@ -711,37 +683,4 @@ public class Board {
 
     }
 
-
-
-    //TODO solo per i test
-    /**
-     * Method to place tile on the board and remove it from sachet.
-     *
-     * @param tile the tile to add on the board.
-     * @param row the number of row.
-     * @param col the number of column.
-     */
-    public void placeTiles(Tiles tile, int row, int col){
-        gamesBoard.setTile(tile, row, col);
-        boardSachet.removeTiles(tile);
-    }
-    //TODO solo nei test
-    /**
-     * Method to return all the position of free tiles (does the tile have at least 1 free side?).
-     *
-     * @return the ArrayList that contains the position of free tiles.
-     */
-    public ArrayList<Point> freeTiles(){
-        ArrayList<Point> result=new ArrayList<>();
-        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
-            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
-                if (!gamesBoard.getTile(i, j).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(i, j).equals(Tiles.EMPTY) &
-                                checkFreeTiles(new Point(i, j))){
-                    result.add(new Point(i, j));
-                }
-            }
-        }
-        return result;
-    }
 }
