@@ -78,7 +78,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     private State state = State.REMOVE;
 
 
-    //graphic elements of the scene
+//graphic elements of the scene
     /**
      * Label use to show the name of the current player.
      */
@@ -757,7 +757,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     /**
-     * Method to update all players' bookshelf
+     * Method to update all players' bookshelf.
      *
       * @param username the username of the player interested.
      */
@@ -799,7 +799,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     /**
-     * Method to update the client's bookshelf
+     * Method to update the client's bookshelf.
      */
     private void updateMyBookshelf() {
         //catch my bookshelf's Matrix
@@ -816,9 +816,9 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     /**
-     * Method that update the bookshelf of the player of interest
+     * Method that update the bookshelf of the player of interest.
      *
-     * @param username the username of the player of interest
+     * @param username the username of the player of interest.
      */
     private void updateOtherBookshelf(String username){
         //catch the correct bookshelf's GridPane
@@ -1083,7 +1083,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
      * Method that returns the player's bookshelf GridPane given the username.
      *
      * @param username the username of interest.
-     * @return the player's bookshelf GridPane
+     * @return the player's bookshelf GridPane.
      */
     private GridPane catchOtherPlayerBookshelfGrid(String username){
         if (otherPlayerLabel1.getText().equals(username)){
@@ -1103,8 +1103,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     /**
      * Method that returns the selected chat.
      *
-     * @param username the name of the selected chat (ALL chat or chat with another player)
-     * @return the selected chat's VBox
+     * @param username the name of the selected chat (ALL chat or chat with another player).
+     * @return the selected chat's VBox.
      */
     private VBox catchChatVBox(String username){
         if (username==null){
@@ -1218,7 +1218,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
 
     /**
-     * Method that returns the game state to the previous one if an error has occurred .
+     * Method that returns the game state to the previous one if an error has occurred.
      */
     private void goBack(){
 
@@ -1312,7 +1312,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the confirmation of the selected tiles.
-     *
      */
     @FXML
     private void confirmClick(){
@@ -1353,7 +1352,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the rollback of the selected tiles.
-     *
      */
     @FXML
     private void rollbackClick(){
@@ -1376,7 +1374,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the selection and change order of the selected tile.
-     *
      */
     @FXML
     private void selectTile1(){
@@ -1399,7 +1396,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the selection and change order of the selected tile.
-     *
      */
     @FXML
     private void selectTile2(){
@@ -1422,7 +1418,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the selection and change order of the selected tile.
-     *
      */
     @FXML
     private void selectTile3(){
@@ -1445,7 +1440,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method to manages the confirmation of the tiles order.
-     *
      */
     @FXML
     private void confirmsSelectedClick(){
@@ -1487,7 +1481,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     /**
      * Method to manages the confirmation of the tiles order,
      * the player is sure of the selected order and wants to place the tiles in the bookshelf.
-     *
      */
     @FXML
     private void endSwitchClick(){
@@ -1512,7 +1505,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the adding of tiles in the column.
-     *
      */
     @FXML
     private void addToColumn1(){
@@ -1532,7 +1524,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the adding of tiles in the column.
-     *
      */
     @FXML
     private void addToColumn2(){
@@ -1552,7 +1543,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the adding of tiles in the column.
-     *
      */
     @FXML
     private void addToColumn3(){
@@ -1572,7 +1562,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the adding of tiles in the column.
-     *
      */
     @FXML
     private void addToColumn4(){
@@ -1592,7 +1581,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method that manages the adding of tiles in the column.
-     *
      */
     @FXML
     private void addToColumn5(){
@@ -1613,7 +1601,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     /**
      * Method to send the chat message to the server.
-     *
      */
     @FXML
     private void enterChatClick(){
@@ -1709,7 +1696,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
     /**
-     * Method to disable all the selected column buttons
+     * Method to disable all the selected column buttons.
      */
     private void addToColumn(){
         column1.setVisible(false);
@@ -1895,4 +1882,5 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
 
 //TODO mostrare popup hai n nuovi messaggi
+
 //TODO controllare se può rimuovere il numero di tessere che sta cercando di rimuovere
