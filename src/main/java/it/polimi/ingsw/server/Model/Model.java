@@ -698,6 +698,7 @@ public class Model implements TimerInterface {
             notifier.firePropertyChange(new PropertyChangeEvent(publicChat.getChatMessages().get(0), x, null, "message"));
         }
     }
+
     /**
      * Method that forwards a message coming
      * from a private chat to a particular player
@@ -957,6 +958,11 @@ public class Model implements TimerInterface {
         return selectedTiles;
     }
 
+    /**
+     * <strong>Setter</strong> -> Sets the players in a game given an Arraylist @players
+     *
+     * @param players       ArrayList of players
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
 
