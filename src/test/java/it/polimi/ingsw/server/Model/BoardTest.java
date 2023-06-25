@@ -1078,6 +1078,6 @@ class BoardTest {
         assertTrue(board2.checkBoardReset());
     }
 
-
 }
 
+//TODO mi segna in rosso i commenti
