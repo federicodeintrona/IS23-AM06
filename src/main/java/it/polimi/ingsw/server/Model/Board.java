@@ -668,13 +668,13 @@ public class Board {
 
         //check that position are free / !=EMPTY / !=NOTALLOWED
         for (Point point : position) {
-            if (!checkFreeTiles(point)) {
-                return false;
-            }
             if (checkEmpty(point)){
                 return false;
             }
             if (checkNotAllowed(point)){
+                return false;
+            }
+            if (!checkFreeTiles(point)) {
                 return false;
             }
         }

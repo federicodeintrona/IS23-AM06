@@ -248,6 +248,16 @@ class BoardTest {
         boolean result=board.checkBoardReset();
         assertTrue(result);
 
+        Sachet sachet1=new Sachet();
+        Board board1=new Board(4, sachet);
+
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+                board1.getGamesBoard().setTile(Tiles.EMPTY, i, j);
+            }
+        }
+        assertTrue(board1.checkBoardReset());
+
     }
     @DisplayName("Condition to board reset is verified - 3 players' game")
     @Test
@@ -934,39 +944,19 @@ class BoardTest {
         arrayList3.add(new Point(0,0));
         assertFalse(board.tilesArePickable(arrayList3));
 
+        //selected one tiles pickable
+        ArrayList<Point> arrayList4=new ArrayList<>();
+        arrayList4.add(new Point(1,3));
+        assertTrue(board.tilesArePickable(arrayList4));
+
     }
 
 
 //todo da fare in inglese
-    @DisplayName("casi limite di come è strutturata la nostra board")
+    @DisplayName("testing of all edge cases that are not inherent to the game but to how we decided to structure the board")
     @Test
     void checkBoardResetLimitCaseNotMyShelfie() {
-        Sachet sachet=new Sachet();
-        Board board=new Board(4, sachet);
-        boolean result;
 
-        //corner
-        placeTiles(board, sachet, Tiles.GREEN, 0,0); //upper left
-        result=board.checkBoardReset();
-        assertTrue(result);
-
-        Sachet sachet1=new Sachet();
-        Board board1=new Board(4, sachet1);
-        placeTiles(board1, sachet1, Tiles.GREEN, 0, Define.NUMBEROFCOLUMNS_BOARD.getI()-1); //upper right
-        result=board.checkBoardReset();
-        assertTrue(result);
-
-        Sachet sachet2=new Sachet();
-        Board board2=new Board(4, sachet2);
-        placeTiles(board2, sachet2, Tiles.GREEN, Define.NUMBEROFROWS_BOARD.getI()-1,0); //bottom left
-        result=board.checkBoardReset();
-        assertTrue(result);
-
-        Sachet sachet3=new Sachet();
-        Board board3=new Board(4, sachet3);
-        placeTiles(board3, sachet3, Tiles.GREEN, Define.NUMBEROFROWS_BOARD.getI()-1, Define.NUMBEROFCOLUMNS_BOARD.getI()-1); //bottom right
-        result=board.checkBoardReset();
-        assertTrue(result);
     }
 
 
