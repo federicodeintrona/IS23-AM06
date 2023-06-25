@@ -670,13 +670,13 @@ class BoardTest {
         arr.add(new Point(3, 3));
         arr.add(new Point(3, 4));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,0
         arr.add(new Point(4,0));
         arr.add(new Point(4,2));
         arr.add(new Point(4,1));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,8
         arr.add(new Point(3,6));
         arr.add(new Point(3,7));
@@ -693,13 +693,13 @@ class BoardTest {
         arr.add(new Point(3, 3));
         arr.add(new Point(3, 4));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,0
         arr.add(new Point(4,0));
         arr.add(new Point(4,2));
         arr.add(new Point(4,1));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,8
         arr.add(new Point(3,6));
         arr.add(new Point(3,7));
@@ -727,13 +727,13 @@ class BoardTest {
         arr.add(new Point(4, 3));
         arr.add(new Point(2, 3));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //0,y
         arr.add(new Point(0, 3));
         arr.add(new Point(1, 3));
         arr.add(new Point(2, 3));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //8,y
         arr.add(new Point(8, 5));
         arr.add(new Point(7, 5));
@@ -750,13 +750,13 @@ class BoardTest {
         arr.add(new Point(4, 3));
         arr.add(new Point(2, 3));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //0,y
         arr.add(new Point(0, 3));
         arr.add(new Point(1, 3));
         arr.add(new Point(2, 3));
         assertTrue(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //8,y
         arr.add(new Point(8, 5));
         arr.add(new Point(7, 5));
@@ -784,13 +784,13 @@ class BoardTest {
         arr.add(new Point(3, 3));
         arr.add(new Point(5, 3));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //0,y
         arr.add(new Point(0,3));
         arr.add(new Point(2,3));
         arr.add(new Point(3,3));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //8,y
         arr.add(new Point(8,5));
         arr.add(new Point(6,5));
@@ -807,13 +807,13 @@ class BoardTest {
         arr.add(new Point(3, 3));
         arr.add(new Point(5, 3));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //0,y
         arr.add(new Point(0,3));
         arr.add(new Point(2,3));
         arr.add(new Point(3,3));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //8,y
         arr.add(new Point(8,5));
         arr.add(new Point(6,5));
@@ -841,13 +841,13 @@ class BoardTest {
         arr.add(new Point(4, 3));
         arr.add(new Point(4, 5));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,0
         arr.add(new Point(5,0));
         arr.add(new Point(5,2));
         arr.add(new Point(5,3));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,8
         arr.add(new Point(3,8));
         arr.add(new Point(3,6));
@@ -864,13 +864,13 @@ class BoardTest {
         arr.add(new Point(4, 3));
         arr.add(new Point(4, 5));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,0
         arr.add(new Point(5,0));
         arr.add(new Point(5,2));
         arr.add(new Point(5,3));
         assertFalse(board.checkAdjacentTiles(arr));
-        arr.removeAll(arr);
+        arr.clear();
         //x,8
         arr.add(new Point(3,8));
         arr.add(new Point(3,6));
@@ -1079,5 +1079,3 @@ class BoardTest {
     }
 
 }
-
-//TODO mi segna in rosso i commenti
