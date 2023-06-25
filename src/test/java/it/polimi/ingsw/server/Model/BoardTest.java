@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.rmi.server.ServerNotActiveException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -248,7 +247,6 @@ class BoardTest {
         boolean result=board.checkBoardReset();
         assertTrue(result);
 
-        Sachet sachet1=new Sachet();
         Board board1=new Board(4, sachet);
 
         for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
@@ -903,12 +901,10 @@ class BoardTest {
     }
 
 
-
-
     //TEST tilesArePickable(ArrayList)
     @DisplayName("Tiles Not Pickable")
     @Test
-    void tilesNotPickable(){
+    void tilesArePickable(){
         Board board=new Board(2, new Sachet());
         board.BoardInitialization();
 
@@ -949,6 +945,87 @@ class BoardTest {
         arrayList4.add(new Point(1,3));
         assertTrue(board.tilesArePickable(arrayList4));
 
+    }
+
+    @DisplayName("test the adjacentTiles method, but since it is private I have to go by checkFreeTiles which is called by tilesArePickable")
+    @Test
+    void tilesArePickable1(){
+        Sachet sachet=new Sachet();
+        Board board=new Board(2, sachet);
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+                board.getGamesBoard().setTile(Tiles.EMPTY, i, j);
+            }
+        }
+
+        //upper left corner
+        placeTiles(board, sachet, Tiles.GREEN, 0,0);
+        placeTiles(board, sachet, Tiles.GREEN, 0, 1);
+        placeTiles(board, sachet, Tiles.GREEN, 1, 0);
+        ArrayList<Point> arrayList=new ArrayList<>();
+        arrayList.add(new Point(0, 0));
+        assertTrue(board.tilesArePickable(arrayList));
+
+        //upper right corner
+        placeTiles(board, sachet, Tiles.GREEN, 0,Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        placeTiles(board, sachet, Tiles.GREEN, 0, Define.NUMBEROFCOLUMNS_BOARD.getI()-1-1);
+        placeTiles(board, sachet, Tiles.GREEN, 1, Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        ArrayList<Point> arrayList1=new ArrayList<>();
+        arrayList1.add(new Point(0, Define.NUMBEROFCOLUMNS_BOARD.getI()-1));
+        assertTrue(board.tilesArePickable(arrayList1));
+
+        //bottom left corner
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1,0);
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1, 1);
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1-1, 0);
+        ArrayList<Point> arrayList2=new ArrayList<>();
+        arrayList2.add(new Point(Define.NUMBEROFCOLUMNS_BOARD.getI()-1, 0));
+        assertTrue(board.tilesArePickable(arrayList2));
+
+        //bottom right corner
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1,Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1, Define.NUMBEROFCOLUMNS_BOARD.getI()-1-1);
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1-1, Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        ArrayList<Point> arrayList3=new ArrayList<>();
+        arrayList3.add(new Point(Define.NUMBEROFCOLUMNS_BOARD.getI()-1, Define.NUMBEROFCOLUMNS_BOARD.getI()-1));
+        assertTrue(board.tilesArePickable(arrayList3));
+
+
+        //upper edge
+        placeTiles(board, sachet, Tiles.GREEN, 0,4);
+        placeTiles(board, sachet, Tiles.GREEN, 0, 3);
+        placeTiles(board, sachet, Tiles.GREEN, 0, 5);
+        placeTiles(board, sachet, Tiles.GREEN, 1, 4);
+        ArrayList<Point> arrayList4=new ArrayList<>();
+        arrayList4.add(new Point(0, 4));
+        assertTrue(board.tilesArePickable(arrayList4));
+
+        //bottom edge
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1,4);
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1, 3);
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1, 5);
+        placeTiles(board, sachet, Tiles.GREEN, Define.NUMBEROFCOLUMNS_BOARD.getI()-1-1, 4);
+        ArrayList<Point> arrayList5=new ArrayList<>();
+        arrayList5.add(new Point(Define.NUMBEROFCOLUMNS_BOARD.getI()-1, 4));
+        assertTrue(board.tilesArePickable(arrayList5));
+
+        //left edge
+        placeTiles(board, sachet, Tiles.GREEN, 4,0);
+        placeTiles(board, sachet, Tiles.GREEN, 3, 0);
+        placeTiles(board, sachet, Tiles.GREEN, 5, 0);
+        placeTiles(board, sachet, Tiles.GREEN, 4, 1);
+        ArrayList<Point> arrayList6=new ArrayList<>();
+        arrayList6.add(new Point(4, 0));
+        assertTrue(board.tilesArePickable(arrayList6));
+
+        //right edge
+        placeTiles(board, sachet, Tiles.GREEN, 4,Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        placeTiles(board, sachet, Tiles.GREEN, 3, Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        placeTiles(board, sachet, Tiles.GREEN, 5, Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        placeTiles(board, sachet, Tiles.GREEN, 4, Define.NUMBEROFCOLUMNS_BOARD.getI()-1-1);
+        ArrayList<Point> arrayList7=new ArrayList<>();
+        arrayList7.add(new Point(4, Define.NUMBEROFCOLUMNS_BOARD.getI()-1));
+        assertTrue(board.tilesArePickable(arrayList7));
     }
 
 

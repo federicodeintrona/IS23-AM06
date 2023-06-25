@@ -354,6 +354,7 @@ public class Board {
      */
     private boolean checkFreeTiles(Point position){
         ArrayList<Point> list=adjacentTiles(position);
+        //the tile to be considered free must have at least one free side
         return list.size() != 4;
     }
 
