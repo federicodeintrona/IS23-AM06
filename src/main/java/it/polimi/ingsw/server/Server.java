@@ -40,9 +40,7 @@ public class Server extends UnicastRemoteObject {
         Server Server;
         try {
             Server = new Server();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
 
@@ -87,9 +85,7 @@ public class Server extends UnicastRemoteObject {
         try {
             assert registry != null;
             registry.bind("RMIHandler", stub);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (AlreadyBoundException e) {
+        } catch (RemoteException | AlreadyBoundException e) {
             e.printStackTrace();
         }
 
@@ -106,6 +102,12 @@ public class Server extends UnicastRemoteObject {
         executor.shutdown();
     }
 
+    /**
+     * Method that returns the Server's IP Address
+     *
+     * @return      Ip address
+     * @throws SocketException      Exception due to socket
+     */
     public static String getLocalIPAddress() throws SocketException {
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
         while (interfaces.hasMoreElements()) {
