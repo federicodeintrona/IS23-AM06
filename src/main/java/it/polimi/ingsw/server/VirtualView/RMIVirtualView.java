@@ -13,24 +13,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ * <p>RMI implementation of the virtual view</p>
+ * <p>Used to communicate with the client using RMI</p>
+ */
 public class RMIVirtualView implements VirtualView{
 
     private ClientStateRemoteInterface clientState;
     private RMITimer timer;
-
     private String username;
     private boolean disconnected = false;
 
+
+    /**
+     * Main constructor of the class
+     * @param username The username of the player.
+     * @param clientState The Remote Interface used to communicate with the client.
+     */
     public RMIVirtualView(String username, ClientStateRemoteInterface clientState) {
         this.setUsername(username);
         this.clientState = clientState;
     }
 
+    /**
+     * Constructor used for tests
+     * @param username The username of the player
+     */
     public RMIVirtualView(String username) {
         this.setUsername(username);
     }
 
 
+    /**
+     * <p>Implementation of the property change method</p>
+     * <p>Receives notification from the model when the state has changed and updates the client</p>
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
@@ -101,14 +121,9 @@ public class RMIVirtualView implements VirtualView{
         }
     }
 
-    public ClientStateRemoteInterface getClientState() {
-        return clientState;
-    }
-
-    public void setTimer(RMITimer timer) {
-        this.timer = timer;
-    }
-
+    /**
+     * Method to stop the countdown timer used to check if a client disconnected abruptly.
+     */
     public void stopTimer(){
         if(timer!=null){
             timer.stopTimer();
@@ -116,19 +131,53 @@ public class RMIVirtualView implements VirtualView{
     }
 
 
+    /**
+     * <strong>Getter</strong> -> Method to return the remote interface.
+     * @return The Remote Interface
+     */
+    public ClientStateRemoteInterface getClientState() {
+        return clientState;
+    }
+
+
+    /**
+     * <strong>Setter</strong> -> Method to set the timer used in case of abrupt disconnection.
+     * @param timer The RMITimer
+     */
+    public void setTimer(RMITimer timer) {
+        this.timer = timer;
+    }
+
+
+    /**
+     * <strong>Getter</strong> -> Method to check if the virtual view is disconnected.
+     * @return True if disconnected, false otherwise.
+     */
     public boolean isDisconnected() {
         return disconnected;
     }
 
+    /**
+     * <strong>Setter</strong> -> Method to set the connection status of the virtual view. True means it is disconnected.
+     * @param disconnected True if you want the view to disconnect false otherwise.
+     */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
         stopTimer();
     }
 
+    /**
+     * <strong>Getter</strong> -> Method to receive the username of the player associated to the virtual view.
+     * @return The username of the player.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * <strong>Setter</strong> -> Method to set the username of the player associated to the virtual view.
+     * @param username The username of the player.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
