@@ -28,6 +28,7 @@ class ControllerTest {
 
     public ArrayList<ArrayList<Player>> players = new ArrayList<>();
     public ArrayList<ArrayList<VirtualView>> views = new ArrayList<>();
+    public Lobby lobby = new Lobby(modelmap,playermap);
 
     public int gameNumber=2;
     public int playerNumber=3;
@@ -61,7 +62,8 @@ class ControllerTest {
 
         }
 
-        controller=new Controller(modelmap,playermap);
+        controller=new Controller(lobby);
+        lobby.setController(controller);
         controller.startGame(0);
         controller.startGame(1);
     }

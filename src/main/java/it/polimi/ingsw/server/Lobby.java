@@ -6,6 +6,15 @@ import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
 import java.util.*;
 
+/**
+ * <p>Class used to manage the creation of lobbies and games</p>
+ * <p>It keeps all the information about the lobbies, games, players, and their views.</p>
+ * <p>It creates a new lobby if a new player wants to play a game and there aren't any other lobby waiting for players.
+ *     It also checks the uniqueness of the nickname before adding "logging in"
+ *     (saving his username and associated view) a user.</p>
+ *
+ * <p> A lobby is waiting room created to store players who will play the same game. It is deleted after the game starts.</p>
+ */
 public class Lobby {
     private Controller controller;
     private final HashMap<Integer,ArrayList<String>> lobbys = new HashMap<>();
@@ -22,20 +31,46 @@ public class Lobby {
     private final HashMap<String , VirtualView> views = new HashMap<>();
 
 
+    /**
+     * Main constructor of the class.
+     */
     public Lobby() {
         this.games = new HashMap<>();
         this.players = new HashMap<>();
     }
 
+    /**
+     * Constructor only used for testing
+     * @param games The HashMap containing all games.
+     * @param players The HashMap containing all players.
+     */
     public Lobby(HashMap<Integer, Model> games, HashMap<String, Player> players) {
         this.games = games;
         this.players = players;
     }
 
+    /**
+     * Method to check if there are lobbies waiting for players.
+     * @return True if there are, false otherwise.
+     */
     public synchronized boolean waitingLobbies(){
         return !waitingLobbys.isEmpty();
     }
 
+    /**
+     * <p>Method to handle new clients.</p>
+     * <p>It checks if the username chosen by the player was already taken, if it wasn't
+     *     it checks to see if there are lobbies waiting for players (if so adds the player to it),
+     *     if there aren't any asks the player to create a new lobby through the controller and the client handlers.</p>
+     * @param client The username of the player.
+     * @param view The virtual view of the player.
+     * @return <p>An optional of Integer which can either be:
+     *              <ul>
+     *                  <li>The ID of the game the client was added to</li>
+     *                  <li>Empty if he needs to create a new lobby himself.</li>
+     *              </ul></p>
+     * @throws UsernameAlreadyTaken If the username chosen by the player was already taken.
+     */
     public synchronized Optional<Integer> handleClient(String client,VirtualView view) throws UsernameAlreadyTaken {
 
         if(!usernames.contains(client.toLowerCase())) {
@@ -54,12 +89,17 @@ public class Lobby {
                     }
                     //if there aren't any, return empty Optional
                 } else return Optional.empty();
+
             }else throw new UsernameAlreadyTaken();
     }
 
 
-
-
+    /**
+     * Creates a new lobby/game with the selected number of players and adds it to the waiting lobbies.
+     * @param client The username of the player
+     * @param numplayers The chosen number of players for the game.
+     * @return The ID of the game.
+     */
     public synchronized int newLobby(String client,int numplayers){
         //Update the game number
         gameNumber+=1;
@@ -88,8 +128,9 @@ public class Lobby {
 
 
     /**
-     * Adds a client to a waiting lobby and starts the game when it is full
-     * @param client    The client you want to add
+     * Adds a player to a waiting lobby and starts the game when it is full
+     * @param client  The player you want to add
+     * @throws LobbyNotExists If the lobby does not exist (it should never happen in theory)
      */
     public synchronized int addClient(String client) throws LobbyNotExists {
 
@@ -110,6 +151,10 @@ public class Lobby {
         }else throw new LobbyNotExists();
     }
 
+    /**
+     * Method to check if the selected game has reached the maximum number of players and is ready to start.
+     * @param index The ID of the game.
+     */
     public void checkStart(int index){
         //If the lobby reached the max number of player, start the game.
         if (lobbys.get(index).size() == gamePlayerNumber.get(index)) {
@@ -118,6 +163,11 @@ public class Lobby {
         }
     }
 
+    /**
+     * <p> Method to start a game</p>
+     * <p>It adds all the players and virtual views to the game and deletes the associated lobby.</p>
+     * @param index The ID of the game.
+     */
     private void startGame(int index) {
         //create the model and the array that will contain alla players
         ArrayList<Player> playerList = new ArrayList<>();
@@ -148,6 +198,10 @@ public class Lobby {
     }
 
 
+    /**
+     * Creates a new empty game.
+     * @param num The ID of the game.
+     */
     private void newGame(int num){
         Model m = new Model();
         games.put(num, m);
@@ -157,6 +211,11 @@ public class Lobby {
     }
 
 
+    /**
+     * <p>Method to close a game</p>
+     * <p>Removes all players (even if disconnected), virtual views and the game itself from their respective maps.</p>
+     * @param gameID The ID of the game.
+     */
     public synchronized void closeGame(int gameID){
 
         for(String s : games.get(gameID).getPlayers().stream().map(Player::getUsername).toList()){
@@ -171,6 +230,11 @@ public class Lobby {
         games.remove(gameID);
 
     }
+
+    /**
+     * <p>Disconnect a player from the game and adds it to the HashMap of all disconnected players.</p>
+     * @param username The username of the player.
+     */
     public synchronized void playerDisconnection(String username){
 
         VirtualView view =views.get(username);
@@ -208,6 +272,12 @@ public class Lobby {
     }
 
 
+    /**
+     * <p>Reconnects a player from the game and removes it to the HashMap of all disconnected players.</p>
+     * @param username The username of the player.
+     * @param view The virtual view of the player.
+     * @return The ID of the game.
+     */
     public synchronized int playerReconnection(String username,VirtualView view){
         Player player = disconnectedPlayers.get(username);
         disconnectedPlayers.remove(username);
@@ -222,23 +292,42 @@ public class Lobby {
 
     }
 
+    /**
+     *  <strong>Setter</strong> -> Sets the controller.
+     * @param controller
+     */
     public void setController(Controller controller) {
         this.controller = controller;
     }
+
+    /**
+     * <strong>Getter</strong> -> Gets the HashMap containing all games.
+     * @return The HashMap containing all games.
+     */
     public HashMap<Integer,Model> getGames() {
         return games;
     }
+
+    /**
+     *  <strong>Getter</strong> -> Gets the HashMap containing all players.
+     * @return The HashMap containing all players.
+     */
     public HashMap<String, Player> getPlayers() {
         return players;
     }
+
+    /**
+     * <strong>Getter</strong> -> Gets the HashMap containing all views.
+     * @return The HashMap containing all views.
+     */
     public HashMap<String, VirtualView> getViews() {
         return views;
     }
 
-    public HashMap<String, Integer> getPlayerToGame() {
-        return playerToGame;
-    }
-
+    /**
+     * <strong>Getter</strong> -> Gets the HashMap containing all disconnected players.
+     * @return The HashMap containing all disconnected players.
+     */
     public HashMap<String, Player> getDisconnectedPlayers() {
         return disconnectedPlayers;
     }

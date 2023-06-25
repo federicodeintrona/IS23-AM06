@@ -16,6 +16,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
+/**
+ * <p>Class used to manage multiple games together and the interaction of the players/clients with those games</p>
+ * <p>It is responsible for routing the players' commands to the correct model
+ *    and forwarding the handing of a new client to the Lobby.</p>
+ * <p>It formats the proper messages that ought to be sent to the client as a response to their actions.</p>
+ *
+ */
 public class Controller implements PropertyChangeListener {
     private Lobby lobby;
     private  HashMap<String, Player> players;
@@ -24,13 +31,18 @@ public class Controller implements PropertyChangeListener {
 
 
     /**
-     * Constructor
+     *  Main constructor of the class.
      * @param mainLobby The lobby of the server
      */
     public Controller(Lobby mainLobby) {
         lobby = mainLobby;
     }
 
+    /**
+     * Constructor used for testing
+     * @param models HashMap of all the games(Models) in the server.
+     * @param playerMap Hash map of all the users playing in a game.
+     */
     public Controller(HashMap<Integer,Model> models,HashMap<String ,Player > playerMap){
         lobby=new Lobby(models,playerMap);
         lobby.setController(this);
@@ -181,6 +193,13 @@ public class Controller implements PropertyChangeListener {
     //Lobby methods
 
 
+    /**
+     * <p>Method used to forward the creation of a new lobby tp the Lobby class.</p>
+     * <p>It is used only after the user has already "logged in"</p>
+     * @param client The username of the player.
+     * @param players The number of players for the game.
+     * @return The message to be sent to the client.
+     */
     public IntMessage newLobby(String client, int players){
         IntMessage msg = new IntMessage();
         int gameNum =  lobby.newLobby(client,players);
@@ -191,7 +210,19 @@ public class Controller implements PropertyChangeListener {
     }
 
 
-
+    /**
+     * <p>Message used to forward the handling of a new client to the lobby</p>
+     * <p>The controller checks if a player was already connected to game and if reconnects the player</p>
+     * @param client The username of the player.
+     * @param view The virtual view associated with the player.
+     * @return <p>A message to send to the client which can be:
+     * <ul>
+     *     <li> An error message if the username was already taken</li>
+     *     <li> A message to inform the player that he reconnected to the game</li>
+     *     <li>A  message to inform the player that he was added to a game</li>
+     *     <li>A  message to inform the player that he needs to create a new lobby</li>
+     * </ul></p>
+     */
     public IntMessage handleNewClient(String client,VirtualView view) {
 
         try {
@@ -227,11 +258,19 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Method to add a virtual view to the HashMap of all views.
+     * @param view
+     */
     public void addView(VirtualView view){
         lobby.getViews().put(view.getUsername(),view);
     }
 
 
+    /**
+     * Method to forward to the lobby the handling of the disconnection of a player.
+     * @param username
+     */
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");
         lobby.playerDisconnection(username);
@@ -239,6 +278,11 @@ public class Controller implements PropertyChangeListener {
     }
 
 
+    /**
+     * Method to forward to the lobby the closing of a game when it ends.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
