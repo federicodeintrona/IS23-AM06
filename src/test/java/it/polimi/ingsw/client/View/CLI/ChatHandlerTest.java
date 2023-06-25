@@ -110,6 +110,40 @@ class ChatHandlerTest {
     }
 
     @Test
+    void settingForPublicChat3() {
+        ChatHandler chatHandler = new ChatHandler(chatController, cli, cliPrint);
+        Chat publicChat = new Chat();
+        String username = "yoda";
+        String input = "#help\n#exit";
+
+        // Converte la stringa di input in un oggetto InputStream
+        InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+
+        // Salva l'input attuale per poterlo ripristinare successivamente
+        InputStream originalInputStream = System.in;
+
+        // Setting Mock's methods
+        doNothing().when(cliPrint).printChat(true);
+        when(chatController.getPublicChat()).thenReturn(publicChat);
+        when(cli.getClientState()).thenReturn(clientState);
+        when(clientState.getMyUsername()).thenReturn(username);
+        doNothing().when(cliPrint).helpForChat();
+
+        try {
+            // Imposta l'input simulato come l'input di sistema
+            System.setIn(inputStream);
+
+            chatHandler.settingForPublicChat();
+        } finally {
+            // Ripristina l'input di sistema originale
+            System.setIn(originalInputStream);
+        }
+
+        //Assertions.assertEquals(expectedOutput, output);
+        verify(cliPrint).helpForChat();
+    }
+
+    @Test
     void settingForPrivateChat() {
         ChatHandler chatHandler = new ChatHandler(chatController, cli, cliPrint);
         Chat privateChat = new Chat();
