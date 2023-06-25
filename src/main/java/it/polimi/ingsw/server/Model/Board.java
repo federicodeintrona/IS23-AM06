@@ -6,7 +6,9 @@ import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class to manage the game board.
@@ -354,6 +356,7 @@ public class Board {
      */
     private boolean checkFreeTiles(Point position){
         ArrayList<Point> list=adjacentTiles(position);
+        System.out.println(list.size());
         //the tile to be considered free must have at least one free side
         return list.size() != 4;
     }
@@ -398,8 +401,9 @@ public class Board {
                 //we are on x-th row / NO limit cases
                 else {
                     if (!position.contains(new Point(position.get(i).x, position.get(i).y-1)) &&
-                            !position.contains(new Point(position.get(i).x, position.get(i).y+1)))
+                            !position.contains(new Point(position.get(i).x, position.get(i).y+1))) {
                         return false;
+                    }
                 }
             }
         }
@@ -430,6 +434,8 @@ public class Board {
         return true;
     }
 
+
+    //TODO cercare di capire se objects ha un if in linea
     /**
      * Method to return the positions of adjacent tiles to the incoming one.
      * <p>
@@ -439,165 +445,128 @@ public class Board {
      * @return the ArrayList that contains the positions of tiles adjacent to the incoming one.
      */
     private ArrayList<Point> adjacentTiles(Point tile){
-        int x=tile.x;
-        int y=tile.y;
         ArrayList<Point> result=new ArrayList<>();
 
         //not on the edge
         if ((tile.x!=0 && tile.x!=Define.NUMBEROFROWS_BOARD.getI()-1) &&
                 (tile.y!=0 && tile.y!=Define.NUMBEROFCOLUMNS_BOARD.getI()-1)){
-            //upper
-            if (!gamesBoard.getTile(x-1, y).equals(Tiles.NOT_ALLOWED) &&
-                    !gamesBoard.getTile(x-1, y).equals(Tiles.EMPTY)){
-                result.add(new Point(x-1, y));
-            }
-            //bottom
-            if (!gamesBoard.getTile(x+1, y).equals(Tiles.NOT_ALLOWED) &&
-                    !gamesBoard.getTile(x+1, y).equals(Tiles.EMPTY)){
-                result.add(new Point(x+1, y));
-            }
-            //sx
-            if (!gamesBoard.getTile(x, y-1).equals(Tiles.NOT_ALLOWED) &&
-                    !gamesBoard.getTile(x, y-1).equals(Tiles.EMPTY)){
-                result.add(new Point(x, y-1));
-            }
-            //dx
-            if (!gamesBoard.getTile(x, y+1).equals(Tiles.NOT_ALLOWED) &&
-                    !gamesBoard.getTile(x, y+1).equals(Tiles.EMPTY)){
-                result.add(new Point(x, y+1));
-            }
+            //upper, bottom, left, right
+            result.addAll(Arrays.asList(
+                    Objects.requireNonNull(upperAdjacency(tile)),
+                    Objects.requireNonNull(bottomAdjacency(tile)),
+                    Objects.requireNonNull(leftAdjacency(tile)),
+                    Objects.requireNonNull(rightAdjacency(tile))));
         }
         //on the edge
         else {
             //upper left corner
             if (tile.x==0 && tile.y==0){
-                //dx
-                if (!gamesBoard.getTile(x, y+1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y+1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y+1));
-                }
-                //bottom
-                if (!gamesBoard.getTile(x+1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x+1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x+1, y));
-                }
+                //bottom, right
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(bottomAdjacency(tile)),
+                        Objects.requireNonNull(rightAdjacency(tile))));
             }
             //upper right corner
             else if (tile.x==0 && tile.y==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
-                //sx
-                if (!gamesBoard.getTile(x, y-1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y-1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y-1));
-                }
-                //bottom
-                if (!gamesBoard.getTile(x+1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x+1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x+1, y));
-                }
+                //bottom, left
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(bottomAdjacency(tile)),
+                        Objects.requireNonNull(leftAdjacency(tile))));
             }
             //bottom left corner
             else if (tile.x==Define.NUMBEROFCOLUMNS_BOARD.getI()-1 && tile.y==0){
-                //dx
-                if (!gamesBoard.getTile(x, y+1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y+1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y+1));
-                }
-                //upper
-                if (!gamesBoard.getTile(x-1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x-1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x-1, y));
-                }
+                //upper, right
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(upperAdjacency(tile)),
+                        Objects.requireNonNull(rightAdjacency(tile))));
             }
             //bottom right corner
             else if (tile.x==Define.NUMBEROFCOLUMNS_BOARD.getI()-1 && tile.y==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
-                //sx
-                if (!gamesBoard.getTile(x, y-1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y-1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y-1));
-                }
-                //upper
-                if (!gamesBoard.getTile(x-1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x-1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x-1, y));
-                }
+                //upper, left
+                result.add(upperAdjacency(tile));
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(upperAdjacency(tile)),
+                        Objects.requireNonNull(leftAdjacency(tile))));
             }
             //upper edge
             else if (tile.x==0){
-                //sx
-                if (!gamesBoard.getTile(x, y-1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y-1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y-1));
-                }
-                //dx
-                if (!gamesBoard.getTile(x, y+1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y+1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y+1));
-                }
-                //bottom
-                if (!gamesBoard.getTile(x+1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x+1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x+1, y));
-                }
+                //bootom, left, right
+                result.add(bottomAdjacency(tile));
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(bottomAdjacency(tile)),
+                        Objects.requireNonNull(leftAdjacency(tile)),
+                        Objects.requireNonNull(rightAdjacency(tile))));
             }
             //bottom edge
             else if (tile.x==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
-                //sx
-                if (!gamesBoard.getTile(x, y-1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y-1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y-1));
-                }
-                //dx
-                if (!gamesBoard.getTile(x, y+1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y+1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y+1));
-                }
-                //upper
-                if (!gamesBoard.getTile(x-1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x-1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x-1, y));
-                }
+                //upper, left, right
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(upperAdjacency(tile)),
+                        Objects.requireNonNull(leftAdjacency(tile)),
+                        Objects.requireNonNull(rightAdjacency(tile))));
             }
             //left edge
             else if (tile.y==0){
-                //dx
-                if (!gamesBoard.getTile(x, y+1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y+1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y+1));
-                }
-                //upper
-                if (!gamesBoard.getTile(x-1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x-1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x-1, y));
-                }
-                //bottom
-                if (!gamesBoard.getTile(x+1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x+1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x+1, y));
-                }
+                //upper, bottom, right
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(upperAdjacency(tile)),
+                        Objects.requireNonNull(bottomAdjacency(tile)),
+                        Objects.requireNonNull(rightAdjacency(tile))));
             }
             //right edge
             else if (tile.y==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
-                //sx
-                if (!gamesBoard.getTile(x, y-1).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x, y-1).equals(Tiles.EMPTY)){
-                    result.add(new Point(x, y-1));
-                }
-                //upper
-                if (!gamesBoard.getTile(x-1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x-1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x-1, y));
-                }
-                //bottom
-                if (!gamesBoard.getTile(x+1, y).equals(Tiles.NOT_ALLOWED) &&
-                        !gamesBoard.getTile(x+1, y).equals(Tiles.EMPTY)){
-                    result.add(new Point(x+1, y));
-                }
+                //upper, bottom, left
+                result.addAll(Arrays.asList(
+                        Objects.requireNonNull(upperAdjacency(tile)),
+                        Objects.requireNonNull(bottomAdjacency(tile)),
+                        Objects.requireNonNull(leftAdjacency(tile))));
             }
         }
 
         //return ArrayList of adjacent tiles to the incoming one
         return result;
     }
+
+
+    private Point upperAdjacency(Point tile){
+        int x=tile.x;
+        int y=tile.y;
+        if (!gamesBoard.getTile(x-1, y).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(x-1, y).equals(Tiles.EMPTY)){
+            return new Point(x-1, y);
+        }
+        return null;
+    }
+    private Point bottomAdjacency(Point tile){
+        int x=tile.x;
+        int y=tile.y;
+        if (!gamesBoard.getTile(x+1, y).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(x+1, y).equals(Tiles.EMPTY)){
+            return new Point(x+1, y);
+        }
+        return null;
+    }
+    private Point leftAdjacency(Point tile){
+        int x=tile.x;
+        int y=tile.y;
+        if (!gamesBoard.getTile(x, y-1).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(x, y-1).equals(Tiles.EMPTY)){
+            return new Point(x, y-1);
+        }
+        return null;
+    }
+    private Point rightAdjacency(Point tile){
+        int x=tile.x;
+        int y=tile.y;
+        if (!gamesBoard.getTile(x, y+1).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(x, y+1).equals(Tiles.EMPTY)){
+            return new Point(x, y+1);
+        }
+        return null;
+    }
+
+
+
 
     /**
      * Method to return if all element in the List are on the same row.
