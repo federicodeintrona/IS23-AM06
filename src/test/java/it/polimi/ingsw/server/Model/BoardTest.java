@@ -165,7 +165,7 @@ class BoardTest {
     }
 
     //TEST boardInitialization()
-    @DisplayName("Board initiliazation for 2 players do NOT put EMPTY tiles")
+    @DisplayName("Board initialization for 2 players do NOT put EMPTY tiles")
     @Test
     void boardInitialization1() {
         //arrange - setup our test objects
@@ -197,7 +197,7 @@ class BoardTest {
         assertEquals(board.getGamesBoard().getTile(8,5), Tiles.NOT_ALLOWED);
 
     }
-    @DisplayName("Board initiliazation for 3 players do NOT put EMPTY tiles")
+    @DisplayName("Board initialization for 3 players do NOT put EMPTY tiles")
     @Test
     void boardInitialization2() {
         //arrange - setup our test objects
@@ -220,7 +220,7 @@ class BoardTest {
         assertEquals(board.getGamesBoard().getTile(7,3), Tiles.NOT_ALLOWED);
         assertEquals(board.getGamesBoard().getTile(8,4), Tiles.NOT_ALLOWED);
     }
-    @DisplayName("Board initiliazation for 3 players do NOT put EMPTY tiles")
+    @DisplayName("Board initialization for 3 players do NOT put EMPTY tiles")
     @Test
     void boardInitialization3() {
         //arrange - setup our test objects
@@ -952,11 +952,53 @@ class BoardTest {
     }
 
 
-//todo da fare in inglese
     @DisplayName("testing of all edge cases that are not inherent to the game but to how we decided to structure the board")
     @Test
     void checkBoardResetLimitCaseNotMyShelfie() {
+        //upper left corner
+        Sachet sachet=new Sachet();
+        Board board=new Board(2, sachet);
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+                board.getGamesBoard().setTile(Tiles.EMPTY, i, j);
+            }
+        }
+        placeTiles(board, sachet, Tiles.GREEN, 0, 0);
+        assertTrue(board.checkBoardReset());
 
+        //upper right corner
+        Sachet sachet1=new Sachet();
+        Board board1=new Board(2, sachet);
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+                board1.getGamesBoard().setTile(Tiles.EMPTY, i, j);
+            }
+        }
+        placeTiles(board1, sachet1, Tiles.GREEN, 0, Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        assertTrue(board1.checkBoardReset());
+
+
+        //bottom left corner
+        Sachet sachet3=new Sachet();
+        Board board3=new Board(2, sachet);
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+                board3.getGamesBoard().setTile(Tiles.EMPTY, i, j);
+            }
+        }
+        placeTiles(board3, sachet3, Tiles.GREEN, Define.NUMBEROFROWS_BOARD.getI()-1, 0);
+        assertTrue(board3.checkBoardReset());
+
+        //bottom right corner
+        Sachet sachet2=new Sachet();
+        Board board2=new Board(2, sachet);
+        for (int i = 0; i < Define.NUMBEROFROWS_BOARD.getI(); i++) {
+            for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOARD.getI(); j++) {
+                board2.getGamesBoard().setTile(Tiles.EMPTY, i, j);
+            }
+        }
+        placeTiles(board2, sachet2, Tiles.GREEN, Define.NUMBEROFROWS_BOARD.getI()-1, Define.NUMBEROFCOLUMNS_BOARD.getI()-1);
+        assertTrue(board2.checkBoardReset());
     }
 
 
