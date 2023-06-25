@@ -145,12 +145,28 @@ public class ChatHandler {
     }
 
     /**
-     * Method that helps the PrivateChat by getting via scanner
-     * the username of the player you want to chat with
+     * <p>
+     *      Method that helps the PrivateChat by getting via scanner
+     *      the username of the player you want to chat with
+     * </p>
+     * <p>
+     *     During a 2 players game it automatically
+     *     returns the other player without asking
+     * </p>
      *
      * @return      String containing username
      */
     private String privateChatHandler () {
+        int numOfPlayers = cliMain.getClientState().getAllUsername().size();
+
+        // Returning the only other available player in a 2 players game
+        if (numOfPlayers == 2) {
+            return cliMain.getClientState().getAllUsername().stream()
+                    .filter(x -> !x.equals(cliMain.getClientState().getMyUsername()))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("No other player found"));
+        }
+
         Scanner scanner=new Scanner(System.in);
         String str;
 
