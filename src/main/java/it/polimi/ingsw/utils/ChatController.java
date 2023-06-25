@@ -7,13 +7,13 @@ import java.util.HashMap;
  * <p>
  *     Class to manage all Chats behavior
  * </p>
- * <p>
+ *
  *     It contains:
  *     <ul>
  *         <li>1 publicChat</li>
  *         <li>all privateChats grouped in a HashMap accessible by player's username</li>
  *     </ul>
- * </p>
+ *
  * <p>
  *     Its role is to group all chats in one place
  *     and to manage their construction and calls

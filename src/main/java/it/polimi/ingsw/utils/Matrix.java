@@ -70,7 +70,7 @@ public class Matrix implements Serializable {
     }
 
     /**
-     * <p><strong>Setter</strong> --> set the selected tile.</p>
+     * <p><strong>Setter</strong> --> Set the selected tile.</p>
      * @param tile Wanted value of the tile
      * @param pos The position of the tile as a point.
      */
@@ -80,6 +80,12 @@ public class Matrix implements Serializable {
 
     }
 
+    /**
+     * <p><strong>Setter</strong> --> set the selected completed tile.</p>
+     * @param tile Wanted value of the tile
+     * @param row The number of the row where you want to set the tile
+     * @param col The number of the column where you want to set the tile
+     */
     public void setFullTile(Tile tile, int row, int col){
 
         board.get(col).set(row, tile);
@@ -102,6 +108,12 @@ public class Matrix implements Serializable {
     public void remove(Point pos){
         board.get(pos.y).get(pos.x).setTiles(Tiles.EMPTY);
     }
+
+    /**
+     <p>Set the selected position with a new EMPTY tile.</p>
+     * @param row   The number of the row where you want to set the tile
+     * @param col   the number of the column where you want to set the tile
+     */
     public void fullRemove(int row, int col){
         board.get(col).set(row,new Tile(Tiles.EMPTY));
     }
@@ -134,19 +146,37 @@ public class Matrix implements Serializable {
         return board.get(pos.y).get(pos.x).getTiles();
     }
 
+    /**
+     *  <p><strong>Getter</strong> --> get the selected full tile.</p>
+     * @param row The number of the row.
+     * @param col The number of the column.
+     * @return The selected tile.
+     */
     public Tile getFullTile(int row, int col){
         return board.get(col).get(row);
     }
 
+    /**
+     *  <p><strong>Getter</strong> --> get the selected tile.</p>
+     * @param pos The position of the tile as a point
+     * @return The selected tile.
+     */
     public Tile getFullTile(Point pos){
         return board.get(pos.y).get(pos.x);
     }
 
+    /**
+     * <strong>Getter</strong> -> Gets the board with all full tile
+     * @return board with all full tile
+     */
     private ArrayList<ArrayList<Tile>> getBoard() {
         return board;
     }
 
-
+    /**
+     * <p><strong>Getter</strong> --> get the number of rows.</p>
+     * @return  The number of rows.
+     */
     private int getNumRows() {
         return numRows;
     }

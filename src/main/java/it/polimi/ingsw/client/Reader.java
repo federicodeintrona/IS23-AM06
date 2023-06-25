@@ -32,10 +32,10 @@ import static java.lang.System.out;
  * <p>Class used to read all the message sent from the controller and modify client state</p>
  * If the message received is:
  * <ul>
- *     <il> a view message then the class changes client state</il>
- *     <il> a ping message then sends back the pong message to server and in case of
- *     missing answer starts disconnection</il>
- *     <il> in other case send to networker the message</il>
+ *     <li> a view message then the class changes client state</li>
+ *     <li> a ping message then sends back the pong message to server and in case of
+ *     missing answer starts disconnection</li>
+ *     <li> in other case send to networker the message</li>
  * </ul>
  * It also close socket, object input stream and object output stream in case of disconnection
  */
