@@ -11,7 +11,14 @@ import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.net.Socket;
 
-
+/**
+ * <p>Class used to manage the tcp connection</p>
+ * <ul>
+ *     <il>Creates socket, reader and the object output stream</il>
+ *     <il>Sends message to server</il>
+ *     <il>Starts disconnection</il>
+ * </ul>
+ */
 public class NetworkerTcp implements Networker, PropertyChangeListener {
     private static int port;
     private String serverIP;
@@ -20,7 +27,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     private View view;
     private final ClientState clientState;
     private Reader reader;
-
+    /**
+     * Initialize the networker with tho the given client state and host
+     * @param clientState client state
+     * @param host server's host
+     */
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;
         try {
@@ -39,6 +50,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         }
         this.clientState = clientState;
     }
+
+    /**
+     * Initialize the networker with the given client state
+     * @param clientState client state
+     */
     public NetworkerTcp(ClientState clientState) {
         JsonReader config;
         try {
@@ -52,6 +68,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         this.clientState = clientState;
         port=config.getInt("tcpPort");
     }
+
+    /**
+     * Method to create socket, object output stream and reader
+     * @return true if everything goes fine, false in other cases
+     */
     public boolean initializeConnection() {
         try {
             socket = new Socket(serverIP, port);
@@ -70,6 +91,9 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
 
     }
 
+    /**
+     * Method to close socket and Object Output Stream
+     */
     private void close(){
         try {
             socket.close();
@@ -80,21 +104,25 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         }
     }
 
+    /**
+     * Method to send a disconnection message to server and then to start closing the programme
+     * @param closing message to send to server
+     */
     @Override
     public void closeProgram(Message closing) {
         try {
             oos.writeObject(closing);
             oos.flush();
-            reader.disconnect();
+            reader.disconnection();
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
+            reader.disconnection();
         }
     }
 
 
     /**
-     * Sends to server the username selected by player
+     * Method to send to server the username selected by player
      * @param username a message which contains the username selected by the palyer
      */
     public void firstConnection (Message username){
@@ -108,7 +136,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Sends to server the number of player selected
+     * Method to send to server the number of player selected
      * @param numberOfPlayers a message which contains the number of player
      */
     public void numberOfPlayersSelection(Message numberOfPlayers){
@@ -123,7 +151,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Sends to the server the positions of the tiles to remove from board
+     * Method to send to the server the positions of the tiles to remove from board
      * @param tiles a message which contains the positions of the tiles to remove from board
      */
     public void removeTilesFromBoard(Message tiles){
@@ -132,12 +160,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.flush();
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
     }
 
     /**
-     * Sends to the server the order of the tiles
+     * Method to send to the server the order of the tiles
      * @param ints a message which contains the order of the tiles
      */
     public void switchTilesOrder(Message ints){
@@ -151,7 +178,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Send to the server the column chosen from the player
+     * Method to send to the server the column chosen from the player
      * @param column a message which contains the column chosen by the player
      */
     public void addTilesToBookshelf (Message column){
@@ -165,24 +192,29 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Send to the view the message received
+     * Method to send to the view the message received
      * @param evt A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        view.receivedMessage((Message) evt.getNewValue());
+        if(evt.getPropertyName().equals("disconnect")){
+            view.close();
+        }else view.receivedMessage((Message) evt.getNewValue());
     }
 
     /**
-     * Sets the view
-     * @param view The view created by the view
+     * <strong>Setter</strong> -> Sets the view
+     * @param view The view created by the clientbase
      */
     @Override
     public void setView(View view) {
         this.view=view;
     }
-
+    /**
+     * <strong>Setter</strong> -> Sets the view
+     * @param serverIP serverIp
+     */
     @Override
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
@@ -191,7 +223,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
 
 
     /**
-     * Send to the server the chat message written by the player
+     * Method to send to the server the chat message written by the player
      * @param message a message which contains the chat message by the player
      */
     @Override

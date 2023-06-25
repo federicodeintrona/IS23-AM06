@@ -16,28 +16,132 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Class to manage the GUI
+ * <ul>
+ *     <li>start the GUI</li>
+ *     <li>close the GUI</li>
+ *     <li>change GUI's scene</li>
+ *     <li>send message to the server</li>
+ *     <li>received message from the server</li>
+ * </ul>
+ */
 public class GUIController implements View, SceneController {
+
+    /**
+     * Attribute that instance the stage
+     */
     private  Stage stage;
+    /**
+     * Attribute that instance the current scene
+     */
     private  Scene scene;
+    /**
+     * Attribute that instance the root
+     */
     private  Parent root;
+
+    /**
+     * Attribute that instantiates the correct Networker to send and receive messages from
+     */
     private  Networker networker;
+    /**
+     * Attribute that instance the correct ClientState
+     */
     private final ClientState state;
+    /**
+     * Attribute used to know which scene controller is currently instantiated
+     */
     private SceneController sceneController;
 
 
-    public ClientState getState() {
-        return state;
-    }
 
-
-    public GUIController( ClientState state) {
+    //TODO and... addListener cosa fanno - javadoc FEDE
+    /**
+     * Initialize the ClientState and
+     *
+     * @param state the reference ClientState
+     */
+    public GUIController(ClientState state) {
         this.state=state;
         state.addListener(this,"start");
         state.addListener(this,"end");
     }
 
-    //invia i messaggi dal client al server
-    //client -> networker -> server
+
+
+    /**
+     * <strong>Getter</strong> -> Returns the ClientState
+     *
+     * @return the ClientState
+     */
+    public ClientState getState() {
+        return state;
+    }
+
+    /**
+     * <strong>Getter</strong> -> Returns the Stage
+     *
+     * @return the Stage
+     */
+    public Stage getStage() {
+        return stage;
+    }
+
+
+
+    /**
+     * <strong>Setter</strong> -> Sets the current SceneController
+     *
+     * @param sceneController the current SceneController
+     */
+    public void setSceneController(SceneController sceneController) {
+        this.sceneController = sceneController;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the Stage where to show the Scene
+     *
+     * @param stage the Stage
+     */
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the current Scene shown
+     *
+     * @param scene the current Scene shown
+     */
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the Root
+     *
+     * @param root the Root
+     */
+    public void setRoot(Parent root) {
+        this.root = root;
+    }
+
+    /**
+     * <strong>Setter</strong> -> Sets the Networker (RMI or TCP) to which to send messages and from which to receive server messages
+     *
+     * @param networker the correct Networker (RMI or TCP)
+     */
+    public void setNetworker(Networker networker) {
+        this.networker = networker;
+    }
+
+
+
+    /**
+     * Method to send the message to the server
+     *
+     * @param message the message to send to the server
+     */
     public void sendMessage(Message message){
         switch (message.getType()){
             case REMOVE_FROM_BOARD -> networker.removeTilesFromBoard(message);
@@ -49,20 +153,42 @@ public class GUIController implements View, SceneController {
         }
     }
 
-
-    //riceve i messaggi dal server
-    //server -> networker -> client
+    /**
+     * Method to receive the message from the server
+     *
+     * @param message that received from the server
+     */
     @Override
     public void receivedMessage(Message message) {
         switch (message.getType()){
             case NEW_LOBBY ->  changeScene(Scenes.NumOfPlayers);
             case WAITING_FOR_PLAYERS -> {
-                if(!state.gameHasStarted()) changeScene(Scenes.Waiting);
+                if(state.gameHasStarted()) changeScene(Scenes.Waiting);
             }
             case ERROR -> showError(message);
         }
     }
 
+    /**
+     * Method for managing scene change
+     *
+     * @param scene to be shown now
+     */
+    public void changeScene(Scenes scene){
+        Platform.runLater(()->{
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scene.getPath())));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            this.scene.setRoot(root);
+            stage.setTitle(scene.getTitle());
+        });
+    }
+
+    /**
+     * Method to close the Graphic User Interface
+     */
     @Override
     public void close() {
         Message msg = new Message();
@@ -71,67 +197,38 @@ public class GUIController implements View, SceneController {
         else System.exit(0);
     }
 
-    //mostra gli errori che arrivano dal server
+    /**
+     * Method to show all the error received from server
+     *
+     * @param message the error message received from the server
+     */
     private void showError(Message message){
         Platform.runLater(()-> sceneController.showError(message.getText(),stage));
     }
 
-    //Qui arrivano le notifiche dal client state
+
+
+    //TODO javadoc FEDE
+    /**
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()){
-            case "start" -> changeScene(Scenes.Game);
+            case "start" ->
+                    changeScene(Scenes.Game);
             case "end" -> {
                 if(state.isDisconnectionWinner()){
                     changeScene(Scenes.DisconnectionEnd);
-                } else changeScene(Scenes.Endgame);
-
+                }
+                else
+                    changeScene(Scenes.Endgame);
             }
-            default -> throw new IllegalStateException("Unexpected value: " + evt.getPropertyName());
+            default ->
+                    throw new IllegalStateException("Unexpected value: " + evt.getPropertyName());
         }
     }
 
-
-    //si occupa del cambiamento di scena
-    public void changeScene(Scenes scenes){
-        Platform.runLater(()->{
-            try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scenes.getName())));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            this.scene.setRoot(root);
-            stage.setTitle(scenes.getTitle());
-        });
-    }
-
-
-
-    public void setSceneController(SceneController sceneController) {
-        this.sceneController = sceneController;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public void setNetworker(Networker networker) {
-        this.networker = networker;
-    }
 }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.utils.Timer;
 
 /**
- * <p> An interface for classes that use countdown timers</p>
+ * <p> Interface for classes that use countdown timers</p>
  * <p> It is used to automatically disconnect or close a class when the timer ends.
  *  The class that implements this interface needs to have a counter (an int variable suffices)
  *  which will be updated by the timer itself.</p>

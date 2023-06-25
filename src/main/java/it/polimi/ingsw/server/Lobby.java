@@ -152,6 +152,7 @@ public class Lobby {
         Model m = new Model();
         games.put(num, m);
         m.setGameID(num);
+        m.addChangeListener(controller);
 
     }
 
@@ -162,7 +163,6 @@ public class Lobby {
             disconnectedPlayers.remove(s);
             players.remove(s);
             playerToGame.remove(s);
-            views.get(s).setDisconnected(true);
             views.remove(s);
 
         }
@@ -172,7 +172,12 @@ public class Lobby {
 
     }
     public synchronized void playerDisconnection(String username){
-        views.get(username).setDisconnected(true);
+
+        VirtualView view =views.get(username);
+        if(view != null) {
+            view.setDisconnected(true);
+        }
+
 
         //If in a lobby remove him
         Integer lobbyID = playerToLobby.get(username);

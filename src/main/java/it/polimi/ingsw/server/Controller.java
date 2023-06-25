@@ -124,7 +124,7 @@ public class Controller implements PropertyChangeListener {
 
 
     /**
-     * Removes the tiles of coordinates 'points'
+     * Method to remove tiles of coordinates 'points'
      * @param gameID The ID of the game
      * @param playerID  The username of the player requesting the move
      * @param points The coordinates of the tiles
@@ -245,6 +245,16 @@ public class Controller implements PropertyChangeListener {
         lobby.closeGame(((Model)evt.getSource()).getGameID());
     }
 
+    /**
+     * Method that creates a ChatMessage destined to
+     * PublicChat with @playerForwarding and @message
+     * and thanks to @gameId forwards it to the correct game
+     *
+     * @param gameId        Key to access the correct game in the HashMap games
+     * @param playerForwarding      Player who wrote the message
+     * @param message       Message to forward
+     * @return      ChatMessage created
+     */
     public ChatMessage sendMessage (int gameId, String playerForwarding, String message) {
 
         lobby.getGames().get(gameId).sendMessage(playerForwarding, message);
@@ -255,6 +265,17 @@ public class Controller implements PropertyChangeListener {
         return messageOut;
     }
 
+    /**
+     * Method that creates a ChatMessage destined to
+     * PrivateChat with @playerForwarding and @message
+     * and thanks to @gameId forwards it to the correct game
+     *
+     * @param gameId        Key to access the correct game in the HashMap games
+     * @param playerForwarding      Player who wrote the message
+     * @param message       Message to forward
+     * @param receivingPlayer       Player who the message is destined to
+     * @return      ChatMessage created
+     */
     public ChatMessage sendMessage (int gameId, String playerForwarding, String message, String receivingPlayer) {
 
         lobby.getGames().get(gameId).sendMessage(playerForwarding, message, receivingPlayer);
@@ -265,6 +286,11 @@ public class Controller implements PropertyChangeListener {
         return messageOut;
     }
 
+    /**
+     * <strong>Getter</strong> -> Gets the lobby
+     *
+     * @return      Lobby
+     */
     public Lobby getLobby () {
         return lobby;
     }

@@ -27,6 +27,17 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.out;
 
+/**
+ * <p>Class used to read all the message sent from the controller and modify client state</p>
+ * If the message received is:
+ * <ul>
+ *     <il> a view message then the class changes client state</il>
+ *     <il> a ping message then sends back the pong message to server and in case of
+ *     missing answer starts disconnection</il>
+ *     <il> in other case send to networker the message</il>
+ * </ul>
+ * It also close socket, object input stream and object output stream in case of disconnection
+ */
 public class Reader extends Thread implements TimerInterface {
     private final Socket socket;
     private final ObjectInputStream client;
@@ -34,16 +45,25 @@ public class Reader extends Thread implements TimerInterface {
     private final NetworkerTcp networkerTcp;
     private final PropertyChangeSupport notifier = new PropertyChangeSupport(this);
     private final ClientState clientState;
+
     private boolean disconnected = false;
     private ScheduledExecutorService e;
 
     //Timer
-
+    private boolean ponging = true;
     private  Timer timer;
     private int time = 0;
     private static final int initialDelay = 50;
-    private static final int delta = 2000;
+    private static final int delta = 1000;
 
+    /**
+     * Initialize socket, object output stream, networker tcp and client state and creates a new object input stream
+     * @param socket server socket
+     * @param oos object output stream
+     * @param networkerTcp networker
+     * @param clientState client state to modify
+     * @throws IOException in case of problem with input and output
+     */
     public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
         this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         this.oos = oos;
@@ -80,9 +100,7 @@ public class Reader extends Thread implements TimerInterface {
             }
         }
         catch(SocketException e){
-            if(!disconnected) disconnect();
-            else out.println("The game is about to close! Have fun! The game will go on without you:)");
-
+            if(disconnected) out.println("The game is about to close! Have fun! The game will go on without you:)");
         }
         catch (IOException e) {
             System.out.println( "Server is not responding...");
@@ -105,8 +123,10 @@ public class Reader extends Thread implements TimerInterface {
                 oos.writeObject(msg);
                 oos.flush();
             } catch (IOException e) {
-                if(!disconnected)
-                    System.out.println( "Server is not responding...");
+                if(ponging&&!disconnected) {
+                    System.out.println("Server is not responding...");
+                    ponging=false;
+                }
             }
         },10,500, TimeUnit.MILLISECONDS);
 
@@ -120,86 +140,61 @@ public class Reader extends Thread implements TimerInterface {
 
         ViewMessage message = (ViewMessage) newMessage;
         switch (message.getObjName()) {
-            case ("board") -> {
-                Matrix board = (Matrix) message.getContent();
-                clientState.setBoard(board);
-            }
-            case ("bookshelf") -> {
-                Matrix bookshelf = (Matrix) message.getContent();
-                String Username = message.getText();
-                clientState.setAllBookshelf(Username, bookshelf);
-            }
-            case ("currPlayer") -> {
-                String currPlayer = (String) message.getContent();
-                clientState.setCurrentPlayer(currPlayer);
-            }
-            case ("playerNames") -> {
-                List<String> playerNames = (List<String>) message.getContent();
-                ArrayList pNames = new ArrayList<>(playerNames);
-                clientState.setAllUsername(pNames);
-            }
-            case ("commonObj") -> {
-                List<Integer> commonObj = (List<Integer>) message.getContent();
-                ArrayList cObj = new ArrayList<>(commonObj);
-                clientState.setGameCommonObjective(cObj);
-            }
-            case ("commonObjPoints") -> {
-                clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) message.getContent()));
-            }
-            case ("publicPoints") -> {
-                int publicPoints = (int) message.getContent();
-                String username = message.getText();
-                clientState.setAllPublicPoints(username, publicPoints);
-            }
-            case ("selectedTiles") -> {
-                ArrayList<Tiles> selectedTiles = (ArrayList<Tiles>) message.getContent();
-                clientState.setSelectedTiles(selectedTiles);
-            }
-            case ("personalObj") -> {
-                HashMap<Point, Tiles> personalObj = (HashMap<Point, Tiles>) message.getContent();
-                clientState.setMyPersonalObjective(personalObj);
-            }
-            case ("personalObjNum")->{
-                clientState.setMyPersonalObjectiveInt((int) message.getContent());
-            }
-            case ("privatePoints") -> {
-                int privatePoints = (int) message.getContent();
-                clientState.setMyPoints(privatePoints);
-            }
-            case ("nextPlayer") -> {
-                String nextPlayer = (String) message.getContent();
-                clientState.setNextPlayer(nextPlayer);
-            }
-            case ("chairPlayer")->{
-                clientState.setChair((String) message.getContent());
-            }
-            case ("winner") -> {
-                String winner = (String) message.getContent();
-                clientState.setWinnerPlayer(winner);
-            }
-            case ("disconnectionWinner") ->{
-                clientState.setDisconnectionWinner(true);
-            }
-            case ("start") -> {
-                Boolean start = (Boolean) message.getContent();
-                clientState.setGameHasStarted(start);
-            }
-            case ("message") -> {
-                clientState.newMessageHandler((ChatMessage) message.getContent());
-            }
-            case ("reloadChats") -> {
-                clientState.reloadChats((ChatController) message.getContent());
-            }
-            case ("end") -> {
-                Boolean end = (Boolean) message.getContent();
-                clientState.setGameIsEnded(end);
-                disconnected=true;
-            }
+            case ("board") ->
+                clientState.setBoard((Matrix) message.getContent());
+            case ("bookshelf") ->
+                clientState.setAllBookshelf(message.getText(), (Matrix) message.getContent());
+            case ("currPlayer") ->
+                    clientState.setCurrentPlayer((String) message.getContent());
+            case ("playerNames") ->
+                    clientState.setAllUsername(new ArrayList<>((List) message.getContent()));
+            case ("commonObj") ->
+                    clientState.setGameCommonObjective(new ArrayList<>((List) message.getContent()));
+            case ("commonObjPoints") ->
+                    clientState.setCommonObjectivePoints(new ArrayList<>((List) message.getContent()));
+            case ("publicPoints") ->
+                    clientState.setAllPublicPoints(message.getText(), (int) message.getContent());
+            case ("selectedTiles") ->
+                    clientState.setSelectedTiles((ArrayList<Tiles>) message.getContent());
+            case ("personalObj") ->
+                    clientState.setMyPersonalObjective((HashMap<Point, Tiles>) message.getContent());
+            case ("personalObjNum")->
+                    clientState.setMyPersonalObjectiveInt((int) message.getContent());
+            case ("privatePoints") ->
+                    clientState.setMyPoints((int) message.getContent());
+            case ("nextPlayer") ->
+                    clientState.setNextPlayer((String) message.getContent());
+            case ("chairPlayer")->
+                    clientState.setChair((String) message.getContent());
+            case ("winner") ->
+                    clientState.setWinnerPlayer((String) message.getContent());
+            case ("disconnectionWinner") ->
+                    clientState.setDisconnectionWinner(true);
+            case ("start") ->
+                    clientState.setGameHasStarted((Boolean) message.getContent());
+            case ("message") ->
+                    clientState.newMessageHandler((ChatMessage) message.getContent());
+            case ("reloadChats") ->
+                    clientState.reloadChats((ChatController) message.getContent());
+            case ("end") ->
+                clientState.setGameIsEnded((Boolean) message.getContent());
         }
     }
 
+    /**
+     * Method used to notify networker to start disconnection process
+     */
     @Override
     public void disconnect() {
+        notifier.firePropertyChange(new PropertyChangeEvent(true,
+                "disconnect", null, null));
+    }
+
+    /**
+     * Method to close all active thread, socket, object output stream and object input stream
+     * and then close the system
+     */
+    public void disconnection() {
         disconnected=true;
         e.shutdown();
         timer.cancel();
@@ -215,12 +210,20 @@ public class Reader extends Thread implements TimerInterface {
         }
     }
 
+    /**
+     * Method to update countdown for skipped ping message
+     * @return skipped ping message
+     */
     @Override
     public int updateTime() {
         time++;
         return time;
     }
 
+    /**
+     * <strong>Getter</strong> -> Returns the error message
+     * @return error message
+     */
     @Override
     public String getErrorMessage() {
         return "Server is not responding. Retry later";

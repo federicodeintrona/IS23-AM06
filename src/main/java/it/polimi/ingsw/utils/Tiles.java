@@ -3,6 +3,9 @@ package it.polimi.ingsw.utils;
 
 import java.io.Serializable;
 
+/**
+ * Enumeration of the different kind of tile that is possible to use
+ */
 public enum Tiles implements Serializable {
 
     GREEN(new String[]{"/images/item tiles/Gatti1.1.png", "/images/item tiles/Gatti1.2.png", "/images/item tiles/Gatti1.3.png"}),
@@ -17,10 +20,18 @@ public enum Tiles implements Serializable {
 
     private final String[] image;
 
+    /**
+     * Initialize the tile with the right position of corresponding image
+     * @param image positions of the corresponding image
+     */
     Tiles(String[] image){
         this.image=image;
     }
 
+    /**
+     * <strong>Getter</strong> -> Returns the positions of the image
+     * @return positions of the image
+     */
     public  String[] getImage(){
         return image;
     }

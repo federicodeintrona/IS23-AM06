@@ -1,5 +1,8 @@
 package it.polimi.ingsw.utils.Messages;
 
+/**
+ * Enumeration which contains all kind of message types
+ */
 public enum MessageTypes {
     USERNAME, //invio username
     NEW_LOBBY,
@@ -11,10 +14,9 @@ public enum MessageTypes {
     OK,
     CHAT,
     RECONNECT,
-    ROLLBACK, //torna all mossa precedente
     DISCONNECT,
     ERROR,
     VIEW,
     PING,
-    PONG;
+    PONG
 }

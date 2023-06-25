@@ -20,6 +20,40 @@ import java.util.*;
 import java.util.List;
 
 
+/**
+ * <p>A class used to control the evolution of the game.</p>
+ * <p>It holds and manages all the information about a single game:</p>
+ * <ul>
+ *     <li>Board</li>
+ *     <li>Bookshelves</li>
+ *     <li>Players (and their points)</li>
+ *     <li>Chat logs</li>
+ *     <li>etc.</li>
+ * </ul>
+ * <p>The model's public methods allow the players to modify the state of game by:
+ *      <ul>
+ *          <li>Removing tiles from the board</li>
+ *          <li>Changing the order of the selected tiles</li>
+ *          <li>Adding the tiles to their bookshelves</li>
+ *      </ul>
+ * </p>
+ * <p>
+ *     <p>
+ *         The model also manages the turns. When a player adds a tile to his bookshelf
+ *         the game advances to the next turn since it is the last move a player can do during
+ *         his turn.
+ *     </p>
+ *     <p>
+ *         The model selects the next non-disconnected player in line; if there is only one player left
+ *         it selects the first disconnected player it finds to stop the game and wait for at least another
+ *         player to reconnect or it will end the game after 2 minutes.
+ *     </p>
+ *     <p>
+ *         The model also notifies the virtual views of each player with the necessary information for the
+ *         client such as the points, the state of the board, the bookshelves, and the current player.
+ *     </p>
+ * </p>
+ */
 public class Model implements TimerInterface {
     private int gameID;
     private Board board;
@@ -45,7 +79,7 @@ public class Model implements TimerInterface {
     private Timer timer;
     private boolean timerIsOn=false;
     private static final int initialDelay = 50;
-    private static final int delta = 5000;
+    private static final int delta = 6000;
 
     //Utility objects
     private final CheckManager checks = new CheckManager(selectedTiles);
@@ -66,40 +100,11 @@ public class Model implements TimerInterface {
 
     //Constructors
 
+    /**
+     * Main constructor for the model.
+     */
     public Model(){}
 
-    public Model(ArrayList<Player> players) {
-        this.players = players;
-
-        // Initializing for each player a particular version of ChatController specifically designed for Server
-        List<String> allUsernames = players.stream()
-                                            .map(Player::getUsername)
-                                            .toList();
-
-        for (String player: allUsernames) {
-            allPlayersChats.put(player, new ChatController(true));
-
-            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
-                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
-        }
-    }
-
-    public Model(ArrayList<Player> players, ArrayList<VirtualView> views) {
-        this.players = players;
-        this.virtualViews = views;
-
-        // Initializing for each player a particular version of ChatController specifically designed for Server
-        List<String> allUsernames = players.stream()
-                                            .map(Player::getUsername)
-                                            .toList();
-
-        for (String player: allUsernames) {
-            allPlayersChats.put(player, new ChatController(true));
-
-            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
-                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
-        }
-    }
 
     public Model(ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
         this.players = players;
@@ -118,6 +123,8 @@ public class Model implements TimerInterface {
                 allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
         }
     }
+
+
     public Model(int iD, ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
         this.gameID = iD;
         this.players = players;
@@ -219,16 +226,16 @@ public class Model implements TimerInterface {
         Random rdm = new Random();
         int num;
 
-        for (int i = 0; i < players.size(); i++) {
+        for (Player player : players) {
             //check if there are NOT 2 equals PersonalObjective
 
             do {
                 //+1 because personal objective's number is between 1, 12
-                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI())+1;
+                num = rdm.nextInt(Define.NUMBEROFPERSONALOBJECTIVE.getI()) + 1;
             } while (numbers.contains(num));
 
             numbers.add(num);
-            players.get(i).setPersonalObjective(new PersonalObjective(num));
+            player.setPersonalObjective(new PersonalObjective(num));
 
 
         }
@@ -656,7 +663,10 @@ public class Model implements TimerInterface {
         //Notify game Start
         notifier.firePropertyChange
                 (new PropertyChangeEvent(true, "all", "0","end" ));
+        notifier.firePropertyChange
+                (new PropertyChangeEvent(this, "end", "0","end" ));
     }
+
 
 
     /**
@@ -727,6 +737,7 @@ public class Model implements TimerInterface {
             notifier.firePropertyChange(new PropertyChangeEvent(publicChat.getChatMessages().get(0), x, null, "message"));
         }
     }
+
     /**
      * Method that forwards a message coming
      * from a private chat to a particular player
@@ -986,6 +997,11 @@ public class Model implements TimerInterface {
         return selectedTiles;
     }
 
+    /**
+     * <strong>Setter</strong> -> Sets the players in a game given an Arraylist @players
+     *
+     * @param players       ArrayList of players
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
 
@@ -1000,6 +1016,15 @@ public class Model implements TimerInterface {
             for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
                 allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
         }
+    }
+
+
+    /**
+     * Method to add the controller as a property change listener of the model.
+     * @param controller the controller
+     */
+    public void addChangeListener(Controller controller){
+        notifier.addPropertyChangeListener("end",controller);
     }
 
     /**

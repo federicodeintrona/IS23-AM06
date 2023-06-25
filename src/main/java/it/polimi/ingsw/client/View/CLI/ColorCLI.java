@@ -1,15 +1,15 @@
 package it.polimi.ingsw.client.View.CLI;
 
 /**
- * Enumeration of ANSI escaped codes used for Command User Interface's color
+ * Enumeration of ANSI escaped codes used for Command User Interface's color.
  * <ul>
- *     <li>reset</li>
- *     <li>clear screen</li>
- *     <li>foreground color code</li>
- *     <li>background color code</li>
- *     <li>bold</li>
- *     <li>underline</li>
- *     <li>reversed</li>
+ *     <li>Reset;</li>
+ *     <li>clear screen;</li>
+ *     <li>foreground color code;</li>
+ *     <li>background color code;</li>
+ *     <li>bold;</li>
+ *     <li>underline;</li>
+ *     <li>reversed.</li>
  * </ul>
  */
 public enum ColorCLI {
@@ -55,24 +55,24 @@ public enum ColorCLI {
 
 
     /**
-     * Attribute used to save the ANSI escape code
+     * Attribute used to save the ANSI escape code.
      */
     private final String code;
 
 
     /**
-     * Constructor --> assign the correct ANSI escape code
+     * Initialize the correct ANSI escape code.
      *
-     * @param code  ANSI escape code
+     * @param code the ANSI escape code.
      */
     ColorCLI(String code) {
         this.code = code;
     }
 
     /**
-     * Method to return a string representation of the object
+     * Method to return a string representation of the object.
      *
-     * @return String   return the ANSI escape code of the color
+     * @return the ANSI escape code of the color.
      */
     @Override
     public String toString() {
@@ -80,4 +80,3 @@ public enum ColorCLI {
     }
 }
 
-//todo scegliere colore

@@ -3,15 +3,15 @@ package it.polimi.ingsw.utils.Timer;
 import java.util.TimerTask;
 
 /**
- * <p>A class, that extends TimerTask, which implements a counter.</p>
+ * <p>Class, that extends TimerTask, which implements a counter.</p>
  * <p>It needs an object that extends TimerInterface to update its timer.</p>
  */
 public class TimerCounter extends TimerTask {
-    private TimerInterface client;
+    private final TimerInterface client;
     private static final int timeout = 20;
 
     /**
-     * <p>The standard constructor for the class.</p>
+     * <p>Initialize client and construct the timer</p>
      * @param client The object that extends TimerInterface.
      */
     public TimerCounter(TimerInterface client) {
@@ -20,10 +20,9 @@ public class TimerCounter extends TimerTask {
 
 
     /**
-     * <p>An override of the TimerTask run method.</p>
-     * <p>It implements a countdown using a counter from the TimerInterface class,
-     * if the counter reaches 20 it calls the disconnect method from the TimerInterface and
-     * prints the error message.</p>
+     * <p>Method that implements a countdown using a counter from the TimerInterface class</p>
+     * <p>If the counter reaches 20 it calls the disconnect method from the TimerInterface and
+     * prints the error message. It is an override of the TimerTask run method.</p>
      */
     @Override
     public void run() {
