@@ -810,7 +810,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
-                    myBookshelfGrid.add(setTiles(bookshelf.getTile(i, j)), j, i);
+                    myBookshelfGrid.add(setTiles(bookshelf.getFullTile(i, j)), j, i);
                 }
             }
         }
@@ -831,7 +831,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         for (int i = 0; i < Define.NUMBEROFROWS_BOOKSHELF.getI(); i++) {
             for (int j = 0; j < Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++) {
                 if (!bookshelf.getTile(i , j ).equals(Tiles.EMPTY)) {
-                    ImageView tile = setTiles(bookshelf.getTile(i, j));
+                    ImageView tile = setTiles(bookshelf.getFullTile(i, j));
                     tile.setFitWidth(20);
                     tile.setFitHeight(20);
                     assert pane != null;
@@ -1140,15 +1140,14 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
      * @param tile the tile of interest.
      * @return the ImageView of the tile of interest.
      */
-    private ImageView setTiles(Tiles tile){
+    private ImageView setTiles(Tile tile){
         //randomize to select the tile
-        Random rand = new Random();
-        String[] titles = tile.getImage();
-        String title = titles==null?null:titles[rand.nextInt(Define.NUMBEROFTILEIMAGES.getI())];
+        String[] titles = tile.getTiles().getImage();
+        String title = titles[tile.getImage()];
 
         //set the Image
         assert title != null;
-        Image image = new Image(title);
+        Image image = getImage(title);
         ImageView imageView = new ImageView(image);
 
         //set the dimension of ImageView
