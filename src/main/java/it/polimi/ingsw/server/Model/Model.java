@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.utils.ChatController;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.server.CommonObjective.CommonObjective;
 import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.Exceptions.*;
@@ -10,7 +11,6 @@ import it.polimi.ingsw.utils.Chat;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
-import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
 import java.awt.*;
@@ -64,7 +64,7 @@ public class Model implements TimerInterface {
     private Player chairPlayer;
     private Player currPlayer;
     private Player nextPlayer;
-    private ArrayList<Tiles> selectedTiles = new ArrayList<>();
+    private ArrayList<Tile> selectedTiles = new ArrayList<>();
     private ArrayList<Point> removedTilesCoord;
     private boolean isFinished = false;
     private int connectedPlayers;
@@ -268,7 +268,7 @@ public class Model implements TimerInterface {
         //Notify the views and add the removed tiles to the selectedTiles array
         for (Point point : points) {
             //Adding the removed tiles to selectedTiles array
-            selectedTiles.add(board.getGamesBoard().getTile(point));
+            selectedTiles.add(board.getGamesBoard().getFullTile(point));
         }
 
         //Remove the selected tiles
@@ -305,7 +305,7 @@ public class Model implements TimerInterface {
         state = GameState.CHOOSING_TILES;
 
         //Add to bookshelf
-        player.getBookshelf().addTile(selectedTiles, column);
+        player.getBookshelf().addFullTile(selectedTiles, column);
 
         //Notify Bookshelf
         notifier.firePropertyChange(new PropertyChangeEvent(player.getBookshelf().getTiles(),
@@ -359,7 +359,7 @@ public class Model implements TimerInterface {
         checks.swapCheck(ints,player);
 
         //Swaps the array around
-        ArrayList<Tiles> array = new ArrayList<>(selectedTiles);
+        ArrayList<Tile> array = new ArrayList<>(selectedTiles);
 
         for (int i = 0; i < ints.size(); i++) {
             selectedTiles.set(i, array.get(ints.get(i)-1));
@@ -593,7 +593,7 @@ public class Model implements TimerInterface {
      */
     private void restoreTiles(){
         for(int i = 0; i<selectedTiles.size();i++){
-            board.getGamesBoard().setTile(selectedTiles.get(i), removedTilesCoord.get(i));
+            board.getGamesBoard().setTile(selectedTiles.get(i).getTiles(), removedTilesCoord.get(i));
         }
     }
 
@@ -982,7 +982,7 @@ public class Model implements TimerInterface {
      * <strong>Setter</strong> -> Sets the selectedTiles array
      * @param selectedTile Array you want to set selectedTiles as
      */
-    public synchronized void setSelectedTiles(ArrayList<Tiles> selectedTile) {
+    public synchronized void setSelectedTiles(ArrayList<Tile> selectedTile) {
         this.selectedTiles = selectedTile;
     }
 
@@ -991,7 +991,7 @@ public class Model implements TimerInterface {
      * <strong>Getter</strong> -> Returns the selectedTiles array
      * @return selectedTiles ArrayList
      */
-    public ArrayList<Tiles> getSelectedTiles() {
+    public ArrayList<Tile> getSelectedTiles() {
         return selectedTiles;
     }
 

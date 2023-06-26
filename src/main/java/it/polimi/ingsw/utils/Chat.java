@@ -78,8 +78,8 @@ public class Chat implements Serializable {
     /**
      * <p>
      *    Method that creates a new ChatMessage from the given
-     *    username and @message and adds it into the Chat
-     *
+     *    username and message and adds it into the Chat.
+     * </p>
      * <p>
      *     In case the Chat is full it refreshes the
      *     history of messages by deleting the oldest one
@@ -106,7 +106,7 @@ public class Chat implements Serializable {
     /**
      * <p>
      *    Method that creates a new ChatMessage from the given
-     *    forwardingPlayer, @message and @receivingPlayer
+     *    forwarding player, message and receiving player
      *    and adds it into the Chat
      * </p>
      * <p>

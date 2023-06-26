@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.ClientState;
-import it.polimi.ingsw.server.VirtualView.TCPVirtualView;
 import it.polimi.ingsw.utils.Messages.*;
 import it.polimi.ingsw.server.Model.GameState;
 import it.polimi.ingsw.server.Model.Model;
 import it.polimi.ingsw.server.Model.Player;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.server.VirtualView.VirtualView;
@@ -16,7 +16,6 @@ import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -160,10 +159,10 @@ class ControllerTest {
 
     @Test
     void swapOrder() {
-        ArrayList<Tiles> selected = new ArrayList<>();
-        selected.add(Tiles.GREEN);
-        selected.add(Tiles.BLUE);
-        selected.add(Tiles.YELLOW);
+        ArrayList<Tile> selected = new ArrayList<>();
+        selected.add(new Tile(Tiles.GREEN));
+        selected.add(new Tile(Tiles.BLUE));
+        selected.add(new Tile(Tiles.YELLOW));
         modelmap.get(0).setSelectedTiles(selected);
         modelmap.get(0).setState(GameState.CHOOSING_ORDER);
         Message msg;
@@ -222,7 +221,7 @@ class ControllerTest {
         points.add(new Point(7,4));
         controller.removeTiles(0,modelmap.get(0).getCurrPlayer().getUsername(),points);
         assertEquals(1,modelmap.get(0).getSelectedTiles().size());
-        String player = modelmap.get(0).getCurrPlayer().getUsername();
+        //String player = modelmap.get(0).getCurrPlayer().getUsername();
         Player curr = modelmap.get(0).getCurrPlayer();
 
         msg = controller.addToBookshelf(0,modelmap.get(0).getCurrPlayer().getUsername(),7);

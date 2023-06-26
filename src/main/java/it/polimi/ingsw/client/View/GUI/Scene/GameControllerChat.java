@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.View.GUI.GUIControllerStatic;
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.*;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -445,7 +446,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
             for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
                 if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
-                    boardGrid.add(setTiles(matrix.getTile(i-1, j-1)), j, i); //column, row
+                    boardGrid.add(setTiles(matrix.getFullTile(i-1, j-1)), j, i); //lavora colonna - riga
                 }
             }
         }
@@ -870,26 +871,31 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             //set the Image of the selected tiles
             switch (clientState.getSelectedTiles().size()) {
                 case 1 -> {
-                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
+                    selectedTiles1.setImage(getImage(getTile(0)));
                     selectedTiles2.setDisable(true);
                     selectedTiles2.setVisible(false);
                     selectedTiles3.setDisable(true);
                     selectedTiles3.setVisible(false);
                 }
                 case 2 -> {
-                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
-                    selectedTiles2.setImage(new Image(clientState.getSelectedTiles().get(1).getImage()[0]));
+                    selectedTiles1.setImage(getImage(getTile(0)));
+                    selectedTiles2.setImage(getImage(getTile(1)));
                     selectedTiles3.setDisable(true);
                     selectedTiles3.setVisible(false);
                 }
                 case 3 -> {
-                    selectedTiles1.setImage(new Image(clientState.getSelectedTiles().get(0).getImage()[0]));
-                    selectedTiles2.setImage(new Image(clientState.getSelectedTiles().get(1).getImage()[0]));
-                    selectedTiles3.setImage(new Image(clientState.getSelectedTiles().get(2).getImage()[0]));
+                    selectedTiles1.setImage(getImage(getTile(0)));
+                    selectedTiles2.setImage(getImage(getTile(1)));
+                    selectedTiles3.setImage(getImage(getTile(2)));
                 }
             }
         }
     }
+    public String getTile (int i){
+        return clientState.getSelectedTiles().get(i).getTiles().getImage()[
+                clientState.getSelectedTiles().get(i).getImage()];
+    }
+
 
     /**
      * Method to update the public chat.

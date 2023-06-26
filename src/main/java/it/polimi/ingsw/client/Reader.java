@@ -6,6 +6,7 @@ import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.Message;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
 import it.polimi.ingsw.utils.Messages.ViewMessage;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
@@ -155,7 +156,7 @@ public class Reader extends Thread implements TimerInterface {
             case ("publicPoints") ->
                     clientState.setAllPublicPoints(message.getText(), (int) message.getContent());
             case ("selectedTiles") ->
-                    clientState.setSelectedTiles((ArrayList<Tiles>) message.getContent());
+                    clientState.setSelectedTiles((ArrayList<Tile>) message.getContent());
             case ("personalObj") ->
                     clientState.setMyPersonalObjective((HashMap<Point, Tiles>) message.getContent());
             case ("personalObjNum")->

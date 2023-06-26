@@ -88,7 +88,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * The selected tiles.
      */
-    private ArrayList<Tiles> selectedTiles;
+    private ArrayList<Tile> selectedTiles;
     /**
      * The current player to play.
      */
@@ -258,7 +258,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      *
      * @return the tiles selected from the client.
      */
-    public ArrayList<Tiles> getSelectedTiles() {
+    public ArrayList<Tile> getSelectedTiles() {
         synchronized (viewLock) {
             return selectedTiles;
         }
@@ -477,7 +477,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      *
      * @param selectedTiles the tiles selected from the client.
      */
-    public void setSelectedTiles(ArrayList<Tiles> selectedTiles) {
+    public void setSelectedTiles(ArrayList<Tile> selectedTiles) {
         synchronized (viewLock) {
             this.selectedTiles = selectedTiles;
         }

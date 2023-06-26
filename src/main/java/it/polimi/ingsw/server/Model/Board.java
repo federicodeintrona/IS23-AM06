@@ -404,8 +404,8 @@ public class Board {
      *
      * @param position the position where to remove tile.
      */
-    private void remove(Point position){
-        gamesBoard.remove(position.x, position.y);
+    public void remove(Point position){
+        gamesBoard.fullRemove(position.x, position.y);
     }
 
     /**

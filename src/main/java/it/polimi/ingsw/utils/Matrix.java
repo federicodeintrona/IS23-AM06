@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Matrix implements Serializable {
 
-    private final ArrayList<ArrayList<Tiles>> board;
+    private final ArrayList<ArrayList<Tile>> board;
     private final int numRows;
     private final int numCols;
 
@@ -29,7 +29,7 @@ public class Matrix implements Serializable {
         for( int i=0; i<columns;i++){
             board.add(new ArrayList<>());
             for( int j=0; j<rows;j++){
-                board.get(i).add(Tiles.EMPTY);
+                board.get(i).add(new Tile(Tiles.EMPTY));
             }
         }
     }
@@ -50,7 +50,11 @@ public class Matrix implements Serializable {
      * @return    The selected column
      */
     public ArrayList<Tiles> getColumn(int col){
-        return board.get(col);
+        ArrayList<Tiles> column=new ArrayList<>();
+        for(int i=0;i<numRows;i++){
+            column.add(getTile(i,col));
+        }
+        return column;
     }
 
     /**
@@ -61,18 +65,30 @@ public class Matrix implements Serializable {
      */
     public void setTile(Tiles tile, int row, int col){
 
-        board.get(col).set(row,tile);
+        board.get(col).get(row).setTiles(tile);
 
     }
 
     /**
-     * <p><strong>Setter</strong> --> set the selected tile.</p>
+     * <p><strong>Setter</strong> --> Set the selected tile.</p>
      * @param tile Wanted value of the tile
      * @param pos The position of the tile as a point.
      */
     public void setTile(Tiles tile, Point pos) {
 
-        board.get(pos.getLocation().y).set(pos.getLocation().x,tile);
+        board.get(pos.getLocation().y).get(pos.getLocation().x).setTiles(tile);
+
+    }
+
+    /**
+     * <p><strong>Setter</strong> --> set the selected completed tile.</p>
+     * @param tile Wanted value of the tile
+     * @param row The number of the row where you want to set the tile
+     * @param col The number of the column where you want to set the tile
+     */
+    public void setFullTile(Tile tile, int row, int col){
+
+        board.get(col).set(row, tile);
 
     }
 
@@ -81,9 +97,8 @@ public class Matrix implements Serializable {
      * @param row   The number of the row where you want to set the tile
      * @param col   the number of the column where you want to set the tile
      */
-    public void remove(int row, int col){
-        board.get(col).set(row,Tiles.EMPTY);
-
+    public void remove(int row, int col) {
+        board.get(col).get(row).setTiles(Tiles.EMPTY);
     }
 
     /**
@@ -91,7 +106,16 @@ public class Matrix implements Serializable {
      * @param pos The position of the tile as a point.
      */
     public void remove(Point pos){
-        board.get(pos.y).set(pos.x,Tiles.EMPTY);
+        board.get(pos.y).get(pos.x).setTiles(Tiles.EMPTY);
+    }
+
+    /**
+     <p>Set the selected position with a new EMPTY tile.</p>
+     * @param row   The number of the row where you want to set the tile
+     * @param col   the number of the column where you want to set the tile
+     */
+    public void fullRemove(int row, int col){
+        board.get(col).set(row,new Tile(Tiles.EMPTY));
     }
 
     /**
@@ -100,7 +124,7 @@ public class Matrix implements Serializable {
      * @param col   the number of the column where you want to set the tile
      */
     public void setNotAllowed(int row, int col){
-        board.get(col).set(row,Tiles.NOT_ALLOWED);
+        board.get(col).get(row).setTiles(Tiles.NOT_ALLOWED);
     }
 
     /**
@@ -110,7 +134,7 @@ public class Matrix implements Serializable {
      * @return The selected tile.
      */
     public Tiles getTile(int row, int col){
-        return board.get(col).get(row);
+        return board.get(col).get(row).getTiles();
     }
 
     /**
@@ -119,14 +143,40 @@ public class Matrix implements Serializable {
      * @return The selected tile.
      */
     public Tiles getTile(Point pos){
+        return board.get(pos.y).get(pos.x).getTiles();
+    }
+
+    /**
+     *  <p><strong>Getter</strong> --> get the selected full tile.</p>
+     * @param row The number of the row.
+     * @param col The number of the column.
+     * @return The selected tile.
+     */
+    public Tile getFullTile(int row, int col){
+        return board.get(col).get(row);
+    }
+
+    /**
+     *  <p><strong>Getter</strong> --> get the selected tile.</p>
+     * @param pos The position of the tile as a point
+     * @return The selected tile.
+     */
+    public Tile getFullTile(Point pos){
         return board.get(pos.y).get(pos.x);
     }
 
-
-    private ArrayList<ArrayList<Tiles>> getBoard() {
+    /**
+     * <strong>Getter</strong> -> Gets the board with all full tile
+     * @return board with all full tile
+     */
+    private ArrayList<ArrayList<Tile>> getBoard() {
         return board;
     }
 
+    /**
+     * <p><strong>Getter</strong> --> get the number of rows.</p>
+     * @return  The number of rows.
+     */
     private int getNumRows() {
         return numRows;
     }
@@ -147,7 +197,7 @@ public class Matrix implements Serializable {
      */
     public boolean columnIsFull(int x){
         for (int i=0; i<numRows; i++){
-            if (board.get(x).get(i).equals(Tiles.EMPTY)) return false;
+            if (board.get(x).get(i).getTiles().equals(Tiles.EMPTY)) return false;
         }
         return true;
     }
@@ -159,8 +209,9 @@ public class Matrix implements Serializable {
      */
     public boolean rowIsFull(int x){
         for (int i=0; i<numCols; i++){
-            if (board.get(i).get(x).equals(Tiles.EMPTY)) return false;
+            if (board.get(i).get(x).getTiles().equals(Tiles.EMPTY)) return false;
         }
         return true;
     }
+
 }

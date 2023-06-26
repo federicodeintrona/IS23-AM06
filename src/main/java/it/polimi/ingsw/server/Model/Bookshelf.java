@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.Model;
 
 import it.polimi.ingsw.utils.Define;
 import it.polimi.ingsw.utils.Matrix;
+import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
@@ -102,7 +103,13 @@ public class Bookshelf {
             }
             num_of_tiles=num_of_tiles+tiles.size();
         }
-
+    public void addFullTile(ArrayList<Tile> tiles, int column){
+        int pos=firstFree(column);
+        for(int i=0;i<tiles.size();i++){
+            this.tiles.setFullTile(tiles.get(i), pos-i, column);
+        }
+        num_of_tiles=num_of_tiles+tiles.size();
+    }
     /**
      * <strong>Setter</strong> -> Sets the number of tiles
      * @param num number of tiles
