@@ -452,11 +452,13 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      * @param board the game's board.
      */
     public void setBoard(Matrix board) {
+        Matrix old;
         synchronized (viewLock){
+            old = this.board;
             this.board = board;
         }
         notifier.firePropertyChange(
-                new PropertyChangeEvent(this,"board",null,this.board));
+                new PropertyChangeEvent(this,"board",old,this.board));
     }
 
     /**

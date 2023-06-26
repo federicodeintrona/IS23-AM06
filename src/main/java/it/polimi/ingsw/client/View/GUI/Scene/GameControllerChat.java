@@ -446,7 +446,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
             for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
                 if (!matrix.getTile(i-1,j-1).equals(Tiles.NOT_ALLOWED) && !matrix.getTile(i-1,j-1).equals(Tiles.EMPTY)) {
-                    boardGrid.add(setTiles(matrix.getFullTile(i-1, j-1)), j, i); //lavora colonna - riga
+                    boardGrid.add(setTiles(matrix.getFullTile(i-1, j-1)), j, i); //column - row
                 }
             }
         }
@@ -743,15 +743,22 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     /**
      * Method to update the board.
      */
-    private void updateBoard() {
+    private void updateBoard(Matrix oldBoard) {
         Matrix matrix=clientState.getBoard();
         for (int i = 1; i < Define.NUMBEROFROWS_BOARD.getI()+1; i++) {
             for (int j = 1; j < Define.NUMBEROFCOLUMNS_BOARD.getI()+1; j++) {
-                if (matrix.getTile(i-1, j-1).equals(Tiles.EMPTY)){
-                    int finalJ = j;
-                    int finalI = i;
-                    //remove the tile of interest
-                    boardGrid.getChildren().removeIf(node -> GridPane.getColumnIndex(node)== finalJ && GridPane.getRowIndex(node)== finalI);
+                if (!matrix.getTile(i-1, j-1).equals(oldBoard.getTile(i-1, j-1))){
+                    //add tile
+                    if (oldBoard.getTile(i-1, j-1).equals(Tiles.EMPTY) && !matrix.getTile(i-1, j-1).equals(Tiles.EMPTY)){
+                        boardGrid.add(setTiles(matrix.getFullTile(i-1, j-1)), j, i);
+                    }
+                    //remove tile
+                    else {
+                        int finalJ = j;
+                        int finalI = i;
+                        //remove the tile of interest
+                        boardGrid.getChildren().removeIf(node -> GridPane.getColumnIndex(node)== finalJ && GridPane.getRowIndex(node)== finalI);
+                    }
                 }
             }
         }
@@ -1799,7 +1806,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     Platform.runLater(() -> {
                         //if the board can not be reset
                         if(checkResetPoint==null || clientState.getBoard().getTile(checkResetPoint).equals(Tiles.EMPTY)){
-                            updateBoard();
+                            updateBoard((Matrix) evt.getOldValue());
                         }
                         //if the board can be reset
                         else {

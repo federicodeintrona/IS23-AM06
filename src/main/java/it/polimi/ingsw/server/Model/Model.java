@@ -595,6 +595,7 @@ public class Model implements TimerInterface {
         for(int i = 0; i<selectedTiles.size();i++){
             board.getGamesBoard().setTile(selectedTiles.get(i).getTiles(), removedTilesCoord.get(i));
         }
+        selectedTiles.clear();
     }
 
 

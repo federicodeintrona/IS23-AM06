@@ -29,7 +29,7 @@ public class MyShelfieApplication extends Application{
             String st;
 
             do {
-                System.out.println("""
+                System.out.print("""
                                         Insert --server to start the Server
                                         or
                                         Insert --client to start the Client
@@ -57,7 +57,7 @@ public class MyShelfieApplication extends Application{
             }
             do{
 
-                System.out.println("""
+                System.out.print("""
                                     Insert --server to start the Server
                                     or
                                     Insert --client to start the Client
