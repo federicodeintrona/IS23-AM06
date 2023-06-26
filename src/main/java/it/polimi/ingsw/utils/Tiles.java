@@ -8,16 +8,48 @@ import java.io.Serializable;
  */
 public enum Tiles implements Serializable {
 
+    /**
+     * Green tile.
+     */
     GREEN(new String[]{"/images/item tiles/Gatti1.1.png", "/images/item tiles/Gatti1.2.png", "/images/item tiles/Gatti1.3.png"}),
+    /**
+     * Blue tile.
+     */
     BLUE(new String[]{"/images/item tiles/Cornici1.1.png", "/images/item tiles/Cornici1.2.png", "/images/item tiles/Cornici1.3.png"}),
+    /**
+     * Yellow tile.
+     */
     YELLOW(new String[]{"/images/item tiles/Giochi1.1.png", "/images/item tiles/Giochi1.2.png", "/images/item tiles/Giochi1.3.png"}),
+    /**
+     * White tile.
+     */
     WHITE(new String[]{"/images/item tiles/Libri1.1.png", "/images/item tiles/Libri1.2.png", "/images/item tiles/Libri1.3.png"}),
+    /**
+     * Pink tile.
+     */
     PINK(new String[]{"/images/item tiles/Piante1.1.png", "/images/item tiles/Piante1.2.png", "/images/item tiles/Piante1.3.png"}),
+    /**
+     * Light blue tile.
+     */
     LIGHT_BLUE(new String[]{"/images/item tiles/Trofei1.1.png", "/images/item tiles/Trofei1.2.png", "/images/item tiles/Trofei1.3.png"}),
+    /**
+     * Not allowed tile.
+     */
     NOT_ALLOWED(null),
+    /**
+     * Empty tile.
+     */
     EMPTY(null),
+    /**
+     * Position tile used by print common objective in Command Line Interface.
+     */
     POSITION(null);
 
+
+
+    /**
+     * Array used to save all tile images path.
+     */
     private final String[] image;
 
     /**

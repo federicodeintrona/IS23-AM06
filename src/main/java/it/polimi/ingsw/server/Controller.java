@@ -215,13 +215,13 @@ public class Controller implements PropertyChangeListener {
      * <p>The controller checks if a player was already connected to game and if reconnects the player</p>
      * @param client The username of the player.
      * @param view The virtual view associated with the player.
-     * @return <p>A message to send to the client which can be:
+     * @return A message to send to the client which can be:
      * <ul>
      *     <li> An error message if the username was already taken</li>
      *     <li> A message to inform the player that he reconnected to the game</li>
      *     <li>A  message to inform the player that he was added to a game</li>
      *     <li>A  message to inform the player that he needs to create a new lobby</li>
-     * </ul></p>
+     * </ul>
      */
     public IntMessage handleNewClient(String client,VirtualView view) {
 

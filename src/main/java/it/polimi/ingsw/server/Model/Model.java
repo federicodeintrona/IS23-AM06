@@ -36,7 +36,6 @@ import java.util.List;
  *          <li>Changing the order of the selected tiles</li>
  *          <li>Adding the tiles to their bookshelves</li>
  *      </ul>
- * </p>
  * <p>
  *     <p>
  *         The model also manages the turns. When a player adds a tile to his bookshelf
@@ -52,7 +51,6 @@ import java.util.List;
  *         The model also notifies the virtual views of each player with the necessary information for the
  *         client such as the points, the state of the board, the bookshelves, and the current player.
  *     </p>
- * </p>
  */
 public class Model implements TimerInterface {
     private int gameID;

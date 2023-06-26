@@ -64,11 +64,11 @@ public class Lobby {
      *     if there aren't any asks the player to create a new lobby through the controller and the client handlers.</p>
      * @param client The username of the player.
      * @param view The virtual view of the player.
-     * @return <p>An optional of Integer which can either be:
+     * @return An optional of Integer which can either be:
      *              <ul>
      *                  <li>The ID of the game the client was added to</li>
      *                  <li>Empty if he needs to create a new lobby himself.</li>
-     *              </ul></p>
+     *              </ul>
      * @throws UsernameAlreadyTaken If the username chosen by the player was already taken.
      */
     public synchronized Optional<Integer> handleClient(String client,VirtualView view) throws UsernameAlreadyTaken {
