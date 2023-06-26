@@ -7,13 +7,13 @@ import java.util.HashMap;
  * <p>
  *     Class to manage all Chats behavior
  * </p>
- * <p>
+ *
  *     It contains:
  *     <ul>
  *         <li>1 publicChat</li>
  *         <li>all privateChats grouped in a HashMap accessible by player's username</li>
  *     </ul>
- * </p>
+ *
  * <p>
  *     Its role is to group all chats in one place
  *     and to manage their construction and calls
@@ -37,6 +37,7 @@ public class ChatController implements Serializable {
         privateChats = new HashMap<>();
     }
 
+    //TODO forServer - FLA
     /**
      * <p>
      *     Constructor for Server
@@ -52,6 +53,7 @@ public class ChatController implements Serializable {
      *     private chats for each player + 1 public instead of 4)
      *     making the backup upload faster
      * </p>
+     * @param forServer
      */
     public ChatController (boolean forServer){
         privateChats = new HashMap<>();

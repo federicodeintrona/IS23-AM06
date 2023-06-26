@@ -90,7 +90,7 @@ public class CheckManager {
      */
     private void checkPointArrayDomain(ArrayList<Point> points,Board board) throws MoveNotPossible, IllegalArgumentException {
         //check if the array is not null
-        if(points!=null&&points.size()>=0 ){
+        if(points!=null && points.size()>=0 ){
 
             //check the length of the array
             if(points.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
@@ -100,7 +100,7 @@ public class CheckManager {
             if(points.size()!=set.size()) throw new SameElement();
 
              //check if the tiles are adjacent
-            if(points.size()>1) if(!Board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
+            if(points.size()>1) if(!board.checkAdjacentTiles(points)) throw new TilesNotAdjacent();
 
             //Check if the selected tiles are allowed and not empty
             for(Point p : points){
