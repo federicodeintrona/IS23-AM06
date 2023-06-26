@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
-//TODO va bene??
 /**
  * Enumeration of the game states.
  * <ul>
@@ -11,8 +10,17 @@ package it.polimi.ingsw.client.View.GUI.Scene;
  */
 public enum State {
 
+    /**
+     * The state of the game when the player chooses which tiles to remove from board.
+     */
     REMOVE,
+    /**
+     * The state of the game when the player chooses the order of selected tiles.
+     */
     SWITCH,
+    /**
+     * The state of the game when the player chooses in which column put the selected tiles.
+     */
     ADD
 
 }
