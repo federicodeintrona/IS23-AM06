@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client.View.GUI.Scene;
 
-//enumeration per gestire le scene del gioco
-
 /**
  * Enumeration of the Graphic User Interface scene
  * <ul>
@@ -16,13 +14,35 @@ package it.polimi.ingsw.client.View.GUI.Scene;
  */
 public enum Scenes {
 
+    /**
+     * The initial request's scene.
+     */
     InitialRequest("/fxml/InitialRequest.fxml", "Connection"),
+    /**
+     * The login's scene.
+     */
     Login("/fxml/loginGriglia.fxml","Login Page"),
+    /**
+     * The player number selection's scene.
+     */
     NumOfPlayers("/fxml/numberOfPlayer.fxml","New Game"),
+    /**
+     * The waiting for other players' scene.
+     */
     Waiting("/fxml/waiting.fxml","Waiting Page"),
+    /**
+     * The game's scene.
+     */
     Game("/fxml/gameCompleto.fxml","MyShelfie"),
+    /**
+     * The end game for disconnection's scene.
+     */
     DisconnectionEnd("/fxml/EndGameForDisconnection.fxml","Winner Page"),
+    /**
+     * The end game's scene.
+     */
     Endgame("/fxml/endGame.fxml","Winner Page");
+
 
 
     /**

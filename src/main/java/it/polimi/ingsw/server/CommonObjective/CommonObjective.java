@@ -15,8 +15,8 @@ import java.util.Set;
  * Abstract class
  */
 public abstract class CommonObjective {
-    public int points = 8;
-    public Set<Player> playersWhoCompletedComObj = new HashSet<>();
+    private int points = 8;
+    private final Set<Player> playersWhoCompletedComObj = new HashSet<>();
     private int num;
 
 
@@ -114,6 +114,7 @@ public abstract class CommonObjective {
         return points;
     }
 
+    //TODO sembra non utilizzato - serve???
     /**
      * <Strong>Getter</Strong> -> Gets a set of players who completed the CommonObjective
      *

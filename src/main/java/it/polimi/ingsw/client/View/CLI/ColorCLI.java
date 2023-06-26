@@ -13,15 +13,26 @@ package it.polimi.ingsw.client.View.CLI;
  * </ul>
  */
 public enum ColorCLI {
-    //reset all style
+
+    /**
+     * ANSI escaped code which reset all previous style.
+     */
     RESET ("\u001b[0m"),
-    //moves cursor to home position (0, 0)
+    /**
+     * ANSI escaped code which moves cursor to home position (0, 0).
+     */
     CLEAR ("\033[H\033[2J"),
 
 
 
     //Foreground Color Code
+    /**
+     * ANSI escaped code of the Tiles.NOT_ALLOWED's foreground color.
+     */
     NOTALLOWED ("\u001b[30m"),
+    /**
+     * ANSI escaped code of the Tiles.GREEN's foreground color.
+     */
     GREEN1 ("\u001B[38;2;145;165;65m"), //145;165;65
     YELLOW1 ("\u001B[38;2;223;159;69m"), //223;159;69
     BLUE1 ("\u001B[38;2;0;103;105m"), //0;103;105

@@ -78,6 +78,7 @@ public class Bookshelf {
         return num_of_tiles == 0;
     }
 
+    //TODO sembra non utilizzato - serve???
     /**
      * Method to check if the matrix is empty
      * @return true if the matrix is empty, false if it isn't
