@@ -1,6 +1,6 @@
 # SOFTWARE ENGINEERING PROJECT A.A. 2022-2023 <br/> My Shelfie
 
-<img src="https://github.com/federicodeintrona/IS23-AM06/blob/main/src/main/resources/images/Publisher_material/Box%20noshadow%20280x280.png" width=300px height=300px/ alt="My Shelfie Box";>
+<img src="https://github.com/federicodeintrona/IS23-AM06/blob/main/src/main/resources/images/Publisher_material/Box%20noshadow%20280x280.png" width=300px height=300px alt="My Shelfie Box">
 
 
 
