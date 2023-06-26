@@ -137,18 +137,19 @@ public class Lobby {
         //Get the ID of the lobby that is waiting for the longest time
         Integer index = waitingLobbys.peek();
 
-        if(index!=null) {
-            System.out.println( client+ " added to lobby number: " + index);
-            //Add the client to the lobby and set his lobbyID
-            lobbys.get(index).add(client);
-            playerToLobby.put(client,index);
+        if(index==null) throw new LobbyNotExists();
 
-            checkStart(index);
+        System.out.println( client+ " added to lobby number: " + index);
+        //Add the client to the lobby and set his lobbyID
+        lobbys.get(index).add(client);
+        playerToLobby.put(client,index);
 
-            //return the game number
-            return index;
+        checkStart(index);
 
-        }else throw new LobbyNotExists();
+        //return the game number
+        return index;
+
+
     }
 
     /**
@@ -219,11 +220,12 @@ public class Lobby {
     public synchronized void closeGame(int gameID){
 
         for(String s : games.get(gameID).getPlayers().stream().map(Player::getUsername).toList()){
+            usernames.remove(s);
             disconnectedPlayers.remove(s);
             players.remove(s);
+            playerToLobby.remove(s);
             playerToGame.remove(s);
             views.remove(s);
-
         }
 
         //Remove the model
@@ -236,6 +238,8 @@ public class Lobby {
      * @param username The username of the player.
      */
     public synchronized void playerDisconnection(String username){
+
+        System.out.println("lobby player disconnection of " + username);
 
         VirtualView view =views.get(username);
         if(view != null) {
@@ -257,12 +261,12 @@ public class Lobby {
         //If in a game disconnect him
         Integer gameID=playerToGame.get(username);
         if(gameID!=null){
-            games.get(gameID).disconnectPlayer(players.get(username), views.get(username));
+            if(!games.get(gameID).isFinished()) games.get(gameID).disconnectPlayer(players.get(username), views.get(username));
 
+            if(usernames.contains(username)){
+                disconnectedPlayers.put(username, players.get(username));
+            }
         }
-
-        //Add him to the disconnected players
-        disconnectedPlayers.put(username,players.get(username));
 
         //Remove him from the necessary maps
         views.remove(username);

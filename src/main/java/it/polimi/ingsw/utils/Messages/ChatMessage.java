@@ -4,7 +4,7 @@ import java.io.Serializable;
 /**
  * <p>Class for message sent by client and server used for chat</p>
  */
-public class ChatMessage extends Message implements Serializable {
+public class ChatMessage extends Message  {
     private final String message;
     private final String receivingUsername;
 

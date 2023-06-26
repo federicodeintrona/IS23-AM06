@@ -26,6 +26,8 @@ public class RMIVirtualView implements VirtualView{
     private String username;
     private boolean disconnected = false;
 
+    private int counterino = 0;
+
 
     /**
      * Main constructor of the class
@@ -55,8 +57,9 @@ public class RMIVirtualView implements VirtualView{
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+        System.out.println("Rmi vv  of " + username + " on " + evt.getNewValue());
         if(!isDisconnected()) {
-
+            System.out.println("Rmi vv not disconnected of " + username + " on " + evt.getNewValue());
             try {
                 switch ((String) evt.getNewValue()) {
                     case ("playerNames") -> clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));
@@ -116,9 +119,11 @@ public class RMIVirtualView implements VirtualView{
                     }
                 }
             } catch (RemoteException e) {
-                if(!isDisconnected()) System.out.println(getUsername()+" is not responding...");
+                if(!isDisconnected()) System.out.println(getUsername()+"'s vv is not responding...");
+                counterino++;
             }
 
+            if(counterino>3) setDisconnected(true);
         }
     }
 
@@ -126,9 +131,7 @@ public class RMIVirtualView implements VirtualView{
      * Method to stop the countdown timer used to check if a client disconnected abruptly.
      */
     public void stopTimer(){
-        if(timer!=null){
-            timer.stopTimer();
-        }
+        if(timer!=null) timer.stopTimer();
     }
 
 
@@ -164,7 +167,7 @@ public class RMIVirtualView implements VirtualView{
      */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
-        stopTimer();
+        if(disconnected) stopTimer();
     }
 
     /**

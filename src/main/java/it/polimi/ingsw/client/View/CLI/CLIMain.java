@@ -291,7 +291,7 @@ public class CLIMain implements View {
      */
     @Override
     public void close() {
-        th1.interrupt();
+        if(th1!=null) th1.interrupt();
 
         Message msg = new Message();
         msg.setType(MessageTypes.DISCONNECT);

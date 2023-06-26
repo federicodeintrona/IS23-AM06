@@ -115,6 +115,11 @@ public class RMIHandler implements RMIHandlerInterface{
         return message;
     }
 
+    /**
+     * Method used by the client to check if the server is still running.
+     * @return TRUE
+     * @throws RemoteException If the rmi connection stops working
+     */
     @Override
     public boolean pingPong() throws RemoteException {
         return true;
@@ -150,6 +155,12 @@ public class RMIHandler implements RMIHandlerInterface{
         return controller.sendMessage(gameId, playerForwarding, message, playerReceiving);
     }
 
+
+    /**
+     * Method to disconnect the associated player.
+     * @param username The username of the player.
+     * @throws RemoteException  In case the connection fails between Server and RMI Client
+     */
     @Override
     public void disconnect(String username) throws RemoteException {
         controller.playerDisconnection(username);

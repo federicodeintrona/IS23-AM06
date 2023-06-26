@@ -273,6 +273,7 @@ public class Controller implements PropertyChangeListener {
      */
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");
+
         lobby.playerDisconnection(username);
 
     }
@@ -286,6 +287,7 @@ public class Controller implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
+        System.out.println("procodddidodidoidodioi " + ((Model)evt.getSource()).getGameID());
         lobby.closeGame(((Model)evt.getSource()).getGameID());
     }
 

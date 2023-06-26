@@ -1,5 +1,7 @@
 package it.polimi.ingsw.utils.Messages;
 
+import java.io.Serializable;
+
 /**
  * <p> Class for message sent by client and server which will modify the client state</p>
  */

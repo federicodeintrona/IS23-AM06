@@ -1,11 +1,12 @@
 package it.polimi.ingsw.utils.Messages;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * <p> Class for message sent by client and server which contains an array of integer number</p>
  */
-public class IntArrayMessage extends Message {
+public class IntArrayMessage extends Message{
     private ArrayList<Integer> integers;
 
     /**

@@ -149,7 +149,7 @@ public class Model implements TimerInterface {
      * Create and initialize the board,initialize common and personal objectives,
      * add the views as change listeners,initialize the arrays of points.
      */
-    public synchronized void  initialization()  {
+    public void  initialization()  {
 
         System.out.println("Game number: "+gameID+" is starting...");
 
@@ -568,12 +568,14 @@ public class Model implements TimerInterface {
      * @param player The player to disconnect.
      */
     public synchronized void disconnectPlayer(Player player,VirtualView view){
-        System.out.println(player.getUsername() + " has disconnected");
+        System.out.println(player.getUsername() + " has disconnected in the model");
        //Disconnect the player
        player.setDisconnected(true);
 
+       view.setDisconnected(true);
        virtualViews.remove(view);
-       notifier.removePropertyChangeListener(view);
+       notifier.removePropertyChangeListener("all",view);
+       notifier.removePropertyChangeListener(player.getUsername(),view);
 
        connectedPlayers--;
        if(connectedPlayers<=1&&!timerIsOn) startEndTimer();
@@ -581,6 +583,11 @@ public class Model implements TimerInterface {
 
            if(state.equals(GameState.CHOOSING_ORDER)||state.equals(GameState.CHOOSING_COLUMN)){
                restoreTiles();
+
+               //Notify Board
+               notifier.firePropertyChange(new PropertyChangeEvent(
+                       new Matrix(board.getGamesBoard()), "all", "0","board" ));
+
            }
            nextTurn();
        }
@@ -659,11 +666,23 @@ public class Model implements TimerInterface {
     private synchronized void endGame(){
         state = GameState.ENDING;
         selectWInner();
+
+
+        if(timerIsOn) timer.cancel();
+
         //Notify game Start
         notifier.firePropertyChange
                 (new PropertyChangeEvent(true, "all", "0","end" ));
+
+        for(VirtualView v : virtualViews){
+            v.setDisconnected(true);
+        }
+
+        isFinished=true;
+
         notifier.firePropertyChange
                 (new PropertyChangeEvent(this, "end", "0","end" ));
+
     }
 
 
@@ -1015,6 +1034,9 @@ public class Model implements TimerInterface {
             for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
                 allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
         }
+
+        selectedTiles.clear();
+
     }
 
 

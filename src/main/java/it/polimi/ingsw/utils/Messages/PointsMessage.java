@@ -1,11 +1,12 @@
 package it.polimi.ingsw.utils.Messages;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * <p> Class for message sent by client and server which contains an arraylist of point</p>
  */
-public class PointsMessage extends Message {
+public class PointsMessage extends Message  {
     private ArrayList<Point> tiles;
     /**
      * <strong>Getter</strong> -> Return the array of point contained of the message

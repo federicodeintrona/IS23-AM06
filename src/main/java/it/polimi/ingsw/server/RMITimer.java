@@ -21,6 +21,7 @@ public class RMITimer implements TimerInterface {
     private int time = 0;
     private static final int initialDelay = 50;
     private static final int delta = 500;
+    private boolean ponging = true;
 
 
 
@@ -51,17 +52,20 @@ public class RMITimer implements TimerInterface {
 
 
     public void pingPong(){
-
+        System.out.println("pongherò " + view.getUsername());
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
 
             try {
                 if(view.getClientState().pingPong()){
+                    System.out.println("ho rmi pongato " + view.getUsername());
                     this.time=0;
                 }
             } catch (RemoteException ex) {
-                if(!disconnected)
-                  System.out.println(view.getUsername() + " is not responding...");
+                if(ponging&&!disconnected) {
+                    System.out.println(view.getUsername() + " is not responding...");
+                    ponging = false;
+                }
             }
 
         },50,500, TimeUnit.MILLISECONDS);

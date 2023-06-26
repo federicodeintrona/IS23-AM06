@@ -82,6 +82,7 @@ public class TCPVirtualView implements VirtualView{
      */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
+        if(disconnected) client.stopTimer();
     }
 
     /**

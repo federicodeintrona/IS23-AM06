@@ -177,8 +177,10 @@ public class Reader extends Thread implements TimerInterface {
                     clientState.newMessageHandler((ChatMessage) message.getContent());
             case ("reloadChats") ->
                     clientState.reloadChats((ChatController) message.getContent());
-            case ("end") ->
+            case ("end") -> {
                 clientState.setGameIsEnded((Boolean) message.getContent());
+               // disconnected=true;
+            }
         }
     }
 
@@ -204,9 +206,11 @@ public class Reader extends Thread implements TimerInterface {
             socket.close();
             oos.close();
             client.close();
+            out.println("The game is about to close! Have fun! :)");
             System.exit(0);
 
         } catch (IOException ex) {
+            out.println("The game is about to close! Have fun! :)");
             System.exit(0);
         }
     }

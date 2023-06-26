@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * <p> Class for message sent by client and server which contains an integer number</p>
  */
-public class IntMessage extends Message implements Serializable {
+public class IntMessage extends Message {
 
     private int num;
 
