@@ -1,8 +1,5 @@
 package it.polimi.ingsw.utils.Messages;
 
-import it.polimi.ingsw.utils.Chat;
-
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -48,10 +45,6 @@ public class ChatMessage extends Message  {
      */
     public String getReceivingUsername() {return receivingUsername;}
 
-    /*public void getConversation (Boolean complete) {
-        System.out.println(getText() + " :" + message + " TO " + receivingUsername);
-    }*/
-
     /**
      * <strong>Getter</strong> -> Returns the conversation in the chat message
      * @return the conversation in the chat message
@@ -60,6 +53,13 @@ public class ChatMessage extends Message  {
         return getText() + ": " + message;
     }
 
+    /**
+     * Method that does Override of equals in order
+     * to properly confront 2 ChatMessage-like structures
+     *
+     * @param obj       ChatMessage-type Object to analyze
+     * @return      True or false depending on the result of the confrontation
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

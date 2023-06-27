@@ -9,8 +9,16 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test Class for CommonObjective 3
+ */
 class CommonObjective3Test {
 
+    /**
+     * Testing for success the case of 4 different
+     * groups created manually that meet the criteria
+     * in a bookshelf full of different tiles
+     */
     @Test
     void checkConditionSuccess1() {
         Player player = new Player( "Jhon");

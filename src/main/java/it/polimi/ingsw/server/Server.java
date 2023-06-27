@@ -16,6 +16,13 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class to manage the Server
+ * <p>
+ *     prepares both the Socket for tcp and the
+ *     instance of the Controller to bind for rmi
+ * </p>
+ */
 public class Server extends UnicastRemoteObject {
 
     private static int tcpPort;

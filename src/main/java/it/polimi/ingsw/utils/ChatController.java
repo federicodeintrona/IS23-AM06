@@ -37,7 +37,6 @@ public class ChatController implements Serializable {
         privateChats = new HashMap<>();
     }
 
-    //TODO forServer - FLA
     /**
      * <p>
      *     Constructor for Server
@@ -53,7 +52,7 @@ public class ChatController implements Serializable {
      *     private chats for each player + 1 public instead of 4)
      *     making the backup upload faster
      * </p>
-     * @param forServer
+     * @param forServer     Parameter used only for overload
      */
     public ChatController (boolean forServer){
         privateChats = new HashMap<>();

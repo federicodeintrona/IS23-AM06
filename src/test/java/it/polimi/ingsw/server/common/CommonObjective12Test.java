@@ -10,6 +10,9 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test Class for CommonObjective 12
+ */
 class CommonObjective12Test {
 
     /**

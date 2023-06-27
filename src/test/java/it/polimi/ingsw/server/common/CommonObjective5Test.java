@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test Class for CommonObjective 5
+ */
 class CommonObjective5Test {
 
     /**

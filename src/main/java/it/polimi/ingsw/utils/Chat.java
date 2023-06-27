@@ -217,7 +217,6 @@ public class Chat implements Serializable {
                 Objects.equals(chatMessages, chat.chatMessages);
     }
 
-    //TODO sembra non venga mai utilizzato - FLA
     /**
      * Method defined in the class Object that allows to extend the
      * "equals" confrontation to hash-type structures
