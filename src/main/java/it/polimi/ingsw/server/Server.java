@@ -68,39 +68,45 @@ public class Server extends UnicastRemoteObject {
 
         // Preparing for the RMI connections
         System.out.println(getLocalIPAddress());
-        System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(getLocalIPAddress()));
-        //TODO gestire IP address null
-        RMIHandlerInterface stub = null;
-        try {
-            stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        try{
+            System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(getLocalIPAddress()));
+            RMIHandlerInterface stub = null;
+            try {
+                stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            // Bind the remote object's stub in the registry
+            Registry registry = null;
+            try {
+                registry = LocateRegistry.createRegistry(rmiPort);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            try {
+                assert registry != null;
+                registry.bind("RMIHandler", stub);
+            } catch (RemoteException | AlreadyBoundException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Server pronto");
+            while (true) {
+                try {
+                    Socket socket = serverSocket.accept();
+                    clientList.add(new ServerClientHandler(socket, controller));
+                    executor.submit(clientList.get(clientList.size()-1));
+                } catch (IOException e) {
+                    break;
+                }
+            }
+            executor.shutdown();
         }
-        // Bind the remote object's stub in the registry
-        Registry registry = null;
-        try {
-            registry = LocateRegistry.createRegistry(rmiPort);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
-            assert registry != null;
-            registry.bind("RMIHandler", stub);
-        } catch (RemoteException | AlreadyBoundException e) {
-            e.printStackTrace();
+        catch (NullPointerException e){
+            System.out.println("The server is disconnected");
+            System.exit(0);
         }
 
-        System.out.println("Server pronto");
-        while (true) {
-            try {
-                Socket socket = serverSocket.accept();
-                clientList.add(new ServerClientHandler(socket, controller));
-                executor.submit(clientList.get(clientList.size()-1));
-            } catch (IOException e) {
-                break;
-            }
-        }
-        executor.shutdown();
     }
 
     /**
