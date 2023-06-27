@@ -1,5 +1,6 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.utils.Timer;
 
+import it.polimi.ingsw.server.Controller;
 import it.polimi.ingsw.server.VirtualView.RMIVirtualView;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
@@ -11,6 +12,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * A countdown timer used with RMI connection
+ */
 public class RMITimer implements TimerInterface {
     private boolean disconnected = false;
     private ScheduledExecutorService e;
@@ -24,13 +28,20 @@ public class RMITimer implements TimerInterface {
     private boolean ponging = true;
 
 
-
+    /**
+     * Main constructor of the class.
+     * @param view The RMIVirtualView of the player.
+     * @param controller The controller.
+     */
     public RMITimer( RMIVirtualView view, Controller controller) {
         this.view = view;
         this.controller=controller;
     }
 
 
+    /**
+     * Method to disconnect the player.
+     */
     @Override
     public void disconnect() {
         e.shutdown();
@@ -43,14 +54,19 @@ public class RMITimer implements TimerInterface {
     }
 
 
-
+    /**
+     * Method to update the time counter.
+     * @return The updated counter.
+     */
     public int updateTime() {
         this.time+=1;
         return this.time;
     }
 
 
-
+    /**
+     * Method to start sending pings and to start the timer.
+     */
     public void pingPong(){
         System.out.println("pongherò " + view.getUsername());
         e = Executors.newSingleThreadScheduledExecutor();
@@ -73,12 +89,16 @@ public class RMITimer implements TimerInterface {
 
     }
 
+    /**
+     * Method to stop the timer.
+     */
     public void stopTimer(){
         timer.cancel();
         e.shutdown();
     }
 
-    public void startTimer(){
+
+    private void startTimer(){
         if(timer!=null)
             timer.cancel();
 
@@ -86,9 +106,10 @@ public class RMITimer implements TimerInterface {
         timer.schedule(task, initialDelay, delta);
     }
 
-
-
-
+    /**
+     * Method to get the personalized error message of the user of the timer.
+     * @return The personalized message.
+     */
     public String getErrorMessage() {
         return view.getUsername()+" timed out";
     }
