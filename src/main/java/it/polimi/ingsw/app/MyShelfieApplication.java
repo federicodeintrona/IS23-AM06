@@ -10,14 +10,14 @@ import java.rmi.NotBoundException;
 import java.util.Scanner;
 
 /**
- * Class that lets you chose if you want to open Server or Client
+ * Class that lets you chose if you want to open Server or Client.
  */
 public class MyShelfieApplication extends Application{
 
     /**
-     * Static method to run Server or ClientBase
+     * Static method to run Server or ClientBase.
      *
-     * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client)
+     * @param args the arguments that you insert on the opening jar (args[0] contains the choice to start Server or Client).
      * @throws IOException
      * @throws InterruptedException
      * @throws NotBoundException
@@ -82,9 +82,9 @@ public class MyShelfieApplication extends Application{
 
 
     /**
-     * The main entry point for all JavaFX applications
+     * The main entry point for all JavaFX applications.
      *
-     * @param stage the stage for this application, onto which the application scene can be set
+     * @param stage the stage for this application, onto which the application scene can be set.
      * @throws IOException
      */
     @Override
@@ -94,10 +94,10 @@ public class MyShelfieApplication extends Application{
 
 
     /**
-     * Method to verify if the user insert the correct choice (--server or --client)
+     * Method to verify if the user insert the correct choice (--server or --client).
      *
-     * @param p0 the string that contains the choice
-     * @return a string containing Error if there is an error, otherwise contains the choice (Server or Client)
+     * @param p0 the string that contains the choice.
+     * @return a string containing Error if there is an error, otherwise contains the choice (Server or Client).
      */
     private static String correctInput(String p0){
         if (p0.equals("--server")){
@@ -112,9 +112,9 @@ public class MyShelfieApplication extends Application{
     }
 
     /**
-     * Method to run Server or Client
+     * Method to run Server or Client.
      *
-     * @param st contains the choice of whether to run the Server or the Client
+     * @param st contains the choice of whether to run the Server or the Client.
      * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client)
      * @throws IOException
      */
