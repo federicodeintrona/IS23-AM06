@@ -26,7 +26,25 @@ public class Player {
 
     /**
      * Initialize all the points to zero and the given username
+     *
      * @param username username
+     */
+    public Player(String username) {
+        this.username = username.toLowerCase();
+        this.CapUser = username;
+        publicPoint = 0;
+        privatePoint = 0;
+        commonObjectivePoint = 0;
+        personalObjectivePoint = 0;
+        vicinityPoint = 0;
+        winnerPoint = 0;
+    }
+
+    /**
+     * Initialize all the points to zero and the given username
+     *
+     * @param username      username without caps
+     * @param Cap       username with caps
      */
     public Player(String username,String Cap) {
         this.username = username;

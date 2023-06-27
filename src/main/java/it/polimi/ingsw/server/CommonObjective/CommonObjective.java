@@ -6,17 +6,14 @@ import it.polimi.ingsw.server.Model.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Abstract class
  */
 public abstract class CommonObjective {
     private int points = 8;
-    private final Set<Player> playersWhoCompletedComObj = new HashSet<>();
+    private final HashMap<Player, Integer> playersWhoCompletedComObj = new HashMap<>();
     private int num;
 
 
@@ -84,10 +81,7 @@ public abstract class CommonObjective {
      */
     public  boolean commonObjPointsCalculator(Player player, int numOfPlayers){
 
-        if (checkCondition(player) && !playersWhoCompletedComObj.contains(player)) {
-
-            // adding the player to the set of players who already received the points
-            playersWhoCompletedComObj.add(player);
+        if (checkCondition(player) && !playersWhoCompletedComObj.containsKey(player)) {
 
             // for a 2 players game the first to complete a commonObj gets 8 points and the second to do so 4
             if (numOfPlayers == 2) {
@@ -100,6 +94,10 @@ public abstract class CommonObjective {
                 player.setCommonObjectivePoint(points);
                 points -= 2;
             }
+
+            // adding the player to the set of players who already received the points
+            playersWhoCompletedComObj.put(player, points);
+
             return true;
         } return false;
 
@@ -120,7 +118,7 @@ public abstract class CommonObjective {
      *
      * @return      HashSet containing the players who completed the CommonObjective
      */
-    public Set<Player> getPlayersWhoCompletedComObj() {
+    public HashMap<Player, Integer> getPlayersWhoCompletedComObj() {
         return playersWhoCompletedComObj;
     }
 
