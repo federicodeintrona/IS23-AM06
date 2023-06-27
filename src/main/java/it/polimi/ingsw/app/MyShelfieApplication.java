@@ -42,19 +42,22 @@ public class MyShelfieApplication extends Application{
                 word=String.valueOf(scanner.nextLine());
 
                 st=correctInput(word);
+                //if args[0] contains the commands --server or --client run the correct one
                 if (!st.equals("Error")) {
                     runCorrectService(st, args);
                 }
+                //else request the command
             }while (st.equals("Error"));
         }
         //if there is args in input
         else {
             String st;
             st=correctInput(args[0]);
-            System.out.println(st);
+            //if args[0] contains the commands --server or --client run the correct one
             if (!st.equals("Error")){
                 runCorrectService(st, args);
             }
+            //else request the command
             do{
 
                 System.out.print("""
@@ -67,7 +70,6 @@ public class MyShelfieApplication extends Application{
                 //wait for data input and reads them
                 String word=String.valueOf(scanner.nextLine());
                 st=correctInput(word);
-                System.out.println(st);
                 if (!st.equals("Error")){
                     runCorrectService(st, args);
                 }

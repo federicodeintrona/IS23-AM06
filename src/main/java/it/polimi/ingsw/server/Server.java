@@ -69,6 +69,7 @@ public class Server extends UnicastRemoteObject {
         // Preparing for the RMI connections
         System.out.println(getLocalIPAddress());
         System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(getLocalIPAddress()));
+        //TODO gestire IP address null
         RMIHandlerInterface stub = null;
         try {
             stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);

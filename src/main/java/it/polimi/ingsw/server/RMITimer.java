@@ -58,7 +58,6 @@ public class RMITimer implements TimerInterface {
 
             try {
                 if(view.getClientState().pingPong()){
-                    System.out.println("ho rmi pongato " + view.getUsername());
                     this.time=0;
                 }
             } catch (RemoteException ex) {
