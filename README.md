@@ -69,7 +69,61 @@
 
 
 ## Diagrams
+
+-  [old](https://github.com/federicodeintrona/IS23-AM06/blob/main/Deliverables/Diagrams/old)
+   The different updates to the diagrams.
+-  [Sequence Diagram](https://github.com/federicodeintrona/IS23-AM06/blob/main/Deliverables/Diagrams/Sequence%20Diagram)
+   The last Sequence Diagram.
+-  [UML](https://github.com/federicodeintrona/IS23-AM06/blob/main/Deliverables/Diagrams/UML)
+   The last High-Level UML and the Final UML.
+
+
+
 ## How to execute jar
+
+The jar is in the folder <i>/Deliverables/jar</i>
+- <b>SERVER</b>
+<p>
+The server starts with the command presented below:
+
+    java -jar AM06.jar --server
+
+If everything goes fine, this is what appears on the screen:
+</p>
+
+- <b>CLIENT</b>
+<p>
+The client starts with the command presented below and requests you which User Interface do you want to use:
+
+    java -jar AM06.jar --client
+
+If everything goes fine, this is what appears on the screen:
+
+</p>
+
+- <b>If you do not choose <i>--server</i> or <i>--client</i></b> the .jar starts already and requests you if you want to start the server or the client.
+
+
+    java -jar AM06.jar
+
+If everything goes fine, this is what appears on the screen:
+
+
+
 ## javadoc
+
+This is the javadoc of the all project.
+Open it to this [link]().
+
+
+
 ## Peer Review
+
+- [Sequence Diagram Peer Review](https://github.com/federicodeintrona/IS23-AM06/blob/main/Deliverables/Peer%20Review/Sequence%20Diagram%20Peer%20Review)
+- [UML Peer Review](https://github.com/federicodeintrona/IS23-AM06/blob/main/Deliverables/Peer%20Review/UML%20Peer%20Review)
+
+
+
 ## Test Coverage
+
+The test coverage of the server part of the models and controllers.

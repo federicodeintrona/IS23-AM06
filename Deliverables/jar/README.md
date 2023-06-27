@@ -1,10 +1,6 @@
 # jar
 
 The JAR is unique for server/client side.
-<p>
-The server ...
-<p>
-The client is run by choosing the interface to play with: <i>Command Line Interface</i> or <i>Graphic User Interface</i> 
 
 
 
@@ -12,18 +8,26 @@ The client is run by choosing the interface to play with: <i>Command Line Interf
 
 - <b>SERVER</b>
 <p>
-il server parte con:
+The server starts with the command presented below:
 
     java -jar AM06.jar --server
+
+If everything goes fine, this is what appears on the screen:
 </p>
 
 - <b>CLIENT</b>
 <p>
-il client parte con:
+The client starts with the command presented below and requests you which User Interface do you want to use:
 
     java -jar AM06.jar --client
+
+If everything goes fine, this is what appears on the screen:
+
 </p>
 
-se non scegli server o client ti viene richiesto:
+- <b>If you do not choose <i>--server</i> or <i>--client</i></b> the .jar starts already and requests you if you want to start the server or the client.
 
-    java -jar Eriantys_AM45.jar --server --host <hostname> --port <port number>
+
+    java -jar AM06.jar
+
+If everything goes fine, this is what appears on the screen:
