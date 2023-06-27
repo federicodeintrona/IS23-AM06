@@ -130,12 +130,35 @@ public class ChatHandler {
                     chatController.getPrivateChat(username).setChatIsEnable(false);
                     clearCLI();
 
+                    // Printing publicChat's history
                     cliPrint.printChat(true);
                     chatController.getPublicChat().setChatIsEnable(true);
                     chat();
                 }
-                case "#printublicchat" -> cliPrint.printChat(false);
-                case "#printrivatechat" -> {
+                case "#switchtoprivate" -> {
+                    if (cliMain.getClientState().getAllUsername().size() == 2) {
+                        System.out.println("The command " + str + " is not available for a 2 players game");
+                        break;
+                    }
+
+                    chatController.getPublicChat().setChatIsEnable(false);
+
+                    String otherUsername = privateChatHandler();
+                    clearCLI();
+
+                    // Printing privateChat's history
+                    cliPrint.printChat(otherUsername, true);
+
+                    chatController.getPrivateChat(otherUsername).setChatIsEnable(true);
+                    chat(otherUsername);
+                }
+                case "#printpublicchat" -> cliPrint.printChat(false);
+                case "#printprivatechat" -> {
+                    if (cliMain.getClientState().getAllUsername().size() == 2) {
+                        System.out.println("The command " + str + " is not available for a 2 players game");
+                        break;
+                    }
+
                     String player = privateChatHandler();
                     cliPrint.printChat(player, false);
                 }
@@ -158,6 +181,9 @@ public class ChatHandler {
      */
     private String privateChatHandler () {
         int numOfPlayers = cliMain.getClientState().getAllUsername().size();
+        Scanner scanner=new Scanner(System.in);
+        String str = null;
+        boolean existingUsername = false;
 
         // Returning the only other available player in a 2 players game
         if (numOfPlayers == 2) {
@@ -167,11 +193,13 @@ public class ChatHandler {
                     .orElseThrow(() -> new RuntimeException("No other player found"));
         }
 
-        Scanner scanner=new Scanner(System.in);
-        String str;
-
         System.out.println("Who do you want to chat with?");
-        str = scanner.nextLine();
+        while (!existingUsername) {
+            str = scanner.nextLine();
+
+            if (cliMain.getClientState().getAllUsername().contains(str) && !cliMain.getClientState().getMyUsername().equals(str)) existingUsername = true;
+            else System.out.println("Username not found, try again\n");
+        }
 
         return str;
     }
