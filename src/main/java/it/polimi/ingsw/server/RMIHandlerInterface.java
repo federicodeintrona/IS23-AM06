@@ -60,12 +60,15 @@ public interface RMIHandlerInterface extends Remote {
      * Gets the instance of clientState from a specific Client given his ip address and port
      *
      * @param username      client's username
+     * @param state     ClientState interface from rmi client
      * @throws RemoteException      In case the connection fails between Server and RMI Client
+     * @return      IntMessage from Controller
      */
     IntMessage acceptRmiConnection (String username, ClientStateRemoteInterface state) throws RemoteException;
 
     /**
      * Method used by the client to check if the server is still running.
+     *
      * @return TRUE
      * @throws RemoteException If the rmi connection stops working
      */
