@@ -1,6 +1,10 @@
 package it.polimi.ingsw.utils.Messages;
 
+import it.polimi.ingsw.utils.Chat;
+
 import java.io.Serializable;
+import java.util.Objects;
+
 /**
  * <p>Class for message sent by client and server used for chat</p>
  */
@@ -54,6 +58,23 @@ public class ChatMessage extends Message  {
      */
     public String getConversation () {
         return getText() + ": " + message;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        ChatMessage other = (ChatMessage) obj;
+
+        return Objects.equals(getText(), other.getText())
+                && Objects.equals(message, other.message)
+                && Objects.equals(receivingUsername, other.receivingUsername);
     }
 
 }
