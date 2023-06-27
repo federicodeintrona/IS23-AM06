@@ -28,7 +28,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     private final ClientState clientState;
     private Reader reader;
     /**
-     * Initialize the networker with tho the given client state and host
+     * Initialize the networker with the given client state and host
      * @param clientState client state
      * @param host server's host
      */
@@ -60,9 +60,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config=new JsonReader(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
         this.clientState = clientState;
@@ -204,8 +202,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the view
-     * @param view The view created by the clientbase
+     * <strong>Setter</strong> -> Sets the user interface
+     * @param view user interface created by the clientbase
      */
     @Override
     public void setView(View view) {

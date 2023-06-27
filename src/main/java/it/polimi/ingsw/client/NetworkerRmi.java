@@ -233,6 +233,10 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
     }
 
+    /**
+     * <strong>Setter</strong> -> Sets the user interface
+     * @param view user interface created by the clientbase
+     */
     @Override
     public void setView(View view) {
         this.view=view;
@@ -293,31 +297,34 @@ public class NetworkerRmi implements Networker, TimerInterface {
         timer.schedule(task,initialDelay,delta);
     }
 
+    /**
+     * Method to disconnect the client.
+     */
     @Override
     public void disconnect() {
         disconnected=true;
         view.close();
     }
 
+    /**
+     * Method to update countdown for skipped ping message
+     * @return skipped ping message
+     */
     @Override
     public int updateTime() {
         time++;
         return time;
     }
 
+    /**
+     * <strong>Getter</strong> -> Returns the error message
+     * @return error message
+     */
     @Override
     public String getErrorMessage() {
         return "Server is not responding. Retry later.";
     }
 
-    /**
-     * <Strong>Getter</Strong> -> Get the serverIp
-     *
-     * @return      String containing the serverIp
-     */
-    public String getServerIP() {
-        return serverIP;
-    }
 
     /**
      * <Strong>Setter</Strong> -> Set the serverIp
