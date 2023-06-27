@@ -26,16 +26,32 @@ public class Server extends UnicastRemoteObject {
     private final Controller controller= new Controller(lobby);
     private final RMIHandlerInterface rmiHandler = new RMIHandler(controller);
 
+    /**
+     * Constructor for Server
+     * <p>
+     *     It initializes both rmi and tcp ports
+     * </p>
+     *
+     * @throws IOException      In case of input/output error
+     * @throws ParseException       In case of error during parsing process using json
+     */
     protected Server() throws IOException, ParseException{
         super();
         JsonReader config;
         InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
         config = new JsonReader(is);
 
+        // Configuring ports for both rmi and tcp from json
         tcpPort = config.getInt("tcpPort");
         rmiPort = config.getInt("rmiPort");
     }
 
+    /**
+     * Static method to launch the Server
+     *
+     * @param args      The arguments that you insert on input
+     * @throws RemoteException      In case of error during the rmi connection process
+     */
     public static void main( String[] args ) throws RemoteException {
         Server Server;
         try {
@@ -54,7 +70,7 @@ public class Server extends UnicastRemoteObject {
 
     }
 
-    public void startServer() throws IOException{
+    private void startServer() throws IOException{
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
         lobby.setController(controller);
@@ -129,5 +145,4 @@ public class Server extends UnicastRemoteObject {
         }
         return null;
     }
-
 }
