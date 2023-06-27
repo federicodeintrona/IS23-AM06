@@ -139,7 +139,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
         }
 
         // Saving the gameID once the new game has been created
-        if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS)){
+        if (message1.getType().equals(MessageTypes.WAITING_FOR_PLAYERS) ||
+                message1.getType().equals(MessageTypes.RECONNECT )){
             gameID =  message1.getNum();
         }
 
