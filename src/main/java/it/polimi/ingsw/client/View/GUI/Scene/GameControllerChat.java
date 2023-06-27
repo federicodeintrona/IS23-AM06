@@ -944,14 +944,21 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         if (!selectChat.getValue().equals("ALL")){
             //pop up - you got a message
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("New message");
-            alert.setHeaderText("New Message");
-            alert.setContentText("You have a new Public Message");
+            alert.setTitle("New public message");
+            alert.setHeaderText("New public Message");
+
+            if (clientState.getChatController().getPublicChat().getUnReadMessages() == 1)
+                alert.setContentText("You have a new Public Message");
+            else
+                alert.setContentText("You have " + clientState.getChatController().getPublicChat().getUnReadMessages() + " new Public Messages");
+
             alert.initOwner(guiController.getStage());
             alert.showAndWait();
         }
 
     }
+
+    // TODO pup multipli: gestione popup più vecchi
 
     /**
      * Method to update the private chat.
@@ -999,9 +1006,12 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             if (!selectChat.getValue().equals(message.getText())){
                 //pop up - you got a message
                 Alert alert=new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("New message");
-                alert.setHeaderText("New Message");
-                alert.setContentText("You have a new Private Message"); //TODO chi ha mandato il messaggio
+                alert.setTitle("New private message");
+                alert.setHeaderText("New private Message");
+                if (clientState.getChatController().getPrivateChat(message.getText()).getUnReadMessages() == 1)
+                    alert.setContentText("You have a new Private Message from " + message.getText());
+                else
+                    alert.setContentText("You have " + clientState.getChatController().getPrivateChat(message.getText()).getUnReadMessages() + " new Private Messages from " + message.getText());
                 alert.initOwner(guiController.getStage());
                 alert.showAndWait();
             }
@@ -1654,21 +1664,25 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             publicChatBox.setVisible(true);
             chatScroll.setContent(publicChatBox);
             chatScroll.setFitToWidth(true);
+            clientState.getChatController().getPublicChat().resetUnReadMessages();
         }
         else if (chatToShow.equals(otherPlayerLabel1.getText())){
             otherPlayerChatBox1.setVisible(true);
             chatScroll.setContent(otherPlayerChatBox1);
             chatScroll.setFitToWidth(true);
+            clientState.getChatController().getPrivateChat(otherPlayerLabel1.getText()).resetUnReadMessages();
         }
         else if (chatToShow.equals(otherPlayerLabel2.getText())){
             otherPlayerChatBox2.setVisible(true);
             chatScroll.setContent(otherPlayerChatBox2);
             chatScroll.setFitToWidth(true);
+            clientState.getChatController().getPrivateChat(otherPlayerLabel2.getText()).resetUnReadMessages();
         }
         else if (chatToShow.equals(otherPlayerLabel3.getText())){
             otherPlayerChatBox3.setVisible(true);
             chatScroll.setContent(otherPlayerChatBox3);
             chatScroll.setFitToWidth(true);
+            clientState.getChatController().getPrivateChat(otherPlayerLabel3.getText()).resetUnReadMessages();
         }
     }
 
@@ -1869,6 +1883,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 //add message to chatController
                 clientState.getChatController().getPublicChat().addMessage(chatMessage);
 
+                if (!selectChat.getValue().equals("ALL"))
+                    clientState.getChatController().getPublicChat().updateUnReadMessages();
+
+
                 Platform.runLater(() ->
                         updatePublicChat(chatMessage));
             }
@@ -1879,9 +1897,15 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 //add message to chatController
                 if (chatMessage.getText().equals(clientState.getMyUsername())){
                     clientState.getChatController().getPrivateChat(chatMessage.getReceivingUsername()).addMessage(chatMessage);
+                    if (!selectChat.getValue().equals(chatMessage.getText())){
+                        clientState.getChatController().getPrivateChat(chatMessage.getReceivingUsername()).updateUnReadMessages();
+                    }
                 }
                 else {
                     clientState.getChatController().getPrivateChat(chatMessage.getText()).addMessage(chatMessage);
+                    if (!selectChat.getValue().equals(chatMessage.getText())){
+                        clientState.getChatController().getPrivateChat(chatMessage.getText()).updateUnReadMessages();
+                    }
                 }
 
                 Platform.runLater(() ->
