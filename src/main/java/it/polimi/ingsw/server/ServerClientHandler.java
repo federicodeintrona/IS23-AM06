@@ -84,7 +84,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
 
                      t.submit(()-> {
                          Message message = controller.handleNewClient(incomingMsg.getText(),
-                                new TCPVirtualView(incomingMsg.getText(), this));
+                                new TCPVirtualView(incomingMsg.getText().toLowerCase(), this));
 
                         if (!message.getType().equals(MessageTypes.ERROR)) {
                             this.gameID = ((IntMessage) message).getNum();

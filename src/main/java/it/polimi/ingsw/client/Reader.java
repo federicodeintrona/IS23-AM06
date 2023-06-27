@@ -159,8 +159,10 @@ public class Reader extends Thread implements TimerInterface {
                     clientState.setSelectedTiles((ArrayList<Tile>) message.getContent());
             case ("personalObj") ->
                     clientState.setMyPersonalObjective((HashMap<Point, Tiles>) message.getContent());
-            case ("personalObjNum")->
-                    clientState.setMyPersonalObjectiveInt((int) message.getContent());
+            case ("personalObjNum")-> {
+                out.println((int) message.getContent());
+                clientState.setMyPersonalObjectiveInt((int) message.getContent());
+            }
             case ("privatePoints") ->
                     clientState.setMyPoints((int) message.getContent());
             case ("nextPlayer") ->

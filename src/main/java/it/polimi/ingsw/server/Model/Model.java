@@ -856,10 +856,12 @@ public class Model implements TimerInterface {
      * @param p The player to update
      */
     private void notifyPersonalData(Player p){
+        System.out.println("personal data di: " + p.getUsername());
         //Notify personal objective
         notifier.firePropertyChange(new PropertyChangeEvent(
                 p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
+        System.out.println(p.getPersonalObjective().getPersonalObjectiveNum()+ " notify");
         notifier.firePropertyChange(new PropertyChangeEvent(
                 p.getPersonalObjective().getPersonalObjectiveNum(), p.getUsername(),  p.getUsername(),"personalObjNum" ));
 

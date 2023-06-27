@@ -12,6 +12,8 @@ import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 public class Player {
     private final String username;
+
+    private final String CapUser;
     private boolean disconnected = false;
     private final Bookshelf bookshelf = new Bookshelf();
     private PersonalObjective personalObjective;
@@ -26,8 +28,9 @@ public class Player {
      * Initialize all the points to zero and the given username
      * @param username username
      */
-    public Player(String username) {
+    public Player(String username,String Cap) {
         this.username = username;
+        this.CapUser=Cap;
         publicPoint = 0;
         privatePoint = 0;
         commonObjectivePoint = 0;
@@ -160,5 +163,9 @@ public class Player {
      */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
+    }
+
+    public String getCapUser() {
+        return CapUser;
     }
 }

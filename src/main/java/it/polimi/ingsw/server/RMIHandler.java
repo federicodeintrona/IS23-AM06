@@ -96,7 +96,7 @@ public class RMIHandler implements RMIHandlerInterface{
         IntMessage message = null;
         try {
 
-            RMIVirtualView myView = new RMIVirtualView(username,state);
+            RMIVirtualView myView = new RMIVirtualView(username.toLowerCase(),state);
             RMITimer myTimer = new RMITimer(myView,controller);
             myTimer.pingPong();
             myView.setTimer(myTimer);

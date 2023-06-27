@@ -19,13 +19,13 @@ class LobbyTest {
             RMIVirtualView view = new RMIVirtualView("ciao");
             view.setDisconnected(true);
 
-            lobby.handleClient("ciao",view);
+            lobby.handleClient("ciao","ciao",view);
 
             lobby.newLobby("ciao",2);
 
             RMIVirtualView view1 = new RMIVirtualView("1");
             view1.setDisconnected(true);
-            lobby.handleClient("1",view1);
+            lobby.handleClient("1","1",view1);
 
         } catch (UsernameAlreadyTaken e) {
             System.out.println("scommettiamo che non succederà mai qui???");
