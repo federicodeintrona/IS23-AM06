@@ -57,13 +57,19 @@ public class TCPVirtualView implements VirtualView{
         if(!isDisconnected()) {
             System.out.println(getUsername()+" TCP virtual view is on: " + evt.getNewValue());
 
-            ViewMessage viewMsg = new ViewMessage();
-            viewMsg.setType(MessageTypes.VIEW);
-            viewMsg.setContent(evt.getSource());
-            viewMsg.setObjName((String)evt.getNewValue());
-            viewMsg.setText((String) evt.getOldValue());
+            if(evt.getPropertyName().equals("personalObjNum")) {
+                System.out.println(evt.getSource());
+            }
 
-            client.sendMessage(viewMsg);
+
+                ViewMessage viewMsg = new ViewMessage();
+                viewMsg.setType(MessageTypes.VIEW);
+                viewMsg.setContent(evt.getSource());
+                viewMsg.setObjName((String) evt.getNewValue());
+                viewMsg.setText((String) evt.getOldValue());
+
+                client.sendMessage(viewMsg);
+
         }
     }
 

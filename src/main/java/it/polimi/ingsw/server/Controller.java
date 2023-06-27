@@ -70,7 +70,7 @@ public class Controller implements PropertyChangeListener {
         Message reply = new Message();
 
         try {
-            lobby.getGames().get(gameID).addToBookShelf(lobby.getPlayers().get(playerID),col);
+            lobby.getGames().get(gameID).addToBookShelf(lobby.getPlayers().get(playerID.toLowerCase()),col);
             reply.setType(MessageTypes.OK);
             reply.setText("Move successful add to bookshelf");
 
@@ -110,7 +110,7 @@ public class Controller implements PropertyChangeListener {
         Message reply = new Message();
 
         try {
-            lobby.getGames().get(gameID).swapOrder(ints,lobby.getPlayers().get(playerID));
+            lobby.getGames().get(gameID).swapOrder(ints,lobby.getPlayers().get(playerID.toLowerCase()));
             reply.setType(MessageTypes.OK);
             reply.setText("Move successful swap order");
         } catch (NotCurrentPlayer e) {
@@ -147,7 +147,7 @@ public class Controller implements PropertyChangeListener {
 
 
         try {
-            lobby.getGames().get(gameID).removeTileArray(lobby.getPlayers().get(playerID),points);
+            lobby.getGames().get(gameID).removeTileArray(lobby.getPlayers().get(playerID.toLowerCase()),points);
             reply.setType(MessageTypes.OK);
             reply.setText("Move successful remove tiles");
 
@@ -202,7 +202,7 @@ public class Controller implements PropertyChangeListener {
      */
     public IntMessage newLobby(String client, int players){
         IntMessage msg = new IntMessage();
-        int gameNum =  lobby.newLobby(client,players);
+        int gameNum =  lobby.newLobby(client.toLowerCase(),players);
         msg.setType(MessageTypes.WAITING_FOR_PLAYERS);
         msg.setText("Lobby created. Waiting for other players...");
         msg.setNum(gameNum);
@@ -224,11 +224,12 @@ public class Controller implements PropertyChangeListener {
      * </ul>
      */
     public IntMessage handleNewClient(String client,VirtualView view) {
+        System.out.println(client);
 
         try {
 
-            if(lobby.getDisconnectedPlayers().containsKey(client)) {
-                int idx = lobby.playerReconnection(client,view);
+            if(lobby.getDisconnectedPlayers().containsKey(client.toLowerCase())) {
+                int idx = lobby.playerReconnection(client.toLowerCase(),view);
                 IntMessage reply = new IntMessage();
                 reply.setType(MessageTypes.RECONNECT);
                 reply.setNum(idx);
@@ -236,7 +237,7 @@ public class Controller implements PropertyChangeListener {
                 return reply;
             }
 
-            Optional<Integer> response = lobby.handleClient(client,view);
+            Optional<Integer> response = lobby.handleClient(client.toLowerCase(),client,view);
 
             if (response.isEmpty()) {
                 IntMessage reply = new IntMessage();
@@ -263,7 +264,7 @@ public class Controller implements PropertyChangeListener {
      * @param view
      */
     public void addView(VirtualView view){
-        lobby.getViews().put(view.getUsername(),view);
+        lobby.getViews().put(view.getUsername().toLowerCase(),view);
     }
 
 
@@ -274,7 +275,7 @@ public class Controller implements PropertyChangeListener {
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");
 
-        lobby.playerDisconnection(username);
+        lobby.playerDisconnection(username.toLowerCase());
 
     }
 
@@ -303,9 +304,9 @@ public class Controller implements PropertyChangeListener {
      */
     public ChatMessage sendMessage (int gameId, String playerForwarding, String message) {
 
-        lobby.getGames().get(gameId).sendMessage(playerForwarding, message);
+        lobby.getGames().get(gameId).sendMessage(playerForwarding.toLowerCase(), message);
 
-        ChatMessage messageOut = new ChatMessage(playerForwarding, message);
+        ChatMessage messageOut = new ChatMessage(playerForwarding.toLowerCase(), message);
         messageOut.setType(MessageTypes.CHAT);
 
         return messageOut;
@@ -324,9 +325,9 @@ public class Controller implements PropertyChangeListener {
      */
     public ChatMessage sendMessage (int gameId, String playerForwarding, String message, String receivingPlayer) {
 
-        lobby.getGames().get(gameId).sendMessage(playerForwarding, message, receivingPlayer);
+        lobby.getGames().get(gameId).sendMessage(playerForwarding.toLowerCase(), message, receivingPlayer);
 
-        ChatMessage messageOut = new ChatMessage(playerForwarding, message ,receivingPlayer);
+        ChatMessage messageOut = new ChatMessage(playerForwarding.toLowerCase(), message ,receivingPlayer);
         messageOut.setType(MessageTypes.CHAT);
 
         return messageOut;

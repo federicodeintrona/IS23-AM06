@@ -91,7 +91,7 @@ public class LoginController implements SceneController, Initializable {
         //create the message to send to the server and send it out
         else {
             //set the client's username
-            guiController.getState().setMyUsername(username);
+            guiController.getState().setMyUsername(username.toLowerCase());
             //create the message to send to the server
             Message message=new Message();
             //set the message

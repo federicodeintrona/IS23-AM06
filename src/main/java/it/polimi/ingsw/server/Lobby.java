@@ -29,7 +29,7 @@ public class Lobby {
     private final HashMap<String , Player> players;
     private final HashMap<String , Player> disconnectedPlayers = new HashMap<>();
     private final HashMap<String , VirtualView> views = new HashMap<>();
-
+    private final HashMap<String,String> nocapUsernames = new HashMap<>();
 
     /**
      * Main constructor of the class.
@@ -71,26 +71,27 @@ public class Lobby {
      *              </ul>
      * @throws UsernameAlreadyTaken If the username chosen by the player was already taken.
      */
-    public synchronized Optional<Integer> handleClient(String client,VirtualView view) throws UsernameAlreadyTaken {
+    public synchronized Optional<Integer> handleClient(String client,String noCap,VirtualView view) throws UsernameAlreadyTaken {
 
         if(!usernames.contains(client.toLowerCase())) {
 
             usernames.add(client.toLowerCase());
+            nocapUsernames.put(client,noCap);
             controller.addView(view);
 
             System.out.println(client+ " has logged in successfully");
 
             if (waitingLobbies()) {//if there are waiting lobbies, add the client to the longest waiting lobby
-                    try {
-                        //return the game number
-                        return Optional.of(addClient(client));
-                    } catch (LobbyNotExists e) {
-                        return Optional.empty();
-                    }
-                    //if there aren't any, return empty Optional
-                } else return Optional.empty();
+                try {
+                    //return the game number
+                    return Optional.of(addClient(client));
+                } catch (LobbyNotExists e) {
+                    return Optional.empty();
+                }
+                //if there aren't any, return empty Optional
+            } else return Optional.empty();
 
-            }else throw new UsernameAlreadyTaken();
+        }else throw new UsernameAlreadyTaken();
     }
 
 
@@ -178,12 +179,13 @@ public class Lobby {
         //for every client in the lobby, create his player, add it to the playerToGame map
         // and remove it from the playerToLobby map
         for (String s : myLobby) {
-            Player p = new Player(s);
+            System.out.println(nocapUsernames);
+            Player p = new Player(s,nocapUsernames.get(s));
 
             players.put(s,p);
             playerList.add(p);
             virtualViews.add(views.get(s));
-            playerToGame.put(s,index);
+            playerToGame.put(s.toLowerCase(),index);
             playerToLobby.remove(s);
         }
 
@@ -220,11 +222,11 @@ public class Lobby {
     public synchronized void closeGame(int gameID){
 
         for(String s : games.get(gameID).getPlayers().stream().map(Player::getUsername).toList()){
-            usernames.remove(s);
-            disconnectedPlayers.remove(s);
+            usernames.remove(s.toLowerCase());
+            disconnectedPlayers.remove(s.toLowerCase());
             players.remove(s);
             playerToLobby.remove(s);
-            playerToGame.remove(s);
+            playerToGame.remove(s.toLowerCase());
             views.remove(s);
         }
 
@@ -259,19 +261,19 @@ public class Lobby {
         }
 
         //If in a game disconnect him
-        Integer gameID=playerToGame.get(username);
+        Integer gameID=playerToGame.get(username.toLowerCase());
         if(gameID!=null){
             if(!games.get(gameID).isFinished()) games.get(gameID).disconnectPlayer(players.get(username), views.get(username));
 
-            if(usernames.contains(username)){
-                disconnectedPlayers.put(username, players.get(username));
+            if(usernames.contains(username.toLowerCase())){
+                disconnectedPlayers.put(username.toLowerCase(), players.get(username));
             }
         }
 
         //Remove him from the necessary maps
         views.remove(username);
         players.remove(username);
-        usernames.remove(username);
+        usernames.remove(username.toLowerCase());
 
     }
 
@@ -283,14 +285,15 @@ public class Lobby {
      * @return The ID of the game.
      */
     public synchronized int playerReconnection(String username,VirtualView view){
-        Player player = disconnectedPlayers.get(username);
-        disconnectedPlayers.remove(username);
+        Player player = disconnectedPlayers.get(username.toLowerCase());
+        disconnectedPlayers.remove(username.toLowerCase());
 
-        usernames.add(username);
+        usernames.add(username.toLowerCase());
         players.put(username,player);
         views.put(username,view);
-
-        int index = playerToGame.get(username);
+        System.out.println(username);
+        System.out.println("player to game: " + playerToGame);
+        int index = playerToGame.get(username.toLowerCase());
         games.get(index).playerReconnection(player,view);
         return index;
 
@@ -334,5 +337,9 @@ public class Lobby {
      */
     public HashMap<String, Player> getDisconnectedPlayers() {
         return disconnectedPlayers;
+    }
+
+    public void addNoCapUser(String lower, String noCap){
+        nocapUsernames.put(lower,noCap);
     }
 }
