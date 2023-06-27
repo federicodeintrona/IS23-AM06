@@ -13,7 +13,7 @@ import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 public class Player {
     private final String username;
 
-    private final String noCapUser;
+    private final String CapUser;
     private boolean disconnected = false;
     private final Bookshelf bookshelf = new Bookshelf();
     private PersonalObjective personalObjective;
@@ -28,9 +28,9 @@ public class Player {
      * Initialize all the points to zero and the given username
      * @param username username
      */
-    public Player(String username,String noCap) {
+    public Player(String username,String Cap) {
         this.username = username;
-        this.noCapUser=noCap;
+        this.CapUser=Cap;
         publicPoint = 0;
         privatePoint = 0;
         commonObjectivePoint = 0;
@@ -165,7 +165,7 @@ public class Player {
         this.disconnected = disconnected;
     }
 
-    public String getNoCapUser() {
-        return noCapUser;
+    public String getCapUser() {
+        return CapUser;
     }
 }
