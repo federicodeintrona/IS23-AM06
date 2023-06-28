@@ -740,8 +740,25 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
     }
 
-
+//TODO javadoc FEDE
     public PropertyChangeSupport getNotifier() {
         return notifier;
+    }
+
+
+    public HashMap<String, Integer> getCommonMap1() {
+        return commonMap1;
+    }
+
+    public void setCommonMap1(HashMap<String, Integer> commonMap1) {
+        this.commonMap1 = commonMap1;
+    }
+
+    public HashMap<String, Integer> getCommonMap2() {
+        return commonMap2;
+    }
+
+    public void setCommonMap2(HashMap<String, Integer> commonMap2) {
+        this.commonMap2 = commonMap2;
     }
 }
