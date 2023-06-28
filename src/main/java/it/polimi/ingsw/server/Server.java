@@ -17,10 +17,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Class to manage the Server
+ * Class to manage the Server.
  * <p>
- *     prepares both the Socket for tcp and the
- *     instance of the Controller to bind for rmi
+ *     Prepares both the Socket for tcp and the
+ *     instance of the Controller to bind for rmi.
  * </p>
  */
 public class Server extends UnicastRemoteObject {
@@ -34,13 +34,13 @@ public class Server extends UnicastRemoteObject {
     private final RMIHandlerInterface rmiHandler = new RMIHandler(controller);
 
     /**
-     * Constructor for Server
+     * Constructor for Server.
      * <p>
-     *     It initializes both rmi and tcp ports
+     *     It initializes both rmi and tcp ports.
      * </p>
      *
-     * @throws IOException      In case of input/output error
-     * @throws ParseException       In case of error during parsing process using json
+     * @throws IOException      In case of input/output error.
+     * @throws ParseException       In case of error during parsing process using json.
      */
     protected Server() throws IOException, ParseException{
         super();
@@ -54,10 +54,10 @@ public class Server extends UnicastRemoteObject {
     }
 
     /**
-     * Static method to launch the Server
+     * Static method to launch the Server.
      *
-     * @param args      The arguments that you insert on input
-     * @throws RemoteException      In case of error during the rmi connection process
+     * @param args      The arguments that you insert on input.
+     * @throws RemoteException      In case of error during the rmi connection process.
      */
     public static void main( String[] args ) throws RemoteException {
         Server Server;
@@ -133,10 +133,10 @@ public class Server extends UnicastRemoteObject {
     }
 
     /**
-     * Method that returns the Server's IP Address
+     * Method that returns the Server's IP Address.
      *
-     * @return      Ip address
-     * @throws SocketException      Exception due to socket
+     * @return      Ip address.
+     * @throws SocketException      Exception due to socket.
      */
     public static String getLocalIPAddress() throws SocketException {
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();

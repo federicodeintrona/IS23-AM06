@@ -8,8 +8,8 @@ import java.beans.PropertyChangeEvent;
 
 
 /**
- * <p>TCP implementation of the virtual view</p>
- * <p>Used to communicate with the client using sockets</p>
+ * <p>TCP implementation of the virtual view.</p>
+ * <p>Used to communicate with the client using sockets.</p>
  */
 public class TCPVirtualView implements VirtualView{
 
@@ -28,8 +28,8 @@ public class TCPVirtualView implements VirtualView{
     }
 
     /**
-     * <p>Implementation of the property change method</p>
-     * <p>Receives notification from the model when the state has changed and updates the client</p>
+     * <p>Implementation of the property change method.</p>
+     * <p>Receives notification from the model when the state has changed and updates the client.</p>
      * @param evt A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
      */

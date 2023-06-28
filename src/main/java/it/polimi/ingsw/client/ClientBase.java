@@ -27,8 +27,9 @@ import java.util.Scanner;
  * </ul>
  */
 public class ClientBase extends Application{
+
     /**
-     * Default constructor
+     * Default constructor.
      */
     public ClientBase() {
     }

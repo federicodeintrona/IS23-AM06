@@ -58,7 +58,7 @@ public class PersonalObjective {
     /**
      * Getter --> return PersonalObjective card.
      *
-     * @return the HashMap that represent the personal objective.
+     * @return the <i>HashMap</i> that represent the personal objective.
      */
     public HashMap<Point, Tiles> getCard(){
         return card;

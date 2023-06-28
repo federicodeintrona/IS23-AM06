@@ -17,8 +17,8 @@ import java.util.List;
 
 
 /**
- * <p>RMI implementation of the virtual view</p>
- * <p>Used to communicate with the client using RMI</p>
+ * <p>RMI implementation of the virtual view.</p>
+ * <p>Used to communicate with the client using RMI.</p>
  */
 public class RMIVirtualView implements VirtualView{
 
@@ -31,7 +31,7 @@ public class RMIVirtualView implements VirtualView{
 
 
     /**
-     * Main constructor of the class
+     * Main constructor of the class.
      * @param username The username of the player.
      * @param clientState The Remote Interface used to communicate with the client.
      */
@@ -41,7 +41,7 @@ public class RMIVirtualView implements VirtualView{
     }
 
     /**
-     * Constructor used for tests
+     * Constructor used for tests.
      * @param username The username of the player
      */
     public RMIVirtualView(String username) {
@@ -50,8 +50,8 @@ public class RMIVirtualView implements VirtualView{
 
 
     /**
-     * <p>Implementation of the property change method</p>
-     * <p>Receives notification from the model when the state has changed and updates the client</p>
+     * <p>Implementation of the property change method.</p>
+     * <p>Receives notification from the model when the state has changed and updates the client.</p>
      * @param evt A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
      */
@@ -141,7 +141,7 @@ public class RMIVirtualView implements VirtualView{
 
     /**
      * <strong>Getter</strong> -> Method to return the remote interface.
-     * @return The Remote Interface
+     * @return The Remote Interface.
      */
     public ClientStateRemoteInterface getClientState() {
         return clientState;
@@ -150,7 +150,7 @@ public class RMIVirtualView implements VirtualView{
 
     /**
      * <strong>Setter</strong> -> Method to set the timer used in case of abrupt disconnection.
-     * @param timer The RMITimer
+     * @param timer The RMITimer.
      */
     public void setTimer(RMITimer timer) {
         this.timer = timer;
@@ -159,7 +159,7 @@ public class RMIVirtualView implements VirtualView{
 
     /**
      * <strong>Getter</strong> -> Method to check if the virtual view is disconnected.
-     * @return True if disconnected, false otherwise.
+     * @return <i>true</i> if disconnected, <i>false</i> otherwise.
      */
     public boolean isDisconnected() {
         return disconnected;

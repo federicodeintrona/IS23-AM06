@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.VirtualView.VirtualView;
 import java.util.*;
 
 /**
- * <p>Class used to manage the creation of lobbies and games</p>
+ * <p>Class used to manage the creation of lobbies and games.</p>
  * <p>It keeps all the information about the lobbies, games, players, and their views.</p>
  * <p>It creates a new lobby if a new player wants to play a game and there aren't any other lobby waiting for players.
  *     It also checks the uniqueness of the nickname before adding "logging in"
@@ -40,7 +40,7 @@ public class Lobby {
     }
 
     /**
-     * Constructor only used for testing
+     * Constructor only used for testing.
      * @param games The HashMap containing all games.
      * @param players The HashMap containing all players.
      */
@@ -66,8 +66,8 @@ public class Lobby {
      * @param view The virtual view of the player.
      * @return An optional of Integer which can either be:
      *              <ul>
-     *                  <li>The ID of the game the client was added to</li>
-     *                  <li>Empty if he needs to create a new lobby himself.</li>
+     *                  <li>the ID of the game the client was added to;</li>
+     *                  <li>empty if he needs to create a new lobby himself.</li>
      *              </ul>
      * @throws UsernameAlreadyTaken If the username chosen by the player was already taken.
      */
@@ -97,7 +97,7 @@ public class Lobby {
 
     /**
      * Method to create a new lobby/game with the selected number of players and adds it to the waiting lobbies.
-     * @param client The username of the player
+     * @param client The username of the player.
      * @param numplayers The chosen number of players for the game.
      * @return The ID of the game.
      */
@@ -129,9 +129,9 @@ public class Lobby {
 
     //TODO Fede controlla
     /**
-     * Method to add a player to a waiting lobby and starts the game when it is full
-     * @param client  The player you want to add
-     * @throws LobbyNotExists If the lobby does not exist (it should never happen in theory)
+     * Method to add a player to a waiting lobby and starts the game when it is full.
+     * @param client  The player you want to add.
+     * @throws LobbyNotExists If the lobby does not exist (it should never happen in theory).
      * @return
      */
     public synchronized int addClient(String client) throws LobbyNotExists {
@@ -167,7 +167,7 @@ public class Lobby {
     }
 
     /**
-     * <p> Method to start a game</p>
+     * <p> Method to start a game.</p>
      * <p>It adds all the players and virtual views to the game and deletes the associated lobby.</p>
      * @param index The ID of the game.
      */
@@ -216,7 +216,7 @@ public class Lobby {
 
 
     /**
-     * <p>Method to close a game</p>
+     * <p>Method to close a game.</p>
      * <p>Removes all players (even if disconnected), virtual views and the game itself from their respective maps.</p>
      * @param gameID The ID of the game.
      */
@@ -302,7 +302,7 @@ public class Lobby {
     //TODO Fede controlla
     /**
      *  <strong>Setter</strong> -> Sets the controller.
-     * @param controller controller of the server
+     * @param controller controller of the server.
      */
     public void setController(Controller controller) {
         this.controller = controller;
@@ -310,7 +310,7 @@ public class Lobby {
 
     /**
      * <strong>Getter</strong> -> Gets the HashMap containing all games.
-     * @return The HashMap containing all games.
+     * @return The <i>HashMap</i> containing all games.
      */
     public HashMap<Integer,Model> getGames() {
         return games;
@@ -318,7 +318,7 @@ public class Lobby {
 
     /**
      *  <strong>Getter</strong> -> Gets the HashMap containing all players.
-     * @return The HashMap containing all players.
+     * @return The <i>HashMap</i> containing all players.
      */
     public HashMap<String, Player> getPlayers() {
         return players;
@@ -326,7 +326,7 @@ public class Lobby {
 
     /**
      * <strong>Getter</strong> -> Gets the HashMap containing all views.
-     * @return The HashMap containing all views.
+     * @return The <i>HashMap</i> containing all views.
      */
     public HashMap<String, VirtualView> getViews() {
         return views;
@@ -334,7 +334,7 @@ public class Lobby {
 
     /**
      * <strong>Getter</strong> -> Gets the HashMap containing all disconnected players.
-     * @return The HashMap containing all disconnected players.
+     * @return The <i>HashMap</i> containing all disconnected players.
      */
     public HashMap<String, Player> getDisconnectedPlayers() {
         return disconnectedPlayers;

@@ -121,7 +121,7 @@ public class Reader extends Thread implements TimerInterface {
     }
 
 
-
+//TODO javadoc FEDE
     private void pingPong(){
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
@@ -143,7 +143,7 @@ public class Reader extends Thread implements TimerInterface {
         timer.schedule(task,initialDelay,delta);
     }
 
-
+//TODO javadoc DIPA
     private void processMessage(Message newMessage){
 
         ViewMessage message = (ViewMessage) newMessage;

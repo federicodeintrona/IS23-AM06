@@ -496,7 +496,7 @@ public class CLIPrint  {
     /**
      * Method to print error - the server send an error message.
      *
-      * @param error the error to show received from server.
+     * @param error the error to show received from server.
      */
     public void printError(String error){
         synchronized (cliMain.getLock()) {
@@ -591,10 +591,10 @@ public class CLIPrint  {
      * <p>
      *     Using the boolean @printAndChat it prints
      *     different outputs depending if the method
-     *     gets called while the Chat is enable or not
+     *     gets called while the Chat is enable or not.
      * </p>
      *
-     * @param printAndChat      Boolean used to activate different code's part via if-else
+     * @param printAndChat      Boolean used to activate different code's part via if-else.
      */
     public void printChat (boolean printAndChat) {
         ChatController chat = cliMain.getClientState().getChatController();
@@ -643,17 +643,18 @@ public class CLIPrint  {
      * </p>
      * <p>
      *     Prints the history the chat's history that the player
-     *     who called the method has with @username.
+     *     who called the method has with username.
      * </p>
      * <p>
-     *     Using the boolean @printAndChat it prints
+     *     Using the boolean printAndChat it prints
      *     different outputs depending if the method
      *     gets called while the Chat is enable or not.
      * </p>
      *
      * @param username      Player to chat with.
      * @param printAndChat      Boolean used to activate different code's part via if-else.
-     */    public void printChat (String username, boolean printAndChat) {
+     */
+    public void printChat (String username, boolean printAndChat) {
         ChatController chat = cliMain.getClientState().getChatController();
         chat.getPrivateChat(username).resetUnReadMessages();
 

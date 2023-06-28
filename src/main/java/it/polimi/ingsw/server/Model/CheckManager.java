@@ -84,13 +84,13 @@ public class CheckManager {
 
 
     /**
-     * Method to check if the selected tiles can actually be removed from the board
-     * @param points Array of coordinates of the tiles
-     * @throws IllegalArgumentException if the array points is null
-     * @throws TilesNotAdjacent if the tiles are not adjacent
-     * @throws OutOfDomain if at least one of the points is outside the board
-     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
-     * @throws TooManySelected if the array is too long
+     * Method to check if the selected tiles can actually be removed from the board.
+     * @param points Array of coordinates of the tiles.
+     * @throws IllegalArgumentException if the array points is null.
+     * @throws TilesNotAdjacent if the tiles are not adjacent.
+     * @throws OutOfDomain if at least one of the points is outside the board.
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed.
+     * @throws TooManySelected if the array is too long.
      */
     private void checkPointArrayDomain(ArrayList<Point> points,Board board,Player player) throws MoveNotPossible, IllegalArgumentException {
         //check if the array is not null
@@ -124,10 +124,10 @@ public class CheckManager {
 
 
     /**
-     * Method to check if the tiles of coordinates p can be selected (it's in the board, is allowed and not empty)
-     * @param p the coordinates of the tiles
-     * @throws OutOfDomain if at least one of the points is outside the board
-     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
+     * Method to check if the tiles of coordinates p can be selected (it's in the board, is allowed and not empty).
+     * @param p the coordinates of the tiles.
+     * @throws OutOfDomain if at least one of the points is outside the board.
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed.
      */
     private void checkBoardDomain(Point p,Board board) throws MoveNotPossible {
         //Check if the point is inside the board
@@ -141,9 +141,9 @@ public class CheckManager {
 
 
     /**
-     * Method to check if the point is inside the board
-     * @param p Coordinates of the point
-     * @throws OutOfDomain If the point is outside the board
+     * Method to check if the point is inside the board.
+     * @param p Coordinates of the point.
+     * @throws OutOfDomain If the point is outside the board.
      */
     private void checkPointBoardDomain(Point p) throws OutOfDomain {
         //Check if the point is inside the board
@@ -156,14 +156,14 @@ public class CheckManager {
 
 
     /**
-     * Method to check if the player can add tiles to his bookshelf
-     * @param player The player trying to add tiles to his bookshelf
-     * @param col    The column number where to add the tiles
-     * @param size   The number of tiles you want to add
-     * @throws OutOfDomain if requested column does not exists
-     * @throws ColumnIsFull if the requested column is full
-     * @throws MoveNotPossible if game is not in the right state
-     * @throws NotCurrentPlayer if the player requesting the move is not the current player
+     * Method to check if the player can add tiles to his bookshelf.
+     * @param player The player trying to add tiles to his bookshelf.
+     * @param col    The column number where to add the tiles.
+     * @param size   The number of tiles you want to add.
+     * @throws OutOfDomain if requested column does not exists.
+     * @throws ColumnIsFull if the requested column is full.
+     * @throws MoveNotPossible if game is not in the right state.
+     * @throws NotCurrentPlayer if the player requesting the move is not the current player.
      */
     public void checkAddLegit(Player player,int col,int size) throws MoveNotPossible {
 
@@ -180,11 +180,11 @@ public class CheckManager {
 
 
     /**
-     * Method to check if the selected column exists and if there is enough empty space
-     * @param col The column where you want to put the tiles
-     * @param size The number of tiles you want to add
-     * @throws OutOfDomain if requested column does not exists
-     * @throws ColumnIsFull if the requested column is full
+     * Method to check if the selected column exists and if there is enough empty space.
+     * @param col The column where you want to put the tiles.
+     * @param size The number of tiles you want to add.
+     * @throws OutOfDomain if requested column does not exists.
+     * @throws ColumnIsFull if the requested column is full.
      */
     private void checkColumn(int col,int size) throws OutOfDomain, ColumnIsFull {
         if(col<0||col> numberOfBookshelfColumns -1) throw new OutOfDomain();
@@ -193,13 +193,13 @@ public class CheckManager {
 
 
     /**
-     * Method to check if the player can swap the selectedTiles array
-     * @param ints Swap array
-     * @param player Player
-     * @throws MoveNotPossible The game is not in the right state
-     * @throws NotCurrentPlayer The player is not the current player
-     * @throws IllegalArgumentException The ints array is not of appropriate content
-     * @throws TooManySelected if the array is not of appropriate size
+     * Method to check if the player can swap the selectedTiles array.
+     * @param ints Swap array.
+     * @param player Player.
+     * @throws MoveNotPossible The game is not in the right state.
+     * @throws NotCurrentPlayer The player is not the current player.
+     * @throws IllegalArgumentException The ints array is not of appropriate content.
+     * @throws TooManySelected if the array is not of appropriate size.
      */
     public void swapCheck(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
 
@@ -214,10 +214,10 @@ public class CheckManager {
 
 
     /**
-     * Method to check if the array is of appropriate size and content
-     * @param ints Swap array
-     * @throws IllegalArgumentException if the array is not of appropriate content
-     * @throws TooManySelected if the array is not of appropriate size
+     * Method to check if the array is of appropriate size and content.
+     * @param ints Swap array.
+     * @throws IllegalArgumentException if the array is not of appropriate content.
+     * @throws TooManySelected if the array is not of appropriate size.
      */
     private void intsCheck(ArrayList<Integer> ints) throws IllegalArgumentException, TooManySelected {
         //Checks if the swap array is the same size as the selectedTiles array

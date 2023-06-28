@@ -12,11 +12,11 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * <p>Class used to manage the tcp connection</p>
+ * <p>Class used to manage the tcp connection.</p>
  * <ul>
- *     <li>Creates socket, reader and the object output stream</li>
- *     <li>Sends message to server</li>
- *     <li>Starts disconnection</li>
+ *     <li>Creates socket, reader and the object output stream;</li>
+ *     <li>sends message to server;</li>
+ *     <li>starts disconnection.</li>
  * </ul>
  */
 public class NetworkerTcp implements Networker, PropertyChangeListener {
@@ -27,10 +27,11 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     private View view;
     private final ClientState clientState;
     private Reader reader;
+
     /**
-     * Initialize the networker with the given client state and host
-     * @param clientState client state
-     * @param host server's host
+     * Initialize the networker with the given client state and host.
+     * @param clientState client state.
+     * @param host server's host.
      */
     public NetworkerTcp(ClientState clientState,String host) {
         JsonReader config;
@@ -52,8 +53,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Initialize the networker with the given client state
-     * @param clientState client state
+     * Initialize the networker with the given client state.
+     * @param clientState client state.
      */
     public NetworkerTcp(ClientState clientState) {
         JsonReader config;
@@ -68,8 +69,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to create socket, object output stream and reader
-     * @return true if everything goes fine, false in other cases
+     * Method to create socket, object output stream and reader.
+     * @return <i>true</i> if everything goes fine, <i>false</i> in other cases.
      */
     public boolean initializeConnection() {
         try {
@@ -90,7 +91,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to close socket and Object Output Stream
+     * Method to close socket and Object Output Stream.
      */
     private void close(){
         try {
@@ -103,8 +104,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to send a disconnection message to server and then to start closing the programme
-     * @param closing message to send to server
+     * Method to send a disconnection message to server and then to start closing the programme.
+     * @param closing message to send to server.
      */
     @Override
     public void closeProgram(Message closing) {
@@ -120,8 +121,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
 
 
     /**
-     * Method to send to server the username selected by player
-     * @param username a message which contains the username selected by the palyer
+     * Method to send to server the username selected by player.
+     * @param username a message which contains the username selected by the palyer.
      */
     public void firstConnection (Message username){
         try {
@@ -134,8 +135,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to send to server the number of player selected
-     * @param numberOfPlayers a message which contains the number of player
+     * Method to send to server the number of player selected.
+     * @param numberOfPlayers a message which contains the number of player.
      */
     public void numberOfPlayersSelection(Message numberOfPlayers){
         try {
@@ -149,8 +150,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to send to the server the positions of the tiles to remove from board
-     * @param tiles a message which contains the positions of the tiles to remove from board
+     * Method to send to the server the positions of the tiles to remove from board.
+     * @param tiles a message which contains the positions of the tiles to remove from board.
      */
     public void removeTilesFromBoard(Message tiles){
         try {
@@ -162,8 +163,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to send to the server the order of the tiles
-     * @param ints a message which contains the order of the tiles
+     * Method to send to the server the order of the tiles.
+     * @param ints a message which contains the order of the tiles.
      */
     public void switchTilesOrder(Message ints){
         try {
@@ -176,8 +177,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to send to the server the column chosen from the player
-     * @param column a message which contains the column chosen by the player
+     * Method to send to the server the column chosen from the player.
+     * @param column a message which contains the column chosen by the player.
      */
     public void addTilesToBookshelf (Message column){
         try {
@@ -190,7 +191,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * Method to send to the view the message received
+     * Method to send to the view the message received.
      * @param evt A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
      */
@@ -202,16 +203,16 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the user interface
-     * @param view user interface created by the clientbase
+     * <strong>Setter</strong> -> Sets the user interface.
+     * @param view user interface created by the clientbase.
      */
     @Override
     public void setView(View view) {
         this.view=view;
     }
     /**
-     * <strong>Setter</strong> -> Sets the view
-     * @param serverIP serverIp
+     * <strong>Setter</strong> -> Sets the view.
+     * @param serverIP serverIp.
      */
     @Override
     public void setServerIP(String serverIP) {
@@ -221,8 +222,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
 
 
     /**
-     * Method to send to the server the chat message written by the player
-     * @param message a message which contains the chat message by the player
+     * Method to send to the server the chat message written by the player.
+     * @param message a message which contains the chat message by the player.
      */
     @Override
     public void chat(Message message) {

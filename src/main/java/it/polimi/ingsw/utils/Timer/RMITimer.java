@@ -13,7 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A countdown timer used with RMI connection
+ * A countdown timer used with RMI connection.
  */
 public class RMITimer implements TimerInterface {
     private boolean disconnected = false;
@@ -97,7 +97,7 @@ public class RMITimer implements TimerInterface {
         e.shutdown();
     }
 
-
+//TODO javadoc FEDE
     private void startTimer(){
         if(timer!=null)
             timer.cancel();

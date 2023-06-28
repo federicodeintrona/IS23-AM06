@@ -1,7 +1,7 @@
 package it.polimi.ingsw.utils;
 
 /**
- * Enumeration which contains all constant number used in the programme
+ * Enumeration which contains all constant number used in the programme.
  */
 public enum Define {
 
@@ -57,16 +57,16 @@ public enum Define {
 
 
     /**
-     * The constant number
+     * The constant number.
      */
     private final int i;
 
 
 
     /**
-     * Initialize the defined number with the right number
+     * Initialize the defined number with the right number.
      *
-     * @param i the number to define
+     * @param i the number to define.
      */
     Define(int i) {
         this.i=i;
@@ -75,9 +75,9 @@ public enum Define {
 
 
     /**
-     * <strong>Getter</strong> -> Returns the corresponding content
+     * <strong>Getter</strong> -> Returns the corresponding content.
      *
-     * @return Content of the defined number
+     * @return Content of the defined number.
      */
     public int getI() {
         return i;
