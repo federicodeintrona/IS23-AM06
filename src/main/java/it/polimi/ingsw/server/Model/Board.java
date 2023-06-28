@@ -195,7 +195,6 @@ public class Board {
         }
     }
 
-    //TODO togliere return e mettere if con dentro true
     /**
      * Method to return if the board needs to be reset (all remaining tiles have no adjacent ones).
      *
@@ -211,34 +210,105 @@ public class Board {
                     //not on the edge board
                     if (i!=0 && i!=Define.NUMBEROFROWS_BOARD.getI()-1 &&
                             j!=0 && j!=Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
-                        return leftAdjacency(i, j) && rightAdjacency(i, j) && upperAdjacency(i, j) && bottomAdjacency(i, j);
+                        if (leftAdjacency(i, j)){
+                            return false;
+                        }
+                        if (rightAdjacency(i, j)){
+                            return false;
+                        }
+                        if (upperAdjacency(i, j)){
+                            return false;
+                        }
+                        if (bottomAdjacency(i, j)){
+                            return false;
+                        }
                     }
                     //we are on one edge
                     else {
                         //upper left corner
-                        if (i==0 && j==0)
-                            return rightAdjacency(i, j) && bottomAdjacency(i, j);
+                        if (i==0 && j==0){
+                            if (rightAdjacency(i, j)){
+                                return false;
+                            }
+                            if (bottomAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                         //upper right corner
-                        else if (i==0 && j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1)
-                            return leftAdjacency(i, j) && bottomAdjacency(i, j);
+                        else if (i==0 && j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
+                            if (leftAdjacency(i, j)){
+                                return false;
+                            }
+                            if (bottomAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                         //bottom left corner
-                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1 && j==0)
-                            return rightAdjacency(i, j) && upperAdjacency(i, j);
+                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1 && j==0){
+                            if (rightAdjacency(i, j)){
+                                return false;
+                            }
+                            if (upperAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                         //bottom right corner
-                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1 && j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1)
-                            return leftAdjacency(i, j) && upperAdjacency(i, j);
+                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1 && j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
+                            if (leftAdjacency(i, j)){
+                                return false;
+                            }
+                            if (upperAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                         //upper edge
-                        else if (i==0)
-                            return leftAdjacency(i, j) && rightAdjacency(i, j) && bottomAdjacency(i, j);
+                        else if (i==0){
+                            if (leftAdjacency(i, j)){
+                                return false;
+                            }
+                            if (rightAdjacency(i, j)){
+                                return false;
+                            }
+                            if (bottomAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                         //bottom edge
-                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1)
-                            return leftAdjacency(i, j) && rightAdjacency(i, j) && upperAdjacency(i, j);
+                        else if (i==Define.NUMBEROFROWS_BOARD.getI()-1){
+                            if (leftAdjacency(i, j)){
+                                return false;
+                            }
+                            if (rightAdjacency(i, j)){
+                                return false;
+                            }
+                            if (upperAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                         //left edge
-                        else if (j==0)
-                            return rightAdjacency(i, j) && upperAdjacency(i, j) && bottomAdjacency(i, j);
+                        else if (j==0){
+                            if (rightAdjacency(i, j)){
+                                return false;
+                            }
+                            if (upperAdjacency(i, j)){
+                                return false;
+                            }
+                            if (bottomAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                         //right edge
-                        else if (j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1)
-                            return leftAdjacency(i, j) && upperAdjacency(i, j) && bottomAdjacency(i, j);
+                        else if (j==Define.NUMBEROFCOLUMNS_BOARD.getI()-1){
+                            if (leftAdjacency(i, j)){
+                                return false;
+                            }
+                            if (upperAdjacency(i, j)){
+                                return false;
+                            }
+                            if (bottomAdjacency(i, j)){
+                                return false;
+                            }
+                        }
                     }
                 }
             }
@@ -255,8 +325,8 @@ public class Board {
      * @return <i>true</i> if there is left adjacency, <i>false</i> in the other case.
      */
     private boolean leftAdjacency(int i, int j){
-        return gamesBoard.getTile(i, j - 1).equals(Tiles.NOT_ALLOWED) ||
-                gamesBoard.getTile(i, j - 1).equals(Tiles.EMPTY);
+        return !gamesBoard.getTile(i, j - 1).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(i, j - 1).equals(Tiles.EMPTY);
     }
 
     /**
@@ -267,8 +337,8 @@ public class Board {
      * @return <i>true</i> if there is right adjacency, <i>false</i> in the other case.
      */
     private boolean rightAdjacency(int i, int j){
-        return gamesBoard.getTile(i, j + 1).equals(Tiles.NOT_ALLOWED) ||
-                gamesBoard.getTile(i, j + 1).equals(Tiles.EMPTY);
+        return !gamesBoard.getTile(i, j + 1).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(i, j + 1).equals(Tiles.EMPTY);
     }
 
     /**
@@ -279,8 +349,8 @@ public class Board {
      * @return <i>true</i> if there is upper adjacency, <i>false</i> in the other case.
      */
     private boolean upperAdjacency(int i, int j){
-        return gamesBoard.getTile(i - 1, j).equals(Tiles.NOT_ALLOWED) ||
-                gamesBoard.getTile(i - 1, j).equals(Tiles.EMPTY);
+        return !gamesBoard.getTile(i-1, j).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(i-1, j).equals(Tiles.EMPTY);
     }
 
     /**
@@ -291,8 +361,8 @@ public class Board {
      * @return <i>true</i> if there is bottom adjacency, <i>false</i> in the other case.
      */
     private boolean bottomAdjacency(int i, int j){
-        return gamesBoard.getTile(i + 1, j).equals(Tiles.NOT_ALLOWED) ||
-                gamesBoard.getTile(i + 1, j).equals(Tiles.EMPTY);
+        return !gamesBoard.getTile(i+1, j).equals(Tiles.NOT_ALLOWED) &&
+                !gamesBoard.getTile(i+1, j).equals(Tiles.EMPTY);
     }
 
     /**
