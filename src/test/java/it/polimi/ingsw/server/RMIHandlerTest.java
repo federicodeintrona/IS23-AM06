@@ -148,8 +148,22 @@ class RMIHandlerTest {
         Assertions.assertEquals(expectedMessage.getText(), message.getText());
     }
 
+    /**
+     * Testing rmiHandler's newLobby
+     */
     @Test
     void newLobby() {
+        Message msg;
+        Message expectedMessage = new Message();
+
+        expectedMessage.setText("Lobby created. Waiting for other players...");
+
+        try {
+            msg = rmiHandler.newLobby("ciao",2);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        Assertions.assertEquals(expectedMessage.getText(), msg.getText());
     }
 
 
