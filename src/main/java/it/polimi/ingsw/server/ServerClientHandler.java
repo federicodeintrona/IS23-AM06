@@ -11,12 +11,15 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.concurrent.*;
 
+/**
+ * <p>Class used as a support to communicate with tcp-using clients.</p>
+ * <p>Manages the connection with the client using ping-pongs and timers to check for abrupt disconnections</p>
+ */
 public class ServerClientHandler implements Runnable, TimerInterface {
     private final Controller controller;
     private String username;
     private int gameID;
-    private Player player;
-    private Socket socket;
+    private final Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private final Object lock = new Object();
@@ -33,11 +36,19 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private int time = 0;
 
 
+    /**
+     * Main constructor of the class.
+     * @param socket The socket of the client.
+     * @param controller The controller of the server.
+     */
     public ServerClientHandler(Socket socket, Controller controller) {
         this.socket = socket;
         this.controller=controller;
     }
 
+    /**
+     * Method to start receiving messages from the client.
+     */
     public void run() {
 
         try {
@@ -129,6 +140,10 @@ public class ServerClientHandler implements Runnable, TimerInterface {
         }
     }
 
+    /**
+     * Method to send a message to the client.
+     * @param message The message to be sent.
+     */
     public void sendMessage(Message message){
 
         if(message.getType().equals(MessageTypes.PING)){
@@ -161,12 +176,6 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     }
 
 
-    private void receivePing(){
-
-
-
-    }
-
     private void pingPong(){
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
@@ -181,7 +190,9 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     }
 
 
-
+    /**
+     * Method to disconnect the client.
+     */
     @Override
     public void disconnect() {
         t.shutdown();
@@ -195,6 +206,9 @@ public class ServerClientHandler implements Runnable, TimerInterface {
 
     }
 
+    /**
+     * Method to stop the timer.
+     */
     public void stopTimer(){
         if(timer!=null) timer.cancel();
         if(e!=null) e.shutdown();
@@ -202,23 +216,23 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     }
 
 
-
+    /**
+     * Method to update the timer counter.
+     * @return The updated counter.
+     */
     @Override
     public int updateTime() {
         this.time+=1;
         return this.time;
     }
 
+    /**
+     * Method to return the personalized message.
+     * @return The personalized message.
+     */
     @Override
     public String getErrorMessage() {
         return this.username+" timed out";
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 }
