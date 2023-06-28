@@ -994,6 +994,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         //add the message to the correct chat Vbox
         Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
 
+//TODO FLA tolta
+
         // Forced update of the graphic interface
         Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).requestLayout();
 
@@ -1014,6 +1016,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 }
             });
         });
+//TODO FLA tolta
 
         if (!selectChat.getValue().equals("ALL")){
             //pop up - you got a message
@@ -1059,6 +1062,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             //add the message to the correct chat Vbox
             Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
 
+//TODO FLA tolta
+
             // Adding a Listener for the PrivateChat automatic sliding
             Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
                 Platform.runLater(() -> {
@@ -1076,6 +1081,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     }
                 });
             });
+//TODO FLA tolta
+
         }
         else {
             messageLabel.setText(message.getConversation());
@@ -1092,6 +1099,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
             //add the message to the correct chat Vbox
             Objects.requireNonNull(catchChatVBox(message.getText())).getChildren().add(messageLabel);
+
+//TODO FLA tolta
 
             // Adding a Listener for the PrivateChat automatic sliding
             Objects.requireNonNull(catchChatVBox(message.getText())).layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
@@ -1110,6 +1119,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     }
                 });
             });
+//TODO FLA tolta
 
             if (!selectChat.getValue().equals(message.getText())){
                 //pop up - you got a message
