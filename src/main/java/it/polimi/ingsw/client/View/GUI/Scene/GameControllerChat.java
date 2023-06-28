@@ -420,8 +420,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         updateMyPointsLabel();
         //all players' points
         updateAllPlayerPoints();
-        //current player
-        updateCurrPlayer();
+
         //chair
         initializeChair();
         //ranking
@@ -430,12 +429,41 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         initializeChatChoice();
         //initialize all chat
         initializeChat();
+        //initialize all common objective's point
+        initializeCommonObjPoint();
         //bookshelf
         List<String> username = clientState.getAllUsername();
         for(String x: username){
             updateBookshelf(x);
         }
+        //current player
+        initializeCurrPlayer();
     }
+
+    private void initializeCurrPlayer(){
+        String string;
+        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+            //update label
+            string="It is YOUR turn";
+            turnLabel.setText(string);
+        }
+        else {
+            //update label
+            string="It is "+clientState.getCurrentPlayer()+" turn";
+            turnLabel.setText(string);
+        }
+    }
+
+    private void initializeCommonObjPoint(){
+//        if (!clientState.getCommonMap1().isEmpty()){
+//            for (String player: clientState.getCommonMap1().keySet()){
+//
+//            }
+//        }
+    }
+
+
+
 
     /**
      * Method to initialize the board.
@@ -1844,6 +1872,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     });
             //show the selected tiles
             case ("selectedTiles") ->
+
                     Platform.runLater(this::updateSelectedTiles);
             //update bookshelf
             case ("bookshelf") ->
@@ -1926,8 +1955,25 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 Platform.runLater(() ->
                         updatePrivateChat(chatMessage));
             }
+            //update disconnect / reconnect
+            case ("notification") -> {
+                String playerDis=(String) evt.getSource();
+                String conOrDis=(String) evt.getNewValue();
+//                Platform.runLater(() ->
+//                        );
+            }
         }
     }
+
+
+//    private void updateDisconnectPlayer(String player, String type){
+//        if (type.equals("reconnection")){
+//
+//        }
+//        else if (type.equals("disconnection")){
+//
+//        }
+//    }
 
 }
 

@@ -163,6 +163,9 @@ public class Model implements TimerInterface {
         notifier.firePropertyChange(new PropertyChangeEvent(
                true, "all", "0","start" ));
 
+        //NotifyCurrPlayer
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(),"all",
+                currPlayer.getUsername(), "currPlayer"));
 
 
         //Change game state
@@ -909,8 +912,7 @@ public class Model implements TimerInterface {
                 commonObj.stream().map(CommonObjective::getPlayersNameCommonObj).toList(),"all", "0","commonObjCompleted" ));
 
         //Notify currPlayer, nextPlayer and chair player
-        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(),"all",
-                currPlayer.getUsername(), "currPlayer"));
+
 
         notifier.firePropertyChange(new PropertyChangeEvent(nextPlayer.getUsername(), "all",
                 currPlayer.getUsername(), "nextPlayer"));
