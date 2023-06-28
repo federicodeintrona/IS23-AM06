@@ -1,7 +1,6 @@
 package it.polimi.ingsw.utils.Messages;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * <p> Class for message sent by client and server which contains an arraylist of point</p>

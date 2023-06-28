@@ -1,6 +1,5 @@
 package it.polimi.ingsw.utils.Messages;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**

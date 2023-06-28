@@ -1,6 +1,5 @@
 package it.polimi.ingsw.utils.Messages;
 
-
 /**
  * <p> Class for message sent by client and server which will modify the client state</p>
  */
