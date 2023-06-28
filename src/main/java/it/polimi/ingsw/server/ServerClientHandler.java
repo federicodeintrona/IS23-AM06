@@ -176,7 +176,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     }
 
 
-    private void pingPong(){
+        private void pingPong(){
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
              Message msg = new Message();

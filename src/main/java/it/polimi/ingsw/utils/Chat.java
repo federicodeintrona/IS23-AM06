@@ -9,11 +9,11 @@ import java.util.Objects;
 
 /**
  * <p>
- *     Class that implements an ArrayList of messages creating a chat
+ *     Class that implements an ArrayList of messages creating a chat.
  * </p>
  * <p>
  *     It manages the addition and removal of messages in the Chat
- *     and it preserves them in an ArrayList that becomes the Chat's history
+ *     and it preserves them in an ArrayList that becomes the Chat's history.
  * </p>
  */
 public class Chat implements Serializable {
@@ -26,7 +26,7 @@ public class Chat implements Serializable {
     /**
      * Constructor standard that sets the maximum
      * number of messages contained in a Chat
-     * automatically to 20
+     * automatically to 20.
      */
     public Chat () {
         chatMessages = new ArrayList<>();
@@ -38,9 +38,9 @@ public class Chat implements Serializable {
     /**
      * Constructor that sets the maximum
      * number of messages contained in a
-     * Chat to @maxNumberOfMessages
+     * Chat to maxNumberOfMessages.
      *
-     * @param maxNumberOfMessages       The maximum number of messages in the chat's history
+     * @param maxNumberOfMessages       The maximum number of messages in the chat's history.
      */
     public Chat(int maxNumberOfMessages) {
         chatMessages = new ArrayList<>();
@@ -51,14 +51,14 @@ public class Chat implements Serializable {
 
     /**
      * <p>
-     *    Method that adds a new ChatMessage into the Chat
+     *    Method that adds a new ChatMessage into the Chat.
      * </p>
      * <p>
      *     In case the Chat is full it refreshes the
-     *     history of messages by deleting the oldest one
+     *     history of messages by deleting the oldest one.
      * </p>
      *
-     * @param message       ChatMessage to add
+     * @param message       ChatMessage to add.
      */
     public synchronized void addMessage(ChatMessage message) {
         // Managing the spacial case of first message in Chat
@@ -82,11 +82,11 @@ public class Chat implements Serializable {
      * </p>
      * <p>
      *     In case the Chat is full it refreshes the
-     *     history of messages by deleting the oldest one
+     *     history of messages by deleting the oldest one.
      * </p>
      *
-     * @param username      Player sending the message
-     * @param message       Message sent
+     * @param username      Player sending the message.
+     * @param message       Message sent.
      */
     public synchronized void addMessage(String username, String message) {
         // Managing the spacial case of first message in Chat
@@ -107,16 +107,16 @@ public class Chat implements Serializable {
      * <p>
      *    Method that creates a new ChatMessage from the given
      *    forwarding player, message and receiving player
-     *    and adds it into the Chat
+     *    and adds it into the Chat.
      * </p>
      * <p>
      *     In case the Chat is full it refreshes the
-     *     history of messages by deleting the oldest one
+     *     history of messages by deleting the oldest one.
      * </p>
      *
-     * @param forwardingPlayer      Player sending the message
-     * @param message       Message sent
-     * @param receivingPlayer       Player receiving the message
+     * @param forwardingPlayer      Player sending the message.
+     * @param message       Message sent.
+     * @param receivingPlayer       Player receiving the message.
      */
     public synchronized void addMessage(String forwardingPlayer, String message, String receivingPlayer) {
         // Managing the spacial case of first message in Chat
@@ -134,7 +134,7 @@ public class Chat implements Serializable {
     }
 
     /**
-     * Method that deletes the oldest message in the Chat
+     * Method that deletes the oldest message in the Chat.
      */
     private void chatRefresh () {
         chatMessages.remove(oldestMessage);
@@ -142,57 +142,57 @@ public class Chat implements Serializable {
     }
 
     /**
-     * <strong>Getter</strong> -> Gets all Chat's messages
+     * <strong>Getter</strong> -> Gets all Chat's messages.
      *
-     * @return      Chat's history
+     * @return      Chat's history.
      */
     public List<ChatMessage> getChatMessages () {return chatMessages;}
 
     /**
-     * <strong>Getter</strong> -> Gets the position of the oldest message
+     * <strong>Getter</strong> -> Gets the position of the oldest message.
      *
-     * @return      Integer representing the position in the ArrayList of the oldest message
+     * @return      <i>Integer</i> representing the position in the ArrayList of the oldest message.
      */
     public int getOldestMessage() {return oldestMessage;}
 
     /**
-     * Method that updates the number representing the un read message
+     * Method that updates the number representing the un read message.
      */
     public synchronized void updateUnReadMessages () {unReadMessages++;}
 
     /**
      * Method that resets to zero the
-     * number representing the un read message
+     * number representing the un read message.
      */
     public synchronized void resetUnReadMessages () {unReadMessages = 0;}
 
     /**
-     * <strong>Getter</strong> -> Gets the number of unread messages
+     * <strong>Getter</strong> -> Gets the number of unread messages.
      *
-     * @return      Number of unread messages
+     * @return      Number of unread messages.
      */
     public int getUnReadMessages() {return unReadMessages;}
 
     /**
-     * <strong>Getter</strong> -> Gets the maximum number of messages allowed in the Chat's history
+     * <strong>Getter</strong> -> Gets the maximum number of messages allowed in the Chat's history.
      *
-     * @return      Maximum number of messages
+     * @return      Maximum number of messages.
      */
     public int getMaxNumberOfMessages() {return maxNumberOfMessages;}
 
     /**
-     * <strong>Getter</strong> -> Gets boolean used to check if the Chat is open on screen
+     * <strong>Getter</strong> -> Gets boolean used to check if the Chat is open on screen.
      *
-     * @return      Boolean used to check if the Chat is open on screen
+     * @return      <i>boolean</i> used to check if the Chat is open on screen.
      */
     public boolean ChatIsEnable() {
         return chatIsEnable;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the boolean ChatIsEnable to ChatIsEnable
+     * <strong>Setter</strong> -> Sets the boolean ChatIsEnable to ChatIsEnable.
      *
-     * @param chatIsEnable      Boolean used to set chatIsEnable
+     * @param chatIsEnable      Boolean used to set chatIsEnable.
      */
     public void setChatIsEnable(boolean chatIsEnable) {
         this.chatIsEnable = chatIsEnable;
@@ -200,10 +200,10 @@ public class Chat implements Serializable {
 
     /**
      * Method that does Override of equals in order
-     * to properly confront 2 Chat-like structures
+     * to properly confront 2 Chat-like structures.
      *
-     * @param o     Chat-type Object to analyze
-     * @return      True or false depending on the result of the confrontation
+     * @param o     Chat-type Object to analyze.
+     * @return      <i>true</i> or <i>false</i> depending on the result of the confrontation.
      */
     @Override
     public boolean equals(Object o) {
@@ -219,9 +219,9 @@ public class Chat implements Serializable {
 
     /**
      * Method defined in the class Object that allows to extend the
-     * "equals" confrontation to hash-type structures
+     * "equals" confrontation to hash-type structures.
      *
-     * @return      Returns an entire value that represents the hash code of the object
+     * @return      Returns an entire value that represents the hash code of the object.
      */
     @Override
     public int hashCode() {

@@ -106,7 +106,7 @@ public class MyShelfieApplication extends Application{
      * Method to verify if the user insert the correct choice (--server or --client).
      *
      * @param p0 the string that contains the choice.
-     * @return a string containing Error if there is an error, otherwise contains the choice (Server or Client).
+     * @return a <i>string</i> containing Error if there is an error, otherwise contains the choice (Server or Client).
      */
     private static String correctInput(String p0){
         if (p0.equals("--server")){

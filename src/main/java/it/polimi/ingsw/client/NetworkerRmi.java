@@ -21,7 +21,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Class that regulates the rmi_Client
+ * Class that regulates the rmi_Client.
  */
 public class NetworkerRmi implements Networker, TimerInterface {
     private static int port;
@@ -42,7 +42,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
     /**
      * Constructor that sets the rmiPort via Json
-     * and create an instance of ClientState
+     * and create an instance of ClientState.
      */
     public NetworkerRmi()  {
         JsonReader config;
@@ -63,9 +63,9 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
     /**
      * Constructor that sets the rmiPort via Json
-     * and sets the instance of ClientState
+     * and sets the instance of ClientState.
      *
-     * @param state     instance of ClientState to set
+     * @param state     instance of ClientState to set.
      */
     public NetworkerRmi(ClientState state)  {
         JsonReader config;
@@ -83,10 +83,10 @@ public class NetworkerRmi implements Networker, TimerInterface {
     /**
      * Constructor that sets the rmiPort via Json
      * and sets the instance of ClientState and
-     * the string containing the serverIp
+     * the string containing the serverIp.
      *
-     * @param state     Instance of ClientState to set
-     * @param serverIP      String containing the serverIp
+     * @param state     Instance of ClientState to set.
+     * @param serverIP      String containing the serverIp.
      */
     public NetworkerRmi(ClientState state,String serverIP)  {
         JsonReader config;
@@ -103,7 +103,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
     }
 
     /**
-     * Method to initialize an RMI connection
+     * Method to initialize an RMI connection.
      */
     public boolean initializeConnection () {
         try {
@@ -123,9 +123,9 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
     /**
      * Asks the client to enter a valid username. Once he has
-     * done the client gets added to the lobby
+     * done the client gets added to the lobby.
      *
-     * @param username  Message from the View containing the username
+     * @param username  Message from the View containing the username.
      */
     public void firstConnection (Message username) {
         IntMessage message1;
@@ -161,7 +161,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
      * the controller method passing it the required arguments.
      * After saving the server's response it sends it back to the View.
      *
-     * @param numberOfPlayers   Message to cast from the View
+     * @param numberOfPlayers   Message to cast from the View.
      */
     public void numberOfPlayersSelection(Message numberOfPlayers) {
         IntMessage tempMessage = (IntMessage) numberOfPlayers;
@@ -183,7 +183,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
      * the controller method passing it the required arguments.
      * After saving the server's response it sends it back to the View.
      *
-     * @param tiles     Message to cast from the View
+     * @param tiles     Message to cast from the View.
      */
     public void removeTilesFromBoard(Message tiles) {
         PointsMessage tempMessage = (PointsMessage) tiles;
@@ -201,7 +201,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
      * the controller method passing it the required arguments.
      * After saving the server's response it sends it back to the View.
      *
-     * @param ints  Message to cast from the View
+     * @param ints  Message to cast from the View.
      */
     public void switchTilesOrder(Message ints) {
         IntArrayMessage tempMessage = (IntArrayMessage) ints;
@@ -220,7 +220,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
      * the controller method passing it the required arguments.
      * After saving the server's response it sends it back to the View.
      *
-     * @param column    Message to cast from the View
+     * @param column    Message to cast from the View.
      */
     public void addTilesToBookshelf (Message column) {
         IntMessage tempMessage = (IntMessage) column;
@@ -235,8 +235,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the user interface
-     * @param view user interface created by the clientbase
+     * <strong>Setter</strong> -> Sets the user interface.
+     * @param view user interface created by the clientbase.
      */
     @Override
     public void setView(View view) {
@@ -250,7 +250,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
      * public chat, passing it the required arguments.
      * After saving the server's response it sends it back to the View.
      *
-     * @param message   Message to cast from the View
+     * @param message   Message to cast from the View.
      */
     public void chat (Message message) {
         ChatMessage tempMessage = (ChatMessage) message;
@@ -274,6 +274,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
         }
     }
 
+    //TODO javadoc FEDE
     private void pingPong(){
         ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
@@ -308,8 +309,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
     }
 
     /**
-     * Method to update countdown for skipped ping message
-     * @return skipped ping message
+     * Method to update countdown for skipped ping message.
+     * @return skipped ping message.
      */
     @Override
     public int updateTime() {
@@ -318,8 +319,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the error message
-     * @return error message
+     * <strong>Getter</strong> -> Returns the error message.
+     * @return error message.
      */
     @Override
     public String getErrorMessage() {
@@ -328,18 +329,18 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
 
     /**
-     * <Strong>Setter</Strong> -> Set the serverIp
+     * <Strong>Setter</Strong> -> Set the serverIp.
      *
-     * @param serverIP      String containing the serverIp
+     * @param serverIP      String containing the serverIp.
      */
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
     }
 
     /**
-     * Method that regulates the proper closing
-     * of the program during logout
-     * @param closing       closing message
+     * Method that regulates the proper closing.
+     * of the program during logout.
+     * @param closing       closing message.
      */
     @Override
     public void closeProgram(Message closing) {

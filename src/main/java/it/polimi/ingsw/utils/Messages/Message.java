@@ -11,36 +11,36 @@ public class Message implements Serializable {
     private MessageTypes type;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Message() {
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the content of the message
-     * @param text text content of the message
+     * <strong>Setter</strong> -> Sets the content of the message.
+     * @param text text content of the message.
      */
     public void setText(String text) {
         this.text = text;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the content of the message
-     * @return text content of the message
+     * <strong>Getter</strong> -> Returns the content of the message.
+     * @return text content of the message.
      */
     public String getText() { return text; }
 
     /**
-     * <strong>Setter</strong> -> Sets the type of the message
-     * @param type type of the message
+     * <strong>Setter</strong> -> Sets the type of the message.
+     * @param type type of the message.
      */
     public void setType(MessageTypes type) {
         this.type = type;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the content of the message
-     * @return type of the message
+     * <strong>Getter</strong> -> Returns the content of the message.
+     * @return type of the message.
      */
     public MessageTypes getType() {
         return type;

@@ -61,7 +61,7 @@ public class Player {
 
     /**
      * <strong>Getter</strong> -> returns the bookshelf.
-     * @return Bookshelf of the player.
+     * @return <i>Bookshelf</i> of the player.
      */
     public Bookshelf getBookshelf(){
         return bookshelf;
@@ -126,7 +126,7 @@ public class Player {
 
     /**
      * <strong>Getter</strong> -> returns personal objective of the player.
-     * @return Personal objective of the player.
+     * @return <i>PersonalObjective</i> of the player.
      */
 
     public PersonalObjective getPersonalObjective() {

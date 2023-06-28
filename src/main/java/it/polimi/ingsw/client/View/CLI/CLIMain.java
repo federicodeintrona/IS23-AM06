@@ -83,52 +83,52 @@ public class CLIMain implements View {
 
 
     /**
-     * <strong>Getter</strong> --> Returns the lock Object.
+     * <strong>Getter</strong> -> Returns the lock Object.
      *
-     * @return the lock on which to make the locks, must be common to CLIPrint, ReadShell and ClientState.
+     * @return the <i>lock</i> on which to make the locks, must be common to CLIPrint, ReadShell and ClientState.
      */
     public Object getLock() {
         return lock;
     }
 
     /**
-     * <strong>Getter</strong> --> Returns the ClientState.
+     * <strong>Getter</strong> -> Returns the ClientState.
      *
-     * @return the ClientState.
+     * @return the <i>ClientState</i>.
      */
     public ClientState getClientState() {
         return clientState;
     }
 
     /**
-     * <strong>Getter</strong> --> Returns the CLIPrint.
+     * <strong>Getter</strong> -> Returns the CLIPrint.
      *
-     * @return the CLIPrint.
+     * @return the <i>CLIPrint</i>.
      */
     public CLIPrint getCliPrint() {
         return cliPrint;
     }
 
     /**
-     * <strong>Getter</strong> --> Returns the ReadShell.
+     * <strong>Getter</strong> -> Returns the ReadShell.
      *
-     * @return the ReadShell
+     * @return the <i>ReadShell</i>.
      */
     public ReadShell getReadShell() {
         return readShell;
     }
 
     /**
-     * <strong>Getter</strong> --> Returns the ChatHandler
+     * <strong>Getter</strong> -> Returns the ChatHandler
      *
-     * @return the ChatHandler.
+     * @return the <i>ChatHandler</i>.
      */
     public ChatHandler getChatHandler () { return chatHandler; }
 
     /**
-     * <strong>Getter</strong> --> Returns the Networker.
+     * <strong>Getter</strong> -> Returns the Networker.
      *
-     * @return the Networker, class to which the client should send commands to be sent to the server.
+     * @return the <i>Networker</i>, class to which the client should send commands to be sent to the server.
      */
     public Networker getNet() {
         return net;
@@ -137,7 +137,7 @@ public class CLIMain implements View {
 
 
     /**
-     * <strong>Setter</strong> --> Sets true if chat is opened.
+     * <strong>Setter</strong> -> Sets true if chat is opened.
      *
      * @param openChat sets true if chat is open, false in other cases.
      */

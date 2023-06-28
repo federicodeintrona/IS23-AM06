@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.View.CLI;
 
+
+//TODO non ci possono essere più vincitori
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.MessageTypes;
@@ -8,11 +10,11 @@ import java.util.Scanner;
 
 /**
  * <p>
- *     Class to manage the Chat in CLI
+ *     Class to manage the Chat in CLI.
  * </p>
  * <p>
  *     Its job is to create, forward, receive and print
- *     all types of messages destined to the Chat
+ *     all types of messages destined to the Chat.
  * </p>
  */
 public class ChatHandler {
@@ -21,11 +23,11 @@ public class ChatHandler {
     private final CLIPrint cliPrint;
 
     /**
-     * Constructor that get called by CLIMain
+     * Constructor that get called by CLIMain.
      *
-     * @param chatController        ChatController saved in ClientState
-     * @param cliMain       Instance of cliMain
-     * @param cliPrint        Instance of cliPrint
+     * @param chatController        ChatController saved in ClientState.
+     * @param cliMain       Instance of cliMain.
+     * @param cliPrint        Instance of cliPrint.
      */
     public ChatHandler(ChatController chatController, CLIMain cliMain, CLIPrint cliPrint) {
         this.chatController = chatController;
@@ -34,7 +36,7 @@ public class ChatHandler {
     }
 
     /**
-     * Method to clear the shell
+     * Method to clear the shell.
      */
     public void clearCLI(){
         System.out.println(ColorCLI.CLEAR);
@@ -43,14 +45,14 @@ public class ChatHandler {
 
     /**
      * <p>
-     *     Method to menage the PublicChat
+     *     Method to menage the PublicChat.
      * </p>
      * <p>
-     *     The scanner gets the message written by the player and saves it in str
+     *     The scanner gets the message written by the player and saves it in str.
      *     Depending on the first character of str the method has 2 behavior:
      *     <ul>
-     *         <li>to create a ChatMessage to send</li>
-     *         <li>to call one of the chat's method</li>
+     *         <li>to create a ChatMessage to send;</li>
+     *         <li>to call one of the chat's method.</li>
      *     </ul>
      * </p>
      */
@@ -95,14 +97,14 @@ public class ChatHandler {
 
     /**
      * <p>
-     *     Method to menage the PrivateChat
+     *     Method to menage the PrivateChat.
      * </p>
      * <p>
-     *     The scanner gets the message written by the player and saves it in str
+     *     The scanner gets the message written by the player and saves it in str.
      *     Depending on the first character of str the method has 2 behavior:
      *     <ul>
-     *         <li>to create a ChatMessage to send</li>
-     *         <li>to call one of the chat's method</li>
+     *         <li>to create a ChatMessage to send;</li>
+     *         <li>to call one of the chat's method.</li>
      *     </ul>
      * </p>
      *
@@ -170,14 +172,14 @@ public class ChatHandler {
     /**
      * <p>
      *      Method that helps the PrivateChat by getting via scanner
-     *      the username of the player you want to chat with
+     *      the username of the player you want to chat with.
      * </p>
      * <p>
      *     During a 2 players game it automatically
-     *     returns the other player without asking
+     *     returns the other player without asking.
      * </p>
      *
-     * @return      String containing username
+     * @return      <i>String</i> containing username.
      */
     private String privateChatHandler () {
         int numOfPlayers = cliMain.getClientState().getAllUsername().size();
@@ -206,9 +208,9 @@ public class ChatHandler {
 
     /**
      * Method that creates a ChatMessage
-     * destined for the PublicChat
+     * destined for the PublicChat.
      *
-     * @param string        The message to forward
+     * @param string        The message to forward.
      */
     private void createChatMessage(String string) {
 
@@ -222,10 +224,10 @@ public class ChatHandler {
 
     /**
      * Method that creates a ChatMessage
-     * destined for the PrivateChat
+     * destined for the PrivateChat.
      *
-     * @param string        The message to forward
-     * @param receivingPlayer       The player who the message is destined to
+     * @param string        The message to forward.
+     * @param receivingPlayer       The player who the message is destined to.
      */
     private void createChatMessage(String string, String receivingPlayer) {
 
@@ -238,7 +240,7 @@ public class ChatHandler {
     }
 
     /**
-     * Method that prepares the CLI in order to start the PublicChat
+     * Method that prepares the CLI in order to start the PublicChat.
      */
     public void settingForPublicChat () {
         // Printing publicChat's history
@@ -249,7 +251,7 @@ public class ChatHandler {
     }
 
     /**
-     * Method that prepares the CLI in order to start the PrivateChat
+     * Method that prepares the CLI in order to start the PrivateChat.
      */
     public void settingForPrivateChat () {
         String username = privateChatHandler();
@@ -264,9 +266,9 @@ public class ChatHandler {
 
     /**
      * Method to manage the arriving of a new message
-     * from server destined to the PublicChat
+     * from server destined to the PublicChat.
      *
-     * @param message       the ChatMessage to analyze
+     * @param message       the ChatMessage to analyze.
      */
     public void newPublicMessage(ChatMessage message) {
         if (chatController.getPublicChat().ChatIsEnable()) {
@@ -284,9 +286,9 @@ public class ChatHandler {
 
     /**
      * Method to manage the arriving of a new message
-     * from server destined to the PrivateChat
+     * from server destined to the PrivateChat.
      *
-     * @param message       the ChatMessage to analyze
+     * @param message       the ChatMessage to analyze.
      */
     public void newPrivateMessage(ChatMessage message) {
         String forwardingPlayer = message.getText();
@@ -312,7 +314,7 @@ public class ChatHandler {
     }
 
     /**
-     * Method that helps to visualize the ending of the PublicChat
+     * Method that helps to visualize the ending of the PublicChat.
      */
     private void endOfChat () {
         System.out.println("The PUBLIC CHAT is now closed ________________________________");
@@ -322,7 +324,7 @@ public class ChatHandler {
     }
 
     /**
-     * Method that helps to visualize the ending of the PrivateChat
+     * Method that helps to visualize the ending of the PrivateChat.
      */
     private void endOfChat (String username) {
         System.out.println("The PRIVATE CHAT with " + username + "is now closed _________________________");

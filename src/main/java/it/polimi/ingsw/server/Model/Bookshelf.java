@@ -41,7 +41,7 @@ public class Bookshelf {
 
     /**
     * <strong>Getter</strong> -> Returns the matrix of tiles.
-    * @return The matrix of tiles.
+    * @return The <i>Matrix</i> of tiles.
      **/
     public Matrix getTiles(){
         return tiles;
@@ -56,8 +56,8 @@ public class Bookshelf {
     /**
      * Method to check if the column given is full of tiles.
      * <p><strong>REQUIRES:</strong> choice between 1 and 6 AND column between 0 and 4.</p>
-     * @param choice number of tiles chosen
-     * @param column index of the colum chosen
+     * @param choice number of tiles chosen.
+     * @param column index of the colum chosen.
      * @return <i>true</i> if the column is full, <i>false</i> if it isn't.
      */
     public boolean checkColumns(int choice, int column){
@@ -66,14 +66,14 @@ public class Bookshelf {
 
     /**
      * Method to check if the matrix is full.
-     * @return <i>true</i> if the matrix is full, <i>false</i> if it isn't
+     * @return <i>true</i> if the matrix is full, <i>false</i> if it isn't.
      */
     public boolean checkEndGame(){
         return num_of_tiles == maxNumberOfTiles;
     }
      /**
-     * Method to check if the matrix is empty
-     * @return <i>true</i> if the matrix is empty, <i>false</i> if it isn't
+     * Method to check if the matrix is empty.
+     * @return <i>true</i> if the matrix is empty, <i>false</i> if it isn't.
      */
     public boolean checkEmptyBoard(){
         return num_of_tiles == 0;
@@ -93,8 +93,8 @@ public class Bookshelf {
     }
 
     /**
-     * Method to check if the matrix is empty
-     * @return true if the matrix is empty, false if it isn't
+     * Method to check if the matrix is empty.
+     * @return <i>true</i> if the matrix is empty, <i>false</i> if it isn't.
      */
     public boolean isEmpty(){
         for (int j=0; j<Define.NUMBEROFCOLUMNS_BOOKSHELF.getI(); j++){

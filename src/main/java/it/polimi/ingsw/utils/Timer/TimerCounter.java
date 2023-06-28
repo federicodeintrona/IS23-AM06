@@ -11,7 +11,7 @@ public class TimerCounter extends TimerTask {
     private static final int timeout = 20;
 
     /**
-     * <p>Initialize client and construct the timer</p>
+     * <p>Initialize client and construct the timer.</p>
      * @param client The object that extends TimerInterface.
      */
     public TimerCounter(TimerInterface client) {
@@ -20,7 +20,7 @@ public class TimerCounter extends TimerTask {
 
 
     /**
-     * <p>Method that implements a countdown using a counter from the TimerInterface class</p>
+     * <p>Method that implements a countdown using a counter from the TimerInterface class.</p>
      * <p>If the counter reaches 20 it calls the disconnect method from the TimerInterface and
      * prints the error message. It is an override of the TimerTask run method.</p>
      */

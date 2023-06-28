@@ -24,17 +24,17 @@ import java.util.List;
  * <p>Class used to control the evolution of the game.</p>
  * <p>It holds and manages all the information about a single game:</p>
  * <ul>
- *     <li>Board,</li>
- *     <li>Bookshelves,</li>
- *     <li>Players (and their points),</li>
- *     <li>Chat logs,</li>
+ *     <li>board;</li>
+ *     <li>bookshelves;</li>
+ *     <li>players (and their points);</li>
+ *     <li>chat logs;</li>
  *     <li>etc.</li>
  * </ul>
  * <p>The model's public methods allow the players to modify the state of game by:
  *      <ul>
- *          <li>Removing tiles from the board;</li>
- *          <li>Changing the order of the selected tiles;</li>
- *          <li>Adding the tiles to their bookshelves.</li>
+ *          <li>removing tiles from the board;</li>
+ *          <li>changing the order of the selected tiles;</li>
+ *          <li>adding the tiles to their bookshelves.</li>
  *      </ul>
  *
  *     <p>
@@ -109,7 +109,7 @@ public class Model implements TimerInterface {
 
     /**
      * <p>Method to initialize the board and the objectives:</p>
-     * Create and initialize the board,initialize common and personal objectives,
+     * create and initialize the board,initialize common and personal objectives,
      * add the views as change listeners,initialize the arrays of points.
      */
     public void  initialization()  {
@@ -308,7 +308,7 @@ public class Model implements TimerInterface {
 
     /**
      * <p>Method to swap the order of the array of selected tiles to the order describes in the array ints.</p>
-     *       ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
+     *       ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y].
      * @param ints  The new order of the array.
      * @param player  The player requesting the move.
      * @throws MoveNotPossible The game is not in the right state.
@@ -344,9 +344,9 @@ public class Model implements TimerInterface {
     /**
      * <p>Method that updates and sets the current player's points.</p>
      * <ul>
-     *  <il>Vicinity points,</il>
-     *  <il>Common objective points,</il>
-     *  <il>Personal objective points.</il>
+     *  <il>Vicinity points;</il>
+     *  <il>common objective points;</il>
+     *  <il>personal objective points.</il>
      * </ul>
      */
     private void updatePoints(){
@@ -406,7 +406,7 @@ public class Model implements TimerInterface {
      * <ul>
      *  <il>Update the points of the current player;</il>
      *  <il>select the next player and calls the endGame function if the last turn of the game has been played;</il>
-     *  <il>Also resets the board when needed.</il>
+     *  <il>also resets the board when needed.</il>
      * </ul>
      */
     private void nextTurn(){
@@ -919,7 +919,7 @@ public class Model implements TimerInterface {
 
     /**
      * <strong>Getter</strong>-> Returns the board.
-     * @return the board.
+     * @return the <i>Board</i>.
      */
     public  Board getBoard() {
         return board;
@@ -943,7 +943,7 @@ public class Model implements TimerInterface {
 
     /**
      * <strong>Getter</strong>-> Returns the common objective of the game.
-     * @return ArrayList of all the common objectives.
+     * @return <i>ArrayList</i> of all the common objectives.
      */
     public ArrayList<CommonObjective> getCommonObj() {
         return commonObj;
@@ -984,7 +984,7 @@ public class Model implements TimerInterface {
 
     /**
      * <strong>Getter</strong> -> Returns the selectedTiles array.
-     * @return selectedTiles ArrayList.
+     * @return selectedTiles <i>ArrayList</i>.
      */
     public ArrayList<Tile> getSelectedTiles() {
         return selectedTiles;

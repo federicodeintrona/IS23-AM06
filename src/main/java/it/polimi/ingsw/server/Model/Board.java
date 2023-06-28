@@ -251,7 +251,7 @@ public class Board {
      *
      * @param i the index of row.
      * @param j the index of column.
-     * @return <i>true</i> if there is left adjacency, else in the other case.
+     * @return <i>true</i> if there is left adjacency, <i>false</i> in the other case.
      */
     private boolean leftAdjacency(int i, int j){
         return gamesBoard.getTile(i, j - 1).equals(Tiles.NOT_ALLOWED) ||
@@ -263,7 +263,7 @@ public class Board {
      *
      * @param i the index of row.
      * @param j the index of column.
-     * @return <i>true</i> if there is right adjacency, else in the other case.
+     * @return <i>true</i> if there is right adjacency, <i>false</i> in the other case.
      */
     private boolean rightAdjacency(int i, int j){
         return gamesBoard.getTile(i, j + 1).equals(Tiles.NOT_ALLOWED) ||
@@ -275,7 +275,7 @@ public class Board {
      *
      * @param i the index of row.
      * @param j the index of column.
-     * @return <i>true</i> if there is upper adjacency, else in the other case.
+     * @return <i>true</i> if there is upper adjacency, <i>false</i> in the other case.
      */
     private boolean upperAdjacency(int i, int j){
         return gamesBoard.getTile(i - 1, j).equals(Tiles.NOT_ALLOWED) ||
@@ -287,7 +287,7 @@ public class Board {
      *
      * @param i the index of row.
      * @param j the index of column.
-     * @return <i>true</i> if there is bottom adjacency, else in the other case.
+     * @return <i>true</i> if there is bottom adjacency, <i>false</i> in the other case.
      */
     private boolean bottomAdjacency(int i, int j){
         return gamesBoard.getTile(i + 1, j).equals(Tiles.NOT_ALLOWED) ||
@@ -298,7 +298,7 @@ public class Board {
      * Method that verify the left adjacency.
      *
      * @param tile the position to verify.
-     * @return a <i>Point</i> with the left position of that given, <i>null</i> if the left position is EMPTY or NOTALLOWED
+     * @return a <i>Point</i> with the left position of that given, <i>null</i> if the left position is EMPTY or NOTALLOWED.
      */
     private Point leftAdjacency(Point tile){
         int x=tile.x;
@@ -314,7 +314,7 @@ public class Board {
      * Method that verify the right adjacency.
      *
      * @param tile the position to verify.
-     * @return a <i>Point</i> with the right position of that given, <i>null</i> if the right position is EMPTY or NOTALLOWED
+     * @return a <i>Point</i> with the right position of that given, <i>null</i> if the right position is EMPTY or NOTALLOWED.
      */
     private Point rightAdjacency(Point tile){
         int x=tile.x;
@@ -330,7 +330,7 @@ public class Board {
      * Method that verify the upper adjacency.
      *
      * @param tile the position to verify.
-     * @return a <i>Point</i> with the upper position of that given, <i>null</i> if the upper position is EMPTY or NOTALLOWED
+     * @return a <i>Point</i> with the upper position of that given, <i>null</i> if the upper position is EMPTY or NOTALLOWED.
      */
     private Point upperAdjacency(Point tile){
         int x=tile.x;
@@ -346,7 +346,7 @@ public class Board {
      * Method that verify the bottom adjacency.
      *
      * @param tile the position to verify.
-     * @return a <i>Point</i> with the bottom position of that given, <i>null</i> if the bottom position is EMPTY or NOTALLOWED
+     * @return a <i>Point</i> with the bottom position of that given, <i>null</i> if the bottom position is EMPTY or NOTALLOWED.
      */
     private Point bottomAdjacency(Point tile){
         int x=tile.x;
