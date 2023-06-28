@@ -1890,6 +1890,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 //set old common objective points
                 clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
             }
+            // TODO errore invio messaggi chat subito doppo il caricamento della partita (dopo funziona normale)
             //update public chat
             case ("publicChat") -> {
                 //catch chatMessage
