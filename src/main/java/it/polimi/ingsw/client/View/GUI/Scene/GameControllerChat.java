@@ -675,20 +675,19 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
      * Method to initialize all player's common objective points.
      */
     private void initializeCommonObjPoint(){
-        if (!clientState.getCommonMap1().isEmpty()){
+        if (clientState.getCommonMap1()!=null){
             for (String player: clientState.getCommonMap1().keySet()){
                 String path = "/images/scoring_tokens/scoring_"+clientState.getCommonMap1().get(player)+".jpg";
                 Objects.requireNonNull(catchCommonObjPointONE(player)).setImage(getImage(path));
             }
         }
-        if (!clientState.getCommonMap2().isEmpty()){
+        if (clientState.getCommonMap2()!=null){
             for (String player: clientState.getCommonMap1().keySet()){
                 String path = "/images/scoring_tokens/scoring_"+clientState.getCommonMap1().get(player)+".jpg";
                 Objects.requireNonNull(catchCommonObjPointTWO(player)).setImage(getImage(path));
             }
         }
     }
-
 
 
 
@@ -2020,25 +2019,22 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             case ("notification") -> {
                 String playerDis=(String) evt.getSource();
                 String conOrDis=(String) evt.getNewValue();
-//                Platform.runLater(() ->
-//                        );
+                Platform.runLater(() ->
+                        updateDisconnectPlayer(playerDis, conOrDis));
             }
         }
     }
 
 
-//    private void updateDisconnectPlayer(String player, String type){
-//        if (type.equals("reconnection")){
-//
-//        }
-//        else if (type.equals("disconnection")){
-//
-//        }
-//    }
+    private void updateDisconnectPlayer(String player, String type){
+        if (type.equals("reconnection")){
+            //TODO rimuovere opacità la bookshelf, personal, common point, username label, point label
+            catchOtherPlayerBookshelfGrid(player);
+        }
+        else if (type.equals("disconnection")){
+            //TODO opacizzare la bookshelf, personal, common point, username label, point label
+            catchOtherPlayerBookshelfGrid(player);
+        }
+    }
 
 }
-
-
-//TODO mostrare popup hai n nuovi messaggi
-
-//TODO controllare se può rimuovere il numero di tessere che sta cercando di rimuovere

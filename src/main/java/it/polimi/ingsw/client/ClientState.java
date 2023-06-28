@@ -654,7 +654,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
 
 
-
+//TODO javadoc FEDE
     public void setCommonObjMaps(ArrayList<HashMap<String, Integer>> list){
         synchronized (viewLock) {
             commonMap1 = list.get(0);
@@ -739,7 +739,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
     }
 
-//TODO javadoc FEDE
+//TODO javadoc ALE
     public PropertyChangeSupport getNotifier() {
         return notifier;
     }
@@ -754,5 +754,4 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         return commonMap2;
     }
 
-    //TODO javadoc qualcuno
 }

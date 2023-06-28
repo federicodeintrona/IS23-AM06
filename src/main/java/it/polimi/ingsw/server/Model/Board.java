@@ -195,6 +195,7 @@ public class Board {
         }
     }
 
+    //TODO togliere return e mettere if con dentro true
     /**
      * Method to return if the board needs to be reset (all remaining tiles have no adjacent ones).
      *
