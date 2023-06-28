@@ -160,6 +160,8 @@ public class Reader extends Thread implements TimerInterface {
                     clientState.setGameCommonObjective(new ArrayList<>((List) message.getContent()));
             case ("commonObjPoints") ->
                     clientState.setCommonObjectivePoints(new ArrayList<>((List) message.getContent()));
+            case ("commonObjCompl") ->
+                    clientState.setCommonObjMaps(new ArrayList<>((List) message.getContent()));
             case ("publicPoints") ->
                     clientState.setAllPublicPoints(message.getText(), (int) message.getContent());
             case ("selectedTiles") ->
@@ -167,7 +169,6 @@ public class Reader extends Thread implements TimerInterface {
             case ("personalObj") ->
                     clientState.setMyPersonalObjective((HashMap<Point, Tiles>) message.getContent());
             case ("personalObjNum")-> {
-                out.println((int) message.getContent());
                 clientState.setMyPersonalObjectiveInt((int) message.getContent());
             }
             case ("privatePoints") ->

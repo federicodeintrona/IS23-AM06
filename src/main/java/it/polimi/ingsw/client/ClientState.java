@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 
@@ -61,6 +62,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      * Actual common objective points - the first one is associated with the first one of gameCommonObjective and the second also.
      */
     private ArrayList<Integer> commonObjectivePoints;
+
+    private  HashMap<Player, Integer> commonMap1;
+
+    private  HashMap<Player, Integer> commonMap2;
+
     /**
      * Old common objective points - the points before the actual update.
      */
@@ -643,6 +649,21 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
         notifier.firePropertyChange(
                 new PropertyChangeEvent(this,"publicPoints",username,point));
+    }
+
+
+
+
+
+
+    public void setCommonObjMaps(ArrayList<HashMap<Player, Integer>> list){
+        synchronized (viewLock) {
+            commonMap1 = list.get(0);
+            commonMap2 = list.get(1);
+        }
+
+        notifier.firePropertyChange(
+                new PropertyChangeEvent(this,"commonObjCompl",commonMap1,commonMap2));
     }
 
 

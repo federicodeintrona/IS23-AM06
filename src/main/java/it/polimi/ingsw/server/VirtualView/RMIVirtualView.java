@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
+import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.Timer.RMITimer;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Matrix;
@@ -71,6 +72,9 @@ public class RMIVirtualView implements VirtualView{
                     }
                     case ("commonObjPoints") -> {
                         clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) evt.getSource()));
+                    }
+                    case ("commonObjCompl") -> {
+                        clientState.setCommonObjMaps(new ArrayList<>((List<HashMap<Player, Integer>>) evt.getSource()));
                     }
                     case ("personalObj") -> {
                         clientState.setMyPersonalObjective((HashMap<Point, Tiles>) evt.getSource());

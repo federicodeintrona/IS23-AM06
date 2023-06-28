@@ -863,6 +863,11 @@ public class Model implements TimerInterface {
         //Notify commonObjectivesPoints
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getPoints).toList(), p.getUsername(), "0","commonObjPoints" ));
+        //Notify playerWhoCompletedCommonObj
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getPlayersWhoCompletedComObj).toList(), p.getUsername(), "0","commonObjCompleted" ));
+
+
 
         //Notify currPlayer and nextPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
@@ -895,6 +900,10 @@ public class Model implements TimerInterface {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getPoints).toList(), "all", "0","commonObjPoints" ));
 
+        //Notify playerWhoCompletedCommonObj
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                commonObj.stream().map(CommonObjective::getPlayersWhoCompletedComObj).toList(),"all", "0","commonObjCompleted" ));
+
         //Notify currPlayer, nextPlayer and chair player
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(),"all",
                 currPlayer.getUsername(), "currPlayer"));
@@ -906,8 +915,9 @@ public class Model implements TimerInterface {
                 chairPlayer.getUsername(), "chairPlayer"));
 
     }
-    //GETTERS AND SETTERS
 
+
+    //GETTERS AND SETTERS
 
     /**
      * <strong>Getter</strong>-> Returns the array of all players.

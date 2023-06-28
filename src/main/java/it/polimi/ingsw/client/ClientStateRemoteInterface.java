@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
@@ -196,4 +197,11 @@ public interface ClientStateRemoteInterface extends Remote {
      * @throws RemoteException In case of error during the rmi connection process
      */
     void setOldCommonObjectivePoints(ArrayList<Integer> oldCommonObjectivePoints) throws RemoteException;
+
+    /**
+     * Sets the map of the player who completed the common objectives.
+     * @param list The list of the maps of the player who completed the common objectives.
+     * @throws RemoteException  In case of error during the rmi connection process
+     */
+    void setCommonObjMaps(ArrayList<HashMap<Player, Integer>> list) throws RemoteException;
 }
