@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.*;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 
@@ -726,7 +725,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * Method to check if is possible to add the number of selected tiles in a column
      * @param numTilesSelected number of tiles selected
-     * @return array with the usable columns
+     * @return the <i>ArrayList</i> with the usable columns
      */
     public ArrayList<Integer> checkFreeColumn(int numTilesSelected){
         synchronized (viewLock) {
@@ -750,15 +749,10 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         return commonMap1;
     }
 
-    public void setCommonMap1(HashMap<String, Integer> commonMap1) {
-        this.commonMap1 = commonMap1;
-    }
 
     public HashMap<String, Integer> getCommonMap2() {
         return commonMap2;
     }
 
-    public void setCommonMap2(HashMap<String, Integer> commonMap2) {
-        this.commonMap2 = commonMap2;
-    }
+    //TODO javadoc qualcuno
 }
