@@ -509,7 +509,7 @@ class ChatHandlerTest {
         String username1 = "yoda";
         String username2 = "obi-wan";
         String message = "may the force be with you";
-        String expectedOutput = ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + ": may the force be with you\n";
+        String expectedOutput = ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + ": may the force be with you" + System.lineSeparator();
         ChatMessage chatMessage = new ChatMessage(username1, message);
 
         publicChat.setChatIsEnable(true);
