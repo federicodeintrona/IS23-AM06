@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client.View.CLI;
 
-
-//TODO non ci possono essere più vincitori
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Messages.MessageTypes;

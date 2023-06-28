@@ -397,6 +397,33 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
         }
     }
 
+    /**
+     * <strong>Getter</strong> -> Return all players that complete the 1st common objective.
+     *
+     * @return the <i>HashMap</i> of all players that complete the 1st common objective.
+     */
+    public HashMap<String, Integer> getCommonMap1() {
+        return commonMap1;
+    }
+
+    /**
+     * <strong>Getter</strong> -> Return all players that complete the 2nd common objective.
+     *
+     * @return the <i>HashMap</i> of all players that complete the 2nd common objective.
+     */
+    public HashMap<String, Integer> getCommonMap2() {
+        return commonMap2;
+    }
+
+    /**
+     * <strong>Getter</strong> -> Return the notifier.
+     *
+     * @return the notifier.
+     */
+    public PropertyChangeSupport getNotifier() {
+        return notifier;
+    }
+
 
 
     /**
@@ -650,11 +677,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
                 new PropertyChangeEvent(this,"publicPoints",username,point));
     }
 
-
-
-
-
-//TODO javadoc FEDE
+    /**
+     * <strong>Setter</strong> -> Set the two HashMap that contains all players that completed the common objective.
+     *
+     * @param list The list of the maps of the player who completed the common objectives.
+     */
     public void setCommonObjMaps(ArrayList<HashMap<String, Integer>> list){
         synchronized (viewLock) {
             commonMap1 = list.get(0);
@@ -714,12 +741,14 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
 
+
     /**
-     * Method to restore all chats via @backup.
+     * Method to restore all chats via backup.
      *
      * @param backup        ChatController containing the Server's backup for the chats.
      */
     public void reloadChats (ChatController backup) { this.chatController = backup; }
+
 
 
     /**
@@ -737,21 +766,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             }
             return list;
         }
-    }
-
-//TODO javadoc ALE
-    public PropertyChangeSupport getNotifier() {
-        return notifier;
-    }
-
-
-    public HashMap<String, Integer> getCommonMap1() {
-        return commonMap1;
-    }
-
-
-    public HashMap<String, Integer> getCommonMap2() {
-        return commonMap2;
     }
 
 }

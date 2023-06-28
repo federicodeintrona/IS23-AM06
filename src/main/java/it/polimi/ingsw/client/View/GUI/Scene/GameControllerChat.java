@@ -1873,13 +1873,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         sendMessage.clear();
     }
 
-
-    //TODO javadoc ALE
+    /**
+     * <strong>Getter</strong> -> Return the path of the image of the tile in the selected tiles' ArrayList.
+     *
+     * @param i the position of the tile in the ArrayList of selected tiles.
+     * @return the path of the tile in the selected tiles' ArrayList.
+     */
     private String getTile (int i){
         return clientState.getSelectedTiles().get(i).getTiles().getImage()[
                 clientState.getSelectedTiles().get(i).getImage()];
     }
-
 
 
 
@@ -1979,7 +1982,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                 //set old common objective points
                 clientState.setOldCommonObjectivePoints(clientState.getCommonObjectivePoints());
             }
-            // TODO errore invio messaggi chat subito doppo il caricamento della partita (dopo funziona normale)
             //update public chat
             case ("publicChat") -> {
                 //catch chatMessage
@@ -2026,15 +2028,86 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
+
+    private Label catchOtherPlayerUsernameLabel(String username){
+        if (otherPlayerLabel1.getText().equals(username)){
+            return otherPlayerLabel1;
+        }
+        else if (otherPlayerLabel2.getText().equals(username)){
+            return otherPlayerLabel2;
+        }
+        else if (otherPlayerLabel3.getText().equals(username)){
+            return otherPlayerLabel3;
+        }
+        else {
+            return null;
+        }
+    }
+
+    private ImageView catchOtherPlayerPersonalImage(String username){
+        if (otherPlayerLabel1.getText().equals(username)){
+            return personal1;
+        }
+        else if (otherPlayerLabel2.getText().equals(username)){
+            return personal2;
+        }
+        else if (otherPlayerLabel3.getText().equals(username)){
+            return personal3;
+        }
+        else {
+            return null;
+        }
+    }
+
+    private ImageView catchotherPlayerBookshelfImage(String username){
+        if (otherPlayerLabel1.getText().equals(username)){
+            return otherPlayerImage1;
+        }
+        else if (otherPlayerLabel2.getText().equals(username)){
+            return otherPlayerImage2;
+        }
+        else if (otherPlayerLabel3.getText().equals(username)){
+            return otherPlayerImage3;
+        }
+        else {
+            return null;
+        }
+    }
+
+
+
     private void updateDisconnectPlayer(String player, String type){
         if (type.equals("reconnection")){
-            //TODO rimuovere opacità la bookshelf, personal, common point, username label, point label
-            catchOtherPlayerBookshelfGrid(player);
+            disconnectOpacityGraphic(player, 1.0);
         }
         else if (type.equals("disconnection")){
-            //TODO opacizzare la bookshelf, personal, common point, username label, point label
-            catchOtherPlayerBookshelfGrid(player);
+            disconnectOpacityGraphic(player, 0.5);
+        }
+    }
+
+
+    /**
+     * Method used to set the opacity where a client disconnect or reconnect to the game.
+     *
+     * @param player the username of the interested player.
+     * @param v the opacity.
+     */
+    private void disconnectOpacityGraphic(String player, double v){
+        //set the opacity of: bookshelf, personal objective, common objective's points, username, public points
+        try{
+            Objects.requireNonNull(catchOtherPlayerBookshelfGrid(player)).setOpacity(v);
+            Objects.requireNonNull(catchotherPlayerBookshelfImage(player)).setOpacity(v);
+            Objects.requireNonNull(catchOtherPlayerPersonalImage(player)).setOpacity(v);
+            Objects.requireNonNull(catchCommonObjPointONE(player)).setOpacity(v);
+            Objects.requireNonNull(catchCommonObjPointTWO(player)).setOpacity(v);
+            Objects.requireNonNull(catchOtherPlayerUsernameLabel(player)).setOpacity(v);
+            Objects.requireNonNull(catchOtherPlayerPointsLabel(player)).setOpacity(v);
+        }
+        catch (NullPointerException e){
+            System.out.println("The player do not exist");
         }
     }
 
 }
+
+//TODO non arriva la notifica della disconnessione del giocatore lato rmi

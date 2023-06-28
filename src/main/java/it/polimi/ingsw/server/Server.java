@@ -165,3 +165,5 @@ public class Server extends UnicastRemoteObject {
         return null;
     }
 }
+
+//TODO non ci possono essere più vincitori, già controllato??
