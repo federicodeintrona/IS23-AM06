@@ -94,7 +94,7 @@ public class Player {
      */
 
     public void setCommonObjectivePoint(int commonObjectivePoint) {
-        this.commonObjectivePoint = commonObjectivePoint;
+        this.commonObjectivePoint += commonObjectivePoint;
     }
     /**
      * <strong>Getter</strong> -> returns private points of the player.
