@@ -142,8 +142,6 @@ public class Model implements TimerInterface {
 
         //Initializes the arrays of points and notify data
         for(Player p : players){
-            privatePoints.add(p.getPrivatePoint());
-            publicPoints.add(p.getPublicPoint());
 
             if(!p.isDisconnected()) connectedPlayers++;
 
@@ -352,8 +350,8 @@ public class Model implements TimerInterface {
     private void updatePoints(){
 
         //Update points array
-        publicPoints.set(players.indexOf(currPlayer),currPlayer.getPublicPoint());
-        privatePoints.set(players.indexOf(currPlayer), currPlayer.getPrivatePoint());
+        //publicPoints.set(players.indexOf(currPlayer),currPlayer.getPublicPoint());
+        //privatePoints.set(players.indexOf(currPlayer), currPlayer.getPrivatePoint());
 
         //Updates vicinity, common objective and personal objective points
         currPlayer.setVicinityPoint( currPlayer.getBookshelf().checkVicinityPoints());
@@ -373,21 +371,15 @@ public class Model implements TimerInterface {
         currPlayer.updatePoints();
 
         //Notify publicPoints
-        if(currPlayer.getPublicPoint()!=publicPoints.get(players.indexOf(currPlayer))) {
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPublicPoint(), "all",
+                currPlayer.getUsername(), "publicPoints"));
 
-            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPublicPoint(), "all",
-                    currPlayer.getUsername(), "publicPoints"));
-
-
-        }
 
         //Notify privatePoints
-        if(currPlayer.getPrivatePoint()!=privatePoints.get(players.indexOf(currPlayer))) {
+        notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), currPlayer.getUsername(),
+                currPlayer.getUsername(), "privatePoints"));
 
-            notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getPrivatePoint(), currPlayer.getUsername(),
-                    currPlayer.getUsername(), "privatePoints"));
 
-        }
     }
 
 
@@ -542,7 +534,12 @@ public class Model implements TimerInterface {
        notifier.removePropertyChangeListener("all",view);
        notifier.removePropertyChangeListener(player.getUsername(),view);
 
-       connectedPlayers--;
+        //Notify disconnection
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                player.getUsername(), "all", "disconnection","notification" ));
+
+
+        connectedPlayers--;
        if(connectedPlayers<=1&&!timerIsOn) startEndTimer();
        if(player.equals(currPlayer)){
 
@@ -584,6 +581,12 @@ public class Model implements TimerInterface {
         System.out.println(player.getUsername() + " has reconnected");
 
         virtualViews.add(view);
+
+        //Notify reconnection
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                player.getUsername(), "all", "reconnection","notification" ));
+
+
         notifier.addPropertyChangeListener("all",view);
         notifier.addPropertyChangeListener(view.getUsername(),view);
 
@@ -593,6 +596,7 @@ public class Model implements TimerInterface {
         checkRestart();
 
         updatePlayer(player);
+
     }
 
     /**
@@ -865,7 +869,7 @@ public class Model implements TimerInterface {
                 commonObj.stream().map(CommonObjective::getPoints).toList(), p.getUsername(), "0","commonObjPoints" ));
         //Notify playerWhoCompletedCommonObj
         notifier.firePropertyChange(new PropertyChangeEvent(
-                commonObj.stream().map(CommonObjective::getPlayersWhoCompletedComObj).toList(), p.getUsername(), "0","commonObjCompleted" ));
+                commonObj.stream().map(CommonObjective::getPlayersNameCommonObj).toList(), p.getUsername(), "0","commonObjCompleted" ));
 
 
 
@@ -902,7 +906,7 @@ public class Model implements TimerInterface {
 
         //Notify playerWhoCompletedCommonObj
         notifier.firePropertyChange(new PropertyChangeEvent(
-                commonObj.stream().map(CommonObjective::getPlayersWhoCompletedComObj).toList(),"all", "0","commonObjCompleted" ));
+                commonObj.stream().map(CommonObjective::getPlayersNameCommonObj).toList(),"all", "0","commonObjCompleted" ));
 
         //Notify currPlayer, nextPlayer and chair player
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(),"all",

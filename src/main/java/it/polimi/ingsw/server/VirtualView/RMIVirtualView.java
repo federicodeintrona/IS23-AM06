@@ -74,7 +74,7 @@ public class RMIVirtualView implements VirtualView{
                         clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) evt.getSource()));
                     }
                     case ("commonObjCompl") -> {
-                        clientState.setCommonObjMaps(new ArrayList<>((List<HashMap<Player, Integer>>) evt.getSource()));
+                        clientState.setCommonObjMaps(new ArrayList<>((List<HashMap<String, Integer>>) evt.getSource()));
                     }
                     case ("personalObj") -> {
                         clientState.setMyPersonalObjective((HashMap<Point, Tiles>) evt.getSource());
@@ -114,6 +114,10 @@ public class RMIVirtualView implements VirtualView{
                     }
                     case ("end") -> {
                         clientState.setGameIsEnded((boolean) evt.getSource());
+                    }
+                    case ("notification") -> {
+                        clientState.getNotifier().firePropertyChange(new PropertyChangeEvent(
+                                evt.getSource(), "notification", null, evt.getOldValue()));
                     }
                     case ("message") -> {
                         clientState.newMessageHandler((ChatMessage) evt.getSource());

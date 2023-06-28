@@ -66,6 +66,7 @@ public class GUIController implements View, SceneController {
         this.state=state;
         state.addListener(this,"start");
         state.addListener(this,"end");
+        state.addListener(this,"notification");
     }
 
 
@@ -207,10 +208,8 @@ public class GUIController implements View, SceneController {
     }
 
 
-
-    //TODO javadoc FEDE
     /**
-     *
+     * Receives notification from the client state to pass on to the fxml controllers.
      * @param evt A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
      */
@@ -219,6 +218,14 @@ public class GUIController implements View, SceneController {
         switch (evt.getPropertyName()){
             case "start" ->
                     changeScene(Scenes.Game);
+            case "notification" ->{
+                String username = (String)evt.getSource() ;
+                String message = evt.getNewValue().equals("disconnection")?
+                                                (username+" has disconnected"):
+                                                (username+" has reconnected");
+
+                Platform.runLater(()-> sceneController.showNotification(message,stage));
+            }
             case "end" -> {
                 if(state.isDisconnectionWinner()){
                     changeScene(Scenes.DisconnectionEnd);

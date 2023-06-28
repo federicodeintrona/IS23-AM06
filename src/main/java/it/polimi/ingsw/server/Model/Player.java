@@ -165,7 +165,7 @@ public class Player {
      * and to updates private points adding vicinity point, commonObjective point ,winner point and personal objective point.
      */
     public void updatePoints(){
-        this.publicPoint= vicinityPoint + commonObjectivePoint + winnerPoint;
+        this.publicPoint = vicinityPoint + commonObjectivePoint + winnerPoint;
         this.privatePoint = personalObjectivePoint + vicinityPoint + commonObjectivePoint + winnerPoint;
     }
 
@@ -185,8 +185,11 @@ public class Player {
         this.disconnected = disconnected;
     }
 
-    //TODO chiedo a FEDE
-    /*public String getCapUser() {
+    /**
+     * Return the username of the player with original characters.
+     * @return The username.
+     */
+    public String getCapUser() {
         return CapUser;
-    }*/
+    }
 }

@@ -24,6 +24,7 @@ import static org.mockito.Mockito.*;
 /**
  * Test Class for ChatHandler
  */
+
 class ChatHandlerTest {
     @Mock
     private CLIMain cli;

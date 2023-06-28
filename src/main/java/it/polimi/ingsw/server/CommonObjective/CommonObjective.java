@@ -128,6 +128,14 @@ public abstract class CommonObjective {
         return playersWhoCompletedComObj;
     }
 
+    public HashMap<String, Integer> getPlayersNameCommonObj(){
+        HashMap<String,Integer> map = new HashMap<>();
+        for(Player p : playersWhoCompletedComObj.keySet()){
+            map.put(p.getUsername(),playersWhoCompletedComObj.get(p));
+        }
+        return map;
+    }
+
     /**
      * <Strong>Getter</Strong> -> Gets the enumeration of the CommonObjective.
      *
