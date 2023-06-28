@@ -204,7 +204,7 @@ public interface ClientStateRemoteInterface extends Remote {
      * @param list The list of the maps of the player who completed the common objectives.
      * @throws RemoteException  In case of error during the rmi connection process
      */
-    void setCommonObjMaps(ArrayList<HashMap<Player, Integer>> list) throws RemoteException;
+    void setCommonObjMaps(ArrayList<HashMap<String, Integer>> list) throws RemoteException;
 
     /**
      * <strong>Getter</strong> --> get the notifier.

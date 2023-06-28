@@ -63,9 +63,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      */
     private ArrayList<Integer> commonObjectivePoints;
 
-    private  HashMap<Player, Integer> commonMap1;
+    private  HashMap<String, Integer> commonMap1;
 
-    private  HashMap<Player, Integer> commonMap2;
+    private  HashMap<String, Integer> commonMap2;
 
     /**
      * Old common objective points - the points before the actual update.
@@ -656,7 +656,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
 
 
-    public void setCommonObjMaps(ArrayList<HashMap<Player, Integer>> list){
+    public void setCommonObjMaps(ArrayList<HashMap<String, Integer>> list){
         synchronized (viewLock) {
             commonMap1 = list.get(0);
             commonMap2 = list.get(1);
