@@ -89,7 +89,7 @@ public class Reader extends Thread implements TimerInterface {
         try {
             while(!disconnected){
 
-                if(socket.isConnected()) newMessage = (Message) client.readUnshared();
+                if(socket.isConnected()) newMessage = (Message) client.readObject();
 
                 if(newMessage!=null) {
                     if (newMessage.getType() == MessageTypes.VIEW) {
