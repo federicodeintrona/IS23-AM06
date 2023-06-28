@@ -56,9 +56,8 @@ public class GUIController implements View, SceneController {
 
 
 
-    //TODO and... addListener cosa fanno - javadoc FEDE
     /**
-     * Initialize the ClientState and
+     * Initialize the ClientState and adds itself as a listener to receive notifications from the client state
      *
      * @param state the reference ClientState
      */

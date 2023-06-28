@@ -97,7 +97,9 @@ public class RMITimer implements TimerInterface {
         e.shutdown();
     }
 
-//TODO javadoc FEDE
+    /**
+     * Starts the countdown timer.
+     */
     private void startTimer(){
         if(timer!=null)
             timer.cancel();

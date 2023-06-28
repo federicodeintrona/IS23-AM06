@@ -127,12 +127,12 @@ public class Lobby {
     }
 
 
-    //TODO Fede controlla
+
     /**
      * Method to add a player to a waiting lobby and starts the game when it is full.
      * @param client  The player you want to add.
      * @throws LobbyNotExists If the lobby does not exist (it should never happen in theory).
-     * @return
+     * @return The game ID
      */
     public synchronized int addClient(String client) throws LobbyNotExists {
 
@@ -299,7 +299,8 @@ public class Lobby {
         return index;
 
     }
-    //TODO Fede controlla
+
+
     /**
      *  <strong>Setter</strong> -> Sets the controller.
      * @param controller controller of the server.
