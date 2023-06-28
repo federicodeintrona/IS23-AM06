@@ -32,7 +32,7 @@ public class Controller implements PropertyChangeListener {
 
     /**
      *  Main constructor of the class.
-     * @param mainLobby The lobby of the server
+     * @param mainLobby The lobby of the server.
      */
     public Controller(Lobby mainLobby) {
         lobby = mainLobby;

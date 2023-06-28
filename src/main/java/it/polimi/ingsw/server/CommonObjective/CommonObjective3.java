@@ -12,12 +12,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Class that regulates the functioning of CommonObjective 3
+ * Class that regulates the functioning of CommonObjective 3.
  */
 public class CommonObjective3 extends CommonObjective{
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective3() {
         this.setNum(3);
@@ -26,10 +26,10 @@ public class CommonObjective3 extends CommonObjective{
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 4 separate groups, each one made by 4 tiles of the same
-     * color adjacent to one another, inside it and, in case, returns true
+     * color adjacent to one another, inside it and, in case, returns true.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player    player whose bookshelf gets analyze.
+     * @return      <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player) {
@@ -84,11 +84,11 @@ public class CommonObjective3 extends CommonObjective{
 
     /**
      * Helping method that takes a matrix, a point inside and returns an ArrayList
-     * of points, adjacent to the given one, that share the same tile color
+     * of points, adjacent to the given one, that share the same tile color.
      *
-     * @param matrix    player's bookshelf
-     * @param point     coordinates of the analyzed tile
-     * @return      adjacent: ArrayList of points that meet the criteria
+     * @param matrix    player's bookshelf.
+     * @param point     coordinates of the analyzed tile.
+     * @return      adjacent: ArrayList of points that meet the criteria.
      */
     private static ArrayList<Point> getAdjacentSameColor(Matrix matrix, Point point) {
         ArrayList<Point> adjacent = new ArrayList<>();

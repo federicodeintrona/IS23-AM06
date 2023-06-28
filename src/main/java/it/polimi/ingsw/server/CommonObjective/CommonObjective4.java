@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class that regulates the functioning of CommonObjective 4
+ * Class that regulates the functioning of CommonObjective 4.
  */
 public class CommonObjective4 extends CommonObjective{
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective4() {
         this.setNum(4);
@@ -24,10 +24,10 @@ public class CommonObjective4 extends CommonObjective{
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 2 separate groups, each one made by 4 tiles of the same
      * color disposed in a 2x2 formation, inside it and, in case, returns true.
-     * The tiles of the 2 groups need to have the same color to meet the criteria
+     * The tiles of the 2 groups need to have the same color to meet the criteria.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player    player whose bookshelf gets analyze.
+     * @return      <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player) {
@@ -71,10 +71,10 @@ public class CommonObjective4 extends CommonObjective{
 
     /**
      * Helping method that takes an Arraylist of tiles and
-     * returns true only if all of its tiles have the same color
+     * returns true only if all of its tiles have the same color.
      *
-     * @param box   ArrayList of tiles
-     * @return      true if all elements of box are the same, else false
+     * @param box   <i>ArrayList</i> of tiles.
+     * @return      true if all elements of box are the same, else false.
      */
     public static boolean checkColorBox(ArrayList<Tiles> box){
         Tiles case0 = box.get(0);

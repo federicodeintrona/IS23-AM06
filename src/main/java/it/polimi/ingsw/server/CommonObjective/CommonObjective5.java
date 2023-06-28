@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class that regulates the functioning of CommonObjective 5
+ * Class that regulates the functioning of CommonObjective 5.
  */
 public class CommonObjective5 extends CommonObjective{
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective5() {
         this.setNum(5);
@@ -20,10 +20,10 @@ public class CommonObjective5 extends CommonObjective{
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 3 filled columns, each one made by tiles of
-     * maximum 3 different colors, inside it and, in case, returns true
+     * maximum 3 different colors, inside it and, in case, returns true.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player    player whose bookshelf gets analyze.
+     * @return      <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player){

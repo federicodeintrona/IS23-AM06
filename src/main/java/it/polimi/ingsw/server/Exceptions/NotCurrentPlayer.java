@@ -5,7 +5,7 @@ package it.polimi.ingsw.server.Exceptions;
  */
 public class NotCurrentPlayer extends MoveNotPossible{
     /**
-     * Default Contructor
+     * Default constructor.
      */
     public NotCurrentPlayer() {
     }

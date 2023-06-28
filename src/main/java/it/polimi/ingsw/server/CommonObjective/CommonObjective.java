@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
- * Abstract class
+ * Abstract class.
  */
 public abstract class CommonObjective {
     private int points = 8;
@@ -17,17 +17,17 @@ public abstract class CommonObjective {
     private int num;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public CommonObjective() {
     }
 
     /**
      * Method that selects randomly a number of CommonObjectives equals to the
-     * int num and instantiate only the selected ones among the 12 totals
+     * int num and instantiate only the selected ones among the 12 totals.
      *
-     * @param num      Number of CommonObjective to instantiate
-     * @return      ArrayList containing the instantiated CommonObjective
+     * @param num      Number of CommonObjective to instantiate.
+     * @return      ArrayList containing the instantiated CommonObjective.
      */
     public static ArrayList<CommonObjective> randomSubclass(int num) {
 
@@ -71,10 +71,10 @@ public abstract class CommonObjective {
 
     /**
      * Method to be implemented in each subclass that check if a
-     * player's bookshelf meets the criteria of the relative commonObjective
+     * player's bookshelf meets the criteria of the relative commonObjective.
      *
-     * @param player    Player whose bookshelf gets analyze
-     * @return      Boolean depending on the result of the analysis
+     * @param player    Player whose bookshelf gets analyze.
+     * @return      Boolean depending on the result of the analysis.
      */
     public abstract boolean checkCondition(Player player);
 
@@ -110,9 +110,9 @@ public abstract class CommonObjective {
     }
 
     /**
-     * <Strong>Getter</Strong> -> Gets the points to assign
+     * <Strong>Getter</Strong> -> Gets the points to assign.
      *
-     * @return      Points to assign
+     * @return      Points to assign.
      */
     public int getPoints() {
         return points;
@@ -120,27 +120,27 @@ public abstract class CommonObjective {
 
     //TODO sembra non utilizzato - serve???
     /**
-     * <Strong>Getter</Strong> -> Gets a set of players who completed the CommonObjective
+     * <Strong>Getter</Strong> -> Gets a set of players who completed the CommonObjective.
      *
-     * @return      HashSet containing the players who completed the CommonObjective
+     * @return      HashSet containing the players who completed the CommonObjective.
      */
     public HashMap<Player, Integer> getPlayersWhoCompletedComObj() {
         return playersWhoCompletedComObj;
     }
 
     /**
-     * <Strong>Getter</Strong> -> Gets the enumeration of the CommonObjective
+     * <Strong>Getter</Strong> -> Gets the enumeration of the CommonObjective.
      *
-     * @return      The int num
+     * @return      The int num.
      */
     public int getNum() {
         return num;
     }
 
     /**
-     * <Strong>Setter</Strong> -> Sets the enumeration for a CommonObjective
+     * <Strong>Setter</Strong> -> Sets the enumeration for a CommonObjective.
      *
-     * @param num   The int num
+     * @param num   The int num.
      */
     public void setNum(int num) {
         this.num = num;

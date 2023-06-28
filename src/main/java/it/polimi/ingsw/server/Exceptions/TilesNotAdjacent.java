@@ -5,7 +5,7 @@ package it.polimi.ingsw.server.Exceptions;
  */
 public class TilesNotAdjacent extends MoveNotPossible{
     /**
-     * Default Contructor
+     * Default constructor.
      */
     public TilesNotAdjacent() {
     }

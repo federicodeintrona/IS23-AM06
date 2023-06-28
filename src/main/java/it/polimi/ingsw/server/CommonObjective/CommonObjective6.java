@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class that regulates the functioning of CommonObjective 6
+ * Class that regulates the functioning of CommonObjective 6.
  */
 public class CommonObjective6 extends CommonObjective{
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective6() {
         this.setNum(6);
@@ -21,10 +21,10 @@ public class CommonObjective6 extends CommonObjective{
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 8 tiles of the color, in any position,
-     * inside it and, in case, returns true
+     * inside it and, in case, returns true.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player    player whose bookshelf gets analyze.
+     * @return      <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player){
