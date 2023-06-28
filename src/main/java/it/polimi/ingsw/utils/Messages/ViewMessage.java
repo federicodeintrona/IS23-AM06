@@ -1,6 +1,5 @@
 package it.polimi.ingsw.utils.Messages;
 
-import java.io.Serializable;
 
 /**
  * <p> Class for message sent by client and server which will modify the client state</p>
@@ -9,6 +8,12 @@ public class ViewMessage extends Message {
 
     private String objName;
     private Object content;
+
+    /**
+     * Default constructor
+     */
+    public ViewMessage() {
+    }
 
     /**
      * <strong>Getter</strong> -> Returns the content of the view message
