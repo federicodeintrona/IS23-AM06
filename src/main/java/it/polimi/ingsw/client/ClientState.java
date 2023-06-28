@@ -131,7 +131,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      * Initialize the ClientState with the lock.
      *
      * @param viewLock the object to lock on.
-     * @throws RemoteException
+     * @throws RemoteException In case of error during the rmi connection process
      */
     public ClientState(Object viewLock) throws RemoteException {
         super();
@@ -144,7 +144,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      *
      * @param s the username of the client.
      * @param o the object to lock on.
-     * @throws RemoteException
+     * @throws RemoteException In case of error during the rmi connection process
      */
     public ClientState(String s, Object o) throws RemoteException {
         super();
@@ -705,8 +705,11 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     public void reloadChats (ChatController backup) { this.chatController = backup; }
 
 
-
-    //TODO javadoc DIPA
+    /**
+     * Method to check if is possible to add the number of selected tiles in a column
+     * @param numTilesSelected number of tiles selected
+     * @return array with the usable columns
+     */
     public ArrayList<Integer> checkFreeColumn(int numTilesSelected){
         synchronized (viewLock) {
             ArrayList<Integer> list=new ArrayList<>();

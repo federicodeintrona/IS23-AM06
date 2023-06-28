@@ -379,9 +379,13 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private ScrollPane chatScroll;
 
+    /**
+     * Default constructor
+     */
+    public GameControllerChat() {
+    }
 
-
-//INITIALIZE
+    //INITIALIZE
     /**
      * Method called to initialize the scene.
      *
@@ -898,7 +902,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
     }
-    public String getTile (int i){
+    private String getTile (int i){
         return clientState.getSelectedTiles().get(i).getTiles().getImage()[
                 clientState.getSelectedTiles().get(i).getImage()];
     }

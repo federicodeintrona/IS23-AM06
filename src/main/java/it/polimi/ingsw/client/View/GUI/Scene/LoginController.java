@@ -35,8 +35,12 @@ public class LoginController implements SceneController, Initializable {
     private TextField usernameField;
 
 
-
-//INITIALIZE
+    /**
+     * Default constructor
+     */
+    public LoginController() {
+    }
+    //INITIALIZE
     /**
      * Method called to initialize the scene.
      *

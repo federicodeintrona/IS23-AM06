@@ -42,8 +42,13 @@ public class NumberOfPlayerController implements Initializable,SceneController {
     private ChoiceBox<Integer> numberOfPlayerBox;
 
 
-
+    /**
+     * Default constructor
+     */
+    public NumberOfPlayerController() {
+    }
 //INITIALIZE
+
     /**
      * Method called to initialize the scene.
      *

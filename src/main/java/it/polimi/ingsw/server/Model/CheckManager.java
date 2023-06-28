@@ -59,6 +59,7 @@ public class CheckManager {
      * Method to check if the player can remove the selected tiles from the board.
      * @param points The array of points you want to remove
      * @param player The player who wants to remove the tiles
+     * @param board The board of the game
      * @throws MoveNotPossible if the game is not in the right state
      * @throws NotCurrentPlayer if the player is not the current player
      * @throws IllegalArgumentException if the array points is null

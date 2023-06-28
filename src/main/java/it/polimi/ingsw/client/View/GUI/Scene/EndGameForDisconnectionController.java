@@ -30,7 +30,11 @@ public class EndGameForDisconnectionController implements SceneController, Initi
     @FXML
     private Label winnerPlayer;
 
-
+    /**
+     * Default constructor
+     */
+    public EndGameForDisconnectionController() {
+    }
 
     /**
      * Method called to initialize the scene.

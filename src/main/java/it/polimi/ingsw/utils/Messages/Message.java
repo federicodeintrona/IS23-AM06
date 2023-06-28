@@ -11,6 +11,12 @@ public class Message implements Serializable {
     private MessageTypes type;
 
     /**
+     * Default constructor
+     */
+    public Message() {
+    }
+
+    /**
      * <strong>Setter</strong> -> Sets the content of the message
      * @param text text content of the message
      */

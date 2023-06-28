@@ -27,6 +27,11 @@ import java.util.Scanner;
  * </ul>
  */
 public class ClientBase extends Application{
+    /**
+     * Default constructor
+     */
+    public ClientBase() {
+    }
 
     /**
      * Static method to launch the Client.

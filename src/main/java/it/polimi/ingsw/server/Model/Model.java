@@ -36,7 +36,7 @@ import java.util.List;
  *          <li>Changing the order of the selected tiles</li>
  *          <li>Adding the tiles to their bookshelves</li>
  *      </ul>
- * <p>
+ *
  *     <p>
  *         The model also manages the turns. When a player adds a tile to his bookshelf
  *         the game advances to the next turn since it is the last move a player can do during
@@ -104,43 +104,6 @@ public class Model implements TimerInterface {
     public Model(){}
 
 
-    public Model(ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
-        this.players = players;
-        this.virtualViews = views;
-        notifier.addPropertyChangeListener("end", controller);
-
-        // Initializing for each player a particular version of ChatController specifically designed for Server
-        List<String> allUsernames = players.stream()
-                                            .map(Player::getUsername)
-                                            .toList();
-
-        for (String player: allUsernames) {
-            allPlayersChats.put(player, new ChatController(true));
-
-            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
-                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
-        }
-    }
-
-
-    public Model(int iD, ArrayList<Player> players, ArrayList<VirtualView> views, Controller controller) {
-        this.gameID = iD;
-        this.players = players;
-        this.virtualViews = views;
-        notifier.addPropertyChangeListener("end", controller);
-
-        // Initializing for each player a particular version of ChatController specifically designed for Server
-        List<String> allUsernames = players.stream()
-                                            .map(Player::getUsername)
-                                            .toList();
-
-        for (String player: allUsernames) {
-            allPlayersChats.put(player, new ChatController(true));
-
-            for (String x: allUsernames.stream().filter(y -> !y.equals(player)).toList())
-                allPlayersChats.get(player).getPrivateChats().put(x, new Chat());
-        }
-    }
 
     //PUBLIC METHODS
 
@@ -245,6 +208,7 @@ public class Model implements TimerInterface {
      * <p>Method to remove an array of tiles from the board if the move is legitimate.</p>
      * Also notifies the views of changes
      * @param points  The position of the tiles
+     * @param player The username of the player who wants to remove the tile
      * @throws MoveNotPossible if the game is not in the right state
      * @throws NotCurrentPlayer if the player is not the current player
      * @throws IllegalArgumentException if the array points is null
@@ -563,9 +527,10 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * <p>Method to disconnect the selected player</p>
+     * <p>Method to disconnect the selected player.</p>
      * If there is only one player left starts the end timer.
      * @param player The player to disconnect.
+     * @param view The virtual view of the player.
      */
     public synchronized void disconnectPlayer(Player player,VirtualView view){
         System.out.println(player.getUsername() + " has disconnected in the model");
@@ -613,6 +578,7 @@ public class Model implements TimerInterface {
      * If the game was stopped due to and insufficient number of players,
      * checks if there are enough players and if so makes the game continue.
      * @param player The player to reconnect.
+     * @param view Virtual view of the player
      */
     public synchronized void playerReconnection(Player player,VirtualView view){
         System.out.println(player.getUsername() + " has reconnected");

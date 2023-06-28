@@ -58,7 +58,11 @@ public class EndGameController implements Initializable, SceneController{
     @FXML
     private Label winnerPlayer;
 
-
+    /**
+     * Default constructor
+     */
+    public EndGameController() {
+    }
 
     /**
      * Method called to initialize the scene.

@@ -13,13 +13,18 @@ import java.util.Scanner;
  * Class that lets you chose if you want to open Server or Client.
  */
 public class MyShelfieApplication extends Application{
-
+    /**
+     * Default constructor
+     */
+    public MyShelfieApplication() {
+    }
+    //TODO NotBoundException
     /**
      * Static method to run Server or ClientBase.
      *
      * @param args the arguments that you insert on the opening jar (args[0] contains the choice to start Server or Client).
-     * @throws IOException
-     * @throws InterruptedException
+     * @throws IOException in case of problem with input/output
+     * @throws InterruptedException in case of problem with thread interruption
      * @throws NotBoundException
      */
     public static void main(String[] args) throws IOException, InterruptedException, NotBoundException {
@@ -85,7 +90,7 @@ public class MyShelfieApplication extends Application{
      * The main entry point for all JavaFX applications.
      *
      * @param stage the stage for this application, onto which the application scene can be set.
-     * @throws IOException
+     * @throws IOException in case of problems with input/output
      */
     @Override
     public void start(Stage stage) throws IOException {

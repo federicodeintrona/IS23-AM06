@@ -16,6 +16,11 @@ public abstract class CommonObjective {
     private final HashMap<Player, Integer> playersWhoCompletedComObj = new HashMap<>();
     private int num;
 
+    /**
+     * Default constructor
+     */
+    public CommonObjective() {
+    }
 
     /**
      * Method that selects randomly a number of CommonObjectives equals to the
@@ -74,10 +79,11 @@ public abstract class CommonObjective {
     public abstract boolean checkCondition(Player player);
 
     /**
-     * Method to calculate the commonObjective points
+     * Method to calculate the commonObjective points.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @param numOfPlayers      number of player to assign points
+     * @param player    player whose bookshelf gets analyze.
+     * @param numOfPlayers      number of player to assign points.
+     * @return <i>true</i> if the points are to add, <i>false</i> in other cases.
      */
     public  boolean commonObjPointsCalculator(Player player, int numOfPlayers){
 

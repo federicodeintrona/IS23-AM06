@@ -10,6 +10,12 @@ public class IntMessage extends Message {
     private int num;
 
     /**
+     * Default constructor
+     */
+    public IntMessage() {
+    }
+
+    /**
      * <strong>Getter</strong> -> Return the integer contained of the message
      * @return integer contained in the message
      */

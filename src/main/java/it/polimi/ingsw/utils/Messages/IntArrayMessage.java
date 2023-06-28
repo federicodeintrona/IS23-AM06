@@ -10,6 +10,12 @@ public class IntArrayMessage extends Message{
     private ArrayList<Integer> integers;
 
     /**
+     * Default constructor
+     */
+    public IntArrayMessage() {
+    }
+
+    /**
      * <strong>Getter</strong> -> Return the array of integer contained of the message
      * @return arraylist of integer contained in the message
      */

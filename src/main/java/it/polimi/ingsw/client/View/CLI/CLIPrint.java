@@ -7,8 +7,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,7 +28,7 @@ import java.util.HashMap;
  *     <li>game status (waiting for other player, start of game, player turn, end game).</li>
  * </ul>
  */
-public class CLIPrint implements PropertyChangeListener {
+public class CLIPrint  {
 
     /**
      * Attribute used to retrieve CLI-side all the client information.
@@ -696,13 +694,4 @@ public class CLIPrint implements PropertyChangeListener {
         }
     }
 
-    //TODO ci serve effettivamente sulla CLI???
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-    }
-
-    public void printMessage (String username, String message) {
-        System.out.println(username + ": " + message);
-    }
 }

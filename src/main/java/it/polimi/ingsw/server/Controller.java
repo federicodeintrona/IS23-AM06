@@ -261,7 +261,7 @@ public class Controller implements PropertyChangeListener {
 
     /**
      * Method to add a virtual view to the HashMap of all views.
-     * @param view
+     * @param view The virtual view of the player
      */
     public void addView(VirtualView view){
         lobby.getViews().put(view.getUsername().toLowerCase(),view);
@@ -270,7 +270,7 @@ public class Controller implements PropertyChangeListener {
 
     /**
      * Method to forward to the lobby the handling of the disconnection of a player.
-     * @param username
+     * @param username The username of the player
      */
     public void playerDisconnection(String username){
         System.out.println(username+ " was disconnected by the controller");

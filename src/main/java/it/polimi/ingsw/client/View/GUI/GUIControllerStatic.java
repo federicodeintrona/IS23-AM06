@@ -11,6 +11,11 @@ public class GUIControllerStatic {
      */
     private static GUIController guiController;
 
+    /**
+     * Default constructor
+     */
+    public GUIControllerStatic() {
+    }
 
     /**
      * <strong>Getter</strong> -> Returns the GUIController

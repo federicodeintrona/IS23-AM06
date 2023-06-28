@@ -104,6 +104,13 @@ public class Bookshelf {
             }
             num_of_tiles=num_of_tiles+tiles.size();
         }
+
+    /**
+     * Method to insert the array of tile in the matrix
+     * in the column chosen
+     * @param tiles tile to put in the matrix
+     * @param column index of column for tiles
+     */
     public void addFullTile(ArrayList<Tile> tiles, int column){
         int pos=firstFree(column);
         for(int i=0;i<tiles.size();i++){

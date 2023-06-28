@@ -79,13 +79,6 @@ public class CLIMain implements View {
         openChat=false;
     }
 
-    //TODO è solo nei test del cliprint - NON SERVE PIù - da capire se bisogna testare anche la UI
-    public CLIMain(Object lock, ClientState clientState, Networker net) {
-        this.lock = lock;
-        this.clientState = clientState;
-        this.net = net;
-        openChat=false;
-    }
 
 
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.View.CLI;
 
+//TODO javadoc da finire Ale
 /**
  * Enumeration of ANSI escaped codes used for Command User Interface's color.
  * <ul>

@@ -63,9 +63,14 @@ public class InitialRequestController implements SceneController, Initializable 
     @FXML
     private Label requestLabel1;
 
+    /**
+     * Default constructor
+     */
+    public InitialRequestController() {
+    }
 
 
-//INITIALIZE
+    //INITIALIZE
     /**
      * Method called to initialize the scene.
      *
