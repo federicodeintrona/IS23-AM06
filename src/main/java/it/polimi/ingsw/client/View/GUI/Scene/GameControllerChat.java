@@ -77,6 +77,10 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
      * What move is the client making?
      */
     private State state = State.REMOVE;
+    /**
+     * Attribute used to know if the alert of new chat message is open
+     */
+    private Alert alert;
 
 
 //GRAPHIC ELEMENTS OF THE SCENE
@@ -918,6 +922,15 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         Label messageLabel=new Label();
         messageLabel.setPrefWidth(250);
 
+        //close the previous chat alert
+        if (alert!=null){
+            Platform.runLater(() -> {
+                if (alert.isShowing()) {
+                    alert.close();
+                }
+            });
+        }
+
         //is it the message I sent?
         if (message.getText().equals(clientState.getMyUsername())){
             messageLabel.setText(message.getMessage());
@@ -947,7 +960,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
         if (!selectChat.getValue().equals("ALL")){
             //pop up - you got a message
-            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert=new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("New public message");
             alert.setHeaderText("New public Message");
 
@@ -962,8 +975,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
     }
 
-    // TODO pup multipli: gestione popup più vecchi
-
     /**
      * Method to update the private chat.
      *
@@ -973,6 +984,15 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         //create the new message's Label
         Label messageLabel=new Label();
         messageLabel.setPrefWidth(250);
+
+        //close the previous chat alert
+        if (alert!=null){
+            Platform.runLater(() -> {
+                if (alert.isShowing()) {
+                    alert.close();
+                }
+            });
+        }
 
         //is it the message I sent?
         if (message.getText().equals(clientState.getMyUsername())){
@@ -1009,7 +1029,7 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
             if (!selectChat.getValue().equals(message.getText())){
                 //pop up - you got a message
-                Alert alert=new Alert(Alert.AlertType.INFORMATION);
+                alert=new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("New private message");
                 alert.setHeaderText("New private Message");
                 if (clientState.getChatController().getPrivateChat(message.getText()).getUnReadMessages() == 1)
@@ -1919,8 +1939,5 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 }
-
-
-//TODO mostrare popup hai n nuovi messaggi
 
 //TODO controllare se può rimuovere il numero di tessere che sta cercando di rimuovere

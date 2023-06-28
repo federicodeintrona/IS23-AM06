@@ -14,10 +14,7 @@ import it.polimi.ingsw.utils.Timer.TimerInterface;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
@@ -100,7 +97,7 @@ public class Reader extends Thread implements TimerInterface {
                 }
             }
         }
-        catch(SocketException e){
+        catch(SocketException | EOFException e){
             if(disconnected) out.println("The game is about to close! Have fun! The game will go on without you:)");
         }
         catch (IOException e) {
