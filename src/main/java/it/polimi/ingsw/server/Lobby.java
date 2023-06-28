@@ -96,7 +96,7 @@ public class Lobby {
 
 
     /**
-     * Creates a new lobby/game with the selected number of players and adds it to the waiting lobbies.
+     * Method to create a new lobby/game with the selected number of players and adds it to the waiting lobbies.
      * @param client The username of the player
      * @param numplayers The chosen number of players for the game.
      * @return The ID of the game.
@@ -129,7 +129,7 @@ public class Lobby {
 
     //TODO Fede controlla
     /**
-     * Adds a player to a waiting lobby and starts the game when it is full
+     * Method to add a player to a waiting lobby and starts the game when it is full
      * @param client  The player you want to add
      * @throws LobbyNotExists If the lobby does not exist (it should never happen in theory)
      * @return
@@ -203,7 +203,7 @@ public class Lobby {
 
 
     /**
-     * Creates a new empty game.
+     * Method to create a new empty game.
      * @param num The ID of the game.
      */
     private void newGame(int num){
@@ -237,7 +237,7 @@ public class Lobby {
     }
 
     /**
-     * <p>Disconnect a player from the game and adds it to the HashMap of all disconnected players.</p>
+     * <p>Method to disconnect a player from the game and adds it to the HashMap of all disconnected players.</p>
      * @param username The username of the player.
      */
     public synchronized void playerDisconnection(String username){
@@ -280,7 +280,7 @@ public class Lobby {
 
 
     /**
-     * <p>Reconnects a player from the game and removes it to the HashMap of all disconnected players.</p>
+     * <p>Method to reconnect a player from the game and removes it to the HashMap of all disconnected players.</p>
      * @param username The username of the player.
      * @param view The virtual view of the player.
      * @return The ID of the game.

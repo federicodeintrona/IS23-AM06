@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * Class used to make checks based on the current player and the current state
+ * Class used to make checks based on the current player and the current state.
  */
 public class CheckManager {
     private static final int maxNumberOfSelectedTiles=3;
@@ -23,27 +23,27 @@ public class CheckManager {
     private final ArrayList<Tile> selectedTiles;
 
     /**
-     * Initialize the selected tiles
+     * Initialize the selected tiles.
      *
-     * @param selectedTiles selected tiles
+     * @param selectedTiles selected tiles.
      */
     public CheckManager(ArrayList<Tile> selectedTiles) {
         this.selectedTiles = selectedTiles;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the current player
+     * <strong>Setter</strong> -> Sets the current player.
      *
-     * @param currPlayer current player
+     * @param currPlayer current player.
      */
     public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the current state
+     * <strong>Setter</strong> -> Sets the current state.
      *
-     * @param state state
+     * @param state state.
      */
     public void setState(GameState state) {
         this.state = state;
@@ -57,16 +57,16 @@ public class CheckManager {
 
     /**
      * Method to check if the player can remove the selected tiles from the board.
-     * @param points The array of points you want to remove
-     * @param player The player who wants to remove the tiles
-     * @param board The board of the game
-     * @throws MoveNotPossible if the game is not in the right state
-     * @throws NotCurrentPlayer if the player is not the current player
-     * @throws IllegalArgumentException if the array points is null
-     * @throws TilesNotAdjacent if the tiles are not adjacent
-     * @throws OutOfDomain if at least one of the points is outside the board
-     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
-     * @throws TooManySelected if the array points is too long
+     * @param points The array of points you want to remove.
+     * @param player The player who wants to remove the tiles.
+     * @param board The board of the game.
+     * @throws MoveNotPossible if the game is not in the right state.
+     * @throws NotCurrentPlayer if the player is not the current player.
+     * @throws IllegalArgumentException if the array points is null.
+     * @throws TilesNotAdjacent if the tiles are not adjacent.
+     * @throws OutOfDomain if at least one of the points is outside the board.
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed.
+     * @throws TooManySelected if the array points is too long.
      */
     public void checkRemoveLegit(ArrayList<Point> points, Player player,Board board) throws MoveNotPossible,IllegalArgumentException {
 

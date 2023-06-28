@@ -3,10 +3,12 @@ package it.polimi.ingsw.server.Model;
 import it.polimi.ingsw.server.PersonalObjective.PersonalObjective;
 
 /**
- * Class used to
+ * <p>Class used to manage player's personal information.</p>
+ * In particular:
+ *
  * <ul>
- *     <li>save the information related to the player</li>
- *     <li>to count points of the player</li>
+ *     <li>save the information related to the player(like username and bookshelf);</li>
+ *     <li>to count points of the player.</li>
  * </ul>
  */
 
@@ -25,9 +27,9 @@ public class Player {
     private int publicPoint;
 
     /**
-     * Initialize all the points to zero and the given username
+     * Initialize all the points to zero and the given username.
      *
-     * @param username username
+     * @param username username.
      */
     public Player(String username) {
         this.username = username.toLowerCase();
@@ -41,10 +43,10 @@ public class Player {
     }
 
     /**
-     * Initialize all the points to zero and the given username
+     * Initialize all the points to zero and the given username.
      *
-     * @param username      username without caps
-     * @param Cap       username with caps
+     * @param username      username without caps.
+     * @param Cap       username with caps.
      */
     public Player(String username,String Cap) {
         this.username = username;
@@ -58,45 +60,45 @@ public class Player {
     }
 
     /**
-     * <strong>Getter</strong> -> returns the bookshelf
-     * @return Bookshelf of the player
+     * <strong>Getter</strong> -> returns the bookshelf.
+     * @return Bookshelf of the player.
      */
     public Bookshelf getBookshelf(){
         return bookshelf;
     }
     /**
-     * <strong>Getter</strong> -> returns public points of the player
-     * @return Public points of the player
+     * <strong>Getter</strong> -> returns public points of the player.
+     * @return Public points of the player.
      */
     public int getPublicPoint() {
         return publicPoint;
     }
 
     /**
-     * <strong>Setter</strong> -> sets public points of the player
+     * <strong>Setter</strong> -> sets public points of the player.
      */
     public void setPublicPoint() {
         publicPoint= (vicinityPoint + commonObjectivePoint + winnerPoint) ;
     }
     /**
-     * <strong>Getter</strong> -> returns common objective points of the player
-     * @return Common objective points of the player
+     * <strong>Getter</strong> -> returns common objective points of the player.
+     * @return Common objective points of the player.
      */
 
     public int getCommonObjectivePoint() {
         return commonObjectivePoint;
     }
     /**
-     * <strong>Setter</strong> -> sets common objective points of the player
-     * @param commonObjectivePoint common objective points of the player
+     * <strong>Setter</strong> -> sets common objective points of the player.
+     * @param commonObjectivePoint common objective points of the player.
      */
 
     public void setCommonObjectivePoint(int commonObjectivePoint) {
         this.commonObjectivePoint = commonObjectivePoint;
     }
     /**
-     * <strong>Getter</strong> -> returns private points of the player
-     * @return Private points of the player
+     * <strong>Getter</strong> -> returns private points of the player.
+     * @return Private points of the player.
      */
 
     public int getPrivatePoint() {
@@ -105,8 +107,8 @@ public class Player {
 
 
     /**
-     * <strong>Setter</strong> -> sets personal objective points of the player
-     * @param personalObjectivePoint personal objective points of the player
+     * <strong>Setter</strong> -> sets personal objective points of the player.
+     * @param personalObjectivePoint personal objective points of the player.
      */
     public void setPersonalObjectivePoint(int personalObjectivePoint) {
         this.personalObjectivePoint = personalObjectivePoint;
@@ -114,8 +116,8 @@ public class Player {
 
 
     /**
-     * <strong>Setter</strong> -> sets vicinity points of the player
-     * @param vicinityPoint vicinity points of the player
+     * <strong>Setter</strong> -> sets vicinity points of the player.
+     * @param vicinityPoint vicinity points of the player.
      */
     public void setVicinityPoint(int vicinityPoint) {
         this.vicinityPoint = vicinityPoint;
@@ -123,16 +125,16 @@ public class Player {
 
 
     /**
-     * <strong>Getter</strong> -> returns personal objective of the player
-     * @return Personal objective of the player
+     * <strong>Getter</strong> -> returns personal objective of the player.
+     * @return Personal objective of the player.
      */
 
     public PersonalObjective getPersonalObjective() {
         return personalObjective;
     }
     /**
-     * <strong>Setter</strong> -> sets personal objective of the player
-     * @param personalObjective personal objective of the player
+     * <strong>Setter</strong> -> sets personal objective of the player.
+     * @param personalObjective personal objective of the player.
      */
 
     public void setPersonalObjective(PersonalObjective personalObjective) {
@@ -140,8 +142,8 @@ public class Player {
     }
 
     /**
-     * <strong>Setter</strong> -> sets winner points of the player
-     * @param winnerPoint winner point
+     * <strong>Setter</strong> -> sets winner points of the player.
+     * @param winnerPoint winner point.
      */
 
     public void setWinnerPoint(int winnerPoint) {
@@ -149,9 +151,9 @@ public class Player {
     }
 
     /**
-     * <strong>Getter</strong> -> returns username of the player
+     * <strong>Getter</strong> -> returns username of the player.
      *
-     * @return Username of the player
+     * @return Username of the player.
      */
 
     public String getUsername() {
@@ -160,7 +162,7 @@ public class Player {
 
     /**
      * Method to update public points adding vicinity point, commonObjective point and winner point
-     * and to updates private points adding vicinity point, commonObjective point ,winner point and personal objective point
+     * and to updates private points adding vicinity point, commonObjective point ,winner point and personal objective point.
      */
     public void updatePoints(){
         this.publicPoint= vicinityPoint + commonObjectivePoint + winnerPoint;
@@ -168,22 +170,23 @@ public class Player {
     }
 
     /**
-     * <strong>Getter</strong> -> returns the flag disconnected
+     * <strong>Getter</strong> -> returns the flag disconnected.
      *
-     * @return flag disconnected
+     * @return flag disconnected.
      */
     public boolean isDisconnected() {
         return disconnected;
     }
     /**
-     * <strong>Setter</strong> -> sets the flag disconnected
-     * @param disconnected flag disconnected
+     * <strong>Setter</strong> -> sets the flag disconnected.
+     * @param disconnected flag disconnected.
      */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
     }
 
-    public String getCapUser() {
+    //TODO chiedo a FEDE
+    /*public String getCapUser() {
         return CapUser;
-    }
+    }*/
 }

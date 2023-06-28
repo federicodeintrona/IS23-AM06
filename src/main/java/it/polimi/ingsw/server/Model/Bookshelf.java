@@ -11,11 +11,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Class used to manage matrix which contains the tiles selected by the player
+ * Class used to manage matrix which contains the tiles selected by the player.
  * <ul>
- *     <li>to update</li>
- *     <li>to calculate the vicinity points </li>
- *     <li>to check conditions</li>
+ *     <li>to update;</li>
+ *     <li>to calculate the vicinity points;</li>
+ *     <li>to check conditions.</li>
  * </ul>
  */
 public class Bookshelf {
@@ -25,7 +25,7 @@ public class Bookshelf {
 
     /**
      * Initialize the bookshelf with the Matrix
-     * and set every position to EMPTY
+     * and set every position to EMPTY.
      */
     public Bookshelf(){
         maxNumberOfTiles=Define.MAXNUMBEROFTILES_BOOKSHELF.getI();
@@ -40,33 +40,33 @@ public class Bookshelf {
     }
 
     /**
-    * <strong>Getter</strong> -> Returns the matrix of tiles
-    * @return The matrix of tiles
+    * <strong>Getter</strong> -> Returns the matrix of tiles.
+    * @return The matrix of tiles.
      **/
     public Matrix getTiles(){
         return tiles;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the number of tiles
-     * @return the number of tiles
+     * <strong>Getter</strong> -> Returns the number of tiles.
+     * @return the number of tiles.
      */
     public int getNum_of_tiles () { return num_of_tiles; }
 
     /**
-     * Method to check if the column given is full of tiles
-     * <p><strong>REQUIRES:</strong> choice between 1 and 6 AND column between 0 and 4</p>
+     * Method to check if the column given is full of tiles.
+     * <p><strong>REQUIRES:</strong> choice between 1 and 6 AND column between 0 and 4.</p>
      * @param choice number of tiles chosen
      * @param column index of the colum chosen
-     * @return true if the column is full, false if it isn't
+     * @return <i>true</i> if the column is full, <i>false</i> if it isn't.
      */
     public boolean checkColumns(int choice, int column){
         return tiles.getTile(choice - 1, column).equals(Tiles.EMPTY);
     }
 
     /**
-     * Method to check if the matrix is full
-     * @return true if the matrix is full, false if it isn't
+     * Method to check if the matrix is full.
+     * @return <i>true</i> if the matrix is full, <i>false</i> if it isn't
      */
     public boolean checkEndGame(){
         return num_of_tiles == maxNumberOfTiles;
@@ -77,6 +77,19 @@ public class Bookshelf {
      */
     public boolean checkEmptyBoard(){
         return num_of_tiles == 0;
+    }
+
+    /**
+     * Method to check if it is possible to add the number of chosen tiles in the matrix
+     * @return true if the matrix is possible, false if it isn't
+     */
+    public boolean checkPossibleChoice(int j){
+        for (int i=0;i< Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();i++) {
+            if (tiles.getTile( j-1, i)==Tiles.EMPTY){
+                return true;
+            }
+        }
+        return false;
     }
 
     //TODO sembra non utilizzato - serve???

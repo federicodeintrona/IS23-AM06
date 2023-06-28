@@ -21,20 +21,20 @@ import java.util.List;
 
 
 /**
- * <p>A class used to control the evolution of the game.</p>
+ * <p>Class used to control the evolution of the game.</p>
  * <p>It holds and manages all the information about a single game:</p>
  * <ul>
- *     <li>Board</li>
- *     <li>Bookshelves</li>
- *     <li>Players (and their points)</li>
- *     <li>Chat logs</li>
+ *     <li>Board,</li>
+ *     <li>Bookshelves,</li>
+ *     <li>Players (and their points),</li>
+ *     <li>Chat logs,</li>
  *     <li>etc.</li>
  * </ul>
  * <p>The model's public methods allow the players to modify the state of game by:
  *      <ul>
- *          <li>Removing tiles from the board</li>
- *          <li>Changing the order of the selected tiles</li>
- *          <li>Adding the tiles to their bookshelves</li>
+ *          <li>Removing tiles from the board;</li>
+ *          <li>Changing the order of the selected tiles;</li>
+ *          <li>Adding the tiles to their bookshelves.</li>
  *      </ul>
  *
  *     <p>
@@ -173,14 +173,14 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method to initialize common objectives
+     * Method to initialize common objectives.
      */
     private void commonobjInit() {
         commonObj = CommonObjective.randomSubclass(Define.NUMBEROFCOMMONOBJECTIVE.getI());
     }
 
     /**
-     * Method to initialize personal objectives
+     * Method to initialize personal objectives.
      */
     private void personalobjInit() {
         ArrayList<Integer> numbers = new ArrayList<>();
@@ -206,16 +206,16 @@ public class Model implements TimerInterface {
 
     /**
      * <p>Method to remove an array of tiles from the board if the move is legitimate.</p>
-     * Also notifies the views of changes
-     * @param points  The position of the tiles
-     * @param player The username of the player who wants to remove the tile
-     * @throws MoveNotPossible if the game is not in the right state
-     * @throws NotCurrentPlayer if the player is not the current player
-     * @throws IllegalArgumentException if the array points is null
-     * @throws TooManySelected if the array points is too long
-     * @throws TilesNotAdjacent if the tiles are not adjacent
-     * @throws OutOfDomain if at least one of the points is outside the board
-     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
+     * Also notifies the views of changes.
+     * @param points  The position of the tiles.
+     * @param player The username of the player who wants to remove the tile.
+     * @throws MoveNotPossible if the game is not in the right state.
+     * @throws NotCurrentPlayer if the player is not the current player.
+     * @throws IllegalArgumentException if the array points is null.
+     * @throws TooManySelected if the array points is too long.
+     * @throws TilesNotAdjacent if the tiles are not adjacent.
+     * @throws OutOfDomain if at least one of the points is outside the board.
+     * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed.
      */
     public synchronized void removeTileArray(Player player,ArrayList<Point> points) throws MoveNotPossible{
 
@@ -252,12 +252,12 @@ public class Model implements TimerInterface {
     /**
      * <p>Method to add the selected tiles in the player's bookshelf.</p>
      * Since adding tiles to your bookshelf is the last action you can do on your turn, it also makes the game go to the next turn.
-     * @param player  The player who owns the Bookshelf
-     * @param column   The column where you want to add the tiles
-     * @throws OutOfDomain if requested column does not exists
-     * @throws ColumnIsFull if the requested column is full
-     * @throws MoveNotPossible if game is not in the right state
-     * @throws NotCurrentPlayer if the player requesting the move is not the current player
+     * @param player  The player who owns the Bookshelf.
+     * @param column   The column where you want to add the tiles.
+     * @throws OutOfDomain if requested column does not exists.
+     * @throws ColumnIsFull if the requested column is full.
+     * @throws MoveNotPossible if game is not in the right state.
+     * @throws NotCurrentPlayer if the player requesting the move is not the current player.
      */
     public synchronized void addToBookShelf(Player player,  int column) throws MoveNotPossible{
 
@@ -290,8 +290,8 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method to check if the player is the first to fill his bookshelf, if so gives him 1 point
-     * @param player The player to check
+     * Method to check if the player is the first to fill his bookshelf, if so gives him 1 point.
+     * @param player The player to check.
      */
     private void checkFirstToFillBookshelf(Player player){
         //Checks if player filled his bookshelf
@@ -309,12 +309,12 @@ public class Model implements TimerInterface {
     /**
      * <p>Method to swap the order of the array of selected tiles to the order describes in the array ints.</p>
      *       ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
-     * @param ints  The new order of the array
-     * @param player  The player requesting the move
-     * @throws MoveNotPossible The game is not in the right state
-     * @throws NotCurrentPlayer The player is not the current player
-     * @throws IllegalArgumentException The ints array is not of appropriate content
-     * @throws TooManySelected if the array is not of appropriate size
+     * @param ints  The new order of the array.
+     * @param player  The player requesting the move.
+     * @throws MoveNotPossible The game is not in the right state.
+     * @throws NotCurrentPlayer The player is not the current player.
+     * @throws IllegalArgumentException The ints array is not of appropriate content.
+     * @throws TooManySelected if the array is not of appropriate size.
      */
     public synchronized void swapOrder(ArrayList<Integer> ints,Player player) throws MoveNotPossible,IllegalArgumentException {
 
@@ -342,11 +342,11 @@ public class Model implements TimerInterface {
     //PRIVATE METHODS : UTILITY
 
     /**
-     * <p>Method that updates and sets the current player's points</p>
+     * <p>Method that updates and sets the current player's points.</p>
      * <ul>
-     *  <il>Vicinity points</il>
-     *  <il>Common objective points</il>
-     *  <il>Personal objective points</il>
+     *  <il>Vicinity points,</il>
+     *  <il>Common objective points,</il>
+     *  <il>Personal objective points.</il>
      * </ul>
      */
     private void updatePoints(){
@@ -402,11 +402,11 @@ public class Model implements TimerInterface {
     }
 
 
-    /** <p>Method that advances the turn</p>
+    /** <p>Method that advances the turn.</p>
      * <ul>
-     *  <il>Update the points of the current player</il>
-     *  <il>select the next player and calls the endGame function if the last turn of the game has been played.</il>
-     *  <il>Also resets the board when needed</il>
+     *  <il>Update the points of the current player;</il>
+     *  <il>select the next player and calls the endGame function if the last turn of the game has been played;</il>
+     *  <il>Also resets the board when needed.</il>
      * </ul>
      */
     private void nextTurn(){
@@ -456,7 +456,7 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method that selects the current and next player
+     * Method that selects the current and next player.
      */
     private void playerSelection(){
             selectCurr();
@@ -464,10 +464,10 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * <p>Method that selects the current player</p>
+     * <p>Method that selects the current player.</p>
      * <ul>
-     *     <il>it's the next player if it is connected</il>
-     *     <il>if not the next connected player</il>
+     *     <il>it's the next player if it is connected;</il>
+     *     <il>if not the next connected player;</il>
      *     <il>if there are no other connected players it's the next player in line.</il>
      * </ul>
      */
@@ -486,7 +486,7 @@ public class Model implements TimerInterface {
      * <p>Method to selects the next player in line to play the game.</p> Skips disconnected player.
      * (if there are no other connected players, the next player is set to the successive player in line
      * even if it is disconnected to make sure that if a player reconnects in time
-     * the game will select the next player properly)
+     * the game will select the next player properly.)
      */
     private void selectNext() {
         Optional<Player> player=selectNextNotDisconnected(currPlayer);
@@ -496,7 +496,7 @@ public class Model implements TimerInterface {
 
     /**
      * Method that returns the next player in line even if it is disconnected.
-     * @param player The first player in line
+     * @param player The first player in line.
      * @return The next player.
      */
     private Player selectNextPlayer(Player player){
@@ -508,7 +508,7 @@ public class Model implements TimerInterface {
     /**
      * Method that returns the next connected player in line.
      *
-     * @param current The player of whom you want to select the next
+     * @param current The player of whom you want to select the next.
      * @return The Optional of the next connected player.
      * Or an Empty Optional if there is only 1 player connected.
      */
@@ -560,8 +560,8 @@ public class Model implements TimerInterface {
 
 
     /**
-     *  <p>Method to put back picked tiles in the board
-     *      if a player disconnects in the middle of his turn</p>
+     *  <p>Method to put back picked tiles in the board.
+     *      if a player disconnects in the middle of his turn.</p>
      */
     private void restoreTiles(){
         for(int i = 0; i<selectedTiles.size();i++){
@@ -578,7 +578,7 @@ public class Model implements TimerInterface {
      * If the game was stopped due to and insufficient number of players,
      * checks if there are enough players and if so makes the game continue.
      * @param player The player to reconnect.
-     * @param view Virtual view of the player
+     * @param view Virtual view of the player.
      */
     public synchronized void playerReconnection(Player player,VirtualView view){
         System.out.println(player.getUsername() + " has reconnected");
@@ -613,7 +613,7 @@ public class Model implements TimerInterface {
 
     /**
      * Method that starts the countdown timer,
-     * if it ends before at least 2 players are connected the game ends
+     * if it ends before at least 2 players are connected the game ends.
      */
     private void startEndTimer(){
         System.out.println("start timer");
@@ -627,7 +627,7 @@ public class Model implements TimerInterface {
     //Game ending methods
 
     /**
-     * Method that selects the winner of the game and ends it
+     * Method that selects the winner of the game and ends it.
      */
     private synchronized void endGame(){
         state = GameState.ENDING;
@@ -654,7 +654,7 @@ public class Model implements TimerInterface {
 
 
     /**
-     * Method that selects the player who won the game
+     * Method that selects the player who won the game.
      */
     private void selectWInner(){
         Player winner = connectedPlayers == 1 ?
@@ -667,8 +667,8 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method that returns the first connected player
-     * @return the first connected player
+     * Method that returns the first connected player.
+     * @return the first connected player.
      */
     private Player disconnectionWinner(){
 
@@ -687,8 +687,8 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method that returns the player with most points
-     * @return The player with most points
+     * Method that returns the player with most points.
+     * @return The player with most points.
      */
     private Player playerWithMostPoints(){
         int winnerpos=0;
@@ -703,10 +703,10 @@ public class Model implements TimerInterface {
 
     /**
      * Method that forwards a message coming
-     * from the chat to all the players
+     * from the chat to all the players.
      *
-     * @param playerForwarding      the player that sent the message
-     * @param message       the message to forward
+     * @param playerForwarding      the player that sent the message.
+     * @param message       the message to forward.
      */
     public synchronized void sendMessage (String playerForwarding, String message) {
         // Adding message to public chat's history
@@ -724,11 +724,11 @@ public class Model implements TimerInterface {
 
     /**
      * Method that forwards a message coming
-     * from a private chat to a particular player
+     * from a private chat to a particular player.
      *
-     * @param forwardingPlayer      the player that sent the message
-     * @param message       the message to forward
-     * @param receivingPlayer       the player that receives the message
+     * @param forwardingPlayer      the player that sent the message.
+     * @param message       the message to forward.
+     * @param receivingPlayer       the player that receives the message.
      */
     public synchronized void sendMessage (String forwardingPlayer, String message, String receivingPlayer) {
         ChatMessage conversation = new ChatMessage(forwardingPlayer, message, receivingPlayer);
@@ -751,7 +751,7 @@ public class Model implements TimerInterface {
     //TimerInterface Methods
 
     /**
-     * Method to ends the game when the timer ends
+     * Method to ends the game when the timer ends.
      */
     @Override
     public void disconnect() {
@@ -759,8 +759,8 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method to update and returns the time counter
-     * @return the updated time
+     * Method to update and returns the time counter.
+     * @return the updated time.
      */
     @Override
     public int updateTime() {
@@ -769,8 +769,8 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method to return the error message to be printed when the timer ends
-     * @return The error message to be printed when the timer ends
+     * Method to return the error message to be printed when the timer ends.
+     * @return The error message to be printed when the timer ends.
      */
     @Override
     public String getErrorMessage() {
@@ -783,7 +783,7 @@ public class Model implements TimerInterface {
 
     /**
      * Method to update the selected player client state using his virtual view.
-     * @param p The player to update
+     * @param p The player to update.
      */
     private void updatePlayer(Player p){
 
@@ -818,8 +818,8 @@ public class Model implements TimerInterface {
     }
 
     /**
-     * Method to notify the personal objective (and it's number) and private points
-     * @param p The player to update
+     * Method to notify the personal objective (and it's number) and private points.
+     * @param p The player to update.
      */
     private void notifyPersonalData(Player p){
         System.out.println("personal data di: " + p.getUsername());
@@ -839,8 +839,8 @@ public class Model implements TimerInterface {
 
     /**
      * Method to notify the common objective (and it's points), player names, current, next and chair player and board
-     * for a single chosen player
-     * @param p The player to update
+     * for a single chosen player.
+     * @param p The player to update.
      */
     private void notifyCommonData(Player p){
         //Notify PlayerNames
@@ -870,7 +870,7 @@ public class Model implements TimerInterface {
     }
     /**
      * Method to notify the common objective (and it's points), player names, current, next and chair player and board
-     * for all players
+     * for all players.
      */
     private void notifyCommonData(){
         //Notify PlayerNames
@@ -903,72 +903,72 @@ public class Model implements TimerInterface {
 
 
     /**
-     * <strong>Getter</strong>-> Returns the array of all players
-     * @return  Arraylist of all players
+     * <strong>Getter</strong>-> Returns the array of all players.
+     * @return  Arraylist of all players.
      */
     public  ArrayList<Player> getPlayers() {
         return players;
     }
 
     /**
-     * <strong>Getter</strong>-> Returns the board
-     * @return the board
+     * <strong>Getter</strong>-> Returns the board.
+     * @return the board.
      */
     public  Board getBoard() {
         return board;
     }
 
     /**
-     * <strong>Getter</strong>-> Returns the current state of the game
-     * @return The current state of the game
+     * <strong>Getter</strong>-> Returns the current state of the game.
+     * @return The current state of the game.
      */
     public  GameState getState() {
         return state;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the state of the game
-     * @param state The state you want to set the game to
+     * <strong>Setter</strong> -> Sets the state of the game.
+     * @param state The state you want to set the game to.
      */
     public void setState(GameState state) {
         this.state = state;
     }
 
     /**
-     * <strong>Getter</strong>-> Returns the common objective of the game
-     * @return ArrayList of all the common objectives
+     * <strong>Getter</strong>-> Returns the common objective of the game.
+     * @return ArrayList of all the common objectives.
      */
     public ArrayList<CommonObjective> getCommonObj() {
         return commonObj;
     }
 
     /**
-     * <strong>Setter</strong> -> Set the current player (Just for Testing purposes)
-     * @param currPlayer The player to set as current player
+     * <strong>Setter</strong> -> Set the current player (Just for Testing purposes).
+     * @param currPlayer The player to set as current player.
      */
     public synchronized void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the gameID
-     * @return gameId
+     * <strong>Getter</strong> -> Returns the gameID.
+     * @return gameId.
      */
     public int getGameID() {
         return gameID;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns true if the game is finished, false otherwise
-     * @return flag isFinished
+     * <strong>Getter</strong> -> Returns true if the game is finished, false otherwise.
+     * @return flag isFinished.
      */
     public boolean isFinished() {
         return isFinished;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the selectedTiles array
-     * @param selectedTile Array you want to set selectedTiles as
+     * <strong>Setter</strong> -> Sets the selectedTiles array.
+     * @param selectedTile Array you want to set selectedTiles as.
      */
     public synchronized void setSelectedTiles(ArrayList<Tile> selectedTile) {
         this.selectedTiles = selectedTile;
@@ -976,17 +976,17 @@ public class Model implements TimerInterface {
 
 
     /**
-     * <strong>Getter</strong> -> Returns the selectedTiles array
-     * @return selectedTiles ArrayList
+     * <strong>Getter</strong> -> Returns the selectedTiles array.
+     * @return selectedTiles ArrayList.
      */
     public ArrayList<Tile> getSelectedTiles() {
         return selectedTiles;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the players in a game given an Arraylist @players
+     * <strong>Setter</strong> -> Sets the players in a game given an Arraylist of players.
      *
-     * @param players       ArrayList of players
+     * @param players       ArrayList of players.
      */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
@@ -1010,47 +1010,47 @@ public class Model implements TimerInterface {
 
     /**
      * Method to add the controller as a property change listener of the model.
-     * @param controller the controller
+     * @param controller the controller.
      */
     public void addChangeListener(Controller controller){
         notifier.addPropertyChangeListener("end",controller);
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the virtual views
-     * @param virtualViews virtual views
+     * <strong>Setter</strong> -> Sets the virtual views.
+     * @param virtualViews virtual views.
      */
     public void setVirtualViews(ArrayList<VirtualView> virtualViews) {
         this.virtualViews = virtualViews;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the gameID
-     * @param gameID gameId
+     * <strong>Setter</strong> -> Sets the gameID.
+     * @param gameID gameId.
      */
     public void setGameID(int gameID) {
         this.gameID = gameID;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns current player
-     * @return current player
+     * <strong>Getter</strong> -> Returns current player.
+     * @return current player.
      */
     public Player getCurrPlayer() {
         return currPlayer;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns next player
-     * @return next player
+     * <strong>Getter</strong> -> Returns next player.
+     * @return next player.
      */
     public Player getNextPlayer() {
         return nextPlayer;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the flag if the timer is on
-     * @return flag timerIsOn
+     * <strong>Getter</strong> -> Returns the flag if the timer is on.
+     * @return flag timerIsOn.
      */
     public boolean isTimerIsOn() {
         return timerIsOn;

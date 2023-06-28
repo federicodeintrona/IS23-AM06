@@ -86,7 +86,7 @@ public class RMIHandler implements RMIHandlerInterface{
     }
 
     /**
-     * Gets the instance of clientState from a specific Client given his ip address and port
+     * Method to get the instance of clientState from a specific Client given his ip address and port
      *
      * @param username      client's username
      * @throws RemoteException      In case the connection fails between Server and RMI Client

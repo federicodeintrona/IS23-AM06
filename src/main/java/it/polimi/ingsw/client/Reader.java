@@ -14,10 +14,7 @@ import it.polimi.ingsw.utils.Timer.TimerInterface;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
@@ -29,15 +26,15 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.System.out;
 
 /**
- * <p>Class used to read all the message sent from the controller and modify client state</p>
+ * <p>Class used to read all the message sent from the controller and modify client state.</p>
  * If the message received is:
  * <ul>
- *     <li> a view message then the class changes client state</li>
+ *     <li> a view message then the class changes client state;</li>
  *     <li> a ping message then sends back the pong message to server and in case of
- *     missing answer starts disconnection</li>
- *     <li> in other case send to networker the message</li>
+ *     missing answer starts disconnection;</li>
+ *     <li> in other case send to networker the message.</li>
  * </ul>
- * It also close socket, object input stream and object output stream in case of disconnection
+ * It also close socket, object input stream and object output stream in case of disconnection.
  */
 public class Reader extends Thread implements TimerInterface {
     private final Socket socket;
@@ -58,12 +55,12 @@ public class Reader extends Thread implements TimerInterface {
     private static final int delta = 1000;
 
     /**
-     * Initialize socket, object output stream, networker tcp and client state and creates a new object input stream
-     * @param socket server socket
-     * @param oos object output stream
-     * @param networkerTcp networker
-     * @param clientState client state to modify
-     * @throws IOException in case of problem with input and output
+     * Initialize socket, object output stream, networker tcp and client state and creates a new object input stream.
+     * @param socket server socket.
+     * @param oos object output stream.
+     * @param networkerTcp networker.
+     * @param clientState client state to modify.
+     * @throws IOException in case of problem with input and output.
      */
     public Reader(Socket socket,ObjectOutputStream oos, NetworkerTcp networkerTcp, ClientState clientState) throws IOException {
         this.client = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -74,13 +71,13 @@ public class Reader extends Thread implements TimerInterface {
     }
 
     /**
-     * Method to read messages sent from the Server
+     * Method to read messages sent from the Server.
      *If the message received is:
      *  <ul>
-     *     <li> a view message then the class changes client state</li>
+     *     <li> a view message then the class changes client state;</li>
      *     <li> a ping message then sends back the pong message to server and in case of
-     *           missing answer starts disconnection</li>
-     *     <li> in other case send to networker the message</li>
+     *           missing answer starts disconnection;</li>
+     *     <li> in other case send to networker the message.</li>
      *  * </ul>
      */
     public void run() {
@@ -195,7 +192,7 @@ public class Reader extends Thread implements TimerInterface {
     }
 
     /**
-     * Method used to notify networker to start disconnection process
+     * Method used to notify networker to start disconnection process.
      */
     @Override
     public void disconnect() {
@@ -205,7 +202,7 @@ public class Reader extends Thread implements TimerInterface {
 
     /**
      * Method to close all active thread, socket, object output stream and object input stream
-     * and then close the system
+     * and then close the system.
      */
     public void disconnection() {
         disconnected=true;
@@ -226,8 +223,8 @@ public class Reader extends Thread implements TimerInterface {
     }
 
     /**
-     * Method to update countdown for skipped ping message
-     * @return skipped ping message
+     * Method to update countdown for skipped ping message.
+     * @return skipped ping message.
      */
     @Override
     public int updateTime() {
@@ -236,8 +233,8 @@ public class Reader extends Thread implements TimerInterface {
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the error message
-     * @return error message
+     * <strong>Getter</strong> -> Returns the error message.
+     * @return error message.
      */
     @Override
     public String getErrorMessage() {

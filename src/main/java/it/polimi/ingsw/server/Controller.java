@@ -24,7 +24,7 @@ import java.util.Optional;
  *
  */
 public class Controller implements PropertyChangeListener {
-    private Lobby lobby;
+    private final Lobby lobby;
     private  HashMap<String, Player> players;
     private  HashMap<Integer,Model> games;
 
@@ -51,7 +51,7 @@ public class Controller implements PropertyChangeListener {
     }
 
     /**
-     * Start the selected game.
+     * Method to start the selected game.
      * @param ID The ID of the game you want to start
      */
     public void startGame(int ID)  {
@@ -60,7 +60,7 @@ public class Controller implements PropertyChangeListener {
 
 
     /**
-     * Adds the selected tiles of the game whose id is 'gameID' in the column 'col'
+     * Method to add the selected tiles of the game whose id is 'gameID' in the column 'col'
      * @param gameID The ID of the game
      * @param playerID  The username of the player requesting the move
      * @param col The column where you want to add the tiles
@@ -97,7 +97,7 @@ public class Controller implements PropertyChangeListener {
 
 
     /**
-     * Swap the order of the array of selected tiles to the order describes in the array ints.
+     * Method to swap the order of the array of selected tiles to the order describes in the array ints.
      * ex. oldSelectedTiles[G,B,Y], ints[2,1,3] --> newSelectedTiles[B,G,Y]
      *
      * @param ints The new order in which you want the array
@@ -211,7 +211,7 @@ public class Controller implements PropertyChangeListener {
 
 
     /**
-     * <p>Message used to forward the handling of a new client to the lobby</p>
+     * <p>Method for forwarding a message used for the handling of a new client to the lobby</p>
      * <p>The controller checks if a player was already connected to game and if reconnects the player</p>
      * @param client The username of the player.
      * @param view The virtual view associated with the player.
