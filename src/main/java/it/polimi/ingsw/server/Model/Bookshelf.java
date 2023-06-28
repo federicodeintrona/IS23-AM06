@@ -73,15 +73,15 @@ public class Bookshelf {
     }
      /**
      * Method to check if the matrix is empty
-     * @return true if the matrix is empty, false if it isn't
+     * @return <i>true</i> if the matrix is empty, <i>false</i> if it isn't
      */
     public boolean checkEmptyBoard(){
         return num_of_tiles == 0;
     }
 
     /**
-     * Method to check if it is possible to add the number of chosen tiles in the matrix
-     * @return true if the matrix is possible, false if it isn't
+     * Method to check if it is possible to add the number of chosen tiles in the matrix.
+     * @return <i>true</i> if the matrix is possible, <i>false</i> if it isn't.
      */
     public boolean checkPossibleChoice(int j){
         for (int i=0;i< Define.NUMBEROFCOLUMNS_BOOKSHELF.getI();i++) {
@@ -106,9 +106,9 @@ public class Bookshelf {
 
     /**
      * Method to insert the array of tiles in the matrix
-     * in the column chosen
-     * @param tiles tiles to put in the matrix
-     * @param column index of the column for tiles
+     * in the column chosen.
+     * @param tiles tiles to put in the matrix.
+     * @param column index of the column for tiles.
      */
     public void addTile(ArrayList<Tiles> tiles, int column){
             int pos=firstFree(column);
@@ -120,9 +120,9 @@ public class Bookshelf {
 
     /**
      * Method to insert the array of tile in the matrix
-     * in the column chosen
-     * @param tiles tile to put in the matrix
-     * @param column index of column for tiles
+     * in the column chosen.
+     * @param tiles tile to put in the matrix.
+     * @param column index of column for tiles.
      */
     public void addFullTile(ArrayList<Tile> tiles, int column){
         int pos=firstFree(column);
@@ -132,15 +132,15 @@ public class Bookshelf {
         num_of_tiles=num_of_tiles+tiles.size();
     }
     /**
-     * <strong>Setter</strong> -> Sets the number of tiles
-     * @param num number of tiles
+     * <strong>Setter</strong> -> Sets the number of tiles.
+     * @param num number of tiles.
      */
     public void setNum_of_tiles (int num) { num_of_tiles = num; }
 
     /**
-     * Method to find the first free position of the matrix in the given column
-     * @param column index of the column
-     * @return first free row of the matrix
+     * Method to find the first free position of the matrix in the given column.
+     * @param column index of the column.
+     * @return first free row of the matrix.
      */
     private int firstFree (int column){
         for (int i=5;i>=0;i--){
@@ -154,11 +154,11 @@ public class Bookshelf {
 
     /**
      * Helping method that takes a matrix, a point inside and returns an ArrayList
-     * of points, adjacent to the given one, that share the same tile color
+     * of points, adjacent to the given one, that share the same tile color.
      *
-     * @param matrix    player's bookshelf
-     * @param point coordinates of the analyzed tile
-     * @return ArrayList    position with adjacent color
+     * @param matrix    player's bookshelf.
+     * @param point coordinates of the analyzed tile.
+     * @return An arraylist of position with adjacent color.
      */
     private static ArrayList<Point> getAdjacentSameColor(Matrix matrix, Point point) {
         ArrayList<Point> adjacent = new ArrayList<>();
@@ -184,9 +184,9 @@ public class Bookshelf {
     }
 
     /**
-     * Method to associate the number of adjacent tiles to the corresponding point
-     * @param n number of adjacent tiles
-     * @return corresponding point
+     * Method to associate the number of adjacent tiles to the corresponding point.
+     * @param n number of adjacent tiles.
+     * @return corresponding point.
      */
     private int vicinityPointCount(int n){
         switch (n) {
@@ -210,8 +210,8 @@ public class Bookshelf {
     }
 
     /**
-     * Method to calculate vicinity points
-     * @return vicinity point
+     * Method to calculate vicinity points.
+     * @return vicinity point.
      */
     public int checkVicinityPoints(){
         int adjPoint=0;
