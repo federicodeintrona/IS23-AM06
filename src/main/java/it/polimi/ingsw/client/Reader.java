@@ -1,5 +1,4 @@
 package it.polimi.ingsw.client;
-
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
@@ -10,7 +9,6 @@ import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 import it.polimi.ingsw.utils.Timer.TimerCounter;
 import it.polimi.ingsw.utils.Timer.TimerInterface;
-
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
@@ -121,7 +119,9 @@ public class Reader extends Thread implements TimerInterface {
     }
 
 
-//TODO javadoc FEDE
+    /**
+     * Starts sending pings to the server and starts the countdown timer.
+     */
     private void pingPong(){
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{

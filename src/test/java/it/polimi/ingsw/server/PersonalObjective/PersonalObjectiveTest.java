@@ -14,7 +14,6 @@ class PersonalObjectiveTest {
     void personalObjectivePoint11(){
         Bookshelf bookshelf=new Bookshelf();
         PersonalObjective po=new PersonalObjective(1);
-        PersonalObjective po1=new PersonalObjective(2);
 
         //controllo con bookshelf vuota
         assertEquals(0, po.personalObjectivePoint(bookshelf));
@@ -571,7 +570,7 @@ class PersonalObjectiveTest {
         bookshelf.getTiles().setTile(Tiles.BLUE, 4,1);
         assertEquals(9, po.personalObjectivePoint(bookshelf));
 
-        bookshelf.getTiles().setTile(Tiles.PINK, 5,0);
+        bookshelf.getTiles().setTile(Tiles.PINK, 5,3);
         assertEquals(12, po.personalObjectivePoint(bookshelf));
     }
     @DisplayName("Checking the wrong positions of PersonalObjective10")

@@ -7,6 +7,7 @@ import java.rmi.NotBoundException;
  * Class to launch the My Shelfie Application.
  */
 public class Launcher {
+    //TODO provare a toglierlo
     /**
      * Default constructor
      */

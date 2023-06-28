@@ -379,13 +379,17 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     @FXML
     private ScrollPane chatScroll;
 
+
+
     /**
      * Default constructor
      */
     public GameControllerChat() {
     }
 
-    //INITIALIZE
+
+
+//INITIALIZE
     /**
      * Method called to initialize the scene.
      *
@@ -429,39 +433,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         initializeChatChoice();
         //initialize all chat
         initializeChat();
-        //initialize all common objective's point
-        initializeCommonObjPoint();
         //bookshelf
         List<String> username = clientState.getAllUsername();
         for(String x: username){
             updateBookshelf(x);
         }
+        //initialize all common objective's point
+        initializeCommonObjPoint();
         //current player
         initializeCurrPlayer();
     }
-
-    private void initializeCurrPlayer(){
-        String string;
-        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
-            //update label
-            string="It is YOUR turn";
-            turnLabel.setText(string);
-        }
-        else {
-            //update label
-            string="It is "+clientState.getCurrentPlayer()+" turn";
-            turnLabel.setText(string);
-        }
-    }
-
-    private void initializeCommonObjPoint(){
-//        if (!clientState.getCommonMap1().isEmpty()){
-//            for (String player: clientState.getCommonMap1().keySet()){
-//
-//            }
-//        }
-    }
-
 
 
 
@@ -669,6 +650,41 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
                     //add the message
                     updatePrivateChat(clientState.getChatController().getPrivateChat(st).getChatMessages().get(i));
                 }
+            }
+        }
+    }
+
+    /**
+     * Method to initialize the current player.
+     */
+    private void initializeCurrPlayer(){
+        String string;
+        if (clientState.getCurrentPlayer().equals(clientState.getMyUsername())){
+            //update label
+            string="It is YOUR turn";
+            turnLabel.setText(string);
+        }
+        else {
+            //update label
+            string="It is "+clientState.getCurrentPlayer()+" turn";
+            turnLabel.setText(string);
+        }
+    }
+
+    /**
+     * Method to initialize all player's common objective points.
+     */
+    private void initializeCommonObjPoint(){
+        if (clientState.getCommonMap1()!=null){
+            for (String player: clientState.getCommonMap1().keySet()){
+                String path = "/images/scoring_tokens/scoring_"+clientState.getCommonMap1().get(player)+".jpg";
+                Objects.requireNonNull(catchCommonObjPointONE(player)).setImage(getImage(path));
+            }
+        }
+        if (clientState.getCommonMap2()!=null){
+            for (String player: clientState.getCommonMap1().keySet()){
+                String path = "/images/scoring_tokens/scoring_"+clientState.getCommonMap1().get(player)+".jpg";
+                Objects.requireNonNull(catchCommonObjPointTWO(player)).setImage(getImage(path));
             }
         }
     }
@@ -940,11 +956,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
     }
-    private String getTile (int i){
-        return clientState.getSelectedTiles().get(i).getTiles().getImage()[
-                clientState.getSelectedTiles().get(i).getImage()];
-    }
-
 
     /**
      * Method to update the public chat.
@@ -1020,8 +1031,6 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
 
     }
-
-    // TODO pup multipli: gestione popup più vecchi
 
     /**
      * Method to update the private chat.
@@ -1248,6 +1257,49 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         }
     }
 
+    /**
+     * Method that returns the first common objective points of the selected player.
+     *
+     * @param username the username of the player.
+     * @return the <i>ImageView</i> of the player correct.
+     */
+    private ImageView catchCommonObjPointONE(String username){
+        if (clientState.getMyUsername().equals(username)){
+            return myCommonPointImage1;
+        }
+        else if (otherPlayerLabel1.getText().equals(username)){
+            return otherPlayer1CommonPoint1;
+        }
+        else if (otherPlayerLabel2.getText().equals(username)){
+            return otherPlayer2CommonPoint1;
+        }
+        else if (otherPlayerLabel3.getText().equals(username)){
+            return otherPlayer3CommonPoint1;
+        }
+        return null;
+    }
+
+    /**
+     * Method that returns the second common objective points of the selected player.
+     *
+     * @param username the username of the player.
+     * @return the <i>ImageView</i> of the player correct.
+     */
+    private ImageView catchCommonObjPointTWO(String username){
+        if (clientState.getMyUsername().equals(username)){
+            return myCommonPointImage2;
+        }
+        else if (otherPlayerLabel1.getText().equals(username)){
+            return otherPlayer1CommonPoint2;
+        }
+        else if (otherPlayerLabel2.getText().equals(username)){
+            return otherPlayer2CommonPoint2;
+        }
+        else if (otherPlayerLabel3.getText().equals(username)){
+            return otherPlayer3CommonPoint2;
+        }
+        return null;
+    }
 
 
     /**
@@ -1879,6 +1931,14 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
     }
 
 
+    //TODO javadoc ALE
+    private String getTile (int i){
+        return clientState.getSelectedTiles().get(i).getTiles().getImage()[
+                clientState.getSelectedTiles().get(i).getImage()];
+    }
+
+
+
 
 //OVERRIDE
     /**
@@ -2016,25 +2076,22 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             case ("notification") -> {
                 String playerDis=(String) evt.getSource();
                 String conOrDis=(String) evt.getNewValue();
-//                Platform.runLater(() ->
-//                        );
+                Platform.runLater(() ->
+                        updateDisconnectPlayer(playerDis, conOrDis));
             }
         }
     }
 
 
-//    private void updateDisconnectPlayer(String player, String type){
-//        if (type.equals("reconnection")){
-//
-//        }
-//        else if (type.equals("disconnection")){
-//
-//        }
-//    }
+    private void updateDisconnectPlayer(String player, String type){
+        if (type.equals("reconnection")){
+            //TODO rimuovere opacità la bookshelf, personal, common point, username label, point label
+            catchOtherPlayerBookshelfGrid(player);
+        }
+        else if (type.equals("disconnection")){
+            //TODO opacizzare la bookshelf, personal, common point, username label, point label
+            catchOtherPlayerBookshelfGrid(player);
+        }
+    }
 
 }
-
-
-//TODO mostrare popup hai n nuovi messaggi
-
-//TODO controllare se può rimuovere il numero di tessere che sta cercando di rimuovere
