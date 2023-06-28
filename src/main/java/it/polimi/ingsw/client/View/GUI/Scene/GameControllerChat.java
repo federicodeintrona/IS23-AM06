@@ -596,6 +596,16 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
      * ALL and with the other player.
      */
     private void initializeChatChoice(){
+        // Particular initialization in a 2 players game
+        if (clientState.getAllUsername().size() == 2){
+
+            //initialization
+            selectChat.setValue("ALL");
+            chatScroll.setContent(publicChatBox);
+            chatScroll.setFitToWidth(true);
+            return;
+        }
+
         //username of the other players
         ArrayList<String> otherPlayer=catchOtherPlayerName(clientState.getAllUsername());
 
