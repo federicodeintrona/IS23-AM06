@@ -14,11 +14,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -34,8 +34,8 @@ import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * Class to manage the game scene.
@@ -994,6 +994,27 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
         //add the message to the correct chat Vbox
         Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
 
+        // Forced update of the graphic interface
+        Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).requestLayout();
+
+        // Adding a Listener for the PublicChat automatic sliding
+        Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+            Platform.runLater(() -> {
+                // Gets the latest element added to the VBOX
+                Node lastMessage = Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().get(Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().size() - 1);
+
+                // Automatic sliding at the end of the VBOX
+                if (chatScroll != null && lastMessage != null) {
+                    double containerHeight = Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getHeight();
+                    double scrollHeight = chatScroll.getContent().getBoundsInLocal().getHeight();
+
+                    // Set the vertical position based on the height of the containers
+                    double vvalue = Math.max(0, (lastMessage.getBoundsInParent().getMaxY() - containerHeight + scrollHeight) / scrollHeight);
+                    chatScroll.setVvalue(vvalue);
+                }
+            });
+        });
+
         if (!selectChat.getValue().equals("ALL")){
             //pop up - you got a message
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
@@ -1037,6 +1058,24 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
             //add the message to the correct chat Vbox
             Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().add(messageLabel);
+
+            // Adding a Listener for the PrivateChat automatic sliding
+            Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+                Platform.runLater(() -> {
+                    // Gets the latest element added to the VBOX
+                    Node lastMessage = Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().get(Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getChildren().size() - 1);
+
+                    // Automatic sliding at the end of the VBOX
+                    if (chatScroll != null && lastMessage != null) {
+                        double containerHeight = Objects.requireNonNull(catchChatVBox(message.getReceivingUsername())).getHeight();
+                        double scrollHeight = chatScroll.getContent().getBoundsInLocal().getHeight();
+
+                        // Set the vertical position based on the height of the containers
+                        double vvalue = Math.max(0, (lastMessage.getBoundsInParent().getMaxY() - containerHeight + scrollHeight) / scrollHeight);
+                        chatScroll.setVvalue(vvalue);
+                    }
+                });
+            });
         }
         else {
             messageLabel.setText(message.getConversation());
@@ -1053,6 +1092,24 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
 
             //add the message to the correct chat Vbox
             Objects.requireNonNull(catchChatVBox(message.getText())).getChildren().add(messageLabel);
+
+            // Adding a Listener for the PrivateChat automatic sliding
+            Objects.requireNonNull(catchChatVBox(message.getText())).layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+                Platform.runLater(() -> {
+                    // Gets the latest element added to the VBOX
+                    Node lastMessage = Objects.requireNonNull(catchChatVBox(message.getText())).getChildren().get(Objects.requireNonNull(catchChatVBox(message.getText())).getChildren().size() - 1);
+
+                    // Automatic sliding at the end of the VBOX
+                    if (chatScroll != null && lastMessage != null) {
+                        double containerHeight = Objects.requireNonNull(catchChatVBox(message.getText())).getHeight();
+                        double scrollHeight = chatScroll.getContent().getBoundsInLocal().getHeight();
+
+                        // Set the vertical position based on the height of the containers
+                        double vvalue = Math.max(0, (lastMessage.getBoundsInParent().getMaxY() - containerHeight + scrollHeight) / scrollHeight);
+                        chatScroll.setVvalue(vvalue);
+                    }
+                });
+            });
 
             if (!selectChat.getValue().equals(message.getText())){
                 //pop up - you got a message
