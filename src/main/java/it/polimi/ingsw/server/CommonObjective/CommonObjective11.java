@@ -7,12 +7,12 @@ import it.polimi.ingsw.utils.Tiles;
 import java.awt.*;
 
 /**
- * Class that regulates the functioning of CommonObjective 11
+ * Class that regulates the functioning of CommonObjective 11.
  */
 public class CommonObjective11 extends CommonObjective{
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective11() {
         this.setNum(11);
@@ -21,10 +21,10 @@ public class CommonObjective11 extends CommonObjective{
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 5 tiles of the same color that form an
-     * x-shape inside it and, in case, returns true
+     * x-shape inside it and, in case, returns true.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player    player whose bookshelf gets analyze.
+     * @return      <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player) {
@@ -47,11 +47,11 @@ public class CommonObjective11 extends CommonObjective{
 
     /**
      * Method that returns true if the given point can make an x-shape,
-     * with it in the center, of same colored tiles in the given matrix
+     * with it in the center, of same colored tiles in the given matrix.
      *
-     * @param coordinate    point that has to be in the center of the x-shape
-     * @param matrix      player's bookshelf
-     * @return      true if an x-shape is possible, else false
+     * @param coordinate    point that has to be in the center of the x-shape.
+     * @param matrix      player's bookshelf.
+     * @return      <i>true</i> if an x-shape is possible, else <i>false</i>.
      */
     public static boolean checkForXShape(Point coordinate, Matrix matrix){
         int x = coordinate.x;

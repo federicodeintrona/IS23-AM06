@@ -78,7 +78,7 @@ public class Reader extends Thread implements TimerInterface {
      *     <li> a ping message then sends back the pong message to server and in case of
      *           missing answer starts disconnection;</li>
      *     <li> in other case send to networker the message.</li>
-     *  * </ul>
+     *  </ul>
      */
     public void run() {
         notifier.addPropertyChangeListener(networkerTcp);

@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class that regulates the functioning of CommonObjective 9
+ * Class that regulates the functioning of CommonObjective 9.
  */
 public class CommonObjective9 extends CommonObjective{
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective9() {
         this.setNum(9);
@@ -21,10 +21,10 @@ public class CommonObjective9 extends CommonObjective{
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 2 filled columns, each one made by 6 tiles of
-     * 6 different colors, inside it and, in case, returns true
+     * 6 different colors, inside it and, in case, returns true.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player    player whose bookshelf gets analyze.
+     * @return      <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player) {

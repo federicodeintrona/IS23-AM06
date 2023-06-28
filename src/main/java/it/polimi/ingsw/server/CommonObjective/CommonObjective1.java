@@ -9,12 +9,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class that regulates the functioning of CommonObjective 1
+ * Class that regulates the functioning of CommonObjective 1.
  */
 public class CommonObjective1 extends CommonObjective {
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective1() {
         this.setNum(1);
@@ -23,10 +23,10 @@ public class CommonObjective1 extends CommonObjective {
     /**
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 6 separate groups, made by 2 tiles of the same
-     * color each, inside it and, in case, returns true
+     * color each, inside it and, in case, returns true.
      *
-     * @param player player whose bookshelf gets analyze
-     * @return true if the bookshelf meets the criteria, else false
+     * @param player player whose bookshelf gets analyze.
+     * @return <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player) {
@@ -65,7 +65,7 @@ public class CommonObjective1 extends CommonObjective {
  *     Thread class:
  * </p>
  * <p>
- *     one to analyze the columns and one for the rows
+ *     one to analyze the columns and one for the rows.
  * </p>
  */
 class MyRunnable implements Runnable {

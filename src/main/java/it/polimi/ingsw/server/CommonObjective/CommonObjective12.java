@@ -5,12 +5,12 @@ import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Tiles;
 
 /**
- * Class that regulates the functioning of CommonObjective 12
+ * Class that regulates the functioning of CommonObjective 12.
  */
 public class CommonObjective12 extends CommonObjective{
 
     /**
-     * Sets the num variable of the CommonObjective
+     * Sets the num variable of the CommonObjective.
      */
     public CommonObjective12() {
         this.setNum(12);
@@ -20,10 +20,10 @@ public class CommonObjective12 extends CommonObjective{
      * Method that takes a player and analyzes his bookshelf to
      * see if there are 5 columns of growing or decreasing height,
      * each one that differs from the previous one by a box,
-     * inside it and, in case, returns true
+     * inside it and, in case, returns true.
      *
-     * @param player    player whose bookshelf gets analyze
-     * @return      true if the bookshelf meets the criteria, else false
+     * @param player    player whose bookshelf gets analyze.
+     * @return      <i>true</i> if the bookshelf meets the criteria, else <i>false</i>.
      */
     @Override
     public boolean checkCondition(Player player) {
@@ -66,7 +66,7 @@ public class CommonObjective12 extends CommonObjective{
      * </p>
      * <p>
      *     regulates the work of 6 threads each one
-     *     dedicated to analyze one out of 6 possible diagonals
+     *     dedicated to analyze one out of 6 possible diagonals.
      * </p>
      */
     private static class DiagonalAnalyzerThread extends Thread {
@@ -80,14 +80,14 @@ public class CommonObjective12 extends CommonObjective{
         private volatile boolean stop;
 
         /**
-         * Initializer for each thread
+         * Initializer for each thread.
          *
-         * @param matrix    player's bookshelf
-         * @param rowStart      the starting index for the row
-         * @param colStart      the starting index for the column
-         * @param rowEnd    the ending index for the row
-         * @param colEnd    the ending index for the column
-         * @param isInverse     switch case
+         * @param matrix    player's bookshelf.
+         * @param rowStart      the starting index for the row.
+         * @param colStart      the starting index for the column.
+         * @param rowEnd    the ending index for the row.
+         * @param colEnd    the ending index for the column.
+         * @param isInverse     switch case.
          */
         public DiagonalAnalyzerThread(Matrix matrix, int rowStart, int colStart, int rowEnd, int colEnd, boolean isInverse) {
             this.matrix = matrix;
@@ -101,9 +101,9 @@ public class CommonObjective12 extends CommonObjective{
         }
 
         /**
-         * Method that returns the boolean areAllElementsEqual
+         * Method that returns the boolean areAllElementsEqual.
          *
-         * @return  areAllElementsEqual
+         * @return  areAllElementsEqual.
          */
         public boolean areAllElementsEqual() {
             return areAllElementsEqual;
@@ -115,12 +115,12 @@ public class CommonObjective12 extends CommonObjective{
          * </p>
          * <p>
          *     Through an if-else construct decides if the
-         *     diagonal to analyze is an inverse or not
+         *     diagonal to analyze is an inverse or not.
          * </p>
          * <p>
          *     It sets the areAllElementsEqual boolean to false in case its
          *     diagonal does not meet the criteria, else it calls the
-         *     helping method stopOtherThreads() to end the other threads
+         *     helping method stopOtherThreads() to end the other threads.
          * </p>
          */
         @Override
@@ -160,7 +160,7 @@ public class CommonObjective12 extends CommonObjective{
 
         /**
          * Method used to end all the threads
-         * except for the one who calls it
+         * except for the one who calls it.
          */
         private void stopOtherThreads() {
             if (areAllElementsEqual) {

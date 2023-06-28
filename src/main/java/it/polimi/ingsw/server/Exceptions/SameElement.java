@@ -5,7 +5,7 @@ package it.polimi.ingsw.server.Exceptions;
  */
 public class SameElement extends MoveNotPossible{
     /**
-     * Default Contructor
+     * Default constructor.
      */
     public SameElement() {
     }
