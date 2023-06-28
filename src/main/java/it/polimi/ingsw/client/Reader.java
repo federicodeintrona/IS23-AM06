@@ -73,6 +73,16 @@ public class Reader extends Thread implements TimerInterface {
         this.clientState = clientState;
     }
 
+    /**
+     * Method to read messages sent from the Server
+     *If the message received is:
+     *  <ul>
+     *     <li> a view message then the class changes client state</li>
+     *     <li> a ping message then sends back the pong message to server and in case of
+     *           missing answer starts disconnection</li>
+     *     <li> in other case send to networker the message</li>
+     *  * </ul>
+     */
     public void run() {
         notifier.addPropertyChangeListener(networkerTcp);
         pingPong();
@@ -179,10 +189,8 @@ public class Reader extends Thread implements TimerInterface {
                     clientState.newMessageHandler((ChatMessage) message.getContent());
             case ("reloadChats") ->
                     clientState.reloadChats((ChatController) message.getContent());
-            case ("end") -> {
+            case ("end") ->
                 clientState.setGameIsEnded((Boolean) message.getContent());
-               // disconnected=true;
-            }
         }
     }
 
