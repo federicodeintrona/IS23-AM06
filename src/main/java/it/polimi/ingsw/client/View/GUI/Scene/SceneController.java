@@ -45,7 +45,7 @@ public interface SceneController {
                 "-fx-font-size: 18px;" +
                 "-fx-font-style: italic;"+
                 "-fx-text-fill: #070707;"+
-                "-fx-background-color: #00f721;");
+                "-fx-background-color: #f7d600;");
         alert.initOwner(stage);
         alert.showAndWait();
 
