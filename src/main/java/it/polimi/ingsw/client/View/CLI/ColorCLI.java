@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.View.CLI;
 
-//TODO javadoc da finire Ale
 /**
  * Enumeration of ANSI escaped codes used for Command User Interface's color.
  * <ul>
@@ -68,7 +67,9 @@ public enum ColorCLI {
      */
     EMPTY1 ("\u001b[38;2;77;48;35m"), //77;48;35
 
-    //TODO Ale
+    /**
+     * ANSI escaped code of the Tiles.POSITION's foreground color (used by print common objective in Command Line Interface).
+     */
     POSITION ("\u001b[31;1m"),
 
     /**
@@ -118,7 +119,10 @@ public enum ColorCLI {
      * ANSI escaped code of the Tiles.EMPTY's background color.
      */
     EMPTYBG1 ("\u001b[48;2;77;48;35m"), //77;48;35
-    //TODO Ale
+
+    /**
+     * ANSI escaped code of the Tiles.POSITION's background color (used by print common objective in Command Line Interface).
+      */
     POSITIONBG ("\u001b[41;1m"),
 
 

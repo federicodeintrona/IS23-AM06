@@ -13,18 +13,22 @@ import java.util.Scanner;
  * Class that lets you chose if you want to open Server or Client.
  */
 public class MyShelfieApplication extends Application{
+
     /**
-     * Default constructor
+     * Default constructor.
      */
     public MyShelfieApplication() {
     }
+
+
+
     //TODO NotBoundException
     /**
      * Static method to run Server or ClientBase.
      *
      * @param args the arguments that you insert on the opening jar (args[0] contains the choice to start Server or Client).
-     * @throws IOException in case of problem with input/output
-     * @throws InterruptedException in case of problem with thread interruption
+     * @throws IOException in case of problem with input/output.
+     * @throws InterruptedException in case of problem with thread interruption.
      * @throws NotBoundException
      */
     public static void main(String[] args) throws IOException, InterruptedException, NotBoundException {
@@ -90,7 +94,7 @@ public class MyShelfieApplication extends Application{
      * The main entry point for all JavaFX applications.
      *
      * @param stage the stage for this application, onto which the application scene can be set.
-     * @throws IOException in case of problems with input/output
+     * @throws IOException in case of problems with input/output.
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -120,7 +124,7 @@ public class MyShelfieApplication extends Application{
      * Method to run Server or Client.
      *
      * @param st contains the choice of whether to run the Server or the Client.
-     * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client)
+     * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client).
      * @throws IOException
      */
     private static void runCorrectService(String st, String[] args) throws IOException {
@@ -135,7 +139,7 @@ public class MyShelfieApplication extends Application{
     /**
      * Method to run the Server
      *
-     * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client)
+     * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client).
      * @throws IOException
      */
     private static void runAsServer(String[] args) throws IOException {
@@ -145,7 +149,7 @@ public class MyShelfieApplication extends Application{
     /**
      * Method to run the Client
      *
-     * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client)
+     * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client).
      */
     private static void runAsClient(String[] args) {
         ClientBase.main(args);
