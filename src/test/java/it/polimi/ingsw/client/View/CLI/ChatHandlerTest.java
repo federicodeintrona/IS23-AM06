@@ -510,7 +510,7 @@ class ChatHandlerTest {
         String username1 = "yoda";
         String username2 = "obi-wan";
         String message = "may the force be with you";
-        String expectedOutput = ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + ": may the force be with you\n";
+        String expectedOutput = ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + ": may the force be with you" + System.lineSeparator();
         ChatMessage chatMessage = new ChatMessage(username1, message);
 
         publicChat.setChatIsEnable(true);
@@ -542,7 +542,7 @@ class ChatHandlerTest {
         Chat publicChat = new Chat();
         String username = "yoda";
         String message = "may the force be with you";
-        String expectedOutput1 = "*One new message from the PUBLIC CHAT*\n*2 new messages from the PUBLIC CHAT*\n";
+        String expectedOutput1 = "*One new message from the PUBLIC CHAT*" + System.lineSeparator() + "*2 new messages from the PUBLIC CHAT*" + System.lineSeparator();
         ChatMessage chatMessage = new ChatMessage(username, message);
 
         publicChat.setChatIsEnable(false);
@@ -600,7 +600,7 @@ class ChatHandlerTest {
         String forwardingUsername = "yoda";
         String receivingUsername = "obi-wan";
         String message = "may the force be with you";
-        String expectedOutput = ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + ": may the force be with you\n";
+        String expectedOutput = ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + ": may the force be with you" + System.lineSeparator();
         ChatMessage chatMessage = new ChatMessage(forwardingUsername, message, receivingUsername);
 
         privateChat.setChatIsEnable(true);
@@ -634,8 +634,8 @@ class ChatHandlerTest {
         String forwardingUsername = "yoda";
         String receivingUsername = "obi-wan";
         String message = "may the force be with you";
-        String expectedOutput = "*One new message from the PRIVATE CHAT with " + ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + "*\n" +
-                                "*2 new messages from the PRIVATE CHAT with " + ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + "*\n";
+        String expectedOutput = "*One new message from the PRIVATE CHAT with " + ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + "*" + System.lineSeparator() +
+                                "*2 new messages from the PRIVATE CHAT with " + ColorCLI.UNDERLINE + "yoda" + ColorCLI.RESET + "*" + System.lineSeparator();
         ChatMessage chatMessage = new ChatMessage(forwardingUsername, message, receivingUsername);
 
         privateChat.setChatIsEnable(false);
