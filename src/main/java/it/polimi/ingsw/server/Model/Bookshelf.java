@@ -92,7 +92,6 @@ public class Bookshelf {
         return false;
     }
 
-    //TODO sembra non utilizzato - serve???
     /**
      * Method to check if the matrix is empty
      * @return true if the matrix is empty, false if it isn't

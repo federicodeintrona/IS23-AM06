@@ -691,14 +691,21 @@ public class Model implements TimerInterface {
      * @return The player with most points.
      */
     private Player playerWithMostPoints(){
-        int winnerpos=0;
+
+        Player winner=chairPlayer;
+        Player temp = selectNextPlayer(chairPlayer);
+
 
         for( int i = 0; i< players.size(); i++){
-            if(players.get(i).getPrivatePoint() >= players.get(winnerpos).getPrivatePoint())
-                winnerpos=i;
+
+            if(winner.getPrivatePoint()<=temp.getPrivatePoint())
+                winner=temp;
+
+            temp = selectNextPlayer(temp);
+
         }
 
-        return players.get(winnerpos);
+        return winner;
     }
 
     /**
