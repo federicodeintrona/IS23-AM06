@@ -163,7 +163,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
         try {
 
             if(!disconnected) {
-                oos.writeUnshared(message);
+                oos.writeObject(message);
                 oos.flush();
                 oos.reset();
             }
