@@ -8,6 +8,7 @@ import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
+import java.beans.PropertyChangeSupport;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -204,4 +205,11 @@ public interface ClientStateRemoteInterface extends Remote {
      * @throws RemoteException  In case of error during the rmi connection process
      */
     void setCommonObjMaps(ArrayList<HashMap<Player, Integer>> list) throws RemoteException;
+
+    /**
+     * <strong>Getter</strong> --> get the notifier.
+     * @return The notifier.
+     * @throws RemoteException In case of error during the rmi connection process.
+     */
+    PropertyChangeSupport getNotifier() throws RemoteException;
 }

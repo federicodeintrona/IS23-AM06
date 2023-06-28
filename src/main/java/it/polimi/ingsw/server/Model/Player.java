@@ -185,8 +185,11 @@ public class Player {
         this.disconnected = disconnected;
     }
 
-    //TODO chiedo a FEDE
-    /*public String getCapUser() {
+    /**
+     * Return the username of the player with original characters.
+     * @return The username.
+     */
+    public String getCapUser() {
         return CapUser;
-    }*/
+    }
 }

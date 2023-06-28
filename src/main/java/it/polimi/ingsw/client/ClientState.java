@@ -661,9 +661,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             commonMap1 = list.get(0);
             commonMap2 = list.get(1);
         }
-
-        notifier.firePropertyChange(
-                new PropertyChangeEvent(this,"commonObjCompl",commonMap1,commonMap2));
     }
 
 
@@ -741,5 +738,10 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
             }
             return list;
         }
+    }
+
+
+    public PropertyChangeSupport getNotifier() {
+        return notifier;
     }
 }

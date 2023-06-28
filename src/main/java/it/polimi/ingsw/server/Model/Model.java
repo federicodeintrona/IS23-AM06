@@ -542,7 +542,12 @@ public class Model implements TimerInterface {
        notifier.removePropertyChangeListener("all",view);
        notifier.removePropertyChangeListener(player.getUsername(),view);
 
-       connectedPlayers--;
+        //Notify disconnection
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                player.getUsername(), "all", "disconnection","notification" ));
+
+
+        connectedPlayers--;
        if(connectedPlayers<=1&&!timerIsOn) startEndTimer();
        if(player.equals(currPlayer)){
 
@@ -584,6 +589,12 @@ public class Model implements TimerInterface {
         System.out.println(player.getUsername() + " has reconnected");
 
         virtualViews.add(view);
+
+        //Notify reconnection
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                player.getUsername(), "all", "reconnection","notification" ));
+
+
         notifier.addPropertyChangeListener("all",view);
         notifier.addPropertyChangeListener(view.getUsername(),view);
 
@@ -593,6 +604,7 @@ public class Model implements TimerInterface {
         checkRestart();
 
         updatePlayer(player);
+
     }
 
     /**

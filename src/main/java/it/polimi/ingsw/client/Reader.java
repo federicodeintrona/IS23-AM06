@@ -184,6 +184,9 @@ public class Reader extends Thread implements TimerInterface {
                     clientState.setGameHasStarted((Boolean) message.getContent());
             case ("message") ->
                     clientState.newMessageHandler((ChatMessage) message.getContent());
+            case ("notification") ->
+                    clientState.getNotifier().firePropertyChange(new PropertyChangeEvent(
+                            message.getContent(),"notification",null,message.getText()));
             case ("reloadChats") ->
                     clientState.reloadChats((ChatController) message.getContent());
             case ("end") ->

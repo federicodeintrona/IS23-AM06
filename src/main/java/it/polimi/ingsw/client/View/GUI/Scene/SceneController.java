@@ -35,4 +35,20 @@ public interface SceneController {
         alert.showAndWait();
     }
 
+    default void showNotification(String notification, Stage stage){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Notification");
+        alert.setHeaderText("Notification");
+        alert.setContentText(notification);
+        //set style
+        alert.getDialogPane().setStyle( "-fx-font-weight: bold;" +
+                "-fx-font-size: 18px;" +
+                "-fx-font-style: italic;"+
+                "-fx-text-fill: #070707;"+
+                "-fx-background-color: #00f721;");
+        alert.initOwner(stage);
+        alert.showAndWait();
+
+    }
+
 }
