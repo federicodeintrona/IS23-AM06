@@ -66,15 +66,17 @@ public class CheckManager {
      * @throws TilesNotAdjacent if the tiles are not adjacent.
      * @throws OutOfDomain if at least one of the points is outside the board.
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed.
-     * @throws TooManySelected if the array points is too long.
+     * @throws TooManySelected if the points array is too long.
      */
     public void checkRemoveLegit(ArrayList<Point> points, Player player,Board board) throws MoveNotPossible,IllegalArgumentException {
 
         if(state.equals(GameState.CHOOSING_TILES)){
-            //Check if the player requesting the move is the current player
+            //check if the player requesting the move is the current player
             if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
-                //check if the selected tiles can actually be selected
-            else checkPointArrayDomain(points,board);
+
+
+            //check if the selected tiles can actually be selected
+            checkPointArrayDomain(points,board,player);
 
         }else throw new MoveNotPossible();
 
@@ -90,9 +92,13 @@ public class CheckManager {
      * @throws TilesCannotBeSelected if at least one of the selected tiles is either Empty or Not Allowed
      * @throws TooManySelected if the array is too long
      */
-    private void checkPointArrayDomain(ArrayList<Point> points,Board board) throws MoveNotPossible, IllegalArgumentException {
+    private void checkPointArrayDomain(ArrayList<Point> points,Board board,Player player) throws MoveNotPossible, IllegalArgumentException {
         //check if the array is not null
-        if(points!=null && points.size()>=0 ){
+        if(points!=null && points.size()>0 ){
+
+            //Check if the bookshelf has enough empty slots to fit the selected tiles
+            if(!player.getBookshelf().checkPossibleChoice(points.size())) throw new TooManySelected();
+
 
             //check the length of the array
             if(points.size()>maxNumberOfSelectedTiles) throw new TooManySelected();
