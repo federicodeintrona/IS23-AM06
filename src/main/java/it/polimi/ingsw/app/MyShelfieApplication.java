@@ -125,7 +125,7 @@ public class MyShelfieApplication extends Application{
      *
      * @param st contains the choice of whether to run the Server or the Client.
      * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client).
-     * @throws IOException
+     * @throws IOException in case of problem with input/output.
      */
     private static void runCorrectService(String st, String[] args) throws IOException {
         switch (st){
@@ -140,7 +140,7 @@ public class MyShelfieApplication extends Application{
      * Method to run the Server
      *
      * @param args the arguments that you insert on the opening .jar (args[0] contains the choice to start Server or Client).
-     * @throws IOException
+     * @throws IOException in case of problem with input/output.
      */
     private static void runAsServer(String[] args) throws IOException {
         Server.main(args);

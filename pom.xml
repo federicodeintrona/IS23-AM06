@@ -76,6 +76,14 @@
       <artifactId>javafx-fxml</artifactId>
       <version>20.0.1</version>
     </dependency>
+
+<!--sistemato jar???-->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-graphics</artifactId>
+      <version>20.0.1</version>
+      <classifier>linux</classifier>
+    </dependency>
   </dependencies>
 
 <!--  By Fossati-->
