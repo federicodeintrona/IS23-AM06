@@ -686,6 +686,8 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      * @param list The list of the maps of the player who completed the common objectives.
      */
     public void setCommonObjMaps(ArrayList<HashMap<String, Integer>> list){
+        System.out.println(list.get(0));
+        System.out.println(list.get(1));
         synchronized (viewLock) {
             commonMap1 = list.get(0);
             commonMap2 = list.get(1);

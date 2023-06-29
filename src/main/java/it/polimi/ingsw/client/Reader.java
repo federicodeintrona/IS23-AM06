@@ -154,13 +154,13 @@ public class Reader extends Thread implements TimerInterface {
             case ("currPlayer") ->
                     clientState.setCurrentPlayer((String) message.getContent());
             case ("playerNames") ->
-                    clientState.setAllUsername(new ArrayList<>((List) message.getContent()));
+                    clientState.setAllUsername(new ArrayList<String>((List<String>) message.getContent()));
             case ("commonObj") ->
-                    clientState.setGameCommonObjective(new ArrayList<>((List) message.getContent()));
+                    clientState.setGameCommonObjective(new ArrayList<Integer>((List<Integer>) message.getContent()));
             case ("commonObjPoints") ->
-                    clientState.setCommonObjectivePoints(new ArrayList<>((List) message.getContent()));
-            case ("commonObjCompl") ->
-                    clientState.setCommonObjMaps(new ArrayList<>((List) message.getContent()));
+                    clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) message.getContent()));
+            case ("commonObjCompleted") ->
+                    clientState.setCommonObjMaps(new ArrayList<HashMap<String, Integer>>((List<HashMap<String, Integer>>) message.getContent()));
             case ("publicPoints") ->
                     clientState.setAllPublicPoints(message.getText(), (int) message.getContent());
             case ("selectedTiles") ->

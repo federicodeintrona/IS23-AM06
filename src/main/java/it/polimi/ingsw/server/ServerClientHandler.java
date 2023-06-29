@@ -149,6 +149,8 @@ public class ServerClientHandler implements Runnable, TimerInterface {
      */
     public void sendMessage(Message message){
 
+        send(message);
+        /*
         if(message.getType().equals(MessageTypes.PING)){
             synchronized (pingLock) {
                 send(message);
@@ -157,14 +159,13 @@ public class ServerClientHandler implements Runnable, TimerInterface {
             synchronized (lock) {
                 send(message);
             }
-        }
+        }*/
     }
 
 
 
-    private void send(Message message){
+    private synchronized void send(Message message){
         try {
-
             if(!disconnected) {
                 oos.writeObject(message);
                 oos.flush();

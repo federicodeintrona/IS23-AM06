@@ -8,7 +8,7 @@ import java.util.TimerTask;
  */
 public class TimerCounter extends TimerTask {
     private final TimerInterface client;
-    private static final int timeout = 20;
+    private static final int timeout = 30;
 
     /**
      * <p>Initialize client and construct the timer.</p>

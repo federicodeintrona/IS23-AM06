@@ -89,6 +89,9 @@ public abstract class CommonObjective {
 
         if (checkCondition(player) && !playersWhoCompletedComObj.containsKey(player)) {
 
+            // adding the player to the set of players who already received the points
+            playersWhoCompletedComObj.put(player, points);
+
             // for a 2 players game the first to complete a commonObj gets 8 points and the second to do so 4
             if (numOfPlayers == 2) {
                 player.setCommonObjectivePoint(points);
@@ -101,8 +104,6 @@ public abstract class CommonObjective {
                 points -= 2;
             }
 
-            // adding the player to the set of players who already received the points
-            playersWhoCompletedComObj.put(player, points);
 
             return true;
         } return false;

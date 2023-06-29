@@ -73,7 +73,7 @@ public class RMIVirtualView implements VirtualView{
                     case ("commonObjPoints") -> {
                         clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) evt.getSource()));
                     }
-                    case ("commonObjCompl") -> {
+                    case ("commonObjCompleted") -> {
                         clientState.setCommonObjMaps(new ArrayList<>((List<HashMap<String, Integer>>) evt.getSource()));
                     }
                     case ("personalObj") -> {

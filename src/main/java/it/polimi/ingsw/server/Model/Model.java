@@ -874,7 +874,8 @@ public class Model implements TimerInterface {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getPlayersNameCommonObj).toList(), p.getUsername(), "0","commonObjCompleted" ));
 
-
+        System.out.println(commonObj.get(0).getPlayersNameCommonObj());
+        System.out.println(commonObj.get(1).getPlayersNameCommonObj());
 
         //Notify currPlayer and nextPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),
