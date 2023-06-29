@@ -179,7 +179,8 @@ public class GUIController implements View, SceneController {
             try {
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(scene.getPath())));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Create client error");
+                close();
             }
             this.scene.setRoot(root);
             stage.setTitle(scene.getTitle());
@@ -232,8 +233,7 @@ public class GUIController implements View, SceneController {
                 else
                     changeScene(Scenes.Endgame);
             }
-            default ->
-                    throw new IllegalStateException("Unexpected value: " + evt.getPropertyName());
+            default -> System.out.println("Unexpected value: " + evt.getPropertyName());
         }
     }
 

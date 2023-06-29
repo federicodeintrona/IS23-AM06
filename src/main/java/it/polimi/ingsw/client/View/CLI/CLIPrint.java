@@ -411,7 +411,7 @@ public class CLIPrint  {
                 printBookshelf(bookshelf);
 
             } catch (IOException | ParseException e) {
-                throw new RuntimeException(e);
+                System.out.println("Open Json error");
             }
         }
     }
@@ -461,18 +461,18 @@ public class CLIPrint  {
     }
 
     /**
-     * Method to print the player that have the chair - who is the first player to start the game.
+     * Method to print the player that has the chair - who is the first player to start the game.
      */
     public void printChair(){
         synchronized (cliMain.getLock()){
-            System.out.println("The first player, that have chair, is: " +
+            System.out.println("The first player, that has chair, is: " +
                                cliMain.getClientState().getChair());
 
             //wait before you move on - only graphics idea
             try{
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                System.out.println("Sleep error");
             }
             System.out.println("\n");
         }
