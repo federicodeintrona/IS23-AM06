@@ -118,15 +118,12 @@ public abstract class CommonObjective {
         return points;
     }
 
-    //TODO sembra non utilizzato - serve???
+
     /**
      * <Strong>Getter</Strong> -> Gets a set of players who completed the CommonObjective.
      *
-     * @return      HashSet containing the players who completed the CommonObjective.
+     * @return  <i>HashSet</i> containing the name players who completed the CommonObjective.
      */
-    public HashMap<Player, Integer> getPlayersWhoCompletedComObj() {
-        return playersWhoCompletedComObj;
-    }
 
     public HashMap<String, Integer> getPlayersNameCommonObj(){
         HashMap<String,Integer> map = new HashMap<>();

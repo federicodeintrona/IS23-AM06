@@ -19,13 +19,15 @@ import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.Scanner;
 
-//TODO inglese FLA
 /**
- * Class to manage the Client.
+ *  <p>Class to manage the Client.</p>
+ *
+ * <p>The client manages: </p>
  * <ul>
- *     <li>Choice of which User Interface you want to play in (CLI or GUI), if you do not choose which one you prefer the GUI starts automatically;</li>
- *     <li>logout from the User Interface.</li>
+ *     <li>The choice of which User Interface you want to play in (CLI or GUI), if you do not choose which one you prefer the GUI starts automatically;</li>
+ *     <li>The logout from the User Interface.</li>
  * </ul>
+ *
  */
 public class ClientBase extends Application{
 
