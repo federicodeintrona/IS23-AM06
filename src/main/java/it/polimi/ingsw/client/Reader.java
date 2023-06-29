@@ -143,7 +143,6 @@ public class Reader extends Thread implements TimerInterface {
         timer.schedule(task,initialDelay,delta);
     }
 
-//TODO javadoc DIPA
     private void processMessage(Message newMessage){
 
         ViewMessage message = (ViewMessage) newMessage;

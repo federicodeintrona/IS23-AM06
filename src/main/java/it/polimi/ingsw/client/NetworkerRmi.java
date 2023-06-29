@@ -274,7 +274,9 @@ public class NetworkerRmi implements Networker, TimerInterface {
         }
     }
 
-    //TODO javadoc FEDE
+    /**
+     * Starts sending pings to the server and starts the countdown timer.
+     */
     private void pingPong(){
         ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{

@@ -18,7 +18,7 @@ public class Launcher {
      * Static method to launch MyShelfieApplication main.
      *
      * @param args the arguments that you insert on the opening jar.
-     * @throws NotBoundException
+     * @throws NotBoundException in case of attempt to search or disassociate in the registry a name that does not have an associated link.
      * @throws IOException in case of problem with input/output.
      * @throws InterruptedException in case of problem with thread interruption.
      */

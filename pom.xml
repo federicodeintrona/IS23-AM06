@@ -77,12 +77,6 @@
       <version>19.0.2.1</version>
     </dependency>
 
-<!--sistemato jar???-->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>19.0.2.1</version>
-    </dependency>
   </dependencies>
 
 <!--  By Fossati-->

@@ -22,14 +22,13 @@ public class MyShelfieApplication extends Application{
 
 
 
-    //TODO NotBoundException
     /**
      * Static method to run Server or ClientBase.
      *
      * @param args the arguments that you insert on the opening jar (args[0] contains the choice to start Server or Client).
      * @throws IOException in case of problem with input/output.
      * @throws InterruptedException in case of problem with thread interruption.
-     * @throws NotBoundException
+     * @throws NotBoundException in cas of attempt to search or disassociate in the registry a name that does not have an associated link.
      */
     public static void main(String[] args) throws IOException, InterruptedException, NotBoundException {
 
