@@ -51,7 +51,6 @@ public class PersonalObjective {
      * @return the number of the personal objective.
      */
     public int getPersonalObjectiveNum() {
-        System.out.println(personalObjectiveNum);
         return personalObjectiveNum;
     }
 
