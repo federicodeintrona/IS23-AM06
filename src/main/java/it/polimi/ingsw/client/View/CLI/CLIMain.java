@@ -329,9 +329,8 @@ public class CLIMain implements View {
         }
     }
 
-    //TODO javadoc Fla
     /**
-     *
+     * Method to show the chat and the disconnection or reconnection notification.
      * @param evt A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
      */
