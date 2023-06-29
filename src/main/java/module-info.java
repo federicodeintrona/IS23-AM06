@@ -26,7 +26,6 @@ module it.polimi.ingsw {
     exports it.polimi.ingsw.client;
     exports it.polimi.ingsw.server;
     exports it.polimi.ingsw.utils;
-    exports it.polimi.ingsw.utils.Timer;
     opens it.polimi.ingsw.utils.Timer to java.rmi;
 
 }
