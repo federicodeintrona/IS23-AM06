@@ -49,18 +49,18 @@ public abstract class CommonObjective {
 
         for(int i = 0; i<num; i++ ){
             int index = rand.nextInt(temp.size());
-            Constructor c;
+            Constructor c = null;
             try {
                 c = temp.get(index).getDeclaredConstructor();
             } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
+                System.out.println("No non è vero sto metodo esiste");
             }
             temp.remove(index);
             try {
+                assert c != null;
                 result.add((CommonObjective) c.newInstance() );
             } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
+                System.out.println("No non è vero sto metodo esiste");
             }
         }
 

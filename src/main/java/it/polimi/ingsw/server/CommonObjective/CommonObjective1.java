@@ -50,7 +50,7 @@ public class CommonObjective1 extends CommonObjective {
             rowThread.join();
             columnThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("20€ che non succede");
         }
 
         // the division by 2 of the set's size will give us the number of pair found in the bookshelf
