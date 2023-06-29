@@ -682,8 +682,8 @@ public class GameControllerChat implements Initializable, PropertyChangeListener
             }
         }
         if (clientState.getCommonMap2()!=null){
-            for (String player: clientState.getCommonMap1().keySet()){
-                String path = "/images/scoring_tokens/scoring_"+clientState.getCommonMap1().get(player)+".jpg";
+            for (String player: clientState.getCommonMap2().keySet()){
+                String path = "/images/scoring_tokens/scoring_"+clientState.getCommonMap2().get(player)+".jpg";
                 Objects.requireNonNull(catchCommonObjPointTWO(player)).setImage(getImage(path));
             }
         }
