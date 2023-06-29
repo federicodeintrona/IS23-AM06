@@ -68,7 +68,6 @@ public class RMITimer implements TimerInterface {
      * Method to start sending pings and to start the timer.
      */
     public void pingPong(){
-        System.out.println("pongherò " + view.getUsername());
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
 

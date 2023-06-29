@@ -89,8 +89,8 @@ public class ServerClientHandler implements Runnable, TimerInterface {
         Message messageOut=null;
         if(incomingMsg != null) {
 
-            if(!incomingMsg.getType().equals(MessageTypes.PONG))
-                System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
+           // if(!incomingMsg.getType().equals(MessageTypes.PONG))
+          //      System.out.println("Server received " + incomingMsg.getType() + " from: " + username);
 
             switch (incomingMsg.getType()) {
                 case USERNAME -> {

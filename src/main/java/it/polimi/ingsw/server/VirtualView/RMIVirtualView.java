@@ -57,10 +57,7 @@ public class RMIVirtualView implements VirtualView{
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
-        System.out.println("Rmi vv  of " + username + " on " + evt.getNewValue());
         if(!isDisconnected()) {
-            System.out.println("Rmi vv not disconnected of " + username + " on " + evt.getNewValue());
             try {
                 switch ((String) evt.getNewValue()) {
                     case ("playerNames") -> clientState.setAllUsername((new ArrayList<>((List<String>) evt.getSource())));
@@ -117,7 +114,6 @@ public class RMIVirtualView implements VirtualView{
                     }
                     case ("notification") -> {
                         clientState.notify((String)evt.getSource(),(String)evt.getOldValue());;
-
                     }
                     case ("message") -> {
                         clientState.newMessageHandler((ChatMessage) evt.getSource());

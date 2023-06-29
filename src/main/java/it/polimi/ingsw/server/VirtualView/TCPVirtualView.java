@@ -52,10 +52,7 @@ public class TCPVirtualView implements VirtualView{
         //w/name vuol dire che nel campo username del messaggio scrivo
         //lo username del proprietario
 
-        System.out.println(getUsername()+" disconnesso TCP virtual view is on: " + evt.getNewValue());
-
         if(!isDisconnected()) {
-            System.out.println(getUsername()+" TCP virtual view is on: " + evt.getNewValue());
 
             if(evt.getPropertyName().equals("personalObjNum")) {
                 System.out.println(evt.getSource());

@@ -30,7 +30,6 @@ public class CommonObjective1 extends CommonObjective {
      */
     @Override
     public boolean checkCondition(Player player) {
-        System.out.println("common 1 check condition : " + player.getUsername());
 
         // creation of set to contain all tiles approved by the algorithm
         Set<Point> nodes = new HashSet<>();
@@ -54,7 +53,6 @@ public class CommonObjective1 extends CommonObjective {
             e.printStackTrace();
         }
 
-        System.out.println(nodes.size() / 2);
         // the division by 2 of the set's size will give us the number of pair found in the bookshelf
         return nodes.size() / 2 > 5;
     }
@@ -93,7 +91,6 @@ class MyRunnable implements Runnable {
      */
     public void run() {
 
-        System.out.println("my runnable");
 
         // code for the thread 1 that will analyze the rows
         if (name.equals("row-Thread 1")){

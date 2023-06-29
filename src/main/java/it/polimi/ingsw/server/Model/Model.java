@@ -528,7 +528,6 @@ public class Model implements TimerInterface {
      * @param view The virtual view of the player.
      */
     public synchronized void disconnectPlayer(Player player,VirtualView view){
-        System.out.println(player.getUsername() + " has disconnected in the model");
        //Disconnect the player
        player.setDisconnected(true);
 
@@ -623,7 +622,7 @@ public class Model implements TimerInterface {
      * if it ends before at least 2 players are connected the game ends.
      */
     private void startEndTimer(){
-        System.out.println("start timer");
+        System.out.println("End game timer started for game number: " + gameID);
         if(timer!=null) timer.cancel();
         timer = new Timer();
         TimerTask task = new TimerCounter(this);
@@ -836,12 +835,10 @@ public class Model implements TimerInterface {
      * @param p The player to update.
      */
     private void notifyPersonalData(Player p){
-        System.out.println("personal data di: " + p.getUsername());
         //Notify personal objective
         notifier.firePropertyChange(new PropertyChangeEvent(
                 p.getPersonalObjective().getCard(), p.getUsername(),  p.getUsername(),"personalObj" ));
 
-        System.out.println(p.getPersonalObjective().getPersonalObjectiveNum()+ " notify");
         notifier.firePropertyChange(new PropertyChangeEvent(
                 p.getPersonalObjective().getPersonalObjectiveNum(), p.getUsername(),  p.getUsername(),"personalObjNum" ));
 
@@ -874,8 +871,6 @@ public class Model implements TimerInterface {
         notifier.firePropertyChange(new PropertyChangeEvent(
                 commonObj.stream().map(CommonObjective::getPlayersNameCommonObj).toList(), p.getUsername(), "0","commonObjCompleted" ));
 
-        System.out.println(commonObj.get(0).getPlayersNameCommonObj());
-        System.out.println(commonObj.get(1).getPlayersNameCommonObj());
 
         //Notify currPlayer and nextPlayer
         notifier.firePropertyChange(new PropertyChangeEvent(currPlayer.getUsername(), p.getUsername(),

@@ -180,7 +180,6 @@ public class Lobby {
         //for every client in the lobby, create his player, add it to the playerToGame map
         // and remove it from the playerToLobby map
         for (String s : myLobby) {
-            System.out.println(nocapUsernames);
             Player p = new Player(s,nocapUsernames.get(s));
 
             players.put(s,p);
@@ -242,8 +241,6 @@ public class Lobby {
      */
     public synchronized void playerDisconnection(String username){
 
-        System.out.println("lobby player disconnection of " + username);
-
         VirtualView view =views.get(username);
         if(view != null) {
             view.setDisconnected(true);
@@ -292,8 +289,6 @@ public class Lobby {
         usernames.add(username.toLowerCase());
         players.put(username,player);
         views.put(username,view);
-        System.out.println(username);
-        System.out.println("player to game: " + playerToGame);
         int index = playerToGame.get(username.toLowerCase());
         games.get(index).playerReconnection(player,view);
         return index;

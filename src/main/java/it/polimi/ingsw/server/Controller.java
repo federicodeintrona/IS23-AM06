@@ -224,7 +224,6 @@ public class Controller implements PropertyChangeListener {
      * </ul>
      */
     public IntMessage handleNewClient(String client,VirtualView view) {
-        System.out.println(client);
 
         try {
 
@@ -288,7 +287,6 @@ public class Controller implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Game number: " + ((Model)evt.getSource()).getGameID() +" ended");
-        System.out.println("procodddidodidoidodioi " + ((Model)evt.getSource()).getGameID());
         lobby.closeGame(((Model)evt.getSource()).getGameID());
     }
 

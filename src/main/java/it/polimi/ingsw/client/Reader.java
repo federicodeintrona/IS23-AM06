@@ -106,7 +106,7 @@ public class Reader extends Thread implements TimerInterface {
             }
         }
         catch(SocketException | EOFException e){
-            if(disconnected) out.println("The game is about to close! Have fun! The game will go on without you:)");
+            if(!disconnected) out.println("The game is about to close! Have fun! The game will go on without you:)");
         }
         catch (IOException e) {
             System.out.println( "Server is not responding...");
