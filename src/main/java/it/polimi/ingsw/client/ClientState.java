@@ -424,7 +424,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      */
     public void notify(String username, String type) {
         notifier.firePropertyChange(new PropertyChangeEvent(
-                username, "notification", null, type));;
+                username, "notification", null, type));
     }
 
 
@@ -436,7 +436,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      */
     public void setMyUsername(String myUsername) {
         synchronized (viewLock){
-            this.myUsername = myUsername;
+            this.myUsername = myUsername.toLowerCase();
         }
     }
 

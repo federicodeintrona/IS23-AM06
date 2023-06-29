@@ -530,7 +530,7 @@ public class CLIPrint  {
     private void printTurn(){
         synchronized (cliMain.getLock()){
             //if is my turn
-            if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername().toLowerCase())){
+            if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername())){
                 System.out.println(ColorCLI.RED + String.valueOf(ColorCLI.BOLD) + "It is YOUR turn"+ ColorCLI.RESET);
             }
             else {
