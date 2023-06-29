@@ -56,7 +56,7 @@ public class PersonalObjective {
     }
 
     /**
-     * Getter --> return PersonalObjective card.
+     * Getter -> return PersonalObjective card.
      *
      * @return the <i>HashMap</i> that represent the personal objective.
      */
