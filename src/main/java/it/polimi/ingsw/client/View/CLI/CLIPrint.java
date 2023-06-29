@@ -695,6 +695,12 @@ public class CLIPrint  {
         }
     }
 
+    /**
+     * Method to print notification for disconnection and reconnection.
+     *
+     * @param username username of the player reconnected/disconnected.
+     * @param disconnection notification of disconnection or reconnection.
+     */
     public void printDisconnection(String username, String disconnection){
         System.out.println(disconnection.equals("disconnection")?
                 (username+" has disconnected"):
