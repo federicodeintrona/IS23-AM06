@@ -116,7 +116,7 @@ public class RMIVirtualView implements VirtualView{
                         clientState.setGameIsEnded((boolean) evt.getSource());
                     }
                     case ("notification") -> {
-                        clientState.notify((String)evt.getSource(),(String)evt.getNewValue());;
+                        clientState.notify((String)evt.getSource(),(String)evt.getOldValue());;
 
                     }
                     case ("message") -> {
