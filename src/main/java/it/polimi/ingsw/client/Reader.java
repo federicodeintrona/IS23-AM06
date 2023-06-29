@@ -110,7 +110,6 @@ public class Reader extends Thread implements TimerInterface {
         }
         catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
 
         } catch (ClassNotFoundException e) {
             System.out.println( "Unable to identify the received object...");

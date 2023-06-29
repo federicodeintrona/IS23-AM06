@@ -42,11 +42,9 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             port=config.getInt("tcpPort");
         } catch (IOException e) {
             System.out.println("Input/Output problems. Try to close and reopen the program");
-            e.printStackTrace();
             close();
         } catch (ParseException e) {
             System.out.println("Problem with tha parsing of file json. Try to close and reopen the program");
-            e.printStackTrace();
             close();
         }
         this.clientState = clientState;
@@ -79,7 +77,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             reader=new Reader(socket,oos,this, clientState);
             reader.start();
         } catch (IOException e) {
-//            e.printStackTrace();
+
             if (socket!=null){
                 System.out.println( "Server is not responding...");
                 close();
@@ -99,7 +97,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.close();
         } catch (IOException e) {
             System.out.println( "Error: unable to close the socket...");
-            e.printStackTrace();
         }
     }
 
@@ -129,7 +126,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(username);
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
 
     }
@@ -144,7 +140,7 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.flush();
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
+
         }
 
     }
@@ -172,7 +168,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.flush();
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
     }
 
@@ -186,7 +181,6 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.flush();
         } catch (IOException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
     }
 

@@ -115,7 +115,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
             System.out.println("Created RMI connection with Server");
         } catch (Exception e) {
             System.err.println("Client exception: " + e);
-            e.printStackTrace();
             return false;
         }
         return true;
@@ -147,7 +146,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
             view.receivedMessage(message1);
         } catch (RemoteException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
 
 
@@ -172,7 +170,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
             view.receivedMessage(message1);
         } catch (RemoteException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
 
     }
@@ -210,7 +207,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
             view.receivedMessage(message);
         } catch (RemoteException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
+
         }
     }
 
@@ -229,7 +226,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
             view.receivedMessage(message);
         } catch (RemoteException e) {
             System.out.println( "Server is not responding...");
-            e.printStackTrace();
         }
 
     }
