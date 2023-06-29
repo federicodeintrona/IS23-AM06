@@ -342,6 +342,8 @@ public class CLIMain implements View {
                 chatHandler.newPublicMessage((ChatMessage) evt.getNewValue());
             case "privateChat" ->
                 chatHandler.newPrivateMessage((ChatMessage) evt.getNewValue());
+            case "notification" ->
+                cliPrint.printDisconnection((String) evt.getSource(), (String) evt.getNewValue());
         }
     }
 
