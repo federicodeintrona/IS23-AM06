@@ -530,7 +530,7 @@ public class CLIPrint  {
     private void printTurn(){
         synchronized (cliMain.getLock()){
             //if is my turn
-            if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername())){
+            if (cliMain.getClientState().getCurrentPlayer().equals(cliMain.getClientState().getMyUsername().toLowerCase())){
                 System.out.println(ColorCLI.RED + String.valueOf(ColorCLI.BOLD) + "It is YOUR turn"+ ColorCLI.RESET);
             }
             else {
@@ -695,4 +695,9 @@ public class CLIPrint  {
         }
     }
 
+    public void printDisconnection(String username, String disconnection){
+        System.out.println(disconnection.equals("disconnection")?
+                (username+" has disconnected"):
+                (username+" has reconnected"));
+    }
 }
