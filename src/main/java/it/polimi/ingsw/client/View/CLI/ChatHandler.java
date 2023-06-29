@@ -61,6 +61,7 @@ public class ChatHandler {
         while (chatController.getPublicChat().ChatIsEnable()) {
 
             str = scanner.nextLine();
+            if (str.isEmpty()) continue;
 
             // Creating the ChatMessage in case the str is not a command
             if (str.charAt(0) != '#') {
@@ -72,6 +73,7 @@ public class ChatHandler {
             switch (str) {
                 case "#exit" -> endOfChat();
                 case "#help", "#h" -> cliPrint.helpForChat();
+                case "#quit", "#q" -> cliMain.close();
                 case "#switchtoprivate" -> {
                     chatController.getPublicChat().setChatIsEnable(false);
 
@@ -115,6 +117,7 @@ public class ChatHandler {
         while (chatController.getPrivateChat(username).ChatIsEnable()) {
 
             str = scanner.nextLine();
+            if (str.isEmpty()) continue;
 
             // Creating the ChatMessage in case the str is not a command
             if (str.charAt(0) != '#') {
@@ -126,6 +129,7 @@ public class ChatHandler {
             switch (str) {
                 case "#exit" -> endOfChat(username);
                 case "#help", "#h" -> cliPrint.helpForChat();
+                case "#quit", "#q" -> cliMain.close();
                 case "#switchtopublic" -> {
                     chatController.getPrivateChat(username).setChatIsEnable(false);
                     clearCLI();
@@ -195,7 +199,7 @@ public class ChatHandler {
 
         System.out.println("Who do you want to chat with?");
         while (!existingUsername) {
-            str = scanner.nextLine();
+            str = scanner.nextLine().toLowerCase();
 
             if (cliMain.getClientState().getAllUsername().contains(str) && !cliMain.getClientState().getMyUsername().equals(str)) existingUsername = true;
             else System.out.println("Username not found, try again\n");
