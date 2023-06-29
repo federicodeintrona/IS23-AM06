@@ -88,7 +88,7 @@ public class Server extends UnicastRemoteObject {
         lobby.setController(controller);
 
         try {
-            serverSocket = new ServerSocket(103);
+            serverSocket = new ServerSocket(tcpPort);
         } catch (IOException e) {
             tcpServer = false;
             System.out.println("Tcp port not available\nYou can still play using rmi"); // Porta non disponibile
