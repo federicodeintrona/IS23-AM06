@@ -418,12 +418,13 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     /**
-     * <strong>Getter</strong> -> Return the notifier.
-     *
-     * @return the notifier.
+     * Fires a notification of a disconnection or reconnection.
+     * @param username The username of the player.
+     * @param type String saying if the user disconnected or reconnected.
      */
-    public PropertyChangeSupport getNotifier() {
-        return notifier;
+    public void notify(String username, String type) {
+        notifier.firePropertyChange(new PropertyChangeEvent(
+                username, "notification", null, type));;
     }
 
 

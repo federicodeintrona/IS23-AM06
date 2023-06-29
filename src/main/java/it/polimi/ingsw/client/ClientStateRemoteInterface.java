@@ -211,5 +211,5 @@ public interface ClientStateRemoteInterface extends Remote {
      * @return The notifier.
      * @throws RemoteException In case of error during the rmi connection process.
      */
-    PropertyChangeSupport getNotifier() throws RemoteException;
+    void notify(String username, String type) throws RemoteException;
 }

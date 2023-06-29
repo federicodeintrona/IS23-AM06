@@ -82,7 +82,6 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
       <version>19.0.2.1</version>
-      <classifier>linux</classifier>
     </dependency>
   </dependencies>
 
@@ -166,22 +165,18 @@
                   <mainClass>it.polimi.ingsw.app.Launcher</mainClass>
                 </transformer>
               </transformers>
-<!--              <filters>-->
-<!--                <filter>-->
-<!--                  <artifact>*:*</artifact>-->
-<!--                  <excludes>-->
-<!--                    <exclude>module-info.class</exclude>-->
-<!--                    <exclude>META-INF/*.SF</exclude>-->
-<!--                    <exclude>META-INF/*.DSA</exclude>-->
-<!--                    <exclude>META-INF/*.RSA</exclude>-->
-<!--                  </excludes>-->
-<!--                </filter>-->
-<!--              </filters>-->
+                 <filters>
+                  <filter>
+                    <artifact>*:*</artifact>
+                     <excludes>
+                      <exclude>module-info.class</exclude>
+                      <exclude>META-INF/*.SF</exclude>
+                      <exclude>META-INF/*.DSA</exclude>
+                      <exclude>META-INF/*.RSA</exclude>
+                     </excludes>
+                    </filter>
+                </filters>
             </configuration>
-
-
-
-
           </execution>
         </executions>
 

@@ -115,10 +115,8 @@ public class RMIVirtualView implements VirtualView{
                     case ("end") -> {
                         clientState.setGameIsEnded((boolean) evt.getSource());
                     }
-                    //TODO è RMI puoi farlo lo stesso???
                     case ("notification") -> {
-                        clientState.getNotifier().firePropertyChange(new PropertyChangeEvent(
-                                evt.getSource(), "notification", null, evt.getOldValue()));
+                        clientState.notify((String)evt.getSource(),(String)evt.getNewValue());;
 
                     }
                     case ("message") -> {
