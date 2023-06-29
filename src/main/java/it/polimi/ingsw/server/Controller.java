@@ -272,7 +272,7 @@ public class Controller implements PropertyChangeListener {
      * @param username The username of the player.
      */
     public void playerDisconnection(String username){
-        System.out.println(username+ " was disconnected by the controller");
+        System.out.println(username.toLowerCase()+ " was disconnected by the controller");
 
         lobby.playerDisconnection(username.toLowerCase());
 
