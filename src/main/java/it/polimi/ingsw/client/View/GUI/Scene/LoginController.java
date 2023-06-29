@@ -40,7 +40,10 @@ public class LoginController implements SceneController, Initializable {
      */
     public LoginController() {
     }
-    //INITIALIZE
+
+
+
+//INITIALIZE
     /**
      * Method called to initialize the scene.
      *
