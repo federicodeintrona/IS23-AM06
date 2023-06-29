@@ -105,7 +105,7 @@ public class Reader extends Thread implements TimerInterface {
                 }
             }
         }
-        catch(SocketException e){
+        catch(SocketException | EOFException e){
             if(disconnected) out.println("The game is about to close! Have fun! The game will go on without you:)");
         }
         catch (IOException e) {
