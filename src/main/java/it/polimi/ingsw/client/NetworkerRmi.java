@@ -256,7 +256,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
             try {
                 this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage());
             } catch (RemoteException e) {
-                throw new RuntimeException(e);
+                System.out.println("Server not responding...");
+                view.close();
             }
         }
 
@@ -265,7 +266,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
             try {
                 this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage(), tempMessage.getReceivingUsername());
             } catch (RemoteException e) {
-                throw new RuntimeException(e);
+                System.out.println("Server not responding...");
+                view.close();
             }
         }
     }

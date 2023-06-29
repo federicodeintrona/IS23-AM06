@@ -83,8 +83,9 @@
 
 The jar runs on every Operative System (eg. Linux, MacOS, Windows) regardless of the OS it was created on.
 
-<u>If you want to run the project on IntelliJ, you have to move all three org.openjfx dependencies in the pom of your Operative System first</u>
+- <strong>If you want to run the project on IntelliJ, you have to move all three org.openjfx dependencies in the pom of your Operative System first</strong>
 (eg. Windows above Linux and MacOS if you run it from Windows' OS).
+- <strong>Mac users need to delete the dependencies for the other OSs</strong>
 
 The jar is in the folder <i>/Deliverables/jar</i>
 - <b>SERVER</b>
