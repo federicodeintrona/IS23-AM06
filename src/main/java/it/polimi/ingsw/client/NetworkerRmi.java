@@ -114,7 +114,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
             System.out.println("Created RMI connection with Server");
         } catch (Exception e) {
-            System.err.println("Client exception: " + e);
             return false;
         }
         return true;
