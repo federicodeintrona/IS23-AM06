@@ -15,8 +15,10 @@ import java.util.List;
 
 /**
  * Class to save all the reference client's information received from the server (one ClientState for each instance Client).
+ * <p>
+ * The information received are:
  * <ul>
- *     <li>All players' username;</li>
+ *     <li>all players' username;</li>
  *     <li>board;</li>
  *     <li>all players' bookshelf;</li>
  *     <li>client personal objective;</li>
@@ -173,7 +175,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns the ArrayList with all players' username.
      *
-     * @return the ArrayList with all players' username.
+     * @return the <i>ArrayList</i> with all players' username.
      */
     public ArrayList<String> getAllUsername() {
         synchronized (viewLock){
@@ -184,7 +186,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns the HashMap that represent the personal objective.
      *
-     * @return the HashMap that represent the personal objective.
+     * @return the <i>HashMap</i> that represent the personal objective.
      */
     public HashMap<Point, Tiles> getMyPersonalObjective() {
         synchronized (viewLock){
@@ -195,7 +197,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns the Arraylist that contains the number of common objective.
      *
-     * @return the Arraylist that contains the number of common objective.
+     * @return the <i>Arraylist</i> that contains the number of common objective.
      */
     public ArrayList<Integer> getGameCommonObjective() {
         synchronized (viewLock){
@@ -228,7 +230,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns the HashMap that contains all players' bookshelf.
      *
-     * @return the HashMap that contains all players' bookshelf.
+     * @return the <i>HashMap</i> that contains all players' bookshelf.
      */
     public HashMap<String, Matrix> getAllBookshelf() {
         synchronized (viewLock){
@@ -250,7 +252,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns the HashMap that contains all players' point (only the public one).
      *
-     * @return the HashMap that contains all players' point (only the public one).
+     * @return the <i>HashMap</i> that contains all players' point (only the public one).
      */
     public HashMap<String, Integer> getAllPublicPoints() {
         synchronized (viewLock) {
@@ -305,7 +307,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns if game is ended.
      *
-     * @return if game is ended.
+     * @return <i>true </i>if game is ended, else <i>false</i>.
      */
     public boolean isGameIsEnded() {
         synchronized (viewLock) {
@@ -316,7 +318,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Return if game has started.
      *
-     * @return if game has started.
+     * @return <i>true</i> if game has started, else <i>false</i>.
      */
     public boolean gameHasStarted () {
         synchronized (viewLock){
@@ -338,7 +340,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns if we are to be waiting for another player.
      *
-     * @return if we are to be waiting for another player.
+     * @return <i>true</i> if we are to be waiting for another player, else <i>false</i>.
      */
     public boolean isWaiting() {
         return waiting;
@@ -367,7 +369,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns the ArrayList that contains the numbers of game's common objectives.
      *
-     * @return the ArrayList that contains the numbers of game's common objectives.
+     * @return the <i>ArrayList</i> that contains the numbers of game's common objectives.
      */
     public ArrayList<Integer> getCommonObjectivePoints() {
         synchronized (viewLock){
@@ -378,7 +380,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Getter</strong> -> Returns true if the player won because all other players disconnected.
      *
-     * @return true if the player won because all other players disconnected.
+     * @return <i>true</i> if the player won because all other players disconnected, else <i>false</i>.
      */
     public boolean isDisconnectionWinner() {
         synchronized (viewLock) {
@@ -557,7 +559,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Setter</strong> -> Sets if game is ended.
      *
-     * @param gameIsEnded game is ended.
+     * @param gameIsEnded true if game is ended, else false.
      */
     public void setGameIsEnded(boolean gameIsEnded) {
         synchronized (viewLock) {
@@ -570,7 +572,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Setter</strong> -> Sets if game has started.
      *
-     * @param gameHasStarted game has started.
+     * @param gameHasStarted true if game has started, else false.
      */
     public void setGameHasStarted (boolean gameHasStarted) {
         synchronized (viewLock) {
@@ -594,7 +596,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     /**
      * <strong>Setter</strong> -> Sets if we have to be waiting for another player.
      *
-     * @param waiting if we have to be waiting for another player.
+     * @param waiting true if we have to be waiting for another player, else false.
      */
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
@@ -717,7 +719,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      * Method used to check if the server is still running.
      * <p>Only used with RMI connection.</p>
      *
-     * @return true.
+     * @return <i>true</i>.
      * @throws RemoteException When the communication with the server fails.
      */
     @Override
@@ -726,7 +728,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     /**
-     * Method that analyzes @message to see if is intended for the public
+     * Method that analyzes message to see if is intended for the public
      * or private chat and calls the proper method via notifier.
      *
      * @param message ChatMessage containing the conversation for a Chat.
@@ -752,9 +754,9 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
 
 
     /**
-     * Method to check if is possible to add the number of selected tiles in a column
-     * @param numTilesSelected number of tiles selected
-     * @return the <i>ArrayList</i> with the usable columns
+     * Method to check if is possible to add the number of selected tiles in a column.
+     * @param numTilesSelected number of tiles selected.
+     * @return the <i>ArrayList</i> with the usable columns.
      */
     public ArrayList<Integer> checkFreeColumn(int numTilesSelected){
         synchronized (viewLock) {

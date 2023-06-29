@@ -21,7 +21,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Class that regulates the rmi_Client.
+ * Class that regulates the RMI_Client.
  */
 public class NetworkerRmi implements Networker, TimerInterface {
     private static int port;
@@ -122,7 +122,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
     }
 
     /**
-     * Asks the client to enter a valid username. Once he has
+     * Method to ask client to enter a valid username. Once he has
      * done the client gets added to the lobby.
      *
      * @param username  Message from the View containing the username.

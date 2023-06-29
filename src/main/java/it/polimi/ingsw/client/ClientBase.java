@@ -19,6 +19,7 @@ import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.Scanner;
 
+//TODO inglese FLA
 /**
  * Class to manage the Client.
  * <ul>
@@ -70,7 +71,7 @@ public class ClientBase extends Application{
      * The start method is called after the init method has returned, and after the system is ready for the application to begin running.
      *
      * @param stage the stage for this application, onto which the application scene can be set.
-     * @throws Exception
+     * @throws Exception Constructs a new exception with null as its detail message.
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -124,7 +125,7 @@ public class ClientBase extends Application{
     }
 
     /**
-     * Method to logged out from the Graphic User Interface.
+     * Method to log out from the Graphic User Interface.
      *
      * @param stage the stage for this application.
      */
