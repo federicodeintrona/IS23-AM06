@@ -725,7 +725,6 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      */
     @Override
     public boolean pingPong() throws RemoteException {
-        System.out.println("pingpong");
         return true;
     }
 

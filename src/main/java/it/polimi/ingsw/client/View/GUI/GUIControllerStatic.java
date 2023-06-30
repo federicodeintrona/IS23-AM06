@@ -30,7 +30,7 @@ public class GUIControllerStatic {
     /**
      * <strong>Setter</strong> -> Sets the GUIController.
      *
-     * @param guiController the GUIController to set
+     * @param guiController the GUIController to set.
      */
     public static void setGuiController(GUIController guiController) {
         GUIControllerStatic.guiController = guiController;

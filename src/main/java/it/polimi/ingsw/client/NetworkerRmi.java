@@ -284,7 +284,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
             try {
                 if(rmiHandler.pingPong()){
-                    System.out.println("test");
                     this.time=0;
 
                 }
