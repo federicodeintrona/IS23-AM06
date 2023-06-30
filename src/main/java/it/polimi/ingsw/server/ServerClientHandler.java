@@ -147,7 +147,13 @@ public class ServerClientHandler implements Runnable, TimerInterface {
      * Method to send a message to the client.
      * @param message The message to be sent.
      */
-    public synchronized void sendMessage(Message message){
+    public void sendMessage(Message message){
+        send(message);
+    }
+
+
+
+    private synchronized void send(Message message){
         try {
             if(!disconnected) {
                 oos.writeObject(message);
