@@ -82,7 +82,10 @@
 ## How to execute jar
 
 
-The jar is in the folder <i>/Deliverables/jar</i>
+The jar is in the folder <i>/Deliverables/jar</i>. 
+You can find a jar for every operative system in the folder Deliverables/jar/{operative_system}.
+
+If you want to create your own jar, once done, you will find it in the folder Deliverables/jar.
 - <b>SERVER</b>
 <p>
 The server starts with the command presented below:
