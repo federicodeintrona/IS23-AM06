@@ -33,6 +33,8 @@ public class NetworkerRmi implements Networker, TimerInterface {
     private final ClientState clientState;
     private View view;
 
+    private ScheduledExecutorService e ;
+    private Timer timer;
     private boolean ponging = true;
     private int time = 0;
     private static final int initialDelay = 50;
@@ -277,7 +279,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
      * Starts sending pings to the server and starts the countdown timer.
      */
     private void pingPong(){
-        ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
+        e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
             Message msg = new Message();
             msg.setType(MessageTypes.PONG);
@@ -295,10 +297,20 @@ public class NetworkerRmi implements Networker, TimerInterface {
         },10,1000, TimeUnit.MILLISECONDS);
 
         //Timer
-        Timer timer = new Timer();
+        timer = new Timer();
         TimerTask task = new TimerCounter(this);
         timer.schedule(task,initialDelay,delta);
     }
+
+
+    /**
+     * Stops the countdown timer and the ping pong
+     */
+    public void stopTimer(){
+        e.shutdown();
+        timer.cancel();
+    }
+
 
     /**
      * Method to disconnect the client.

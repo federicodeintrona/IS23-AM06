@@ -639,16 +639,25 @@ public class Model implements TimerInterface {
         state = GameState.ENDING;
         selectWInner();
 
-
         if(timerIsOn) timer.cancel();
 
-        //Notify game Start
+        for(Player p : players){
+            //Notify publicPoints
+            notifier.firePropertyChange(new PropertyChangeEvent(p.getPrivatePoint(), "all",
+                    p.getUsername(), "publicPoints"));
+        }
+
+
+        //Notify game end
         notifier.firePropertyChange
                 (new PropertyChangeEvent(true, "all", "0","end" ));
 
+
         for(VirtualView v : virtualViews){
             v.setDisconnected(true);
+
         }
+
 
         isFinished=true;
 

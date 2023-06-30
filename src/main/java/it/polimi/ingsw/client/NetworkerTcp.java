@@ -118,6 +118,14 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
         }
     }
 
+    /**
+     * Stops the countdown timer and the ping pong
+     */
+    @Override
+    public void stopTimer() {
+        reader.stopTimer();
+    }
+
 
     /**
      * Method to send to server the username selected by player.
