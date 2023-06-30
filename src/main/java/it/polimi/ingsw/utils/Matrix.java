@@ -94,8 +94,8 @@ public class Matrix implements Serializable {
 
     /**
      * <p>Set the selected tile to EMPTY.</p>
-     * @param row   The number of the row where you want to set the tile
-     * @param col   the number of the column where you want to set the tile
+     * @param row   The number of the row where you want to set the tile.
+     * @param col   the number of the column where you want to set the tile.
      */
     public void remove(int row, int col) {
         board.get(col).get(row).setTiles(Tiles.EMPTY);

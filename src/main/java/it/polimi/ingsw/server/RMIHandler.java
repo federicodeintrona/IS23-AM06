@@ -115,7 +115,7 @@ public class RMIHandler implements RMIHandlerInterface{
 
     /**
      * Method used by the client to check if the server is still running.
-     * @return <i>true</i>
+     * @return <i>true</i>.
      * @throws RemoteException If the rmi connection stops working.
      */
     @Override

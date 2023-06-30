@@ -168,7 +168,7 @@ public class Server extends UnicastRemoteObject {
     /**
      * Method that starts rmi connection
      *
-     * @return      Boolean true or false depending on if the connection was created or not
+     * @return      Boolean <i>true</i> or <i>false</i> depending on if the connection was created or not
      */
     public boolean startRmiServer () {
 

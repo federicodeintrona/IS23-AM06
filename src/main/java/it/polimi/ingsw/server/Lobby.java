@@ -51,7 +51,7 @@ public class Lobby {
 
     /**
      * Method to check if there are lobbies waiting for players.
-     * @return True if there are, false otherwise.
+     * @return <i>True</i> if there are, <i>false</i> otherwise.
      */
     public synchronized boolean waitingLobbies(){
         return !waitingLobbys.isEmpty();
@@ -334,9 +334,5 @@ public class Lobby {
      */
     public HashMap<String, Player> getDisconnectedPlayers() {
         return disconnectedPlayers;
-    }
-
-    public void addNoCapUser(String lower, String noCap){
-        nocapUsernames.put(lower,noCap);
     }
 }

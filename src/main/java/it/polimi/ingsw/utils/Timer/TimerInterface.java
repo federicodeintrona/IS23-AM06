@@ -16,7 +16,7 @@ public interface TimerInterface {
 
      /**
       * <p>Method that updates and returns the counter.</p>
-      * @return The updated counter
+      * @return The updated counter.
       */
      int updateTime();
 
