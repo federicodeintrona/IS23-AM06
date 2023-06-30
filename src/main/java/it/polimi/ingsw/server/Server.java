@@ -111,46 +111,9 @@ public class Server extends UnicastRemoteObject {
             else {
                 System.out.println("Both tcp and rmi protocols available");
 
-                try{
-                    System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(getLocalIPAddress()));
-                    RMIHandlerInterface stub = null;
-                    try {
-                        stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    // Bind the remote object's stub in the registry
-                    Registry registry = null;
-                    try {
-                        registry = LocateRegistry.createRegistry(rmiPort);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        assert registry != null;
-                        registry.bind("RMIHandler", stub);
-                    } catch (RemoteException | AlreadyBoundException e) {
-                        e.printStackTrace();
-                    }
-
-                    System.out.println("Server pronto");
-                    while (true) {
-                        try {
-                            Socket socket = serverSocket.accept();
-                            clientList.add(new ServerClientHandler(socket, controller));
-                            executor.submit(clientList.get(clientList.size()-1));
-                        } catch (IOException e) {
-                            break;
-                        }
-                    }
-                    executor.shutdown();
-                }
-                catch (NullPointerException e){
-                    System.out.println("The server is disconnected");
-                    System.exit(0);
-                }
-
+                menageTcp(serverSocket, executor);
             }
+
         }
         else {
             // Neither protocols available
