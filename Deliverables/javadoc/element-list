@@ -1,0 +1,16 @@
+module:it.polimi.ingsw
+it.polimi.ingsw.app
+it.polimi.ingsw.client
+it.polimi.ingsw.client.View
+it.polimi.ingsw.client.View.CLI
+it.polimi.ingsw.client.View.GUI
+it.polimi.ingsw.client.View.GUI.Scene
+it.polimi.ingsw.server
+it.polimi.ingsw.server.CommonObjective
+it.polimi.ingsw.server.Exceptions
+it.polimi.ingsw.server.Model
+it.polimi.ingsw.server.PersonalObjective
+it.polimi.ingsw.server.VirtualView
+it.polimi.ingsw.utils
+it.polimi.ingsw.utils.Messages
+it.polimi.ingsw.utils.Timer
