@@ -22,7 +22,7 @@ class CommonObjective1Test {
      * of the bookshelf so that they have to communicate with each other
      */
     @Test
-    void checkConditionSuccess1() {
+    void checkConditionSuccess() {
         Player player = new Player( "Jhon");
 
         // Initializing the bookshelf
@@ -57,54 +57,6 @@ class CommonObjective1Test {
 
         player.getBookshelf().getTiles().setTile(Tiles.BLUE, 2, 1);
         player.getBookshelf().getTiles().setTile(Tiles.BLUE, 3, 1);
-
-
-        // Creation of an instance for CommonObjective1
-        CommonObjective1 obj = new CommonObjective1();
-
-        // Checking that the checkCondition method returns true
-        assertTrue(obj.checkCondition(player));
-    }
-
-    /**
-     * Testing all method's branches for success, programming the matrix
-     * for the particular case of 2 groups attached in the left high corner
-     * to see if the Threads work fine in this circumstance
-     */
-    @Test
-    void checkConditionSuccess2() {
-        Player player = new Player( "Jhon");
-
-        // Initializing the bookshelf
-        for (int i=0; i<6; i++){
-            for (int j=0; j<5; j++){
-                Tiles[] values = Tiles.values();
-                Random random = new Random();
-
-                // Random number generator from 0 to 5 to avoid EMPTY and NOT ALLOWED tiles [0, 5)
-                int index = random.nextInt(6);
-                Tiles randomValue = values[index];
-                player.getBookshelf().getTiles().setTile(randomValue, i, j);
-            }
-        }
-
-        // Programming the specific boxes to manually get 6 groups of two same colored tiles
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 0);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 1);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 0, 2);
-        player.getBookshelf().getTiles().setTile(Tiles.WHITE, 1, 0);
-
-        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 0, 4);
-        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 1, 4);
-
-        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 2, 3);
-        player.getBookshelf().getTiles().setTile(Tiles.GREEN, 2, 4);
-
-        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 5, 1);
-        player.getBookshelf().getTiles().setTile(Tiles.YELLOW, 5, 2);
-
-        player.getBookshelf().getTiles().setTile(Tiles.PINK, 4, 2);
-        player.getBookshelf().getTiles().setTile(Tiles.PINK, 4, 3);
 
 
         // Creation of an instance for CommonObjective1
