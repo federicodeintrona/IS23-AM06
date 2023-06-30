@@ -281,8 +281,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
     private void pingPong(){
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
-            Message msg = new Message();
-            msg.setType(MessageTypes.PONG);
             try {
                 if(rmiHandler.pingPong()){
                     this.time=0;
@@ -363,9 +361,9 @@ public class NetworkerRmi implements Networker, TimerInterface {
                 rmiHandler.disconnect(username);
             } catch (RemoteException e) {
                 System.out.println("Server is not responding...");
-
             }
         }
+
         System.out.println("Client disconnecting...");
         System.exit(0);
     }
