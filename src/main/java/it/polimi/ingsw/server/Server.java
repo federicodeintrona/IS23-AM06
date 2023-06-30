@@ -178,7 +178,6 @@ public class Server extends UnicastRemoteObject {
         try {
             stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
         } catch (RemoteException e) {
-
             return false;
         }
         // Bind the remote object's stub in the registry
