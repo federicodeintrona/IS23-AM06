@@ -24,8 +24,8 @@ import java.util.Scanner;
  *
  * <p>The client manages: </p>
  * <ul>
- *     <li>The choice of which User Interface you want to play in (CLI or GUI), if you do not choose which one you prefer the GUI starts automatically;</li>
- *     <li>The logout from the User Interface.</li>
+ *     <li>the choice of which User Interface you want to play in (CLI or GUI), if you do not choose which one you prefer the GUI starts automatically;</li>
+ *     <li>the logout from the User Interface.</li>
  * </ul>
  *
  */

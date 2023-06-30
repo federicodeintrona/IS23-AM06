@@ -316,7 +316,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     /**
-     * <strong>Getter</strong> -> Return if game has started.
+     * <strong>Getter</strong> -> Returns if game has started.
      *
      * @return <i>true</i> if game has started, else <i>false</i>.
      */
@@ -389,7 +389,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     /**
-     * <strong>Getter</strong> -> Return the old common objectives points.
+     * <strong>Getter</strong> -> Returns the old common objectives points.
      *
      * @return the old common objectives points.
      */
@@ -400,7 +400,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     /**
-     * <strong>Getter</strong> -> Return all players that complete the 1st common objective.
+     * <strong>Getter</strong> -> Returns all players that complete the 1st common objective.
      *
      * @return the <i>HashMap</i> of all players that complete the 1st common objective.
      */
@@ -409,7 +409,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
     }
 
     /**
-     * <strong>Getter</strong> -> Return all players that complete the 2nd common objective.
+     * <strong>Getter</strong> -> Returns all players that complete the 2nd common objective.
      *
      * @return the <i>HashMap</i> of all players that complete the 2nd common objective.
      */
@@ -725,6 +725,7 @@ public class ClientState extends UnicastRemoteObject implements ClientStateRemot
      */
     @Override
     public boolean pingPong() throws RemoteException {
+        System.out.println("pingpong");
         return true;
     }
 

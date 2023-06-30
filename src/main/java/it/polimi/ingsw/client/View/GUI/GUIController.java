@@ -19,38 +19,38 @@ import java.util.Objects;
 /**
  * Class to manage the GUI
  * <ul>
- *     <li>start the GUI</li>
- *     <li>close the GUI</li>
- *     <li>change GUI's scene</li>
- *     <li>send message to the server</li>
- *     <li>received message from the server</li>
+ *     <li>Start the GUI;</li>
+ *     <li>close the GUI;</li>
+ *     <li>change GUI's scene;</li>
+ *     <li>send message to the server;</li>
+ *     <li>received message from the server.</li>
  * </ul>
  */
 public class GUIController implements View, SceneController {
 
     /**
-     * Attribute that instance the stage
+     * Attribute that instance the stage.
      */
     private  Stage stage;
     /**
-     * Attribute that instance the current scene
+     * Attribute that instance the current scene.
      */
     private  Scene scene;
     /**
-     * Attribute that instance the root
+     * Attribute that instance the root.
      */
     private  Parent root;
 
     /**
-     * Attribute that instantiates the correct Networker to send and receive messages from
+     * Attribute that instantiates the correct Networker to send and receive messages from.
      */
     private  Networker networker;
     /**
-     * Attribute that instance the correct ClientState
+     * Attribute that instance the correct ClientState.
      */
     private final ClientState state;
     /**
-     * Attribute used to know which scene controller is currently instantiated
+     * Attribute used to know which scene controller is currently instantiated.
      */
     private SceneController sceneController;
 
@@ -59,7 +59,7 @@ public class GUIController implements View, SceneController {
     /**
      * Initialize the ClientState and adds itself as a listener to receive notifications from the client state
      *
-     * @param state the reference ClientState
+     * @param state the reference ClientState.
      */
     public GUIController(ClientState state) {
         this.state=state;
@@ -71,18 +71,18 @@ public class GUIController implements View, SceneController {
 
 
     /**
-     * <strong>Getter</strong> -> Returns the ClientState
+     * <strong>Getter</strong> -> Returns the ClientState.
      *
-     * @return the ClientState
+     * @return the ClientState.
      */
     public ClientState getState() {
         return state;
     }
 
     /**
-     * <strong>Getter</strong> -> Returns the Stage
+     * <strong>Getter</strong> -> Returns the Stage.
      *
-     * @return the Stage
+     * @return the Stage.
      */
     public Stage getStage() {
         return stage;
@@ -91,45 +91,45 @@ public class GUIController implements View, SceneController {
 
 
     /**
-     * <strong>Setter</strong> -> Sets the current SceneController
+     * <strong>Setter</strong> -> Sets the current SceneController.
      *
-     * @param sceneController the current SceneController
+     * @param sceneController the current SceneController.
      */
     public void setSceneController(SceneController sceneController) {
         this.sceneController = sceneController;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the Stage where to show the Scene
+     * <strong>Setter</strong> -> Sets the Stage where to show the Scene.
      *
-     * @param stage the Stage
+     * @param stage the Stage.
      */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the current Scene shown
+     * <strong>Setter</strong> -> Sets the current Scene shown.
      *
-     * @param scene the current Scene shown
+     * @param scene the current Scene shown.
      */
     public void setScene(Scene scene) {
         this.scene = scene;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the Root
+     * <strong>Setter</strong> -> Sets the Root.
      *
-     * @param root the Root
+     * @param root the Root.
      */
     public void setRoot(Parent root) {
         this.root = root;
     }
 
     /**
-     * <strong>Setter</strong> -> Sets the Networker (RMI or TCP) to which to send messages and from which to receive server messages
+     * <strong>Setter</strong> -> Sets the Networker (RMI or TCP) to which to send messages and from which to receive server messages.
      *
-     * @param networker the correct Networker (RMI or TCP)
+     * @param networker the correct Networker (RMI or TCP).
      */
     public void setNetworker(Networker networker) {
         this.networker = networker;
@@ -138,9 +138,9 @@ public class GUIController implements View, SceneController {
 
 
     /**
-     * Method to send the message to the server
+     * Method to send the message to the server.
      *
-     * @param message the message to send to the server
+     * @param message the message to send to the server.
      */
     public void sendMessage(Message message){
         switch (message.getType()){
@@ -154,9 +154,9 @@ public class GUIController implements View, SceneController {
     }
 
     /**
-     * Method to receive the message from the server
+     * Method to receive the message from the server.
      *
-     * @param message that received from the server
+     * @param message that received from the server.
      */
     @Override
     public void receivedMessage(Message message) {
@@ -170,9 +170,9 @@ public class GUIController implements View, SceneController {
     }
 
     /**
-     * Method for managing scene change
+     * Method for managing scene change.
      *
-     * @param scene to be shown now
+     * @param scene to be shown now.
      */
     public void changeScene(Scenes scene){
         Platform.runLater(()->{
@@ -188,7 +188,7 @@ public class GUIController implements View, SceneController {
     }
 
     /**
-     * Method to close the Graphic User Interface
+     * Method to close the Graphic User Interface.
      */
     @Override
     public void close() {
@@ -199,9 +199,9 @@ public class GUIController implements View, SceneController {
     }
 
     /**
-     * Method to show all the error received from server
+     * Method to show all the error received from server.
      *
-     * @param message the error message received from the server
+     * @param message the error message received from the server.
      */
     private void showError(Message message){
         Platform.runLater(()-> sceneController.showError(message.getText(),stage));

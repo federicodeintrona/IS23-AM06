@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
@@ -7,6 +8,7 @@ import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
+import java.beans.PropertyChangeSupport;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -165,7 +167,7 @@ public interface ClientStateRemoteInterface extends Remote {
     boolean pingPong() throws RemoteException;
 
     /**
-     * Method that analyzes @message to see if is intended for the public
+     * Method that analyzes message to see if is intended for the public
      * or private chat and calls the proper method via notifier.
      *
      * @param message ChatMessage containing the conversation for a Chat.
@@ -174,7 +176,7 @@ public interface ClientStateRemoteInterface extends Remote {
     void newMessageHandler (ChatMessage message) throws RemoteException;
 
     /**
-     * Method to restore all chats via @backup.
+     * Method to restore all chats via backup.
      *
      * @param backup        ChatController containing the Server's backup for the chats.
      * @throws RemoteException In case of error during the rmi connection process.
@@ -205,7 +207,7 @@ public interface ClientStateRemoteInterface extends Remote {
     void setCommonObjMaps(ArrayList<HashMap<String, Integer>> list) throws RemoteException;
 
     /**
-     * <strong>Getter</strong> --> get the notifier.
+     * <strong>Getter</strong> -> get the notifier.
      * @throws RemoteException In case of error during the rmi connection process.
      */
     void notify(String username, String type) throws RemoteException;

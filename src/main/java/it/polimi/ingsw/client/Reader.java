@@ -235,7 +235,7 @@ public class Reader extends Thread implements TimerInterface {
 
     /**
      * Method to update countdown for skipped ping message.
-     * @return skipped ping message.
+     * @return the number of skipped ping message.
      */
     @Override
     public int updateTime() {

@@ -281,9 +281,12 @@ public class NetworkerRmi implements Networker, TimerInterface {
     private void pingPong(){
         e = Executors.newSingleThreadScheduledExecutor();
         e.scheduleAtFixedRate(()->{
+
             try {
                 if(rmiHandler.pingPong()){
+                    System.out.println("test");
                     this.time=0;
+
                 }
             } catch (RemoteException ex) {
                 if(ponging&&!disconnected) {
@@ -321,7 +324,7 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
     /**
      * Method to update countdown for skipped ping message.
-     * @return skipped ping message.
+     * @return the number of skipped ping message.
      */
     @Override
     public int updateTime() {
