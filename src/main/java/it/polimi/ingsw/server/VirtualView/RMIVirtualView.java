@@ -1,13 +1,13 @@
 package it.polimi.ingsw.server.VirtualView;
 
 import it.polimi.ingsw.client.ClientStateRemoteInterface;
-import it.polimi.ingsw.server.Model.Player;
-import it.polimi.ingsw.utils.Timer.RMITimer;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Matrix;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
+import it.polimi.ingsw.utils.Timer.RMITimer;
+
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
@@ -124,10 +124,8 @@ public class RMIVirtualView implements VirtualView{
                 }
             } catch (RemoteException e) {
                 if(!isDisconnected()) System.out.println(getUsername()+"'s vv is not responding...");
-                counterino++;
             }
 
-            if(counterino>3) setDisconnected(true);
         }
     }
 
