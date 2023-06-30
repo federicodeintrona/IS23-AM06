@@ -65,75 +65,24 @@
       <version>1.1</version>
     </dependency>
 
-
-    <!-- Linux -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>19.0.2.1</version>
-      <classifier>linux</classifier>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>19.0.2.1</version>
-      <classifier>linux</classifier>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
       <version>19.0.2.1</version>
-      <classifier>linux</classifier>
     </dependency>
 
-    <!-- Windows -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>19.0.2.1</version>
-      <classifier>win</classifier>
-    </dependency>
-
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>19.0.2.1</version>
-      <classifier>win</classifier>
-    </dependency>
-
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>19.0.2.1</version>
-      <classifier>win</classifier>
-    </dependency>
-
-
-
-
-    <!-- MacOS -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>19.0.2.1</version>
-      <classifier>mac</classifier>
-    </dependency>
-
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>19.0.2.1</version>
-      <classifier>mac</classifier>
-    </dependency>
-
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>19.0.2.1</version>
-      <classifier>mac</classifier>
-    </dependency>
 
   </dependencies>
 
