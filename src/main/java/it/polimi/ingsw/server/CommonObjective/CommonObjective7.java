@@ -42,7 +42,7 @@ public class CommonObjective7 extends CommonObjective{
             thread3.join();
             thread4.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("50€ che non succede");
         }
         
         return thread1.areAllElementsEqual() || thread2.areAllElementsEqual() || thread3.areAllElementsEqual() || thread4.areAllElementsEqual();

@@ -137,7 +137,7 @@ public class PersonalObjective {
 
         }
         catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
+            System.out.println("Json do not open");
         }
     }
 

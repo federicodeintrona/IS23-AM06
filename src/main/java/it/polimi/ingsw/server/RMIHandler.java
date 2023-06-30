@@ -95,23 +95,20 @@ public class RMIHandler implements RMIHandlerInterface{
     public IntMessage acceptRmiConnection(String username, ClientStateRemoteInterface state) throws RemoteException {
 
         IntMessage message = null;
-        try {
-
-            RMIVirtualView myView = new RMIVirtualView(username.toLowerCase(),state);
-            RMITimer myTimer = new RMITimer(myView,controller);
-            myTimer.pingPong();
-            myView.setTimer(myTimer);
-
-            message = controller.handleNewClient(username, myView);
-
-            if(message.getType().equals(MessageTypes.ERROR)){
-                myView.stopTimer();
-            }
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        RMIVirtualView myView = new RMIVirtualView(username.toLowerCase(),state);
+        RMITimer myTimer = new RMITimer(myView,controller);
+        myTimer.pingPong();
+        myView.setTimer(myTimer);
+
+        message = controller.handleNewClient(username, myView);
+
+        if(message.getType().equals(MessageTypes.ERROR)){
+            myView.stopTimer();
         }
+
+
 
         return message;
     }

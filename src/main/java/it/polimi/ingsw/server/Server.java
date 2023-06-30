@@ -32,6 +32,7 @@ public class Server extends UnicastRemoteObject {
     private final Lobby lobby = new Lobby();
     private final Controller controller= new Controller(lobby);
     private final RMIHandlerInterface rmiHandler = new RMIHandler(controller);
+    boolean tcpServer;
 
     /**
      * Constructor for Server.
@@ -60,82 +61,80 @@ public class Server extends UnicastRemoteObject {
      * @throws RemoteException      In case of error during the rmi connection process.
      */
     public static void main( String[] args ) throws RemoteException {
-        Server Server;
+        Server Server = null;
         try {
             Server = new Server();
         } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error");
+            System.exit(0);
         }
 
         try {
             Server.startServer();
         }
         catch (IOException e){
-            System.err.println(e.getMessage());
+            System.out.println("Error");
+            System.exit(0);
         }
 
 
     }
 
     private void startServer() throws IOException{
-        ExecutorService executor = Executors.newCachedThreadPool();
-        ServerSocket serverSocket;
         lobby.setController(controller);
 
-        try {
-            serverSocket = new ServerSocket(tcpPort);
-        } catch (IOException e) {
-            System.err.println(e.getMessage()); // Porta non disponibile
-            return;
-        }
+        // Preparing for TCP connections
+        ExecutorService executor = Executors.newCachedThreadPool();
 
-        // Preparing for the RMI connections
+        // Printing ip addresses
         System.out.println(getLocalIPAddress());
-
         InetAddress ip = InetAddress.getLocalHost();
         String ipaddr = ip.getHostAddress();
         System.out.println(ipaddr);
 
+        // Preparing for RMI connections
+        System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(getLocalIPAddress()));
 
-        try{
-            System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(getLocalIPAddress()));
-            RMIHandlerInterface stub = null;
-            try {
-                stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            // Bind the remote object's stub in the registry
-            Registry registry = null;
-            try {
-                registry = LocateRegistry.createRegistry(rmiPort);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            try {
-                assert registry != null;
-                registry.bind("RMIHandler", stub);
-            } catch (RemoteException | AlreadyBoundException e) {
-                e.printStackTrace();
-            }
 
-            System.out.println("Server pronto");
-            while (true) {
-                try {
-                    Socket socket = serverSocket.accept();
-                    clientList.add(new ServerClientHandler(socket, controller));
-                    executor.submit(clientList.get(clientList.size()-1));
-                } catch (IOException e) {
-                    break;
+        ServerSocket serverSocket = startTcpServer();
+        boolean rmiService = startRmiServer();
+
+        if (tcpServer) {
+            // Only tcp available
+            if (!rmiService) {
+                System.out.println("Rmi protocol is not available");
+                System.out.println("You can still play using only tcp");
+
+                menageTcp(serverSocket, executor);
+            }
+            // Both protocols available
+            else {
+                System.out.println("Both tcp and rmi protocols available");
+
+                menageTcp(serverSocket, executor);
+            }
+        }
+        else {
+            // Neither protocols available
+            if (!rmiService) {
+                System.out.println("Neither protocols are available");
+                System.out.println("The server is disconnected");
+
+                executor.shutdown();
+                System.exit(0);
+            }
+            // Only rmi available
+            else {
+                System.out.println("Tcp protocol is not available");
+                System.out.println("You can still play using only rmi");
+
+                executor.shutdown();
+
+                while (true) {
+
                 }
             }
-            executor.shutdown();
         }
-        catch (NullPointerException e){
-            System.out.println("The server is disconnected");
-            System.exit(0);
-        }
-
     }
 
     /**
@@ -163,5 +162,74 @@ public class Server extends UnicastRemoteObject {
             }
         }
         return null;
+    }
+
+    /**
+     * Method that starts rmi connection
+     *
+     * @return      Boolean true or false depending on if the connection was created or not
+     */
+    public boolean startRmiServer () {
+
+        // Preparing for the RMI connections
+        RMIHandlerInterface stub;
+
+        try {
+            stub = (RMIHandlerInterface) UnicastRemoteObject.exportObject(rmiHandler, 0);
+        } catch (RemoteException e) {
+
+            return false;
+        }
+        // Bind the remote object's stub in the registry
+        Registry registry;
+        try {
+            registry = LocateRegistry.createRegistry(rmiPort);
+        } catch (RemoteException e) {
+            return false;
+        }
+        try {
+            registry.bind("RMIHandler", stub);
+        } catch (RemoteException | AlreadyBoundException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Method that starts tcp connection
+     *
+     * @return      Initialized serverSocket if the connection was created
+     */
+    private ServerSocket startTcpServer() {
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(tcpPort);
+            tcpServer = true;
+        } catch (IOException e) {
+            tcpServer = false;
+        }
+
+        return serverSocket;
+    }
+
+    /**
+     * Method that keeps the server alive after the initialization of tcp connection
+     *
+     * @param serverSocket      ServerSocket initialized
+     * @param executor      Executor initialized
+     */
+    private void menageTcp(ServerSocket serverSocket, ExecutorService executor) {
+        while (true) {
+            try {
+                Socket socket = serverSocket.accept();
+                clientList.add(new ServerClientHandler(socket, controller));
+                executor.submit(clientList.get(clientList.size()-1));
+            } catch (IOException e) {
+                break;
+            }
+        }
+
+        executor.shutdown();
     }
 }

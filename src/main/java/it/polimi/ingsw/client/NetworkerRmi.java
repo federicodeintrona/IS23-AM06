@@ -116,7 +116,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
 
             System.out.println("Created RMI connection with Server");
         } catch (Exception e) {
-            System.err.println("Client exception: " + e);
             return false;
         }
         return true;
@@ -258,7 +257,9 @@ public class NetworkerRmi implements Networker, TimerInterface {
             try {
                 this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage());
             } catch (RemoteException e) {
-                throw new RuntimeException(e);
+                System.out.println("Unable to reach the Server while chatting...");
+                System.out.println("Client closing please try again later");
+                view.close();
             }
         }
 
@@ -267,7 +268,9 @@ public class NetworkerRmi implements Networker, TimerInterface {
             try {
                 this.message = rmiHandler.sendMessage(gameID, username, tempMessage.getMessage(), tempMessage.getReceivingUsername());
             } catch (RemoteException e) {
-                throw new RuntimeException(e);
+                System.out.println("Unable to reach the Server while chatting...");
+                System.out.println("Client closing please try again later");
+                view.close();
             }
         }
     }

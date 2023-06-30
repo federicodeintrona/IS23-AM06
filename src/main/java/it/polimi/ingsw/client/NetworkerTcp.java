@@ -55,14 +55,16 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
      * @param clientState client state.
      */
     public NetworkerTcp(ClientState clientState) {
-        JsonReader config;
+        JsonReader config = null;
         try {
             InputStream is=this.getClass().getClassLoader().getResourceAsStream("ConnectionPorts.json");
             config=new JsonReader(is);
         } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
+            System.out.println("Server not responding...");
+            view.close();
         }
         this.clientState = clientState;
+        assert config != null;
         port=config.getInt("tcpPort");
     }
 
@@ -233,7 +235,8 @@ public class NetworkerTcp implements Networker, PropertyChangeListener {
             oos.writeObject(message);
             oos.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Server not responding...");
+            view.close();
         }
     }
 }

@@ -194,6 +194,11 @@ public class CLIMain implements View {
             }
             net.setServerIP(host);
             connected= net.initializeConnection();
+            if (!connected){
+                System.out.println(ColorCLI.RED+"IP address not working"+ColorCLI.RESET);
+                System.out.println(ColorCLI.RED+"Unable to reach the Server\n"+ColorCLI.RESET);
+
+            }
         }while (!connected);
 
         //setting the view in Networker
