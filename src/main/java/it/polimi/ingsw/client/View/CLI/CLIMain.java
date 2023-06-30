@@ -270,6 +270,7 @@ public class CLIMain implements View {
         cliPrint.clearShell();
         cliPrint.printEndGame();
         th1.interrupt();
+        net.stopTimer();
         //wait until the client quit
         do {
             System.out.println("To exit close: #quit or #q");

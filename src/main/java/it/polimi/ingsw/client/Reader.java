@@ -186,10 +186,21 @@ public class Reader extends Thread implements TimerInterface {
                     clientState.notify((String)message.getContent(),message.getText());
             case ("reloadChats") ->
                     clientState.reloadChats((ChatController) message.getContent());
-            case ("end") ->
+            case ("end") -> {
                 clientState.setGameIsEnded((Boolean) message.getContent());
+            }
         }
     }
+
+
+    /**
+     * Stops the countdown timer and the ping pong
+     */
+    public void stopTimer(){
+        e.shutdown();
+        timer.cancel();
+    }
+
 
     /**
      * Method used to notify networker to start disconnection process.

@@ -66,4 +66,9 @@ public interface Networker {
      * @param closing disconnection message.
      */
     void closeProgram(Message closing);
+
+    /**
+     * Stops the countdown timer and the ping pong
+     */
+    void stopTimer();
 }

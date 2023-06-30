@@ -227,6 +227,7 @@ public class GUIController implements View, SceneController {
                 Platform.runLater(()-> sceneController.showNotification(message,stage));
             }
             case "end" -> {
+                networker.stopTimer();
                 if(state.isDisconnectionWinner()){
                     changeScene(Scenes.DisconnectionEnd);
                 }
