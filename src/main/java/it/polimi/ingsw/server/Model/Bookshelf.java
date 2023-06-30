@@ -81,6 +81,7 @@ public class Bookshelf {
 
     /**
      * Method to check if it is possible to add the number of chosen tiles in the matrix.
+     * @param j number of tile selected.
      * @return <i>true</i> if the matrix is possible, <i>false</i> if it isn't.
      */
     public boolean checkPossibleChoice(int j){

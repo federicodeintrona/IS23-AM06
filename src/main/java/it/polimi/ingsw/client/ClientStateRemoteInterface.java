@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Model.Player;
 import it.polimi.ingsw.utils.ChatController;
 import it.polimi.ingsw.utils.Messages.ChatMessage;
 import it.polimi.ingsw.utils.Matrix;
@@ -8,7 +7,6 @@ import it.polimi.ingsw.utils.Tile;
 import it.polimi.ingsw.utils.Tiles;
 
 import java.awt.*;
-import java.beans.PropertyChangeSupport;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -208,7 +206,6 @@ public interface ClientStateRemoteInterface extends Remote {
 
     /**
      * <strong>Getter</strong> --> get the notifier.
-     * @return The notifier.
      * @throws RemoteException In case of error during the rmi connection process.
      */
     void notify(String username, String type) throws RemoteException;

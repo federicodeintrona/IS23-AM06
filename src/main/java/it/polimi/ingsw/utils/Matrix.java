@@ -193,7 +193,7 @@ public class Matrix implements Serializable {
     /**
      * <p>Method that returns true if the column is full, false otherwise</p>
      * @param x The column that is checked.
-     * @return true if the column is full, false otherwise.
+     * @return <i>true</i> if the column is full, <i>false</i> otherwise.
      */
     public boolean columnIsFull(int x){
         for (int i=0; i<numRows; i++){
@@ -205,7 +205,7 @@ public class Matrix implements Serializable {
     /**
      * <p>Method that returns true if the row is full, false otherwise</p>
      * @param x The row that is checked.
-     * @return true if the row is full, false otherwise.
+     * @return <i>true</i> if the row is full, <i>false</i> otherwise.
      */
     public boolean rowIsFull(int x){
         for (int i=0; i<numCols; i++){
