@@ -147,24 +147,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
      * Method to send a message to the client.
      * @param message The message to be sent.
      */
-    public void sendMessage(Message message){
-
-        send(message);
-        /*
-        if(message.getType().equals(MessageTypes.PING)){
-            synchronized (pingLock) {
-                send(message);
-            }
-        }else{
-            synchronized (lock) {
-                send(message);
-            }
-        }*/
-    }
-
-
-
-    private synchronized void send(Message message){
+    public synchronized void sendMessage(Message message){
         try {
             if(!disconnected) {
                 oos.writeObject(message);
