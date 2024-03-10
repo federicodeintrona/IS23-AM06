@@ -28,7 +28,7 @@ public class ServerClientHandler implements Runnable, TimerInterface {
     private final Object lock = new Object();
     private final Object pingLock = new Object();
 
-    private final ExecutorService t = Executors.newSingleThreadExecutor();
+    private final ExecutorService t = Executors.newCachedThreadPool();
     private boolean ponging = true;
     private boolean disconnected = false;
     //Timer
@@ -109,17 +109,31 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     });
                 }
                 case NUM_OF_PLAYERS -> {
-                    messageOut = controller.newLobby(this.username,((IntMessage) incomingMsg).getNum());
-                    this.gameID = ((IntMessage) messageOut).getNum();
+                    t.submit(()->{
+                        Message message = controller.newLobby(this.username,((IntMessage) incomingMsg).getNum());
+                        this.gameID = ((IntMessage) message).getNum();
+                        sendMessage(message);
+                    });
+
                 }
                 case REMOVE_FROM_BOARD -> {
-                    messageOut = controller.removeTiles(this.gameID,this.username, ((PointsMessage) incomingMsg).getTiles());
+                    t.submit(()-> {
+                        Message message = controller.removeTiles(this.gameID, this.username, ((PointsMessage) incomingMsg).getTiles());
+                        sendMessage(message);
+                    });
                 }
                 case SWITCH_PLACE -> {
-                    messageOut = controller.swapOrder(((IntArrayMessage) incomingMsg).getIntegers(),gameID,username);
+                    t.submit(()-> {
+                        Message message  = controller.swapOrder(((IntArrayMessage) incomingMsg).getIntegers(),gameID,username);
+                        sendMessage(message);
+                    });
                 }
                 case ADD_TO_BOOKSHELF -> {
-                    messageOut = controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
+                    t.submit(()-> {
+                        Message message  = controller.addToBookshelf(gameID,username,((IntMessage)incomingMsg).getNum());
+                        sendMessage(message);
+                    });
+
                 }
                 case DISCONNECT -> {
                     disconnect();
@@ -128,11 +142,16 @@ public class ServerClientHandler implements Runnable, TimerInterface {
                     this.time=0;
                 }
                 case CHAT -> {
-                    if (((ChatMessage) incomingMsg).getReceivingUsername() == null)
-                        messageOut = controller.sendMessage(gameID, username, ((ChatMessage)incomingMsg).getMessage());
-                    else
-                        messageOut = controller.sendMessage(gameID, username, ((ChatMessage)incomingMsg).getMessage(), ((ChatMessage)incomingMsg).getReceivingUsername());
-                }
+
+                    t.submit(()-> {
+                        Message message;
+                        if (((ChatMessage) incomingMsg).getReceivingUsername() == null)
+                             message = controller.sendMessage(gameID, username, ((ChatMessage)incomingMsg).getMessage());
+                        else
+                             message = controller.sendMessage(gameID, username, ((ChatMessage)incomingMsg).getMessage(), ((ChatMessage)incomingMsg).getReceivingUsername());
+                        sendMessage(message);
+                    });
+                   }
                 default -> {
                     System.out.println("Server received: " + incomingMsg);
                 }
@@ -170,15 +189,15 @@ public class ServerClientHandler implements Runnable, TimerInterface {
 
 
         private void pingPong(){
-        e = Executors.newSingleThreadScheduledExecutor();
-        e.scheduleAtFixedRate(()->{
-             Message msg = new Message();
-             msg.setType(MessageTypes.PING);
-             sendMessage(msg);
-        },10,500, TimeUnit.MILLISECONDS);
+            e = Executors.newSingleThreadScheduledExecutor();
+            e.scheduleAtFixedRate(()->{
+                 Message msg = new Message();
+                 msg.setType(MessageTypes.PING);
+                 sendMessage(msg);
+            },10,500, TimeUnit.MILLISECONDS);
 
-        timer = new Timer();
-        timer.schedule(new TimerCounter(this), initialDelay, delta);
+            timer = new Timer();
+            timer.schedule(new TimerCounter(this), initialDelay, delta);
 
     }
 

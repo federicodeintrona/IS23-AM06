@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -45,6 +46,7 @@ public class Reader extends Thread implements TimerInterface {
     private boolean disconnected = false;
     private ScheduledExecutorService e;
 
+    private ExecutorService t = Executors.newCachedThreadPool();
     //Timer
     private boolean ponging = true;
     private  Timer timer;
@@ -97,8 +99,14 @@ public class Reader extends Thread implements TimerInterface {
                         time=0;
                     }
                     else {
-                        notifier.firePropertyChange(new PropertyChangeEvent(newMessage,
-                                newMessage.getType().toString(), oldMessage, newMessage));
+                        Message nm= newMessage;
+                        Message om = oldMessage;
+                            t.submit(()->{
+                                notifier.firePropertyChange(new PropertyChangeEvent(nm,
+                                        nm.getType().toString(), om, nm));
+
+                            });
+
 
                         oldMessage = newMessage;
                     }
@@ -146,48 +154,132 @@ public class Reader extends Thread implements TimerInterface {
 
         ViewMessage message = (ViewMessage) newMessage;
         switch (message.getObjName()) {
-            case ("board") ->
-                clientState.setBoard((Matrix) message.getContent());
+            case ("board") -> {
+                t.submit(()->{
+                    clientState.setBoard((Matrix) message.getContent());
+                });
+            }
             case ("bookshelf") ->
-                clientState.setAllBookshelf(message.getText(), (Matrix) message.getContent());
+            {
+                t.submit(()->{
+                    clientState.setAllBookshelf(message.getText(), (Matrix) message.getContent());
+                });
+            }
             case ("currPlayer") ->
+            {
+                t.submit(()->{
                     clientState.setCurrentPlayer((String) message.getContent());
+                });
+            }
             case ("playerNames") ->
+            {
+                t.submit(()->{
                     clientState.setAllUsername(new ArrayList<String>((List<String>) message.getContent()));
+                });
+            }
+
             case ("commonObj") ->
+            {
+                t.submit(()->{
                     clientState.setGameCommonObjective(new ArrayList<Integer>((List<Integer>) message.getContent()));
+                });
+            }
             case ("commonObjPoints") ->
+            {
+                t.submit(()->{
                     clientState.setCommonObjectivePoints(new ArrayList<>((List<Integer>) message.getContent()));
+                });
+            }
             case ("commonObjCompleted") ->
+            {
+                t.submit(()->{
                     clientState.setCommonObjMaps(new ArrayList<HashMap<String, Integer>>((List<HashMap<String, Integer>>) message.getContent()));
+                });
+            }
             case ("publicPoints") ->
+            {
+                t.submit(()->{
                     clientState.setAllPublicPoints(message.getText(), (int) message.getContent());
+                });
+            }
             case ("selectedTiles") ->
+            {
+                t.submit(()->{
                     clientState.setSelectedTiles((ArrayList<Tile>) message.getContent());
+                });
+            }
             case ("personalObj") ->
+            {
+                t.submit(()->{
                     clientState.setMyPersonalObjective((HashMap<Point, Tiles>) message.getContent());
+                });
+            }
             case ("personalObjNum")->
-                clientState.setMyPersonalObjectiveInt((int) message.getContent());
+            {
+                t.submit(()->{
+                    clientState.setMyPersonalObjectiveInt((int) message.getContent());
+                });
+            }
             case ("privatePoints") ->
+            {
+                t.submit(()->{
                     clientState.setMyPoints((int) message.getContent());
+                });
+            }
             case ("nextPlayer") ->
+            {
+                t.submit(()->{
                     clientState.setNextPlayer((String) message.getContent());
+                });
+            }
             case ("chairPlayer")->
+            {
+                t.submit(()->{
                     clientState.setChair((String) message.getContent());
+                });
+            }
             case ("winner") ->
+            {
+                t.submit(()->{
                     clientState.setWinnerPlayer((String) message.getContent());
+                });
+            }
             case ("disconnectionWinner") ->
+            {
+                t.submit(()->{
                     clientState.setDisconnectionWinner(true);
+                });
+            }
             case ("start") ->
+            {
+                t.submit(()->{
                     clientState.setGameHasStarted((Boolean) message.getContent());
-            case ("message") ->
+                });
+            }
+            case ("message")->
+            {
+                t.submit(()->{
                     clientState.newMessageHandler((ChatMessage) message.getContent());
+                });
+            }
             case ("notification") ->
+            {
+                t.submit(()->{
                     clientState.notify((String)message.getContent(),message.getText());
+                });
+            }
             case ("reloadChats") ->
+            {
+                t.submit(()->{
                     clientState.reloadChats((ChatController) message.getContent());
+                });
+            }
             case ("end") -> {
-                clientState.setGameIsEnded((Boolean) message.getContent());
+                {
+                    t.submit(()->{
+                        clientState.setGameIsEnded((Boolean) message.getContent());
+                    });
+                }
             }
         }
     }
@@ -207,8 +299,11 @@ public class Reader extends Thread implements TimerInterface {
      */
     @Override
     public void disconnect() {
-        notifier.firePropertyChange(new PropertyChangeEvent(true,
-                "disconnect", null, null));
+        t.submit(()->{
+            notifier.firePropertyChange(new PropertyChangeEvent(true,
+                    "disconnect", null, null));
+        });
+
     }
 
     /**

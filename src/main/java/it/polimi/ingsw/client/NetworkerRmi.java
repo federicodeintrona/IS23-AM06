@@ -148,8 +148,6 @@ public class NetworkerRmi implements Networker, TimerInterface {
         } catch (RemoteException e) {
             System.out.println( "Server is not responding...");
         }
-
-
     }
 
 

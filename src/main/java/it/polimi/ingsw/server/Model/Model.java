@@ -88,7 +88,7 @@ public class Model implements TimerInterface {
      username of the owner of the sent object ("0" if there isn't any ), property name)
 
       I know it's not the correct way to use PropertyChangeEvent, but it's easier this way, doesn't
-      cause any problem and I wanted to use the PropertyChangeSupport object*/
+      cause any problem and I wanted to use the PropertyChangeSupport object */
 
 
     //Probably temporary, just used for notification

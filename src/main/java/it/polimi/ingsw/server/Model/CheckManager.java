@@ -207,6 +207,12 @@ public class CheckManager {
 
         if(!player.equals(currPlayer)) throw new NotCurrentPlayer();
 
+        //check if the player is trying to pick the same tile more than one
+        HashSet<Integer> set = new HashSet<>(ints);
+        if(ints.size()!=set.size()) throw new SameElement();
+
+        if(ints.size()!=selectedTiles.size()) throw new TooManySelected();
+
         //Checks if the array is of appropriate size and content
         intsCheck(ints);
 
@@ -226,9 +232,5 @@ public class CheckManager {
         for(Integer i : ints){
             if( i<1 || i>ints.size()) throw new IllegalArgumentException();
         }
-
     }
-
-
-
 }
